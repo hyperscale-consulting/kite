@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: |
+  A role to allow cloud security assessments to be performed. It
+  includes the AWS managed policies 'SecurityAudit' and 'ViewOnlyAccess',
+  which allow read-only access to AWS resources.
+Parameters:
+  Assessor:
+    Type: String
+    Description: The principal performing the assessment.  For example, "arn:aws:sts::<ACCOUNT-ID>:assumed-role/<ROLE-NAME>/<USER>""
+  ExternalId:
+    Type: String
+    Description: The external ID.
+  AssessmentEnd:
+    Type: String
+    Description: When should the assessment end in the format YYYY-MM-DDTHH:MM:SSZ.
+    AllowedPattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    ConstraintDescription: Must be in the format YYYY-MM-DDTHH:MM:SSZ.
+Resources:
+  KiteAssessmentRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: KiteAssessmentRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Ref Assessor
+            Action: "sts:AssumeRole"
+            Condition:
+              StringEquals:
+                sts:ExternalId: !Ref ExternalId
+      MaxSessionDuration: 3600
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/SecurityAudit"
+        - "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess"
+      Policies:
+        - PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Deny
+                Action: "*"
+                Resource: "*"
+                Condition:
+                  DateGreaterThan:
+                    aws:CurrentTime: !Ref AssessmentEnd
+          PolicyName: RevokeAssessorAfterEnd
+Outputs:
+  KiteAssessmentRole:
+    Description: The ARN of the Kite assessment role.
+    Value: !GetAtt KiteAssessmentRole.Arn

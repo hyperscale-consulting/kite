@@ -49,6 +49,8 @@ Replace:
 
 #### Multi-Account Deployment using Stack Sets
 
+You can easily deploy the template across the entire AWS Organization - just remember you need to deploy to the management account separately using the instruction above.
+
 To deploy the assessment role across multiple accounts using AWS Organizations:
 
 ```bash

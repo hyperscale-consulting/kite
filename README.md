@@ -136,8 +136,8 @@ kite configure
 Once installed and configured, you can run the `prowler` CLI for a standalone account:
 
 ```zsh
-    prowler aws \
-        -R arn:aws:iam::<ACCOUNT-ID>:role/KiteAssessmentRole
+prowler aws \
+    -R arn:aws:iam::<ACCOUNT-ID>:role/KiteAssessmentRole
 ```
 
 Or for a list of accounts in an AWS Organization:

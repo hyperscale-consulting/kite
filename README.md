@@ -105,7 +105,27 @@ Replace:
 
 Note that the above `create-stack-set` command assumes that you are using [service-managed permissions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-activate-trusted-access.html). You can also use [self-managed permissions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs-self-managed.html).
 
-Once you've set up the role, you can switch to the AWS account / role from which you will be doing the assessment and you can configure `kite`:
+Once you've set up the role, you can switch to the AWS account / role from which you will be doing the assessment. The only permission this role needs is to be able to assume the assessment role in whichever account it is, for example:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowAssumeKiteAssessmentRoleInAnyAccount",
+            "Effect": "Allow",
+            "Action": [
+                "sts:AssumeRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::*:role/KiteAssessmentRole"
+            ]
+        }
+    ]
+}
+```
+
+Next, configure `kite`:
 
 ```bash
 kite configure

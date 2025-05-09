@@ -12,7 +12,6 @@ from . import ui
 from kite.config import Config
 from kite.data import get_organization
 from kite.iam import (
-    fetch_account_summary,
     fetch_root_virtual_mfa_device,
     list_saml_providers,
     list_oidc_providers,
@@ -306,33 +305,6 @@ def get_account_ids_in_scope() -> Set[str]:
         )
 
     return account_ids
-
-
-def get_account_summary(account_id: str) -> Dict[str, Any]:
-    """
-    Lazily load and cache the IAM account summary.
-
-    Args:
-        account_id: Account ID to fetch the account summary for.
-
-    Returns:
-        Dict containing the account summary data.
-
-    Raises:
-        ClickException: If no account ID is available or role assumption fails.
-    """
-    # Initialize the cache if it doesn't exist
-    if not hasattr(get_account_summary, "_summaries"):
-        get_account_summary._summaries = {}
-
-    # Check if we already have the summary for this account
-    if account_id not in get_account_summary._summaries:
-        # Assume role in the specified account
-        session = assume_role(account_id)
-        # Fetch and cache the summary
-        get_account_summary._summaries[account_id] = fetch_account_summary(session)
-
-    return get_account_summary._summaries[account_id]
 
 
 def get_root_virtual_mfa_device(account_id: str) -> Optional[str]:

@@ -15,11 +15,7 @@ from kite.config import Config
 from kite.check_themes import CHECK_THEMES, ALL_CHECKS
 from kite.organizations import get_account_details
 from kite.helpers import assume_organizational_role, get_prowler_output
-from kite.collect import (
-    collect_organization_data,
-    collect_mgmt_account_workload_resources,
-    collect_credentials_reports
-)
+from kite.collect import collect_data
 from kite.organizations import fetch_account_ids
 
 
@@ -489,18 +485,8 @@ def collect(config: str):
             shutil.rmtree(Config.get().data_dir)
         os.makedirs(Config.get().data_dir, exist_ok=True)
 
-        # Collect organization data
-        collect_organization_data()
+        collect_data()
 
-        # Collect workload resources from management account
-        collect_mgmt_account_workload_resources()
-
-        # Collect credentials reports
-        collect_credentials_reports()
-
-        console.print(
-            "[green]Data collection completed successfully![/green]"
-        )
     except Exception as e:
         console.print(f"[red]Error collecting data: {str(e)}[/red]")
         raise click.Abort()

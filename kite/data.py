@@ -161,3 +161,25 @@ def get_credentials_report(account_id: str) -> Optional[Dict[str, Any]]:
         The credentials report data, or None if not found.
     """
     return _load_data("credentials_report", account_id)
+
+
+def save_account_summary(account_id: str, summary: Dict[str, Any]) -> None:
+    """Save account summary for an account.
+
+    Args:
+        account_id: The AWS account ID to save the summary for.
+        summary: The account summary data to save.
+    """
+    _save_data(summary, "account_summary", account_id)
+
+
+def get_account_summary(account_id: str) -> Optional[Dict[str, Any]]:
+    """Get account summary for an account.
+
+    Args:
+        account_id: The AWS account ID to get the summary for.
+
+    Returns:
+        The account summary data, or None if not found.
+    """
+    return _load_data("account_summary", account_id)

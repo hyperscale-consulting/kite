@@ -5,7 +5,7 @@ from kite.organizations import (
     fetch_organization,
     fetch_delegated_admins,
 )
-from kite.iam import fetch_organization_features, fetch_credentials_report
+from kite.iam import fetch_organization_features, fetch_credentials_report, fetch_account_summary
 from kite.helpers import assume_organizational_role, get_account_ids_in_scope
 from kite.data import (
     save_organization,
@@ -13,6 +13,7 @@ from kite.data import (
     save_mgmt_account_workload_resources,
     save_organization_features,
     save_credentials_report,
+    save_account_summary,
 )
 from kite.config import Config
 from kite.helpers import assume_role
@@ -274,3 +275,50 @@ def collect_credentials_reports() -> None:
 
     except Exception as e:
         raise Exception(f"Error gathering IAM credentials reports: {str(e)}")
+
+
+def collect_account_summaries() -> None:
+    """
+    Collect IAM account summaries for all in-scope accounts and save them locally.
+
+    This function collects account summaries from all accounts in scope and saves them
+    to the .kite/audit directory for later use by the audit checks.
+    """
+    try:
+        console.print("\n[bold blue]Gathering IAM account summaries...[/]")
+
+        # Get all account IDs in scope
+        account_ids = get_account_ids_in_scope()
+
+        # Collect account summary for each account
+        for account_id in account_ids:
+            try:
+                console.print(
+                    f"  [yellow]Fetching account summary for account "
+                    f"{account_id}...[/]"
+                )
+                session = assume_role(account_id)
+                summary = fetch_account_summary(session)
+                save_account_summary(account_id, summary)
+                console.print(
+                    f"  [green]✓ Saved account summary for account {account_id}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching account summary for account "
+                    f"{account_id}: {str(e)}[/]"
+                )
+
+        console.print("[bold green]✓ Completed gathering IAM account summaries[/]")
+
+    except Exception as e:
+        raise Exception(f"Error gathering IAM account summaries: {str(e)}")
+
+
+def collect_data() -> None:
+    console.print("\n[bold blue]Gathering AWS data...[/]")
+    collect_organization_data()
+    collect_mgmt_account_workload_resources()
+    collect_credentials_reports()
+    collect_account_summaries()
+    console.print("\n[bold green]✓ Data collection complete![/]")

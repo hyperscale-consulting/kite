@@ -2,7 +2,8 @@
 
 from typing import Dict, Any
 
-from kite.helpers import get_account_summary, get_account_ids_in_scope
+from kite.helpers import get_account_ids_in_scope
+from kite.data import get_account_summary
 
 
 CHECK_ID = "no-root-access-keys"

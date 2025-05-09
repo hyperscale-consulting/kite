@@ -4,11 +4,10 @@ from typing import Dict, Any
 
 from kite.config import Config
 from kite.helpers import (
-    get_account_summary,
     get_account_ids_in_scope,
     get_root_virtual_mfa_device,
 )
-from kite.data import get_organization_features
+from kite.data import get_account_summary, get_organization_features
 
 
 CHECK_ID = "root-mfa-enabled"

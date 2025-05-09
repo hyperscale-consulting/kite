@@ -1,15 +1,7 @@
-# Kite - AWS Security Assessment CLI
+# Kite - Cloud Security Assessments
 
-Kite is a command-line interface tool designed to help security professionals perform AWS security assessments efficiently. It provides a suite of commands to analyze and assess AWS security configurations and best practices.
+Kite is a command-line interface tool designed to help security professionals perform cloud security assessments efficiently. It provides a suite of commands to analyze and assess security configurations and best practices. Currently, only AWS is supported, and the checks align closely with the security pillar of the AWS Well-Architected framework.
 
-## Features
-
-- AWS security assessment
-- IAM configuration analysis
-- Security group and network ACL validation
-- S3 bucket security checks
-- AWS best practices validation
-- Automated security checks
 
 ## Installation
 
@@ -19,9 +11,139 @@ pip install kite
 
 ## Usage
 
+Run the help command to get an overview of the available commands:
+
 ```bash
 kite --help
-kite assess -r us-east-1  # Assess AWS resources in us-east-1
+```
+
+`kite` works by assuming a role in each target account in order to check AWS configuration. A [CloudFormation template](https://raw.githubusercontent.com/hyperscale-consulting/kite/refs/heads/main/permissions/kite-assessment-role.yaml) with the required permissions is available to help setting this up. This can be deployed as a regular CloudFormation stack, or as a stack set to deploy across multiple accounts using AWS Organizations.
+
+### Deploying the Assessment Role
+
+#### Single Account Deployment
+
+To deploy the assessment role in a single account:
+
+```bash
+# Download the template
+curl -O https://raw.githubusercontent.com/hyperscale-consulting/kite/refs/heads/main/permissions/kite-assessment-role.yaml
+
+# Deploy the stack
+aws cloudformation deploy \
+    --template-file kite-assessment-role.yaml \
+    --stack-name kite-assessment-role \
+    --capabilities CAPABILITY_NAMED_IAM \
+    --parameter-overrides \
+        Assessor="arn:aws:sts::<ASSESSOR-ACCOUNT-ID>:assumed-role/<ROLE-NAME>/<USER>" \
+        ExternalId="<EXTERNAL-ID>" \
+        AssessmentEnd="2024-12-31T23:59:59Z"
+```
+
+Replace:
+- `<ASSESSOR-ACCOUNT-ID>` with the AWS account ID of the assessor
+- `<ROLE-NAME>` with the name of the role the assessor will use
+- `<USER>` with the username or session name of the assessor
+- `<EXTERNAL-ID>` with a unique identifier for this assessment
+- The `AssessmentEnd` date with when the assessment should end
+
+#### Multi-Account Deployment using Stack Sets
+
+To deploy the assessment role across multiple accounts using AWS Organizations:
+
+```bash
+# Download the template
+curl -O https://raw.githubusercontent.com/hyperscale-consulting/kite/refs/heads/main/permissions/kite-assessment-role.yaml
+
+# Create the stack set
+aws cloudformation create-stack-set \
+    --stack-set-name kite-assessment-role \
+    --template-body file://kite-assessment-role.yaml \
+    --capabilities CAPABILITY_NAMED_IAM \
+    --parameters \
+        ParameterKey=Assessor,ParameterValue="arn:aws:sts::<ASSESSOR-ACCOUNT-ID>:assumed-role/<ROLE-NAME>/<USER>" \
+        ParameterKey=ExternalId,ParameterValue="<EXTERNAL-ID>" \
+        ParameterKey=AssessmentEnd,ParameterValue="2024-12-31T23:59:59Z" \
+    --administration-role-arn "arn:aws:iam::<MANAGEMENT-ACCOUNT-ID>:role/AWSCloudFormationStackSetAdministrationRole" \
+    --execution-role-name "AWSCloudFormationStackSetExecutionRole"
+
+# Create stack instances (deploy to accounts)
+aws cloudformation create-stack-instances \
+    --stack-set-name kite-assessment-role \
+    --accounts <ACCOUNT-ID-1> <ACCOUNT-ID-2> \
+    --regions <REGION> \
+    --operation-preferences FailureToleranceCount=0,MaxConcurrentCount=1
+
+# Alternatively, deploy to all accounts in the organization
+aws cloudformation create-stack-instances \
+    --stack-set-name kite-assessment-role \
+    --deployment-targets OrganizationalUnitIds=<OU-ID> \
+    --regions <REGION> \
+    --operation-preferences FailureToleranceCount=0,MaxConcurrentCount=1
+
+# Or deploy to the entire organization (including the root)
+aws cloudformation create-stack-instances \
+    --stack-set-name kite-assessment-role \
+    --deployment-targets OrganizationalUnitIds=r-<ROOT-ID> \
+    --regions <REGION> \
+    --operation-preferences FailureToleranceCount=0,MaxConcurrentCount=1
+```
+
+Replace:
+- `<ASSESSOR-ACCOUNT-ID>` with the AWS account ID of the assessor
+- `<ROLE-NAME>` with the name of the role the assessor will use
+- `<USER>` with the username or session name of the assessor
+- `<EXTERNAL-ID>` with a unique identifier for this assessment
+- `<MANAGEMENT-ACCOUNT-ID>` with your AWS Organizations management account ID
+- `<ACCOUNT-ID-1> <ACCOUNT-ID-2>` with the target account IDs (if using specific accounts)
+- `<OU-ID>` with the ID of the organizational unit to deploy to (if using OUs)
+- `<ROOT-ID>` with your organization's root ID (if deploying to entire organization)
+- `<REGION>` with the AWS region to deploy to
+- The `AssessmentEnd` date with when the assessment should end
+
+Note: Before deploying with stack sets, ensure you have:
+1. Set up the required IAM roles in your management account:
+   - `AWSCloudFormationStackSetAdministrationRole`
+   - `AWSCloudFormationStackSetExecutionRole`
+2. Enabled trusted access for AWS CloudFormation in your organization
+
+Once you've set up the role you can configure `kite`:
+
+```bash
+kite configure
+```
+
+`kite` can utilise the output of [Prowler](https://github.com/prowler-cloud/prowler) checks, and the role you created above can be used with `prowler`. If you're using AWS Organizations you can configure `prowler` to get the most out of the `prowler` checks - take a copy of the [config file](https://raw.githubusercontent.com/prowler-cloud/prowler/refs/heads/master/prowler/config/config.yaml) and update `organizations_enabled_regions` to your enabled regions, and `organizations_trusted_delegated_administrators` to the trusted administrator accounts for your organization (e.g. your security tooling account).
+
+Once installed and configured, you can run the `prowler` CLI for a standalone account:
+
+```zsh
+    prowler aws \
+        -R arn:aws:iam::<ACCOUNT-ID>:role/KiteAssessmentRole
+```
+
+Or for a list of accounts in an AWS Organization:
+
+```zsh
+ACCOUNT_IDS=$(kite list-account-ids)
+for ACCOUNT in ${(f)ACCOUNT_IDS} ; do
+    prowler aws \
+        -O arn:aws:iam::<MGMT-ACCOUNT-ID>:role/KiteAssessmentRole \
+        -R arn:aws:iam::${ACCOUNT}:role/KiteAssessmentRole \
+        --config-file prowler.yaml
+done
+```
+
+While `prowler` is running you can tell `kite` to collect the data it will need for the assessment:
+
+```bash
+kite collect
+```
+
+Then, when `prowler` has finished scanning and `kite` has collected the data it needs, you can start an assessment:
+
+```bash
+kite start
 ```
 
 ## Development
@@ -36,14 +158,14 @@ kite assess -r us-east-1  # Assess AWS resources in us-east-1
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/kite.git
+git clone https://github.com/hyperscale-consulting/kite
 cd kite
 ```
 
 2. Create a virtual environment:
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate
 ```
 
 3. Install development dependencies:

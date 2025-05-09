@@ -5,13 +5,15 @@ build-backend = "hatchling.build"
 [project]
 name = "kite"
 version = "0.1.0"
-description = "A CLI tool for AWS cloud security assessments"
+description = "A CLI tool for cloud security assessments"
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
 authors = [
-    { name = "Your Name", email = "your.email@example.com" }
+    { name = "Andy Caine", email = "andy@hyperscale.consulting" },
+    { name = "Henry Addico", email = "henry@hyperscale.consulting" }
 ]
+urls = { repository = "https://github.com/hyperscale-consulting/kite" }
 dependencies = [
     "click>=8.0.0",
     "rich>=10.0.0",  # For beautiful terminal output

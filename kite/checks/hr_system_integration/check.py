@@ -4,10 +4,12 @@ from typing import Dict, Any
 from botocore.exceptions import ClientError
 
 from kite.helpers import (
-    get_saml_providers,
-    get_oidc_providers,
     is_identity_center_enabled,
     manual_check,
+)
+from kite.data import (
+    get_oidc_providers,
+    get_saml_providers,
 )
 
 

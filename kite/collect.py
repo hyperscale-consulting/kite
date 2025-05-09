@@ -5,7 +5,13 @@ from kite.organizations import (
     fetch_organization,
     fetch_delegated_admins,
 )
-from kite.iam import fetch_organization_features, fetch_credentials_report, fetch_account_summary
+from kite.iam import (
+    fetch_organization_features,
+    fetch_credentials_report,
+    fetch_account_summary,
+    list_saml_providers,
+    list_oidc_providers,
+)
 from kite.helpers import assume_organizational_role, get_account_ids_in_scope
 from kite.data import (
     save_organization,
@@ -14,6 +20,8 @@ from kite.data import (
     save_organization_features,
     save_credentials_report,
     save_account_summary,
+    save_saml_providers,
+    save_oidc_providers,
 )
 from kite.config import Config
 from kite.helpers import assume_role
@@ -315,10 +323,42 @@ def collect_account_summaries() -> None:
         raise Exception(f"Error gathering IAM account summaries: {str(e)}")
 
 
+def collect_identity_providers() -> None:
+    """
+    Collect SAML and OIDC providers and save them locally.
+
+    This function collects identity provider information and saves it
+    to the .kite/audit directory for later use by the audit checks.
+    """
+    try:
+        console.print("\n[bold blue]Gathering identity providers...[/]")
+
+        # Assume role in the management account
+        session = assume_organizational_role()
+
+        # Collect SAML providers
+        console.print("  [yellow]Fetching SAML providers...[/]")
+        saml_providers = list_saml_providers(session)
+        save_saml_providers(saml_providers)
+        console.print("  [green]✓ Saved SAML providers[/]")
+
+        # Collect OIDC providers
+        console.print("  [yellow]Fetching OIDC providers...[/]")
+        oidc_providers = list_oidc_providers(session)
+        save_oidc_providers(oidc_providers)
+        console.print("  [green]✓ Saved OIDC providers[/]")
+
+        console.print("[bold green]✓ Completed gathering identity providers[/]")
+
+    except Exception as e:
+        raise Exception(f"Error gathering identity providers: {str(e)}")
+
+
 def collect_data() -> None:
     console.print("\n[bold blue]Gathering AWS data...[/]")
     collect_organization_data()
     collect_mgmt_account_workload_resources()
     collect_credentials_reports()
     collect_account_summaries()
+    collect_identity_providers()
     console.print("\n[bold green]✓ Data collection complete![/]")

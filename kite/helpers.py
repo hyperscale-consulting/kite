@@ -337,43 +337,6 @@ def get_root_virtual_mfa_device(account_id: str) -> Optional[str]:
     return get_root_virtual_mfa_device._mfa_devices[account_id]
 
 
-def get_saml_providers() -> List[Dict[str, Any]]:
-    """
-    Lazily load and cache the list of SAML providers.
-
-    Returns:
-        A list of dictionaries containing SAML provider information.
-
-    Raises:
-        ClickException: If no account ID is available or role assumption fails.
-    """
-    if not hasattr(get_saml_providers, "_providers"):
-        session = assume_organizational_role()
-        get_saml_providers._providers = list_saml_providers(session)
-    return get_saml_providers._providers
-
-
-def get_oidc_providers() -> List[Dict[str, Any]]:
-    """
-    Lazily load and cache the list of OpenID Connect (OIDC) providers.
-
-    Returns:
-        A list of dictionaries containing OIDC provider information, including:
-        - Arn: The Amazon Resource Name (ARN) of the OIDC provider
-        - CreateDate: The date and time when the OIDC provider was created
-        - Url: The URL of the OIDC provider
-        - ClientIDList: The list of client IDs associated with the OIDC provider
-        - ThumbprintList: The list of thumbprints associated with the OIDC provider
-
-    Raises:
-        ClickException: If no account ID is available or role assumption fails.
-    """
-    if not hasattr(get_oidc_providers, "_providers"):
-        session = assume_organizational_role()
-        get_oidc_providers._providers = list_oidc_providers(session)
-    return get_oidc_providers._providers
-
-
 def is_identity_center_enabled() -> bool:
     """
     Lazily load and cache whether AWS Identity Center is being used.

@@ -3,8 +3,6 @@
 from typing import Dict, Any
 
 from kite.helpers import (
-    get_oidc_providers,
-    get_saml_providers,
     is_identity_center_enabled,
     is_identity_center_identity_store_used,
     get_account_ids_in_scope,
@@ -15,6 +13,11 @@ from kite.helpers import (
     manual_check,
     get_user_pool_password_policy,
 )
+from kite.data import (
+    get_oidc_providers,
+    get_saml_providers,
+)
+
 
 CHECK_ID = "complex-passwords"
 CHECK_NAME = "Complex Passwords"

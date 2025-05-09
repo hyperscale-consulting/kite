@@ -33,7 +33,7 @@ def _save_data(
     # Save data to file
     file_path = f"{account_dir}/{data_type}.json"
     with open(file_path, "w") as f:
-        json.dump(data, f, indent=2)
+        json.dump(data, f, indent=2, default=str)
 
 
 def _load_data(
@@ -183,3 +183,45 @@ def get_account_summary(account_id: str) -> Optional[Dict[str, Any]]:
         The account summary data, or None if not found.
     """
     return _load_data("account_summary", account_id)
+
+
+def save_saml_providers(providers: List[Dict[str, Any]]) -> None:
+    """Save SAML providers.
+
+    Args:
+        providers: The list of SAML providers to save.
+    """
+    _save_data({"providers": providers}, "saml_providers")
+
+
+def get_saml_providers() -> Optional[List[Dict[str, Any]]]:
+    """Get SAML providers.
+
+    Returns:
+        The list of SAML providers, or None if not found.
+    """
+    data = _load_data("saml_providers")
+    if data is None:
+        return None
+    return data.get("providers", [])
+
+
+def save_oidc_providers(providers: List[Dict[str, Any]]) -> None:
+    """Save OIDC providers.
+
+    Args:
+        providers: The list of OIDC providers to save.
+    """
+    _save_data({"providers": providers}, "oidc_providers")
+
+
+def get_oidc_providers() -> Optional[List[Dict[str, Any]]]:
+    """Get OIDC providers.
+
+    Returns:
+        The list of OIDC providers, or None if not found.
+    """
+    data = _load_data("oidc_providers")
+    if data is None:
+        return None
+    return data.get("providers", [])

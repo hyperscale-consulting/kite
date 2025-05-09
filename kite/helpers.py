@@ -4,8 +4,6 @@ import boto3
 import click
 import glob
 from rich.console import Console
-from rich.panel import Panel
-from rich.prompt import Confirm, Prompt
 from rich.tree import Tree
 from typing import Optional, Dict, List, Any, Set, Tuple, Callable
 from dataclasses import dataclass
@@ -14,8 +12,6 @@ from . import ui
 from kite.config import Config
 from kite.data import get_organization
 from kite.iam import (
-    fetch_credentials_report,
-    fetch_organization_features,
     fetch_account_summary,
     fetch_root_virtual_mfa_device,
     list_saml_providers,

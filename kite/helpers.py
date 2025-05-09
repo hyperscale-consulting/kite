@@ -156,7 +156,7 @@ def manual_check(
 
 def assume_role(account_id: str) -> boto3.Session:
     """
-    Assume a role in the specified AWS account.
+    Assume a role in the specified account.
 
     Args:
         account_id: The AWS account ID to assume the role in.
@@ -165,16 +165,23 @@ def assume_role(account_id: str) -> boto3.Session:
         A boto3 session with the assumed role credentials.
 
     Raises:
-        ClickException: If the role assumption fails.
+        ClickException: If role assumption fails.
     """
     config = Config.get()
     role_arn = f"arn:aws:iam::{account_id}:role/{config.role_name}"
 
     try:
         sts_client = boto3.client("sts")
-        assumed_role = sts_client.assume_role(
-            RoleArn=role_arn, RoleSessionName="KiteAssessment"
-        )
+        assume_role_params = {
+            "RoleArn": role_arn,
+            "RoleSessionName": "KiteAssessment"
+        }
+
+        # Add external ID if configured
+        if config.external_id:
+            assume_role_params["ExternalId"] = config.external_id
+
+        assumed_role = sts_client.assume_role(**assume_role_params)
 
         return boto3.Session(
             aws_access_key_id=assumed_role["Credentials"]["AccessKeyId"],
@@ -182,7 +189,7 @@ def assume_role(account_id: str) -> boto3.Session:
             aws_session_token=assumed_role["Credentials"]["SessionToken"],
         )
     except Exception as e:
-        raise click.ClickException(f"Failed to assume role {role_arn}: {str(e)}")
+        raise click.ClickException(f"Failed to assume role: {str(e)}")
 
 
 def assume_organizational_role() -> boto3.Session:

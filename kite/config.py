@@ -20,6 +20,7 @@ class Config:
     active_regions: List[str]
     role_name: str
     prowler_output_dir: str
+    external_id: Optional[str]
     data_dir: str = ".kite/audit"
 
     # Class variable to hold the singleton instance
@@ -28,13 +29,14 @@ class Config:
     @classmethod
     def create(cls, management_account_id: str, account_ids: List[str],
                active_regions: List[str], role_name: str, prowler_output_dir: str,
-               data_dir: str):
+               external_id: Optional[str], data_dir: str):
         cls._instance = cls(
             management_account_id=management_account_id,
             account_ids=account_ids,
             active_regions=active_regions,
             role_name=role_name,
             prowler_output_dir=prowler_output_dir,
+            external_id=external_id,
             data_dir=data_dir,
         )
 
@@ -93,6 +95,7 @@ class Config:
                 active_regions=data["active_regions"],
                 role_name=data["role_name"],
                 prowler_output_dir=data["prowler_output_dir"],
+                external_id=data.get("external_id"),
                 data_dir=data.get("data_dir", ".kite/audit"),
             )
             return cls._instance
@@ -101,3 +104,35 @@ class Config:
             raise click.ClickException(f"Config file not found: {config_path}")
         except yaml.YAMLError as e:
             raise click.ClickException(f"Error parsing config file: {str(e)}")
+
+    @classmethod
+    def save(cls, config_path: str) -> None:
+        """Save the current configuration to a YAML file.
+
+        Args:
+            config_path: Path to save the YAML configuration file.
+
+        Raises:
+            RuntimeError: If configuration hasn't been loaded yet.
+            ClickException: If there's an error saving the file.
+        """
+        if cls._instance is None:
+            raise RuntimeError("Configuration not loaded. Call load() or create() first.")
+
+        try:
+            config_dict = {
+                "management_account_id": cls._instance.management_account_id,
+                "account_ids": cls._instance.account_ids,
+                "active_regions": cls._instance.active_regions,
+                "role_name": cls._instance.role_name,
+                "prowler_output_dir": cls._instance.prowler_output_dir,
+                "external_id": cls._instance.external_id,
+                "data_dir": cls._instance.data_dir,
+            }
+            # Remove None values
+            config_dict = {k: v for k, v in config_dict.items() if v is not None}
+
+            with open(config_path, "w") as f:
+                yaml.dump(config_dict, f, default_flow_style=False)
+        except Exception as e:
+            raise click.ClickException(f"Error saving config file: {str(e)}")

@@ -289,3 +289,23 @@ def get_account_details(session, account_id: str) -> Optional[Account]:
         if hasattr(e, "response") and e.response.get("Error", {}).get("Code") == "AccountNotFoundException":
             return None
         raise
+
+
+def fetch_account_ids(session) -> List[str]:
+    """
+    Fetch all account IDs in the organization.
+
+    Args:
+        session: A boto3 session to use for AWS API calls
+
+    Returns:
+        A list of account IDs in the organization
+    """
+    orgs_client = session.client("organizations")
+
+    account_ids = []
+    paginator = orgs_client.get_paginator("list_accounts")
+    for page in paginator.paginate():
+        for account in page["Accounts"]:
+            account_ids.append(account["Id"])
+    return account_ids

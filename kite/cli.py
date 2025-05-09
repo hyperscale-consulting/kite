@@ -9,7 +9,7 @@ import click
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
-
+from rich.prompt import Prompt, Confirm
 
 from kite.config import Config
 from kite.check_themes import CHECK_THEMES, ALL_CHECKS
@@ -20,6 +20,8 @@ from kite.collect import (
     collect_mgmt_account_workload_resources,
     collect_credentials_reports
 )
+from kite.organizations import fetch_account_ids
+
 
 console = Console()
 
@@ -270,6 +272,137 @@ def get_organization_account_details(account_id: str, config: str):
 
     except Exception as e:
         raise click.ClickException(f"Error fetching account details: {str(e)}")
+
+
+@main.command()
+def configure():
+    """Configure the Kite CLI."""
+
+    # Check if kite.yaml exists
+    if os.path.exists("kite.yaml"):
+        if not Confirm.ask("kite.yaml already exists. Overwrite?"):
+            return
+
+    # Ask the user for the management account ID, if they have one
+    management_account_id = Prompt.ask(
+        "Management Account ID",
+        default="",
+        show_default=False,
+    ).strip()
+
+    # Ask the user for the list of account IDs to include in the assessment
+    while True:
+        account_ids_input = Prompt.ask(
+            "Account IDs (comma separated) - leave blank for all accounts in an AWS Organization",
+            default="",
+            show_default=False,
+        ).strip()
+
+        if not management_account_id and not account_ids_input:
+            console.print(
+                "[yellow]Account IDs are required when no management account is provided[/yellow]"
+            )
+            continue
+
+        # Convert account IDs to list, filtering out empty strings
+        account_ids = [
+            aid.strip() for aid in account_ids_input.split(",") if aid.strip()
+        ] if account_ids_input else []
+        break
+
+    # Ask the user for the list of regions to include in the assessment
+    while True:
+        active_regions_input = Prompt.ask(
+            "Active Regions (comma separated)",
+            default="",
+            show_default=False,
+        ).strip()
+
+        if not active_regions_input:
+            console.print("[yellow]Active regions are required[/yellow]")
+            continue
+
+        # Convert regions to list, filtering out empty strings
+        active_regions = [
+            region.strip() for region in active_regions_input.split(",") if region.strip()
+        ]
+        break
+
+    # Ask the user for the name of the role to use for the assessment
+    role_name = Prompt.ask(
+        "Role Name",
+        default="KiteAssessmentRole",
+    ).strip() or "KiteAssessmentRole"
+
+    # Ask for the external ID
+    external_id = Prompt.ask(
+        "External ID (optional)",
+        default="",
+        show_default=False,
+    ).strip() or None
+
+    # Ask for the prowler output directory
+    prowler_output_dir = Prompt.ask(
+        "Prowler Output Directory",
+        default="output",
+    ).strip() or "output"
+
+    # Ask for the data directory
+    data_dir = Prompt.ask(
+        "Data Directory",
+        default=".kite/audit",
+    ).strip() or ".kite/audit"
+
+    # Create the config
+    Config.create(
+        management_account_id=management_account_id,
+        account_ids=account_ids,
+        active_regions=active_regions,
+        role_name=role_name,
+        prowler_output_dir=prowler_output_dir,
+        external_id=external_id,
+        data_dir=data_dir,
+    )
+
+    # save the config to kite.yaml
+    Config.save("kite.yaml")
+
+
+@main.command()
+@click.option(
+    "--config",
+    "-c",
+    default="kite.yaml",
+    help="Path to config file (default: kite.yaml)",
+    type=click.Path(exists=True),
+)
+def list_accounts(config: str):
+    """List all accounts in the organization."""
+    Config.load(config)
+    config = Config.get()
+    account_ids = set()
+
+    # Add management account if provided
+    if config.management_account_id:
+        # Normalize to string to avoid duplicates
+        account_ids.add(str(config.management_account_id))
+
+    # Add account IDs from config if provided
+    if config.account_ids:
+        # Normalize all account IDs to strings
+        account_ids.update(str(account_id) for account_id in config.account_ids)
+
+    # If we have a management account but no specific account IDs,
+    # get all accounts in the organization
+    if config.management_account_id and not config.account_ids:
+        session = assume_organizational_role()
+        org_account_ids = fetch_account_ids(session)
+
+        # Normalize all account IDs to strings
+        account_ids.update(org_account_ids)
+
+    for acc_id in account_ids:
+        console.print(acc_id)
 
 
 @main.command()

@@ -49,6 +49,7 @@ def config(
         role_name=role_name,
         prowler_output_dir=prowler_output_dir,
         data_dir=data_dir,
+        external_id='123456',
     )
     return Config.get()
 

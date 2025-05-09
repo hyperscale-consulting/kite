@@ -37,7 +37,7 @@ aws cloudformation deploy \
     --parameter-overrides \
         Assessor="arn:aws:sts::<ASSESSOR-ACCOUNT-ID>:assumed-role/<ROLE-NAME>/<USER>" \
         ExternalId="<EXTERNAL-ID>" \
-        AssessmentEnd="2024-12-31T23:59:59Z"
+        AssessmentEnd="2025-12-31T23:59:59Z"
 ```
 
 Replace:
@@ -60,12 +60,12 @@ aws cloudformation create-stack-set \
     --stack-set-name kite-assessment-role \
     --template-body file://kite-assessment-role.yaml \
     --capabilities CAPABILITY_NAMED_IAM \
+    --permission-model service-managed \
+    --auto-deployment Enabled=true,RetainStacksOnAccountRemoval=false \
     --parameters \
         ParameterKey=Assessor,ParameterValue="arn:aws:sts::<ASSESSOR-ACCOUNT-ID>:assumed-role/<ROLE-NAME>/<USER>" \
         ParameterKey=ExternalId,ParameterValue="<EXTERNAL-ID>" \
-        ParameterKey=AssessmentEnd,ParameterValue="2024-12-31T23:59:59Z" \
-    --administration-role-arn "arn:aws:iam::<MANAGEMENT-ACCOUNT-ID>:role/AWSCloudFormationStackSetAdministrationRole" \
-    --execution-role-name "AWSCloudFormationStackSetExecutionRole"
+        ParameterKey=AssessmentEnd,ParameterValue="2025-12-31T23:59:59Z"
 
 # Create stack instances (deploy to accounts)
 aws cloudformation create-stack-instances \
@@ -101,11 +101,7 @@ Replace:
 - `<REGION>` with the AWS region to deploy to
 - The `AssessmentEnd` date with when the assessment should end
 
-Note: Before deploying with stack sets, ensure you have:
-1. Set up the required IAM roles in your management account:
-   - `AWSCloudFormationStackSetAdministrationRole`
-   - `AWSCloudFormationStackSetExecutionRole`
-2. Enabled trusted access for AWS CloudFormation in your organization
+Note that the above `create-stack-set` command assumes that you are using [service-managed permissions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-activate-trusted-access.html). You can also use [self-managed permissions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs-self-managed.html).
 
 Once you've set up the role you can configure `kite`:
 

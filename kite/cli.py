@@ -17,7 +17,7 @@ from kite.organizations import get_account_details
 from kite.helpers import assume_organizational_role, get_prowler_output
 from kite.collect import collect_data
 from kite.organizations import fetch_account_ids
-
+from kite.data import save_collection_metadata, verify_collection_status
 
 console = Console()
 
@@ -119,6 +119,9 @@ def start(config: str):
     """Start a security assessment using the specified config file."""
     config_data = Config.load(config)
 
+    # Verify collection status
+    verify_collection_status()
+
     # Format account IDs for display
     account_ids_str = (
         ", ".join(config_data.account_ids) if config_data.account_ids else "ALL"
@@ -208,6 +211,10 @@ def list_checks():
 def run_check(config, check_id):
     """Run a specific security check by ID."""
     Config.load(config)
+
+    # Verify collection status
+    verify_collection_status()
+
     check = find_check_by_id(check_id)
     if not check:
         console.print(f"[red]Error: No check found with ID {check_id}[/red]")
@@ -354,7 +361,7 @@ def configure():
     ).strip() or ".kite/audit"
 
     # Create the config
-    Config.create(
+    config = Config.create(
         management_account_id=management_account_id,
         account_ids=account_ids,
         active_regions=active_regions,
@@ -364,8 +371,7 @@ def configure():
         data_dir=data_dir,
     )
 
-    # save the config to kite.yaml
-    Config.save("kite.yaml")
+    config.save("kite.yaml")
 
 
 @main.command()
@@ -490,6 +496,10 @@ def collect(config: str):
         os.makedirs(Config.get().data_dir, exist_ok=True)
 
         collect_data()
+
+        # Save collection metadata
+        save_collection_metadata()
+        console.print("[green]✓ Saved collection metadata[/green]")
 
     except Exception as e:
         console.print(f"[red]Error collecting data: {str(e)}[/red]")

@@ -39,6 +39,7 @@ class Config:
             external_id=external_id,
             data_dir=data_dir,
         )
+        return cls._instance
 
     @classmethod
     def get(cls) -> "Config":
@@ -106,8 +107,7 @@ class Config:
         except yaml.YAMLError as e:
             raise click.ClickException(f"Error parsing config file: {str(e)}")
 
-    @classmethod
-    def save(cls, config_path: str) -> None:
+    def save(self, config_path: str) -> None:
         """Save the current configuration to a YAML file.
 
         Args:
@@ -117,18 +117,16 @@ class Config:
             RuntimeError: If configuration hasn't been loaded yet.
             ClickException: If there's an error saving the file.
         """
-        if cls._instance is None:
-            raise RuntimeError("Configuration not loaded. Call load() or create() first.")
 
         try:
             config_dict = {
-                "management_account_id": cls._instance.management_account_id,
-                "account_ids": cls._instance.account_ids,
-                "active_regions": cls._instance.active_regions,
-                "role_name": cls._instance.role_name,
-                "prowler_output_dir": cls._instance.prowler_output_dir,
-                "external_id": cls._instance.external_id,
-                "data_dir": cls._instance.data_dir,
+                "management_account_id": self.management_account_id,
+                "account_ids": self.account_ids,
+                "active_regions": self.active_regions,
+                "role_name": self.role_name,
+                "prowler_output_dir": self.prowler_output_dir,
+                "external_id": self.external_id,
+                "data_dir": self.data_dir,
             }
             # Remove None values
             config_dict = {k: v for k, v in config_dict.items() if v is not None}

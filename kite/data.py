@@ -4,6 +4,9 @@ from dataclasses import asdict
 import json
 import os
 from typing import Dict, Any, Optional, List
+from datetime import datetime
+
+import click
 
 from kite.config import Config
 from kite.models import Organization, DelegatedAdmin, WorkloadResources
@@ -273,3 +276,41 @@ def get_ec2_instances(account_id: str) -> Optional[List[Dict[str, Any]]]:
     if data is None:
         return None
     return [EC2Instance.from_dict(instance) for instance in data]
+
+
+def save_collection_metadata() -> None:
+    """Save metadata about the last data collection run."""
+    metadata = {
+        "timestamp": datetime.now().isoformat(),
+        "external_id": Config.get().external_id,
+    }
+    _save_data(metadata, "collection_metadata")
+
+
+def get_collection_metadata() -> Optional[Dict[str, Any]]:
+    """Get metadata about the last data collection run.
+
+    Returns:
+        The collection metadata, or None if not found.
+    """
+    return _load_data("collection_metadata")
+
+
+def verify_collection_status() -> None:
+    """Verify that data collection has been run and external ID matches.
+
+    Raises:
+        ClickException: If collection hasn't been run or external ID doesn't match.
+    """
+    metadata = get_collection_metadata()
+    if not metadata:
+        raise click.ClickException(
+            "Data collection has not been run. Please run 'kite collect' first."
+        )
+
+    current_external_id = Config.get().external_id
+    if metadata["external_id"] != current_external_id:
+        raise click.ClickException(
+            "External ID has changed since last data collection. "
+            "Please run 'kite collect' again."
+        )

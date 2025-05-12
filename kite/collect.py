@@ -22,6 +22,7 @@ from kite.data import (
     save_account_summary,
     save_saml_providers,
     save_oidc_providers,
+    save_identity_center_instances,
 )
 from kite.config import Config
 from kite.helpers import assume_role
@@ -39,6 +40,7 @@ from kite.sqs import get_queues
 from kite.s3 import get_buckets
 from kite.kms import get_customer_keys
 from kite.cloudfront import get_distributions
+from kite.identity_center import list_identity_center_instances
 
 console = Console()
 
@@ -354,6 +356,31 @@ def collect_identity_providers() -> None:
         raise Exception(f"Error gathering identity providers: {str(e)}")
 
 
+def collect_identity_center_instances() -> None:
+    """
+    Collect Identity Center instances and save them locally.
+
+    This function collects Identity Center instance information and saves it
+    to the .kite/audit directory for later use by the audit checks.
+    """
+    try:
+        console.print("\n[bold blue]Gathering Identity Center instances...[/]")
+
+        # Assume role in the management account
+        session = assume_organizational_role()
+
+        # Collect Identity Center instances
+        console.print("  [yellow]Fetching Identity Center instances...[/]")
+        instances = list_identity_center_instances(session)
+        save_identity_center_instances(instances)
+        console.print(f"  [green]✓ Saved {len(instances)} Identity Center instances[/]")
+
+        console.print("[bold green]✓ Completed gathering Identity Center instances[/]")
+
+    except Exception as e:
+        raise Exception(f"Error gathering Identity Center instances: {str(e)}")
+
+
 def collect_data() -> None:
     console.print("\n[bold blue]Gathering AWS data...[/]")
     collect_organization_data()
@@ -361,4 +388,5 @@ def collect_data() -> None:
     collect_credentials_reports()
     collect_account_summaries()
     collect_identity_providers()
+    collect_identity_center_instances()
     console.print("\n[bold green]✓ Data collection complete![/]")

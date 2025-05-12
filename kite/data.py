@@ -225,3 +225,24 @@ def get_oidc_providers() -> Optional[List[Dict[str, Any]]]:
     if data is None:
         return None
     return data.get("providers", [])
+
+
+def save_identity_center_instances(instances: List[Dict[str, Any]]) -> None:
+    """Save Identity Center instances.
+
+    Args:
+        instances: The list of Identity Center instances to save.
+    """
+    _save_data({"instances": instances}, "identity_center_instances")
+
+
+def get_identity_center_instances() -> Optional[List[Dict[str, Any]]]:
+    """Get Identity Center instances.
+
+    Returns:
+        The list of Identity Center instances, or None if not found.
+    """
+    data = _load_data("identity_center_instances")
+    if data is None:
+        return None
+    return data.get("instances", [])

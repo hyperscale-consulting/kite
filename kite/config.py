@@ -133,5 +133,6 @@ class Config:
 
             with open(config_path, "w") as f:
                 yaml.dump(config_dict, f, default_flow_style=False)
+                return f
         except Exception as e:
             raise click.ClickException(f"Error saving config file: {str(e)}")

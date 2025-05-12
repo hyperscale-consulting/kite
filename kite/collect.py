@@ -1,16 +1,23 @@
 """Data collection module for Kite."""
 
 from rich.console import Console
-from kite.organizations import (
-    fetch_organization,
-    fetch_delegated_admins,
-)
-from kite.iam import (
-    fetch_organization_features,
-    fetch_credentials_report,
-    fetch_account_summary,
-    list_saml_providers,
-    list_oidc_providers,
+from . import (
+    organizations,
+    ec2,
+    ecs,
+    eks,
+    lambda_,
+    rds,
+    dynamodb,
+    redshift,
+    sagemaker,
+    sns,
+    sqs,
+    s3,
+    kms,
+    cloudfront,
+    iam,
+    identity_center,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -31,20 +38,7 @@ from kite.data import (
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
-from kite.ec2 import get_running_instances
-from kite.ecs import get_clusters as get_ecs_clusters
-from kite.eks import get_clusters as get_eks_clusters
-from kite.lambda_ import get_functions
-from kite.rds import get_instances as get_rds_instances
-from kite.dynamodb import get_tables
-from kite.redshift import get_clusters as get_redshift_clusters
-from kite.sagemaker import get_notebook_instances
-from kite.sns import get_topics
-from kite.sqs import get_queues
-from kite.s3 import get_buckets
-from kite.kms import get_customer_keys
-from kite.cloudfront import get_distributions
-from kite.identity_center import list_identity_center_instances
+
 
 console = Console()
 
@@ -64,20 +58,20 @@ def collect_organization_data() -> None:
 
         # Get organization data
         console.print("  [yellow]Fetching organization details...[/]")
-        org = fetch_organization(session)
+        org = organizations.fetch_organization(session)
 
         save_organization(org)
         console.print("  [green]✓ Saved organization data[/]")
 
         # Collect delegated admin data
         console.print("  [yellow]Fetching delegated admins...[/]")
-        admins = fetch_delegated_admins(session)
+        admins = organizations.fetch_delegated_admins(session)
         save_delegated_admins(admins)
         console.print("  [green]✓ Saved delegated admins[/]")
 
         # Collect organization features
         console.print("  [yellow]Fetching organization features...[/]")
-        features = fetch_organization_features(session)
+        features = iam.fetch_organization_features(session)
         save_organization_features(features)
         console.print("  [green]✓ Saved organization features[/]")
 
@@ -109,7 +103,7 @@ def collect_mgmt_account_workload_resources() -> None:
     for region in config.active_regions:
         console.print(f"  [yellow]Scanning resources in {region}...[/]")
         # Check EC2 instances
-        for instance in get_running_instances(session, region):
+        for instance in ec2.get_running_instances(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="EC2",
@@ -123,7 +117,7 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check ECS clusters
-        for cluster in get_ecs_clusters(session, region):
+        for cluster in ecs.get_clusters(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="ECS",
@@ -133,7 +127,7 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check EKS clusters
-        for cluster in get_eks_clusters(session, region):
+        for cluster in eks.get_clusters(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="EKS",
@@ -143,7 +137,7 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check Lambda functions
-        for function in get_functions(session, region):
+        for function in lambda_.get_functions(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="Lambda",
@@ -153,7 +147,7 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check RDS instances
-        for instance in get_rds_instances(session, region):
+        for instance in rds.get_instances(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="RDS",
@@ -164,7 +158,7 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check DynamoDB tables
-        for table in get_tables(session, region):
+        for table in dynamodb.get_tables(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="DynamoDB",
@@ -174,7 +168,7 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check Redshift clusters
-        for cluster in get_redshift_clusters(session, region):
+        for cluster in redshift.get_clusters(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="Redshift",
@@ -184,7 +178,7 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check SageMaker notebook instances
-        for notebook in get_notebook_instances(session, region):
+        for notebook in sagemaker.get_notebook_instances(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="SageMaker",
@@ -194,7 +188,7 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check SNS topics
-        for topic in get_topics(session, region):
+        for topic in sns.get_topics(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="SNS",
@@ -204,7 +198,7 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check SQS queues
-        for queue in get_queues(session, region):
+        for queue in sqs.get_queues(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="SQS",
@@ -214,7 +208,7 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check KMS keys
-        for key in get_customer_keys(session, region):
+        for key in kms.get_customer_keys(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="KMS",
@@ -229,7 +223,7 @@ def collect_mgmt_account_workload_resources() -> None:
     console.print("  [yellow]Scanning global resources...[/]")
     # Check global resources (not region-specific)
     # Check S3 buckets
-    for bucket in get_buckets(session):
+    for bucket in s3.get_buckets(session):
         workload_resources.resources.append(
             WorkloadResource(
                 resource_type="S3",
@@ -238,7 +232,7 @@ def collect_mgmt_account_workload_resources() -> None:
         )
 
     # Check CloudFront distributions
-    for dist in get_distributions(session):
+    for dist in cloudfront.get_distributions(session):
         workload_resources.resources.append(
             WorkloadResource(
                 resource_type="CloudFront",
@@ -274,7 +268,7 @@ def collect_credentials_reports() -> None:
                     f"{account_id}...[/]"
                 )
                 session = assume_role(account_id)
-                report = fetch_credentials_report(session)
+                report = iam.fetch_credentials_report(session)
                 save_credentials_report(account_id, report)
                 console.print(
                     f"  [green]✓ Saved credentials report for account {account_id}[/]"
@@ -312,7 +306,7 @@ def collect_account_summaries() -> None:
                     f"{account_id}...[/]"
                 )
                 session = assume_role(account_id)
-                summary = fetch_account_summary(session)
+                summary = iam.fetch_account_summary(session)
                 save_account_summary(account_id, summary)
                 console.print(
                     f"  [green]✓ Saved account summary for account {account_id}[/]"
@@ -344,13 +338,13 @@ def collect_identity_providers() -> None:
 
         # Collect SAML providers
         console.print("  [yellow]Fetching SAML providers...[/]")
-        saml_providers = list_saml_providers(session)
+        saml_providers = iam.list_saml_providers(session)
         save_saml_providers(saml_providers)
         console.print("  [green]✓ Saved SAML providers[/]")
 
         # Collect OIDC providers
         console.print("  [yellow]Fetching OIDC providers...[/]")
-        oidc_providers = list_oidc_providers(session)
+        oidc_providers = iam.list_oidc_providers(session)
         save_oidc_providers(oidc_providers)
         console.print("  [green]✓ Saved OIDC providers[/]")
 
@@ -375,7 +369,7 @@ def collect_identity_center_instances() -> None:
 
         # Collect Identity Center instances
         console.print("  [yellow]Fetching Identity Center instances...[/]")
-        instances = list_identity_center_instances(session)
+        instances = identity_center.list_identity_center_instances(session)
         save_identity_center_instances(instances)
         console.print(f"  [green]✓ Saved {len(instances)} Identity Center instances[/]")
 
@@ -411,7 +405,7 @@ def collect_ec2_instances() -> None:
                 for region in Config.get().active_regions:
                     try:
                         # Get instances using the EC2 module
-                        instances.extend(get_running_instances(session, region))
+                        instances.extend(ec2.get_running_instances(session, region))
                     except Exception as e:
                         console.print(
                             f"    [red]✗ Error fetching EC2 instances in region "

@@ -2,22 +2,7 @@
 
 import boto3
 from typing import List, Dict, Any
-from dataclasses import dataclass
-
-
-@dataclass
-class EC2Instance:
-    """EC2 instance data class."""
-
-    instance_id: str
-    instance_type: str
-    state: str
-    region: str
-
-    @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "EC2Instance":
-        """Create an EC2Instance from a dictionary."""
-        return cls(**data)
+from kite.models import EC2Instance
 
 
 def get_running_instances(session, region: str) -> List[EC2Instance]:

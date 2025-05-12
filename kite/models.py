@@ -43,6 +43,21 @@ class Account:
 
 
 @dataclass
+class EC2Instance:
+    """EC2 instance data class."""
+
+    instance_id: str
+    instance_type: str
+    state: str
+    region: str
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "EC2Instance":
+        """Create an EC2Instance from a dictionary."""
+        return cls(**data)
+
+
+@dataclass
 class DelegatedAdmin:
     """Represents a delegated administrator in the organization."""
 

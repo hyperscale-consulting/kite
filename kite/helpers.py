@@ -8,7 +8,7 @@ from rich.tree import Tree
 from typing import Optional, Dict, List, Any, Set, Tuple, Callable
 from dataclasses import dataclass
 
-from . import ui
+from . import ui, sts
 from kite.config import Config
 from kite.data import (
     get_organization,
@@ -167,24 +167,7 @@ def assume_role(account_id: str) -> boto3.Session:
         ClickException: If role assumption fails.
     """
     config = Config.get()
-    role_arn = f"arn:aws:iam::{account_id}:role/{config.role_name}"
-
-    try:
-        sts_client = boto3.client("sts")
-
-        assumed_role = sts_client.assume_role(
-            RoleArn=role_arn,
-            RoleSessionName="KiteAssessment",
-            ExternalId=config.external_id
-        )
-
-        return boto3.Session(
-            aws_access_key_id=assumed_role["Credentials"]["AccessKeyId"],
-            aws_secret_access_key=assumed_role["Credentials"]["SecretAccessKey"],
-            aws_session_token=assumed_role["Credentials"]["SessionToken"],
-        )
-    except Exception as e:
-        raise click.ClickException(f"Failed to assume role: {str(e)}")
+    return sts.assume_role(account_id, config.role_name, config.external_id)
 
 
 def assume_organizational_role() -> boto3.Session:

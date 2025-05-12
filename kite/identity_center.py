@@ -24,28 +24,3 @@ def list_identity_center_instances(session) -> list:
         instances.extend(page.get("Instances", []))
 
     return instances
-
-
-def is_identity_center_used(session) -> bool:
-    """
-    Check if AWS Identity Center is being used in the account.
-
-    Args:
-        session: The boto3 session to use.
-
-    Returns:
-        bool: True if Identity Center is being used, False otherwise.
-
-    Raises:
-        ClientError: If the API calls fail.
-    """
-    # First check if the account is part of an organization
-    orgs_client = session.client("organizations")
-    try:
-        orgs_client.describe_organization()
-    except ClientError as e:
-        if e.response["Error"]["Code"] == "AWSOrganizationsNotInUseException":
-            return False
-        raise
-
-    return len(list_identity_center_instances(session)) > 0

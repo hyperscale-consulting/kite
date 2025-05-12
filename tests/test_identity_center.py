@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import MagicMock
 from botocore.exceptions import ClientError
 
-from kite.identity_center import is_identity_center_used, list_identity_center_instances
+from kite.identity_center import list_identity_center_instances
 
 
 @pytest.fixture
@@ -90,65 +90,3 @@ def test_list_identity_center_instances_error(mock_session, mock_sso_admin_clien
     # Call the function and expect an exception
     with pytest.raises(ClientError):
         list_identity_center_instances(mock_session)
-
-
-def test_is_identity_center_enabled_success(mock_session, mock_sso_admin_client):
-    """Test successful check for Identity Center enabled."""
-    # Set up the mock SSO Admin client
-    mock_session.client.return_value = mock_sso_admin_client
-
-    # Mock the paginator and its pages
-    mock_paginator = MagicMock()
-    mock_sso_admin_client.get_paginator.return_value = mock_paginator
-    mock_paginator.paginate.return_value = [
-        {
-            "Instances": [
-                {
-                    "InstanceArn": "arn:aws:sso:::instance/ssoins-12345678901234567",
-                    "IdentityStoreId": "d-1234567890",
-                    "Status": "ACTIVE",
-                }
-            ]
-        }
-    ]
-
-    # Call the function
-    result = is_identity_center_used(mock_session)
-
-    # Verify the result
-    assert result is True
-
-
-def test_is_identity_center_enabled_no_instances(mock_session, mock_sso_admin_client):
-    """Test when no Identity Center instances are found."""
-    # Set up the mock SSO Admin client
-    mock_session.client.return_value = mock_sso_admin_client
-
-    # Mock the paginator with empty results
-    mock_paginator = MagicMock()
-    mock_sso_admin_client.get_paginator.return_value = mock_paginator
-    mock_paginator.paginate.return_value = [{"Instances": []}]
-
-    # Call the function
-    result = is_identity_center_used(mock_session)
-
-    # Verify the result
-    assert result is False
-
-
-def test_is_identity_center_enabled_error(mock_session, mock_sso_admin_client):
-    """Test error handling when checking Identity Center status."""
-    # Set up the mock SSO Admin client
-    mock_session.client.return_value = mock_sso_admin_client
-
-    # Mock the paginator to raise an error
-    mock_paginator = MagicMock()
-    mock_sso_admin_client.get_paginator.return_value = mock_paginator
-    mock_paginator.paginate.side_effect = ClientError(
-        {"Error": {"Code": "AccessDenied", "Message": "Access denied"}},
-        "list_instances",
-    )
-
-    # Call the function and expect an exception
-    with pytest.raises(ClientError):
-        is_identity_center_used(mock_session)

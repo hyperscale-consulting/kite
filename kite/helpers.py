@@ -10,14 +10,14 @@ from dataclasses import dataclass
 
 from . import ui
 from kite.config import Config
-from kite.data import get_organization
+from kite.data import (
+    get_organization,
+    get_identity_center_instances,
+)
 from kite.iam import (
     fetch_root_virtual_mfa_device,
-    list_saml_providers,
-    list_oidc_providers,
     get_password_policy as fetch_password_policy,
 )
-from kite.identity_center import is_identity_center_used
 from kite.identity_store import is_identity_store_used
 from kite.cognito import (
     list_user_pools,
@@ -339,18 +339,24 @@ def get_root_virtual_mfa_device(account_id: str) -> Optional[str]:
 
 def is_identity_center_enabled() -> bool:
     """
-    Lazily load and cache whether AWS Identity Center is being used.
+    Check if AWS Identity Center is enabled by checking the collected data.
+
+    This function checks if:
+    1. The account is part of an organization (using Organizations data)
+    2. There are any Identity Center instances (using Identity Center data)
 
     Returns:
-        bool: True if Identity Center is being used, False otherwise.
+        bool: True if Identity Center is enabled and in use, False otherwise.
 
-    Raises:
-        ClickException: If no account ID is available or role assumption fails.
     """
-    if not hasattr(is_identity_center_enabled, "_enabled"):
-        session = assume_organizational_role()
-        is_identity_center_enabled._enabled = is_identity_center_used(session)
-    return is_identity_center_enabled._enabled
+    # Get organization data to check if we're in an organization
+    org = get_organization()
+    if org is None:
+        return False
+
+    # Get Identity Center instances
+    instances = get_identity_center_instances()
+    return instances is not None and len(instances) > 0
 
 
 def get_password_policy(account_id: str) -> Optional[Dict[str, Any]]:

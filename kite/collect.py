@@ -389,8 +389,8 @@ def collect_ec2_instances() -> None:
     """
     Collect EC2 instances for all in-scope accounts and save them locally.
 
-    This function collects EC2 instance information from all accounts in scope and saves it
-    to the .kite/audit directory for later use by the audit checks.
+    This function collects EC2 instance information from all accounts in scope and
+    saves it to the .kite/audit directory for later use by the audit checks.
     """
     try:
         console.print("\n[bold blue]Gathering EC2 instances...[/]")
@@ -410,24 +410,18 @@ def collect_ec2_instances() -> None:
                 # Check EC2 instances in each region
                 for region in Config.get().active_regions:
                     try:
-                        ec2_client = session.client("ec2", region_name=region)
-                        paginator = ec2_client.get_paginator("describe_instances")
-
-                        # Iterate through all pages
-                        for page in paginator.paginate():
-                            for reservation in page.get("Reservations", []):
-                                for instance in reservation.get("Instances", []):
-                                    if instance.get("State", {}).get("Name") != "terminated":
-                                        instances.append({
-                                            "InstanceId": instance.get("InstanceId"),
-                                            "AccountId": account_id,
-                                            "Region": region,
-                                            "State": instance.get("State", {}).get("Name"),
-                                        })
+                        # Get instances using the EC2 module
+                        for instance in get_running_instances(session, region):
+                            instances.append({
+                                "InstanceId": instance.instance_id,
+                                "AccountId": account_id,
+                                "Region": instance.region,
+                                "State": instance.state,
+                            })
                     except Exception as e:
                         console.print(
-                            f"    [red]✗ Error fetching EC2 instances in region {region}: "
-                            f"{str(e)}[/]"
+                            f"    [red]✗ Error fetching EC2 instances in region "
+                            f"{region}: {str(e)}[/]"
                         )
                         continue
 
@@ -440,8 +434,8 @@ def collect_ec2_instances() -> None:
 
             except Exception as e:
                 console.print(
-                    f"  [red]✗ Error fetching EC2 instances for account {account_id}: "
-                    f"{str(e)}[/]"
+                    f"  [red]✗ Error fetching EC2 instances for account "
+                    f"{account_id}: {str(e)}[/]"
                 )
 
         console.print("[bold green]✓ Completed gathering EC2 instances[/]")

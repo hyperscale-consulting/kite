@@ -17,30 +17,34 @@ class EC2Instance:
 
 def get_running_instances(session, region: str) -> List[EC2Instance]:
     """
-    Get all running EC2 instances in a region.
+    Get all non-terminated EC2 instances in a region.
 
     Args:
         session: The boto3 session to use
         region: The AWS region to check
 
     Returns:
-        List of running EC2 instances
+        List of non-terminated EC2 instances
     """
     ec2_client = session.client("ec2", region_name=region)
     instances = []
 
-    response = ec2_client.describe_instances()
-    for reservation in response.get("Reservations", []):
-        for instance in reservation.get("Instances", []):
-            if instance.get("State", {}).get("Name") == "running":
-                instances.append(
-                    EC2Instance(
-                        instance_id=instance.get("InstanceId"),
-                        instance_type=instance.get("InstanceType"),
-                        state=instance.get("State", {}).get("Name"),
-                        region=region,
+    # Use paginator for describe_instances
+    paginator = ec2_client.get_paginator("describe_instances")
+
+    # Iterate through all pages
+    for page in paginator.paginate():
+        for reservation in page.get("Reservations", []):
+            for instance in reservation.get("Instances", []):
+                if instance.get("State", {}).get("Name") != "terminated":
+                    instances.append(
+                        EC2Instance(
+                            instance_id=instance.get("InstanceId"),
+                            instance_type=instance.get("InstanceType"),
+                            state=instance.get("State", {}).get("Name"),
+                            region=region,
+                        )
                     )
-                )
 
     return instances
 

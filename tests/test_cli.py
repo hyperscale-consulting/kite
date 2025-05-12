@@ -29,9 +29,19 @@ def config(tmp_path: Path):
 @pytest.fixture
 def runner():
     runner = CliRunner()
-    yield runner
+    with runner.isolated_filesystem():
+        yield runner
 
 
 def test_run_list_checks(runner, config):
     result = runner.invoke(main, ["list-checks"])
     assert result.exit_code == 0
+
+
+def test_run_start_without_collect(runner, config):
+    result = runner.invoke(main, ["start", "--config", str(config)])
+    assert result.exit_code == 1
+    assert (
+        "Data collection has not been run. Please run 'kite collect' first."
+        in result.output
+    )

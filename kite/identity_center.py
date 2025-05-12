@@ -3,6 +3,29 @@
 from botocore.exceptions import ClientError
 
 
+def list_identity_center_instances(session) -> list:
+    """
+    List all instances of Identity Center.
+
+    Args:
+        session: The boto3 session to use.
+
+    Returns:
+        list: List of Identity Center instances.
+
+    Raises:
+        ClientError: If the API call fails.
+    """
+    sso_client = session.client("sso-admin")
+    instances = []
+    paginator = sso_client.get_paginator("list_instances")
+
+    for page in paginator.paginate():
+        instances.extend(page.get("Instances", []))
+
+    return instances
+
+
 def is_identity_center_used(session) -> bool:
     """
     Check if AWS Identity Center is being used in the account.
@@ -14,17 +37,15 @@ def is_identity_center_used(session) -> bool:
         bool: True if Identity Center is being used, False otherwise.
 
     Raises:
-        ClientError: If the Identity Center API call fails.
+        ClientError: If the API calls fail.
     """
-    sso_client = session.client("sso-admin")
-
+    # First check if the account is part of an organization
+    orgs_client = session.client("organizations")
     try:
-        # List all instances of Identity Center
-        response = sso_client.list_instances()
-        return len(response.get("Instances", [])) > 0
+        orgs_client.describe_organization()
     except ClientError as e:
-        # If the error is that Identity Center is not enabled, return False
-        if e.response["Error"]["Code"] == "AccessDeniedException":
+        if e.response["Error"]["Code"] == "AWSOrganizationsNotInUseException":
             return False
-        # For any other error, raise the exception
         raise
+
+    return len(list_identity_center_instances(session)) > 0

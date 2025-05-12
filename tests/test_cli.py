@@ -88,6 +88,7 @@ def valid_config(tmp_path: Path) -> Generator[Path, None, None]:
         "active_regions": ["us-east-1", "us-west-2", "eu-west-2"],
         "role_name": "KiteAssessmentRole",
         "prowler_output_dir": "/tmp/prowler",
+        "external_id": "123456",
     }
     config_path = tmp_path / "kite.yaml"
     with open(config_path, "w") as f:
@@ -105,6 +106,7 @@ def valid_config_without_account_ids(tmp_path: Path) -> Generator[Path, None, No
         "active_regions": ["us-east-1", "us-west-2", "eu-west-2"],
         "role_name": "KiteAssessmentRole",
         "prowler_output_dir": "/tmp/prowler",
+        "external_id": "123456",
     }
     config_path = tmp_path / "kite.yaml"
     with open(config_path, "w") as f:
@@ -122,6 +124,7 @@ def valid_config_with_account_ids_only(tmp_path: Path) -> Generator[Path, None, 
         "active_regions": ["us-east-1", "us-west-2", "eu-west-2"],
         "role_name": "KiteAssessmentRole",
         "prowler_output_dir": "/tmp/prowler",
+        "external_id": "123456",
     }
     config_path = tmp_path / "kite.yaml"
     with open(config_path, "w") as f:

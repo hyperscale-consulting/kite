@@ -171,16 +171,12 @@ def assume_role(account_id: str) -> boto3.Session:
 
     try:
         sts_client = boto3.client("sts")
-        assume_role_params = {
-            "RoleArn": role_arn,
-            "RoleSessionName": "KiteAssessment"
-        }
 
-        # Add external ID if configured
-        if config.external_id:
-            assume_role_params["ExternalId"] = config.external_id
-
-        assumed_role = sts_client.assume_role(**assume_role_params)
+        assumed_role = sts_client.assume_role(
+            RoleArn=role_arn,
+            RoleSessionName="KiteAssessment",
+            ExternalId=config.external_id
+        )
 
         return boto3.Session(
             aws_access_key_id=assumed_role["Credentials"]["AccessKeyId"],

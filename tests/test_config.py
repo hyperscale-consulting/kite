@@ -26,6 +26,7 @@ def valid_config(tmp_path: Path) -> Generator[Path, None, None]:
         "active_regions": ["us-east-1", "us-west-2", "eu-west-2"],
         "role_name": "KiteAssessmentRole",
         "prowler_output_dir": "/tmp/prowler",
+        "external_id": "123456",
     }
     config_path = tmp_path / "kite.yaml"
     with open(config_path, "w") as f:
@@ -39,7 +40,7 @@ def valid_config(tmp_path: Path) -> Generator[Path, None, None]:
 def invalid_config(tmp_path: Path) -> Generator[Path, None, None]:
     """Create a temporary invalid config file."""
     config = {
-        # Missing management_account_id and active_regions
+        # Missing management_account_id, active_regions, and external_id
         "some_other_field": "value",
         "role_name": "KiteAssessmentRole",
         "prowler_output_dir": "/tmp/prowler",
@@ -82,6 +83,7 @@ def valid_config_without_account_ids(tmp_path: Path) -> Generator[Path, None, No
         "active_regions": ["us-east-1", "us-west-2", "eu-west-2"],
         "role_name": "KiteAssessmentRole",
         "prowler_output_dir": "/tmp/prowler",
+        "external_id": "123456",
     }
     config_path = tmp_path / "kite_no_accounts.yaml"
     with open(config_path, "w") as f:
@@ -99,6 +101,7 @@ def valid_config_with_account_ids_only(tmp_path: Path) -> Generator[Path, None, 
         "active_regions": ["us-east-1", "us-west-2", "eu-west-2"],
         "role_name": "KiteAssessmentRole",
         "prowler_output_dir": "/tmp/prowler",
+        "external_id": "123456",
     }
     config_path = tmp_path / "kite_account_ids.yaml"
     with open(config_path, "w") as f:
@@ -115,6 +118,7 @@ def invalid_config_missing_both(tmp_path: Path) -> Generator[Path, None, None]:
         "active_regions": ["us-east-1", "us-west-2", "eu-west-2"],
         "role_name": "KiteAssessmentRole",
         "prowler_output_dir": "/tmp/prowler",
+        "external_id": "123456",
     }
     config_path = tmp_path / "invalid_kite.yaml"
     with open(config_path, "w") as f:

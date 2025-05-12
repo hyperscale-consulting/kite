@@ -20,7 +20,7 @@ class Config:
     active_regions: List[str]
     role_name: str
     prowler_output_dir: str
-    external_id: Optional[str]
+    external_id: str
     data_dir: str = ".kite/audit"
 
     # Class variable to hold the singleton instance
@@ -29,7 +29,7 @@ class Config:
     @classmethod
     def create(cls, management_account_id: str, account_ids: List[str],
                active_regions: List[str], role_name: str, prowler_output_dir: str,
-               external_id: Optional[str], data_dir: str):
+               external_id: str, data_dir: str):
         cls._instance = cls(
             management_account_id=management_account_id,
             account_ids=account_ids,
@@ -72,7 +72,8 @@ class Config:
                 data = yaml.safe_load(f) or {}
 
             # Check for required fields
-            required_fields = ["active_regions", "role_name", "prowler_output_dir"]
+            required_fields = ["active_regions", "role_name", "prowler_output_dir",
+                               "external_id"]
             missing_fields = [field for field in required_fields if not data.get(field)]
 
             # Check account field requirements
@@ -95,7 +96,7 @@ class Config:
                 active_regions=data["active_regions"],
                 role_name=data["role_name"],
                 prowler_output_dir=data["prowler_output_dir"],
-                external_id=data.get("external_id"),
+                external_id=data["external_id"],
                 data_dir=data.get("data_dir", ".kite/audit"),
             )
             return cls._instance

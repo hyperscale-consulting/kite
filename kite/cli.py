@@ -331,11 +331,15 @@ def configure():
     ).strip() or "KiteAssessmentRole"
 
     # Ask for the external ID
-    external_id = Prompt.ask(
-        "External ID (optional)",
-        default="",
-        show_default=False,
-    ).strip() or None
+    while True:
+        external_id = Prompt.ask(
+            "External ID",
+            show_default=False,
+        ).strip()
+        if external_id:
+            break
+        else:
+            console.print("[yellow]External ID is required[/yellow]")
 
     # Ask for the prowler output directory
     prowler_output_dir = Prompt.ask(

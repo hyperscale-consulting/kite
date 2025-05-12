@@ -411,13 +411,7 @@ def collect_ec2_instances() -> None:
                 for region in Config.get().active_regions:
                     try:
                         # Get instances using the EC2 module
-                        for instance in get_running_instances(session, region):
-                            instances.append({
-                                "InstanceId": instance.instance_id,
-                                "AccountId": account_id,
-                                "Region": instance.region,
-                                "State": instance.state,
-                            })
+                        instances.extend(get_running_instances(session, region))
                     except Exception as e:
                         console.print(
                             f"    [red]✗ Error fetching EC2 instances in region "

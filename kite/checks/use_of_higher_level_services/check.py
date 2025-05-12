@@ -1,6 +1,6 @@
 """Check for use of higher-level services."""
 
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.data import get_ec2_instances
@@ -41,17 +41,16 @@ def check_use_of_higher_level_services() -> Dict[str, Any]:
             },
         }
 
-    # Initialize list to store EC2 instances
-    ec2_instances: List[Dict[str, Any]] = []
+    ec2_instances_by_account = {}
 
     # Get EC2 instances for each account from collected data
     for account_id in account_ids:
         instances = get_ec2_instances(account_id)
         if instances:
-            ec2_instances.extend(instances)
+            ec2_instances_by_account[account_id] = instances
 
     # If no EC2 instances found, automatically pass
-    if not ec2_instances:
+    if not ec2_instances_by_account:
         return {
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
@@ -76,12 +75,13 @@ def check_use_of_higher_level_services() -> Dict[str, Any]:
     )
 
     # Add EC2 instance details to message
-    for instance in ec2_instances:
-        message += (
-            f"- Instance {instance['InstanceId']} in account "
-            f"{instance['AccountId']} ({instance['Region']}) - "
-            f"State: {instance['State']}\n"
-        )
+    for account_id, instances in ec2_instances_by_account.items():
+        for instance in instances:
+            message += (
+                f"- Instance {instance.instance_id} in account "
+                f"{account_id} ({instance.region}) - "
+                f"State: {instance.state}\n"
+            )
 
     # Use manual_check to get the user's response
     return manual_check(

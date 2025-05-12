@@ -14,6 +14,11 @@ class EC2Instance:
     state: str
     region: str
 
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "EC2Instance":
+        """Create an EC2Instance from a dictionary."""
+        return cls(**data)
+
 
 def get_running_instances(session, region: str) -> List[EC2Instance]:
     """

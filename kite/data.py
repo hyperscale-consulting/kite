@@ -7,6 +7,7 @@ from typing import Dict, Any, Optional, List
 
 from kite.config import Config
 from kite.models import Organization, DelegatedAdmin, WorkloadResources
+from kite.ec2 import EC2Instance
 
 
 def _save_data(
@@ -248,14 +249,15 @@ def get_identity_center_instances() -> Optional[List[Dict[str, Any]]]:
     return data.get("instances", [])
 
 
-def save_ec2_instances(account_id: str, instances: List[Dict[str, Any]]) -> None:
+def save_ec2_instances(account_id: str, instances: List[EC2Instance]) -> None:
     """Save EC2 instances for an account.
 
     Args:
         account_id: The AWS account ID to save the instances for.
         instances: The list of EC2 instances to save.
     """
-    _save_data({"instances": instances}, "ec2_instances", account_id)
+    _save_data([asdict(instance) for instance in instances],
+               "ec2_instances", account_id)
 
 
 def get_ec2_instances(account_id: str) -> Optional[List[Dict[str, Any]]]:
@@ -270,4 +272,4 @@ def get_ec2_instances(account_id: str) -> Optional[List[Dict[str, Any]]]:
     data = _load_data("ec2_instances", account_id)
     if data is None:
         return None
-    return data.get("instances", [])
+    return [EC2Instance.from_dict(instance) for instance in data]

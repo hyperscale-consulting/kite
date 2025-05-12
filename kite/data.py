@@ -246,3 +246,28 @@ def get_identity_center_instances() -> Optional[List[Dict[str, Any]]]:
     if data is None:
         return None
     return data.get("instances", [])
+
+
+def save_ec2_instances(account_id: str, instances: List[Dict[str, Any]]) -> None:
+    """Save EC2 instances for an account.
+
+    Args:
+        account_id: The AWS account ID to save the instances for.
+        instances: The list of EC2 instances to save.
+    """
+    _save_data({"instances": instances}, "ec2_instances", account_id)
+
+
+def get_ec2_instances(account_id: str) -> Optional[List[Dict[str, Any]]]:
+    """Get EC2 instances for an account.
+
+    Args:
+        account_id: The AWS account ID to get the instances for.
+
+    Returns:
+        The list of EC2 instances, or None if not found.
+    """
+    data = _load_data("ec2_instances", account_id)
+    if data is None:
+        return None
+    return data.get("instances", [])

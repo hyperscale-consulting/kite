@@ -12,7 +12,11 @@ from kite.iam import (
     list_saml_providers,
     list_oidc_providers,
 )
-from kite.helpers import assume_organizational_role, get_account_ids_in_scope
+from kite.helpers import (
+    assume_organizational_role,
+    get_account_ids_in_scope,
+    assume_role,
+)
 from kite.data import (
     save_organization,
     save_delegated_admins,
@@ -23,9 +27,9 @@ from kite.data import (
     save_saml_providers,
     save_oidc_providers,
     save_identity_center_instances,
+    save_ec2_instances,
 )
 from kite.config import Config
-from kite.helpers import assume_role
 from kite.models import WorkloadResources, WorkloadResource
 from kite.ec2 import get_running_instances
 from kite.ecs import get_clusters as get_ecs_clusters
@@ -381,6 +385,71 @@ def collect_identity_center_instances() -> None:
         raise Exception(f"Error gathering Identity Center instances: {str(e)}")
 
 
+def collect_ec2_instances() -> None:
+    """
+    Collect EC2 instances for all in-scope accounts and save them locally.
+
+    This function collects EC2 instance information from all accounts in scope and saves it
+    to the .kite/audit directory for later use by the audit checks.
+    """
+    try:
+        console.print("\n[bold blue]Gathering EC2 instances...[/]")
+
+        # Get all account IDs in scope
+        account_ids = get_account_ids_in_scope()
+
+        # Collect EC2 instances for each account
+        for account_id in account_ids:
+            try:
+                console.print(
+                    f"  [yellow]Fetching EC2 instances for account {account_id}...[/]"
+                )
+                session = assume_role(account_id)
+                instances = []
+
+                # Check EC2 instances in each region
+                for region in Config.get().active_regions:
+                    try:
+                        ec2_client = session.client("ec2", region_name=region)
+                        paginator = ec2_client.get_paginator("describe_instances")
+
+                        # Iterate through all pages
+                        for page in paginator.paginate():
+                            for reservation in page.get("Reservations", []):
+                                for instance in reservation.get("Instances", []):
+                                    if instance.get("State", {}).get("Name") != "terminated":
+                                        instances.append({
+                                            "InstanceId": instance.get("InstanceId"),
+                                            "AccountId": account_id,
+                                            "Region": region,
+                                            "State": instance.get("State", {}).get("Name"),
+                                        })
+                    except Exception as e:
+                        console.print(
+                            f"    [red]✗ Error fetching EC2 instances in region {region}: "
+                            f"{str(e)}[/]"
+                        )
+                        continue
+
+                # Save the instances for this account
+                save_ec2_instances(account_id, instances)
+                console.print(
+                    f"  [green]✓ Saved {len(instances)} EC2 instances for account "
+                    f"{account_id}[/]"
+                )
+
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching EC2 instances for account {account_id}: "
+                    f"{str(e)}[/]"
+                )
+
+        console.print("[bold green]✓ Completed gathering EC2 instances[/]")
+
+    except Exception as e:
+        raise Exception(f"Error gathering EC2 instances: {str(e)}")
+
+
 def collect_data() -> None:
     console.print("\n[bold blue]Gathering AWS data...[/]")
     collect_organization_data()
@@ -389,4 +458,5 @@ def collect_data() -> None:
     collect_account_summaries()
     collect_identity_providers()
     collect_identity_center_instances()
+    collect_ec2_instances()
     console.print("\n[bold green]✓ Data collection complete![/]")

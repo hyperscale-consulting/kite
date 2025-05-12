@@ -1,6 +1,6 @@
 """Tests for the Use of Higher-Level Services check."""
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 import pytest
 

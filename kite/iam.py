@@ -140,11 +140,13 @@ def fetch_virtual_mfa_devices(session) -> List[Dict[str, Any]]:
         ClientError: If the IAM API call fails.
     """
     iam_client = session.client("iam")
+    virtual_mfa_devices = []
+    paginator = iam_client.get_paginator('list_virtual_mfa_devices')
 
-    response = iam_client.list_virtual_mfa_devices()
+    for page in paginator.paginate():
+        virtual_mfa_devices.extend(page.get("VirtualMFADevices", []))
 
-    # Iterate through virtual MFA devices looking for root user
-    return response.get("VirtualMFADevices", [])
+    return virtual_mfa_devices
 
 
 def list_saml_providers(session) -> List[Dict[str, Any]]:

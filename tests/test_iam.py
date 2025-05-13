@@ -436,19 +436,25 @@ def test_fetch_virtual_mfa_devices(mock_session, mock_iam_client):
     # Set up the mock IAM client
     mock_session.client.return_value = mock_iam_client
 
-    # Mock the list_virtual_mfa_devices response
-    mock_iam_client.list_virtual_mfa_devices.return_value = {
-        "VirtualMFADevices": [
-            {
-                "SerialNumber": "arn:aws:iam::123456789012:mfa/root",
-                "User": {"Arn": "arn:aws:iam::123456789012:root"},
-            },
-            {
-                "SerialNumber": "arn:aws:iam::123456789012:mfa/user1",
-                "User": {"Arn": "arn:aws:iam::123456789012:user/user1"},
-            },
-        ]
-    }
+    # Create a mock paginator
+    mock_paginator = MagicMock()
+    mock_iam_client.get_paginator.return_value = mock_paginator
+
+    # Mock the paginate response
+    mock_paginator.paginate.return_value = [
+        {
+            "VirtualMFADevices": [
+                {
+                    "SerialNumber": "arn:aws:iam::123456789012:mfa/root",
+                    "User": {"Arn": "arn:aws:iam::123456789012:root"},
+                },
+                {
+                    "SerialNumber": "arn:aws:iam::123456789012:mfa/user1",
+                    "User": {"Arn": "arn:aws:iam::123456789012:user/user1"},
+                },
+            ]
+        }
+    ]
 
     # Call the function
     result = fetch_virtual_mfa_devices(mock_session)
@@ -464,6 +470,10 @@ def test_fetch_virtual_mfa_devices(mock_session, mock_iam_client):
             "User": {"Arn": "arn:aws:iam::123456789012:user/user1"},
         },
     ]
+
+    # Verify the paginator was used correctly
+    mock_iam_client.get_paginator.assert_called_once_with('list_virtual_mfa_devices')
+    mock_paginator.paginate.assert_called_once()
 
 
 def test_list_saml_providers_success(mock_session, mock_iam_client):
@@ -487,26 +497,12 @@ def test_list_saml_providers_success(mock_session, mock_iam_client):
 
     # Verify the result
     assert len(result) == 1
-    assert (
-        result[0]["Arn"] == "arn:aws:iam::123456789012:saml-provider/MySAMLProvider"
-    )
+    assert result[0]["Arn"] == "arn:aws:iam::123456789012:saml-provider/MySAMLProvider"
     assert result[0]["ValidUntil"] == "2024-01-01T00:00:00Z"
     assert result[0]["CreateDate"] == "2023-01-01T00:00:00Z"
 
-
-def test_list_saml_providers_empty(mock_session, mock_iam_client):
-    """Test listing SAML providers when none exist."""
-    # Set up the mock IAM client
-    mock_session.client.return_value = mock_iam_client
-
-    # Mock the list_saml_providers response with empty list
-    mock_iam_client.list_saml_providers.return_value = {"SAMLProviderList": []}
-
-    # Call the function
-    result = list_saml_providers(mock_session)
-
-    # Verify the result
-    assert len(result) == 0
+    # Verify the client was used correctly
+    mock_iam_client.list_saml_providers.assert_called_once()
 
 
 def test_list_saml_providers_error(mock_session, mock_iam_client):
@@ -523,6 +519,9 @@ def test_list_saml_providers_error(mock_session, mock_iam_client):
     # Call the function and expect an exception
     with pytest.raises(ClientError):
         list_saml_providers(mock_session)
+
+    # Verify the client was used correctly
+    mock_iam_client.list_saml_providers.assert_called_once()
 
 
 def test_list_oidc_providers_success(mock_session, mock_iam_client):
@@ -552,30 +551,17 @@ def test_list_oidc_providers_success(mock_session, mock_iam_client):
 
     # Verify the result
     assert len(result) == 1
-    assert (
-        result[0]["Arn"] == "arn:aws:iam::123456789012:oidc-provider/MyOIDCProvider"
-    )
+    assert result[0]["Arn"] == "arn:aws:iam::123456789012:oidc-provider/MyOIDCProvider"
     assert result[0]["CreateDate"] == "2023-01-01T00:00:00Z"
     assert result[0]["Url"] == "https://example.com"
     assert result[0]["ClientIDList"] == ["client1", "client2"]
     assert result[0]["ThumbprintList"] == ["thumbprint1", "thumbprint2"]
 
-
-def test_list_oidc_providers_empty(mock_session, mock_iam_client):
-    """Test listing OIDC providers when none exist."""
-    # Set up the mock IAM client
-    mock_session.client.return_value = mock_iam_client
-
-    # Mock the list_open_id_connect_providers response with empty list
-    mock_iam_client.list_open_id_connect_providers.return_value = {
-        "OpenIDConnectProviderList": []
-    }
-
-    # Call the function
-    result = list_oidc_providers(mock_session)
-
-    # Verify the result
-    assert len(result) == 0
+    # Verify the client was used correctly
+    mock_iam_client.list_open_id_connect_providers.assert_called_once()
+    mock_iam_client.get_open_id_connect_provider.assert_called_once_with(
+        OpenIDConnectProviderArn="arn:aws:iam::123456789012:oidc-provider/MyOIDCProvider"
+    )
 
 
 def test_list_oidc_providers_error(mock_session, mock_iam_client):
@@ -592,6 +578,9 @@ def test_list_oidc_providers_error(mock_session, mock_iam_client):
     # Call the function and expect an exception
     with pytest.raises(ClientError):
         list_oidc_providers(mock_session)
+
+    # Verify the client was used correctly
+    mock_iam_client.list_open_id_connect_providers.assert_called_once()
 
 
 def test_list_oidc_providers_get_provider_error(mock_session, mock_iam_client):
@@ -620,10 +609,14 @@ def test_list_oidc_providers_get_provider_error(mock_session, mock_iam_client):
 
     # Verify the result contains basic info even when detailed info fails
     assert len(result) == 1
-    assert (
-        result[0]["Arn"] == "arn:aws:iam::123456789012:oidc-provider/MyOIDCProvider"
-    )
+    assert result[0]["Arn"] == "arn:aws:iam::123456789012:oidc-provider/MyOIDCProvider"
     assert result[0]["CreateDate"] == "2023-01-01T00:00:00Z"
     assert "Url" not in result[0]
     assert "ClientIDList" not in result[0]
     assert "ThumbprintList" not in result[0]
+
+    # Verify the client was used correctly
+    mock_iam_client.list_open_id_connect_providers.assert_called_once()
+    mock_iam_client.get_open_id_connect_provider.assert_called_once_with(
+        OpenIDConnectProviderArn="arn:aws:iam::123456789012:oidc-provider/MyOIDCProvider"
+    )

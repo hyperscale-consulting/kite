@@ -6,7 +6,7 @@ from botocore.exceptions import ClientError
 
 from kite.iam import (
     fetch_credentials_report,
-    fetch_root_virtual_mfa_device,
+    fetch_virtual_mfa_devices,
     list_saml_providers,
     list_oidc_providers,
 )
@@ -431,7 +431,7 @@ def test_fetch_account_summary_error(mock_session, mock_iam_client):
     assert excinfo.value.response["Error"]["Code"] == "AccessDenied"
 
 
-def test_fetch_root_virtual_mfa_device_success(mock_session, mock_iam_client):
+def test_fetch_virtual_mfa_devices(mock_session, mock_iam_client):
     """Test successful fetch of root virtual MFA device."""
     # Set up the mock IAM client
     mock_session.client.return_value = mock_iam_client
@@ -451,70 +451,19 @@ def test_fetch_root_virtual_mfa_device_success(mock_session, mock_iam_client):
     }
 
     # Call the function
-    result = fetch_root_virtual_mfa_device(mock_session)
+    result = fetch_virtual_mfa_devices(mock_session)
 
     # Verify the result
-    assert result == "arn:aws:iam::123456789012:mfa/root"
-    mock_iam_client.list_virtual_mfa_devices.assert_called_once()
-
-
-def test_fetch_root_virtual_mfa_device_not_found(mock_session, mock_iam_client):
-    """Test when root virtual MFA device is not found."""
-    # Set up the mock IAM client
-    mock_session.client.return_value = mock_iam_client
-
-    # Mock the list_virtual_mfa_devices response with no root device
-    mock_iam_client.list_virtual_mfa_devices.return_value = {
-        "VirtualMFADevices": [
-            {
-                "SerialNumber": "arn:aws:iam::123456789012:mfa/user1",
-                "User": {"Arn": "arn:aws:iam::123456789012:user/user1"},
-            }
-        ]
-    }
-
-    # Call the function
-    result = fetch_root_virtual_mfa_device(mock_session)
-
-    # Verify the result
-    assert result is None
-    mock_iam_client.list_virtual_mfa_devices.assert_called_once()
-
-
-def test_fetch_root_virtual_mfa_device_empty_response(mock_session, mock_iam_client):
-    """Test when list_virtual_mfa_devices returns an empty response."""
-    # Set up the mock IAM client
-    mock_session.client.return_value = mock_iam_client
-
-    # Mock the list_virtual_mfa_devices response with empty list
-    mock_iam_client.list_virtual_mfa_devices.return_value = {"VirtualMFADevices": []}
-
-    # Call the function
-    result = fetch_root_virtual_mfa_device(mock_session)
-
-    # Verify the result
-    assert result is None
-    mock_iam_client.list_virtual_mfa_devices.assert_called_once()
-
-
-def test_fetch_root_virtual_mfa_device_error(mock_session, mock_iam_client):
-    """Test when list_virtual_mfa_devices raises an error."""
-    # Set up the mock IAM client
-    mock_session.client.return_value = mock_iam_client
-
-    # Mock the list_virtual_mfa_devices to raise an error
-    mock_iam_client.list_virtual_mfa_devices.side_effect = ClientError(
-        {"Error": {"Code": "AccessDenied", "Message": "Access Denied"}},
-        "list_virtual_mfa_devices",
-    )
-
-    # Call the function and expect it to raise the error
-    with pytest.raises(ClientError) as excinfo:
-        fetch_root_virtual_mfa_device(mock_session)
-
-    # Verify the error
-    assert excinfo.value.response["Error"]["Code"] == "AccessDenied"
-    mock_iam_client.list_virtual_mfa_devices.assert_called_once()
+    assert result == [
+        {
+            "SerialNumber": "arn:aws:iam::123456789012:mfa/root",
+            "User": {"Arn": "arn:aws:iam::123456789012:root"},
+        },
+        {
+            "SerialNumber": "arn:aws:iam::123456789012:mfa/user1",
+            "User": {"Arn": "arn:aws:iam::123456789012:user/user1"},
+        },
+    ]
 
 
 def test_list_saml_providers_success(mock_session, mock_iam_client):

@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+from pathlib import Path
 
 import pytest
 
@@ -25,8 +26,10 @@ def role_name():
 
 
 @pytest.fixture
-def prowler_output_dir():
-    return "tests/data/prowler/output"
+def prowler_output_dir(tmp_path: Path):
+    path = tmp_path / "prowler/output"
+    path.mkdir(parents=True, exist_ok=True)
+    yield path
 
 
 @pytest.fixture
@@ -47,7 +50,7 @@ def config(
         account_ids=None,
         active_regions=active_regions,
         role_name=role_name,
-        prowler_output_dir=prowler_output_dir,
+        prowler_output_dir=str(prowler_output_dir),
         data_dir=data_dir,
         external_id='123456',
     )

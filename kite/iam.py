@@ -123,35 +123,28 @@ def fetch_account_summary(session) -> Dict[str, Any]:
         raise
 
 
-def fetch_root_virtual_mfa_device(session) -> str:
+def fetch_virtual_mfa_devices(session) -> List[Dict[str, Any]]:
     """
-    Fetch the virtual MFA device for the root user.
+    Fetch all virtual MFA devices in the account.
 
     Args:
         session: The boto3 session to use.
 
     Returns:
-        The serial number of the root user's virtual MFA device, or None if not found.
+        List of dictionaries containing virtual MFA device information, including:
+        - SerialNumber: The serial number of the virtual MFA device
+        - User: The IAM user associated with the virtual MFA device
+        - EnableDate: The date and time when the virtual MFA device was enabled
 
     Raises:
         ClientError: If the IAM API call fails.
     """
     iam_client = session.client("iam")
 
-    try:
-        response = iam_client.list_virtual_mfa_devices()
+    response = iam_client.list_virtual_mfa_devices()
 
-        # Iterate through virtual MFA devices looking for root user
-        for device in response.get("VirtualMFADevices", []):
-            if "User" in device and "Arn" in device["User"]:
-                if "root" in device["User"]["Arn"]:
-                    return device.get("SerialNumber")
-
-        # No virtual MFA device found for root user
-        return None
-    except ClientError:
-        # If the API call fails, raise the exception
-        raise
+    # Iterate through virtual MFA devices looking for root user
+    return response.get("VirtualMFADevices", [])
 
 
 def list_saml_providers(session) -> List[Dict[str, Any]]:

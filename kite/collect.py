@@ -18,6 +18,7 @@ from . import (
     cloudfront,
     iam,
     identity_center,
+    identity_store,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -35,6 +36,8 @@ from kite.data import (
     save_oidc_providers,
     save_identity_center_instances,
     save_ec2_instances,
+    save_virtual_mfa_devices,
+    save_password_policy,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -370,6 +373,12 @@ def collect_identity_center_instances() -> None:
         # Collect Identity Center instances
         console.print("  [yellow]Fetching Identity Center instances...[/]")
         instances = identity_center.list_identity_center_instances(session)
+
+        for instance in instances:
+            instance["HasIdentityStoreUsers"] = identity_store.has_users(
+                session, instance["IdentityStoreId"]
+            )
+
         save_identity_center_instances(instances)
         console.print(f"  [green]✓ Saved {len(instances)} Identity Center instances[/]")
 
@@ -432,13 +441,44 @@ def collect_ec2_instances() -> None:
         raise Exception(f"Error gathering EC2 instances: {str(e)}")
 
 
+def collect_virtual_mfa_devices() -> None:
+    """
+    Collect virtual MFA devices for all in-scope accounts and save them locally.
+    """
+    console.print("\n[bold blue]Gathering virtual MFA devices...[/]")
+
+    for account_id in get_account_ids_in_scope():
+        # Get virtual MFA devices
+        session = assume_role(account_id)
+        mfa_devices = iam.fetch_virtual_mfa_devices(session)
+        save_virtual_mfa_devices(account_id, mfa_devices)
+
+    console.print("[bold green]✓ Completed gathering virtual MFA devices[/]")
+
+
+def collect_password_policies() -> None:
+    """
+    Collect password policies for all in-scope accounts and save them locally.
+    """
+    console.print("\n[bold blue]Gathering password policies...[/]")
+    for account_id in get_account_ids_in_scope():
+        # Get password policy
+        session = assume_role(account_id)
+        policy = iam.get_password_policy(session)
+        save_password_policy(account_id, policy)
+
+    console.print("[bold green]✓ Completed gathering password policies[/]")
+
+
 def collect_data() -> None:
     console.print("\n[bold blue]Gathering AWS data...[/]")
     collect_organization_data()
     collect_mgmt_account_workload_resources()
     collect_credentials_reports()
+    collect_virtual_mfa_devices()
     collect_account_summaries()
     collect_identity_providers()
     collect_identity_center_instances()
     collect_ec2_instances()
+    collect_password_policies()
     console.print("\n[bold green]✓ Data collection complete![/]")

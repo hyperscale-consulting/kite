@@ -314,3 +314,51 @@ def verify_collection_status() -> None:
             "External ID has changed since last data collection. "
             "Please run 'kite collect' again."
         )
+
+
+def save_virtual_mfa_devices(account_id: str, devices: List[Dict[str, Any]]) -> None:
+    """
+    Save virtual MFA devices for an account.
+
+    Args:
+        account_id: The AWS account ID.
+        devices: List of virtual MFA device information.
+    """
+    _save_data(devices, "virtual_mfa_devices", account_id)
+
+
+def get_virtual_mfa_devices(account_id: str) -> List[Dict[str, Any]]:
+    """
+    Get virtual MFA devices for an account.
+
+    Args:
+        account_id: The AWS account ID.
+
+    Returns:
+        List of virtual MFA device information.
+    """
+    return _load_data("virtual_mfa_devices", account_id)
+
+
+def save_password_policy(account_id: str, policy: Dict[str, Any]) -> None:
+    """
+    Save password policy for an account.
+
+    Args:
+        account_id: The AWS account ID to save the policy for.
+        policy: The password policy data to save.
+    """
+    _save_data(policy, "password_policy", account_id)
+
+
+def get_password_policy(account_id: str) -> Optional[Dict[str, Any]]:
+    """
+    Get password policy for an account.
+
+    Args:
+        account_id: The AWS account ID to get the policy for.
+
+    Returns:
+        The password policy data, or None if not found.
+    """
+    return _load_data("password_policy", account_id)

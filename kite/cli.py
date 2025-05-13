@@ -4,6 +4,7 @@ import yaml
 from datetime import datetime
 import os
 import shutil
+import logging
 
 import click
 from rich.console import Console
@@ -19,6 +20,7 @@ from kite.collect import collect_data
 from kite.organizations import fetch_account_ids
 from kite.data import save_collection_metadata, verify_collection_status
 
+logger = logging.getLogger(__name__)
 console = Console()
 
 
@@ -179,6 +181,7 @@ def start(config: str):
         )
 
     except Exception as e:
+        logger.error("Error during assessment: %s", e, exc_info=True)
         raise click.ClickException(f"Error during assessment: {str(e)}")
 
 

@@ -13,12 +13,9 @@ from kite.config import Config
 from kite.data import (
     get_organization,
     get_identity_center_instances,
+    get_virtual_mfa_devices,
+    get_password_policy as get_saved_password_policy,
 )
-from kite.iam import (
-    fetch_root_virtual_mfa_device,
-    get_password_policy as fetch_password_policy,
-)
-from kite.identity_store import is_identity_store_used
 from kite.cognito import (
     list_user_pools,
     fetch_cognito_user_pool,
@@ -288,8 +285,7 @@ def get_account_ids_in_scope() -> Set[str]:
 
 def get_root_virtual_mfa_device(account_id: str) -> Optional[str]:
     """
-    Lazily load and cache the virtual MFA device for the root user in the specified
-    account.
+    Get the virtual MFA device for the root user in the specified account.
 
     Args:
         account_id: The AWS account ID to check.
@@ -298,22 +294,20 @@ def get_root_virtual_mfa_device(account_id: str) -> Optional[str]:
         The serial number of the root user's virtual MFA device, or None if not found.
 
     Raises:
-        ClickException: If role assumption fails or the API call fails.
+        ClickException: If data collection hasn't been run.
     """
-    # Initialize the cache if it doesn't exist
-    if not hasattr(get_root_virtual_mfa_device, "_mfa_devices"):
-        get_root_virtual_mfa_device._mfa_devices = {}
+    # Get virtual MFA devices from data module
+    devices = get_virtual_mfa_devices(account_id)
+    if not devices:
+        return None
 
-    # Check if we already have the MFA device info for this account
-    if account_id not in get_root_virtual_mfa_device._mfa_devices:
-        # Assume role in the specified account
-        session = assume_role(account_id)
-        # Fetch and cache the MFA device info
-        get_root_virtual_mfa_device._mfa_devices[account_id] = (
-            fetch_root_virtual_mfa_device(session)
-        )
+    # Look for root user's virtual MFA device
+    for device in devices:
+        if "User" in device and "Arn" in device["User"]:
+            if "root" in device["User"]["Arn"]:
+                return device.get("SerialNumber")
 
-    return get_root_virtual_mfa_device._mfa_devices[account_id]
+    return None
 
 
 def is_identity_center_enabled() -> bool:
@@ -340,7 +334,7 @@ def is_identity_center_enabled() -> bool:
 
 def get_password_policy(account_id: str) -> Optional[Dict[str, Any]]:
     """
-    Lazily load and cache the IAM password policy for the specified account.
+    Get the IAM password policy for the specified account.
 
     Args:
         account_id: The AWS account ID to get the password policy for.
@@ -348,21 +342,8 @@ def get_password_policy(account_id: str) -> Optional[Dict[str, Any]]:
     Returns:
         Dict containing the password policy settings if one exists, None otherwise.
 
-    Raises:
-        ClickException: If role assumption fails or the API call fails.
     """
-    # Initialize the cache if it doesn't exist
-    if not hasattr(get_password_policy, "_policies"):
-        get_password_policy._policies = {}
-
-    # Check if we already have the policy for this account
-    if account_id not in get_password_policy._policies:
-        # Assume role in the specified account
-        session = assume_role(account_id)
-        # Fetch and cache the policy
-        get_password_policy._policies[account_id] = fetch_password_policy(session)
-
-    return get_password_policy._policies[account_id]
+    return get_saved_password_policy(account_id)
 
 
 def is_complex(policy: Optional[Dict[str, Any]]) -> bool:
@@ -396,18 +377,12 @@ def is_complex(policy: Optional[Dict[str, Any]]) -> bool:
 
 def is_identity_center_identity_store_used() -> bool:
     """
-    Lazily load and cache whether the Identity Center identity store is being used.
-
-    Returns:
-        bool: True if the identity store is being used, False otherwise.
-
-    Raises:
-        ClickException: If no account ID is available or role assumption fails.
+    Check if the Identity Center identity store is being used.
     """
-    if not hasattr(is_identity_center_identity_store_used, "_used"):
-        session = assume_organizational_role()
-        is_identity_center_identity_store_used._used = is_identity_store_used(session)
-    return is_identity_center_identity_store_used._used
+    return any(
+        instance["HasIdentityStoreUsers"]
+        for instance in get_identity_center_instances()
+    )
 
 
 def get_cognito_user_pools(account_id: str) -> List[Dict[str, Any]]:

@@ -1,7 +1,5 @@
 """Identity Center module for Kite."""
 
-from botocore.exceptions import ClientError
-
 
 def list_identity_center_instances(session) -> list:
     """

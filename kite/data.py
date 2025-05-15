@@ -523,3 +523,57 @@ def get_inline_policy_document(account_id: str, role_name: str, policy_name: str
         Dictionary containing the inline policy document, or empty dict.
     """
     return _load_data(f"inline_policy_{role_name}_{policy_name}", account_id) or {}
+
+
+def save_customer_managed_policies(account_id: str, policies: List[Dict[str, Any]]) -> None:
+    """
+    Save customer managed policies for an account.
+
+    Args:
+        account_id: The AWS account ID to save the policies for.
+        policies: The list of customer managed policies to save.
+    """
+    _save_data(policies, "customer_managed_policies", account_id)
+
+
+def get_customer_managed_policies(account_id: str) -> List[Dict[str, Any]]:
+    """
+    Get customer managed policies for an account.
+
+    Args:
+        account_id: The AWS account ID to get the policies for.
+
+    Returns:
+        List of dictionaries containing policy information, or empty list.
+    """
+    return _load_data("customer_managed_policies", account_id) or []
+
+
+def save_policy_document(account_id: str, policy_arn: str, policy_document: Dict[str, Any]) -> None:
+    """
+    Save a policy document for a customer managed policy.
+
+    Args:
+        account_id: The AWS account ID.
+        policy_arn: The ARN of the customer managed policy.
+        policy_document: The policy document to save.
+    """
+    # Convert the ARN to a safe string for file name
+    safe_arn = policy_arn.replace("/", "_").replace(":", "_")
+    _save_data(policy_document, f"policy_document_{safe_arn}", account_id)
+
+
+def get_policy_document(account_id: str, policy_arn: str) -> Dict[str, Any]:
+    """
+    Get a policy document for a customer managed policy.
+
+    Args:
+        account_id: The AWS account ID.
+        policy_arn: The ARN of the customer managed policy.
+
+    Returns:
+        Dictionary containing the policy document, or empty dict.
+    """
+    # Convert the ARN to a safe string for file name
+    safe_arn = policy_arn.replace("/", "_").replace(":", "_")
+    return _load_data(f"policy_document_{safe_arn}", account_id) or {}

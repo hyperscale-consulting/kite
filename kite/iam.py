@@ -386,3 +386,73 @@ def list_roles(session) -> List[Dict[str, Any]]:
             roles.append(role)
 
     return roles
+
+
+def list_customer_managed_policies(session) -> List[Dict[str, Any]]:
+    """
+    List all customer managed policies in the account.
+
+    Args:
+        session: The boto3 session to use.
+
+    Returns:
+        List of dictionaries containing policy information, including:
+        - PolicyName: The name of the policy
+        - PolicyId: The ID of the policy
+        - Arn: The Amazon Resource Name (ARN) of the policy
+        - Path: The path to the policy
+        - DefaultVersionId: The ID of the default version of the policy
+        - AttachmentCount: The number of entities (users, groups, roles) to which the policy is attached
+        - CreateDate: The date and time when the policy was created
+        - UpdateDate: The date and time when the policy was last updated
+        - Description: The description of the policy
+
+    Raises:
+        ClientError: If the IAM API call fails.
+    """
+    iam_client = session.client("iam")
+    policies = []
+    paginator = iam_client.get_paginator('list_policies')
+
+    # Only list customer managed policies (Scope=Local)
+    for page in paginator.paginate(Scope='Local'):
+        policies.extend(page.get("Policies", []))
+
+    return policies
+
+
+def get_policy_and_document(session, policy_arn: str) -> Dict[str, Any]:
+    """
+    Get policy details and the policy document for a customer managed policy.
+
+    Args:
+        session: The boto3 session to use.
+        policy_arn: The ARN of the customer managed policy.
+
+    Returns:
+        Dict containing the policy details and policy document.
+
+    Raises:
+        ClientError: If the IAM API call fails.
+    """
+    iam_client = session.client("iam")
+
+    # Get policy details, including the default version ID
+    policy_details = iam_client.get_policy(PolicyArn=policy_arn)
+    policy = policy_details.get("Policy", {})
+
+    # Get the policy document
+    version_id = policy.get("DefaultVersionId")
+    if version_id:
+        policy_version = iam_client.get_policy_version(
+            PolicyArn=policy_arn,
+            VersionId=version_id
+        )
+        policy_document = policy_version.get("PolicyVersion", {}).get("Document", {})
+    else:
+        policy_document = {}
+
+    return {
+        "PolicyDetails": policy,
+        "PolicyDocument": policy_document
+    }

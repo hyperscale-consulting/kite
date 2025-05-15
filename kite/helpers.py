@@ -20,6 +20,8 @@ from kite.data import (
     get_key_pairs as get_saved_key_pairs,
     get_secrets as get_saved_secrets,
     get_roles as get_saved_roles,
+    get_customer_managed_policies as get_saved_customer_managed_policies,
+    get_policy_document as get_saved_policy_document,
 )
 
 console = Console()
@@ -585,3 +587,36 @@ def get_account_roles(account_id: str) -> List[Dict[str, Any]]:
         ClickException: If data collection hasn't been run
     """
     return get_saved_roles(account_id)
+
+
+def get_customer_managed_policies(account_id: str) -> List[Dict[str, Any]]:
+    """
+    Get all customer managed policies in the specified account from saved data.
+
+    Args:
+        account_id: AWS account ID to check
+
+    Returns:
+        List of dictionaries containing policy information
+
+    Raises:
+        ClickException: If data collection hasn't been run
+    """
+    return get_saved_customer_managed_policies(account_id)
+
+
+def get_policy_document(account_id: str, policy_arn: str) -> Dict[str, Any]:
+    """
+    Get the policy document for a customer managed policy from saved data.
+
+    Args:
+        account_id: AWS account ID to check
+        policy_arn: The ARN of the customer managed policy
+
+    Returns:
+        Dictionary containing the policy document
+
+    Raises:
+        ClickException: If data collection hasn't been run
+    """
+    return get_saved_policy_document(account_id, policy_arn)

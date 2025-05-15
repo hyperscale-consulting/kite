@@ -47,6 +47,8 @@ from kite.data import (
     save_secrets,
     save_roles,
     save_inline_policy_document,
+    save_customer_managed_policies,
+    save_policy_document,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -676,6 +678,65 @@ def collect_roles() -> None:
     console.print("[bold green]✓ Completed gathering IAM roles with policies[/]")
 
 
+def collect_customer_managed_policies() -> None:
+    """
+    Collect customer managed policies for all in-scope accounts and save them locally.
+    Includes policy details and policy documents.
+    """
+    console.print("\n[bold blue]Gathering customer managed policies...[/]")
+
+    for account_id in get_account_ids_in_scope():
+        try:
+            # Assume role in the account
+            session = assume_role(account_id)
+
+            # Get customer managed policies
+            console.print(
+                f"  [yellow]Fetching customer managed policies for "
+                f"account {account_id}...[/]"
+            )
+            policies = iam.list_customer_managed_policies(session)
+
+            # Save customer managed policies
+            save_customer_managed_policies(account_id, policies)
+
+            # Collect and save policy documents separately
+            console.print(
+                f"  [yellow]Fetching policy documents for "
+                f"account {account_id}...[/]"
+            )
+            policy_document_count = 0
+
+            for policy in policies:
+                policy_arn = policy["Arn"]
+                try:
+                    policy_info = iam.get_policy_and_document(session, policy_arn)
+                    save_policy_document(
+                        account_id,
+                        policy_arn,
+                        policy_info["PolicyDocument"]
+                    )
+                    policy_document_count += 1
+                except Exception as e:
+                    console.print(
+                        f"  [red]✗ Error fetching policy document "
+                        f"for policy {policy['PolicyName']}: {str(e)}[/]"
+                    )
+
+            console.print(
+                f"  [green]✓ Saved {len(policies)} customer managed policies and "
+                f"{policy_document_count} policy documents for "
+                f"account {account_id}[/]"
+            )
+        except Exception as e:
+            console.print(
+                f"  [red]✗ Error fetching customer managed policies for account "
+                f"{account_id}: {str(e)}[/]"
+            )
+
+    console.print("[bold green]✓ Completed gathering customer managed policies[/]")
+
+
 def collect_data() -> None:
     console.print("\n[bold blue]Gathering AWS data...[/]")
     collect_organization_data()
@@ -691,4 +752,5 @@ def collect_data() -> None:
     collect_key_pairs()
     collect_secrets()
     collect_roles()
+    collect_customer_managed_policies()
     console.print("\n[bold green]✓ Data collection complete![/]")

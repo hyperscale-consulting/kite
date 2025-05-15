@@ -375,7 +375,11 @@ def save_cognito_user_pools(account_id: str, pools: List[Dict[str, Any]]) -> Non
     _save_data(pools, "cognito_user_pools", account_id)
 
 
-def save_cognito_user_pool(account_id: str, user_pool_id: str, pool_data: Dict[str, Any]) -> None:
+def save_cognito_user_pool(
+    account_id: str,
+    user_pool_id: str,
+    pool_data: Dict[str, Any]
+) -> None:
     """
     Save details for a specific Cognito user pool.
 
@@ -395,7 +399,7 @@ def get_cognito_user_pools(account_id: str) -> List[Dict[str, Any]]:
         account_id: The AWS account ID to get the pools for.
 
     Returns:
-        List of dictionaries containing user pool information, or empty list if not found.
+        List of dictionaries containing user pool information, or empty list.
     """
     return _load_data("cognito_user_pools", account_id) or []
 
@@ -412,3 +416,53 @@ def get_cognito_user_pool(account_id: str, user_pool_id: str) -> Dict[str, Any]:
         Dictionary containing the user pool information, or empty dict if not found.
     """
     return _load_data(f"cognito_user_pool_{user_pool_id}", account_id) or {}
+
+
+def save_key_pairs(account_id: str, key_pairs: List[Dict[str, Any]]) -> None:
+    """
+    Save EC2 key pairs for an account.
+
+    Args:
+        account_id: The AWS account ID to save the key pairs for.
+        key_pairs: The list of EC2 key pairs to save.
+    """
+    _save_data(key_pairs, "ec2_key_pairs", account_id)
+
+
+def get_key_pairs(account_id: str) -> List[Dict[str, Any]]:
+    """
+    Get EC2 key pairs for an account.
+
+    Args:
+        account_id: The AWS account ID to get the key pairs for.
+
+    Returns:
+        List of dictionaries containing key pair information, or empty list.
+    """
+    return _load_data("ec2_key_pairs", account_id) or []
+
+
+def save_secrets(account_id: str, region: str, secrets: List[Dict[str, Any]]) -> None:
+    """
+    Save Secrets Manager secrets for an account and region.
+
+    Args:
+        account_id: The AWS account ID to save the secrets for.
+        region: The AWS region to save the secrets for.
+        secrets: The list of secrets to save.
+    """
+    _save_data(secrets, f"secrets_{region}", account_id)
+
+
+def get_secrets(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """
+    Get Secrets Manager secrets for an account and region.
+
+    Args:
+        account_id: The AWS account ID to get the secrets for.
+        region: The AWS region to get the secrets for.
+
+    Returns:
+        List of dictionaries containing secret information, or empty list.
+    """
+    return _load_data(f"secrets_{region}", account_id) or []

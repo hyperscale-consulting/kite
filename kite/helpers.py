@@ -17,9 +17,9 @@ from kite.data import (
     get_password_policy as get_saved_password_policy,
     get_cognito_user_pools as get_saved_cognito_user_pools,
     get_cognito_user_pool as get_saved_cognito_user_pool,
+    get_key_pairs as get_saved_key_pairs,
+    get_secrets as get_saved_secrets,
 )
-from kite.ec2 import get_key_pairs
-from kite.secretsmanager import fetch_secrets, SecretDetails
 
 console = Console()
 
@@ -539,63 +539,32 @@ def get_prowler_output() -> Dict[str, List[ProwlerResult]]:
 
 def get_account_key_pairs(account_id: str) -> List[Dict[str, Any]]:
     """
-    Get all EC2 key pairs in the specified account.
+    Get all EC2 key pairs in the specified account from saved data.
 
     Args:
         account_id: AWS account ID to check
 
     Returns:
         List of dictionaries containing key pair information
+
+    Raises:
+        ClickException: If data collection hasn't been run
     """
-    # Initialize the cache if it doesn't exist
-    if not hasattr(get_account_key_pairs, "_key_pairs"):
-        get_account_key_pairs._key_pairs = {}
-
-    # Check if we already have the key pairs for this account
-    if account_id not in get_account_key_pairs._key_pairs:
-        try:
-            # Assume role in the specified account
-            session = assume_role(account_id)
-            # Fetch and cache the key pairs
-            get_account_key_pairs._key_pairs[account_id] = get_key_pairs(session)
-        except Exception as e:
-            raise click.ClickException(
-                f"Failed to get EC2 key pairs for account {account_id}: {str(e)}"
-            )
-
-    return get_account_key_pairs._key_pairs[account_id]
+    return get_saved_key_pairs(account_id)
 
 
-def get_secrets(account_id: str, region: str) -> List[SecretDetails]:
+def get_secrets(account_id: str, region: str) -> List[Dict[str, Any]]:
     """
-    Get all secrets from AWS Secrets Manager for a given account and region.
+    Get secrets from AWS Secrets Manager from saved data.
 
     Args:
         account_id: The AWS account ID to get secrets from.
         region: The AWS region to get secrets from.
 
     Returns:
-        List of SecretDetails objects containing secret details and resource policies.
+        List of dictionaries containing secret details and resource policies.
 
     Raises:
-        ClientError: If the Secrets Manager API calls fail.
+        ClickException: If data collection hasn't been run
     """
-    # Initialize the cache if it doesn't exist
-    if not hasattr(get_secrets, "_secrets"):
-        get_secrets._secrets = {}
-
-    # Check if we already have the secrets for this account and region
-    cache_key = f"{account_id}:{region}"
-    if cache_key not in get_secrets._secrets:
-        try:
-            # Assume role in the specified account
-            session = assume_role(account_id)
-            # Fetch and cache the secrets
-            get_secrets._secrets[cache_key] = fetch_secrets(session, region)
-        except Exception as e:
-            raise click.ClickException(
-                f"Failed to get secrets for account {account_id} in region {region}: "
-                f"{str(e)}"
-            )
-
-    return get_secrets._secrets[cache_key]
+    return get_saved_secrets(account_id, region)

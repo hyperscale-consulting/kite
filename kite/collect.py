@@ -1,6 +1,7 @@
 """Data collection module for Kite."""
 
 from rich.console import Console
+from dataclasses import asdict
 from . import (
     organizations,
     ec2,
@@ -20,6 +21,7 @@ from . import (
     identity_center,
     identity_store,
     cognito,
+    secretsmanager,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -41,6 +43,8 @@ from kite.data import (
     save_password_policy,
     save_cognito_user_pools,
     save_cognito_user_pool,
+    save_key_pairs,
+    save_secrets,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -513,6 +517,86 @@ def collect_cognito_user_pools() -> None:
             )
 
 
+def collect_key_pairs() -> None:
+    """
+    Collect EC2 key pairs for all in-scope accounts and save them locally.
+    """
+    console.print("\n[bold blue]Gathering EC2 key pairs...[/]")
+
+    for account_id in get_account_ids_in_scope():
+        try:
+            # Assume role in the account
+            session = assume_role(account_id)
+
+            # Get EC2 key pairs
+            console.print(
+                f"  [yellow]Fetching EC2 key pairs for account {account_id}...[/]"
+            )
+            key_pairs = ec2.get_key_pairs(session)
+
+            # Save key pairs
+            save_key_pairs(account_id, key_pairs)
+
+            console.print(
+                f"  [green]✓ Saved {len(key_pairs)} EC2 key pairs for account "
+                f"{account_id}[/]"
+            )
+        except Exception as e:
+            console.print(
+                f"  [red]✗ Error fetching EC2 key pairs for account "
+                f"{account_id}: {str(e)}[/]"
+            )
+
+    console.print("[bold green]✓ Completed gathering EC2 key pairs[/]")
+
+
+def collect_secrets() -> None:
+    """
+    Collect Secrets Manager secrets for all in-scope accounts and save them locally.
+    """
+    console.print("\n[bold blue]Gathering Secrets Manager secrets...[/]")
+
+    # Get all account IDs in scope
+    account_ids = get_account_ids_in_scope()
+
+    # Collect secrets for each account
+    for account_id in account_ids:
+        try:
+            # Assume role in the account
+            session = assume_role(account_id)
+
+            # Check secrets in each active region
+            for region in Config.get().active_regions:
+                try:
+                    console.print(
+                        f"  [yellow]Fetching secrets for account {account_id} "
+                        f"in region {region}...[/]"
+                    )
+                    secrets = secretsmanager.fetch_secrets(session, region)
+
+                    # Convert dataclass objects to dictionaries for JSON serialization
+                    secrets_dicts = [asdict(secret) for secret in secrets]
+
+                    # Save secrets for this region
+                    save_secrets(account_id, region, secrets_dicts)
+
+                    console.print(
+                        f"  [green]✓ Saved {len(secrets)} secrets for account "
+                        f"{account_id} in region {region}[/]"
+                    )
+                except Exception as e:
+                    console.print(
+                        f"  [red]✗ Error fetching secrets for account {account_id} "
+                        f"in region {region}: {str(e)}[/]"
+                    )
+        except Exception as e:
+            console.print(
+                f"  [red]✗ Error assuming role for account {account_id}: {str(e)}[/]"
+            )
+
+    console.print("[bold green]✓ Completed gathering Secrets Manager secrets[/]")
+
+
 def collect_data() -> None:
     console.print("\n[bold blue]Gathering AWS data...[/]")
     collect_organization_data()
@@ -525,4 +609,6 @@ def collect_data() -> None:
     collect_ec2_instances()
     collect_password_policies()
     collect_cognito_user_pools()
+    collect_key_pairs()
+    collect_secrets()
     console.print("\n[bold green]✓ Data collection complete![/]")

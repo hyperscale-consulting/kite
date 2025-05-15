@@ -55,6 +55,7 @@ from kite.checks import (
     check_identity_audit,
     check_employ_user_groups_and_attributes,
     check_define_access_requirements,
+    check_no_full_admin_policies,
 )
 
 # Define check themes and their associated checks
@@ -212,7 +213,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             "components"
         ),
         "checks": [
-
+            check_no_full_admin_policies,
         ],
     },
 }

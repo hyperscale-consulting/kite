@@ -116,6 +116,9 @@ from kite.checks.employ_user_groups_and_attributes.check import (
 from kite.checks.define_access_requirements.check import (
     check_define_access_requirements,
 )
+from kite.checks.no_full_admin_policies.check import (
+    check_no_full_admin_policies,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -170,4 +173,5 @@ __all__ = [
     "check_identity_audit",
     "check_employ_user_groups_and_attributes",
     "check_define_access_requirements",
+    "check_no_full_admin_policies",
 ]

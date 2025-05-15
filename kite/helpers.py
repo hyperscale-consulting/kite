@@ -19,6 +19,7 @@ from kite.data import (
     get_cognito_user_pool as get_saved_cognito_user_pool,
     get_key_pairs as get_saved_key_pairs,
     get_secrets as get_saved_secrets,
+    get_roles as get_saved_roles,
 )
 
 console = Console()
@@ -568,3 +569,19 @@ def get_secrets(account_id: str, region: str) -> List[Dict[str, Any]]:
         ClickException: If data collection hasn't been run
     """
     return get_saved_secrets(account_id, region)
+
+
+def get_account_roles(account_id: str) -> List[Dict[str, Any]]:
+    """
+    Get all IAM roles in the specified account from saved data.
+
+    Args:
+        account_id: AWS account ID to check
+
+    Returns:
+        List of dictionaries containing role information
+
+    Raises:
+        ClickException: If data collection hasn't been run
+    """
+    return get_saved_roles(account_id)

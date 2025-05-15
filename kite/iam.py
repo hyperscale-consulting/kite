@@ -257,3 +257,132 @@ def get_password_policy(session) -> Dict[str, Any]:
         if e.response["Error"]["Code"] == "NoSuchEntity":
             return None
         raise
+
+
+def get_role_attached_policies(session, role_name: str) -> List[Dict[str, Any]]:
+    """
+    Get all attached managed policies for an IAM role.
+
+    Args:
+        session: The boto3 session to use.
+        role_name: The name of the IAM role.
+
+    Returns:
+        List of dictionaries containing attached policy information.
+
+    Raises:
+        ClientError: If the IAM API call fails.
+    """
+    iam_client = session.client("iam")
+    policies = []
+    paginator = iam_client.get_paginator('list_attached_role_policies')
+
+    for page in paginator.paginate(RoleName=role_name):
+        policies.extend(page.get("AttachedPolicies", []))
+
+    return policies
+
+
+def get_role_inline_policy_document(session, role_name: str, policy_name: str) -> Dict[str, Any]:
+    """
+    Get the policy document for an inline policy attached to a role.
+
+    Args:
+        session: The boto3 session to use.
+        role_name: The name of the IAM role.
+        policy_name: The name of the inline policy.
+
+    Returns:
+        Dict containing the policy document.
+
+    Raises:
+        ClientError: If the IAM API call fails.
+    """
+    iam_client = session.client("iam")
+
+    response = iam_client.get_role_policy(
+        RoleName=role_name,
+        PolicyName=policy_name
+    )
+    return {
+        "PolicyName": policy_name,
+        "RoleName": role_name,
+        "PolicyDocument": response.get("PolicyDocument", {})
+    }
+
+
+def get_role_inline_policies(session, role_name: str) -> List[str]:
+    """
+    Get all inline policy names for an IAM role.
+
+    Args:
+        session: The boto3 session to use.
+        role_name: The name of the IAM role.
+
+    Returns:
+        List of inline policy names.
+
+    Raises:
+        ClientError: If the IAM API call fails.
+    """
+    iam_client = session.client("iam")
+    policy_names = []
+    paginator = iam_client.get_paginator('list_role_policies')
+
+    for page in paginator.paginate(RoleName=role_name):
+        policy_names.extend(page.get("PolicyNames", []))
+
+    return policy_names
+
+
+def list_roles(session) -> List[Dict[str, Any]]:
+    """
+    List all IAM roles in the account with their attached and inline policies.
+
+    Args:
+        session: The boto3 session to use.
+
+    Returns:
+        List of dictionaries containing role information, including:
+        - RoleName: The name of the role
+        - RoleId: The ID of the role
+        - Arn: The Amazon Resource Name (ARN) of the role
+        - Path: The path to the role
+        - AssumeRolePolicyDocument: The trust policy document for assuming the role
+        - CreateDate: The date and time when the role was created
+        - MaxSessionDuration: The maximum session duration in seconds
+        - PermissionsBoundary: The ARN of the policy used as permissions boundary
+        - Tags: The list of tags attached to the role
+        - AttachedPolicies: List of attached managed policies
+        - InlinePolicyNames: List of inline policy names
+
+    Raises:
+        ClientError: If the IAM API call fails.
+    """
+    iam_client = session.client("iam")
+    roles = []
+    paginator = iam_client.get_paginator('list_roles')
+
+    for page in paginator.paginate():
+        for role in page.get("Roles", []):
+            # Get attached policies for the role
+            try:
+                attached_policies = get_role_attached_policies(
+                    session, role["RoleName"]
+                )
+                role["AttachedPolicies"] = attached_policies
+            except ClientError:
+                role["AttachedPolicies"] = []
+
+            # Get inline policy names for the role
+            try:
+                inline_policy_names = get_role_inline_policies(
+                    session, role["RoleName"]
+                )
+                role["InlinePolicyNames"] = inline_policy_names
+            except ClientError:
+                role["InlinePolicyNames"] = []
+
+            roles.append(role)
+
+    return roles

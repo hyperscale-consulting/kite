@@ -45,6 +45,8 @@ from kite.data import (
     save_cognito_user_pool,
     save_key_pairs,
     save_secrets,
+    save_roles,
+    save_inline_policy_document,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -597,6 +599,83 @@ def collect_secrets() -> None:
     console.print("[bold green]✓ Completed gathering Secrets Manager secrets[/]")
 
 
+def collect_roles() -> None:
+    """
+    Collect IAM roles for all in-scope accounts and save them locally.
+    Includes attached policies and inline policy names for each role.
+    Stores inline policy documents separately.
+    """
+    console.print("\n[bold blue]Gathering IAM roles with policies...[/]")
+
+    for account_id in get_account_ids_in_scope():
+        try:
+            # Assume role in the account
+            session = assume_role(account_id)
+
+            # Get IAM roles (includes attached and inline policy names)
+            console.print(
+                f"  [yellow]Fetching IAM roles with policies for "
+                f"account {account_id}...[/]"
+            )
+            roles = iam.list_roles(session)
+
+            # Count policies for summary
+            total_attached_policies = sum(
+                len(role.get("AttachedPolicies", [])) for role in roles
+            )
+            total_inline_policies = sum(
+                len(role.get("InlinePolicyNames", [])) for role in roles
+            )
+
+            # Save roles
+            save_roles(account_id, roles)
+
+            # Collect and save inline policy documents separately
+            console.print(
+                f"  [yellow]Fetching inline policy documents for "
+                f"account {account_id}...[/]"
+            )
+            policy_count = 0
+
+            for role in roles:
+                role_name = role["RoleName"]
+                for policy_name in role.get("InlinePolicyNames", []):
+                    try:
+                        policy_doc = iam.get_role_inline_policy_document(
+                            session, role_name, policy_name
+                        )
+                        save_inline_policy_document(
+                            account_id,
+                            role_name,
+                            policy_name,
+                            policy_doc["PolicyDocument"]
+                        )
+                        policy_count += 1
+                    except Exception as e:
+                        console.print(
+                            f"  [red]✗ Error fetching policy document "
+                            f"for role {role_name}, policy {policy_name}: {str(e)}[/]"
+                        )
+
+            console.print(
+                f"  [green]✓ Saved {len(roles)} IAM roles with "
+                f"{total_attached_policies} attached policies and "
+                f"{total_inline_policies} inline policies for "
+                f"account {account_id}[/]"
+            )
+            console.print(
+                f"  [green]✓ Saved {policy_count} inline policy documents "
+                f"for account {account_id}[/]"
+            )
+        except Exception as e:
+            console.print(
+                f"  [red]✗ Error fetching IAM roles for account "
+                f"{account_id}: {str(e)}[/]"
+            )
+
+    console.print("[bold green]✓ Completed gathering IAM roles with policies[/]")
+
+
 def collect_data() -> None:
     console.print("\n[bold blue]Gathering AWS data...[/]")
     collect_organization_data()
@@ -611,4 +690,5 @@ def collect_data() -> None:
     collect_cognito_user_pools()
     collect_key_pairs()
     collect_secrets()
+    collect_roles()
     console.print("\n[bold green]✓ Data collection complete![/]")

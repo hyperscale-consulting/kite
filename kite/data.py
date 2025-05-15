@@ -466,3 +466,60 @@ def get_secrets(account_id: str, region: str) -> List[Dict[str, Any]]:
         List of dictionaries containing secret information, or empty list.
     """
     return _load_data(f"secrets_{region}", account_id) or []
+
+
+def save_roles(account_id: str, roles: List[Dict[str, Any]]) -> None:
+    """
+    Save IAM roles for an account.
+
+    Args:
+        account_id: The AWS account ID to save the roles for.
+        roles: The list of IAM roles to save.
+    """
+    _save_data(roles, "iam_roles", account_id)
+
+
+def get_roles(account_id: str) -> List[Dict[str, Any]]:
+    """
+    Get IAM roles for an account.
+
+    Args:
+        account_id: The AWS account ID to get the roles for.
+
+    Returns:
+        List of dictionaries containing role information, or empty list.
+    """
+    return _load_data("iam_roles", account_id) or []
+
+
+def save_inline_policy_document(account_id: str, role_name: str, policy_name: str, policy_document: Dict[str, Any]) -> None:
+    """
+    Save an inline policy document for a role.
+
+    Args:
+        account_id: The AWS account ID.
+        role_name: The name of the IAM role.
+        policy_name: The name of the inline policy.
+        policy_document: The inline policy document to save.
+    """
+    data = {
+        "RoleName": role_name,
+        "PolicyName": policy_name,
+        "PolicyDocument": policy_document
+    }
+    _save_data(data, f"inline_policy_{role_name}_{policy_name}", account_id)
+
+
+def get_inline_policy_document(account_id: str, role_name: str, policy_name: str) -> Dict[str, Any]:
+    """
+    Get an inline policy document for a role.
+
+    Args:
+        account_id: The AWS account ID.
+        role_name: The name of the IAM role.
+        policy_name: The name of the inline policy.
+
+    Returns:
+        Dictionary containing the inline policy document, or empty dict.
+    """
+    return _load_data(f"inline_policy_{role_name}_{policy_name}", account_id) or {}

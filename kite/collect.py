@@ -19,6 +19,7 @@ from . import (
     iam,
     identity_center,
     identity_store,
+    cognito,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -38,6 +39,8 @@ from kite.data import (
     save_ec2_instances,
     save_virtual_mfa_devices,
     save_password_policy,
+    save_cognito_user_pools,
+    save_cognito_user_pool,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -470,6 +473,46 @@ def collect_password_policies() -> None:
     console.print("[bold green]✓ Completed gathering password policies[/]")
 
 
+def collect_cognito_user_pools() -> None:
+    """
+    Collect Cognito user pools for all accounts in scope.
+    """
+    account_ids = get_account_ids_in_scope()
+    console.print("\n[bold blue]Gathering Cognito user pools...[/]")
+
+    for account_id in account_ids:
+        try:
+            # Assume role in the account
+            session = assume_role(account_id)
+
+            # Get user pools
+            console.print(
+                f"  [yellow]Fetching Cognito user pools for account {account_id}...[/]"
+            )
+            user_pools = cognito.list_user_pools(session)
+
+            # Save user pools
+            save_cognito_user_pools(account_id, user_pools)
+
+            # Get and save detailed info for each user pool
+            for pool in user_pools:
+                pool_id = pool["Id"]
+                console.print(
+                    f"  [yellow]Fetching details for user pool {pool_id}...[/]"
+                )
+                pool_data = cognito.fetch_cognito_user_pool(session, pool_id)
+                save_cognito_user_pool(account_id, pool_id, pool_data)
+
+            console.print(
+                f"  [green]✓ Saved Cognito user pools for account {account_id}[/]"
+            )
+        except Exception as e:
+            console.print(
+                f"  [red]✗ Error fetching Cognito user pools for account "
+                f"{account_id}: {str(e)}[/]"
+            )
+
+
 def collect_data() -> None:
     console.print("\n[bold blue]Gathering AWS data...[/]")
     collect_organization_data()
@@ -481,4 +524,5 @@ def collect_data() -> None:
     collect_identity_center_instances()
     collect_ec2_instances()
     collect_password_policies()
+    collect_cognito_user_pools()
     console.print("\n[bold green]✓ Data collection complete![/]")

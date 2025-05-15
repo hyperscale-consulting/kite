@@ -362,3 +362,53 @@ def get_password_policy(account_id: str) -> Optional[Dict[str, Any]]:
         The password policy data, or None if not found.
     """
     return _load_data("password_policy", account_id)
+
+
+def save_cognito_user_pools(account_id: str, pools: List[Dict[str, Any]]) -> None:
+    """
+    Save Cognito user pools for an account.
+
+    Args:
+        account_id: The AWS account ID to save the pools for.
+        pools: The list of Cognito user pools to save.
+    """
+    _save_data(pools, "cognito_user_pools", account_id)
+
+
+def save_cognito_user_pool(account_id: str, user_pool_id: str, pool_data: Dict[str, Any]) -> None:
+    """
+    Save details for a specific Cognito user pool.
+
+    Args:
+        account_id: The AWS account ID.
+        user_pool_id: The ID of the Cognito user pool.
+        pool_data: The user pool data to save.
+    """
+    _save_data(pool_data, f"cognito_user_pool_{user_pool_id}", account_id)
+
+
+def get_cognito_user_pools(account_id: str) -> List[Dict[str, Any]]:
+    """
+    Get Cognito user pools for an account.
+
+    Args:
+        account_id: The AWS account ID to get the pools for.
+
+    Returns:
+        List of dictionaries containing user pool information, or empty list if not found.
+    """
+    return _load_data("cognito_user_pools", account_id) or []
+
+
+def get_cognito_user_pool(account_id: str, user_pool_id: str) -> Dict[str, Any]:
+    """
+    Get details for a specific Cognito user pool.
+
+    Args:
+        account_id: The AWS account ID.
+        user_pool_id: The ID of the Cognito user pool.
+
+    Returns:
+        Dictionary containing the user pool information, or empty dict if not found.
+    """
+    return _load_data(f"cognito_user_pool_{user_pool_id}", account_id) or {}

@@ -15,10 +15,8 @@ from kite.data import (
     get_identity_center_instances,
     get_virtual_mfa_devices,
     get_password_policy as get_saved_password_policy,
-)
-from kite.cognito import (
-    list_user_pools,
-    fetch_cognito_user_pool,
+    get_cognito_user_pools as get_saved_cognito_user_pools,
+    get_cognito_user_pool as get_saved_cognito_user_pool,
 )
 from kite.ec2 import get_key_pairs
 from kite.secretsmanager import fetch_secrets, SecretDetails
@@ -387,7 +385,7 @@ def is_identity_center_identity_store_used() -> bool:
 
 def get_cognito_user_pools(account_id: str) -> List[Dict[str, Any]]:
     """
-    Lazily load and cache the list of Cognito user pools for the specified account.
+    Get the list of Cognito user pools for the specified account from saved data.
 
     Args:
         account_id: The AWS account ID to check.
@@ -396,60 +394,25 @@ def get_cognito_user_pools(account_id: str) -> List[Dict[str, Any]]:
         List of dictionaries containing user pool information.
 
     Raises:
-        ClickException: If role assumption fails or the API call fails.
+        ClickException: If data collection hasn't been run.
     """
-    # Initialize the cache if it doesn't exist
-    if not hasattr(get_cognito_user_pools, "_pools"):
-        get_cognito_user_pools._pools = {}
-
-    # Check if we already have the pools for this account
-    if account_id not in get_cognito_user_pools._pools:
-        try:
-            # Assume role in the specified account
-            session = assume_role(account_id)
-            # Fetch and cache the pools
-            get_cognito_user_pools._pools[account_id] = list_user_pools(session)
-        except Exception as e:
-            raise click.ClickException(
-                f"Failed to get Cognito user pools for account {account_id}: {str(e)}"
-            )
-
-    return get_cognito_user_pools._pools[account_id]
+    return get_saved_cognito_user_pools(account_id)
 
 
 def get_cognito_user_pool(account_id: str, user_pool_id: str) -> Dict[str, Any]:
     """
-    Lazily load and cache the Cognito user pool for the specified account and user pool
-    ID.
+    Get Cognito user pool details from saved data.
 
     Args:
         account_id: The AWS account ID containing the user pool.
+        user_pool_id: The ID of the user pool to get.
     Returns:
         Dict containing the user pool information.
 
     Raises:
-        ClickException: If role assumption fails or the API call fails.
+        ClickException: If data collection hasn't been run.
     """
-    # Initialize the cache if it doesn't exist
-    if not hasattr(get_cognito_user_pool, "_pools"):
-        get_cognito_user_pool._pools = {}
-
-    # Check if we already have the pool for this account and user pool ID
-    if (account_id, user_pool_id) not in get_cognito_user_pool._pools:
-        try:
-            # Assume role in the specified account
-            session = assume_role(account_id)
-            # Fetch and cache the pool
-            get_cognito_user_pool._pools[(account_id, user_pool_id)] = (
-                fetch_cognito_user_pool(session, user_pool_id)
-            )
-        except Exception as e:
-            raise click.ClickException(
-                f"Failed to get Cognito user pool {user_pool_id} for account "
-                f"{account_id}: {str(e)}"
-            )
-
-    return get_cognito_user_pool._pools[(account_id, user_pool_id)]
+    return get_saved_cognito_user_pool(account_id, user_pool_id)
 
 
 def is_cognito_password_policy_complex(policy: Dict[str, Any]) -> bool:
@@ -490,7 +453,7 @@ def get_user_pool_password_policy(account_id: str, user_pool_id: str) -> Dict[st
         Dict containing the password policy settings.
 
     Raises:
-        ClickException: If role assumption fails or the API call fails.
+        ClickException: If data collection hasn't been run.
     """
     return get_cognito_user_pool(account_id, user_pool_id).get('Policies', {}).get(
         "PasswordPolicy", {}
@@ -509,7 +472,7 @@ def get_user_pool_mfa_config(account_id: str, user_pool_id: str) -> str:
         str: The MFA configuration ("ON", "OFF", or "OPTIONAL").
 
     Raises:
-        ClickException: If role assumption fails or the API call fails.
+        ClickException: If data collection hasn't been run.
     """
     return get_cognito_user_pool(account_id, user_pool_id).get("MfaConfiguration",
                                                                "OFF")
@@ -631,7 +594,8 @@ def get_secrets(account_id: str, region: str) -> List[SecretDetails]:
             get_secrets._secrets[cache_key] = fetch_secrets(session, region)
         except Exception as e:
             raise click.ClickException(
-                f"Failed to get secrets for account {account_id} in region {region}: {str(e)}"
+                f"Failed to get secrets for account {account_id} in region {region}: "
+                f"{str(e)}"
             )
 
     return get_secrets._secrets[cache_key]

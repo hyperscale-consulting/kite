@@ -119,6 +119,12 @@ from kite.checks.define_access_requirements.check import (
 from kite.checks.no_full_admin_policies.check import (
     check_no_full_admin_policies,
 )
+from kite.checks.no_policy_allows_privilege_escalation.check import (
+    check_no_policy_allows_privilege_escalation,
+)
+from kite.checks.no_permissive_role_assumption.check import (
+    check_no_permissive_role_assumption,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -174,4 +180,6 @@ __all__ = [
     "check_employ_user_groups_and_attributes",
     "check_define_access_requirements",
     "check_no_full_admin_policies",
+    "check_no_policy_allows_privilege_escalation",
+    "check_no_permissive_role_assumption",
 ]

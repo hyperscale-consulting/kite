@@ -58,6 +58,7 @@ from kite.checks import (
     check_no_full_admin_policies,
     check_no_policy_allows_privilege_escalation,
     check_no_permissive_role_assumption,
+    check_no_full_access_to_sensitive_services,
 )
 
 # Define check themes and their associated checks
@@ -218,6 +219,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_no_full_admin_policies,
             check_no_policy_allows_privilege_escalation,
             check_no_permissive_role_assumption,
+            check_no_full_access_to_sensitive_services,
         ],
     },
 }

@@ -206,6 +206,31 @@ def check_admin_privileges_are_restricted() -> Dict[str, Any]:
                 message += f"Policy ARN: {role['policy_arn']}\n"
             message += f"Policy Name: {role['policy_name']}\n"
             message += f"Policy Type: {role['policy_type']}\n"
+            message += "Assume Role Policy:\n"
+            # Get the role's assume role policy
+            role_data = next(
+                (r for r in get_roles(role['account_id'])
+                 if r['RoleName'] == role['role_name']),
+                None
+            )
+            if role_data and 'AssumeRolePolicyDocument' in role_data:
+                policy_doc = role_data['AssumeRolePolicyDocument']
+                for statement in policy_doc.get('Statement', []):
+                    message += f"  Effect: {statement.get('Effect', 'N/A')}\n"
+                    message += "  Principal:\n"
+                    principal = statement.get('Principal', {})
+                    if isinstance(principal, dict):
+                        for key, value in principal.items():
+                            if isinstance(value, list):
+                                for item in value:
+                                    message += f"    {key}: {item}\n"
+                            else:
+                                message += f"    {key}: {value}\n"
+                    message += f"  Action: {statement.get('Action', 'N/A')}\n"
+                    if 'Condition' in statement:
+                        message += "  Condition:\n"
+                        for key, value in statement['Condition'].items():
+                            message += f"    {key}: {value}\n"
             message += "\n"
     else:
         message += "No roles found with administrator privileges\n\n"

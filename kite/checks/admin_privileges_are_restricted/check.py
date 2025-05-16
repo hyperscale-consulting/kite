@@ -60,7 +60,7 @@ def _is_service_linked_role(role: Dict[str, Any]) -> bool:
     # Check for Control Tower roles
     role_name = role.get("RoleName", "")
     if role_name in {
-        "aws-controltower-AuditAdministratorRole",
+        "aws-controltower-AdministratorExecutionRole",
         "AWSControlTowerExecution",
     }:
         return True

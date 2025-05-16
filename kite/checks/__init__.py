@@ -131,6 +131,9 @@ from kite.checks.no_full_access_to_sensitive_services.check import (
 from kite.checks.no_readonly_third_party_access.check import (
     check_no_readonly_third_party_access,
 )
+from kite.checks.cross_account_confused_deputy_prevention.check import (
+    check_cross_account_confused_deputy_prevention,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -190,4 +193,5 @@ __all__ = [
     "check_no_permissive_role_assumption",
     "check_no_full_access_to_sensitive_services",
     "check_no_readonly_third_party_access",
+    "check_cross_account_confused_deputy_prevention",
 ]

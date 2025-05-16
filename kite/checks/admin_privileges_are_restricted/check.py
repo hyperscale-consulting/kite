@@ -43,7 +43,9 @@ def _is_service_linked_role(role: Dict[str, Any]) -> bool:
     A role is considered a service-linked role if:
     1. Its path starts with '/aws-service-role/', or
     2. Its assume role policy has a principal with an ARN containing
-       '/aws-service-role/'
+       '/aws-service-role/', or
+    3. It is a Control Tower role (aws-controltower-AuditAdministratorRole or
+       AWSControlTowerExecution)
 
     Args:
         role: The role to check
@@ -53,6 +55,14 @@ def _is_service_linked_role(role: Dict[str, Any]) -> bool:
     """
     # Check role path
     if role.get("Path", "").startswith("/aws-service-role/"):
+        return True
+
+    # Check for Control Tower roles
+    role_name = role.get("RoleName", "")
+    if role_name in {
+        "aws-controltower-AuditAdministratorRole",
+        "AWSControlTowerExecution",
+    }:
         return True
 
     # Check assume role policy

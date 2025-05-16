@@ -134,8 +134,8 @@ from kite.checks.no_readonly_third_party_access.check import (
 from kite.checks.cross_account_confused_deputy_prevention.check import (
     check_cross_account_confused_deputy_prevention,
 )
-from kite.checks.restrict_admin_privileges_to_small_trusted_group.check import (
-    check_restrict_admin_privileges_to_small_trusted_group,
+from kite.checks.admin_privileges_are_restricted.check import (
+    check_admin_privileges_are_restricted,
 )
 
 __all__ = [
@@ -198,4 +198,5 @@ __all__ = [
     "check_no_readonly_third_party_access",
     "check_cross_account_confused_deputy_prevention",
     "check_restrict_admin_privileges_to_small_trusted_group",
+    "check_admin_privileges_are_restricted",
 ]

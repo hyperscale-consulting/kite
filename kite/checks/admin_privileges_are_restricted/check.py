@@ -12,8 +12,8 @@ from kite.data import (
 from kite.helpers import get_account_ids_in_scope, manual_check
 
 
-CHECK_ID = "restrict-admin-privileges-to-a-small-trusted-group"
-CHECK_NAME = "Restrict Admin Privileges to a Small Trusted Group"
+CHECK_ID = "admin-privileges-are-restricted"
+CHECK_NAME = "Admin Privileges Are Restricted"
 
 
 def _is_admin_policy(policy_doc: Dict[str, Any]) -> bool:
@@ -36,14 +36,51 @@ def _is_admin_policy(policy_doc: Dict[str, Any]) -> bool:
     return False
 
 
-def check_restrict_admin_privileges_to_small_trusted_group() -> Dict[str, Any]:
+def _is_service_linked_role(role: Dict[str, Any]) -> bool:
+    """
+    Check if a role is a service-linked role.
+
+    A role is considered a service-linked role if:
+    1. Its path starts with '/aws-service-role/', or
+    2. Its assume role policy has a principal with an ARN containing
+       '/aws-service-role/'
+
+    Args:
+        role: The role to check
+
+    Returns:
+        bool: True if the role is a service-linked role
+    """
+    # Check role path
+    if role.get("Path", "").startswith("/aws-service-role/"):
+        return True
+
+    # Check assume role policy
+    assume_role_policy = role.get("AssumeRolePolicyDocument", {})
+    for statement in assume_role_policy.get("Statement", []):
+        principal = statement.get("Principal", {})
+        if isinstance(principal, dict):
+            # Check AWS principal ARN
+            aws_principal = principal.get("AWS", "")
+            if isinstance(aws_principal, str) and "/aws-service-role/" in aws_principal:
+                return True
+            # Check list of AWS principal ARNs
+            if isinstance(aws_principal, list):
+                for arn in aws_principal:
+                    if isinstance(arn, str) and "/aws-service-role/" in arn:
+                        return True
+
+    return False
+
+
+def check_admin_privileges_are_restricted() -> Dict[str, Any]:
     """
     Check if administrator privileges are restricted to a small, trusted group.
 
     This check presents to the user:
     1. A list of SAML providers registered in the account
     2. A list of roles that have administrator privileges (Action: "*" and
-       Resource: "*")
+       Resource: "*"), excluding AWS service-linked roles
 
     The user must then decide if these administrator privileges are restricted to
     a small, trusted group.
@@ -78,6 +115,10 @@ def check_restrict_admin_privileges_to_small_trusted_group() -> Dict[str, Any]:
         customer_policies = get_customer_managed_policies(account_id)
 
         for role in roles:
+            # Skip service-linked roles
+            if _is_service_linked_role(role):
+                continue
+
             has_admin_access = False
             admin_policy_info = None
 
@@ -142,7 +183,10 @@ def check_restrict_admin_privileges_to_small_trusted_group() -> Dict[str, Any]:
     else:
         message += "No SAML providers configured\n\n"
 
-    message += "Roles with Administrator Privileges:\n\n"
+    message += (
+        "Roles with Administrator Privileges "
+        "(excluding AWS service-linked roles):\n\n"
+    )
     if admin_roles:
         for role in admin_roles:
             message += f"Account: {role['account_id']}\n"
@@ -185,5 +229,5 @@ def check_restrict_admin_privileges_to_small_trusted_group() -> Dict[str, Any]:
 
 
 # Attach the check ID and name to the function
-check_restrict_admin_privileges_to_small_trusted_group._CHECK_ID = CHECK_ID
-check_restrict_admin_privileges_to_small_trusted_group._CHECK_NAME = CHECK_NAME
+check_admin_privileges_are_restricted._CHECK_ID = CHECK_ID
+check_admin_privileges_are_restricted._CHECK_NAME = CHECK_NAME

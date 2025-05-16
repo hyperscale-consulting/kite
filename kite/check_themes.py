@@ -61,7 +61,7 @@ from kite.checks import (
     check_no_full_access_to_sensitive_services,
     check_no_readonly_third_party_access,
     check_cross_account_confused_deputy_prevention,
-    check_restrict_admin_privileges_to_small_trusted_group,
+    check_admin_privileges_are_restricted,
 )
 
 # Define check themes and their associated checks
@@ -215,8 +215,8 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
     },
     "Grant least privilege access": {
         "description": (
-            "Checks related to granting least privilege access to resources and "
-            "components"
+            "Follow the principle of least privilege by granting only the "
+            "permissions required to perform a task."
         ),
         "checks": [
             check_no_full_admin_policies,
@@ -225,7 +225,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_no_full_access_to_sensitive_services,
             check_no_readonly_third_party_access,
             check_cross_account_confused_deputy_prevention,
-            check_restrict_admin_privileges_to_small_trusted_group,
+            check_admin_privileges_are_restricted,
         ],
     },
 }

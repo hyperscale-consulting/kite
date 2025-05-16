@@ -134,6 +134,9 @@ from kite.checks.no_readonly_third_party_access.check import (
 from kite.checks.cross_account_confused_deputy_prevention.check import (
     check_cross_account_confused_deputy_prevention,
 )
+from kite.checks.restrict_admin_privileges_to_small_trusted_group.check import (
+    check_restrict_admin_privileges_to_small_trusted_group,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -194,4 +197,5 @@ __all__ = [
     "check_no_full_access_to_sensitive_services",
     "check_no_readonly_third_party_access",
     "check_cross_account_confused_deputy_prevention",
+    "check_restrict_admin_privileges_to_small_trusted_group",
 ]

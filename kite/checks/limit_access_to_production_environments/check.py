@@ -1,6 +1,7 @@
 """Check for limiting access to production environments."""
 
 import json
+import os
 from typing import Dict, Any, List
 
 from kite.helpers import (
@@ -8,6 +9,7 @@ from kite.helpers import (
     manual_check,
 )
 from kite.data import get_roles, get_credentials_report
+from kite.config import Config
 
 
 CHECK_ID = "limit-access-to-prod"
@@ -39,6 +41,32 @@ def _is_human_principal(principal: str) -> bool:
     return False
 
 
+def _save_identity_data(account_id: str, data: Dict[str, Any]) -> str:
+    """
+    Save identity data to a file in the data directory.
+
+    Args:
+        account_id: The AWS account ID
+        data: The identity data to save
+
+    Returns:
+        The path to the saved file
+    """
+    # Create data directory if it doesn't exist
+    os.makedirs(Config.get().data_dir, exist_ok=True)
+
+    # Create account-specific directory
+    account_dir = f"{Config.get().data_dir}/{account_id}"
+    os.makedirs(account_dir, exist_ok=True)
+
+    # Save data to file
+    file_path = f"{account_dir}/human_accessible_identities.json"
+    with open(file_path, "w") as f:
+        json.dump(data, f, indent=2, default=str)
+
+    return file_path
+
+
 def check_limit_access_to_production_environments() -> Dict[str, Any]:
     """
     Check if access to production environments is limited to specific tasks.
@@ -64,6 +92,7 @@ def check_limit_access_to_production_environments() -> Dict[str, Any]:
     """
     # Track identities that can be accessed by humans
     human_accessible_identities: List[Dict[str, Any]] = []
+    saved_files: Dict[str, str] = {}
 
     # Get in-scope accounts
     account_ids = get_account_ids_in_scope()
@@ -116,23 +145,36 @@ def check_limit_access_to_production_environments() -> Dict[str, Any]:
                     ),
                 })
 
+        # Save the data for this account
+        if human_accessible_identities:
+            file_path = _save_identity_data(
+                account_id,
+                {
+                    "account_id": account_id,
+                    "identities": [
+                        identity for identity in human_accessible_identities
+                        if identity["account_id"] == account_id
+                    ]
+                }
+            )
+            saved_files[account_id] = file_path
+
     # Build message for manual check
     message = "Identities that can be accessed by humans:\n\n"
     if human_accessible_identities:
-        for identity in human_accessible_identities:
-            message += f"Account: {identity['account_id']}\n"
-            message += f"Type: {identity['identity_type']}\n"
-            message += f"Name: {identity['name']}\n"
-            message += f"ARN: {identity['arn']}\n"
-
-            if identity['identity_type'] == 'role':
-                message += "Trust Policy:\n"
-                message += f"{json.dumps(identity['trust_policy'], indent=2)}\n"
-
-            message += "Attached Policies:\n"
-            for policy in identity['attached_policies']:
-                message += f"- {policy}\n"
-            message += "\n"
+        message += "Detailed information has been saved to the following files:\n"
+        for account_id, file_path in saved_files.items():
+            message += f"- {file_path}\n"
+        message += "\nSummary of findings:\n"
+        for account_id in account_ids:
+            account_identities = [
+                identity for identity in human_accessible_identities
+                if identity["account_id"] == account_id
+            ]
+            if account_identities:
+                message += f"\nAccount {account_id}:\n"
+                for identity in account_identities:
+                    message += f"- {identity['identity_type']}: {identity['name']}\n"
     else:
         message += "No identities found that can be accessed by humans.\n"
 
@@ -161,6 +203,7 @@ def check_limit_access_to_production_environments() -> Dict[str, Any]:
     # Add the details to the result
     if "details" in result:
         result["details"]["human_accessible_identities"] = human_accessible_identities
+        result["details"]["saved_files"] = saved_files
 
     return result
 

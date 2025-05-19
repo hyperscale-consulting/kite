@@ -577,3 +577,27 @@ def get_policy_document(account_id: str, policy_arn: str) -> Dict[str, Any]:
     # Convert the ARN to a safe string for file name
     safe_arn = policy_arn.replace("/", "_").replace(":", "_")
     return _load_data(f"policy_document_{safe_arn}", account_id) or {}
+
+
+def save_bucket_policies(account_id: str, buckets: List[Dict[str, Any]]) -> None:
+    """
+    Save S3 bucket policies for an account.
+
+    Args:
+        account_id: The AWS account ID to save the policies for.
+        buckets: The list of S3 buckets with their policies.
+    """
+    _save_data(buckets, "s3_bucket_policies", account_id)
+
+
+def get_bucket_policies(account_id: str) -> List[Dict[str, Any]]:
+    """
+    Get S3 bucket policies for an account.
+
+    Args:
+        account_id: The AWS account ID to get the policies for.
+
+    Returns:
+        List of dictionaries containing bucket information and policies.
+    """
+    return _load_data("s3_bucket_policies", account_id) or []

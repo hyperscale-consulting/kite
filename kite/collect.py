@@ -50,6 +50,7 @@ from kite.data import (
     save_inline_policy_document,
     save_customer_managed_policies,
     save_policy_document,
+    save_bucket_policies,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -221,6 +222,23 @@ def collect_account_data(account_id: str) -> None:
             f"  [green]✓ Saved {len(roles)} IAM roles with {policy_count} inline policies and "
             f"{len(policies)} customer managed policies with {policy_document_count} policy documents "
             f"for account {account_id}[/]"
+        )
+
+        # Collect S3 bucket policies
+        console.print(
+            f"  [yellow]Fetching S3 bucket policies for account {account_id}...[/]"
+        )
+        buckets = s3.get_buckets(session)
+        buckets_with_policies = [
+            {
+                "bucket_name": bucket.bucket_name,
+                "policy": bucket.policy,
+            }
+            for bucket in buckets
+        ]
+        save_bucket_policies(account_id, buckets_with_policies)
+        console.print(
+            f"  [green]✓ Saved {len(buckets)} S3 bucket policies for account {account_id}[/]"
         )
 
     except Exception as e:

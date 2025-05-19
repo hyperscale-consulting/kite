@@ -70,6 +70,9 @@ def check_cross_service_confused_deputy_prevention() -> Dict[str, Any]:
        - aws:SourceOrgID
        - aws:SourceOrgPaths
 
+    Note: Only Allow statements are considered vulnerable. Deny statements are
+    considered a security control and are not flagged.
+
     Returns:
         Dictionary containing check results
     """
@@ -92,6 +95,10 @@ def check_cross_service_confused_deputy_prevention() -> Dict[str, Any]:
                 continue
 
             for statement in policy_doc.get("Statement", []):
+                # Skip Deny statements as they are a security control
+                if statement.get("Effect") == "Deny":
+                    continue
+
                 # Skip if statement has confused deputy protection
                 if _has_confused_deputy_protection(statement):
                     continue

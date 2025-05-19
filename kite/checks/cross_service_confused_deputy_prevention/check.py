@@ -40,25 +40,20 @@ def _has_confused_deputy_protection(statement: Dict[str, Any]) -> bool:
     """
     condition = statement.get("Condition", {})
 
-    # Check for source account condition
+    # Check StringEquals conditions
     if "StringEquals" in condition:
-        if "aws:SourceAccount" in condition["StringEquals"]:
+        protected_keys = {
+            "aws:SourceAccount",
+            "aws:SourceArn",
+            "aws:SourceOrgID",
+            "aws:SourceOrgPaths"
+        }
+        if any(key in condition["StringEquals"] for key in protected_keys):
             return True
 
-    # Check for source ARN condition
-    if "ArnLike" in condition:
-        if "aws:SourceArn" in condition["ArnLike"]:
-            return True
-
-    # Check for source organization ID condition
-    if "StringEquals" in condition:
-        if "aws:SourceOrgID" in condition["StringEquals"]:
-            return True
-
-    # Check for source organization paths condition
-    if "StringEquals" in condition:
-        if "aws:SourceOrgPaths" in condition["StringEquals"]:
-            return True
+    # Check ArnLike conditions
+    if "ArnLike" in condition and "aws:SourceArn" in condition["ArnLike"]:
+        return True
 
     return False
 

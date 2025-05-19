@@ -11,7 +11,7 @@ from kite.organizations import (
     build_ou_structure,
     fetch_delegated_admins,
     DelegatedAdmin,
-    ServiceControlPolicy,
+    ControlPolicy,
 )
 
 
@@ -301,7 +301,7 @@ def test_fetch_organization_success(
 
     # Verify SCPs are fetched
     assert len(org.root.scps) == 1
-    assert isinstance(org.root.scps[0], ServiceControlPolicy)
+    assert isinstance(org.root.scps[0], ControlPolicy)
     assert org.root.scps[0].id == "p-examplepolicyid1"
     assert org.root.scps[0].name == "DenyAllPolicy"
     assert org.root.scps[0].description == "Denies all actions"
@@ -385,7 +385,7 @@ def test_build_ou_structure(
 
     # Verify SCPs are fetched
     assert len(ou.scps) == 1
-    assert isinstance(ou.scps[0], ServiceControlPolicy)
+    assert isinstance(ou.scps[0], ControlPolicy)
     assert ou.scps[0].id == "p-examplepolicyid1"
     assert ou.scps[0].name == "DenyAllPolicy"
 

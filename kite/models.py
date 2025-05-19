@@ -6,8 +6,8 @@ from datetime import datetime, UTC
 
 
 @dataclass
-class ServiceControlPolicy:
-    """Represents a Service Control Policy in the organization."""
+class ControlPolicy:
+    """Represents a Service Control Policy (SCP) or Resource Control Policy (RCP) in the organization."""
 
     id: str
     arn: str
@@ -17,14 +17,14 @@ class ServiceControlPolicy:
     type: str
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "ServiceControlPolicy":
-        """Create a ServiceControlPolicy from a dictionary."""
+    def from_dict(cls, data: Dict[str, Any]) -> "ControlPolicy":
+        """Create a ControlPolicy from a dictionary."""
         return cls(**data)
 
 
 @dataclass
 class Account:
-    """Represents an AWS account within an organization."""
+    """AWS account information."""
 
     id: str
     arn: str
@@ -33,13 +33,15 @@ class Account:
     status: str
     joined_method: str
     joined_timestamp: str
-    scps: List[ServiceControlPolicy]
+    scps: List[ControlPolicy]
+    rcps: List[ControlPolicy] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Account":
         """Create an Account from a dictionary."""
-        scps = [ServiceControlPolicy.from_dict(scp) for scp in data.pop('scps', [])]
-        return cls(**data, scps=scps)
+        scps = [ControlPolicy.from_dict(scp) for scp in data.pop('scps', [])]
+        rcps = [ControlPolicy.from_dict(rcp) for rcp in data.pop('rcps', [])]
+        return cls(**data, scps=scps, rcps=rcps)
 
 
 @dataclass
@@ -79,22 +81,24 @@ class DelegatedAdmin:
 
 @dataclass
 class OrganizationalUnit:
-    """Represents an organizational unit within an organization."""
+    """AWS organizational unit information."""
 
     id: str
     arn: str
     name: str
     accounts: List[Account]
     child_ous: List["OrganizationalUnit"]
-    scps: List[ServiceControlPolicy]
+    scps: List[ControlPolicy]
+    rcps: List[ControlPolicy] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "OrganizationalUnit":
         """Create an OrganizationalUnit from a dictionary."""
         accounts = [Account.from_dict(acc) for acc in data.pop('accounts', [])]
         child_ous = [cls.from_dict(ou) for ou in data.pop('child_ous', [])]
-        scps = [ServiceControlPolicy.from_dict(scp) for scp in data.pop('scps', [])]
-        return cls(**data, accounts=accounts, child_ous=child_ous, scps=scps)
+        scps = [ControlPolicy.from_dict(scp) for scp in data.pop('scps', [])]
+        rcps = [ControlPolicy.from_dict(rscp) for rscp in data.pop('rcps', [])]
+        return cls(**data, accounts=accounts, child_ous=child_ous, scps=scps, rcps=rcps)
 
     def get_accounts(self) -> List[Account]:
         """Get all accounts in the organizational unit and its child organizational units."""

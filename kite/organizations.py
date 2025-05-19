@@ -5,29 +5,34 @@ from typing import List, Optional, Dict
 from kite.models import (
     Organization,
     Account,
-    ServiceControlPolicy,
+    ControlPolicy,
     OrganizationalUnit,
     DelegatedAdmin
 )
 
 
-def fetch_scps_for_target(orgs_client, target_id: str) -> List[ServiceControlPolicy]:
+def fetch_policies_for_target(orgs_client, target_id: str) -> Dict[str, List[ControlPolicy]]:
     """
-    Fetch all SCPs attached to a target (account or OU).
+    Fetch all SCPs and RCPs attached to a target (account or OU).
 
     Args:
         orgs_client: The boto3 organizations client
         target_id: The ID of the target (account or OU)
 
     Returns:
-        A list of ServiceControlPolicy objects attached to the target
+        A dictionary containing lists of ControlPolicy objects for each policy type
     """
-    scps = []
+    policies = {
+        "SERVICE_CONTROL_POLICY": [],
+        "RESOURCE_CONTROL_POLICY": []
+    }
+
     try:
         # List policies attached to the target
         paginator = orgs_client.get_paginator("list_policies_for_target")
         for page in paginator.paginate(
-            TargetId=target_id, Filter="SERVICE_CONTROL_POLICY"
+            TargetId=target_id,
+            Filter="SERVICE_CONTROL_POLICY,RESOURCE_CONTROL_POLICY"
         ):
             for policy in page["Policies"]:
                 # Get the policy details
@@ -35,21 +40,21 @@ def fetch_scps_for_target(orgs_client, target_id: str) -> List[ServiceControlPol
                 policy_details = policy_response["Policy"]
                 policy_summary = policy_details["PolicySummary"]
 
-                scps.append(
-                    ServiceControlPolicy(
-                        id=policy_summary["Id"],
-                        arn=policy_summary["Arn"],
-                        name=policy_summary["Name"],
-                        description=policy_summary.get("Description", ""),
-                        content=policy_details["Content"],
-                        type=policy_summary["Type"],
-                    )
+                scp = ControlPolicy(
+                    id=policy_summary["Id"],
+                    arn=policy_summary["Arn"],
+                    name=policy_summary["Name"],
+                    description=policy_summary.get("Description", ""),
+                    content=policy_details["Content"],
+                    type=policy_summary["Type"],
                 )
+
+                policies[policy_summary["Type"]].append(scp)
     except Exception as e:
         # Log the error but continue processing
-        print(f"Error fetching SCPs for target {target_id}: {str(e)}")
+        print(f"Error fetching policies for target {target_id}: {str(e)}")
 
-    return scps
+    return policies
 
 
 def fetch_organization(session) -> Optional[Organization]:
@@ -77,16 +82,16 @@ def fetch_organization(session) -> Optional[Organization]:
         root_arn = root["Arn"]
         root_name = root.get("Name", "Root")
 
-        # Get SCPs for the root
-        root_scps = fetch_scps_for_target(orgs_client, root_id)
+        # Get policies for the root
+        root_policies = fetch_policies_for_target(orgs_client, root_id)
 
         # Get accounts in the root
         accounts = []
         paginator = orgs_client.get_paginator("list_accounts_for_parent")
         for page in paginator.paginate(ParentId=root_id):
             for account in page["Accounts"]:
-                # Get SCPs for this account
-                account_scps = fetch_scps_for_target(orgs_client, account["Id"])
+                # Get policies for this account
+                account_policies = fetch_policies_for_target(orgs_client, account["Id"])
 
                 accounts.append(
                     Account(
@@ -97,7 +102,8 @@ def fetch_organization(session) -> Optional[Organization]:
                         status=account["Status"],
                         joined_method=account["JoinedMethod"],
                         joined_timestamp=account["JoinedTimestamp"].isoformat(),
-                        scps=account_scps,
+                        scps=account_policies["SERVICE_CONTROL_POLICY"],
+                        rcps=account_policies["RESOURCE_CONTROL_POLICY"],
                     )
                 )
 
@@ -117,7 +123,8 @@ def fetch_organization(session) -> Optional[Organization]:
             name=root_name,
             accounts=accounts,
             child_ous=child_ous,
-            scps=root_scps,
+            scps=root_policies["SERVICE_CONTROL_POLICY"],
+            rcps=root_policies["RESOURCE_CONTROL_POLICY"],
         )
 
         return Organization(
@@ -144,16 +151,16 @@ def build_ou_structure(orgs_client, ou_id):
     ou_response = orgs_client.describe_organizational_unit(OrganizationalUnitId=ou_id)
     ou = ou_response["OrganizationalUnit"]
 
-    # Get SCPs for this OU
-    ou_scps = fetch_scps_for_target(orgs_client, ou_id)
+    # Get policies for this OU
+    ou_policies = fetch_policies_for_target(orgs_client, ou_id)
 
     # Get accounts in this OU
     accounts = []
     paginator = orgs_client.get_paginator("list_accounts_for_parent")
     for page in paginator.paginate(ParentId=ou_id):
         for account in page["Accounts"]:
-            # Get SCPs for this account
-            account_scps = fetch_scps_for_target(orgs_client, account["Id"])
+            # Get policies for this account
+            account_policies = fetch_policies_for_target(orgs_client, account["Id"])
 
             accounts.append(
                 Account(
@@ -164,7 +171,8 @@ def build_ou_structure(orgs_client, ou_id):
                     status=account["Status"],
                     joined_method=account["JoinedMethod"],
                     joined_timestamp=account["JoinedTimestamp"].isoformat(),
-                    scps=account_scps,
+                    scps=account_policies["SERVICE_CONTROL_POLICY"],
+                    rcps=account_policies["RESOURCE_CONTROL_POLICY"],
                 )
             )
 
@@ -181,7 +189,8 @@ def build_ou_structure(orgs_client, ou_id):
         name=ou["Name"],
         accounts=accounts,
         child_ous=child_ous,
-        scps=ou_scps,
+        scps=ou_policies["SERVICE_CONTROL_POLICY"],
+        rcps=ou_policies["RESOURCE_CONTROL_POLICY"],
     )
 
 
@@ -272,8 +281,8 @@ def get_account_details(session, account_id: str) -> Optional[Account]:
         account_response = orgs_client.describe_account(AccountId=account_id)
         account = account_response["Account"]
 
-        # Get SCPs for this account
-        account_scps = fetch_scps_for_target(orgs_client, account_id)
+        # Get policies for this account
+        account_policies = fetch_policies_for_target(orgs_client, account_id)
 
         return Account(
             id=account["Id"],
@@ -283,7 +292,8 @@ def get_account_details(session, account_id: str) -> Optional[Account]:
             status=account["Status"],
             joined_method=account["JoinedMethod"],
             joined_timestamp=account["JoinedTimestamp"].isoformat(),
-            scps=account_scps,
+            scps=account_policies["SERVICE_CONTROL_POLICY"],
+            rcps=account_policies["RESOURCE_CONTROL_POLICY"],
         )
     except Exception as e:
         if hasattr(e, "response") and e.response.get("Error", {}).get("Code") == "AccountNotFoundException":

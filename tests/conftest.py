@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from kite.config import Config
-from kite.models import Organization, OrganizationalUnit, Account, ServiceControlPolicy
+from kite.models import Organization, OrganizationalUnit, Account, ControlPolicy
 from kite.data import save_organization
 
 
@@ -59,7 +59,7 @@ def config(
 
 @pytest.fixture
 def full_access_scp():
-    return ServiceControlPolicy(
+    return ControlPolicy(
         id="p-FullAccess",
         name="FullAWSAccess",
         description="Full access to every operation",

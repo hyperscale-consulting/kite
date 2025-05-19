@@ -6,7 +6,7 @@ from kite.checks.region_deny_scp.check import check_region_deny_scp
 from kite.organizations import (
     Organization,
     OrganizationalUnit,
-    ServiceControlPolicy,
+    ControlPolicy,
 )
 
 
@@ -20,7 +20,7 @@ def test_check_region_deny_scp_pass_root():
         accounts=[],
         child_ous=[],
         scps=[
-            ServiceControlPolicy(
+            ControlPolicy(
                 id="p-example123",
                 arn=(
                     "arn:aws:organizations::111111111111:policy/o-example123/"
@@ -71,7 +71,7 @@ def test_check_region_deny_scp_pass_top_level_ous():
         accounts=[],
         child_ous=[],
         scps=[
-            ServiceControlPolicy(
+            ControlPolicy(
                 id="p-example123",
                 arn=(
                     "arn:aws:organizations::111111111111:policy/o-example123/"
@@ -96,7 +96,7 @@ def test_check_region_deny_scp_pass_top_level_ous():
         accounts=[],
         child_ous=[],
         scps=[
-            ServiceControlPolicy(
+            ControlPolicy(
                 id="p-example123",
                 arn=(
                     "arn:aws:organizations::111111111111:policy/o-example123/"
@@ -197,7 +197,7 @@ def test_check_region_deny_scp_fail_missing_ou():
         accounts=[],
         child_ous=[],
         scps=[
-            ServiceControlPolicy(
+            ControlPolicy(
                 id="p-example123",
                 arn=(
                     "arn:aws:organizations::111111111111:policy/o-example123/"

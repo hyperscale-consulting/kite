@@ -2,14 +2,13 @@
 
 import pytest
 from unittest.mock import patch, MagicMock
-from botocore.exceptions import ClientError
 
 
 from kite.organizations import (
     Organization,
     OrganizationalUnit,
     Account,
-    ServiceControlPolicy,
+    ControlPolicy,
 )
 from kite.helpers import (
     get_organization_structure_str,
@@ -63,7 +62,7 @@ def mock_boto3_session():
 @pytest.fixture
 def mock_scp():
     """Create a mock SCP."""
-    return ServiceControlPolicy(
+    return ControlPolicy(
         id="p-1234",
         arn="arn:aws:organizations::123456789012:policy/o-abcd/p-1234",
         name="TestPolicy",

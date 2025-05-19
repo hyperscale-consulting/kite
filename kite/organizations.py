@@ -27,32 +27,29 @@ def fetch_policies_for_target(orgs_client, target_id: str) -> Dict[str, List[Con
         "RESOURCE_CONTROL_POLICY": []
     }
 
-    try:
-        # List policies attached to the target
-        paginator = orgs_client.get_paginator("list_policies_for_target")
-        for page in paginator.paginate(
-            TargetId=target_id,
-            Filter="SERVICE_CONTROL_POLICY,RESOURCE_CONTROL_POLICY"
-        ):
-            for policy in page["Policies"]:
-                # Get the policy details
-                policy_response = orgs_client.describe_policy(PolicyId=policy["Id"])
-                policy_details = policy_response["Policy"]
-                policy_summary = policy_details["PolicySummary"]
+    for policy_type in ["SERVICE_CONTROL_POLICY", "RESOURCE_CONTROL_POLICY"]:
+        try:
+            paginator = orgs_client.get_paginator("list_policies_for_target")
+            for page in paginator.paginate(TargetId=target_id, Filter=policy_type):
+                for policy in page["Policies"]:
+                    # Get the policy details
+                    policy_response = orgs_client.describe_policy(PolicyId=policy["Id"])
+                    policy_details = policy_response["Policy"]
+                    policy_summary = policy_details["PolicySummary"]
 
-                scp = ControlPolicy(
-                    id=policy_summary["Id"],
-                    arn=policy_summary["Arn"],
-                    name=policy_summary["Name"],
-                    description=policy_summary.get("Description", ""),
-                    content=policy_details["Content"],
-                    type=policy_summary["Type"],
-                )
+                    pol = ControlPolicy(
+                        id=policy_summary["Id"],
+                        arn=policy_summary["Arn"],
+                        name=policy_summary["Name"],
+                        description=policy_summary.get("Description", ""),
+                        content=policy_details["Content"],
+                        type=policy_summary["Type"],
+                    )
 
-                policies[policy_summary["Type"]].append(scp)
-    except Exception as e:
-        # Log the error but continue processing
-        print(f"Error fetching policies for target {target_id}: {str(e)}")
+                    policies[policy_summary["Type"]].append(pol)
+        except Exception as e:
+            # Log the error but continue processing
+            print(f"Error fetching {policy_type} policies for target {target_id}: {str(e)}")
 
     return policies
 

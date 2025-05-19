@@ -103,7 +103,13 @@ def mock_policy_details_response():
 def mock_policies_for_target_paginator(mock_policies_for_target_response):
     """Create a mock policies for target paginator."""
     mock_paginator = MagicMock()
-    mock_paginator.paginate.return_value = [mock_policies_for_target_response]
+
+    def paginate_side_effect(**kwargs):
+        if kwargs.get("Filter") == "SERVICE_CONTROL_POLICY":
+            return [mock_policies_for_target_response]
+        else:
+            return [{"Policies": []}]
+    mock_paginator.paginate.side_effect = paginate_side_effect
     return mock_paginator
 
 

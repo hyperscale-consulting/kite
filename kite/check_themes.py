@@ -62,6 +62,7 @@ from kite.checks import (
     check_no_readonly_third_party_access,
     check_cross_account_confused_deputy_prevention,
     check_admin_privileges_are_restricted,
+    check_limit_access_to_production_environments,
 )
 
 # Define check themes and their associated checks
@@ -226,6 +227,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_no_readonly_third_party_access,
             check_cross_account_confused_deputy_prevention,
             check_admin_privileges_are_restricted,
+            check_limit_access_to_production_environments,
         ],
     },
 }

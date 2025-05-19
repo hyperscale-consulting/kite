@@ -140,6 +140,9 @@ from kite.checks.admin_privileges_are_restricted.check import (
 from kite.checks.limit_access_to_production_environments.check import (
     check_limit_access_to_production_environments,
 )
+from kite.checks.cross_service_confused_deputy_prevention.check import (
+    check_cross_service_confused_deputy_prevention,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -203,4 +206,5 @@ __all__ = [
     "check_restrict_admin_privileges_to_small_trusted_group",
     "check_admin_privileges_are_restricted",
     "check_limit_access_to_production_environments",
+    "check_cross_service_confused_deputy_prevention",
 ]

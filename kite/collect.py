@@ -51,6 +51,7 @@ from kite.data import (
     save_customer_managed_policies,
     save_policy_document,
     save_bucket_policies,
+    save_sns_topics,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -240,6 +241,30 @@ def collect_account_data(account_id: str) -> None:
         console.print(
             f"  [green]✓ Saved {len(buckets)} S3 bucket policies for account {account_id}[/]"
         )
+
+        # Collect SNS topics
+        for region in Config.get().active_regions:
+            try:
+                console.print(
+                    f"  [yellow]Fetching SNS topics for account {account_id} in region {region}...[/]"
+                )
+                topics = sns.get_topics(session, region)
+                topics_dicts = [
+                    {
+                        "topic_arn": topic.topic_arn,
+                        "region": topic.region,
+                        "policy": topic.policy,
+                    }
+                    for topic in topics
+                ]
+                save_sns_topics(account_id, region, topics_dicts)
+                console.print(
+                    f"  [green]✓ Saved {len(topics)} SNS topics for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching SNS topics for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
     except Exception as e:
         console.print(

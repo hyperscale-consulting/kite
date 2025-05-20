@@ -601,3 +601,30 @@ def get_bucket_policies(account_id: str) -> List[Dict[str, Any]]:
         List of dictionaries containing bucket information and policies.
     """
     return _load_data("s3_bucket_policies", account_id) or []
+
+
+def save_sns_topics(account_id: str, region: str, topics: List[Dict[str, Any]]) -> None:
+    """Save SNS topics for an account and region.
+
+    Args:
+        account_id: The AWS account ID to save the topics for.
+        region: The AWS region to save the topics for.
+        topics: The list of SNS topics to save.
+    """
+    _save_data({"topics": topics}, f"sns_topics_{region}", account_id)
+
+
+def get_sns_topics(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get SNS topics for an account and region.
+
+    Args:
+        account_id: The AWS account ID to get the topics for.
+        region: The AWS region to get the topics for.
+
+    Returns:
+        The list of SNS topics, or an empty list if not found.
+    """
+    data = _load_data(f"sns_topics_{region}", account_id)
+    if data is None:
+        return []
+    return data.get("topics", [])

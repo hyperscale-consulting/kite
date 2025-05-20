@@ -154,3 +154,7 @@ def check_confused_deputy_protection_for_s3() -> Dict:
             )
         }
     }
+
+
+check_confused_deputy_protection_for_s3._CHECK_ID = CHECK_ID
+check_confused_deputy_protection_for_s3._CHECK_NAME = CHECK_NAME

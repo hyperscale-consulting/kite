@@ -146,6 +146,9 @@ from kite.checks.cross_service_confused_deputy_prevention.check import (
 from kite.checks.confused_deputy_protection_for_s3.check import (
     check_confused_deputy_protection_for_s3,
 )
+from kite.checks.sns_confused_deputy_prevention.check import (
+    check_sns_confused_deputy_prevention,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -211,4 +214,5 @@ __all__ = [
     "check_limit_access_to_production_environments",
     "check_cross_service_confused_deputy_prevention",
     "check_confused_deputy_protection_for_s3",
+    "check_sns_confused_deputy_prevention",
 ]

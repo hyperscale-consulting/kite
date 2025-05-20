@@ -125,6 +125,7 @@ def fetch_organization(session) -> Optional[Organization]:
         )
 
         return Organization(
+            id=org["Id"],
             master_account_id=org["MasterAccountId"],
             arn=org["Arn"],
             feature_set=org["FeatureSet"],

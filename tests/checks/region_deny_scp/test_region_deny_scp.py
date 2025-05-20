@@ -39,6 +39,7 @@ def test_check_region_deny_scp_pass_root():
     )
 
     mock_org = Organization(
+        id="o-example123",
         master_account_id="111111111111",
         arn=("arn:aws:organizations::111111111111:organization/o-example123"),
         feature_set="ALL",
@@ -124,6 +125,7 @@ def test_check_region_deny_scp_pass_top_level_ous():
     )
 
     mock_org = Organization(
+        id="o-example123",
         master_account_id="111111111111",
         arn=("arn:aws:organizations::111111111111:organization/o-example123"),
         feature_set="ALL",
@@ -162,6 +164,7 @@ def test_check_region_deny_scp_fail_no_scp():
     )
 
     mock_org = Organization(
+        id="o-example123",
         master_account_id="111111111111",
         arn=("arn:aws:organizations::111111111111:organization/o-example123"),
         feature_set="ALL",
@@ -234,6 +237,7 @@ def test_check_region_deny_scp_fail_missing_ou():
     )
 
     mock_org = Organization(
+        id="o-example123",
         master_account_id="111111111111",
         arn=("arn:aws:organizations::111111111111:organization/o-example123"),
         feature_set="ALL",
@@ -286,6 +290,7 @@ def test_check_region_deny_scp_no_active_regions():
     )
 
     mock_org = Organization(
+        id="o-example123",
         master_account_id="111111111111",
         arn=("arn:aws:organizations::111111111111:organization/o-example123"),
         feature_set="ALL",

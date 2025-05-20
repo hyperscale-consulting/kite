@@ -34,6 +34,7 @@ def mock_org_response():
     """Create a mock organization response."""
     return {
         "Organization": {
+            "Id": "o-exampleorgid",
             "MasterAccountId": "123456789012",
             "Arn": ("arn:aws:organizations::123456789012:organization/o-exampleorgid"),
             "FeatureSet": "ALL",

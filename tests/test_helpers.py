@@ -117,8 +117,9 @@ def mock_root_ou(mock_scp, mock_child_ou):
 def mock_organization(mock_root_ou):
     """Create a mock organization."""
     return Organization(
+        id="o-123456789012",
         master_account_id="123456789012",
-        arn="arn:aws:organizations::123456789012:organization/o-abcd",
+        arn="arn:aws:organizations::123456789012:organization/o-123456789012",
         feature_set="ALL",
         root=mock_root_ou,
     )

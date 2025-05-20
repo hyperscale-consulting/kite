@@ -221,6 +221,7 @@ def organization_id():
 @pytest.fixture
 def organization(mgmt_account_id, root_ou, organization_id):
     result = Organization(
+        id=organization_id,
         master_account_id=mgmt_account_id,
         arn=f"arn:aws:organizations:::{mgmt_account_id}:organization/{organization_id}",
         feature_set="ALL",

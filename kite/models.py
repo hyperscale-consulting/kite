@@ -112,6 +112,7 @@ class OrganizationalUnit:
 class Organization:
     """Represents an AWS organization with its structure."""
 
+    id: str  # The organization ID (e.g., o-1234567890)
     master_account_id: str
     arn: str
     feature_set: str

@@ -4,7 +4,6 @@ import json
 from typing import Dict, Any
 from kite.data import get_bucket_policies
 from kite.helpers import get_account_ids_in_scope
-from kite.config import Config
 
 
 # Define check ID and name
@@ -59,7 +58,7 @@ def _has_confused_deputy_protection(statement: Dict[str, Any]) -> bool:
     return False
 
 
-def check_cross_service_confused_deputy_prevention() -> Dict[str, Any]:
+def check_s3_confused_deputy_protection() -> Dict[str, Any]:
     """
     Check for S3 bucket policies that could be vulnerable to confused deputy attacks.
 
@@ -137,5 +136,5 @@ def check_cross_service_confused_deputy_prevention() -> Dict[str, Any]:
 
 
 # Attach the check ID and name to the function
-check_cross_service_confused_deputy_prevention._CHECK_ID = CHECK_ID
-check_cross_service_confused_deputy_prevention._CHECK_NAME = CHECK_NAME
+check_s3_confused_deputy_protection._CHECK_ID = CHECK_ID
+check_s3_confused_deputy_protection._CHECK_NAME = CHECK_NAME

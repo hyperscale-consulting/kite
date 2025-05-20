@@ -140,14 +140,14 @@ from kite.checks.admin_privileges_are_restricted.check import (
 from kite.checks.limit_access_to_production_environments.check import (
     check_limit_access_to_production_environments,
 )
-from kite.checks.cross_service_confused_deputy_prevention.check import (
-    check_cross_service_confused_deputy_prevention,
-)
 from kite.checks.confused_deputy_protection_for_s3.check import (
     check_confused_deputy_protection_for_s3,
 )
-from kite.checks.sns_confused_deputy_prevention.check import (
-    check_sns_confused_deputy_prevention,
+from kite.checks.s3_confused_deputy_protection.check import (
+    check_s3_confused_deputy_protection,
+)
+from kite.checks.sns_confused_deputy_protection.check import (
+    check_sns_confused_deputy_protection,
 )
 
 __all__ = [
@@ -212,7 +212,7 @@ __all__ = [
     "check_restrict_admin_privileges_to_small_trusted_group",
     "check_admin_privileges_are_restricted",
     "check_limit_access_to_production_environments",
-    "check_cross_service_confused_deputy_prevention",
     "check_confused_deputy_protection_for_s3",
-    "check_sns_confused_deputy_prevention",
+    "check_s3_confused_deputy_protection",
+    "check_sns_confused_deputy_protection",
 ]

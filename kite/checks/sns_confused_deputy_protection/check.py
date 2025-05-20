@@ -58,7 +58,7 @@ def _has_confused_deputy_protection(statement: Dict[str, Any]) -> bool:
     return False
 
 
-def check_sns_confused_deputy_prevention() -> Dict[str, Any]:
+def check_sns_confused_deputy_protection() -> Dict[str, Any]:
     """
     Check for SNS topic policies that could be vulnerable to confused deputy attacks.
 
@@ -134,5 +134,5 @@ def check_sns_confused_deputy_prevention() -> Dict[str, Any]:
 
 
 # Attach the check ID and name to the function
-check_sns_confused_deputy_prevention._CHECK_ID = CHECK_ID
-check_sns_confused_deputy_prevention._CHECK_NAME = CHECK_NAME
+check_sns_confused_deputy_protection._CHECK_ID = CHECK_ID
+check_sns_confused_deputy_protection._CHECK_NAME = CHECK_NAME

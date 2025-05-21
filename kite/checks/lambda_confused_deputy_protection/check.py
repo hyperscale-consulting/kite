@@ -48,12 +48,17 @@ def _has_confused_deputy_protection(statement: Dict[str, Any]) -> bool:
             "aws:SourceOrgID",
             "aws:SourceOrgPaths"
         }
-        if any(key in condition["StringEquals"] for key in protected_keys):
+        # Check for any of the protected keys in a case-insensitive way
+        condition_keys = {k.lower(): v for k, v in condition["StringEquals"].items()}
+        if any(key.lower() in condition_keys for key in protected_keys):
             return True
 
     # Check ArnLike conditions
-    if "ArnLike" in condition and "aws:SourceArn" in condition["ArnLike"]:
-        return True
+    if "ArnLike" in condition:
+        # Check for aws:SourceArn in a case-insensitive way
+        arnlike_keys = {k.lower(): v for k, v in condition["ArnLike"].items()}
+        if "aws:sourcearn" in arnlike_keys:
+            return True
 
     return False
 

@@ -158,6 +158,9 @@ from kite.checks.lambda_confused_deputy_protection.check import (
 from kite.checks.kms_confused_deputy_protection.check import (
     check_kms_confused_deputy_protection,
 )
+from kite.checks.established_emergency_access_procedures.check import (
+    check_emergency_access_procedures,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -227,4 +230,5 @@ __all__ = [
     "check_sqs_confused_deputy_protection",
     "check_lambda_confused_deputy_protection",
     "check_kms_confused_deputy_protection",
+    "check_emergency_access_procedures",
 ]

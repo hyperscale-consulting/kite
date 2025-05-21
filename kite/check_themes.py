@@ -68,6 +68,7 @@ from kite.checks import (
     check_sqs_confused_deputy_protection,
     check_lambda_confused_deputy_protection,
     check_kms_confused_deputy_protection,
+    check_emergency_access_procedures,
 )
 
 # Define check themes and their associated checks
@@ -238,6 +239,15 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_sqs_confused_deputy_protection,
             check_lambda_confused_deputy_protection,
             check_kms_confused_deputy_protection,
+        ],
+    },
+    "Establish emergency access procedures": {
+        "description": (
+            "Checks related to establishing and maintaining emergency access "
+            "procedures for critical failure scenarios"
+        ),
+        "checks": [
+            check_emergency_access_procedures,
         ],
     },
 }

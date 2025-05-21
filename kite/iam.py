@@ -456,3 +456,99 @@ def get_policy_and_document(session, policy_arn: str) -> Dict[str, Any]:
         "PolicyDetails": policy,
         "PolicyDocument": policy_document
     }
+
+
+def list_users(session) -> List[Dict[str, Any]]:
+    """
+    List all IAM users in the account with their groups, policies, and inline policies.
+
+    Args:
+        session: The boto3 session to use.
+
+    Returns:
+        List of dictionaries containing user information
+    """
+    iam_client = session.client("iam")
+    users = []
+    paginator = iam_client.get_paginator("list_users")
+    for page in paginator.paginate():
+        for user in page["Users"]:
+            # Get user's groups
+            groups = []
+            for group in iam_client.list_groups_for_user(
+                UserName=user["UserName"]
+            )["Groups"]:
+                groups.append(group["GroupName"])
+
+            # Get user's policies
+            policies = []
+            for policy in iam_client.list_attached_user_policies(
+                UserName=user["UserName"]
+            )["AttachedPolicies"]:
+                policies.append(policy["PolicyName"])
+
+            # Get user's inline policy
+            try:
+                inline_policy = iam_client.get_user_policy(
+                    UserName=user["UserName"],
+                    PolicyName="inline-policy"
+                )["PolicyDocument"]
+            except iam_client.exceptions.NoSuchEntityException:
+                inline_policy = None
+
+            users.append({
+                "name": user["UserName"],
+                "arn": user["Arn"],
+                "create_date": user["CreateDate"],
+                "groups": groups,
+                "policies": policies,
+                "inline_policy": inline_policy
+            })
+
+    return users
+
+
+def list_groups(session) -> List[Dict[str, Any]]:
+    """
+    List all IAM groups in the account with their attached policies.
+
+    Args:
+        session: The boto3 session to use.
+
+    Returns:
+        List of dictionaries containing group information,
+    """
+    iam_client = session.client("iam")
+    groups = []
+    paginator = iam_client.get_paginator("list_groups")
+    for page in paginator.paginate():
+        for group in page["Groups"]:
+            # Get group's policies
+            policies = []
+            for policy in iam_client.list_attached_group_policies(
+                GroupName=group["GroupName"]
+            )["AttachedPolicies"]:
+                policies.append(policy["PolicyName"])
+
+            # Get group's inline policies
+            inline_policies = {}
+            try:
+                for policy_name in iam_client.list_group_policies(
+                    GroupName=group["GroupName"]
+                )["PolicyNames"]:
+                    inline_policies[policy_name] = iam_client.get_group_policy(
+                        GroupName=group["GroupName"],
+                        PolicyName=policy_name
+                    )["PolicyDocument"]
+            except iam_client.exceptions.NoSuchEntityException:
+                pass
+
+            groups.append({
+                "arn": group["Arn"],
+                "name": group["GroupName"],
+                "create_date": group["CreateDate"],
+                "policies": policies,
+                "inline_policies": inline_policies
+            })
+
+    return groups

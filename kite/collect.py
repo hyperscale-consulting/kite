@@ -55,6 +55,9 @@ from kite.data import (
     save_sqs_queues,
     save_lambda_functions,
     save_kms_keys,
+    save_identity_center_permission_sets,
+    save_identity_store_users,
+    save_identity_store_groups,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -316,6 +319,49 @@ def collect_account_data(account_id: str) -> None:
                 console.print(
                     f"  [red]✗ Error fetching KMS keys for account {account_id} in region {region}: {str(e)}[/]"
                 )
+
+        # Collect account level identity center instances
+        console.print(
+            f"  [yellow]Fetching Identity Center instances for account {account_id}...[/]"
+        )
+        instances = identity_center.list_identity_center_instances(session)
+        save_identity_center_instances(instances, account_id)
+        console.print(f"  [green]✓ Saved {len(instances)} Identity Center instances for account {account_id}[/]")
+
+        # Collect account level identity store users
+        console.print(
+            f"  [yellow]Fetching Identity Store users for account {account_id}...[/]"
+        )
+        for instance in instances:
+            users = identity_store.get_users(session, instance["IdentityStoreId"])
+            save_identity_store_users(account_id, instance["IdentityStoreId"], users)
+            console.print(f"  [green]✓ Saved {len(users)} Identity Store users for "
+                          f"account {account_id} and instance "
+                          f"{instance['IdentityStoreId']}[/]")
+
+        # Collect account level identity store groups
+        console.print(
+            f"  [yellow]Fetching Identity Store groups for account {account_id}...[/]"
+        )
+        for instance in instances:
+            groups = identity_store.get_groups(session, instance["IdentityStoreId"])
+            save_identity_store_groups(account_id, instance["IdentityStoreId"], groups)
+            console.print(f"  [green]✓ Saved {len(groups)} Identity Store groups for "
+                          f"account {account_id} and instance "
+                          f"{instance['IdentityStoreId']}[/]")
+
+        # Collect account level identity center permission sets
+        # TODO: This is not working - current permissions (SecurityAudit and
+        # ViewOnlyAccess) do not allow
+        #console.print(
+        #    f"  [yellow]Fetching Identity Center permission sets for account {account_id}...[/]"
+        #)
+        #for instance in instances:
+        #    permission_sets = identity_center.list_permission_sets(session, instance["InstanceArn"])
+        #    save_identity_center_permission_sets(account_id, instance["IdentityStoreId"], permission_sets)
+        #    console.print(f"  [green]✓ Saved {len(permission_sets)} Identity Center permission sets for "
+        #                  f"account {account_id} and instance "
+        #                  f"{instance['IdentityStoreId']}[/]")
 
     except Exception as e:
         console.print(

@@ -189,64 +189,67 @@ def get_account_summary(account_id: str) -> Optional[Dict[str, Any]]:
     return _load_data("account_summary", account_id)
 
 
-def save_saml_providers(providers: List[Dict[str, Any]]) -> None:
+def save_saml_providers(providers: List[Dict[str, Any]], account_id: str = "organization") -> None:
     """Save SAML providers.
 
     Args:
         providers: The list of SAML providers to save.
+        account_id: The AWS account ID to save the providers for.
     """
-    _save_data({"providers": providers}, "saml_providers")
+    _save_data({"providers": providers}, "saml_providers", account_id)
 
 
-def get_saml_providers() -> Optional[List[Dict[str, Any]]]:
+def get_saml_providers(account_id: str = "organization") -> Optional[List[Dict[str, Any]]]:
     """Get SAML providers.
 
     Returns:
         The list of SAML providers, or None if not found.
     """
-    data = _load_data("saml_providers")
+    data = _load_data("saml_providers", account_id)
     if data is None:
         return None
     return data.get("providers", [])
 
 
-def save_oidc_providers(providers: List[Dict[str, Any]]) -> None:
+def save_oidc_providers(providers: List[Dict[str, Any]], account_id: str = "organization") -> None:
     """Save OIDC providers.
 
     Args:
         providers: The list of OIDC providers to save.
+        account_id: The AWS account ID to save the providers for.
     """
-    _save_data({"providers": providers}, "oidc_providers")
+    _save_data({"providers": providers}, "oidc_providers", account_id)
 
 
-def get_oidc_providers() -> Optional[List[Dict[str, Any]]]:
+def get_oidc_providers(account_id: str = "organization") -> Optional[List[Dict[str, Any]]]:
     """Get OIDC providers.
 
     Returns:
         The list of OIDC providers, or None if not found.
     """
-    data = _load_data("oidc_providers")
+    data = _load_data("oidc_providers", account_id)
     if data is None:
         return None
     return data.get("providers", [])
 
 
-def save_identity_center_instances(instances: List[Dict[str, Any]]) -> None:
+def save_identity_center_instances(instances: List[Dict[str, Any]], account_id: str = "organization") -> None:
     """Save Identity Center instances.
 
     Args:
         instances: The list of Identity Center instances to save.
+        account_id: The AWS account ID to save the instances for.
     """
-    _save_data({"instances": instances}, "identity_center_instances")
+    _save_data({"instances": instances}, "identity_center_instances", account_id)
 
 
-def get_identity_center_instances() -> Optional[List[Dict[str, Any]]]:
+def get_identity_center_instances(account_id: str = "organization") -> Optional[List[Dict[str, Any]]]:
     """Get Identity Center instances.
 
     Returns:
         The list of Identity Center instances, or None if not found.
     """
-    data = _load_data("identity_center_instances")
+    data = _load_data("identity_center_instances", account_id)
     if data is None:
         return None
     return data.get("instances", [])
@@ -709,3 +712,84 @@ def get_kms_keys(account_id: str, region: str) -> List[Dict[str, Any]]:
     if data is None:
         return []
     return data.get("keys", [])
+
+
+def save_identity_center_permission_sets(account_id: str, instance_id: str, permission_sets: List[Dict[str, Any]]) -> None:
+    """Save Identity Center permission sets for an account and instance.
+
+    Args:
+        account_id: The AWS account ID.
+        instance_id: The ID of the Identity Center instance.
+        permission_sets: The list of permission sets to save.
+    """
+    _save_data({"permission_sets": permission_sets}, f"identity_center_permission_sets_{instance_id}", account_id)
+
+
+def get_identity_center_permission_sets(account_id: str, instance_id: str) -> List[Dict[str, Any]]:
+    """Get Identity Center permission sets for an account and instance.
+
+    Args:
+        account_id: The AWS account ID.
+        instance_id: The ID of the Identity Center instance.
+
+    Returns:
+        The list of Identity Center permission sets, or an empty list if not found.
+    """
+    data = _load_data(f"identity_center_permission_sets_{instance_id}", account_id)
+    if data is None:
+        return []
+    return data.get("permission_sets", [])
+
+
+def save_identity_store_users(account_id: str, instance_id: str, users: List[Dict[str, Any]]) -> None:
+    """Save Identity Store users for an account and instance.
+
+    Args:
+        account_id: The AWS account ID.
+        instance_id: The ID of the Identity Center instance.
+        users: The list of users to save.
+    """
+    _save_data({"users": users}, f"identity_store_users_{instance_id}", account_id)
+
+
+def get_identity_store_users(account_id: str, instance_id: str) -> List[Dict[str, Any]]:
+    """Get Identity Store users for an account and instance.
+
+    Args:
+        account_id: The AWS account ID.
+        instance_id: The ID of the Identity Center instance.
+
+    Returns:
+        The list of Identity Store users, or an empty list if not found.
+    """
+    data = _load_data(f"identity_store_users_{instance_id}", account_id)
+    if data is None:
+        return []
+    return data.get("users", [])
+
+
+def save_identity_store_groups(account_id: str, instance_id: str, groups: List[Dict[str, Any]]) -> None:
+    """Save Identity Store groups for an account and instance.
+
+    Args:
+        account_id: The AWS account ID.
+        instance_id: The ID of the Identity Center instance.
+        groups: The list of groups to save.
+    """
+    _save_data({"groups": groups}, f"identity_store_groups_{instance_id}", account_id)
+
+
+def get_identity_store_groups(account_id: str, instance_id: str) -> List[Dict[str, Any]]:
+    """Get Identity Store groups for an account and instance.
+
+    Args:
+        account_id: The AWS account ID.
+        instance_id: The ID of the Identity Center instance.
+
+    Returns:
+        The list of Identity Store groups, or an empty list if not found.
+    """
+    data = _load_data(f"identity_store_groups_{instance_id}", account_id)
+    if data is None:
+        return []
+    return data.get("groups", [])

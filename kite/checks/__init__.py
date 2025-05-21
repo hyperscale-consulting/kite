@@ -149,6 +149,15 @@ from kite.checks.s3_confused_deputy_protection.check import (
 from kite.checks.sns_confused_deputy_protection.check import (
     check_sns_confused_deputy_protection,
 )
+from kite.checks.sqs_confused_deputy_protection.check import (
+    check_sqs_confused_deputy_protection,
+)
+from kite.checks.lambda_confused_deputy_protection.check import (
+    check_lambda_confused_deputy_protection,
+)
+from kite.checks.kms_confused_deputy_protection.check import (
+    check_kms_confused_deputy_protection,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -215,4 +224,7 @@ __all__ = [
     "check_confused_deputy_protection_for_s3",
     "check_s3_confused_deputy_protection",
     "check_sns_confused_deputy_protection",
+    "check_sqs_confused_deputy_protection",
+    "check_lambda_confused_deputy_protection",
+    "check_kms_confused_deputy_protection",
 ]

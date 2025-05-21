@@ -1,38 +1,43 @@
-"""Lambda service module for Kite."""
+"""AWS Lambda functionality module."""
 
-from typing import List
-from dataclasses import dataclass
+import json
+from typing import Dict, Any, List
 
-
-@dataclass
-class LambdaFunction:
-    """Lambda function data class."""
-
-    function_name: str
-    region: str
+import boto3
 
 
-def get_functions(session, region: str) -> List[LambdaFunction]:
+def get_functions(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
     """
-    Get all Lambda functions in a region.
+    Get all Lambda functions and their policies in the specified region.
 
     Args:
-        session: The boto3 session to use
-        region: The AWS region to check
+        session: A boto3 session with credentials for the target account
+        region: The AWS region
 
     Returns:
-        List of Lambda functions
+        List of dictionaries containing function information and policies
     """
     lambda_client = session.client("lambda", region_name=region)
     functions = []
 
-    response = lambda_client.list_functions()
-    for function in response.get("Functions", []):
-        functions.append(
-            LambdaFunction(
-                function_name=function.get("FunctionName"),
-                region=region,
-            )
-        )
+    # List all functions
+    paginator = lambda_client.get_paginator("list_functions")
+    for page in paginator.paginate():
+        for function in page["Functions"]:
+            function_arn = function["FunctionArn"]
+
+            # Get the resource policy
+            try:
+                policy = lambda_client.get_policy(FunctionName=function_arn)
+                policy = json.loads(policy["Policy"])
+            except lambda_client.exceptions.ResourceNotFoundException:
+                policy = None
+
+            functions.append({
+                "function_arn": function_arn,
+                "function_name": function["FunctionName"],
+                "policy": policy,
+                "region": region,
+            })
 
     return functions

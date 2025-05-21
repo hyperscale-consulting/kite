@@ -65,6 +65,9 @@ from kite.checks import (
     check_limit_access_to_production_environments,
     check_s3_confused_deputy_protection,
     check_sns_confused_deputy_protection,
+    check_sqs_confused_deputy_protection,
+    check_lambda_confused_deputy_protection,
+    check_kms_confused_deputy_protection,
 )
 
 # Define check themes and their associated checks
@@ -232,6 +235,9 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_limit_access_to_production_environments,
             check_s3_confused_deputy_protection,
             check_sns_confused_deputy_protection,
+            check_sqs_confused_deputy_protection,
+            check_lambda_confused_deputy_protection,
+            check_kms_confused_deputy_protection,
         ],
     },
 }

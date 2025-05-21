@@ -1,41 +1,40 @@
-"""KMS service module for Kite."""
+"""AWS KMS functionality module."""
 
-from typing import List
-from dataclasses import dataclass
+import json
+from typing import Dict, Any, List
 
-
-@dataclass
-class KMSKey:
-    """KMS key data class."""
-
-    key_id: str
-    description: str
+import boto3
 
 
-def get_customer_keys(session, region: str) -> List[KMSKey]:
+def get_keys(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
     """
-    Get all customer-managed KMS keys in a region.
+    Get all KMS keys and their policies in the specified region.
 
     Args:
-        session: The boto3 session to use
-        region: The AWS region to check
+        session: A boto3 session with credentials for the target account
+        region: The AWS region
 
     Returns:
-        List of customer-managed KMS keys
+        List of dictionaries containing key information and policies
     """
-    kms_client = session.client("kms", region_name=region)
+    kms = session.client("kms", region_name=region)
     keys = []
 
-    response = kms_client.list_keys()
-    for key in response.get("Keys", []):
-        key_id = key.get("KeyId")
-        key_metadata = kms_client.describe_key(KeyId=key_id).get("KeyMetadata", {})
-        if key_metadata.get("KeyManager") == "CUSTOMER":
-            keys.append(
-                KMSKey(
-                    key_id=key_id,
-                    description=key_metadata.get("Description", "No description"),
-                )
-            )
+    # List all keys
+    paginator = kms.get_paginator("list_keys")
+    for page in paginator.paginate():
+        for key in page["Keys"]:
+            key_id = key["KeyId"]
+
+            # Get the key policy
+            policy = kms.get_key_policy(KeyId=key_id, PolicyName="default")
+            policy = json.loads(policy["Policy"])
+
+            keys.append({
+                "key_id": key_id,
+                "key_arn": key["KeyArn"],
+                "policy": policy,
+                "description": key.get("Description", "No description")
+            })
 
     return keys

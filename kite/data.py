@@ -628,3 +628,84 @@ def get_sns_topics(account_id: str, region: str) -> List[Dict[str, Any]]:
     if data is None:
         return []
     return data.get("topics", [])
+
+
+def save_sqs_queues(account_id: str, region: str, queues: List[Dict[str, Any]]) -> None:
+    """Save SQS queues for an account and region.
+
+    Args:
+        account_id: The AWS account ID to save the queues for.
+        region: The AWS region to save the queues for.
+        queues: The list of SQS queues to save.
+    """
+    _save_data({"queues": queues}, f"sqs_queues_{region}", account_id)
+
+
+def get_sqs_queues(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get SQS queues for an account and region.
+
+    Args:
+        account_id: The AWS account ID to get the queues for.
+        region: The AWS region to get the queues for.
+
+    Returns:
+        The list of SQS queues, or an empty list if not found.
+    """
+    data = _load_data(f"sqs_queues_{region}", account_id)
+    if data is None:
+        return []
+    return data.get("queues", [])
+
+
+def save_lambda_functions(account_id: str, region: str, functions: List[Dict[str, Any]]) -> None:
+    """Save Lambda functions for an account and region.
+
+    Args:
+        account_id: The AWS account ID to save the functions for.
+        region: The AWS region to save the functions for.
+        functions: The list of Lambda functions to save.
+    """
+    _save_data({"functions": functions}, f"lambda_functions_{region}", account_id)
+
+
+def get_lambda_functions(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Lambda functions for an account and region.
+
+    Args:
+        account_id: The AWS account ID to get the functions for.
+        region: The AWS region to get the functions for.
+
+    Returns:
+        The list of Lambda functions, or an empty list if not found.
+    """
+    data = _load_data(f"lambda_functions_{region}", account_id)
+    if data is None:
+        return []
+    return data.get("functions", [])
+
+
+def save_kms_keys(account_id: str, region: str, keys: List[Dict[str, Any]]) -> None:
+    """Save KMS keys for an account and region.
+
+    Args:
+        account_id: The AWS account ID to save the keys for.
+        region: The AWS region to save the keys for.
+        keys: The list of KMS keys to save.
+    """
+    _save_data({"keys": keys}, f"kms_keys_{region}", account_id)
+
+
+def get_kms_keys(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get KMS keys for an account and region.
+
+    Args:
+        account_id: The AWS account ID to get the keys for.
+        region: The AWS region to get the keys for.
+
+    Returns:
+        The list of KMS keys, or an empty list if not found.
+    """
+    data = _load_data(f"kms_keys_{region}", account_id)
+    if data is None:
+        return []
+    return data.get("keys", [])

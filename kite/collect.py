@@ -52,6 +52,9 @@ from kite.data import (
     save_policy_document,
     save_bucket_policies,
     save_sns_topics,
+    save_sqs_queues,
+    save_lambda_functions,
+    save_kms_keys,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -266,6 +269,54 @@ def collect_account_data(account_id: str) -> None:
                     f"  [red]✗ Error fetching SNS topics for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
+        # Collect SQS queues
+        for region in Config.get().active_regions:
+            try:
+                console.print(
+                    f"  [yellow]Fetching SQS queues for account {account_id} in region {region}...[/]"
+                )
+                queues = sqs.get_queues(session, region)
+                save_sqs_queues(account_id, region, queues)
+                console.print(
+                    f"  [green]✓ Saved {len(queues)} SQS queues for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching SQS queues for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect Lambda functions
+        for region in Config.get().active_regions:
+            try:
+                console.print(
+                    f"  [yellow]Fetching Lambda functions for account {account_id} in region {region}...[/]"
+                )
+                functions = lambda_.get_functions(session, region)
+                save_lambda_functions(account_id, region, functions)
+                console.print(
+                    f"  [green]✓ Saved {len(functions)} Lambda functions for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching Lambda functions for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect KMS keys
+        for region in Config.get().active_regions:
+            try:
+                console.print(
+                    f"  [yellow]Fetching KMS keys for account {account_id} in region {region}...[/]"
+                )
+                keys = kms.get_keys(session, region)
+                save_kms_keys(account_id, region, keys)
+                console.print(
+                    f"  [green]✓ Saved {len(keys)} KMS keys for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching KMS keys for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
     except Exception as e:
         console.print(
             f"  [red]✗ Error collecting data for account {account_id}: {str(e)}[/]"
@@ -424,7 +475,7 @@ def collect_mgmt_account_workload_resources() -> None:
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="Lambda",
-                    resource_id=function.function_name,
+                    resource_id=function["function_name"],
                     region=region,
                 )
             )
@@ -485,19 +536,19 @@ def collect_mgmt_account_workload_resources() -> None:
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="SQS",
-                    resource_id=queue.queue_url,
+                    resource_id=queue["queue_url"],
                     region=region,
                 )
             )
 
         # Check KMS keys
-        for key in kms.get_customer_keys(session, region):
+        for key in kms.get_keys(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="KMS",
-                    resource_id=key.key_id,
+                    resource_id=key["key_id"],
                     region=region,
-                    details={"description": key.description},
+                    details={"description": key["description"]},
                 )
             )
 

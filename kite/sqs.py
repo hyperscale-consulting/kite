@@ -1,38 +1,47 @@
-"""SQS service module for Kite."""
+"""AWS SQS functionality module."""
 
-from typing import List
-from dataclasses import dataclass
+import json
+from typing import Dict, Any, List
 
-
-@dataclass
-class SQSQueue:
-    """SQS queue data class."""
-
-    queue_url: str
-    region: str
+import boto3
 
 
-def get_queues(session, region: str) -> List[SQSQueue]:
+def get_queues(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
     """
-    Get all SQS queues in a region.
+    Get all SQS queues and their policies in the specified region.
 
     Args:
-        session: The boto3 session to use
-        region: The AWS region to check
+        session: A boto3 session with credentials for the target account
+        region: The AWS region
 
     Returns:
-        List of SQS queues
+        List of dictionaries containing queue information and policies
     """
-    sqs_client = session.client("sqs", region_name=region)
+    sqs = session.client("sqs", region_name=region)
     queues = []
 
-    response = sqs_client.list_queues()
-    for queue_url in response.get("QueueUrls", []):
-        queues.append(
-            SQSQueue(
-                queue_url=queue_url,
-                region=region,
-            )
+    # List all queues
+    response = sqs.list_queues()
+    queue_urls = response.get("QueueUrls", [])
+
+    # Get attributes for each queue
+    for queue_url in queue_urls:
+        attributes = sqs.get_queue_attributes(
+            QueueUrl=queue_url,
+            AttributeNames=["QueueArn", "Policy"]
         )
+
+        queue_arn = attributes["Attributes"]["QueueArn"]
+        policy = attributes["Attributes"].get("Policy")
+
+        if policy:
+            policy = json.loads(policy)
+
+        queues.append({
+            "queue_url": queue_url,
+            "queue_arn": queue_arn,
+            "policy": policy,
+            "region": region,
+        })
 
     return queues

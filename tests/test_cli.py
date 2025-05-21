@@ -181,7 +181,7 @@ def runner(
     monkeypatch.setattr(sagemaker, "get_notebook_instances", lambda *args, **kwargs: [])
     monkeypatch.setattr(sns, "get_topics", lambda *args, **kwargs: [])
     monkeypatch.setattr(sqs, "get_queues", lambda *args, **kwargs: [])
-    monkeypatch.setattr(kms, "get_customer_keys", lambda *args, **kwargs: [])
+    monkeypatch.setattr(kms, "get_keys", lambda *args, **kwargs: [])
     monkeypatch.setattr(s3, "get_buckets", lambda *args, **kwargs: [])
     monkeypatch.setattr(cloudfront, "get_distributions", lambda *args, **kwargs: [])
     monkeypatch.setattr(iam, "fetch_organization_features",

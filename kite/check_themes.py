@@ -69,6 +69,7 @@ from kite.checks import (
     check_lambda_confused_deputy_protection,
     check_kms_confused_deputy_protection,
     check_emergency_access_procedures,
+    check_active_unused_access_analyzer,
 )
 
 # Define check themes and their associated checks
@@ -248,6 +249,12 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
         ),
         "checks": [
             check_emergency_access_procedures,
+        ],
+    },
+    "Reduce permissions continuously": {
+        "description": "Checks related to reducing permissions continuously",
+        "checks": [
+            check_active_unused_access_analyzer,
         ],
     },
 }

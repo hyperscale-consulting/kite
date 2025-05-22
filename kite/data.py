@@ -793,3 +793,28 @@ def get_identity_store_groups(account_id: str, instance_id: str) -> List[Dict[st
     if data is None:
         return []
     return data.get("groups", [])
+
+
+def save_access_analyzers(account_id: str, analyzers: List[Dict[str, Any]]) -> None:
+    """Save Access Analyzer analyzers for an account.
+
+    Args:
+        account_id: The AWS account ID.
+        analyzers: The list of Access Analyzer analyzers to save.
+    """
+    _save_data({"analyzers": analyzers}, "access_analyzers", account_id)
+
+
+def get_access_analyzers(account_id: str) -> List[Dict[str, Any]]:
+    """Get Access Analyzer analyzers for an account.
+
+    Args:
+        account_id: The AWS account ID.
+
+    Returns:
+        The list of Access Analyzer analyzers, or an empty list if not found.
+    """
+    data = _load_data("access_analyzers", account_id)
+    if data is None:
+        return []
+    return data.get("analyzers", [])

@@ -23,6 +23,7 @@ from . import (
     identity_store,
     cognito,
     secretsmanager,
+    accessanalyzer,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -55,9 +56,10 @@ from kite.data import (
     save_sqs_queues,
     save_lambda_functions,
     save_kms_keys,
-    save_identity_center_permission_sets,
+    #save_identity_center_permission_sets,
     save_identity_store_users,
     save_identity_store_groups,
+    save_access_analyzers,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -362,6 +364,14 @@ def collect_account_data(account_id: str) -> None:
         #    console.print(f"  [green]✓ Saved {len(permission_sets)} Identity Center permission sets for "
         #                  f"account {account_id} and instance "
         #                  f"{instance['IdentityStoreId']}[/]")
+
+        # Collect access analyzer analyzers
+        console.print(
+            f"  [yellow]Fetching Access Analyzer analyzers for account {account_id}...[/]"
+        )
+        analyzers = accessanalyzer.list_analyzers(session)
+        save_access_analyzers(account_id, analyzers)
+        console.print(f"  [green]✓ Saved {len(analyzers)} Access Analyzer analyzers for account {account_id}[/]")
 
     except Exception as e:
         console.print(

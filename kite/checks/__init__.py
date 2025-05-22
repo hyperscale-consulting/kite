@@ -164,6 +164,9 @@ from kite.checks.established_emergency_access_procedures.check import (
 from kite.checks.active_unused_access_analyzer.check import (
     check_active_unused_access_analyzer,
 )
+from kite.checks.regularly_review_permissions.check import (
+    check_regularly_review_permissions,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -235,4 +238,5 @@ __all__ = [
     "check_kms_confused_deputy_protection",
     "check_emergency_access_procedures",
     "check_active_unused_access_analyzer",
+    "check_regularly_review_permissions",
 ]

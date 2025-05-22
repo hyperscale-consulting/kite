@@ -123,7 +123,6 @@ def check_active_unused_access_analyzer() -> Dict[str, Any]:
             "details": {"message": "No unused-access access analyzers found."},
         }
 
-
     # Check for organization-wide analyzer
     if summary["has_org_analyzer"]:
         org_analyzer = summary["org_analyzer"]
@@ -181,10 +180,16 @@ def check_active_unused_access_analyzer() -> Dict[str, Any]:
     )
 
     if summary["has_org_analyzer"]:
-        message += f"\nOrganization-wide analyzer configuration:\n{summary['org_analyzer']}\n"
+        message += (
+            f"\nOrganization-wide analyzer configuration:\n"
+            f"{summary['org_analyzer']}\n"
+        )
 
     if summary["account_analyzers"]:
-        message += f"\nAccount-level analyzers found in {len(summary['accounts_with_analyzer'])} accounts.\n"
+        message += (
+            f"\nAccount-level analyzers found in "
+            f"{len(summary['accounts_with_analyzer'])} accounts.\n"
+        )
 
     prompt = "Is there an active unused access analyzer across all accounts?"
 
@@ -194,7 +199,9 @@ def check_active_unused_access_analyzer() -> Dict[str, Any]:
         message=message,
         prompt=prompt,
         pass_message="There is an active unused access analyzer across all accounts.",
-        fail_message="There should be an active unused access analyzer across all accounts.",
+        fail_message=(
+            "There should be an active unused access analyzer across all accounts."
+        ),
         default=False,
     )
 

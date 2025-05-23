@@ -71,6 +71,7 @@ from kite.checks import (
     check_emergency_access_procedures,
     check_active_unused_access_analyzer,
     check_regularly_review_permissions,
+    check_scp_prevents_leaving_org,
 )
 
 # Define check themes and their associated checks
@@ -265,6 +266,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
         ),
         "checks": [
             check_region_deny_scp,
+            check_scp_prevents_leaving_org,
         ],
     },
 }

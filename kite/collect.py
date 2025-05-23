@@ -60,6 +60,8 @@ from kite.data import (
     save_identity_store_users,
     save_identity_store_groups,
     save_access_analyzers,
+    save_iam_users,
+    save_iam_groups,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -177,6 +179,15 @@ def collect_account_data(account_id: str) -> None:
                 console.print(
                     f"  [red]✗ Error fetching secrets for account {account_id} in region {region}: {str(e)}[/]"
                 )
+
+        # Collect IAM users and groups
+        console.print(
+            f"  [yellow]Fetching IAM users and groups for account {account_id}...[/]"
+        )
+        users = iam.list_users(session)
+        save_iam_users(account_id, users)
+        groups = iam.list_groups(session)
+        save_iam_groups(account_id, groups)
 
         # Collect IAM roles and policies
         console.print(

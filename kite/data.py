@@ -818,3 +818,41 @@ def get_access_analyzers(account_id: str) -> List[Dict[str, Any]]:
     if data is None:
         return []
     return data.get("analyzers", [])
+
+
+def save_iam_users(account_id: str, users: List[Dict[str, Any]]) -> None:
+    """Save IAM users for an account.
+
+    Args:
+        account_id: The AWS account ID.
+        users: The list of IAM users to save.
+    """
+    _save_data(users, "iam_users", account_id)
+
+
+def get_iam_users(account_id: str) -> List[Dict[str, Any]]:
+    """Get IAM users for an account.
+
+    Args:
+        account_id: The AWS account ID.
+    """
+    return _load_data("iam_users", account_id) or []
+
+
+def save_iam_groups(account_id: str, groups: List[Dict[str, Any]]) -> None:
+    """Save IAM groups for an account.
+
+    Args:
+        account_id: The AWS account ID.
+        groups: The list of IAM groups to save.
+    """
+    _save_data(groups, "iam_groups", account_id)
+
+
+def get_iam_groups(account_id: str) -> List[Dict[str, Any]]:
+    """Get IAM groups for an account.
+
+    Args:
+        account_id: The AWS account ID.
+    """
+    return _load_data("iam_groups", account_id) or []

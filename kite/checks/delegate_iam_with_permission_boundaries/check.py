@@ -7,6 +7,8 @@ from kite.data import (
     get_policy_document,
     get_inline_policy_document,
     get_customer_managed_policies,
+    get_iam_users,
+    get_iam_groups,
 )
 from kite.helpers import get_account_ids_in_scope, manual_check
 
@@ -70,23 +72,26 @@ def check_delegate_iam_with_permission_boundaries() -> Dict[str, Any]:
                 - roles_with_delegation: List of roles with IAM delegation policies
     """
     # Track roles with IAM delegation policies
-    roles_with_delegation: List[Dict[str, Any]] = []
+    entities_with_delegation: List[Dict[str, Any]] = []
 
     # Get in-scope accounts
     account_ids = get_account_ids_in_scope()
 
     # Check each account
     for account_id in account_ids:
-        # Get all roles in the account
+        # Get all IAM entities in the account
+        users = get_iam_users(account_id)
+        groups = get_iam_groups(account_id)
         roles = get_roles(account_id)
+
         customer_policies = get_customer_managed_policies(account_id)
 
-        for role in roles:
+        for entity in users + groups + roles:
             has_iam_delegation = False
             delegation_policy_info = None
 
             # Check attached policies
-            for policy in role.get("AttachedPolicies", []):
+            for policy in entity.get("AttachedPolicies", []):
                 policy_arn = policy["PolicyArn"]
                 # Check customer managed policies
                 for customer_policy in customer_policies:
@@ -105,9 +110,9 @@ def check_delegate_iam_with_permission_boundaries() -> Dict[str, Any]:
 
             # Check inline policies
             if not has_iam_delegation:
-                for policy_name in role.get("InlinePolicyNames", []):
+                for policy_name in entity.get("InlinePolicyNames", []):
                     policy_doc = get_inline_policy_document(
-                        account_id, role["RoleName"], policy_name
+                        account_id, entity["RoleName"], policy_name
                     )
                     if policy_doc and _has_permission_boundary_condition(policy_doc):
                         has_iam_delegation = True
@@ -118,21 +123,22 @@ def check_delegate_iam_with_permission_boundaries() -> Dict[str, Any]:
                         break
 
             if has_iam_delegation and delegation_policy_info:
-                roles_with_delegation.append({
+                entities_with_delegation.append({
                     "account_id": account_id,
-                    "role_name": role["RoleName"],
-                    "role_arn": role["Arn"],
+                    "entity_name": entity["RoleName"],
+                    "entity_arn": entity["Arn"],
                     **delegation_policy_info,
                 })
 
-    if not roles_with_delegation:
+
+    if not entities_with_delegation:
         return {
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
             "status": "FAIL",
             "details": {
                 "message": (
-                    "No roles found with IAM delegation policies. "
+                    "No IAM entities found with IAM delegation policies. "
                     "Permission boundaries should be used to safely delegate IAM "
                     "administration to workload teams."
                 )
@@ -140,16 +146,16 @@ def check_delegate_iam_with_permission_boundaries() -> Dict[str, Any]:
         }
 
     # Build message for manual check
-    message = "Roles with IAM Delegation Policies:\n\n"
-    if roles_with_delegation:
-        for role in roles_with_delegation:
-            message += f"Account: {role['account_id']}\n"
-            message += f"Role Name: {role['role_name']}\n"
-            message += f"Role ARN: {role['role_arn']}\n"
-            if "policy_arn" in role:
-                message += f"Policy ARN: {role['policy_arn']}\n"
-            message += f"Policy Name: {role['policy_name']}\n"
-            message += f"Policy Type: {role['policy_type']}\n\n"
+    message = "IAM entities with IAM Delegation Policies:\n\n"
+    if entities_with_delegation:
+        for entity in entities_with_delegation:
+            message += f"Account: {entity['account_id']}\n"
+            message += f"Entity Name: {entity['entity_name']}\n"
+            message += f"Entity ARN: {entity['entity_arn']}\n"
+            if "policy_arn" in entity:
+                message += f"Policy ARN: {entity['policy_arn']}\n"
+            message += f"Policy Name: {entity['policy_name']}\n"
+            message += f"Policy Type: {entity['policy_type']}\n\n"
 
     return manual_check(
         check_id=CHECK_ID,

@@ -77,6 +77,7 @@ from kite.checks import (
     check_scp_prevents_config_changes,
     check_scp_prevents_guardduty_changes,
     check_scp_prevents_ram_external_sharing,
+    check_scp_prevents_unencrypted_s3_uploads,
 )
 
 # Define check themes and their associated checks
@@ -277,6 +278,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_scp_prevents_config_changes,
             check_scp_prevents_guardduty_changes,
             check_scp_prevents_ram_external_sharing,
+            check_scp_prevents_unencrypted_s3_uploads,
         ],
     },
 }

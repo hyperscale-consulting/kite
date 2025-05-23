@@ -185,6 +185,9 @@ from kite.checks.scp_prevents_guardduty_changes.check import (
 from kite.checks.scp_prevents_ram_external_sharing.check import (
     check_scp_prevents_ram_external_sharing,
 )
+from kite.checks.scp_prevents_unencrypted_s3_uploads.check import (
+    check_scp_prevents_unencrypted_s3_uploads,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -262,4 +265,5 @@ __all__ = [
     "check_scp_prevents_config_changes",
     "check_scp_prevents_guardduty_changes",
     "check_scp_prevents_ram_external_sharing",
+    "check_scp_prevents_unencrypted_s3_uploads",
 ]

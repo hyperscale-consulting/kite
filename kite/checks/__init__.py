@@ -170,6 +170,9 @@ from kite.checks.regularly_review_permissions.check import (
 from kite.checks.scp_prevents_leaving_org.check import (
     check_scp_prevents_leaving_org,
 )
+from kite.checks.scp_prevents_common_admin_role_changes.check import (
+    check_scp_prevents_common_admin_role_changes,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -243,4 +246,5 @@ __all__ = [
     "check_active_unused_access_analyzer",
     "check_regularly_review_permissions",
     "check_scp_prevents_leaving_org",
+    "check_scp_prevents_common_admin_role_changes",
 ]

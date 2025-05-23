@@ -81,6 +81,8 @@ from kite.checks import (
     check_scp_prevents_deleting_logs,
     check_scp_prevents_adding_internet_access_to_vpc,
     check_delegate_iam_with_permission_boundaries,
+    check_access_management_lifecycle,
+    check_access_management_lifecycle_implemented,
 )
 
 # Define check themes and their associated checks
@@ -285,6 +287,15 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_scp_prevents_deleting_logs,
             check_scp_prevents_adding_internet_access_to_vpc,
             check_delegate_iam_with_permission_boundaries,
+        ],
+    },
+    "Manage access based on lifecycle": {
+        "description": (
+            "Checks related to managing access based on lifecycle"
+        ),
+        "checks": [
+            check_access_management_lifecycle,
+            check_access_management_lifecycle_implemented,
         ],
     },
 }

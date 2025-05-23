@@ -259,6 +259,14 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_regularly_review_permissions,
         ],
     },
+    "Define permission guardrails for your organization": {
+        "description": (
+            "Checks related to defining permission guardrails for your organization"
+        ),
+        "checks": [
+            check_region_deny_scp,
+        ],
+    },
 }
 
 # Flatten all checks for backward compatibility

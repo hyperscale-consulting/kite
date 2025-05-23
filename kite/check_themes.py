@@ -80,6 +80,7 @@ from kite.checks import (
     check_scp_prevents_unencrypted_s3_uploads,
     check_scp_prevents_deleting_logs,
     check_scp_prevents_adding_internet_access_to_vpc,
+    check_delegate_iam_with_permission_boundaries,
 )
 
 # Define check themes and their associated checks
@@ -283,6 +284,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_scp_prevents_unencrypted_s3_uploads,
             check_scp_prevents_deleting_logs,
             check_scp_prevents_adding_internet_access_to_vpc,
+            check_delegate_iam_with_permission_boundaries,
         ],
     },
 }

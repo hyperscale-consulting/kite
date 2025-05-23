@@ -194,6 +194,9 @@ from kite.checks.scp_prevents_deleting_logs.check import (
 from kite.checks.scp_prevents_adding_internet_access_to_vpc.check import (
     check_scp_prevents_adding_internet_access_to_vpc,
 )
+from kite.checks.delegate_iam_with_permission_boundaries.check import (
+    check_delegate_iam_with_permission_boundaries,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -274,4 +277,5 @@ __all__ = [
     "check_scp_prevents_unencrypted_s3_uploads",
     "check_scp_prevents_deleting_logs",
     "check_scp_prevents_adding_internet_access_to_vpc",
+    "check_delegate_iam_with_permission_boundaries",
 ]

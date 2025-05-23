@@ -173,6 +173,9 @@ from kite.checks.scp_prevents_leaving_org.check import (
 from kite.checks.scp_prevents_common_admin_role_changes.check import (
     check_scp_prevents_common_admin_role_changes,
 )
+from kite.checks.scp_prevents_cloudwatch_changes.check import (
+    check_scp_prevents_cloudwatch_changes,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -233,7 +236,6 @@ __all__ = [
     "check_no_full_access_to_sensitive_services",
     "check_no_readonly_third_party_access",
     "check_cross_account_confused_deputy_prevention",
-    "check_restrict_admin_privileges_to_small_trusted_group",
     "check_admin_privileges_are_restricted",
     "check_limit_access_to_production_environments",
     "check_confused_deputy_protection_for_s3",
@@ -247,4 +249,5 @@ __all__ = [
     "check_regularly_review_permissions",
     "check_scp_prevents_leaving_org",
     "check_scp_prevents_common_admin_role_changes",
+    "check_scp_prevents_cloudwatch_changes",
 ]

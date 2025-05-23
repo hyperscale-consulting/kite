@@ -191,6 +191,9 @@ from kite.checks.scp_prevents_unencrypted_s3_uploads.check import (
 from kite.checks.scp_prevents_deleting_logs.check import (
     check_scp_prevents_deleting_logs,
 )
+from kite.checks.scp_prevents_adding_internet_access_to_vpc.check import (
+    check_scp_prevents_adding_internet_access_to_vpc,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -270,4 +273,5 @@ __all__ = [
     "check_scp_prevents_ram_external_sharing",
     "check_scp_prevents_unencrypted_s3_uploads",
     "check_scp_prevents_deleting_logs",
+    "check_scp_prevents_adding_internet_access_to_vpc",
 ]

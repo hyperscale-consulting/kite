@@ -203,6 +203,9 @@ from kite.checks.access_management_lifecycle.check import (
 from kite.checks.access_management_lifecycle_implemented.check import (
     check_access_management_lifecycle_implemented,
 )
+from kite.checks.scim_protocol_used.check import (
+    check_scim_protocol_used,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -286,4 +289,5 @@ __all__ = [
     "check_delegate_iam_with_permission_boundaries",
     "check_access_management_lifecycle",
     "check_access_management_lifecycle_implemented",
+    "check_scim_protocol_used",
 ]

@@ -83,6 +83,7 @@ from kite.checks import (
     check_delegate_iam_with_permission_boundaries,
     check_access_management_lifecycle,
     check_access_management_lifecycle_implemented,
+    check_scim_protocol_used,
 )
 
 # Define check themes and their associated checks
@@ -296,6 +297,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
         "checks": [
             check_access_management_lifecycle,
             check_access_management_lifecycle_implemented,
+            check_scim_protocol_used,
         ],
     },
 }

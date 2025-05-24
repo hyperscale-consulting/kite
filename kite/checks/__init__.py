@@ -206,6 +206,9 @@ from kite.checks.access_management_lifecycle_implemented.check import (
 from kite.checks.scim_protocol_used.check import (
     check_scim_protocol_used,
 )
+from kite.checks.active_external_access_analyzer.check import (
+    check_active_external_access_analyzer,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -290,4 +293,5 @@ __all__ = [
     "check_access_management_lifecycle",
     "check_access_management_lifecycle_implemented",
     "check_scim_protocol_used",
+    "check_active_external_access_analyzer",
 ]

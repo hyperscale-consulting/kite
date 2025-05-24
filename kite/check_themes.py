@@ -70,6 +70,7 @@ from kite.checks import (
     check_kms_confused_deputy_protection,
     check_emergency_access_procedures,
     check_active_unused_access_analyzer,
+    check_active_external_access_analyzer,
     check_regularly_review_permissions,
     check_scp_prevents_leaving_org,
     check_scp_prevents_common_admin_role_changes,
@@ -298,6 +299,14 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_access_management_lifecycle,
             check_access_management_lifecycle_implemented,
             check_scim_protocol_used,
+        ],
+    },
+    "Analyze public and cross-account access": {
+        "description": (
+            "Checks related to analyzing public and cross-account access"
+        ),
+        "checks": [
+            check_active_external_access_analyzer,
         ],
     },
 }

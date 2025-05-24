@@ -15,10 +15,12 @@ from rich.prompt import Prompt, Confirm
 from kite.config import Config
 from kite.check_themes import CHECK_THEMES, ALL_CHECKS
 from kite.organizations import get_account_details
-from kite.helpers import assume_organizational_role, get_prowler_output
+from kite.helpers import assume_organizational_role, get_prowler_output, assume_role
 from kite.collect import collect_data
 from kite.organizations import fetch_account_ids
 from kite.data import save_collection_metadata, verify_collection_status
+from kite.accessanalyzer import list_analyzers
+
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -507,6 +509,21 @@ def collect(config: str):
     except Exception as e:
         console.print(f"[red]Error collecting data: {str(e)}[/red]")
         raise click.Abort()
+
+
+@main.command()
+@click.option(
+    "--config",
+    "-c",
+    default="kite.yaml",
+    help="Path to config file (default: kite.yaml)",
+    type=click.Path(exists=True),
+)
+@click.argument("account_id", required=True)
+def list_access_analyzers(config: str, account_id: str):
+    Config.load(config)
+    session = assume_role(account_id)
+    console.print(list_analyzers(session))
 
 
 if __name__ == "__main__":

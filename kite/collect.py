@@ -65,6 +65,7 @@ from kite.data import (
     save_iam_groups,
     save_config_rules,
     save_cloudfront_origin_access_identities,
+    save_vpc_endpoints,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -402,6 +403,18 @@ def collect_account_data(account_id: str) -> None:
         identities = cloudfront.get_origin_access_identities(session)
         save_cloudfront_origin_access_identities(account_id, identities)
         console.print(f"  [green]✓ Saved {len(identities)} CloudFront origin access identities for account {account_id}[/]")
+
+        # Collect VPC endpoints
+        console.print(
+            f"  [yellow]Fetching VPC endpoints for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                endpoints = ec2.get_vpc_endpoints(session, region)
+                save_vpc_endpoints(account_id, region, endpoints)
+                console.print(f"  [green]✓ Saved {len(endpoints)} VPC endpoints for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching VPC endpoints for account {account_id} in region {region}: {str(e)}[/]")
     except Exception as e:
         console.print(
             f"  [red]✗ Error collecting data for account {account_id}: {str(e)}[/]"

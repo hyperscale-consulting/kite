@@ -52,3 +52,21 @@ def get_key_pairs(session: boto3.Session) -> List[Dict[str, Any]]:
     ec2 = session.client('ec2')
     response = ec2.describe_key_pairs()
     return response.get('KeyPairs', [])
+
+
+def get_vpc_endpoints(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+    """
+    Get all VPC endpoints in the account.
+
+    Args:
+        session: boto3 session to use for the API call
+
+    Returns:
+        List of dictionaries containing VPC endpoint information
+    """
+    ec2 = session.client('ec2', region_name=region)
+    paginator = ec2.get_paginator('describe_vpc_endpoints')
+    endpoints = []
+    for page in paginator.paginate():
+        endpoints.extend(page.get('VpcEndpoints', []))
+    return endpoints

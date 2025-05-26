@@ -894,3 +894,24 @@ def get_cloudfront_origin_access_identities(account_id: str) -> List[Dict[str, A
         account_id: The AWS account ID.
     """
     return _load_data("cloudfront_origin_access_identities", account_id) or []
+
+
+def save_vpc_endpoints(account_id: str, region: str, endpoints: List[Dict[str, Any]]) -> None:
+    """Save VPC endpoints for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        endpoints: The list of VPC endpoints to save.
+    """
+    _save_data(endpoints, f"vpc_endpoints_{region}", account_id)
+
+
+def get_vpc_endpoints(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get VPC endpoints for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"vpc_endpoints_{region}", account_id) or []

@@ -215,6 +215,9 @@ from kite.checks.monitor_and_response_to_s3_public_access.check import (
 from kite.checks.maintain_inventory_of_shared_resources.check import (
     check_maintain_inventory_of_shared_resources,
 )
+from kite.checks.approval_process_for_resource_sharing.check import (
+    check_approval_process_for_resource_sharing,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -302,4 +305,5 @@ __all__ = [
     "check_active_external_access_analyzer",
     "check_monitor_and_response_to_s3_public_access",
     "check_maintain_inventory_of_shared_resources",
+    "check_approval_process_for_resource_sharing",
 ]

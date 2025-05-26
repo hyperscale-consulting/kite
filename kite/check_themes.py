@@ -91,6 +91,7 @@ from kite.checks import (
     check_s3_bucket_acl_disabled,
     check_migrate_from_oai,
     check_establish_data_perimeter_trusted_identities,
+    check_data_perimeter_confused_deputy_protection,
 )
 
 # Define check themes and their associated checks
@@ -327,6 +328,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_s3_bucket_acl_disabled,
             check_migrate_from_oai,
             check_establish_data_perimeter_trusted_identities,
+            check_data_perimeter_confused_deputy_protection,
         ],
     },
 }

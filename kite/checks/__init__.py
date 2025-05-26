@@ -227,6 +227,9 @@ from kite.checks.migrate_from_oai.check import (
 from kite.checks.establish_data_perimeter_trusted_identities.check import (
     check_establish_data_perimeter_trusted_identities,
 )
+from kite.checks.data_perimeter_confused_deputy_protection.check import (
+    check_data_perimeter_confused_deputy_protection,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -318,4 +321,5 @@ __all__ = [
     "check_s3_bucket_acl_disabled",
     "check_migrate_from_oai",
     "check_establish_data_perimeter_trusted_identities",
+    "check_data_perimeter_confused_deputy_protection",
 ]

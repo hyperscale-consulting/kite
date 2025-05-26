@@ -92,6 +92,7 @@ from kite.checks import (
     check_migrate_from_oai,
     check_establish_data_perimeter_trusted_identities,
     check_data_perimeter_confused_deputy_protection,
+    check_data_perimeter_trusted_resources,
 )
 
 # Define check themes and their associated checks
@@ -329,6 +330,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_migrate_from_oai,
             check_establish_data_perimeter_trusted_identities,
             check_data_perimeter_confused_deputy_protection,
+            check_data_perimeter_trusted_resources,
         ],
     },
 }

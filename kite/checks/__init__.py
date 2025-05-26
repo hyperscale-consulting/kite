@@ -230,6 +230,9 @@ from kite.checks.establish_data_perimeter_trusted_identities.check import (
 from kite.checks.data_perimeter_confused_deputy_protection.check import (
     check_data_perimeter_confused_deputy_protection,
 )
+from kite.checks.data_perimeter_trusted_resources.check import (
+    check_data_perimeter_trusted_resources,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -322,4 +325,5 @@ __all__ = [
     "check_migrate_from_oai",
     "check_establish_data_perimeter_trusted_identities",
     "check_data_perimeter_confused_deputy_protection",
+    "check_data_perimeter_trusted_resources",
 ]

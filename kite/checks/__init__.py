@@ -224,6 +224,9 @@ from kite.checks.s3_bucket_acl_disabled.check import (
 from kite.checks.migrate_from_oai.check import (
     check_migrate_from_oai,
 )
+from kite.checks.establish_data_perimeter_trusted_identities.check import (
+    check_establish_data_perimeter_trusted_identities,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -314,4 +317,5 @@ __all__ = [
     "check_approval_process_for_resource_sharing",
     "check_s3_bucket_acl_disabled",
     "check_migrate_from_oai",
+    "check_establish_data_perimeter_trusted_identities",
 ]

@@ -8,7 +8,7 @@ from kite.models import ControlPolicy
 
 
 CHECK_ID = "data-perimeter-confused-deputy-protection"
-CHECK_NAME = "Data Perimeter Confused Deputy Protection"
+CHECK_NAME = "Data Perimeter Enforces Confused Deputy Protection"
 
 
 def _has_data_perimeter_confused_deputy_protection(

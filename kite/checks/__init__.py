@@ -233,6 +233,9 @@ from kite.checks.data_perimeter_confused_deputy_protection.check import (
 from kite.checks.data_perimeter_trusted_resources.check import (
     check_data_perimeter_trusted_resources,
 )
+from kite.checks.vpc_endpoints_enforce_data_perimeter.check import (
+    check_vpc_endpoints_enforce_data_perimeter,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -326,4 +329,5 @@ __all__ = [
     "check_establish_data_perimeter_trusted_identities",
     "check_data_perimeter_confused_deputy_protection",
     "check_data_perimeter_trusted_resources",
+    "check_vpc_endpoints_enforce_data_perimeter",
 ]

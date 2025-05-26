@@ -35,3 +35,14 @@ def get_distributions(session) -> List[CloudFrontDistribution]:
         )
 
     return distributions
+
+
+def get_origin_access_identities(session):
+    cf = session.client("cloudfront")
+    paginator = cf.get_paginator("list_cloud_front_origin_access_identities")
+    identities = []
+    for page in paginator.paginate():
+        identities.extend(
+            page.get("CloudFrontOriginAccessIdentityList", {}).get("Items", [])
+        )
+    return identities

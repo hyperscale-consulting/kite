@@ -875,3 +875,22 @@ def get_config_rules(account_id: str) -> List[Dict[str, Any]]:
         account_id: The AWS account ID.
     """
     return _load_data("config_rules", account_id) or []
+
+
+def save_cloudfront_origin_access_identities(account_id: str, identities: List[Dict[str, Any]]) -> None:
+    """Save CloudFront origin access identities for an account.
+
+    Args:
+        account_id: The AWS account ID.
+        identities: The list of CloudFront origin access identities to save.
+    """
+    _save_data(identities, "cloudfront_origin_access_identities", account_id)
+
+
+def get_cloudfront_origin_access_identities(account_id: str) -> List[Dict[str, Any]]:
+    """Get CloudFront origin access identities for an account.
+
+    Args:
+        account_id: The AWS account ID.
+    """
+    return _load_data("cloudfront_origin_access_identities", account_id) or []

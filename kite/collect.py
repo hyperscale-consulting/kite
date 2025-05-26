@@ -64,6 +64,7 @@ from kite.data import (
     save_iam_users,
     save_iam_groups,
     save_config_rules,
+    save_cloudfront_origin_access_identities,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -394,6 +395,13 @@ def collect_account_data(account_id: str) -> None:
         save_config_rules(account_id, rules)
         console.print(f"  [green]✓ Saved {len(rules)} Config rules for account {account_id}[/]")
 
+        # Collect CloudFront origin access identities
+        console.print(
+            f"  [yellow]Fetching CloudFront origin access identities for account {account_id}...[/]"
+        )
+        identities = cloudfront.get_origin_access_identities(session)
+        save_cloudfront_origin_access_identities(account_id, identities)
+        console.print(f"  [green]✓ Saved {len(identities)} CloudFront origin access identities for account {account_id}[/]")
     except Exception as e:
         console.print(
             f"  [red]✗ Error collecting data for account {account_id}: {str(e)}[/]"

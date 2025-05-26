@@ -89,6 +89,7 @@ from kite.checks import (
     check_maintain_inventory_of_shared_resources,
     check_approval_process_for_resource_sharing,
     check_s3_bucket_acl_disabled,
+    check_migrate_from_oai,
 )
 
 # Define check themes and their associated checks
@@ -323,6 +324,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
         "checks": [
             check_scp_prevents_ram_external_sharing,
             check_s3_bucket_acl_disabled,
+            check_migrate_from_oai,
         ],
     },
 }

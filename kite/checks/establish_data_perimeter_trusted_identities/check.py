@@ -7,8 +7,8 @@ from kite.data import get_organization
 from kite.models import ControlPolicy
 
 
-CHECK_ID = "establish-data-perimeter-trusted-identities"
-CHECK_NAME = "Establish Data Perimeter Trusted Identities"
+CHECK_ID = "data-perimeter-trusted-identities"
+CHECK_NAME = "Data Perimeter Enforces Trusted Identities"
 
 
 def _has_data_perimeter_trusted_identities(policy: ControlPolicy, org_id: str) -> bool:

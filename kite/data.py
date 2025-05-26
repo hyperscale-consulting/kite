@@ -856,3 +856,22 @@ def get_iam_groups(account_id: str) -> List[Dict[str, Any]]:
         account_id: The AWS account ID.
     """
     return _load_data("iam_groups", account_id) or []
+
+
+def save_config_rules(account_id: str, rules: List[Dict[str, Any]]) -> None:
+    """Save Config rules for an account.
+
+    Args:
+        account_id: The AWS account ID.
+        rules: The list of Config rules to save.
+    """
+    _save_data(rules, "config_rules", account_id)
+
+
+def get_config_rules(account_id: str) -> List[Dict[str, Any]]:
+    """Get Config rules for an account.
+
+    Args:
+        account_id: The AWS account ID.
+    """
+    return _load_data("config_rules", account_id) or []

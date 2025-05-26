@@ -24,6 +24,7 @@ from . import (
     cognito,
     secretsmanager,
     accessanalyzer,
+    configservice,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -62,6 +63,7 @@ from kite.data import (
     save_access_analyzers,
     save_iam_users,
     save_iam_groups,
+    save_config_rules,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -383,6 +385,14 @@ def collect_account_data(account_id: str) -> None:
         analyzers = accessanalyzer.list_analyzers(session)
         save_access_analyzers(account_id, analyzers)
         console.print(f"  [green]✓ Saved {len(analyzers)} Access Analyzer analyzers for account {account_id}[/]")
+
+        # Collect Config rules
+        console.print(
+            f"  [yellow]Fetching Config rules for account {account_id}...[/]"
+        )
+        rules = configservice.fetch_rules(session)
+        save_config_rules(account_id, rules)
+        console.print(f"  [green]✓ Saved {len(rules)} Config rules for account {account_id}[/]")
 
     except Exception as e:
         console.print(

@@ -86,6 +86,7 @@ from kite.checks import (
     check_access_management_lifecycle_implemented,
     check_scim_protocol_used,
     check_monitor_and_response_to_s3_public_access,
+    check_maintain_inventory_of_shared_resources,
 )
 
 # Define check themes and their associated checks
@@ -309,6 +310,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
         "checks": [
             check_active_external_access_analyzer,
             check_monitor_and_response_to_s3_public_access,
+            check_maintain_inventory_of_shared_resources,
         ],
     },
 }

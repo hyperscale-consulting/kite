@@ -1,14 +1,19 @@
-"""Check for data perimeter confused deputy protection RCP."""
+"""Check for data perimeter confused deputy protection."""
 
 import json
-from typing import Dict, Any
+from typing import Dict
 
 from kite.data import get_organization
 from kite.models import ControlPolicy
+from kite.utils.aws_context_keys import (
+    has_source_org_id_condition,
+    has_source_account_condition,
+    has_principal_is_aws_service_condition,
+)
 
 
 CHECK_ID = "data-perimeter-confused-deputy-protection"
-CHECK_NAME = "Data Perimeter Enforces Confused Deputy Protection"
+CHECK_NAME = "Data Perimeter Confused Deputy Protection"
 
 
 def _has_data_perimeter_confused_deputy_protection(
@@ -60,22 +65,14 @@ def _has_data_perimeter_confused_deputy_protection(
         if not isinstance(conditions, dict):
             continue
 
-        # Check for aws:SourceOrgID condition
-        org_condition = (
-            conditions.get("StringNotEqualsIfExists", {})
-            .get("aws:SourceOrgID")
-        )
-        if org_condition != org_id:
+        # Check for required conditions using case-insensitive functions
+        if not has_source_org_id_condition(conditions, org_id):
             continue
 
-        # Check for aws:SourceAccount condition
-        source_account = conditions.get("Null", {}).get("aws:SourceAccount")
-        if source_account != "false":
+        if not has_source_account_condition(conditions):
             continue
 
-        # Check for aws:PrincipalIsAWSService condition
-        service_condition = conditions.get("Bool", {}).get("aws:PrincipalIsAWSService")
-        if service_condition != "true":
+        if not has_principal_is_aws_service_condition(conditions):
             continue
 
         return True
@@ -83,23 +80,16 @@ def _has_data_perimeter_confused_deputy_protection(
     return False
 
 
-def check_data_perimeter_confused_deputy_protection() -> Dict[str, Any]:
+def check_data_perimeter_confused_deputy_protection() -> Dict:
     """
-    Check if there is a data perimeter confused deputy protection RCP in place.
+    Check if there is data perimeter confused deputy protection in place.
 
     This check verifies that either the root OU or all top-level OUs have a Resource
-    Control Policy (RCP) that enforces confused deputy protection for data perimeter
-    controls by denying access to sensitive services unless the request comes from
-    within the AWS organization and has a source account.
+    Control Policy (RCP) that prevents service-based access to data services unless it
+    comes from within the AWS organization.
 
     Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-                - failing_resources: List of resources that failed the check
+        A dictionary containing the check result
     """
     # Get organization data
     org = get_organization()
@@ -129,8 +119,8 @@ def check_data_perimeter_confused_deputy_protection() -> Dict[str, Any]:
             "status": "PASS",
             "details": {
                 "message": (
-                    "Data perimeter confused deputy protection RCP is attached to "
-                    "the root OU"
+                    "Data perimeter confused deputy protection is attached to the "
+                    "root OU"
                 )
             }
         }
@@ -143,8 +133,8 @@ def check_data_perimeter_confused_deputy_protection() -> Dict[str, Any]:
             "status": "FAIL",
             "details": {
                 "message": (
-                    "Data perimeter confused deputy protection RCP is not attached to "
-                    "the root OU and there are no top-level OUs"
+                    "Data perimeter confused deputy protection is not attached to the "
+                    "root OU and there are no top-level OUs"
                 )
             }
         }
@@ -165,8 +155,8 @@ def check_data_perimeter_confused_deputy_protection() -> Dict[str, Any]:
             "status": "PASS",
             "details": {
                 "message": (
-                    "Data perimeter confused deputy protection RCP is attached to "
-                    "all top-level OUs"
+                    "Data perimeter confused deputy protection is attached to all "
+                    "top-level OUs"
                 )
             }
         }
@@ -177,14 +167,13 @@ def check_data_perimeter_confused_deputy_protection() -> Dict[str, Any]:
         "status": "FAIL",
         "details": {
             "message": (
-                "Data perimeter confused deputy protection RCP is not attached to "
-                "the root OU or all top-level OUs. Missing protection in OUs: "
+                "Data perimeter confused deputy protection is not attached to the root "
+                "OU or all top-level OUs. Missing protection in OUs: "
                 f"{', '.join(missing_ous)}"
             )
         }
     }
 
 
-# Attach the check ID and name to the function
 check_data_perimeter_confused_deputy_protection._CHECK_ID = CHECK_ID
 check_data_perimeter_confused_deputy_protection._CHECK_NAME = CHECK_NAME

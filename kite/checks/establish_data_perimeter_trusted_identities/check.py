@@ -1,10 +1,14 @@
-"""Check for data perimeter trusted identities RCP."""
+"""Check for data perimeter trusted identities."""
 
 import json
-from typing import Dict, Any
+from typing import Dict
 
 from kite.data import get_organization
 from kite.models import ControlPolicy
+from kite.utils.aws_context_keys import (
+    has_source_org_id_condition,
+    has_principal_is_aws_service_condition,
+)
 
 
 CHECK_ID = "data-perimeter-trusted-identities"
@@ -64,20 +68,13 @@ def _has_data_perimeter_trusted_identities(policy: ControlPolicy, org_id: str) -
         if not isinstance(conditions, dict):
             continue
 
-        # Check for aws:PrincipalOrgID condition
-        org_condition = (
-            conditions.get("StringNotEqualsIfExists", {})
-            .get("aws:PrincipalOrgID")
-        )
-        if org_condition != org_id:
+        # Check for required conditions using case-insensitive functions
+        if not has_source_org_id_condition(conditions, org_id):
             continue
 
-        # Check for aws:PrincipalIsAWSService condition
-        service_condition = (
-            conditions.get("BoolIfExists", {})
-            .get("aws:PrincipalIsAWSService")
-        )
-        if service_condition != "false":
+        if not has_principal_is_aws_service_condition(
+            conditions, expected_value="false", condition_type="BoolIfExists"
+        ):
             continue
 
         return True
@@ -85,23 +82,16 @@ def _has_data_perimeter_trusted_identities(policy: ControlPolicy, org_id: str) -
     return False
 
 
-def check_establish_data_perimeter_trusted_identities() -> Dict[str, Any]:
+def check_establish_data_perimeter_trusted_identities() -> Dict:
     """
-    Check if there is a data perimeter trusted identities RCP in place.
+    Check if there is data perimeter trusted identities protection in place.
 
     This check verifies that either the root OU or all top-level OUs have a Resource
-    Control Policy (RCP) that enforces organization identities for data perimeter
-    controls by denying access to sensitive services unless the request comes from
-    within the AWS organization.
+    Control Policy (RCP) that prevents service-based access to data services unless it
+    comes from within the AWS organization.
 
     Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-                - failing_resources: List of resources that failed the check
+        A dictionary containing the check result
     """
     # Get organization data
     org = get_organization()
@@ -131,7 +121,8 @@ def check_establish_data_perimeter_trusted_identities() -> Dict[str, Any]:
             "status": "PASS",
             "details": {
                 "message": (
-                    "Data perimeter trusted identities RCP is attached to the root OU"
+                    "Data perimeter trusted identities protection is attached to the "
+                    "root OU"
                 )
             }
         }
@@ -144,8 +135,8 @@ def check_establish_data_perimeter_trusted_identities() -> Dict[str, Any]:
             "status": "FAIL",
             "details": {
                 "message": (
-                    "Data perimeter trusted identities RCP is not attached to the root OU "
-                    "and there are no top-level OUs"
+                    "Data perimeter trusted identities protection is not attached to "
+                    "the root OU and there are no top-level OUs"
                 )
             }
         }
@@ -166,7 +157,8 @@ def check_establish_data_perimeter_trusted_identities() -> Dict[str, Any]:
             "status": "PASS",
             "details": {
                 "message": (
-                    "Data perimeter trusted identities RCP is attached to all top-level OUs"
+                    "Data perimeter trusted identities protection is attached to all "
+                    "top-level OUs"
                 )
             }
         }
@@ -177,13 +169,13 @@ def check_establish_data_perimeter_trusted_identities() -> Dict[str, Any]:
         "status": "FAIL",
         "details": {
             "message": (
-                "Data perimeter trusted identities RCP is not attached to the root OU or "
-                f"all top-level OUs. Missing protection in OUs: {', '.join(missing_ous)}"
+                "Data perimeter trusted identities protection is not attached to the "
+                "root OU or all top-level OUs. Missing protection in OUs: "
+                f"{', '.join(missing_ous)}"
             )
         }
     }
 
 
-# Attach the check ID and name to the function
 check_establish_data_perimeter_trusted_identities._CHECK_ID = CHECK_ID
 check_establish_data_perimeter_trusted_identities._CHECK_NAME = CHECK_NAME

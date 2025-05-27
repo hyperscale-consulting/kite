@@ -5,6 +5,11 @@ from typing import Dict
 
 from kite.data import get_organization
 from kite.models import ControlPolicy
+from kite.utils.aws_context_keys import (
+    has_source_org_id_condition,
+    has_source_account_condition,
+    has_principal_is_aws_service_condition,
+)
 
 
 CHECK_ID = "confused-deputy-protection-for-s3"
@@ -31,7 +36,6 @@ def _has_confused_deputy_protection(policy: ControlPolicy, org_id: str) -> bool:
         return False
 
     for statement in policy_doc["Statement"]:
-
         # Check if this is a Deny statement for S3 actions
         effect = statement.get("Effect")
         actions = statement.get("Action", [])
@@ -51,19 +55,14 @@ def _has_confused_deputy_protection(policy: ControlPolicy, org_id: str) -> bool:
         if not isinstance(conditions, dict):
             continue
 
-        # Check for aws:SourceOrgID condition
-        source_org = conditions.get("StringNotEqualsIfExists", {}).get("aws:SourceOrgID")
-        if source_org != org_id:
+        # Check for required conditions using case-insensitive functions
+        if not has_source_org_id_condition(conditions, org_id):
             continue
 
-        # Check for aws:SourceAccount condition
-        source_account = conditions.get("Null", {}).get("aws:SourceAccount")
-        if source_account != "false":
+        if not has_source_account_condition(conditions):
             continue
 
-        # Check for aws:PrincipalIsAWSService condition
-        principal_is_service = conditions.get("Bool", {}).get("aws:PrincipalIsAWSService")
-        if principal_is_service != "true":
+        if not has_principal_is_aws_service_condition(conditions):
             continue
 
         return True
@@ -109,7 +108,9 @@ def check_confused_deputy_protection_for_s3() -> Dict:
             "check_name": CHECK_NAME,
             "status": "PASS",
             "details": {
-                "message": "Confused deputy protection for S3 is attached to the root OU"
+                "message": (
+                    "Confused deputy protection for S3 is attached to the root OU"
+                )
             }
         }
 
@@ -120,7 +121,10 @@ def check_confused_deputy_protection_for_s3() -> Dict:
             "check_name": CHECK_NAME,
             "status": "FAIL",
             "details": {
-                "message": "Confused deputy protection for S3 is not attached to the root OU and there are no top-level OUs"
+                "message": (
+                    "Confused deputy protection for S3 is not attached to the root OU "
+                    "and there are no top-level OUs"
+                )
             }
         }
 
@@ -139,7 +143,9 @@ def check_confused_deputy_protection_for_s3() -> Dict:
             "check_name": CHECK_NAME,
             "status": "PASS",
             "details": {
-                "message": "Confused deputy protection for S3 is attached to all top-level OUs"
+                "message": (
+                    "Confused deputy protection for S3 is attached to all top-level OUs"
+                )
             }
         }
 
@@ -149,8 +155,9 @@ def check_confused_deputy_protection_for_s3() -> Dict:
         "status": "FAIL",
         "details": {
             "message": (
-                "Confused deputy protection for S3 is not attached to the root OU or all top-level OUs. "
-                f"Missing protection in OUs: {', '.join(missing_ous)}"
+                "Confused deputy protection for S3 is not attached to the root OU or "
+                "all top-level OUs. Missing protection in OUs: "
+                f"{', '.join(missing_ous)}"
             )
         }
     }

@@ -53,7 +53,7 @@ from kite.data import (
     save_inline_policy_document,
     save_customer_managed_policies,
     save_policy_document,
-    save_bucket_policies,
+    save_bucket_metadata,
     save_sns_topics,
     save_sqs_queues,
     save_lambda_functions,
@@ -252,19 +252,12 @@ def collect_account_data(account_id: str) -> None:
 
         # Collect S3 bucket policies
         console.print(
-            f"  [yellow]Fetching S3 bucket policies for account {account_id}...[/]"
+            f"  [yellow]Fetching S3 bucket metadata for account {account_id}...[/]"
         )
         buckets = s3.get_buckets(session)
-        buckets_with_policies = [
-            {
-                "bucket_name": bucket.bucket_name,
-                "policy": bucket.policy,
-            }
-            for bucket in buckets
-        ]
-        save_bucket_policies(account_id, buckets_with_policies)
+        save_bucket_metadata(account_id, buckets)
         console.print(
-            f"  [green]✓ Saved {len(buckets)} S3 bucket policies for account {account_id}[/]"
+            f"  [green]✓ Saved {len(buckets)} S3 bucket metadata for account {account_id}[/]"
         )
 
         # Collect SNS topics
@@ -670,11 +663,11 @@ def collect_mgmt_account_workload_resources() -> None:
     console.print("  [yellow]Scanning global resources...[/]")
     # Check global resources (not region-specific)
     # Check S3 buckets
-    for bucket in s3.get_buckets(session):
+    for bucket in s3.get_bucket_names(session):
         workload_resources.resources.append(
             WorkloadResource(
                 resource_type="S3",
-                resource_id=bucket.bucket_name,
+                resource_id=bucket,
             )
         )
 

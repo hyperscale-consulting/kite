@@ -2,7 +2,7 @@
 
 import json
 from typing import Dict, Any
-from kite.data import get_bucket_policies
+from kite.data import get_bucket_metadata
 from kite.helpers import get_account_ids_in_scope
 
 
@@ -80,11 +80,11 @@ def check_s3_confused_deputy_protection() -> Dict[str, Any]:
 
     # Get all bucket policies
     for account_id in get_account_ids_in_scope():
-        buckets = get_bucket_policies(account_id)
+        buckets = get_bucket_metadata(account_id)
 
         for bucket in buckets:
-            bucket_name = bucket["bucket_name"]
-            policy = bucket.get("policy")
+            bucket_name = bucket["Name"]
+            policy = bucket.get("Policy")
 
             if not policy:
                 continue

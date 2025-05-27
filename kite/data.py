@@ -582,28 +582,28 @@ def get_policy_document(account_id: str, policy_arn: str) -> Dict[str, Any]:
     return _load_data(f"policy_document_{safe_arn}", account_id) or {}
 
 
-def save_bucket_policies(account_id: str, buckets: List[Dict[str, Any]]) -> None:
+def save_bucket_metadata(account_id: str, buckets: List[Dict[str, Any]]) -> None:
     """
-    Save S3 bucket policies for an account.
+    Save S3 bucket metadata for an account.
 
     Args:
-        account_id: The AWS account ID to save the policies for.
+        account_id: The AWS account ID to save the metadata for.
         buckets: The list of S3 buckets with their policies.
     """
-    _save_data(buckets, "s3_bucket_policies", account_id)
+    _save_data(buckets, "save_bucket_metadata", account_id)
 
 
-def get_bucket_policies(account_id: str) -> List[Dict[str, Any]]:
+def get_bucket_metadata(account_id: str) -> List[Dict[str, Any]]:
     """
-    Get S3 bucket policies for an account.
+    Get S3 bucket metadata for an account.
 
     Args:
-        account_id: The AWS account ID to get the policies for.
+        account_id: The AWS account ID to get the metadata for.
 
     Returns:
         List of dictionaries containing bucket information and policies.
     """
-    return _load_data("s3_bucket_policies", account_id) or []
+    return _load_data("save_bucket_metadata", account_id) or []
 
 
 def save_sns_topics(account_id: str, region: str, topics: List[Dict[str, Any]]) -> None:

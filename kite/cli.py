@@ -20,6 +20,7 @@ from kite.collect import collect_data
 from kite.organizations import fetch_account_ids
 from kite.data import save_collection_metadata, verify_collection_status
 from kite.accessanalyzer import list_analyzers
+from kite.s3 import get_buckets
 
 
 logger = logging.getLogger(__name__)
@@ -524,6 +525,21 @@ def list_access_analyzers(config: str, account_id: str):
     Config.load(config)
     session = assume_role(account_id)
     console.print(list_analyzers(session))
+
+
+@main.command()
+@click.option(
+    "--config",
+    "-c",
+    default="kite.yaml",
+    help="Path to config file (default: kite.yaml)",
+    type=click.Path(exists=True),
+)
+@click.argument("account_id", required=True)
+def get_s3_bucket_metadata(config: str, account_id: str):
+    Config.load(config)
+    session = assume_role(account_id)
+    console.print(get_buckets(session))
 
 
 if __name__ == "__main__":

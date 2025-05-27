@@ -94,6 +94,7 @@ from kite.checks import (
     check_data_perimeter_confused_deputy_protection,
     check_data_perimeter_trusted_resources,
     check_vpc_endpoints_enforce_data_perimeter,
+    check_data_perimeter_trusted_networks,
 )
 
 # Define check themes and their associated checks
@@ -333,6 +334,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_data_perimeter_confused_deputy_protection,
             check_data_perimeter_trusted_resources,
             check_vpc_endpoints_enforce_data_perimeter,
+            check_data_perimeter_trusted_networks,
         ],
     },
 }

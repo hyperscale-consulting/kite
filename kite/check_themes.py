@@ -258,7 +258,6 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_no_permissive_role_assumption,
             check_no_full_access_to_sensitive_services,
             check_no_readonly_third_party_access,
-            check_cross_account_confused_deputy_prevention,
             check_admin_privileges_are_restricted,
             check_limit_access_to_production_environments,
             check_s3_confused_deputy_protection,
@@ -337,6 +336,14 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_data_perimeter_trusted_resources,
             check_vpc_endpoints_enforce_data_perimeter,
             check_data_perimeter_trusted_networks,
+        ],
+    },
+    "Share resources securely with a 3rd party": {
+        "description": (
+            "Checks related to sharing resources securely with a 3rd party"
+        ),
+        "checks": [
+            check_cross_account_confused_deputy_prevention,
         ],
     },
 }

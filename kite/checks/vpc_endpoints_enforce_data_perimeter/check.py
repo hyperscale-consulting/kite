@@ -55,46 +55,6 @@ def _has_required_org_conditions(
     return False
 
 
-def _has_required_service_condition(
-    policy_doc: Dict[str, Any]
-) -> bool:
-    """
-    Check if a policy has the required AWS service condition.
-
-    Args:
-        policy_doc: The policy document to check
-
-    Returns:
-        True if the policy has the required condition, False otherwise
-    """
-    if not isinstance(policy_doc, dict) or "Statement" not in policy_doc:
-        return False
-
-    for statement in policy_doc["Statement"]:
-        # Check if this is an Allow statement
-        effect = statement.get("Effect")
-        if effect != "Allow":
-            continue
-
-        # Check for required conditions
-        conditions = statement.get("Condition", {})
-        if not isinstance(conditions, dict):
-            continue
-
-        # Check for aws:PrincipalIsAWSService condition
-        bool_condition = conditions.get("Bool", {})
-        if not isinstance(bool_condition, dict):
-            continue
-
-        service_condition = bool_condition.get("aws:PrincipalIsAWSService")
-        if service_condition != "true":
-            continue
-
-        return True
-
-    return False
-
-
 def check_vpc_endpoints_enforce_data_perimeter() -> Dict[str, Any]:
     """
     Check if all VPC endpoints have the required endpoint policies for data
@@ -104,7 +64,6 @@ def check_vpc_endpoints_enforce_data_perimeter() -> Dict[str, Any]:
     policies that:
     1. Allow access when both the principal and resource are in the same
        organization
-    2. Allow access when the principal is an AWS service
 
     Returns:
         Dict containing:
@@ -164,23 +123,13 @@ def check_vpc_endpoints_enforce_data_perimeter() -> Dict[str, Any]:
                     continue
 
                 has_org_conditions = _has_required_org_conditions(policy_doc, org_id)
-                has_service_condition = _has_required_service_condition(policy_doc)
 
-                if not has_org_conditions or not has_service_condition:
-                    missing_conditions = []
-                    if not has_org_conditions:
-                        missing_conditions.append("organization conditions")
-                    if not has_service_condition:
-                        missing_conditions.append("AWS service condition")
-
+                if not has_org_conditions:
                     failing_endpoints.append({
                         "id": endpoint['VpcEndpointId'],
                         "account": account,
                         "region": region,
-                        "reason": (
-                            "Missing required conditions: "
-                            f"{' and '.join(missing_conditions)}"
-                        )
+                        "reason": "Missing required organization conditions"
                     })
 
     if not failing_endpoints:

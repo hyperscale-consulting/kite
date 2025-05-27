@@ -6,7 +6,7 @@ from typing import Dict
 from kite.data import get_organization
 from kite.models import ControlPolicy
 from kite.utils.aws_context_keys import (
-    has_source_org_id_condition,
+    has_not_source_org_id_condition,
     has_principal_is_aws_service_condition,
 )
 
@@ -69,7 +69,7 @@ def _has_data_perimeter_trusted_identities(policy: ControlPolicy, org_id: str) -
             continue
 
         # Check for required conditions using case-insensitive functions
-        if not has_source_org_id_condition(conditions, org_id):
+        if not has_not_source_org_id_condition(conditions, org_id):
             continue
 
         if not has_principal_is_aws_service_condition(

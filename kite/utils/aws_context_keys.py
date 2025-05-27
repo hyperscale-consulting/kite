@@ -40,7 +40,7 @@ def get_case_insensitive_value(
     return None
 
 
-def has_source_org_id_condition(
+def has_not_source_org_id_condition(
     conditions: Dict[str, Any],
     org_id: str,
     condition_type: str = "StringNotEqualsIfExists"

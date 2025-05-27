@@ -123,24 +123,21 @@ def has_principal_is_aws_service_condition(
     return value == "true"
 
 
-def has_source_ip_condition(
-    conditions: Dict[str, Any],
-    condition_type: str = "NotIpAddressIfExists"
+def has_not_source_ip_condition(
+    conditions: Dict[str, Any]
 ) -> bool:
     """
-    Check if conditions have the required aws:SourceIp condition.
+    Check if there is a NotIpAddressIfExists condition on source IP.
 
     Args:
         conditions: The conditions dictionary from a policy statement
-        condition_type: The type of condition to check (default:
-            NotIpAddressIfExists)
 
     Returns:
         True if the condition exists and has a non-empty list of IPs, False
         otherwise
     """
     value = get_case_insensitive_value(
-        conditions, condition_type, "aws:SourceIp"
+        conditions, "NotIpAddressIfExists", "aws:SourceIp"
     )
     return isinstance(value, list) and len(value) > 0
 

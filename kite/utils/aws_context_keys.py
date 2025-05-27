@@ -13,7 +13,8 @@ def get_case_insensitive_value(
 
     Args:
         conditions: The conditions dictionary from a policy statement
-        condition_type: The type of condition (e.g., "StringNotEqualsIfExists", "Bool", etc.)
+        condition_type: The type of condition (e.g., "StringNotEqualsIfExists",
+            "Bool", etc.)
         context_key: The context key to look for (e.g., "aws:SourceOrgID")
 
     Returns:
@@ -50,13 +51,36 @@ def has_source_org_id_condition(
     Args:
         conditions: The conditions dictionary from a policy statement
         org_id: The organization ID to check against
-        condition_type: The type of condition to check (default: StringNotEqualsIfExists)
+        condition_type: The type of condition to check (default:
+            StringNotEqualsIfExists)
 
     Returns:
         True if the condition exists and matches, False otherwise
     """
     value = get_case_insensitive_value(
         conditions, condition_type, "aws:SourceOrgID"
+    )
+    return value == org_id
+
+
+def has_resource_org_id_condition(
+    conditions: Dict[str, Any],
+    org_id: str,
+    condition_type: str = "StringEquals"
+) -> bool:
+    """
+    Check if conditions have the required aws:ResourceOrgID condition.
+
+    Args:
+        conditions: The conditions dictionary from a policy statement
+        org_id: The organization ID to check against
+        condition_type: The type of condition to check (default: StringEquals)
+
+    Returns:
+        True if the condition exists and matches, False otherwise
+    """
+    value = get_case_insensitive_value(
+        conditions, condition_type, "aws:ResourceOrgID"
     )
     return value == org_id
 
@@ -103,3 +127,69 @@ def has_principal_is_aws_service_condition(
         conditions, condition_type, "aws:PrincipalIsAWSService"
     )
     return value == expected_value
+
+
+def has_source_ip_condition(
+    conditions: Dict[str, Any],
+    condition_type: str = "NotIpAddressIfExists"
+) -> bool:
+    """
+    Check if conditions have the required aws:SourceIp condition.
+
+    Args:
+        conditions: The conditions dictionary from a policy statement
+        condition_type: The type of condition to check (default:
+            NotIpAddressIfExists)
+
+    Returns:
+        True if the condition exists and has a non-empty list of IPs, False
+        otherwise
+    """
+    value = get_case_insensitive_value(
+        conditions, condition_type, "aws:SourceIp"
+    )
+    return isinstance(value, list) and len(value) > 0
+
+
+def has_source_vpc_condition(
+    conditions: Dict[str, Any],
+    condition_type: str = "StringNotEqualsIfExists"
+) -> bool:
+    """
+    Check if conditions have the required aws:SourceVpc condition.
+
+    Args:
+        conditions: The conditions dictionary from a policy statement
+        condition_type: The type of condition to check (default:
+            StringNotEqualsIfExists)
+
+    Returns:
+        True if the condition exists and has a non-empty list of VPCs, False
+        otherwise
+    """
+    value = get_case_insensitive_value(
+        conditions, condition_type, "aws:SourceVpc"
+    )
+    return isinstance(value, list) and len(value) > 0
+
+
+def has_principal_arn_condition(
+    conditions: Dict[str, Any],
+    condition_type: str = "ArnNotLikeIfExists"
+) -> bool:
+    """
+    Check if conditions have the required aws:PrincipalArn condition.
+
+    Args:
+        conditions: The conditions dictionary from a policy statement
+        condition_type: The type of condition to check (default:
+            ArnNotLikeIfExists)
+
+    Returns:
+        True if the condition exists and has a non-empty list of ARNs, False
+        otherwise
+    """
+    value = get_case_insensitive_value(
+        conditions, condition_type, "aws:PrincipalArn"
+    )
+    return isinstance(value, list) and len(value) > 0

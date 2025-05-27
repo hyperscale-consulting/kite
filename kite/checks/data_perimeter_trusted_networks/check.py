@@ -6,7 +6,7 @@ from typing import Dict, Any, List
 from kite.data import get_organization
 from kite.utils.aws_context_keys import (
     has_not_source_ip_condition,
-    has_source_vpc_condition,
+    has_not_source_vpc_condition,
     has_not_principal_arn_condition,
 )
 
@@ -44,7 +44,7 @@ def _has_required_conditions(policy_content: str) -> bool:
         if has_not_source_ip_condition(conditions):
             return True
 
-        if has_source_vpc_condition(conditions):
+        if has_not_source_vpc_condition(conditions):
             return True
 
         if has_not_principal_arn_condition(conditions):

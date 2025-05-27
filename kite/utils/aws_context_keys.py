@@ -142,24 +142,21 @@ def has_not_source_ip_condition(
     return isinstance(value, list) and len(value) > 0
 
 
-def has_source_vpc_condition(
-    conditions: Dict[str, Any],
-    condition_type: str = "StringNotEqualsIfExists"
+def has_not_source_vpc_condition(
+    conditions: Dict[str, Any]
 ) -> bool:
     """
     Check if conditions have the required aws:SourceVpc condition.
 
     Args:
         conditions: The conditions dictionary from a policy statement
-        condition_type: The type of condition to check (default:
-            StringNotEqualsIfExists)
 
     Returns:
         True if the condition exists and has a non-empty list of VPCs, False
         otherwise
     """
     value = get_case_insensitive_value(
-        conditions, condition_type, "aws:SourceVpc"
+        conditions, "StringNotEqualsIfExists", "aws:SourceVpc"
     )
     return isinstance(value, list) and len(value) > 0
 

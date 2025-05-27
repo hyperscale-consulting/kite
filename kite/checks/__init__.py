@@ -239,6 +239,9 @@ from kite.checks.vpc_endpoints_enforce_data_perimeter.check import (
 from kite.checks.data_perimeter_trusted_networks.check import (
     check_data_perimeter_trusted_networks,
 )
+from kite.checks.scp_prevents_ram_invitations.check import (
+    check_scp_prevents_ram_invitations,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -334,4 +337,5 @@ __all__ = [
     "check_data_perimeter_trusted_resources",
     "check_vpc_endpoints_enforce_data_perimeter",
     "check_data_perimeter_trusted_networks",
+    "check_scp_prevents_ram_invitations",
 ]

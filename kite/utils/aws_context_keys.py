@@ -198,3 +198,31 @@ def has_not_principal_arn_condition(
         conditions, "ArnNotLikeIfExists", "aws:PrincipalArn"
     )
     return isinstance(value, list) and len(value) > 0
+
+
+def has_not_principal_org_id_condition(
+    conditions: Dict[str, Any],
+    org_id: str
+) -> bool:
+    """
+    Check if conditions have the required aws:PrincipalOrgID condition.
+
+    Args:
+        conditions: The conditions dictionary from a policy statement
+        org_id: The organization ID to check against
+    Returns:
+        True if the condition exists and matches, False otherwise
+    """
+    value = get_case_insensitive_value(
+        conditions, "StringNotEqualsIfExists", "aws:PrincipalOrgID"
+    )
+    return value == org_id
+
+
+def has_principal_is_not_aws_service_condition(
+    conditions: Dict[str, Any]
+) -> bool:
+    value = get_case_insensitive_value(
+        conditions, "BoolIfExists", "aws:PrincipalIsAWSService"
+    )
+    return value == "false"

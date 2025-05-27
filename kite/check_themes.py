@@ -96,6 +96,7 @@ from kite.checks import (
     check_vpc_endpoints_enforce_data_perimeter,
     check_data_perimeter_trusted_networks,
     check_scp_prevents_ram_invitations,
+    check_repeatable_auditable_setup_for_3rd_party_access,
 )
 
 # Define check themes and their associated checks
@@ -344,6 +345,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
         ),
         "checks": [
             check_cross_account_confused_deputy_prevention,
+            check_repeatable_auditable_setup_for_3rd_party_access,
         ],
     },
 }

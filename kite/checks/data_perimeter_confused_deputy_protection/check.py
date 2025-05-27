@@ -7,7 +7,7 @@ from kite.data import get_organization
 from kite.models import ControlPolicy
 from kite.utils.aws_context_keys import (
     has_not_source_org_id_condition,
-    has_source_account_condition,
+    has_no_source_account_condition,
     has_principal_is_aws_service_condition,
 )
 
@@ -69,7 +69,7 @@ def _has_data_perimeter_confused_deputy_protection(
         if not has_not_source_org_id_condition(conditions, org_id):
             continue
 
-        if not has_source_account_condition(conditions):
+        if not has_no_source_account_condition(conditions):
             continue
 
         if not has_principal_is_aws_service_condition(conditions):

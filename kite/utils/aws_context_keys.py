@@ -85,35 +85,29 @@ def has_resource_org_id_condition(
     return value == org_id
 
 
-def has_source_account_condition(
-    conditions: Dict[str, Any],
-    expected_value: str = "false",
-    condition_type: str = "Null"
+def has_no_source_account_condition(
+    conditions: Dict[str, Any]
 ) -> bool:
     """
-    Check if conditions have the required aws:SourceAccount condition.
+    Check if the 'no source account' condition is present.
 
     Args:
         conditions: The conditions dictionary from a policy statement
-        expected_value: The expected value (default: "false")
-        condition_type: The type of condition to check (default: Null)
 
     Returns:
         True if the condition exists and matches, False otherwise
     """
     value = get_case_insensitive_value(
-        conditions, condition_type, "aws:SourceAccount"
+        conditions, "Null", "aws:SourceAccount"
     )
-    return value == expected_value
+    return value == "false"
 
 
 def has_principal_is_aws_service_condition(
-    conditions: Dict[str, Any],
-    expected_value: str = "true",
-    condition_type: str = "Bool"
+    conditions: Dict[str, Any]
 ) -> bool:
     """
-    Check if conditions have the required aws:PrincipalIsAWSService condition.
+    Check if the 'principal is AWS service' condition is present.
 
     Args:
         conditions: The conditions dictionary from a policy statement
@@ -124,9 +118,9 @@ def has_principal_is_aws_service_condition(
         True if the condition exists and matches, False otherwise
     """
     value = get_case_insensitive_value(
-        conditions, condition_type, "aws:PrincipalIsAWSService"
+        conditions, "Bool", "aws:PrincipalIsAWSService"
     )
-    return value == expected_value
+    return value == "true"
 
 
 def has_source_ip_condition(

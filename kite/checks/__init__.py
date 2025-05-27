@@ -224,7 +224,7 @@ from kite.checks.s3_bucket_acl_disabled.check import (
 from kite.checks.migrate_from_oai.check import (
     check_migrate_from_oai,
 )
-from kite.checks.establish_data_perimeter_trusted_identities.check import (
+from kite.checks.data_perimeter_trusted_identities.check import (
     check_establish_data_perimeter_trusted_identities,
 )
 from kite.checks.data_perimeter_confused_deputy_protection.check import (

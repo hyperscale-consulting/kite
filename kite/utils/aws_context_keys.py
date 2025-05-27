@@ -164,23 +164,20 @@ def has_source_vpc_condition(
     return isinstance(value, list) and len(value) > 0
 
 
-def has_principal_arn_condition(
+def has_not_principal_arn_condition(
     conditions: Dict[str, Any],
-    condition_type: str = "ArnNotLikeIfExists"
 ) -> bool:
     """
     Check if conditions have the required aws:PrincipalArn condition.
 
     Args:
         conditions: The conditions dictionary from a policy statement
-        condition_type: The type of condition to check (default:
-            ArnNotLikeIfExists)
 
     Returns:
         True if the condition exists and has a non-empty list of ARNs, False
         otherwise
     """
     value = get_case_insensitive_value(
-        conditions, condition_type, "aws:PrincipalArn"
+        conditions, "ArnNotLikeIfExists", "aws:PrincipalArn"
     )
     return isinstance(value, list) and len(value) > 0

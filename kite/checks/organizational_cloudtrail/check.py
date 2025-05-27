@@ -58,6 +58,27 @@ def check_organizational_cloudtrail() -> Dict[str, Any]:
 
             for trail in trails:
                 if trail.get("IsOrganizationTrail", False):
+                    validation_enabled = trail.get("LogFileValidationEnabled", False)
+                    if not validation_enabled:
+                        return {
+                            "check_id": CHECK_ID,
+                            "check_name": CHECK_NAME,
+                            "status": "FAIL",
+                            "details": {
+                                "message": (
+                                    "An organizational CloudTrail trail is configured, but log file validation is not enabled."
+                                ),
+                                "trail": {
+                                    "name": trail["Name"],
+                                    "account": account,
+                                    "region": region,
+                                    "s3_bucket": trail["S3BucketName"],
+                                    "log_group_arn": trail["CloudWatchLogsLogGroupArn"],
+                                    "validation_enabled": validation_enabled
+                                },
+                            },
+                        }
+
                     return {
                         "check_id": CHECK_ID,
                         "check_name": CHECK_NAME,
@@ -70,6 +91,9 @@ def check_organizational_cloudtrail() -> Dict[str, Any]:
                                 "name": trail["Name"],
                                 "account": account,
                                 "region": region,
+                                "s3_bucket": trail["S3BucketName"],
+                                "log_group_arn": trail["CloudWatchLogsLogGroupArn"],
+                                "validation_enabled": validation_enabled
                             },
                         },
                     }

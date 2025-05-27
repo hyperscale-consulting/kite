@@ -55,7 +55,7 @@ def trusted_resources_scp(organization_id):
                         Principal="*",
                         Condition={
                             "StringNotEqualsIfExists": {
-                                "aws:ResourceOrgID": organization_id,
+                                "AWS:ResourceOrgID": organization_id,
                                 "aws:PrincipalTag/dp:exclude:resource": "true"
                             }
                         }

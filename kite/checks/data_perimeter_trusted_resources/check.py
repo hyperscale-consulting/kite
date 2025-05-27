@@ -5,6 +5,7 @@ from typing import Dict, Any
 
 from kite.data import get_organization
 from kite.models import ControlPolicy
+from kite.utils.aws_context_keys import has_not_resource_org_id_condition
 
 
 CHECK_ID = "data-perimeter-trusted-resources"
@@ -44,14 +45,8 @@ def _has_data_perimeter_trusted_resources(
             continue
 
         # Check for aws:ResourceOrgID condition
-        org_condition = (
-            conditions.get("StringNotEqualsIfExists", {})
-            .get("aws:ResourceOrgID")
-        )
-        if org_condition != org_id:
-            continue
-
-        return True
+        if has_not_resource_org_id_condition(conditions, org_id):
+            return True
 
     return False
 

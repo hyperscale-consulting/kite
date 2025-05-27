@@ -97,6 +97,7 @@ from kite.checks import (
     check_data_perimeter_trusted_networks,
     check_scp_prevents_ram_invitations,
     check_repeatable_auditable_setup_for_3rd_party_access,
+    check_organizational_cloudtrail,
 )
 
 # Define check themes and their associated checks
@@ -348,6 +349,14 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_repeatable_auditable_setup_for_3rd_party_access,
         ],
     },
+    "Configure service and application logging": {
+        "description": (
+            "Checks related to configuring service and application logging"
+        ),
+        "checks": [
+            check_organizational_cloudtrail,
+        ],
+    }
 }
 
 # Flatten all checks for backward compatibility

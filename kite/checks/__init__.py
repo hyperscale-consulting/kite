@@ -245,6 +245,9 @@ from kite.checks.scp_prevents_ram_invitations.check import (
 from kite.checks.repeatable_auditable_setup_for_3rd_party_access.check import (
     check_repeatable_auditable_setup_for_3rd_party_access,
 )
+from kite.checks.organizational_cloudtrail.check import (
+    check_organizational_cloudtrail,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -342,4 +345,5 @@ __all__ = [
     "check_data_perimeter_trusted_networks",
     "check_scp_prevents_ram_invitations",
     "check_repeatable_auditable_setup_for_3rd_party_access",
+    "check_organizational_cloudtrail",
 ]

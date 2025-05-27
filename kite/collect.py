@@ -25,6 +25,7 @@ from . import (
     secretsmanager,
     accessanalyzer,
     configservice,
+    cloudtrail,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -66,6 +67,7 @@ from kite.data import (
     save_config_rules,
     save_cloudfront_origin_access_identities,
     save_vpc_endpoints,
+    save_cloudtrail_trails,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -415,6 +417,19 @@ def collect_account_data(account_id: str) -> None:
                 console.print(f"  [green]✓ Saved {len(endpoints)} VPC endpoints for account {account_id} in region {region}[/]")
             except Exception as e:
                 console.print(f"  [red]✗ Error fetching VPC endpoints for account {account_id} in region {region}: {str(e)}[/]")
+
+        # Collect CloudTrail trails
+        console.print(
+            f"  [yellow]Fetching CloudTrail trails for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                trails = cloudtrail.get_trails(session, region)
+                save_cloudtrail_trails(account_id, region, trails)
+                console.print(f"  [green]✓ Saved {len(trails)} CloudTrail trails for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching CloudTrail trails for account {account_id} in region {region}: {str(e)}[/]")
+
     except Exception as e:
         console.print(
             f"  [red]✗ Error collecting data for account {account_id}: {str(e)}[/]"

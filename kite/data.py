@@ -915,3 +915,24 @@ def get_vpc_endpoints(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"vpc_endpoints_{region}", account_id) or []
+
+
+def save_cloudtrail_trails(account_id: str, region: str, trails: List[Dict[str, Any]]) -> None:
+    """Save CloudTrail trails for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        trails: The list of CloudTrail trails to save.
+    """
+    _save_data(trails, f"cloudtrail_trails_{region}", account_id)
+
+
+def get_cloudtrail_trails(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get CloudTrail trails for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"cloudtrail_trails_{region}", account_id) or []

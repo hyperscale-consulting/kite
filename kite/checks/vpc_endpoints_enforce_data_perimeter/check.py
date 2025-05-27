@@ -6,6 +6,10 @@ from typing import Dict, Any, List
 from kite.data import get_organization, get_vpc_endpoints
 from kite.helpers import get_account_ids_in_scope
 from kite.config import Config
+from kite.utils.aws_context_keys import (
+    has_principal_org_id_condition,
+    has_resource_org_id_condition
+)
 
 
 CHECK_ID = "vpc-endpoints-enforce-data-perimeter"
@@ -39,18 +43,9 @@ def _has_required_org_conditions(
         if not isinstance(conditions, dict):
             continue
 
-        # Check for aws:PrincipalOrgID and aws:ResourceOrgID conditions
-        string_equals = conditions.get("StringEquals", {})
-        if not isinstance(string_equals, dict):
-            continue
-
-        principal_org = string_equals.get("aws:PrincipalOrgID")
-        resource_org = string_equals.get("aws:ResourceOrgID")
-
-        if principal_org != org_id or resource_org != org_id:
-            continue
-
-        return True
+        if has_principal_org_id_condition(conditions, org_id) and \
+                has_resource_org_id_condition(conditions, org_id):
+            return True
 
     return False
 

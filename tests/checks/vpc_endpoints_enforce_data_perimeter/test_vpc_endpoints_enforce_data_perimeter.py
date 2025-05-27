@@ -31,7 +31,7 @@ def enforce_data_perimeter_policy(organization):
                 Resource="*",
                 Condition={
                     "StringEquals": {
-                        "aws:PrincipalOrgID": organization.id,
+                        "AWS:PrincipalOrgID": organization.id,
                         "aws:ResourceOrgID": organization.id
                     }
                 }
@@ -98,5 +98,4 @@ def test_allow_all_policy(vpc_endpoint_allow_all_policy):
 
 def test_enforce_data_perimeter_policy(vpc_endpoint_enforce_data_perimeter_policy):
     result = check_vpc_endpoints_enforce_data_perimeter()
-    print(result)
     assert result["status"] == "PASS"

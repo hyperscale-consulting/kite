@@ -83,6 +83,26 @@ def has_not_resource_org_id_condition(
     return value == org_id
 
 
+def has_principal_org_id_condition(
+    conditions: Dict[str, Any],
+    org_id: str
+) -> bool:
+    """
+    Check if conditions have the required aws:PrincipalOrgID condition.
+
+    Args:
+        conditions: The conditions dictionary from a policy statement
+        org_id: The organization ID to check against
+
+    Returns:
+        True if the condition exists and matches, False otherwise
+    """
+    value = get_case_insensitive_value(
+        conditions, "StringEquals", "aws:PrincipalOrgID"
+    )
+    return value == org_id
+
+
 def has_resource_org_id_condition(
     conditions: Dict[str, Any],
     org_id: str,

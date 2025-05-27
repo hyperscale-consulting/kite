@@ -145,7 +145,7 @@ def check_vpc_endpoints_enforce_data_perimeter() -> Dict[str, Any]:
             for endpoint in vpc_endpoints:
                 if 'PolicyDocument' not in endpoint:
                     failing_endpoints.append({
-                        "id": endpoint.id,
+                        "id": endpoint['VpcEndpointId'],
                         "account": account,
                         "region": region,
                         "reason": "No endpoint policy found"

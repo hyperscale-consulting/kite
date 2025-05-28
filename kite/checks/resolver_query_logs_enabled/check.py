@@ -1,23 +1,23 @@
-"""Check for VPC flow logs being enabled."""
+"""Check for Route 53 Resolver query logs being enabled."""
 
 from typing import Dict, Any, List
 
-from kite.data import get_vpcs, get_flow_logs
+from kite.data import get_vpcs, get_route53resolver_resolver_query_log_config_associations
 from kite.helpers import get_account_ids_in_scope
 from kite.config import Config
 
 
-CHECK_ID = "vpc-flow-logs-enabled"
-CHECK_NAME = "VPC Flow Logs Enabled"
+CHECK_ID = "resolver-query-logs-enabled"
+CHECK_NAME = "Route 53 Resolver Query Logs Enabled"
 
 
-def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
+def check_resolver_query_logs_enabled() -> Dict[str, Any]:
     """
-    Check if all VPCs have flow logs enabled.
+    Check if all VPCs have Route 53 Resolver query logs enabled.
 
     This check verifies that:
-    1. Each VPC in each account and region has at least one flow log enabled
-    2. Flow logs are properly configured to capture traffic
+    1. Each VPC in each account and region has at least one resolver query log config association
+    2. The resolver query log config associations are properly configured
 
     Returns:
         Dict containing:
@@ -26,7 +26,7 @@ def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
             - status: str indicating if the check passed ("PASS" or "FAIL")
             - details: Dict containing:
                 - message: str describing the result
-                - failing_resources: List of VPCs that don't have flow logs enabled
+                - failing_resources: List of VPCs that don't have query logs enabled
     """
     config = Config.get()
     failing_vpcs: List[Dict[str, str]] = []
@@ -37,14 +37,14 @@ def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
     # Check each account in each active region
     for account in accounts:
         for region in config.active_regions:
-            # Get VPCs and flow logs for this account and region
+            # Get VPCs and resolver query log config associations for this account and region
             vpcs = get_vpcs(account, region)
-            flow_logs = get_flow_logs(account, region)
+            query_log_associations = get_route53resolver_resolver_query_log_config_associations(account, region)
 
-            # Create a set of VPC IDs that have flow logs enabled
-            vpcs_with_flow_logs = {
-                log["ResourceId"] for log in flow_logs
-                if log.get("ResourceId") and log.get("FlowLogStatus") == "ACTIVE"
+            # Create a set of VPC IDs that have query logs enabled
+            vpcs_with_query_logs = {
+                assoc["ResourceId"] for assoc in query_log_associations
+                if assoc.get("ResourceId") and assoc.get("Status") == "ACTIVE"
             }
 
             # Check each VPC
@@ -53,12 +53,12 @@ def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
                 if not vpc_id:
                     continue
 
-                if vpc_id not in vpcs_with_flow_logs:
+                if vpc_id not in vpcs_with_query_logs:
                     failing_vpcs.append({
                         "id": vpc_id,
                         "account": account,
                         "region": region,
-                        "reason": "No active flow logs found"
+                        "reason": "No active resolver query log config association found"
                     })
 
     if not failing_vpcs:
@@ -67,7 +67,7 @@ def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
             "check_name": CHECK_NAME,
             "status": "PASS",
             "details": {
-                "message": "All VPCs have flow logs enabled"
+                "message": "All VPCs have Route 53 Resolver query logs enabled"
             }
         }
 
@@ -77,7 +77,7 @@ def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
         "status": "FAIL",
         "details": {
             "message": (
-                f"Found {len(failing_vpcs)} VPC(s) without flow logs enabled"
+                f"Found {len(failing_vpcs)} VPC(s) without Route 53 Resolver query logs enabled"
             ),
             "failing_resources": failing_vpcs
         }
@@ -85,5 +85,5 @@ def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
 
 
 # Attach the check ID and name to the function
-check_vpc_flow_logs_enabled._CHECK_ID = CHECK_ID
-check_vpc_flow_logs_enabled._CHECK_NAME = CHECK_NAME
+check_resolver_query_logs_enabled._CHECK_ID = CHECK_ID
+check_resolver_query_logs_enabled._CHECK_NAME = CHECK_NAME

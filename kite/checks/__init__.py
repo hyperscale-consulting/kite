@@ -248,6 +248,9 @@ from kite.checks.organizational_cloudtrail.check import (
 from kite.checks.vpc_flow_logs_enabled import (
     check_vpc_flow_logs_enabled,
 )
+from kite.checks.resolver_query_logs_enabled import (
+    check_resolver_query_logs_enabled,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -346,4 +349,5 @@ __all__ = [
     "check_repeatable_auditable_setup_for_3rd_party_access",
     "check_organizational_cloudtrail",
     "check_vpc_flow_logs_enabled",
+    "check_resolver_query_logs_enabled",
 ]

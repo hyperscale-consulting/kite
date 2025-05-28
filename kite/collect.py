@@ -26,6 +26,7 @@ from . import (
     accessanalyzer,
     configservice,
     cloudtrail,
+    route53resolver,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -70,6 +71,8 @@ from kite.data import (
     save_cloudtrail_trails,
     save_flow_logs,
     save_vpcs,
+    save_route53resolver_query_log_configs,
+    save_route53resolver_resolver_query_log_config_associations,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -449,6 +452,31 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(f"  [red]✗ Error fetching VPCs for account {account_id} in region {region}: {str(e)}[/]")
 
+        # Collect Route 53 resolver query log configs
+
+        console.print(
+            f"  [yellow]Fetching Route 53 resolver query log configs for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                query_log_configs = route53resolver.get_query_log_configs(session, region)
+                save_route53resolver_query_log_configs(account_id, region, query_log_configs)
+                console.print(f"  [green]✓ Saved {len(query_log_configs)} Route 53 resolver query log configs for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching Route 53 resolver query log configs for account {account_id} in region {region}: {str(e)}[/]")
+
+        # Collect Route 53 resolver query log config associations
+
+        console.print(
+            f"  [yellow]Fetching Route 53 resolver query log config associations for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                resolver_query_log_config_associations = route53resolver.get_resolver_query_log_config_associations(session, region)
+                save_route53resolver_resolver_query_log_config_associations(account_id, region, resolver_query_log_config_associations)
+                console.print(f"  [green]✓ Saved {len(resolver_query_log_config_associations)} Route 53 resolver query log config associations for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching Route 53 resolver query log config associations for account {account_id} in region {region}: {str(e)}[/]")
 
     except Exception as e:
         console.print(

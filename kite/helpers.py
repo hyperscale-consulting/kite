@@ -22,6 +22,7 @@ from kite.data import (
     get_roles as get_saved_roles,
     get_customer_managed_policies as get_saved_customer_managed_policies,
     get_policy_document as get_saved_policy_document,
+    get_cloudtrail_trails,
 )
 
 console = Console()
@@ -620,3 +621,21 @@ def get_policy_document(account_id: str, policy_arn: str) -> Dict[str, Any]:
         ClickException: If data collection hasn't been run
     """
     return get_saved_policy_document(account_id, policy_arn)
+
+
+def get_organizational_trail(
+) -> Tuple[Optional[Dict[str, Any]], Optional[str], Optional[str]]:
+    """
+    Get the organizational trail for the account.
+    """
+    config = Config.get()
+    for account in get_account_ids_in_scope():
+        for region in config.active_regions:
+            trails = get_cloudtrail_trails(account, region)
+            if not trails:
+                continue
+
+            for trail in trails:
+                if trail.get("IsOrganizationTrail", False):
+                    return trail, account, region
+    return None, None, None

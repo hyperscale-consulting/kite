@@ -2,9 +2,8 @@
 
 from typing import Dict, Any
 
-from kite.data import get_organization, get_cloudtrail_trails
-from kite.helpers import get_account_ids_in_scope
-from kite.config import Config
+from kite.data import get_organization
+from kite.helpers import get_organizational_trail
 
 
 CHECK_ID = "organizational-cloudtrail"
@@ -42,70 +41,57 @@ def check_organizational_cloudtrail() -> Dict[str, Any]:
             },
         }
 
-    # Get all in-scope accounts
-    accounts = get_account_ids_in_scope()
+    trail, account, region = get_organizational_trail()
+    if trail is None:
+        return {
+            "check_id": CHECK_ID,
+            "check_name": CHECK_NAME,
+            "status": "FAIL",
+            "details": {
+                "message": (
+                    "No organizational CloudTrail trail was found in any active region."
+                ),
+            },
+        }
 
-    # Get active regions from config
-    config = Config.get()
-    active_regions = config.active_regions
-
-    # Check each account in each active region for an organizational trail
-    for account in accounts:
-        for region in active_regions:
-            trails = get_cloudtrail_trails(account, region)
-            if not trails:
-                continue
-
-            for trail in trails:
-                if trail.get("IsOrganizationTrail", False):
-                    validation_enabled = trail.get("LogFileValidationEnabled", False)
-                    if not validation_enabled:
-                        return {
-                            "check_id": CHECK_ID,
-                            "check_name": CHECK_NAME,
-                            "status": "FAIL",
-                            "details": {
-                                "message": (
-                                    "An organizational CloudTrail trail is configured, but log file validation is not enabled."
-                                ),
-                                "trail": {
-                                    "name": trail["Name"],
-                                    "account": account,
-                                    "region": region,
-                                    "s3_bucket": trail["S3BucketName"],
-                                    "log_group_arn": trail["CloudWatchLogsLogGroupArn"],
-                                    "validation_enabled": validation_enabled
-                                },
-                            },
-                        }
-
-                    return {
-                        "check_id": CHECK_ID,
-                        "check_name": CHECK_NAME,
-                        "status": "PASS",
-                        "details": {
-                            "message": (
-                                "An organizational CloudTrail trail is configured."
-                            ),
-                            "trail": {
-                                "name": trail["Name"],
-                                "account": account,
-                                "region": region,
-                                "s3_bucket": trail["S3BucketName"],
-                                "log_group_arn": trail["CloudWatchLogsLogGroupArn"],
-                                "validation_enabled": validation_enabled
-                            },
-                        },
-                    }
+    validation_enabled = trail.get("LogFileValidationEnabled", False)
+    if not validation_enabled:
+        return {
+            "check_id": CHECK_ID,
+            "check_name": CHECK_NAME,
+            "status": "FAIL",
+            "details": {
+                "message": (
+                    "An organizational CloudTrail trail is configured, but log file "
+                    "validation is not enabled."
+                ),
+                "trail": {
+                    "name": trail["Name"],
+                    "account": account,
+                    "region": region,
+                    "s3_bucket": trail["S3BucketName"],
+                    "log_group_arn": trail["CloudWatchLogsLogGroupArn"],
+                    "validation_enabled": validation_enabled
+                },
+            },
+        }
 
     return {
         "check_id": CHECK_ID,
         "check_name": CHECK_NAME,
-        "status": "FAIL",
+        "status": "PASS",
         "details": {
             "message": (
-                "No organizational CloudTrail trail was found in any active region."
+                "An organizational CloudTrail trail is configured."
             ),
+            "trail": {
+                "name": trail["Name"],
+                "account": account,
+                "region": region,
+                "s3_bucket": trail["S3BucketName"],
+                "log_group_arn": trail["CloudWatchLogsLogGroupArn"],
+                "validation_enabled": validation_enabled
+            },
         },
     }
 

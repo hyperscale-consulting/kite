@@ -3,7 +3,13 @@
 from typing import Dict, Any, List
 from collections import defaultdict
 
-from kite.data import get_log_groups, get_export_tasks, get_bucket_metadata, get_cloudtrail_trails
+from kite.data import (
+    get_log_groups,
+    get_export_tasks,
+    get_bucket_metadata,
+    get_cloudtrail_trails,
+    get_route53resolver_query_log_configs,
+)
 from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
 
@@ -112,7 +118,8 @@ def check_log_retention() -> Dict[str, Any]:
     1. Shows CloudWatch log groups grouped by their retention period
     2. Shows log export tasks grouped by their S3 bucket retention period
     3. Shows CloudTrail logging buckets and their retention periods
-    4. Asks the user to confirm if logs are retained for as long as required
+    4. Shows Route53 Resolver query log configs and their S3 bucket retention periods
+    5. Asks the user to confirm if logs are retained for as long as required
 
     Returns:
         Dict containing:
@@ -126,6 +133,7 @@ def check_log_retention() -> Dict[str, Any]:
     log_groups_by_retention = []
     export_tasks_by_retention = []
     cloudtrail_buckets_by_retention = []
+    resolver_logs_by_retention = []
 
     # Get all in-scope accounts
     accounts = get_account_ids_in_scope()
@@ -146,6 +154,7 @@ def check_log_retention() -> Dict[str, Any]:
             log_groups = get_log_groups(account, region)
             export_tasks = get_export_tasks(account, region)
             cloudtrail_trails = get_cloudtrail_trails(account, region)
+            resolver_configs = get_route53resolver_query_log_configs(account, region)
 
             if log_groups:
                 log_groups_by_retention.append(
@@ -201,6 +210,44 @@ def check_log_retention() -> Dict[str, Any]:
                     for bucket in sorted(cloudtrail_buckets):
                         cloudtrail_buckets_by_retention.append(f"  - {bucket}")
 
+            # Process Route53 Resolver query log configs
+            if resolver_configs:
+                resolver_buckets = []
+                for config in resolver_configs:
+                    destination = config.get("DestinationArn", "")
+                    if destination.startswith("arn:aws:s3:::"):
+                        # Extract bucket name from ARN
+                        bucket_name = destination.split(":::")[1].split("/")[0]
+                        if bucket_name in all_buckets:
+                            bucket, bucket_account = all_buckets[bucket_name]
+                            # Find the shortest expiration period in lifecycle rules
+                            retention = None
+                            lifecycle_rules = bucket.get("LifecycleRules")
+                            if lifecycle_rules is not None:
+                                for rule in lifecycle_rules:
+                                    if "Expiration" in rule and "Days" in rule["Expiration"]:
+                                        days = rule["Expiration"]["Days"]
+                                        if retention is None or days < retention:
+                                            retention = days
+
+                            retention = retention if retention is not None else "Never Expire"
+                            resolver_buckets.append(
+                                f"Config: {config.get('Name', 'Unknown')} -> "
+                                f"{bucket_name} (Account: {bucket_account}, days) -> {retention}"
+                            )
+                        else:
+                            resolver_buckets.append(
+                                f"Config: {config.get('Name', 'Unknown')} -> "
+                                f"{bucket_name} (bucket not found in any account)"
+                            )
+
+                if resolver_buckets:
+                    resolver_logs_by_retention.append(
+                        f"\nAccount: {account}, Region: {region}\nRoute53 Resolver Query Log Configs:"
+                    )
+                    for bucket in sorted(resolver_buckets):
+                        resolver_logs_by_retention.append(f"  - {bucket}")
+
     # Build the message
     message = (
         "This check verifies that logs are retained for a suitable period.\n\n"
@@ -210,6 +257,8 @@ def check_log_retention() -> Dict[str, Any]:
         + "\n".join(export_tasks_by_retention)
         + "\n\nCloudTrail Logging Buckets:\n"
         + "\n".join(cloudtrail_buckets_by_retention)
+        + "\n\nRoute53 Resolver Query Log Configs:\n"
+        + "\n".join(resolver_logs_by_retention)
         + "\n\nPlease review the retention periods above and consider:\n"
         "- Are logs retained for as long as required by security requirements?\n"
         "- Are logs retained for longer than necessary?"

@@ -28,6 +28,30 @@ def _is_service_principal(principal: Any) -> bool:
     return principal.endswith(".amazonaws.com")
 
 
+def has_confused_deputy_protection(condition: Dict[str, Any]) -> bool:
+    """
+    Check if a resource-based policy statement condition has confused
+    deputy protection.
+    """
+    if "StringEquals" in condition:
+        protected_keys = {
+            "aws:sourceaccount",
+            "aws:sourcearn",
+            "aws:sourceorgid",
+            "aws:sourceorgpaths"
+        }
+        provided_keys = set([key.lower() for key in condition["StringEquals"].keys()])
+        if any(key in protected_keys for key in provided_keys):
+            return True
+
+    if "ArnLike" in condition:
+        provided_keys = set([key.lower() for key in condition["ArnLike"].keys()])
+        if "aws:sourcearn" in provided_keys:
+            return True
+
+    return False
+
+
 def _has_confused_deputy_protection(statement: Dict[str, Any]) -> bool:
     """
     Check if a policy statement has confused deputy protection.
@@ -39,23 +63,7 @@ def _has_confused_deputy_protection(statement: Dict[str, Any]) -> bool:
         True if the statement has confused deputy protection, False otherwise
     """
     condition = statement.get("Condition", {})
-
-    # Check StringEquals conditions
-    if "StringEquals" in condition:
-        protected_keys = {
-            "aws:SourceAccount",
-            "aws:SourceArn",
-            "aws:SourceOrgID",
-            "aws:SourceOrgPaths"
-        }
-        if any(key in condition["StringEquals"] for key in protected_keys):
-            return True
-
-    # Check ArnLike conditions
-    if "ArnLike" in condition and "aws:SourceArn" in condition["ArnLike"]:
-        return True
-
-    return False
+    return has_confused_deputy_protection(condition)
 
 
 def check_s3_confused_deputy_protection() -> Dict[str, Any]:

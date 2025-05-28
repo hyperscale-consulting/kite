@@ -140,9 +140,6 @@ from kite.checks.admin_privileges_are_restricted.check import (
 from kite.checks.limit_access_to_production_environments.check import (
     check_limit_access_to_production_environments,
 )
-from kite.checks.confused_deputy_protection_for_s3.check import (
-    check_confused_deputy_protection_for_s3,
-)
 from kite.checks.s3_confused_deputy_protection.check import (
     check_s3_confused_deputy_protection,
 )
@@ -310,7 +307,6 @@ __all__ = [
     "check_cross_account_confused_deputy_prevention",
     "check_admin_privileges_are_restricted",
     "check_limit_access_to_production_environments",
-    "check_confused_deputy_protection_for_s3",
     "check_s3_confused_deputy_protection",
     "check_sns_confused_deputy_protection",
     "check_sqs_confused_deputy_protection",

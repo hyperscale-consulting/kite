@@ -4,7 +4,7 @@ from typing import Dict, Any
 from kite.data import get_lambda_functions
 from kite.helpers import get_account_ids_in_scope
 from kite.config import Config
-
+from kite.utils.aws_context_keys import has_confused_deputy_protection
 
 # Define check ID and name
 CHECK_ID = "lambda-confused-deputy-protection"
@@ -26,41 +26,6 @@ def _is_service_principal(principal: Any) -> bool:
     if not isinstance(principal, str):
         return False
     return principal.endswith(".amazonaws.com")
-
-
-def _has_confused_deputy_protection(statement: Dict[str, Any]) -> bool:
-    """
-    Check if a policy statement has confused deputy protection.
-
-    Args:
-        statement: The policy statement to check
-
-    Returns:
-        True if the statement has confused deputy protection, False otherwise
-    """
-    condition = statement.get("Condition", {})
-
-    # Check StringEquals conditions
-    if "StringEquals" in condition:
-        protected_keys = {
-            "aws:SourceAccount",
-            "aws:SourceArn",
-            "aws:SourceOrgID",
-            "aws:SourceOrgPaths"
-        }
-        # Check for any of the protected keys in a case-insensitive way
-        condition_keys = {k.lower(): v for k, v in condition["StringEquals"].items()}
-        if any(key.lower() in condition_keys for key in protected_keys):
-            return True
-
-    # Check ArnLike conditions
-    if "ArnLike" in condition:
-        # Check for aws:SourceArn in a case-insensitive way
-        arnlike_keys = {k.lower(): v for k, v in condition["ArnLike"].items()}
-        if "aws:sourcearn" in arnlike_keys:
-            return True
-
-    return False
 
 
 def check_lambda_confused_deputy_protection() -> Dict[str, Any]:
@@ -102,7 +67,7 @@ def check_lambda_confused_deputy_protection() -> Dict[str, Any]:
                         continue
 
                     # Skip if statement has confused deputy protection
-                    if _has_confused_deputy_protection(statement):
+                    if has_confused_deputy_protection(statement.get("Condition", {})):
                         continue
 
                     # Check principals in the statement

@@ -4,6 +4,7 @@ import json
 from typing import Dict, Any
 from kite.data import get_bucket_metadata
 from kite.helpers import get_account_ids_in_scope
+from kite.utils.aws_context_keys import has_confused_deputy_protection
 
 
 # Define check ID and name
@@ -26,44 +27,6 @@ def _is_service_principal(principal: Any) -> bool:
     if not isinstance(principal, str):
         return False
     return principal.endswith(".amazonaws.com")
-
-
-def has_confused_deputy_protection(condition: Dict[str, Any]) -> bool:
-    """
-    Check if a resource-based policy statement condition has confused
-    deputy protection.
-    """
-    if "StringEquals" in condition:
-        protected_keys = {
-            "aws:sourceaccount",
-            "aws:sourcearn",
-            "aws:sourceorgid",
-            "aws:sourceorgpaths"
-        }
-        provided_keys = set([key.lower() for key in condition["StringEquals"].keys()])
-        if any(key in protected_keys for key in provided_keys):
-            return True
-
-    if "ArnLike" in condition:
-        provided_keys = set([key.lower() for key in condition["ArnLike"].keys()])
-        if "aws:sourcearn" in provided_keys:
-            return True
-
-    return False
-
-
-def _has_confused_deputy_protection(statement: Dict[str, Any]) -> bool:
-    """
-    Check if a policy statement has confused deputy protection.
-
-    Args:
-        statement: The policy statement to check
-
-    Returns:
-        True if the statement has confused deputy protection, False otherwise
-    """
-    condition = statement.get("Condition", {})
-    return has_confused_deputy_protection(condition)
 
 
 def check_s3_confused_deputy_protection() -> Dict[str, Any]:
@@ -108,7 +71,7 @@ def check_s3_confused_deputy_protection() -> Dict[str, Any]:
                     continue
 
                 # Skip if statement has confused deputy protection
-                if _has_confused_deputy_protection(statement):
+                if has_confused_deputy_protection(statement.get("Condition", {})):
                     continue
 
                 # Check principals in the statement

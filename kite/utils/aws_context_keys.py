@@ -246,3 +246,27 @@ def has_principal_is_not_aws_service_condition(
         conditions, "BoolIfExists", "aws:PrincipalIsAWSService"
     )
     return value == "false"
+
+
+def has_confused_deputy_protection(condition: Dict[str, Any]) -> bool:
+    """
+    Check if a resource-based policy statement condition has confused
+    deputy protection.
+    """
+    if "StringEquals" in condition:
+        protected_keys = {
+            "aws:sourceaccount",
+            "aws:sourcearn",
+            "aws:sourceorgid",
+            "aws:sourceorgpaths"
+        }
+        provided_keys = set([key.lower() for key in condition["StringEquals"].keys()])
+        if any(key in protected_keys for key in provided_keys):
+            return True
+
+    if "ArnLike" in condition:
+        provided_keys = set([key.lower() for key in condition["ArnLike"].keys()])
+        if "aws:sourcearn" in provided_keys:
+            return True
+
+    return False

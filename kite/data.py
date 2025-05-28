@@ -1020,3 +1020,45 @@ def get_route53resolver_resolver_query_log_config_associations(account_id: str, 
         region: The AWS region.
     """
     return _load_data(f"route53resolver_resolver_query_log_config_associations_{region}", account_id) or []
+
+
+def save_log_groups(account_id: str, region: str, log_groups: List[Dict[str, Any]]) -> None:
+    """Save log groups for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        log_groups: The list of log groups to save.
+    """
+    _save_data(log_groups, f"log_groups_{region}", account_id)
+
+
+def get_log_groups(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get log groups for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"log_groups_{region}", account_id) or []
+
+
+def save_export_tasks(account_id: str, region: str, export_tasks: List[Dict[str, Any]]) -> None:
+    """Save export tasks for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        export_tasks: The list of export tasks to save.
+    """
+    _save_data(export_tasks, f"export_tasks_{region}", account_id)
+
+
+def get_export_tasks(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get export tasks for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"export_tasks_{region}", account_id) or []

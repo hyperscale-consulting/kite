@@ -100,6 +100,7 @@ from kite.checks import (
     check_organizational_cloudtrail,
     check_vpc_flow_logs_enabled,
     check_resolver_query_logs_enabled,
+    check_log_retention,
 )
 
 # Define check themes and their associated checks
@@ -359,6 +360,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_organizational_cloudtrail,
             check_vpc_flow_logs_enabled,
             check_resolver_query_logs_enabled,
+            check_log_retention,
         ],
     }
 }

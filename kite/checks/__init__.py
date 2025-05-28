@@ -251,6 +251,9 @@ from kite.checks.vpc_flow_logs_enabled import (
 from kite.checks.resolver_query_logs_enabled import (
     check_resolver_query_logs_enabled,
 )
+from kite.checks.log_retention import (
+    check_log_retention,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -350,4 +353,5 @@ __all__ = [
     "check_organizational_cloudtrail",
     "check_vpc_flow_logs_enabled",
     "check_resolver_query_logs_enabled",
+    "check_log_retention",
 ]

@@ -27,6 +27,7 @@ from . import (
     configservice,
     cloudtrail,
     route53resolver,
+    logs,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -73,6 +74,8 @@ from kite.data import (
     save_vpcs,
     save_route53resolver_query_log_configs,
     save_route53resolver_resolver_query_log_config_associations,
+    save_log_groups,
+    save_export_tasks,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -477,6 +480,31 @@ def collect_account_data(account_id: str) -> None:
                 console.print(f"  [green]✓ Saved {len(resolver_query_log_config_associations)} Route 53 resolver query log config associations for account {account_id} in region {region}[/]")
             except Exception as e:
                 console.print(f"  [red]✗ Error fetching Route 53 resolver query log config associations for account {account_id} in region {region}: {str(e)}[/]")
+
+        # Collect log groups
+
+        console.print(
+            f"  [yellow]Fetching log groups for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                log_groups = logs.get_log_groups(session, region)
+                save_log_groups(account_id, region, log_groups)
+                console.print(f"  [green]✓ Saved {len(log_groups)} log groups for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching log groups for account {account_id} in region {region}: {str(e)}[/]")
+
+        # Collect export tasks
+        console.print(
+            f"  [yellow]Fetching export tasks for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                export_tasks = logs.get_export_tasks(session, region)
+                save_export_tasks(account_id, region, export_tasks)
+                console.print(f"  [green]✓ Saved {len(export_tasks)} export tasks for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching export tasks for account {account_id} in region {region}: {str(e)}[/]")
 
     except Exception as e:
         console.print(

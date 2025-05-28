@@ -936,3 +936,45 @@ def get_cloudtrail_trails(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"cloudtrail_trails_{region}", account_id) or []
+
+
+def save_flow_logs(account_id: str, region: str, logs: List[Dict[str, Any]]) -> None:
+    """Save flow logs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        logs: The list of flow logs to save.
+    """
+    _save_data(logs, f"flow_logs_{region}", account_id)
+
+
+def get_flow_logs(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get flow logs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"flow_logs_{region}", account_id) or []
+
+
+def save_vpcs(account_id: str, region: str, vpcs: List[Dict[str, Any]]) -> None:
+    """Save VPCs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        vpcs: The list of VPCs to save.
+    """
+    _save_data(vpcs, f"vpcs_{region}", account_id)
+
+
+def get_vpcs(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get VPCs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"vpcs_{region}", account_id) or []

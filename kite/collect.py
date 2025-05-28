@@ -68,6 +68,8 @@ from kite.data import (
     save_cloudfront_origin_access_identities,
     save_vpc_endpoints,
     save_cloudtrail_trails,
+    save_flow_logs,
+    save_vpcs,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -422,6 +424,31 @@ def collect_account_data(account_id: str) -> None:
                 console.print(f"  [green]✓ Saved {len(trails)} CloudTrail trails for account {account_id} in region {region}[/]")
             except Exception as e:
                 console.print(f"  [red]✗ Error fetching CloudTrail trails for account {account_id} in region {region}: {str(e)}[/]")
+
+        # Collect flow logs
+        console.print(
+            f"  [yellow]Fetching flow logs for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                flow_logs = ec2.get_flow_logs(session, region)
+                save_flow_logs(account_id, region, flow_logs)
+                console.print(f"  [green]✓ Saved {len(flow_logs)} flow logs for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching flow logs for account {account_id} in region {region}: {str(e)}[/]")
+
+        # Collect VPCs
+        console.print(
+            f"  [yellow]Fetching VPCs for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                vpcs = ec2.get_vpcs(session, region)
+                save_vpcs(account_id, region, vpcs)
+                console.print(f"  [green]✓ Saved {len(vpcs)} VPCs for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching VPCs for account {account_id} in region {region}: {str(e)}[/]")
+
 
     except Exception as e:
         console.print(

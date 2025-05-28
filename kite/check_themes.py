@@ -98,6 +98,7 @@ from kite.checks import (
     check_scp_prevents_ram_invitations,
     check_repeatable_auditable_setup_for_3rd_party_access,
     check_organizational_cloudtrail,
+    check_vpc_flow_logs_enabled,
 )
 
 # Define check themes and their associated checks
@@ -355,6 +356,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
         ),
         "checks": [
             check_organizational_cloudtrail,
+            check_vpc_flow_logs_enabled,
         ],
     }
 }

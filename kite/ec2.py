@@ -70,3 +70,27 @@ def get_vpc_endpoints(session: boto3.Session, region: str) -> List[Dict[str, Any
     for page in paginator.paginate():
         endpoints.extend(page.get('VpcEndpoints', []))
     return endpoints
+
+
+def get_flow_logs(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+    """
+    Get all flow logs in the account.
+    """
+    ec2 = session.client('ec2', region_name=region)
+    paginator = ec2.get_paginator('describe_flow_logs')
+    flow_logs = []
+    for page in paginator.paginate():
+        flow_logs.extend(page.get('FlowLogs', []))
+    return flow_logs
+
+
+def get_vpcs(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+    """
+    Get all VPCs in the account.
+    """
+    ec2 = session.client('ec2', region_name=region)
+    paginator = ec2.get_paginator('describe_vpcs')
+    vpcs = []
+    for page in paginator.paginate():
+        vpcs.extend(page.get('Vpcs', []))
+    return vpcs

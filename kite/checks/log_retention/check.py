@@ -3,7 +3,7 @@
 from typing import Dict, Any, List
 from collections import defaultdict
 
-from kite.data import get_log_groups, get_export_tasks, get_bucket_metadata
+from kite.data import get_log_groups, get_export_tasks, get_bucket_metadata, get_cloudtrail_trails
 from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
 
@@ -111,7 +111,8 @@ def check_log_retention() -> Dict[str, Any]:
     This check:
     1. Shows CloudWatch log groups grouped by their retention period
     2. Shows log export tasks grouped by their S3 bucket retention period
-    3. Asks the user to confirm if logs are retained for as long as required
+    3. Shows CloudTrail logging buckets and their retention periods
+    4. Asks the user to confirm if logs are retained for as long as required
 
     Returns:
         Dict containing:
@@ -124,19 +125,27 @@ def check_log_retention() -> Dict[str, Any]:
     config = Config.get()
     log_groups_by_retention = []
     export_tasks_by_retention = []
+    cloudtrail_buckets_by_retention = []
 
     # Get all in-scope accounts
     accounts = get_account_ids_in_scope()
 
+    # First, build a map of all buckets across all accounts
+    all_buckets = {}
+    for account in accounts:
+        buckets = get_bucket_metadata(account)
+        for bucket in buckets:
+            name = bucket.get("Name")
+            if name:
+                all_buckets[name] = (bucket, account)
+
     # Check each account in each active region
     for account in accounts:
-        # Get S3 buckets for this account
-        buckets = get_bucket_metadata(account)
-
         for region in config.active_regions:
             # Get log groups and export tasks for this account and region
             log_groups = get_log_groups(account, region)
             export_tasks = get_export_tasks(account, region)
+            cloudtrail_trails = get_cloudtrail_trails(account, region)
 
             if log_groups:
                 log_groups_by_retention.append(
@@ -147,8 +156,50 @@ def check_log_retention() -> Dict[str, Any]:
             if export_tasks:
                 export_tasks_by_retention.append(
                     f"\nAccount: {account}, Region: {region}"
-                    + _format_export_tasks_by_retention(export_tasks, buckets)
+                    + _format_export_tasks_by_retention(export_tasks, [b[0] for b in all_buckets.values()])
                 )
+
+            # Process CloudTrail trails
+            if cloudtrail_trails:
+                cloudtrail_buckets = []
+                for trail in cloudtrail_trails:
+                    bucket_name = trail.get("S3BucketName")
+                    if bucket_name and bucket_name in all_buckets:
+                        bucket, bucket_account = all_buckets[bucket_name]
+                        # Find the shortest expiration period in lifecycle rules
+                        retention = None
+                        lifecycle_rules = bucket.get("LifecycleRules")
+                        if lifecycle_rules is not None:
+                            for rule in lifecycle_rules:
+                                if "Expiration" in rule and "Days" in rule["Expiration"]:
+                                    days = rule["Expiration"]["Days"]
+                                    if retention is None or days < retention:
+                                        retention = days
+
+                        retention = retention if retention is not None else "Never Expire"
+                        cloudtrail_buckets.append(
+                            f"Trail: {trail.get('Name', 'Unknown')} -> "
+                            f"{bucket_name} (Account: {bucket_account}, days) -> {retention}"
+                        )
+                    else:
+                        # Add debug logging for missing buckets
+                        if bucket_name:
+                            cloudtrail_buckets.append(
+                                f"Trail: {trail.get('Name', 'Unknown')} -> "
+                                f"{bucket_name} (bucket not found in any account)"
+                            )
+                        else:
+                            cloudtrail_buckets.append(
+                                f"Trail: {trail.get('Name', 'Unknown')} -> "
+                                f"No S3 bucket configured"
+                            )
+
+                if cloudtrail_buckets:
+                    cloudtrail_buckets_by_retention.append(
+                        f"\nAccount: {account}, Region: {region}\nCloudTrail Logging Buckets:"
+                    )
+                    for bucket in sorted(cloudtrail_buckets):
+                        cloudtrail_buckets_by_retention.append(f"  - {bucket}")
 
     # Build the message
     message = (
@@ -157,6 +208,8 @@ def check_log_retention() -> Dict[str, Any]:
         + "\n".join(log_groups_by_retention)
         + "\n\nCurrent Log Export Tasks:\n"
         + "\n".join(export_tasks_by_retention)
+        + "\n\nCloudTrail Logging Buckets:\n"
+        + "\n".join(cloudtrail_buckets_by_retention)
         + "\n\nPlease review the retention periods above and consider:\n"
         "- Are logs retained for as long as required by security requirements?\n"
         "- Are logs retained for longer than necessary?"

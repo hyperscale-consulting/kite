@@ -266,6 +266,12 @@ from kite.checks.eks_control_plane_logging_enabled import (
 from kite.checks.network_firewall_logging_enabled import (
     check_network_firewall_logging_enabled,
 )
+from kite.checks.rds_logging_enabled import (
+    check_rds_logging_enabled,
+)
+from kite.checks.cloudfront_logging_enabled import (
+    check_cloudfront_logging_enabled,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -370,4 +376,6 @@ __all__ = [
     "check_elb_logging_enabled",
     "check_eks_control_plane_logging_enabled",
     "check_network_firewall_logging_enabled",
+    "check_rds_logging_enabled",
+    "check_cloudfront_logging_enabled",
 ]

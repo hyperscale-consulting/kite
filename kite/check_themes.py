@@ -107,6 +107,7 @@ from kite.checks import (
     check_network_firewall_logging_enabled,
     check_rds_logging_enabled,
     check_cloudfront_logging_enabled,
+    check_api_gateway_logging_enabled,
 )
 
 # Define check themes and their associated checks
@@ -373,6 +374,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_network_firewall_logging_enabled,
             check_rds_logging_enabled,
             check_cloudfront_logging_enabled,
+            check_api_gateway_logging_enabled,
         ],
     }
 }

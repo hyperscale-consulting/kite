@@ -104,6 +104,7 @@ from kite.checks import (
     check_waf_web_acl_logging_enabled,
     check_elb_logging_enabled,
     check_eks_control_plane_logging_enabled,
+    check_network_firewall_logging_enabled,
 )
 
 # Define check themes and their associated checks
@@ -367,6 +368,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_waf_web_acl_logging_enabled,
             check_elb_logging_enabled,
             check_eks_control_plane_logging_enabled,
+            check_network_firewall_logging_enabled,
         ],
     }
 }

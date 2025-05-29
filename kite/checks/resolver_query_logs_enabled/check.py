@@ -2,7 +2,7 @@
 
 from typing import Dict, Any, List
 
-from kite.data import get_vpcs, get_route53resolver_resolver_query_log_config_associations
+from kite.data import get_vpcs, get_route53resolver_query_log_config_associations
 from kite.helpers import get_account_ids_in_scope
 from kite.config import Config
 
@@ -39,7 +39,7 @@ def check_resolver_query_logs_enabled() -> Dict[str, Any]:
         for region in config.active_regions:
             # Get VPCs and resolver query log config associations for this account and region
             vpcs = get_vpcs(account, region)
-            query_log_associations = get_route53resolver_resolver_query_log_config_associations(account, region)
+            query_log_associations = get_route53resolver_query_log_config_associations(account, region)
 
             # Create a set of VPC IDs that have query logs enabled
             vpcs_with_query_logs = {

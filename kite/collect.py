@@ -73,7 +73,7 @@ from kite.data import (
     save_flow_logs,
     save_vpcs,
     save_route53resolver_query_log_configs,
-    save_route53resolver_resolver_query_log_config_associations,
+    save_route53resolver_query_log_config_associations,
     save_log_groups,
     save_export_tasks,
 )
@@ -476,7 +476,7 @@ def collect_account_data(account_id: str) -> None:
         for region in Config.get().active_regions:
             try:
                 resolver_query_log_config_associations = route53resolver.get_resolver_query_log_config_associations(session, region)
-                save_route53resolver_resolver_query_log_config_associations(account_id, region, resolver_query_log_config_associations)
+                save_route53resolver_query_log_config_associations(account_id, region, resolver_query_log_config_associations)
                 console.print(f"  [green]✓ Saved {len(resolver_query_log_config_associations)} Route 53 resolver query log config associations for account {account_id} in region {region}[/]")
             except Exception as e:
                 console.print(f"  [red]✗ Error fetching Route 53 resolver query log config associations for account {account_id} in region {region}: {str(e)}[/]")

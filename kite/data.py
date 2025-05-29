@@ -1001,7 +1001,7 @@ def get_route53resolver_query_log_configs(account_id: str, region: str) -> List[
     return _load_data(f"route53resolver_query_log_configs_{region}", account_id) or []
 
 
-def save_route53resolver_resolver_query_log_config_associations(account_id: str, region: str, resolver_query_log_config_associations: List[Dict[str, Any]]) -> None:
+def save_route53resolver_query_log_config_associations(account_id: str, region: str, resolver_query_log_config_associations: List[Dict[str, Any]]) -> None:
     """Save Route 53 resolver query log config associations for an account and region.
 
     Args:
@@ -1009,17 +1009,17 @@ def save_route53resolver_resolver_query_log_config_associations(account_id: str,
         region: The AWS region.
         resolver_query_log_config_associations: The list of Route 53 resolver query log config associations to save.
     """
-    _save_data(resolver_query_log_config_associations, f"route53resolver_resolver_query_log_config_associations_{region}", account_id)
+    _save_data(resolver_query_log_config_associations, f"route53resolver_query_log_config_associations_{region}", account_id)
 
 
-def get_route53resolver_resolver_query_log_config_associations(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_route53resolver_query_log_config_associations(account_id: str, region: str) -> List[Dict[str, Any]]:
     """Get Route 53 resolver query log config associations for an account and region.
 
     Args:
         account_id: The AWS account ID.
         region: The AWS region.
     """
-    return _load_data(f"route53resolver_resolver_query_log_config_associations_{region}", account_id) or []
+    return _load_data(f"route53resolver_query_log_config_associations_{region}", account_id) or []
 
 
 def save_log_groups(account_id: str, region: str, log_groups: List[Dict[str, Any]]) -> None:

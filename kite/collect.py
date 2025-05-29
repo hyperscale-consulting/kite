@@ -28,6 +28,7 @@ from . import (
     cloudtrail,
     route53resolver,
     logs,
+    wafv2,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -76,6 +77,8 @@ from kite.data import (
     save_route53resolver_query_log_config_associations,
     save_log_groups,
     save_export_tasks,
+    save_wafv2_web_acls,
+    save_wafv2_logging_configurations,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -505,6 +508,38 @@ def collect_account_data(account_id: str) -> None:
                 console.print(f"  [green]✓ Saved {len(export_tasks)} export tasks for account {account_id} in region {region}[/]")
             except Exception as e:
                 console.print(f"  [red]✗ Error fetching export tasks for account {account_id} in region {region}: {str(e)}[/]")
+
+        # Collect WAFv2 web ACLs
+        console.print(
+            f"  [yellow]Fetching regional WAFv2 web ACLs for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                web_acls = wafv2.get_web_acls(session, wafv2.Scope.REGIONAL.value, region)
+                if region == 'us-east-1':
+                    web_acls.extend(wafv2.get_web_acls(session, wafv2.Scope.CLOUDFRONT.value, region))
+                save_wafv2_web_acls(account_id, region, web_acls)
+                console.print(f"  [green]✓ Saved {len(web_acls)} WAFv2 web ACLs for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching WAFv2 web ACLs for account {account_id} in region {region}: {str(e)}[/]")
+
+        # Collect WAFv2 logging configurations
+        console.print(
+            f"  [yellow]Fetching WAFv2 logging configurations for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                logging_configurations = wafv2.get_logging_configurations(
+                    session, wafv2.Scope.REGIONAL.value, region
+                )
+                if region == 'us-east-1':
+                    logging_configurations.extend(wafv2.get_logging_configurations(
+                        session, wafv2.Scope.CLOUDFRONT.value, region)
+                    )
+                save_wafv2_logging_configurations(account_id, region, logging_configurations)
+                console.print(f"  [green]✓ Saved {len(logging_configurations)} WAFv2 logging configurations for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching WAFv2 logging configurations for account {account_id} in region {region}: {str(e)}[/]")
 
     except Exception as e:
         console.print(

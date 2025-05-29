@@ -1062,3 +1062,45 @@ def get_export_tasks(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"export_tasks_{region}", account_id) or []
+
+
+def save_wafv2_web_acls(account_id: str, region: str, web_acls: List[Dict[str, Any]]) -> None:
+    """Save WAFv2 web ACLs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        web_acls: The list of WAFv2 web ACLs to save.
+    """
+    _save_data(web_acls, f"wafv2_web_acls_{region}", account_id)
+
+
+def get_wafv2_web_acls(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get WAFv2 web ACLs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"wafv2_web_acls_{region}", account_id) or []
+
+
+def save_wafv2_logging_configurations(account_id: str, region: str, logging_configurations: List[Dict[str, Any]]) -> None:
+    """Save WAFv2 logging configurations for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        logging_configurations: The list of WAFv2 logging configurations to save.
+    """
+    _save_data(logging_configurations, f"wafv2_logging_configurations_{region}", account_id)
+
+
+def get_wafv2_logging_configurations(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get WAFv2 logging configurations for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"wafv2_logging_configurations_{region}", account_id) or []

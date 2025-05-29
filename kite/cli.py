@@ -21,7 +21,7 @@ from kite.organizations import fetch_account_ids
 from kite.data import save_collection_metadata, verify_collection_status
 from kite.accessanalyzer import list_analyzers
 from kite.s3 import get_buckets
-
+from kite.wafv2 import get_web_acls
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -540,6 +540,23 @@ def get_s3_bucket_metadata(config: str, account_id: str):
     Config.load(config)
     session = assume_role(account_id)
     console.print(get_buckets(session))
+
+
+@main.command()
+@click.option(
+    "--config",
+    "-c",
+    default="kite.yaml",
+    help="Path to config file (default: kite.yaml)",
+    type=click.Path(exists=True),
+)
+@click.argument("account_id", required=True)
+@click.argument("region", required=True)
+@click.argument("scope", required=True)
+def list_web_acls(config: str, account_id: str, region: str, scope: str):
+    Config.load(config)
+    session = assume_role(account_id)
+    console.print(get_web_acls(session, scope, region))
 
 
 if __name__ == "__main__":

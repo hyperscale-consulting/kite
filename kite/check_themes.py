@@ -101,6 +101,7 @@ from kite.checks import (
     check_vpc_flow_logs_enabled,
     check_resolver_query_logs_enabled,
     check_log_retention,
+    check_waf_web_acl_logging_enabled,
 )
 
 # Define check themes and their associated checks
@@ -361,6 +362,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_vpc_flow_logs_enabled,
             check_resolver_query_logs_enabled,
             check_log_retention,
+            check_waf_web_acl_logging_enabled,
         ],
     }
 }

@@ -254,6 +254,9 @@ from kite.checks.resolver_query_logs_enabled import (
 from kite.checks.log_retention import (
     check_log_retention,
 )
+from kite.checks.waf_web_acl_logging_enabled import (
+    check_waf_web_acl_logging_enabled,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -354,4 +357,5 @@ __all__ = [
     "check_vpc_flow_logs_enabled",
     "check_resolver_query_logs_enabled",
     "check_log_retention",
+    "check_waf_web_acl_logging_enabled",
 ]

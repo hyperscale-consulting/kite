@@ -30,6 +30,7 @@ from . import (
     logs,
     wafv2,
     elbv2,
+    eks,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -81,6 +82,7 @@ from kite.data import (
     save_wafv2_web_acls,
     save_wafv2_logging_configurations,
     save_elbv2_load_balancers,
+    save_eks_clusters,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -556,6 +558,18 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(f"  [red]✗ Error fetching ELBv2 load balancers for account {account_id} in region {region}: {str(e)}[/]")
 
+        # Collect EKS clusters
+        console.print(
+            f"  [yellow]Fetching EKS clusters for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                clusters = eks.get_clusters(session, region)
+                save_eks_clusters(account_id, region, clusters)
+                console.print(f"  [green]✓ Saved {len(clusters)} EKS clusters for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching EKS clusters for account {account_id} in region {region}: {str(e)}[/]")
+
     except Exception as e:
         console.print(
             f"  [red]✗ Error collecting data for account {account_id}: {str(e)}[/]"
@@ -690,11 +704,11 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check ECS clusters
-        for cluster in ecs.get_clusters(session, region):
+        for cluster in ecs.get_cluster_names(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="ECS",
-                    resource_id=cluster.cluster_arn,
+                    resource_id=cluster,
                     region=region,
                 )
             )

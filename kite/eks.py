@@ -1,18 +1,21 @@
 """EKS service module for Kite."""
 
-from typing import List
-from dataclasses import dataclass
+from typing import List, Dict, Any
 
 
-@dataclass
-class EKSCluster:
-    """EKS cluster data class."""
+def get_cluster_names(session, region: str) -> List[str]:
+    """
+    Get all EKS cluster names in a region.
+    """
+    eks_client = session.client("eks", region_name=region)
+    paginator = eks_client.get_paginator("list_clusters")
+    clusters = []
+    for page in paginator.paginate():
+        clusters.extend(page.get("clusters", []))
+    return clusters
 
-    cluster_name: str
-    region: str
 
-
-def get_clusters(session, region: str) -> List[EKSCluster]:
+def get_clusters(session, region: str) -> List[Dict[str, Any]]:
     """
     Get all EKS clusters in a region.
 
@@ -25,14 +28,8 @@ def get_clusters(session, region: str) -> List[EKSCluster]:
     """
     eks_client = session.client("eks", region_name=region)
     clusters = []
-
-    response = eks_client.list_clusters()
-    for cluster_name in response.get("clusters", []):
-        clusters.append(
-            EKSCluster(
-                cluster_name=cluster_name,
-                region=region,
-            )
-        )
+    for name in get_cluster_names(session, region):
+        response = eks_client.describe_cluster(name=name)
+        clusters.append(response["cluster"])
 
     return clusters

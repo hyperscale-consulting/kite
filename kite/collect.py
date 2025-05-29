@@ -29,6 +29,7 @@ from . import (
     route53resolver,
     logs,
     wafv2,
+    elbv2,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -79,6 +80,7 @@ from kite.data import (
     save_export_tasks,
     save_wafv2_web_acls,
     save_wafv2_logging_configurations,
+    save_elbv2_load_balancers,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -536,10 +538,23 @@ def collect_account_data(account_id: str) -> None:
                     logging_configurations.extend(wafv2.get_logging_configurations(
                         session, wafv2.Scope.CLOUDFRONT.value, region)
                     )
-                save_wafv2_logging_configurations(account_id, region, logging_configurations)
+                save_wafv2_logging_configurations(account_id, region,
+                                                  logging_configurations)
                 console.print(f"  [green]✓ Saved {len(logging_configurations)} WAFv2 logging configurations for account {account_id} in region {region}[/]")
             except Exception as e:
                 console.print(f"  [red]✗ Error fetching WAFv2 logging configurations for account {account_id} in region {region}: {str(e)}[/]")
+
+        # Collect ELBv2 load balancers
+        console.print(
+            f"  [yellow]Fetching ELBv2 load balancers for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                load_balancers = elbv2.get_load_balancers(session, region)
+                save_elbv2_load_balancers(account_id, region, load_balancers)
+                console.print(f"  [green]✓ Saved {len(load_balancers)} ELBv2 load balancers for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching ELBv2 load balancers for account {account_id} in region {region}: {str(e)}[/]")
 
     except Exception as e:
         console.print(

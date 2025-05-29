@@ -1104,3 +1104,24 @@ def get_wafv2_logging_configurations(account_id: str, region: str) -> List[Dict[
         region: The AWS region.
     """
     return _load_data(f"wafv2_logging_configurations_{region}", account_id) or []
+
+
+def save_elbv2_load_balancers(account_id: str, region: str, load_balancers: List[Dict[str, Any]]) -> None:
+    """Save ELBv2 load balancers for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        load_balancers: The list of ELBv2 load balancers to save.
+    """
+    _save_data(load_balancers, f"elbv2_load_balancers_{region}", account_id)
+
+
+def get_elbv2_load_balancers(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get ELBv2 load balancers for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"elbv2_load_balancers_{region}", account_id) or []

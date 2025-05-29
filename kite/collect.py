@@ -794,8 +794,8 @@ def collect_mgmt_account_workload_resources() -> None:
         workload_resources.resources.append(
             WorkloadResource(
                 resource_type="CloudFront",
-                resource_id=dist.distribution_id,
-                details={"domain_name": dist.domain_name},
+                resource_id=dist["Id"],
+                details={"domain_name": dist["DomainName"]}
             )
         )
 

@@ -1,18 +1,9 @@
 """CloudFront service module for Kite."""
 
-from typing import List
-from dataclasses import dataclass
+from typing import List, Dict, Any
 
 
-@dataclass
-class CloudFrontDistribution:
-    """CloudFront distribution data class."""
-
-    distribution_id: str
-    domain_name: str
-
-
-def get_distributions(session) -> List[CloudFrontDistribution]:
+def get_distributions(session) -> List[Dict[str, Any]]:
     """
     Get all CloudFront distributions.
 
@@ -24,15 +15,10 @@ def get_distributions(session) -> List[CloudFrontDistribution]:
     """
     cloudfront_client = session.client("cloudfront")
     distributions = []
-
-    response = cloudfront_client.list_distributions()
-    for dist in response.get("DistributionList", {}).get("Items", []):
-        distributions.append(
-            CloudFrontDistribution(
-                distribution_id=dist.get("Id"),
-                domain_name=dist.get("DomainName", "No domain name"),
-            )
-        )
+    paginator = cloudfront_client.get_paginator("list_distributions")
+    for page in paginator.paginate():
+        for dist in page.get("DistributionList", {}).get("Items", []):
+            distributions.append(dist)
 
     return distributions
 

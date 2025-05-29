@@ -590,7 +590,7 @@ def save_bucket_metadata(account_id: str, buckets: List[Dict[str, Any]]) -> None
         account_id: The AWS account ID to save the metadata for.
         buckets: The list of S3 buckets with their policies.
     """
-    _save_data(buckets, "save_bucket_metadata", account_id)
+    _save_data(buckets, "bucket_metadata", account_id)
 
 
 def get_bucket_metadata(account_id: str) -> List[Dict[str, Any]]:
@@ -603,7 +603,7 @@ def get_bucket_metadata(account_id: str) -> List[Dict[str, Any]]:
     Returns:
         List of dictionaries containing bucket information and policies.
     """
-    return _load_data("save_bucket_metadata", account_id) or []
+    return _load_data("bucket_metadata", account_id) or []
 
 
 def save_sns_topics(account_id: str, region: str, topics: List[Dict[str, Any]]) -> None:

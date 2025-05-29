@@ -27,8 +27,9 @@ def get_web_acls(
 def get_web_acl(session: boto3.Session, web_acl_arn: str, region: str) -> Dict[str, Any]:
     client = session.client("wafv2", region_name=region)
     response = client.get_web_acl(ARN=web_acl_arn)
-    response["Region"] = region
-    return response
+    web_acl = response["WebACL"]
+    web_acl["Region"] = region
+    return web_acl
 
 
 def get_logging_configurations(

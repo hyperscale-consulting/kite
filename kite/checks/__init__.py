@@ -275,6 +275,9 @@ from kite.checks.cloudfront_logging_enabled import (
 from kite.checks.api_gateway_logging_enabled import (
     check_api_gateway_logging_enabled,
 )
+from kite.checks.config_recording_enabled.check import (
+    check_config_recording_enabled,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -382,4 +385,5 @@ __all__ = [
     "check_rds_logging_enabled",
     "check_cloudfront_logging_enabled",
     "check_api_gateway_logging_enabled",
+    "check_config_recording_enabled",
 ]

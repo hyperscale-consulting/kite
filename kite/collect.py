@@ -83,6 +83,8 @@ from kite.data import (
     save_wafv2_logging_configurations,
     save_elbv2_load_balancers,
     save_eks_clusters,
+    save_config_recorders,
+    save_config_delivery_channels,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -398,13 +400,41 @@ def collect_account_data(account_id: str) -> None:
         save_access_analyzers(account_id, analyzers)
         console.print(f"  [green]✓ Saved {len(analyzers)} Access Analyzer analyzers for account {account_id}[/]")
 
+        # Collect Config recorders
+        for region in Config.get().active_regions:
+            try:
+                console.print(
+                    f"  [yellow]Fetching Config recorders for account {account_id} in region {region}...[/]"
+                )
+                recorders = configservice.fetch_recorders(session, region)
+                save_config_recorders(account_id, region, recorders)
+                console.print(f"  [green]✓ Saved {len(recorders)} Config recorders for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching Config recorders for account {account_id} in region {region}: {str(e)}[/]")
+
+        # Collect Config delivery channels
+        for region in Config.get().active_regions:
+            try:
+                console.print(
+                    f"  [yellow]Fetching Config delivery channels for account {account_id} in region {region}...[/]"
+                )
+                channels = configservice.fetch_delivery_channels(session, region)
+                save_config_delivery_channels(account_id, region, channels)
+                console.print(f"  [green]✓ Saved {len(channels)} Config delivery channels for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching Config delivery channels for account {account_id} in region {region}: {str(e)}[/]")
+
         # Collect Config rules
-        console.print(
-            f"  [yellow]Fetching Config rules for account {account_id}...[/]"
-        )
-        rules = configservice.fetch_rules(session)
-        save_config_rules(account_id, rules)
-        console.print(f"  [green]✓ Saved {len(rules)} Config rules for account {account_id}[/]")
+        for region in Config.get().active_regions:
+            try:
+                console.print(
+                    f"  [yellow]Fetching Config rules for account {account_id} in region {region}...[/]"
+                )
+                rules = configservice.fetch_rules(session, region)
+                save_config_rules(account_id, region, rules)
+                console.print(f"  [green]✓ Saved {len(rules)} Config rules for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(f"  [red]✗ Error fetching Config rules for account {account_id} in region {region}: {str(e)}[/]")
 
         # Collect CloudFront origin access identities
         console.print(
@@ -704,21 +734,21 @@ def collect_mgmt_account_workload_resources() -> None:
             )
 
         # Check ECS clusters
-        for cluster in ecs.get_cluster_names(session, region):
+        for cluster in ecs.get_clusters(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="ECS",
-                    resource_id=cluster,
+                    resource_id=cluster.cluster_arn,
                     region=region,
                 )
             )
 
         # Check EKS clusters
-        for cluster in eks.get_clusters(session, region):
+        for cluster in eks.get_cluster_names(session, region):
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="EKS",
-                    resource_id=cluster.cluster_name,
+                    resource_id=cluster.cluster,
                     region=region,
                 )
             )

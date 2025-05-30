@@ -173,7 +173,7 @@ def runner(
     monkeypatch.setattr(ec2, "get_running_instances",
                         lambda *args, **kwargs: ec2_instances)
     monkeypatch.setattr(ecs, "get_clusters", lambda *args, **kwargs: [])
-    monkeypatch.setattr(eks, "get_clusters", lambda *args, **kwargs: [])
+    monkeypatch.setattr(eks, "get_cluster_names", lambda *args, **kwargs: [])
     monkeypatch.setattr(lambda_, "get_functions", lambda *args, **kwargs: [])
     monkeypatch.setattr(rds, "get_instances", lambda *args, **kwargs: [])
     monkeypatch.setattr(dynamodb, "get_tables", lambda *args, **kwargs: [])

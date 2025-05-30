@@ -858,23 +858,67 @@ def get_iam_groups(account_id: str) -> List[Dict[str, Any]]:
     return _load_data("iam_groups", account_id) or []
 
 
-def save_config_rules(account_id: str, rules: List[Dict[str, Any]]) -> None:
-    """Save Config rules for an account.
+def save_config_recorders(account_id: str, region: str, recorders: List[Dict[str, Any]]) -> None:
+    """Save Config recorders for an account and region.
 
     Args:
         account_id: The AWS account ID.
+        region: The AWS region.
+        recorders: The list of Config recorders to save.
+    """
+    _save_data(recorders, f"config_recorders_{region}", account_id)
+
+
+def get_config_recorders(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Config recorders for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"config_recorders_{region}", account_id) or []
+
+
+def save_config_delivery_channels(account_id: str, region: str, channels: List[Dict[str, Any]]) -> None:
+    """Save Config delivery channels for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        channels: The list of Config delivery channels to save.
+    """
+    _save_data(channels, f"config_delivery_channels_{region}", account_id)
+
+
+def get_config_delivery_channels(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Config delivery channels for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"config_delivery_channels_{region}", account_id) or []
+
+
+def save_config_rules(account_id: str, region: str, rules: List[Dict[str, Any]]) -> None:
+    """Save Config rules for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
         rules: The list of Config rules to save.
     """
-    _save_data(rules, "config_rules", account_id)
+    _save_data(rules, f"config_rules_{region}", account_id)
 
 
-def get_config_rules(account_id: str) -> List[Dict[str, Any]]:
+def get_config_rules(account_id: str, region: str) -> List[Dict[str, Any]]:
     """Get Config rules for an account.
 
     Args:
         account_id: The AWS account ID.
+        region: The AWS region.
     """
-    return _load_data("config_rules", account_id) or []
+    return _load_data(f"config_rules_{region}", account_id) or []
 
 
 def save_cloudfront_origin_access_identities(account_id: str, identities: List[Dict[str, Any]]) -> None:

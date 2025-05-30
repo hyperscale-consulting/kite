@@ -4,6 +4,7 @@ from typing import Dict, Any, List
 
 from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.data import get_config_rules
+from kite.config import Config
 
 
 CHECK_ID = "monitor-and-respond-to-s3-public-access"
@@ -85,34 +86,35 @@ def check_monitor_and_response_to_s3_public_access() -> Dict[str, Any]:
 
     # Check each account
     for account_id in get_account_ids_in_scope():
-        rules = get_config_rules(account_id)
-        rule_status = _check_config_rules(rules)
+        for region in Config.get().active_regions:
+            rules = get_config_rules(account_id, region)
+            rule_status = _check_config_rules(rules)
 
-        # Check if both rules exist
-        if not (rule_status["has_read_rule"] and rule_status["has_write_rule"]):
-            accounts_without_rules.append(account_id)
-            continue
+            # Check if both rules exist
+            if not (rule_status["has_read_rule"] and rule_status["has_write_rule"]):
+                accounts_without_rules.append(f"{account_id} ({region})")
+                continue
 
-        # Check if both rules have remediation
-        if not (
-            rule_status["read_rule_has_remediation"] and
-            rule_status["write_rule_has_remediation"]
-        ):
-            accounts_without_remediation.append(account_id)
+            # Check if both rules have remediation
+            if not (
+                rule_status["read_rule_has_remediation"] and
+                rule_status["write_rule_has_remediation"]
+            ):
+                accounts_without_remediation.append(f"{account_id} ({region})")
 
     # Build message for manual check
     message = "S3 Public Access Monitoring and Response:\n\n"
 
     if accounts_without_rules:
         message += "Accounts missing required Config rules:\n"
-        for account_id in accounts_without_rules:
-            message += f"- {account_id}\n"
+        for account_and_region in accounts_without_rules:
+            message += f"- {account_and_region}\n"
         message += "\n"
 
     if accounts_without_remediation:
         message += "Accounts with rules but no remediation configuration:\n"
-        for account_id in accounts_without_remediation:
-            message += f"- {account_id}\n"
+        for account_and_region in accounts_without_remediation:
+            message += f"- {account_and_region}\n"
         message += "\n"
 
     message += (

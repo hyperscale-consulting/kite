@@ -10,6 +10,7 @@ from kite.data import (
     get_cloudtrail_trails,
     get_route53resolver_query_log_configs,
     get_flow_logs,
+    get_config_delivery_channels,
 )
 from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
@@ -121,7 +122,8 @@ def check_log_retention() -> Dict[str, Any]:
     3. Shows CloudTrail logging buckets and their retention periods
     4. Shows Route53 Resolver query log configs and their S3 bucket retention periods
     5. Shows VPC flow logs and their S3 bucket retention periods
-    6. Asks the user to confirm if logs are retained for as long as required
+    6. Shows AWS Config delivery channel S3 buckets and their retention periods
+    7. Asks the user to confirm if logs are retained for as long as required
 
     Returns:
         Dict containing:
@@ -137,6 +139,7 @@ def check_log_retention() -> Dict[str, Any]:
     cloudtrail_buckets_by_retention = []
     resolver_logs_by_retention = []
     flow_logs_by_retention = []
+    config_buckets_by_retention = []
 
     # Get all in-scope accounts
     accounts = get_account_ids_in_scope()
@@ -159,6 +162,7 @@ def check_log_retention() -> Dict[str, Any]:
             cloudtrail_trails = get_cloudtrail_trails(account, region)
             resolver_configs = get_route53resolver_query_log_configs(account, region)
             flow_logs = get_flow_logs(account, region)
+            config_channels = get_config_delivery_channels(account, region)
 
             if log_groups:
                 log_groups_by_retention.append(
@@ -169,7 +173,9 @@ def check_log_retention() -> Dict[str, Any]:
             if export_tasks:
                 export_tasks_by_retention.append(
                     f"\nAccount: {account}, Region: {region}"
-                    + _format_export_tasks_by_retention(export_tasks, [b[0] for b in all_buckets.values()])
+                    + _format_export_tasks_by_retention(
+                        export_tasks, [b[0] for b in all_buckets.values()]
+                    )
                 )
 
             # Process CloudTrail trails
@@ -184,15 +190,19 @@ def check_log_retention() -> Dict[str, Any]:
                         lifecycle_rules = bucket.get("LifecycleRules")
                         if lifecycle_rules is not None:
                             for rule in lifecycle_rules:
-                                if "Expiration" in rule and "Days" in rule["Expiration"]:
+                                if ("Expiration" in rule and
+                                    "Days" in rule["Expiration"]):
                                     days = rule["Expiration"]["Days"]
                                     if retention is None or days < retention:
                                         retention = days
 
-                        retention = retention if retention is not None else "Never Expire"
+                        retention = (
+                            retention if retention is not None else "Never Expire"
+                        )
                         cloudtrail_buckets.append(
                             f"Trail: {trail.get('Name', 'Unknown')} -> "
-                            f"{bucket_name} (Account: {bucket_account}, days) -> {retention}"
+                            f"{bucket_name} (Account: {bucket_account}, "
+                            f"days) -> {retention}"
                         )
                     else:
                         # Add debug logging for missing buckets
@@ -209,7 +219,8 @@ def check_log_retention() -> Dict[str, Any]:
 
                 if cloudtrail_buckets:
                     cloudtrail_buckets_by_retention.append(
-                        f"\nAccount: {account}, Region: {region}\nCloudTrail Logging Buckets:"
+                        f"\nAccount: {account}, Region: {region}\n"
+                        "CloudTrail Logging Buckets:"
                     )
                     for bucket in sorted(cloudtrail_buckets):
                         cloudtrail_buckets_by_retention.append(f"  - {bucket}")
@@ -229,15 +240,19 @@ def check_log_retention() -> Dict[str, Any]:
                             lifecycle_rules = bucket.get("LifecycleRules")
                             if lifecycle_rules is not None:
                                 for rule in lifecycle_rules:
-                                    if "Expiration" in rule and "Days" in rule["Expiration"]:
+                                    if ("Expiration" in rule and
+                                        "Days" in rule["Expiration"]):
                                         days = rule["Expiration"]["Days"]
                                         if retention is None or days < retention:
                                             retention = days
 
-                            retention = retention if retention is not None else "Never Expire"
+                            retention = (
+                                retention if retention is not None else "Never Expire"
+                            )
                             resolver_buckets.append(
                                 f"Config: {rc.get('Name', 'Unknown')} -> "
-                                f"{bucket_name} (Account: {bucket_account}, days) -> {retention}"
+                                f"{bucket_name} (Account: {bucket_account}, "
+                                f"days) -> {retention}"
                             )
                         else:
                             resolver_buckets.append(
@@ -247,7 +262,8 @@ def check_log_retention() -> Dict[str, Any]:
 
                 if resolver_buckets:
                     resolver_logs_by_retention.append(
-                        f"\nAccount: {account}, Region: {region}\nRoute53 Resolver Query Log Configs:"
+                        f"\nAccount: {account}, Region: {region}\n"
+                        "Route53 Resolver Query Log Configs:"
                     )
                     for bucket in sorted(resolver_buckets):
                         resolver_logs_by_retention.append(f"  - {bucket}")
@@ -268,15 +284,19 @@ def check_log_retention() -> Dict[str, Any]:
                                 lifecycle_rules = bucket.get("LifecycleRules")
                                 if lifecycle_rules is not None:
                                     for rule in lifecycle_rules:
-                                        if "Expiration" in rule and "Days" in rule["Expiration"]:
+                                        if ("Expiration" in rule and
+                                            "Days" in rule["Expiration"]):
                                             days = rule["Expiration"]["Days"]
                                             if retention is None or days < retention:
                                                 retention = days
 
-                                retention = retention if retention is not None else "Never Expire"
+                                retention = (
+                                    retention if retention is not None else "Never Expire"
+                                )
                                 flow_log_buckets.append(
                                     f"Flow Log: {flow_log.get('FlowLogId', 'Unknown')} -> "
-                                    f"{bucket_name} (Account: {bucket_account}, days) -> {retention}"
+                                    f"{bucket_name} (Account: {bucket_account}, "
+                                    f"days) -> {retention}"
                                 )
                             else:
                                 flow_log_buckets.append(
@@ -291,6 +311,53 @@ def check_log_retention() -> Dict[str, Any]:
                     for bucket in sorted(flow_log_buckets):
                         flow_logs_by_retention.append(f"  - {bucket}")
 
+            # Process AWS Config delivery channels
+            if config_channels:
+                config_buckets = []
+                for channel in config_channels:
+                    bucket_name = channel.get("s3BucketName")
+                    if bucket_name and bucket_name in all_buckets:
+                        bucket, bucket_account = all_buckets[bucket_name]
+                        # Find the shortest expiration period in lifecycle rules
+                        retention = None
+                        lifecycle_rules = bucket.get("LifecycleRules")
+                        if lifecycle_rules is not None:
+                            for rule in lifecycle_rules:
+                                if ("Expiration" in rule and
+                                    "Days" in rule["Expiration"]):
+                                    days = rule["Expiration"]["Days"]
+                                    if retention is None or days < retention:
+                                        retention = days
+
+                        retention = (
+                            retention if retention is not None else "Never Expire"
+                        )
+                        config_buckets.append(
+                            f"Channel: {channel.get('name', 'Unknown')} -> "
+                            f"{bucket_name} (Account: {bucket_account}, "
+                            f"days) -> {retention}"
+                        )
+                    else:
+                        # Add debug logging for missing buckets
+                        if bucket_name:
+                            config_buckets.append(
+                                f"Channel: {channel.get('name', 'Unknown')} -> "
+                                f"{bucket_name} (bucket not found in any account)"
+                            )
+                        else:
+                            config_buckets.append(
+                                f"Channel: {channel.get('name', 'Unknown')} -> "
+                                f"No S3 bucket configured"
+                            )
+
+                if config_buckets:
+                    config_buckets_by_retention.append(
+                        f"\nAccount: {account}, Region: {region}\n"
+                        "AWS Config Delivery Channel Buckets:"
+                    )
+                    for bucket in sorted(config_buckets):
+                        config_buckets_by_retention.append(f"  - {bucket}")
+
     # Build the message
     message = (
         "This check verifies that logs are retained for a suitable period.\n\n"
@@ -304,6 +371,8 @@ def check_log_retention() -> Dict[str, Any]:
         + "\n".join(resolver_logs_by_retention)
         + "\n\nVPC Flow Logs:\n"
         + "\n".join(flow_logs_by_retention)
+        + "\n\nAWS Config Delivery Channel Buckets:\n"
+        + "\n".join(config_buckets_by_retention)
         + "\n\nPlease review the retention periods above and consider:\n"
         "- Are logs retained for as long as required by security requirements?\n"
         "- Are logs retained for longer than necessary?"

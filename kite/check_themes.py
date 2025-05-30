@@ -110,6 +110,7 @@ from kite.checks import (
     check_api_gateway_logging_enabled,
     check_config_recording_enabled,
     check_log_querying,
+    check_log_alerting,
 )
 
 # Define check themes and their associated checks
@@ -379,6 +380,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_api_gateway_logging_enabled,
             check_config_recording_enabled,
             check_log_querying,
+            check_log_alerting,
         ],
     }
 }

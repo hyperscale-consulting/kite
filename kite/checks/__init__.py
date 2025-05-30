@@ -278,7 +278,9 @@ from kite.checks.api_gateway_logging_enabled import (
 from kite.checks.config_recording_enabled.check import (
     check_config_recording_enabled,
 )
-
+from kite.checks.implement_querying_for_logs.check import (
+    check_log_querying,
+)
 __all__ = [
     "check_aws_organizations_usage",
     "check_account_separation",
@@ -386,4 +388,5 @@ __all__ = [
     "check_cloudfront_logging_enabled",
     "check_api_gateway_logging_enabled",
     "check_config_recording_enabled",
+    "check_log_querying",
 ]

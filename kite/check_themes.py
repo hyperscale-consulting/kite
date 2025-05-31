@@ -111,6 +111,7 @@ from kite.checks import (
     check_config_recording_enabled,
     check_log_querying,
     check_log_alerting,
+    check_security_data_published_to_log_archive_account,
 )
 
 # Define check themes and their associated checks
@@ -382,7 +383,16 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
             check_log_querying,
             check_log_alerting,
         ],
-    }
+    },
+    "Capture logs, findings and metrics in standardized locations": {
+        "description": (
+            "Checks related to capturing logs, findings and metrics in standardized "
+            "locations"
+        ),
+        "checks": [
+            check_security_data_published_to_log_archive_account,
+        ],
+    },
 }
 
 # Flatten all checks for backward compatibility

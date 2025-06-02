@@ -115,6 +115,7 @@ from kite.checks import (
     check_deploy_log_analysis_tools_in_audit_account,
     check_detective_enabled,
     check_security_event_correlation,
+    check_auto_remediate_non_compliant_resources,
 )
 
 # Define check themes and their associated checks
@@ -400,6 +401,17 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [
             check_detective_enabled,
             check_security_event_correlation,
+        ],
+    },
+    "Initiate remediation for non-compliant resources": {
+        "description": (
+            "The steps to remedidate when resources are detected to be non-compliant "
+            "are defined, programmitically, along with resource configuration standards"
+            " so that they can be initiated either manually or automatically when "
+            "resources are found to be non-compliant"
+        ),
+        "checks": [
+            check_auto_remediate_non_compliant_resources,
         ],
     },
 }

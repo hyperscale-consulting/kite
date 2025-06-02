@@ -1,6 +1,7 @@
 """Data collection module for Kite."""
 
 import concurrent.futures
+import botocore
 from rich.console import Console
 from dataclasses import asdict
 from . import (
@@ -31,6 +32,7 @@ from . import (
     wafv2,
     elbv2,
     detective,
+    securityhub,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -86,6 +88,8 @@ from kite.data import (
     save_config_recorders,
     save_config_delivery_channels,
     save_detective_graphs,
+    save_securityhub_action_targets,
+    save_securityhub_automation_rules,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -685,6 +689,43 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching detective graphs for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect security hub action targets
+        console.print(
+            f"  [yellow]Fetching security hub action targets for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                action_targets = securityhub.get_action_targets(session, region)
+                save_securityhub_action_targets(account_id, region, action_targets)
+                console.print(
+                    f"  [green]✓ Saved {len(action_targets)} security hub action targets for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching security hub action targets for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect security hub automation rules
+        console.print(
+            f"  [yellow]Fetching security hub automation rules for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                automation_rules = []
+                try:
+                    automation_rules = securityhub.get_automation_rules(session, region)
+                except botocore.exceptions.ClientError as e:
+                    if e.response["Error"]["Code"] != "AccessDeniedException":
+                        raise e
+                save_securityhub_automation_rules(account_id, region, automation_rules)
+                console.print(
+                    f"  [green]✓ Saved {len(automation_rules)} security hub automation rules for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching security hub automation rules for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

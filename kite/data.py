@@ -1211,3 +1211,45 @@ def get_detective_graphs(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"detective_graphs_{region}", account_id) or []
+
+
+def save_securityhub_action_targets(account_id: str, region: str, action_targets: List[Dict[str, Any]]) -> None:
+    """Save Security Hub action targets for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        action_targets: The list of Security Hub action targets to save.
+    """
+    _save_data(action_targets, f"securityhub_action_targets_{region}", account_id)
+
+
+def get_securityhub_action_targets(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Security Hub action targets for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"securityhub_action_targets_{region}", account_id) or []
+
+
+def save_securityhub_automation_rules(account_id: str, region: str, automation_rules: List[Dict[str, Any]]) -> None:
+    """Save Security Hub automation rules for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        automation_rules: The list of Security Hub automation rules to save.
+    """
+    _save_data(automation_rules, f"securityhub_automation_rules_{region}", account_id)
+
+
+def get_securityhub_automation_rules(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Security Hub automation rules for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"securityhub_automation_rules_{region}", account_id) or []

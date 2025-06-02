@@ -296,6 +296,9 @@ from kite.checks.detective_enabled.check import (
 from kite.checks.security_event_correlation.check import (
     check_security_event_correlation,
 )
+from kite.checks.auto_remediate_non_compliant_resources.check import (
+    check_auto_remediate_non_compliant_resources,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -410,4 +413,5 @@ __all__ = [
     "check_deploy_log_analysis_tools_in_audit_account",
     "check_detective_enabled",
     "check_security_event_correlation",
+    "check_auto_remediate_non_compliant_resources",
 ]

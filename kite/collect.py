@@ -30,7 +30,6 @@ from . import (
     logs,
     wafv2,
     elbv2,
-    eks,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -63,7 +62,7 @@ from kite.data import (
     save_sqs_queues,
     save_lambda_functions,
     save_kms_keys,
-    #save_identity_center_permission_sets,
+    # save_identity_center_permission_sets,
     save_identity_store_users,
     save_identity_store_groups,
     save_access_analyzers,
@@ -120,9 +119,7 @@ def collect_account_data(account_id: str) -> None:
         )
         summary = iam.fetch_account_summary(session)
         save_account_summary(account_id, summary)
-        console.print(
-            f"  [green]✓ Saved account summary for account {account_id}[/]"
-        )
+        console.print(f"  [green]✓ Saved account summary for account {account_id}[/]")
 
         # Collect virtual MFA devices
         console.print(
@@ -140,9 +137,7 @@ def collect_account_data(account_id: str) -> None:
         )
         policy = iam.get_password_policy(session)
         save_password_policy(account_id, policy)
-        console.print(
-            f"  [green]✓ Saved password policy for account {account_id}[/]"
-        )
+        console.print(f"  [green]✓ Saved password policy for account {account_id}[/]")
 
         # Collect Cognito user pools
         console.print(
@@ -229,10 +224,7 @@ def collect_account_data(account_id: str) -> None:
                         session, role_name, policy_name
                     )
                     save_inline_policy_document(
-                        account_id,
-                        role_name,
-                        policy_name,
-                        policy_doc["PolicyDocument"]
+                        account_id, role_name, policy_name, policy_doc["PolicyDocument"]
                     )
                     policy_count += 1
                 except Exception as e:
@@ -251,9 +243,7 @@ def collect_account_data(account_id: str) -> None:
             try:
                 policy_info = iam.get_policy_and_document(session, policy_arn)
                 save_policy_document(
-                    account_id,
-                    policy_arn,
-                    policy_info["PolicyDocument"]
+                    account_id, policy_arn, policy_info["PolicyDocument"]
                 )
                 policy_document_count += 1
             except Exception as e:
@@ -355,7 +345,9 @@ def collect_account_data(account_id: str) -> None:
         )
         instances = identity_center.list_identity_center_instances(session)
         save_identity_center_instances(instances, account_id)
-        console.print(f"  [green]✓ Saved {len(instances)} Identity Center instances for account {account_id}[/]")
+        console.print(
+            f"  [green]✓ Saved {len(instances)} Identity Center instances for account {account_id}[/]"
+        )
 
         # Collect account level identity store users
         console.print(
@@ -364,9 +356,11 @@ def collect_account_data(account_id: str) -> None:
         for instance in instances:
             users = identity_store.get_users(session, instance["IdentityStoreId"])
             save_identity_store_users(account_id, instance["IdentityStoreId"], users)
-            console.print(f"  [green]✓ Saved {len(users)} Identity Store users for "
-                          f"account {account_id} and instance "
-                          f"{instance['IdentityStoreId']}[/]")
+            console.print(
+                f"  [green]✓ Saved {len(users)} Identity Store users for "
+                f"account {account_id} and instance "
+                f"{instance['IdentityStoreId']}[/]"
+            )
 
         # Collect account level identity store groups
         console.print(
@@ -375,17 +369,19 @@ def collect_account_data(account_id: str) -> None:
         for instance in instances:
             groups = identity_store.get_groups(session, instance["IdentityStoreId"])
             save_identity_store_groups(account_id, instance["IdentityStoreId"], groups)
-            console.print(f"  [green]✓ Saved {len(groups)} Identity Store groups for "
-                          f"account {account_id} and instance "
-                          f"{instance['IdentityStoreId']}[/]")
+            console.print(
+                f"  [green]✓ Saved {len(groups)} Identity Store groups for "
+                f"account {account_id} and instance "
+                f"{instance['IdentityStoreId']}[/]"
+            )
 
         # Collect account level identity center permission sets
         # TODO: This is not working - current permissions (SecurityAudit and
         # ViewOnlyAccess) do not allow
-        #console.print(
+        # console.print(
         #    f"  [yellow]Fetching Identity Center permission sets for account {account_id}...[/]"
-        #)
-        #for instance in instances:
+        # )
+        # for instance in instances:
         #    permission_sets = identity_center.list_permission_sets(session, instance["InstanceArn"])
         #    save_identity_center_permission_sets(account_id, instance["IdentityStoreId"], permission_sets)
         #    console.print(f"  [green]✓ Saved {len(permission_sets)} Identity Center permission sets for "
@@ -398,7 +394,9 @@ def collect_account_data(account_id: str) -> None:
         )
         analyzers = accessanalyzer.list_analyzers(session)
         save_access_analyzers(account_id, analyzers)
-        console.print(f"  [green]✓ Saved {len(analyzers)} Access Analyzer analyzers for account {account_id}[/]")
+        console.print(
+            f"  [green]✓ Saved {len(analyzers)} Access Analyzer analyzers for account {account_id}[/]"
+        )
 
         # Collect Config recorders
         for region in Config.get().active_regions:
@@ -408,9 +406,13 @@ def collect_account_data(account_id: str) -> None:
                 )
                 recorders = configservice.fetch_recorders(session, region)
                 save_config_recorders(account_id, region, recorders)
-                console.print(f"  [green]✓ Saved {len(recorders)} Config recorders for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(recorders)} Config recorders for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching Config recorders for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching Config recorders for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect Config delivery channels
         for region in Config.get().active_regions:
@@ -420,9 +422,13 @@ def collect_account_data(account_id: str) -> None:
                 )
                 channels = configservice.fetch_delivery_channels(session, region)
                 save_config_delivery_channels(account_id, region, channels)
-                console.print(f"  [green]✓ Saved {len(channels)} Config delivery channels for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(channels)} Config delivery channels for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching Config delivery channels for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching Config delivery channels for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect Config rules
         for region in Config.get().active_regions:
@@ -432,9 +438,13 @@ def collect_account_data(account_id: str) -> None:
                 )
                 rules = configservice.fetch_rules(session, region)
                 save_config_rules(account_id, region, rules)
-                console.print(f"  [green]✓ Saved {len(rules)} Config rules for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(rules)} Config rules for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching Config rules for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching Config rules for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect CloudFront origin access identities
         console.print(
@@ -442,7 +452,9 @@ def collect_account_data(account_id: str) -> None:
         )
         identities = cloudfront.get_origin_access_identities(session)
         save_cloudfront_origin_access_identities(account_id, identities)
-        console.print(f"  [green]✓ Saved {len(identities)} CloudFront origin access identities for account {account_id}[/]")
+        console.print(
+            f"  [green]✓ Saved {len(identities)} CloudFront origin access identities for account {account_id}[/]"
+        )
 
         # Collect VPC endpoints
         console.print(
@@ -452,9 +464,13 @@ def collect_account_data(account_id: str) -> None:
             try:
                 endpoints = ec2.get_vpc_endpoints(session, region)
                 save_vpc_endpoints(account_id, region, endpoints)
-                console.print(f"  [green]✓ Saved {len(endpoints)} VPC endpoints for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(endpoints)} VPC endpoints for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching VPC endpoints for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching VPC endpoints for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect CloudTrail trails
         console.print(
@@ -464,33 +480,41 @@ def collect_account_data(account_id: str) -> None:
             try:
                 trails = cloudtrail.get_trails(session, region)
                 save_cloudtrail_trails(account_id, region, trails)
-                console.print(f"  [green]✓ Saved {len(trails)} CloudTrail trails for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(trails)} CloudTrail trails for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching CloudTrail trails for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching CloudTrail trails for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect flow logs
-        console.print(
-            f"  [yellow]Fetching flow logs for account {account_id}...[/]"
-        )
+        console.print(f"  [yellow]Fetching flow logs for account {account_id}...[/]")
         for region in Config.get().active_regions:
             try:
                 flow_logs = ec2.get_flow_logs(session, region)
                 save_flow_logs(account_id, region, flow_logs)
-                console.print(f"  [green]✓ Saved {len(flow_logs)} flow logs for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(flow_logs)} flow logs for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching flow logs for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching flow logs for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect VPCs
-        console.print(
-            f"  [yellow]Fetching VPCs for account {account_id}...[/]"
-        )
+        console.print(f"  [yellow]Fetching VPCs for account {account_id}...[/]")
         for region in Config.get().active_regions:
             try:
                 vpcs = ec2.get_vpcs(session, region)
                 save_vpcs(account_id, region, vpcs)
-                console.print(f"  [green]✓ Saved {len(vpcs)} VPCs for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(vpcs)} VPCs for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching VPCs for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching VPCs for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect Route 53 resolver query log configs
 
@@ -499,11 +523,19 @@ def collect_account_data(account_id: str) -> None:
         )
         for region in Config.get().active_regions:
             try:
-                query_log_configs = route53resolver.get_query_log_configs(session, region)
-                save_route53resolver_query_log_configs(account_id, region, query_log_configs)
-                console.print(f"  [green]✓ Saved {len(query_log_configs)} Route 53 resolver query log configs for account {account_id} in region {region}[/]")
+                query_log_configs = route53resolver.get_query_log_configs(
+                    session, region
+                )
+                save_route53resolver_query_log_configs(
+                    account_id, region, query_log_configs
+                )
+                console.print(
+                    f"  [green]✓ Saved {len(query_log_configs)} Route 53 resolver query log configs for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching Route 53 resolver query log configs for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching Route 53 resolver query log configs for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect Route 53 resolver query log config associations
 
@@ -512,36 +544,50 @@ def collect_account_data(account_id: str) -> None:
         )
         for region in Config.get().active_regions:
             try:
-                resolver_query_log_config_associations = route53resolver.get_resolver_query_log_config_associations(session, region)
-                save_route53resolver_query_log_config_associations(account_id, region, resolver_query_log_config_associations)
-                console.print(f"  [green]✓ Saved {len(resolver_query_log_config_associations)} Route 53 resolver query log config associations for account {account_id} in region {region}[/]")
+                resolver_query_log_config_associations = (
+                    route53resolver.get_resolver_query_log_config_associations(
+                        session, region
+                    )
+                )
+                save_route53resolver_query_log_config_associations(
+                    account_id, region, resolver_query_log_config_associations
+                )
+                console.print(
+                    f"  [green]✓ Saved {len(resolver_query_log_config_associations)} Route 53 resolver query log config associations for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching Route 53 resolver query log config associations for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching Route 53 resolver query log config associations for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect log groups
 
-        console.print(
-            f"  [yellow]Fetching log groups for account {account_id}...[/]"
-        )
+        console.print(f"  [yellow]Fetching log groups for account {account_id}...[/]")
         for region in Config.get().active_regions:
             try:
                 log_groups = logs.get_log_groups(session, region)
                 save_log_groups(account_id, region, log_groups)
-                console.print(f"  [green]✓ Saved {len(log_groups)} log groups for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(log_groups)} log groups for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching log groups for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching log groups for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect export tasks
-        console.print(
-            f"  [yellow]Fetching export tasks for account {account_id}...[/]"
-        )
+        console.print(f"  [yellow]Fetching export tasks for account {account_id}...[/]")
         for region in Config.get().active_regions:
             try:
                 export_tasks = logs.get_export_tasks(session, region)
                 save_export_tasks(account_id, region, export_tasks)
-                console.print(f"  [green]✓ Saved {len(export_tasks)} export tasks for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(export_tasks)} export tasks for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching export tasks for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching export tasks for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect WAFv2 web ACLs
         console.print(
@@ -549,13 +595,23 @@ def collect_account_data(account_id: str) -> None:
         )
         for region in Config.get().active_regions:
             try:
-                web_acls = wafv2.get_web_acls(session, wafv2.Scope.REGIONAL.value, region)
-                if region == 'us-east-1':
-                    web_acls.extend(wafv2.get_web_acls(session, wafv2.Scope.CLOUDFRONT.value, region))
+                web_acls = wafv2.get_web_acls(
+                    session, wafv2.Scope.REGIONAL.value, region
+                )
+                if region == "us-east-1":
+                    web_acls.extend(
+                        wafv2.get_web_acls(
+                            session, wafv2.Scope.CLOUDFRONT.value, region
+                        )
+                    )
                 save_wafv2_web_acls(account_id, region, web_acls)
-                console.print(f"  [green]✓ Saved {len(web_acls)} WAFv2 web ACLs for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(web_acls)} WAFv2 web ACLs for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching WAFv2 web ACLs for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching WAFv2 web ACLs for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect WAFv2 logging configurations
         console.print(
@@ -566,15 +622,22 @@ def collect_account_data(account_id: str) -> None:
                 logging_configurations = wafv2.get_logging_configurations(
                     session, wafv2.Scope.REGIONAL.value, region
                 )
-                if region == 'us-east-1':
-                    logging_configurations.extend(wafv2.get_logging_configurations(
-                        session, wafv2.Scope.CLOUDFRONT.value, region)
+                if region == "us-east-1":
+                    logging_configurations.extend(
+                        wafv2.get_logging_configurations(
+                            session, wafv2.Scope.CLOUDFRONT.value, region
+                        )
                     )
-                save_wafv2_logging_configurations(account_id, region,
-                                                  logging_configurations)
-                console.print(f"  [green]✓ Saved {len(logging_configurations)} WAFv2 logging configurations for account {account_id} in region {region}[/]")
+                save_wafv2_logging_configurations(
+                    account_id, region, logging_configurations
+                )
+                console.print(
+                    f"  [green]✓ Saved {len(logging_configurations)} WAFv2 logging configurations for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching WAFv2 logging configurations for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching WAFv2 logging configurations for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect ELBv2 load balancers
         console.print(
@@ -584,21 +647,27 @@ def collect_account_data(account_id: str) -> None:
             try:
                 load_balancers = elbv2.get_load_balancers(session, region)
                 save_elbv2_load_balancers(account_id, region, load_balancers)
-                console.print(f"  [green]✓ Saved {len(load_balancers)} ELBv2 load balancers for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(load_balancers)} ELBv2 load balancers for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching ELBv2 load balancers for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching ELBv2 load balancers for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
         # Collect EKS clusters
-        console.print(
-            f"  [yellow]Fetching EKS clusters for account {account_id}...[/]"
-        )
+        console.print(f"  [yellow]Fetching EKS clusters for account {account_id}...[/]")
         for region in Config.get().active_regions:
             try:
                 clusters = eks.get_clusters(session, region)
                 save_eks_clusters(account_id, region, clusters)
-                console.print(f"  [green]✓ Saved {len(clusters)} EKS clusters for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(clusters)} EKS clusters for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
-                console.print(f"  [red]✗ Error fetching EKS clusters for account {account_id} in region {region}: {str(e)}[/]")
+                console.print(
+                    f"  [red]✗ Error fetching EKS clusters for account {account_id} in region {region}: {str(e)}[/]"
+                )
 
     except Exception as e:
         console.print(
@@ -854,7 +923,7 @@ def collect_mgmt_account_workload_resources() -> None:
             WorkloadResource(
                 resource_type="CloudFront",
                 resource_id=dist["Id"],
-                details={"domain_name": dist["DomainName"]}
+                details={"domain_name": dist["DomainName"]},
             )
         )
 

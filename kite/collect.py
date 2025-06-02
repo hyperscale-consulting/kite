@@ -30,6 +30,7 @@ from . import (
     logs,
     wafv2,
     elbv2,
+    detective,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -84,6 +85,7 @@ from kite.data import (
     save_eks_clusters,
     save_config_recorders,
     save_config_delivery_channels,
+    save_detective_graphs,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -667,6 +669,22 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching EKS clusters for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect detective graphs
+        console.print(
+            f"  [yellow]Fetching detective graphs for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                graphs = detective.get_graphs(session, region)
+                save_detective_graphs(account_id, region, graphs)
+                console.print(
+                    f"  [green]✓ Saved {len(graphs)} detective graphs for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching detective graphs for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

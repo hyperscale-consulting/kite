@@ -290,6 +290,9 @@ from kite.checks.security_data_published_to_log_archive_account.check import (
 from kite.checks.deploy_log_analysis_tools_in_audit_account.check import (
     check_deploy_log_analysis_tools_in_audit_account,
 )
+from kite.checks.detective_enabled.check import (
+    check_detective_enabled,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -402,4 +405,5 @@ __all__ = [
     "check_log_alerting",
     "check_security_data_published_to_log_archive_account",
     "check_deploy_log_analysis_tools_in_audit_account",
+    "check_detective_enabled",
 ]

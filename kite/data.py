@@ -1190,3 +1190,24 @@ def get_eks_clusters(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"eks_clusters_{region}", account_id) or []
+
+
+def save_detective_graphs(account_id: str, region: str, graphs: List[Dict[str, Any]]) -> None:
+    """Save Detective graphs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        graphs: The list of Detective graphs to save.
+    """
+    _save_data(graphs, f"detective_graphs_{region}", account_id)
+
+
+def get_detective_graphs(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Detective graphs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"detective_graphs_{region}", account_id) or []

@@ -39,7 +39,6 @@ def _extract_bucket_name(destination: str) -> str:
     if destination.startswith("arn:aws:logs"):
         return ""
 
-
     # Handle simple bucket names
     if "/" not in destination:
         return destination
@@ -48,9 +47,7 @@ def _extract_bucket_name(destination: str) -> str:
     return destination.split("/")[0]
 
 
-def _format_findings(
-    findings: Dict[str, Dict[str, Dict[str, List[str]]]]
-) -> str:
+def _format_findings(findings: Dict[str, Dict[str, Dict[str, List[str]]]]) -> str:
     """
     Format findings into a readable string.
 
@@ -101,7 +98,7 @@ def check_security_data_published_to_log_archive_account() -> Dict[str, Any]:
             "status": "FAIL",
             "details": {
                 "message": "No AWS Organization found. This check requires an organization."
-            }
+            },
         }
 
     # Find Log Archive account
@@ -111,8 +108,6 @@ def check_security_data_published_to_log_archive_account() -> Dict[str, Any]:
             log_archive_account = account
             break
 
-    # Initialize findings structure
-    findings = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
     destination_buckets = defaultdict(list)
     other_destinations = []
 
@@ -124,9 +119,13 @@ def check_security_data_published_to_log_archive_account() -> Dict[str, Any]:
             for task in export_tasks:
                 bucket = _extract_bucket_name(task.get("destination", ""))
                 if bucket:
-                    destination_buckets[bucket].append(f"Log export task in account {account} - {region}")
+                    destination_buckets[bucket].append(
+                        f"Log export task in account {account} - {region}"
+                    )
                 else:
-                    other_destinations.append(f"Log export task in account {account} - {region}")
+                    other_destinations.append(
+                        f"Log export task in account {account} - {region}"
+                    )
 
             # Get CloudTrail trails
             trails = get_cloudtrail_trails(account, region)
@@ -137,19 +136,23 @@ def check_security_data_published_to_log_archive_account() -> Dict[str, Any]:
                         f"CloudTrail {trail['Name']} in account {account} - {region}"
                     )
                 else:
-                    other_destinations.append(f"CloudTrail {trail['Name']} in account {account} - {region}")
+                    other_destinations.append(
+                        f"CloudTrail {trail['Name']} in account {account} - {region}"
+                    )
 
             # Get Route53 Resolver query log configs
-            resolver_configs = get_route53resolver_query_log_configs(
-                account, region
-            )
+            resolver_configs = get_route53resolver_query_log_configs(account, region)
             for resolver_config in resolver_configs:
                 destination = resolver_config.get("DestinationArn", "")
                 bucket = _extract_bucket_name(destination)
                 if bucket:
-                    destination_buckets[bucket].append(f"Route53 resolver query log in account {account} - {region}")
+                    destination_buckets[bucket].append(
+                        f"Route53 resolver query log in account {account} - {region}"
+                    )
                 else:
-                    other_destinations.append(f"Route53 resolver query log in account {account} - {region}")
+                    other_destinations.append(
+                        f"Route53 resolver query log in account {account} - {region}"
+                    )
 
             # Get VPC flow logs
             flow_logs = get_flow_logs(account, region)
@@ -158,20 +161,30 @@ def check_security_data_published_to_log_archive_account() -> Dict[str, Any]:
                     destination = flow_log.get("LogDestination", "")
                     bucket = _extract_bucket_name(destination)
                     if bucket:
-                        destination_buckets[bucket].append(f"VPC flow log in account {account} - {region}")
+                        destination_buckets[bucket].append(
+                            f"VPC flow log in account {account} - {region}"
+                        )
                     else:
-                        other_destinations.append(f"VPC flow log in account {account} - {region}")
+                        other_destinations.append(
+                            f"VPC flow log in account {account} - {region}"
+                        )
                 else:
-                    other_destinations.append(f"VPC flow log in account {account} - {region}")
+                    other_destinations.append(
+                        f"VPC flow log in account {account} - {region}"
+                    )
 
             # Get AWS Config delivery channels
             config_channels = get_config_delivery_channels(account, region)
             for channel in config_channels:
                 bucket = channel.get("s3BucketName", "")
                 if bucket:
-                    destination_buckets[bucket].append(f"Config recorder in account {account} - {region}")
+                    destination_buckets[bucket].append(
+                        f"Config recorder in account {account} - {region}"
+                    )
                 else:
-                    other_destinations.append(f"Config recorder in account {account} - {region}")
+                    other_destinations.append(
+                        f"Config recorder in account {account} - {region}"
+                    )
 
     # Build the message
     message = (

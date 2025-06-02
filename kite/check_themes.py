@@ -1,6 +1,6 @@
 """Check themes module for Kite."""
 
-from typing import Dict, List, Callable
+from typing import Callable
 
 from kite.checks import (
     check_aws_organizations_usage,
@@ -112,10 +112,11 @@ from kite.checks import (
     check_log_querying,
     check_log_alerting,
     check_security_data_published_to_log_archive_account,
+    check_deploy_log_analysis_tools_in_audit_account,
 )
 
 # Define check themes and their associated checks
-CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
+CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     "Multi-Account Architecture": {
         "description": (
             "Checks related to organizational structure, landing zone and guardrails"
@@ -147,8 +148,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
     },
     "Control Objective Identification and Validation": {
         "description": (
-            "Checks related to the identification and validation of "
-            "control objectives"
+            "Checks related to the identification and validation of control objectives"
         ),
         "checks": [
             check_well_defined_control_objectives,
@@ -237,8 +237,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
     },
     "Audit and rotate credentials periodically": {
         "description": (
-            "Regularly audit and rotate credentials to maintain security and "
-            "compliance"
+            "Regularly audit and rotate credentials to maintain security and compliance"
         ),
         "checks": [
             check_credential_rotation,
@@ -318,9 +317,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
         ],
     },
     "Manage access based on lifecycle": {
-        "description": (
-            "Checks related to managing access based on lifecycle"
-        ),
+        "description": ("Checks related to managing access based on lifecycle"),
         "checks": [
             check_access_management_lifecycle,
             check_access_management_lifecycle_implemented,
@@ -328,9 +325,7 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
         ],
     },
     "Analyze public and cross-account access": {
-        "description": (
-            "Checks related to analyzing public and cross-account access"
-        ),
+        "description": ("Checks related to analyzing public and cross-account access"),
         "checks": [
             check_active_external_access_analyzer,
             check_monitor_and_response_to_s3_public_access,
@@ -391,6 +386,8 @@ CHECK_THEMES: Dict[str, Dict[str, List[Callable]]] = {
         ),
         "checks": [
             check_security_data_published_to_log_archive_account,
+            # TODO: where should we check for log tampering prevention and access control?
+            check_deploy_log_analysis_tools_in_audit_account,
         ],
     },
 }

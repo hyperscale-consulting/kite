@@ -287,6 +287,10 @@ from kite.checks.use_logs_for_alerting.check import (
 from kite.checks.security_data_published_to_log_archive_account.check import (
     check_security_data_published_to_log_archive_account,
 )
+from kite.checks.deploy_log_analysis_tools_in_audit_account.check import (
+    check_deploy_log_analysis_tools_in_audit_account,
+)
+
 __all__ = [
     "check_aws_organizations_usage",
     "check_account_separation",
@@ -397,4 +401,5 @@ __all__ = [
     "check_log_querying",
     "check_log_alerting",
     "check_security_data_published_to_log_archive_account",
+    "check_deploy_log_analysis_tools_in_audit_account",
 ]

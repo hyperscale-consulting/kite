@@ -47,28 +47,6 @@ def _extract_bucket_name(destination: str) -> str:
     return destination.split("/")[0]
 
 
-def _format_findings(findings: Dict[str, Dict[str, Dict[str, List[str]]]]) -> str:
-    """
-    Format findings into a readable string.
-
-    Args:
-        findings: Nested dict of findings by account, bucket, and service
-
-    Returns:
-        Formatted string of findings
-    """
-    output = []
-    for account, buckets in sorted(findings.items()):
-        output.append(f"\nAccount: {account}")
-        for bucket, services in sorted(buckets.items()):
-            output.append(f"  Bucket: {bucket}")
-            for service, items in sorted(services.items()):
-                output.append(f"    {service}:")
-                for item in sorted(items):
-                    output.append(f"      - {item}")
-    return "\n".join(output)
-
-
 def check_security_data_published_to_log_archive_account() -> Dict[str, Any]:
     """
     Check if security data is published to a centralized log archive account.

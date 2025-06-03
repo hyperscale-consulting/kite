@@ -414,6 +414,154 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
             check_auto_remediate_non_compliant_resources,
         ],
     },
+    "Create network layers": {
+        "description": "",
+        "checks": [],
+    },
+    "Control traffic flow within your network layers": {
+        "description": "",
+        "checks": [],
+    },
+    "Implement inspection-based protection": {
+        "description": "",
+        "checks": [],
+    },
+    "Automate network protection": {
+        "description": "",
+        "checks": [],
+    },
+    "Perform vulnerability management": {
+        "description": "",
+        "checks": [],
+    },
+    "Provision compute from hardened images": {
+        "description": "",
+        "checks": [],
+    },
+    "Reduce manual management and interactive access": {
+        "description": "",
+        "checks": [],
+    },
+    "Validate software integrity": {
+        "description": "",
+        "checks": [],
+    },
+    "Automate compute protection": {
+        "description": "",
+        "checks": [],
+    },
+    "": {
+        "description": "",
+        "checks": [],
+    },
+    "Understand your data classification scheme": {
+        "description": "",
+        "checks": [],
+    },
+    "Apply data protection controls based on data sensitivity": {
+        "description": "",
+        "checks": [],
+    },
+    "Automate identification and classification": {
+        "description": "",
+        "checks": [],
+    },
+    "Define scalable data lifecycle management": {
+        "description": "",
+        "checks": [],
+    },
+    "Implement secure key management": {
+        "description": "",
+        "checks": [],
+    },
+    "Enforce encryption at rest": {
+        "description": "",
+        "checks": [],
+    },
+    "Automate data at rest protection": {
+        "description": "",
+        "checks": [],
+    },
+    "Enforce access control": {
+        "description": "",
+        "checks": [],
+    },
+    "Implement secure key and certificate management": {
+        "description": "",
+        "checks": [],
+    },
+    "Enforce encryption in transit": {
+        "description": "",
+        "checks": [],
+    },
+    "Authenticate network communications": {
+        "description": "",
+        "checks": [],
+    },
+    "Identify key personnel and external resources": {
+        "description": "",
+        "checks": [],
+    },
+    "Develop incident management plans": {
+        "description": "",
+        "checks": [],
+    },
+    "Prepare forensic capabilities": {
+        "description": "",
+        "checks": [],
+    },
+    "Develop and test security incident response playbooks": {
+        "description": "",
+        "checks": [],
+    },
+    "Pre-provision access": {
+        "description": "",
+        "checks": [],
+    },
+    "Pre-deploy tools": {
+        "description": "",
+        "checks": [],
+    },
+    "Run simulations": {
+        "description": "",
+        "checks": [],
+    },
+    "Establish a framework for learning from incidents": {
+        "description": "",
+        "checks": [],
+    },
+    "Train for application security": {
+        "description": "",
+        "checks": [],
+    },
+    "Automate testing throughout the development and release lifecycle": {
+        "description": "",
+        "checks": [],
+    },
+    "Perform regular penetration testing": {
+        "description": "",
+        "checks": [],
+    },
+    "Conduct code reviews": {
+        "description": "",
+        "checks": [],
+    },
+    "Centralize services for packages and dependencies": {
+        "description": "",
+        "checks": [],
+    },
+    "Deploy software programmatically": {
+        "description": "",
+        "checks": [],
+    },
+    "Regularly assess security properties of the pipelines": {
+        "description": "",
+        "checks": [],
+    },
+    "Build a program that embeds security ownership in workload teams": {
+        "description": "",
+        "checks": [],
+    },
 }
 
 # Flatten all checks for backward compatibility

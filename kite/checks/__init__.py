@@ -302,6 +302,9 @@ from kite.checks.auto_remediate_non_compliant_resources.check import (
 from kite.checks.documented_data_classification_scheme.check import (
     check_documented_data_classification_scheme,
 )
+from kite.checks.data_catalog.check import (
+    check_data_catalog,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -418,4 +421,5 @@ __all__ = [
     "check_security_event_correlation",
     "check_auto_remediate_non_compliant_resources",
     "check_documented_data_classification_scheme",
+    "check_data_catalog",
 ]

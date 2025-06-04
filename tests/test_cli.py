@@ -278,67 +278,49 @@ def test_run_collect(runner, config_path):
 def test_run_start_after_collect(runner, config_path):
     runner.invoke(main, ["collect", "--config", str(config_path)])
 
-    input = [
-        "y",
-        "Effective account separation in place",
-        "y",
-        "Effective OU Structure in place",
-        "n",
-        "Workloads in management account",
-        "y",
-        "Delegated admin is trusted",
-        "y",
-        "Contact details are accurate",
-        "y",
-        "Root account is monitored for abuse",
-        "y",
-        "Root account credentials are stored securely",
-        "y",
-        "Root account access is tested periodically",
-        "y",
-        "Control objectives are well-defined",
-        "y",
-        "Security controls implemented",
-        "y",
-        "Threat intel is used",
-        "y",
-        "Tech inventories are up to date",
-        "y",
-        "Workloads can me quickly updated",
-        "y",
-        "Managed services are used for threat intel",
-        "n",
-        "EC2 widely used",
-        "y",
-        "AWS compliance docs used",
-        "y",
-        "Teams keep up to date with new services",
-        "y",
-        "IaC used",
-        "y",
-        "IaC in VCS",
-        "y",
-        "IaC guardrails in place",
-        "y",
-        "Service catalog used",
-        "y",
-        "Accounts vended with security controls",
-        "y",
-        "Control tower used",
-        "n",
-        "No threat modeling",
-        "n",
-        "No DFDs",
-        "n",
-        "Security risks not identified",
-        "y",
-        "Services are evaluated",
-        "y",
-        "MFA enforced",
-        "",
-    ]
+    def responses():
+        answer = True
+        while True:
+            if answer:
+                yield b"y\n"
+            else:
+                yield b"Because reasons...\n"
+            answer = not answer
+
+    class TestInput:
+        def __init__(self, responses):
+            self.responses = responses
+            self.buffer = b""
+            self.exhausted = False
+
+        def fill_buffer(self, size=None):
+            while not self.exhausted and (size is None or len(self.buffer) < size):
+                try:
+                    self.buffer += next(self.responses)
+                except StopIteration:
+                    self.exhaused = True
+                    break
+
+        def read(self, n=-1):
+            if n == -1:
+                self.fill_buffer()
+                result, self.buffer = self.buffer, b""
+                return result
+            else:
+                self.fill_buffer(n)
+                result, self.buffer = self.buffer[:n], self.buffer[n:]
+                return result
+
+        def readable(self):
+            return True
+
+        def writable(self):
+            return False
+
+        def seekable(self):
+            return False
+
     result = runner.invoke(
-        main, ["start", "--config", str(config_path)], input="\n".join(input)
+        main, ["start", "--config", str(config_path)], input=TestInput(responses())
     )
-    print(result.output)
     assert result.exit_code == 0

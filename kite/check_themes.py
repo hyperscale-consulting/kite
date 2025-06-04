@@ -450,10 +450,6 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "description": "",
         "checks": [],
     },
-    "": {
-        "description": "",
-        "checks": [],
-    },
     "Understand your data classification scheme": {
         "description": "",
         "checks": [],

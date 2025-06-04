@@ -305,6 +305,9 @@ from kite.checks.documented_data_classification_scheme.check import (
 from kite.checks.data_catalog.check import (
     check_data_catalog,
 )
+from kite.checks.tag_data_with_sensitivity_level.check import (
+    check_tag_data_with_sensitivity_level,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -422,4 +425,5 @@ __all__ = [
     "check_auto_remediate_non_compliant_resources",
     "check_documented_data_classification_scheme",
     "check_data_catalog",
+    "check_tag_data_with_sensitivity_level",
 ]

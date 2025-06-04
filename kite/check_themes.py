@@ -118,6 +118,7 @@ from kite.checks import (
     check_auto_remediate_non_compliant_resources,
     check_documented_data_classification_scheme,
     check_data_catalog,
+    check_tag_data_with_sensitivity_level,
 )
 
 # Define check themes and their associated checks
@@ -457,6 +458,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [
             check_documented_data_classification_scheme,
             check_data_catalog,
+            check_tag_data_with_sensitivity_level,
         ],
     },
     "Apply data protection controls based on data sensitivity": {

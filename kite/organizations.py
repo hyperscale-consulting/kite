@@ -24,9 +24,13 @@ def fetch_policies_for_target(
     Returns:
         A dictionary containing lists of ControlPolicy objects for each policy type
     """
-    policies = {"SERVICE_CONTROL_POLICY": [], "RESOURCE_CONTROL_POLICY": []}
+    policies = {
+        "SERVICE_CONTROL_POLICY": [],
+        "RESOURCE_CONTROL_POLICY": [],
+        "TAG_POLICY": [],
+    }
 
-    for policy_type in ["SERVICE_CONTROL_POLICY", "RESOURCE_CONTROL_POLICY"]:
+    for policy_type in policies.keys():
         try:
             paginator = orgs_client.get_paginator("list_policies_for_target")
             for page in paginator.paginate(TargetId=target_id, Filter=policy_type):
@@ -102,6 +106,7 @@ def fetch_organization(session) -> Optional[Organization]:
                         joined_timestamp=account["JoinedTimestamp"].isoformat(),
                         scps=account_policies["SERVICE_CONTROL_POLICY"],
                         rcps=account_policies["RESOURCE_CONTROL_POLICY"],
+                        tag_policies=account_policies["TAG_POLICY"],
                     )
                 )
 
@@ -123,6 +128,7 @@ def fetch_organization(session) -> Optional[Organization]:
             child_ous=child_ous,
             scps=root_policies["SERVICE_CONTROL_POLICY"],
             rcps=root_policies["RESOURCE_CONTROL_POLICY"],
+            tag_policies=root_policies["TAG_POLICY"],
         )
 
         return Organization(
@@ -172,6 +178,7 @@ def build_ou_structure(orgs_client, ou_id):
                     joined_timestamp=account["JoinedTimestamp"].isoformat(),
                     scps=account_policies["SERVICE_CONTROL_POLICY"],
                     rcps=account_policies["RESOURCE_CONTROL_POLICY"],
+                    tag_policies=account_policies["TAG_POLICY"],
                 )
             )
 
@@ -190,6 +197,7 @@ def build_ou_structure(orgs_client, ou_id):
         child_ous=child_ous,
         scps=ou_policies["SERVICE_CONTROL_POLICY"],
         rcps=ou_policies["RESOURCE_CONTROL_POLICY"],
+        tag_policies=ou_policies["TAG_POLICY"],
     )
 
 
@@ -293,6 +301,7 @@ def get_account_details(session, account_id: str) -> Optional[Account]:
             joined_timestamp=account["JoinedTimestamp"].isoformat(),
             scps=account_policies["SERVICE_CONTROL_POLICY"],
             rcps=account_policies["RESOURCE_CONTROL_POLICY"],
+            tag_policies=account_policies["TAG_POLICY"],
         )
     except Exception as e:
         if (

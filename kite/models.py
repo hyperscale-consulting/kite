@@ -35,13 +35,18 @@ class Account:
     joined_timestamp: str
     scps: List[ControlPolicy]
     rcps: List[ControlPolicy] = field(default_factory=list)
+    tag_policies: List[ControlPolicy] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Account":
         """Create an Account from a dictionary."""
         scps = [ControlPolicy.from_dict(scp) for scp in data.pop("scps", [])]
         rcps = [ControlPolicy.from_dict(rcp) for rcp in data.pop("rcps", [])]
-        return cls(**data, scps=scps, rcps=rcps)
+        tag_policies = [
+            ControlPolicy.from_dict(tag_policies)
+            for tag_policies in data.pop("tag_policies", [])
+        ]
+        return cls(**data, scps=scps, rcps=rcps, tag_policies=tag_policies)
 
 
 @dataclass
@@ -90,6 +95,7 @@ class OrganizationalUnit:
     child_ous: List["OrganizationalUnit"]
     scps: List[ControlPolicy]
     rcps: List[ControlPolicy] = field(default_factory=list)
+    tag_policies: List[ControlPolicy] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "OrganizationalUnit":
@@ -98,7 +104,18 @@ class OrganizationalUnit:
         child_ous = [cls.from_dict(ou) for ou in data.pop("child_ous", [])]
         scps = [ControlPolicy.from_dict(scp) for scp in data.pop("scps", [])]
         rcps = [ControlPolicy.from_dict(rscp) for rscp in data.pop("rcps", [])]
-        return cls(**data, accounts=accounts, child_ous=child_ous, scps=scps, rcps=rcps)
+        tag_policies = [
+            ControlPolicy.from_dict(tag_policies)
+            for tag_policies in data.pop("tag_policies", [])
+        ]
+        return cls(
+            **data,
+            accounts=accounts,
+            child_ous=child_ous,
+            scps=scps,
+            rcps=rcps,
+            tag_policies=tag_policies,
+        )
 
     def get_accounts(self) -> List[Account]:
         """Get all accounts in the organizational unit and its child organizational units."""

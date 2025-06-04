@@ -39,8 +39,8 @@ class Account:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Account":
         """Create an Account from a dictionary."""
-        scps = [ControlPolicy.from_dict(scp) for scp in data.pop('scps', [])]
-        rcps = [ControlPolicy.from_dict(rcp) for rcp in data.pop('rcps', [])]
+        scps = [ControlPolicy.from_dict(scp) for scp in data.pop("scps", [])]
+        rcps = [ControlPolicy.from_dict(rcp) for rcp in data.pop("rcps", [])]
         return cls(**data, scps=scps, rcps=rcps)
 
 
@@ -94,10 +94,10 @@ class OrganizationalUnit:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "OrganizationalUnit":
         """Create an OrganizationalUnit from a dictionary."""
-        accounts = [Account.from_dict(acc) for acc in data.pop('accounts', [])]
-        child_ous = [cls.from_dict(ou) for ou in data.pop('child_ous', [])]
-        scps = [ControlPolicy.from_dict(scp) for scp in data.pop('scps', [])]
-        rcps = [ControlPolicy.from_dict(rscp) for rscp in data.pop('rcps', [])]
+        accounts = [Account.from_dict(acc) for acc in data.pop("accounts", [])]
+        child_ous = [cls.from_dict(ou) for ou in data.pop("child_ous", [])]
+        scps = [ControlPolicy.from_dict(scp) for scp in data.pop("scps", [])]
+        rcps = [ControlPolicy.from_dict(rscp) for rscp in data.pop("rcps", [])]
         return cls(**data, accounts=accounts, child_ous=child_ous, scps=scps, rcps=rcps)
 
     def get_accounts(self) -> List[Account]:
@@ -121,7 +121,7 @@ class Organization:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Organization":
         """Create an Organization from a dictionary."""
-        root = OrganizationalUnit.from_dict(data.pop('root'))
+        root = OrganizationalUnit.from_dict(data.pop("root"))
         return cls(**data, root=root)
 
     def get_accounts(self) -> List[Account]:

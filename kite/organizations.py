@@ -7,11 +7,13 @@ from kite.models import (
     Account,
     ControlPolicy,
     OrganizationalUnit,
-    DelegatedAdmin
+    DelegatedAdmin,
 )
 
 
-def fetch_policies_for_target(orgs_client, target_id: str) -> Dict[str, List[ControlPolicy]]:
+def fetch_policies_for_target(
+    orgs_client, target_id: str
+) -> Dict[str, List[ControlPolicy]]:
     """
     Fetch all SCPs and RCPs attached to a target (account or OU).
 
@@ -22,10 +24,7 @@ def fetch_policies_for_target(orgs_client, target_id: str) -> Dict[str, List[Con
     Returns:
         A dictionary containing lists of ControlPolicy objects for each policy type
     """
-    policies = {
-        "SERVICE_CONTROL_POLICY": [],
-        "RESOURCE_CONTROL_POLICY": []
-    }
+    policies = {"SERVICE_CONTROL_POLICY": [], "RESOURCE_CONTROL_POLICY": []}
 
     for policy_type in ["SERVICE_CONTROL_POLICY", "RESOURCE_CONTROL_POLICY"]:
         try:
@@ -49,7 +48,9 @@ def fetch_policies_for_target(orgs_client, target_id: str) -> Dict[str, List[Con
                     policies[policy_summary["Type"]].append(pol)
         except Exception as e:
             # Log the error but continue processing
-            print(f"Error fetching {policy_type} policies for target {target_id}: {str(e)}")
+            print(
+                f"Error fetching {policy_type} policies for target {target_id}: {str(e)}"
+            )
 
     return policies
 
@@ -294,7 +295,10 @@ def get_account_details(session, account_id: str) -> Optional[Account]:
             rcps=account_policies["RESOURCE_CONTROL_POLICY"],
         )
     except Exception as e:
-        if hasattr(e, "response") and e.response.get("Error", {}).get("Code") == "AccountNotFoundException":
+        if (
+            hasattr(e, "response")
+            and e.response.get("Error", {}).get("Code") == "AccountNotFoundException"
+        ):
             return None
         raise
 

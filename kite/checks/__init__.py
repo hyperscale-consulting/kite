@@ -6,9 +6,7 @@ from kite.checks.ou_structure.check import check_ou_structure
 from kite.checks.management_account_workloads.check import (
     check_management_account_workloads,
 )
-from kite.checks.delegated_admins.check import (
-    check_delegated_admins_security_services,
-)
+from kite.checks.delegated_admins.check import check_delegated_admins_security_services
 from kite.checks.trusted_delegated_admins.check import (
     check_trusted_delegated_admins,
 )
@@ -308,6 +306,7 @@ from kite.checks.data_catalog.check import (
 from kite.checks.tag_data_with_sensitivity_level.check import (
     check_tag_data_with_sensitivity_level,
 )
+from kite.checks.isolation_boundaries.check import check_isolation_boundaries
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -426,4 +425,5 @@ __all__ = [
     "check_documented_data_classification_scheme",
     "check_data_catalog",
     "check_tag_data_with_sensitivity_level",
+    "check_isolation_boundaries",
 ]

@@ -119,6 +119,7 @@ from kite.checks import (
     check_documented_data_classification_scheme,
     check_data_catalog,
     check_tag_data_with_sensitivity_level,
+    check_isolation_boundaries,
 )
 
 # Define check themes and their associated checks
@@ -243,7 +244,8 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     },
     "Audit and rotate credentials periodically": {
         "description": (
-            "Regularly audit and rotate credentials to maintain security and compliance"
+            "Regularly audit and rotate credentials to maintain security and "
+            "compliance"
         ),
         "checks": [
             check_credential_rotation,
@@ -398,8 +400,8 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     },
     "Correlate and enrich security alerts": {
         "description": (
-            "Checks relating to automated correlation and enrichment of security alerts "
-            "to accelerate incident response"
+            "Checks relating to automated correlation and enrichment of security "
+            "alerts to accelerate incident response"
         ),
         "checks": [
             check_detective_enabled,
@@ -409,9 +411,9 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     "Initiate remediation for non-compliant resources": {
         "description": (
             "The steps to remedidate when resources are detected to be non-compliant "
-            "are defined, programmitically, along with resource configuration standards"
-            " so that they can be initiated either manually or automatically when "
-            "resources are found to be non-compliant"
+            "are defined, programmitically, along with resource configuration "
+            "standards so that they can be initiated either manually or "
+            "automatically when resources are found to be non-compliant"
         ),
         "checks": [
             check_auto_remediate_non_compliant_resources,
@@ -462,8 +464,13 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Apply data protection controls based on data sensitivity": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to applying data protection controls based on data "
+            "sensitivity levels"
+        ),
+        "checks": [
+            check_isolation_boundaries,
+        ],
     },
     "Automate identification and classification": {
         "description": "",

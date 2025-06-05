@@ -38,3 +38,7 @@ def check_controls_implemented_based_on_sensitivity() -> dict[str, object]:
         message=message,
         default=True,
     )
+
+
+check_controls_implemented_based_on_sensitivity._CHECK_ID = CHECK_ID
+check_controls_implemented_based_on_sensitivity._CHECK_NAME = CHECK_NAME

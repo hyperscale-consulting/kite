@@ -40,3 +40,7 @@ def check_tokenization_and_anonymization() -> dict[str, object]:
         message=message,
         default=True,
     )
+
+
+check_tokenization_and_anonymization._CHECK_ID = CHECK_ID
+check_tokenization_and_anonymization._CHECK_NAME = CHECK_NAME

@@ -28,9 +28,10 @@ def check_data_catalog() -> Dict[str, Any]:
         message=(
             "This check verifies that there is an inventory of all data within the "
             "organization that includes:\n\n"
-            "- Location of all data\n"
-            "- Sensitivity level of data\n"
-            "- Data ownership\n"
+            "- Location\n"
+            "- Sensitivity level\n"
+            "- Ownership\n"
+            "- Retention period\n"
             "- Controls in place to protect the data\n\n"
             "Consider the following factors:\n"
             "- Is the data catalog comprehensive and up-to-date?\n"
@@ -44,12 +45,10 @@ def check_data_catalog() -> Dict[str, Any]:
             "protect that data?"
         ),
         pass_message=(
-            "A comprehensive data catalog exists and includes all required "
-            "information."
+            "A comprehensive data catalog exists and includes all required information."
         ),
         fail_message=(
-            "No data catalog exists or it does not include all required "
-            "information."
+            "No data catalog exists or it does not include all required information."
         ),
         default=True,
     )

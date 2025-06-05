@@ -31,7 +31,9 @@ def check_documented_data_classification_scheme() -> Dict[str, Any]:
         check_name=CHECK_NAME,
         message=(
             "This check verifies that there is a documented data classification "
-            "scheme that describes:\n\n"
+            "scheme that describes the data classification levels and, for each level"
+            " and for each state (at rest, in transit and in use), the controls that "
+            "should be in place including:\n\n"
             "- Data handling requirements\n"
             "- Data lifecycle management\n"
             "- Backup requirements\n"

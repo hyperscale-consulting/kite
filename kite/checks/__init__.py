@@ -310,6 +310,9 @@ from kite.checks.isolation_boundaries.check import check_isolation_boundaries
 from kite.checks.sensitivity_controls.check import (
     check_controls_implemented_based_on_sensitivity,
 )
+from kite.checks.tokenization_and_anonymization.check import (
+    check_tokenization_and_anonymization,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -430,4 +433,5 @@ __all__ = [
     "check_tag_data_with_sensitivity_level",
     "check_isolation_boundaries",
     "check_controls_implemented_based_on_sensitivity",
+    "check_tokenization_and_anonymization",
 ]

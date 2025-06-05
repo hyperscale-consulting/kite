@@ -307,6 +307,9 @@ from kite.checks.tag_data_with_sensitivity_level.check import (
     check_tag_data_with_sensitivity_level,
 )
 from kite.checks.isolation_boundaries.check import check_isolation_boundaries
+from kite.checks.sensitivity_controls.check import (
+    check_controls_implemented_based_on_sensitivity,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -426,4 +429,5 @@ __all__ = [
     "check_data_catalog",
     "check_tag_data_with_sensitivity_level",
     "check_isolation_boundaries",
+    "check_controls_implemented_based_on_sensitivity",
 ]

@@ -120,6 +120,7 @@ from kite.checks import (
     check_data_catalog,
     check_tag_data_with_sensitivity_level,
     check_isolation_boundaries,
+    check_controls_implemented_based_on_sensitivity,
 )
 
 # Define check themes and their associated checks
@@ -244,8 +245,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     },
     "Audit and rotate credentials periodically": {
         "description": (
-            "Regularly audit and rotate credentials to maintain security and "
-            "compliance"
+            "Regularly audit and rotate credentials to maintain security and compliance"
         ),
         "checks": [
             check_credential_rotation,
@@ -470,6 +470,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ),
         "checks": [
             check_isolation_boundaries,
+            check_controls_implemented_based_on_sensitivity,
         ],
     },
     "Automate identification and classification": {

@@ -323,4 +323,5 @@ def test_run_start_after_collect(runner, config_path):
     result = runner.invoke(
         main, ["start", "--config", str(config_path)], input=TestInput(responses())
     )
+    print(result.output)
     assert result.exit_code == 0

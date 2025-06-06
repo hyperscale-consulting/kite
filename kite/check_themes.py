@@ -126,6 +126,7 @@ from kite.checks import (
     check_sns_data_protection_policies,
     check_detect_sensitive_data_transform,
     check_macie_scans_for_sensitive_data,
+    check_scan_for_sensitive_data_in_dev,
 )
 
 # Define check themes and their associated checks
@@ -486,6 +487,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
             check_sns_data_protection_policies,
             check_detect_sensitive_data_transform,
             check_macie_scans_for_sensitive_data,
+            check_scan_for_sensitive_data_in_dev,
         ],
     },
     "Define scalable data lifecycle management": {

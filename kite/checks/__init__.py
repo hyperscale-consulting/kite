@@ -322,6 +322,9 @@ from kite.checks.sns_data_protection_policies.check import (
 from kite.checks.detect_sensitive_data_transform.check import (
     check_detect_sensitive_data_transform,
 )
+from kite.checks.macie_scans_for_sensitive_data.check import (
+    check_macie_scans_for_sensitive_data,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -446,4 +449,5 @@ __all__ = [
     "check_cw_data_protection_policies",
     "check_sns_data_protection_policies",
     "check_detect_sensitive_data_transform",
+    "check_macie_scans_for_sensitive_data",
 ]

@@ -122,6 +122,7 @@ from kite.checks import (
     check_isolation_boundaries,
     check_controls_implemented_based_on_sensitivity,
     check_tokenization_and_anonymization,
+    check_cw_data_protection_policies,
 )
 
 # Define check themes and their associated checks
@@ -477,7 +478,9 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     },
     "Automate identification and classification": {
         "description": "",
-        "checks": [],
+        "checks": [
+            check_cw_data_protection_policies,
+        ],
     },
     "Define scalable data lifecycle management": {
         "description": "",

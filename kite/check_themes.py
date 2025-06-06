@@ -129,6 +129,7 @@ from kite.checks import (
     check_scan_for_sensitive_data_in_dev,
     check_automate_s3_data_retention,
     check_automate_ddb_data_retention,
+    check_implement_retention_policies,
 )
 
 # Define check themes and their associated checks
@@ -497,6 +498,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [
             check_automate_s3_data_retention,
             check_automate_ddb_data_retention,
+            check_implement_retention_policies,
         ],
     },
     "Implement secure key management": {

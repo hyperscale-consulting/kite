@@ -334,6 +334,9 @@ from kite.checks.automate_s3_data_retention.check import (
 from kite.checks.automate_ddb_data_retention.check import (
     check_automate_ddb_data_retention,
 )
+from kite.checks.implement_retention_policies.check import (
+    check_implement_retention_policies,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -462,4 +465,5 @@ __all__ = [
     "check_scan_for_sensitive_data_in_dev",
     "check_automate_s3_data_retention",
     "check_automate_ddb_data_retention",
+    "check_implement_retention_policies",
 ]

@@ -124,6 +124,7 @@ from kite.checks import (
     check_tokenization_and_anonymization,
     check_cw_data_protection_policies,
     check_sns_data_protection_policies,
+    check_detect_sensitive_data_transform,
 )
 
 # Define check themes and their associated checks
@@ -482,6 +483,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [
             check_cw_data_protection_policies,
             check_sns_data_protection_policies,
+            check_detect_sensitive_data_transform,
         ],
     },
     "Define scalable data lifecycle management": {

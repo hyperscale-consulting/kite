@@ -28,11 +28,23 @@ def get_tables(session, region: str) -> List[DynamoDBTable]:
 
     response = dynamodb_client.list_tables()
     for table_name in response.get("TableNames", []):
-        tables.append(
-            DynamoDBTable(
-                table_name=table_name,
-                region=region,
-            )
+        table = dict(
+            TableName=table_name,
+            Region=region,
+            TimeToLiveDescription=get_ttl_status(dynamodb_client, table_name),
         )
+        tables.append(table)
 
     return tables
+
+
+def get_ttl_status(client, table_name: str) -> bool:
+    """
+    Get the TTL status of a DynamoDB table.
+
+    Args:
+        client: The boto3 client to use
+        table_name: The name of the DynamoDB table
+    """
+    response = client.describe_time_to_live(TableName=table_name)
+    return response.get("TimeToLiveDescription", {})

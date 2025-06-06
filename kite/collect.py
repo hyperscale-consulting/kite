@@ -90,6 +90,7 @@ from kite.data import (
     save_detective_graphs,
     save_securityhub_action_targets,
     save_securityhub_automation_rules,
+    save_dynamodb_tables,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -728,6 +729,20 @@ def collect_account_data(account_id: str) -> None:
                     f"  [red]✗ Error fetching security hub automation rules for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
+        # Collect DynamoDB tables
+        console.print(f"  [yellow]Fetching DynamoDB tables for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                tables = dynamodb.get_tables(session, region)
+                save_dynamodb_tables(account_id, region, tables)
+                console.print(
+                    f"  [green]✓ Saved {len(tables)} DynamoDB tables for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching DynamoDB tables for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
     except Exception as e:
         console.print(
             f"  [red]✗ Error collecting data for account {account_id}: {str(e)}[/]"
@@ -907,7 +922,7 @@ def collect_mgmt_account_workload_resources() -> None:
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="DynamoDB",
-                    resource_id=table.table_name,
+                    resource_id=table["TableName"],
                     region=region,
                 )
             )

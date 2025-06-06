@@ -1253,3 +1253,24 @@ def get_securityhub_automation_rules(account_id: str, region: str) -> List[Dict[
         region: The AWS region.
     """
     return _load_data(f"securityhub_automation_rules_{region}", account_id) or []
+
+
+def save_dynamodb_tables(account_id: str, region: str, tables: List[Dict[str, Any]]) -> None:
+    """Save DynamoDB tables for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        tables: The list of DynamoDB tables to save.
+    """
+    _save_data(tables, f"dynamodb_tables_{region}", account_id)
+
+
+def get_dynamodb_tables(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get DynamoDB tables for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"dynamodb_tables_{region}", account_id) or []

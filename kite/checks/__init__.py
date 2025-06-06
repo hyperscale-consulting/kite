@@ -316,6 +316,9 @@ from kite.checks.tokenization_and_anonymization.check import (
 from kite.checks.cw_data_protection_policies.check import (
     check_cw_data_protection_policies,
 )
+from kite.checks.sns_data_protection_policies.check import (
+    check_sns_data_protection_policies,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -438,4 +441,5 @@ __all__ = [
     "check_controls_implemented_based_on_sensitivity",
     "check_tokenization_and_anonymization",
     "check_cw_data_protection_policies",
+    "check_sns_data_protection_policies",
 ]

@@ -340,6 +340,9 @@ from kite.checks.implement_retention_policies.check import (
 from kite.checks.detect_missing_automated_lifecycle_management.check import (
     check_detect_missing_automated_lifecycle_management,
 )
+from kite.checks.use_a_kms.check import (
+    check_use_a_kms,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -470,4 +473,5 @@ __all__ = [
     "check_automate_ddb_data_retention",
     "check_implement_retention_policies",
     "check_detect_missing_automated_lifecycle_management",
+    "check_use_a_kms",
 ]

@@ -131,6 +131,7 @@ from kite.checks import (
     check_automate_ddb_data_retention,
     check_implement_retention_policies,
     check_detect_missing_automated_lifecycle_management,
+    check_use_a_kms,
 )
 
 # Define check themes and their associated checks
@@ -504,8 +505,14 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Implement secure key management": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks relating to the storage, rotation, access control, and "
+            "monitoring of key material used to secure data at rest for your "
+            "workloads."
+        ),
+        "checks": [
+            check_use_a_kms,
+        ],
     },
     "Enforce encryption at rest": {
         "description": "",

@@ -134,6 +134,7 @@ from kite.checks import (
     check_use_a_kms,
     check_no_human_access_to_unencrypted_key_material,
     check_rotate_encryption_keys,
+    check_monitor_key_usage,
 )
 
 # Define check themes and their associated checks
@@ -516,6 +517,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
             check_use_a_kms,
             check_no_human_access_to_unencrypted_key_material,
             check_rotate_encryption_keys,
+            check_monitor_key_usage,
         ],
     },
     "Enforce encryption at rest": {

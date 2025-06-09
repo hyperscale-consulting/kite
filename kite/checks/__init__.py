@@ -349,6 +349,9 @@ from kite.checks.no_human_access_to_unencrypted_key_material.check import (
 from kite.checks.rotate_encryption_keys.check import (
     check_rotate_encryption_keys,
 )
+from kite.checks.monitor_key_usage.check import (
+    check_monitor_key_usage,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -482,4 +485,5 @@ __all__ = [
     "check_use_a_kms",
     "check_no_human_access_to_unencrypted_key_material",
     "check_rotate_encryption_keys",
+    "check_monitor_key_usage",
 ]

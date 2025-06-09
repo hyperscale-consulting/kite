@@ -1274,3 +1274,24 @@ def get_dynamodb_tables(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"dynamodb_tables_{region}", account_id) or []
+
+
+def save_custom_key_stores(account_id: str, region: str, custom_key_stores: List[Dict[str, Any]]) -> None:
+    """Save custom key stores for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        custom_key_stores: The list of custom key stores to save.
+    """
+    _save_data(custom_key_stores, f"custom_key_stores_{region}", account_id)
+
+
+def get_custom_key_stores(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get custom key stores for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"custom_key_stores_{region}", account_id) or []

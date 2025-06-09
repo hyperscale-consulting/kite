@@ -91,6 +91,7 @@ from kite.data import (
     save_securityhub_action_targets,
     save_securityhub_automation_rules,
     save_dynamodb_tables,
+    save_custom_key_stores,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -344,6 +345,22 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching KMS keys for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect custom key stores
+        console.print(
+            f"  [yellow]Fetching custom key stores for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                custom_key_stores = kms.get_custom_key_stores(session, region)
+                save_custom_key_stores(account_id, region, custom_key_stores)
+                console.print(
+                    f"  [green]✓ Saved {len(custom_key_stores)} custom key stores for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching custom key stores for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect account level identity center instances
@@ -972,9 +989,9 @@ def collect_mgmt_account_workload_resources() -> None:
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="KMS",
-                    resource_id=key["key_id"],
+                    resource_id=key["KeyId"],
                     region=region,
-                    details={"description": key["description"]},
+                    details={"description": key["Description"]},
                 )
             )
 

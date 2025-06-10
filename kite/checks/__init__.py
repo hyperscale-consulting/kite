@@ -364,6 +364,9 @@ from kite.checks.use_customer_managed_keys.check import (
 from kite.checks.detect_encryption_at_rest_misconfig.check import (
     check_detect_encryption_at_rest_misconfig,
 )
+from kite.checks.enforce_data_protection_at_rest_with_policy_as_code.check import (
+    check_enforce_data_protection_at_rest_with_policy_as_code,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -502,4 +505,5 @@ __all__ = [
     "check_use_service_encryption_at_rest",
     "check_use_customer_managed_keys",
     "check_detect_encryption_at_rest_misconfig",
+    "check_enforce_data_protection_at_rest_with_policy_as_code",
 ]

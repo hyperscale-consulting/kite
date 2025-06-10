@@ -19,7 +19,7 @@ def check_controls_implemented_based_on_sensitivity() -> dict[str, object]:
         "Consider the following:\n"
         "- Are access controls (IAM policies, SCPs) implemented based on data "
         "sensitivity?\n"
-        "- Is encryption (at rest and in transit) configured according to data "
+        "- Is encryption (at rest and in transit) implemented according to data "
         "sensitivity requirements?\n"
         "- Are audit logs and monitoring configured appropriately for each "
         "sensitivity level?\n"

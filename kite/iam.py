@@ -141,7 +141,7 @@ def fetch_virtual_mfa_devices(session) -> List[Dict[str, Any]]:
     """
     iam_client = session.client("iam")
     virtual_mfa_devices = []
-    paginator = iam_client.get_paginator('list_virtual_mfa_devices')
+    paginator = iam_client.get_paginator("list_virtual_mfa_devices")
 
     for page in paginator.paginate():
         virtual_mfa_devices.extend(page.get("VirtualMFADevices", []))
@@ -206,19 +206,20 @@ def list_oidc_providers(session) -> List[Dict[str, Any]]:
                 provider_info = iam_client.get_open_id_connect_provider(
                     OpenIDConnectProviderArn=provider["Arn"]
                 )
-                detailed_providers.append({
-                    "Arn": provider["Arn"],
-                    "CreateDate": provider.get("CreateDate"),
-                    "Url": provider_info.get("Url"),
-                    "ClientIDList": provider_info.get("ClientIDList", []),
-                    "ThumbprintList": provider_info.get("ThumbprintList", [])
-                })
+                detailed_providers.append(
+                    {
+                        "Arn": provider["Arn"],
+                        "CreateDate": provider.get("CreateDate"),
+                        "Url": provider_info.get("Url"),
+                        "ClientIDList": provider_info.get("ClientIDList", []),
+                        "ThumbprintList": provider_info.get("ThumbprintList", []),
+                    }
+                )
             except ClientError:
                 # If we can't get detailed info for a provider, just include basic info
-                detailed_providers.append({
-                    "Arn": provider["Arn"],
-                    "CreateDate": provider.get("CreateDate")
-                })
+                detailed_providers.append(
+                    {"Arn": provider["Arn"], "CreateDate": provider.get("CreateDate")}
+                )
 
         return detailed_providers
     except ClientError:
@@ -275,7 +276,7 @@ def get_role_attached_policies(session, role_name: str) -> List[Dict[str, Any]]:
     """
     iam_client = session.client("iam")
     policies = []
-    paginator = iam_client.get_paginator('list_attached_role_policies')
+    paginator = iam_client.get_paginator("list_attached_role_policies")
 
     for page in paginator.paginate(RoleName=role_name):
         policies.extend(page.get("AttachedPolicies", []))
@@ -283,7 +284,9 @@ def get_role_attached_policies(session, role_name: str) -> List[Dict[str, Any]]:
     return policies
 
 
-def get_role_inline_policy_document(session, role_name: str, policy_name: str) -> Dict[str, Any]:
+def get_role_inline_policy_document(
+    session, role_name: str, policy_name: str
+) -> Dict[str, Any]:
     """
     Get the policy document for an inline policy attached to a role.
 
@@ -300,14 +303,11 @@ def get_role_inline_policy_document(session, role_name: str, policy_name: str) -
     """
     iam_client = session.client("iam")
 
-    response = iam_client.get_role_policy(
-        RoleName=role_name,
-        PolicyName=policy_name
-    )
+    response = iam_client.get_role_policy(RoleName=role_name, PolicyName=policy_name)
     return {
         "PolicyName": policy_name,
         "RoleName": role_name,
-        "PolicyDocument": response.get("PolicyDocument", {})
+        "PolicyDocument": response.get("PolicyDocument", {}),
     }
 
 
@@ -327,7 +327,7 @@ def get_role_inline_policies(session, role_name: str) -> List[str]:
     """
     iam_client = session.client("iam")
     policy_names = []
-    paginator = iam_client.get_paginator('list_role_policies')
+    paginator = iam_client.get_paginator("list_role_policies")
 
     for page in paginator.paginate(RoleName=role_name):
         policy_names.extend(page.get("PolicyNames", []))
@@ -361,7 +361,7 @@ def list_roles(session) -> List[Dict[str, Any]]:
     """
     iam_client = session.client("iam")
     roles = []
-    paginator = iam_client.get_paginator('list_roles')
+    paginator = iam_client.get_paginator("list_roles")
 
     for page in paginator.paginate():
         for role in page.get("Roles", []):
@@ -412,10 +412,10 @@ def list_customer_managed_policies(session) -> List[Dict[str, Any]]:
     """
     iam_client = session.client("iam")
     policies = []
-    paginator = iam_client.get_paginator('list_policies')
+    paginator = iam_client.get_paginator("list_policies")
 
     # Only list customer managed policies (Scope=Local)
-    for page in paginator.paginate(Scope='Local'):
+    for page in paginator.paginate(Scope="Local"):
         policies.extend(page.get("Policies", []))
 
     return policies
@@ -445,17 +445,13 @@ def get_policy_and_document(session, policy_arn: str) -> Dict[str, Any]:
     version_id = policy.get("DefaultVersionId")
     if version_id:
         policy_version = iam_client.get_policy_version(
-            PolicyArn=policy_arn,
-            VersionId=version_id
+            PolicyArn=policy_arn, VersionId=version_id
         )
         policy_document = policy_version.get("PolicyVersion", {}).get("Document", {})
     else:
         policy_document = {}
 
-    return {
-        "PolicyDetails": policy,
-        "PolicyDocument": policy_document
-    }
+    return {"PolicyDetails": policy, "PolicyDocument": policy_document}
 
 
 def list_users(session) -> List[Dict[str, Any]]:
@@ -475,9 +471,9 @@ def list_users(session) -> List[Dict[str, Any]]:
         for user in page["Users"]:
             # Get user's groups
             groups = []
-            for group in iam_client.list_groups_for_user(
-                UserName=user["UserName"]
-            )["Groups"]:
+            for group in iam_client.list_groups_for_user(UserName=user["UserName"])[
+                "Groups"
+            ]:
                 groups.append(group["GroupName"])
 
             # Get user's policies
@@ -492,14 +488,16 @@ def list_users(session) -> List[Dict[str, Any]]:
             for page in paginator.paginate(UserName=user["UserName"]):
                 inline_policies.extend(page.get("PolicyNames", []))
 
-            users.append({
-                "UserName": user["UserName"],
-                "Arn": user["Arn"],
-                "CreateDate": user["CreateDate"],
-                "Groups": groups,
-                "AttachedPolicies": attached_policies,
-                "InlinePolicyNames": inline_policies
-            })
+            users.append(
+                {
+                    "UserName": user["UserName"],
+                    "Arn": user["Arn"],
+                    "CreateDate": user["CreateDate"],
+                    "Groups": groups,
+                    "AttachedPolicies": attached_policies,
+                    "InlinePolicyNames": inline_policies,
+                }
+            )
 
     return users
 
@@ -531,12 +529,14 @@ def list_groups(session) -> List[Dict[str, Any]]:
             for page in paginator.paginate(GroupName=group["GroupName"]):
                 inline_policies.extend(page.get("PolicyNames", []))
 
-            groups.append({
-                "Arn": group["Arn"],
-                "Name": group["GroupName"],
-                "CreateDate": group["CreateDate"],
-                "AttachedPolicies": attached_policies,
-                "InlinePolicyNames": inline_policies
-            })
+            groups.append(
+                {
+                    "Arn": group["Arn"],
+                    "GroupName": group["GroupName"],
+                    "CreateDate": group["CreateDate"],
+                    "AttachedPolicies": attached_policies,
+                    "InlinePolicyNames": inline_policies,
+                }
+            )
 
     return groups

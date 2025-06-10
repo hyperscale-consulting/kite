@@ -1316,3 +1316,24 @@ def get_config_compliance_by_rule(account_id: str, region: str) -> List[Dict[str
         region: The AWS region.
     """
     return _load_data(f"config_compliance_by_rule_{region}", account_id) or []
+
+
+def save_guardduty_detectors(account_id: str, region: str, detectors: List[Dict[str, Any]]) -> None:
+    """Save GuardDuty detectors for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        detectors: The list of GuardDuty detectors to save.
+    """
+    _save_data(detectors, f"guardduty_detectors_{region}", account_id)
+
+
+def get_guardduty_detectors(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get GuardDuty detectors for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"guardduty_detectors_{region}", account_id) or []

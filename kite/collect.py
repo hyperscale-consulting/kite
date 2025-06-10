@@ -33,6 +33,7 @@ from . import (
     elbv2,
     detective,
     securityhub,
+    guardduty,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -93,6 +94,7 @@ from kite.data import (
     save_dynamodb_tables,
     save_custom_key_stores,
     save_config_compliance_by_rule,
+    save_guardduty_detectors,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -775,6 +777,20 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching DynamoDB tables for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect GuardDuty detectors
+        console.print(f"  [yellow]Fetching GuardDuty detectors for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                detectors = guardduty.get_detectors(session, region)
+                save_guardduty_detectors(account_id, region, detectors)
+                console.print(
+                    f"  [green]✓ Saved {len(detectors)} GuardDuty detectors for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching GuardDuty detectors for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

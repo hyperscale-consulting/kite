@@ -9,8 +9,10 @@ from kite.data import (
     get_customer_managed_policies,
     get_iam_users,
     get_iam_groups,
+    get_kms_keys,
 )
 from kite.helpers import get_account_ids_in_scope, manual_check
+from kite.config import Config
 
 
 CHECK_ID = "key-access-control"
@@ -144,6 +146,106 @@ def _has_key_creation_permissions(policy_doc: Dict[str, Any]) -> bool:
     return False
 
 
+def _has_broad_key_policy_sharing(policy_doc: Dict[str, Any]) -> bool:
+    """
+    Check if a key policy has overly broad sharing with principals.
+
+    Args:
+        policy_doc: The key policy document to check
+
+    Returns:
+        bool: True if the policy has overly broad sharing
+    """
+    if not isinstance(policy_doc, dict) or "Statement" not in policy_doc:
+        return False
+
+    statements = policy_doc["Statement"]
+    if not isinstance(statements, list):
+        statements = [statements]
+
+    for statement in statements:
+        if not isinstance(statement, dict):
+            continue
+
+        if statement.get("Effect") != "Allow":
+            continue
+
+        # Check for broad principal patterns
+        principal = statement.get("Principal", {})
+        if isinstance(principal, dict):
+            for principal_type, principal_value in principal.items():
+                if principal_type == "AWS":
+                    if isinstance(principal_value, list):
+                        for value in principal_value:
+                            if value == "*" or value.endswith("/*"):
+                                # Check if there are restrictive conditions
+                                conditions = statement.get("Condition", {})
+                                if not conditions:
+                                    return True
+
+                                # Check for restrictive conditions
+                                has_restrictive_condition = False
+
+                                # Check for kms:CallerAccount condition
+                                if "StringEquals" in conditions:
+                                    if "kms:CallerAccount" in conditions["StringEquals"]:
+                                        has_restrictive_condition = True
+
+                                # Check for kms:ViaService condition
+                                if "StringEquals" in conditions:
+                                    if "kms:ViaService" in conditions["StringEquals"]:
+                                        has_restrictive_condition = True
+
+                                # Check for kms:EncryptionContext conditions
+                                if "StringEquals" in conditions:
+                                    for key in conditions["StringEquals"]:
+                                        if (
+                                            key.startswith(
+                                                "kms:EncryptionContext:"
+                                            )
+                                        ):
+                                            has_restrictive_condition = True
+                                            break
+
+                                if not has_restrictive_condition:
+                                    return True
+                    elif isinstance(principal_value, str):
+                        if principal_value == "*" or principal_value.endswith("/*"):
+                            # Check if there are restrictive conditions
+                            conditions = statement.get("Condition", {})
+                            if not conditions:
+                                return True
+
+                            # Check for restrictive conditions
+                            has_restrictive_condition = False
+
+                            # Check for kms:CallerAccount condition
+                            if "StringEquals" in conditions:
+                                if "kms:CallerAccount" in conditions["StringEquals"]:
+                                    has_restrictive_condition = True
+
+                            # Check for kms:ViaService condition
+                            if "StringEquals" in conditions:
+                                if "kms:ViaService" in conditions["StringEquals"]:
+                                    has_restrictive_condition = True
+
+                            # Check for kms:EncryptionContext conditions
+                            if "StringEquals" in conditions:
+                                for key in conditions["StringEquals"]:
+                                    if (
+                                        key.startswith(
+                                            "kms:EncryptionContext:"
+                                        )
+                                    ):
+                                        has_restrictive_condition = True
+                                        break
+
+                            if not has_restrictive_condition:
+                                return True
+
+    return False
+
+
 def check_key_access_control() -> Dict[str, Any]:
     """
     Check if KMS key access is tightly controlled through appropriate use of key
@@ -154,6 +256,7 @@ def check_key_access_control() -> Dict[str, Any]:
     2. Permission to create keys is limited to necessary principals
     3. KMS permissions in IAM policies are restricted to specific key ARNs
     4. Resource: '*' is only used for appropriate KMS actions
+    5. Key policies don't have overly broad sharing with principals
 
     Returns:
         Dict containing:
@@ -172,6 +275,8 @@ def check_key_access_control() -> Dict[str, Any]:
     key_creators = []
     # Track policies with broad resource patterns
     broad_resource_policies = []
+    # Track keys with broad policy sharing
+    broad_key_policies = []
 
     # Check each account
     for account_id in account_ids:
@@ -295,6 +400,24 @@ def check_key_access_control() -> Dict[str, Any]:
 
                 key_creators.append(creator_info)
 
+        # Check KMS keys in each region
+        for region in Config.get().active_regions:
+            keys = get_kms_keys(account_id, region)
+            for key in keys:
+                # Only check customer managed keys
+                if key.get("Metadata", {}).get("KeyManager") != "CUSTOMER":
+                    continue
+
+                # Check key policy for broad sharing
+                if _has_broad_key_policy_sharing(key.get("Policy", {})):
+                    broad_key_policies.append({
+                        "account_id": account_id,
+                        "region": region,
+                        "key_id": key["KeyId"],
+                        "key_arn": key["KeyArn"],
+                        "alias": key.get("AliasName", "No alias"),
+                    })
+
     # Build message for manual check
     message = "Customer Managed IAM Policies with KMS Permissions:\n\n"
     if kms_policies:
@@ -353,6 +476,17 @@ def check_key_access_control() -> Dict[str, Any]:
     else:
         message += "No policies found with broad KMS resource patterns\n\n"
 
+    message += "Keys with Broad Policy Sharing:\n\n"
+    if broad_key_policies:
+        for key in broad_key_policies:
+            message += f"Account: {key['account_id']}\n"
+            message += f"Region: {key['region']}\n"
+            message += f"Key ID: {key['key_id']}\n"
+            message += f"Key ARN: {key['key_arn']}\n"
+            message += f"Alias: {key['alias']}\n\n"
+    else:
+        message += "No keys found with broad policy sharing\n\n"
+
     message += (
         "Please review the above and consider:\n"
         "- Are permissions provided in key policies rather than IAM policies "
@@ -360,7 +494,9 @@ def check_key_access_control() -> Dict[str, Any]:
         "- Is permission to create keys limited only to principals who need it?\n"
         "- Are KMS permissions in IAM policies restricted to specific key ARNs?\n"
         "- Is Resource: '*' only used for kms:CreateKey, kms:GenerateRandom, "
-        "kms:ListAliases, kms:ListKeys, and custom key store permissions?"
+        "kms:ListAliases, kms:ListKeys, and custom key store permissions?\n"
+        "- Are key policies restricted to specific principals rather than using "
+        "broad patterns like '*' or 'arn:aws:iam::*'?"
     )
 
     return manual_check(

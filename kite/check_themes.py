@@ -140,6 +140,7 @@ from kite.checks import (
     check_use_customer_managed_keys,
     check_detect_encryption_at_rest_misconfig,
     check_enforce_data_protection_at_rest_with_policy_as_code,
+    check_automate_data_at_rest_protection_with_guardduty,
 )
 
 # Define check themes and their associated checks
@@ -542,6 +543,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [
             check_detect_encryption_at_rest_misconfig,
             check_enforce_data_protection_at_rest_with_policy_as_code,
+            check_automate_data_at_rest_protection_with_guardduty,
         ],
     },
     "Enforce access control": {

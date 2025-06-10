@@ -358,6 +358,9 @@ from kite.checks.key_access_control.check import (
 from kite.checks.use_service_encryption_at_rest.check import (
     check_use_service_encryption_at_rest,
 )
+from kite.checks.use_customer_managed_keys.check import (
+    check_use_customer_managed_keys,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -494,4 +497,5 @@ __all__ = [
     "check_monitor_key_usage",
     "check_key_access_control",
     "check_use_service_encryption_at_rest",
+    "check_use_customer_managed_keys",
 ]

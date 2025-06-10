@@ -92,6 +92,7 @@ from kite.data import (
     save_securityhub_automation_rules,
     save_dynamodb_tables,
     save_custom_key_stores,
+    save_config_compliance_by_rule,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -468,6 +469,22 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching Config rules for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect Config compliance by rule
+        for region in Config.get().active_regions:
+            try:
+                console.print(
+                    f"  [yellow]Fetching Config compliance by rule for account {account_id} in region {region}...[/]"
+                )
+                compliance = configservice.fetch_compliance_by_rule(session, region)
+                save_config_compliance_by_rule(account_id, region, compliance)
+                console.print(
+                    f"  [green]✓ Saved {len(compliance)} Config compliance by rule for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching Config compliance by rule for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect CloudFront origin access identities

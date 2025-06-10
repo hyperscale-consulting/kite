@@ -1295,3 +1295,24 @@ def get_custom_key_stores(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"custom_key_stores_{region}", account_id) or []
+
+
+def save_config_compliance_by_rule(account_id: str, region: str, compliance: List[Dict[str, Any]]) -> None:
+    """Save Config compliance by rule for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        compliance: The list of Config compliance by rule to save.
+    """
+    _save_data(compliance, f"config_compliance_by_rule_{region}", account_id)
+
+
+def get_config_compliance_by_rule(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Config compliance by rule for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"config_compliance_by_rule_{region}", account_id) or []

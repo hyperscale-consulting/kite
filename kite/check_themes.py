@@ -534,12 +534,13 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [
             check_use_service_encryption_at_rest,
             check_use_customer_managed_keys,
-            check_detect_encryption_at_rest_misconfig,
         ],
     },
     "Automate data at rest protection": {
-        "description": "",
-        "checks": [],
+        "description": "Use automation to validate and enforce data at rest controls.",
+        "checks": [
+            check_detect_encryption_at_rest_misconfig,
+        ],
     },
     "Enforce access control": {
         "description": "",

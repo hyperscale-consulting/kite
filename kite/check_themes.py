@@ -136,6 +136,7 @@ from kite.checks import (
     check_rotate_encryption_keys,
     check_monitor_key_usage,
     check_key_access_control,
+    check_use_service_encryption_at_rest,
 )
 
 # Define check themes and their associated checks
@@ -523,8 +524,14 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Enforce encryption at rest": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Encrypt private data at rest to maintain confidentiality and provide "
+            "an additional layer of protection against unintended data disclosure "
+            "or exfiltration"
+        ),
+        "checks": [
+            check_use_service_encryption_at_rest,
+        ],
     },
     "Automate data at rest protection": {
         "description": "",

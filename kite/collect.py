@@ -34,6 +34,7 @@ from . import (
     detective,
     securityhub,
     guardduty,
+    backup,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -95,6 +96,8 @@ from kite.data import (
     save_custom_key_stores,
     save_config_compliance_by_rule,
     save_guardduty_detectors,
+    save_backup_vaults,
+    save_backup_protected_resources,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -791,6 +794,34 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching GuardDuty detectors for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect Backup vaults
+        console.print(f"  [yellow]Fetching Backup vaults for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                vaults = backup.get_backup_vaults(session, region)
+                save_backup_vaults(account_id, region, vaults)
+                console.print(
+                    f"  [green]✓ Saved {len(vaults)} Backup vaults for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching Backup vaults for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect Backup protected resources
+        console.print(f"  [yellow]Fetching Backup protected resources for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                resources = backup.get_protected_resources(session, region)
+                save_backup_protected_resources(account_id, region, resources)
+                console.print(
+                    f"  [green]✓ Saved {len(resources)} Backup protected resources for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching Backup protected resources for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

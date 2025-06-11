@@ -1337,3 +1337,45 @@ def get_guardduty_detectors(account_id: str, region: str) -> List[Dict[str, Any]
         region: The AWS region.
     """
     return _load_data(f"guardduty_detectors_{region}", account_id) or []
+
+
+def save_backup_vaults(account_id: str, region: str, vaults: List[Dict[str, Any]]) -> None:
+    """Save Backup vaults for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        vaults: The list of Backup vaults to save.
+    """
+    _save_data(vaults, f"backup_vaults_{region}", account_id)
+
+
+def get_backup_vaults(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Backup vaults for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"backup_vaults_{region}", account_id) or []
+
+
+def save_backup_protected_resources(account_id: str, region: str, resources: List[Dict[str, Any]]) -> None:
+    """Save Backup protected resources for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        resources: The list of Backup protected resources to save.
+    """
+    _save_data(resources, f"backup_protected_resources_{region}", account_id)
+
+
+def get_backup_protected_resources(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Backup protected resources for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"backup_protected_resources_{region}", account_id) or []

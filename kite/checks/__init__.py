@@ -373,6 +373,9 @@ from kite.checks.automate_data_at_rest_protection_with_guardduty.check import (
 from kite.checks.air_gapped_backup_vault.check import (
     check_air_gapped_backup_vault,
 )
+from kite.checks.restore_testing.check import (
+    check_restore_testing,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -514,4 +517,5 @@ __all__ = [
     "check_enforce_data_protection_at_rest_with_policy_as_code",
     "check_automate_data_at_rest_protection_with_guardduty",
     "check_air_gapped_backup_vault",
+    "check_restore_testing",
 ]

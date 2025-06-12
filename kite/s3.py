@@ -74,6 +74,15 @@ def get_buckets(session) -> List[Dict[str, Any]]:
                     logging_configuration = None
             bucket["Logging"] = logging_configuration
 
+            # Get object lock configuration
+            try:
+                object_lock_response = s3_client.get_object_lock_configuration(Bucket=bucket_name)
+                object_lock_configuration = object_lock_response.get("ObjectLockConfiguration")
+            except ClientError as e:
+                if e.response["Error"]["Code"] == "GetObjectLockConfiguration":
+                    object_lock_configuration = None
+            bucket["ObjectLockConfiguration"] = object_lock_configuration
+
             buckets.append(bucket)
 
     return buckets

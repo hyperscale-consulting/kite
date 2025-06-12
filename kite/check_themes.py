@@ -143,6 +143,7 @@ from kite.checks import (
     check_automate_data_at_rest_protection_with_guardduty,
     check_air_gapped_backup_vault,
     check_restore_testing,
+    check_implement_versioning_and_object_locking,
 )
 
 # Define check themes and their associated checks
@@ -551,8 +552,13 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Enforce access control": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to enforcing access control for S3 buckets and "
+            "object locking"
+        ),
+        "checks": [
+            check_implement_versioning_and_object_locking,
+        ],
     },
     "Implement secure key and certificate management": {
         "description": "",

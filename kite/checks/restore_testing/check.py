@@ -24,7 +24,7 @@ def check_restore_testing() -> Dict[str, Any]:
     """
     message = (
         "Please review your backup restore testing procedures and confirm:\n\n"
-        "1. Backups are regularly tested for restore viability\n"
+        "1. Backups are regularly tested automatically for restore viability\n"
         "2. Restore job duration is monitored and documented\n"
         "3. Restore testing results are reviewed and any issues are addressed\n"
     )
@@ -34,15 +34,15 @@ def check_restore_testing() -> Dict[str, Any]:
         check_name=CHECK_NAME,
         message=message,
         prompt=(
-            "Are backups regularly tested for restore viability and restore job "
+            "Are backups regularly tested automatically for restore viability and restore job "
             "duration?"
         ),
         pass_message=(
-            "Backups are regularly tested for restore viability and restore job "
+            "Backups are regularly tested automatically for restore viability and restore job "
             "duration."
         ),
         fail_message=(
-            "Backups should be regularly tested for restore viability and restore "
+            "Backups should be regularly tested automatically for restore viability and restore "
             "job duration."
         ),
         default=True,

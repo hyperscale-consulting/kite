@@ -11,9 +11,11 @@ def get_bucket_names(session) -> List[Dict[str, Any]]:
     s3_client = session.client("s3")
     paginator = s3_client.get_paginator("list_buckets")
     page_iterator = paginator.paginate()
-    return [bucket.get("Name")
-            for page in page_iterator
-            for bucket in page.get("Buckets", [])]
+    return [
+        bucket.get("Name")
+        for page in page_iterator
+        for bucket in page.get("Buckets", [])
+    ]
 
 
 def get_buckets(session) -> List[Dict[str, Any]]:
@@ -42,45 +44,46 @@ def get_buckets(session) -> List[Dict[str, Any]]:
                 if e.response["Error"]["Code"] == "NoSuchBucketPolicy":
                     policy = None
                 else:
-                    raise
+                    raise e
             bucket["Policy"] = policy
 
             # Get lifecycle configuration
             try:
-                lifecycle_response = s3_client.get_bucket_lifecycle(
-                    Bucket=bucket_name
-                )
+                lifecycle_response = s3_client.get_bucket_lifecycle(Bucket=bucket_name)
                 lifecycle_rules = lifecycle_response.get("Rules")
             except ClientError as e:
                 if e.response["Error"]["Code"] == "NoSuchLifecycleConfiguration":
                     lifecycle_rules = None
+                else:
+                    raise e
             bucket["LifecycleRules"] = lifecycle_rules
 
             # Get versioning configuration
-            try:
-                versioning_response = s3_client.get_bucket_versioning(Bucket=bucket_name)
-                versioning_configuration = versioning_response.get("Status")
-            except ClientError as e:
-                if e.response["Error"]["Code"] == "NoSuchVersioningConfiguration":
-                    versioning_configuration = None
+            versioning_response = s3_client.get_bucket_versioning(Bucket=bucket_name)
+            versioning_configuration = versioning_response.get("Status")
             bucket["Versioning"] = versioning_configuration
 
             # Get logging configuration
-            try:
-                logging_response = s3_client.get_bucket_logging(Bucket=bucket_name)
-                logging_configuration = logging_response.get("LoggingEnabled")
-            except ClientError as e:
-                if e.response["Error"]["Code"] == "NoSuchBucketLoggingConfiguration":
-                    logging_configuration = None
+            logging_response = s3_client.get_bucket_logging(Bucket=bucket_name)
+            logging_configuration = logging_response.get("LoggingEnabled")
             bucket["Logging"] = logging_configuration
 
             # Get object lock configuration
             try:
-                object_lock_response = s3_client.get_object_lock_configuration(Bucket=bucket_name)
-                object_lock_configuration = object_lock_response.get("ObjectLockConfiguration")
+                object_lock_response = s3_client.get_object_lock_configuration(
+                    Bucket=bucket_name
+                )
+                object_lock_configuration = object_lock_response.get(
+                    "ObjectLockConfiguration"
+                )
             except ClientError as e:
-                if e.response["Error"]["Code"] == "GetObjectLockConfiguration":
+                if (
+                    e.response["Error"]["Code"]
+                    == "ObjectLockConfigurationNotFoundError"
+                ):
                     object_lock_configuration = None
+                else:
+                    raise e
             bucket["ObjectLockConfiguration"] = object_lock_configuration
 
             buckets.append(bucket)

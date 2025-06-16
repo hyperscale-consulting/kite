@@ -1400,3 +1400,24 @@ def get_acm_certificates(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"acm_certificates_{region}", account_id) or []
+
+
+def save_acm_pca_certificate_authorities(account_id: str, region: str, authorities: List[Dict[str, Any]]) -> None:
+    """Save ACM PCA certificate authorities for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        authorities: The list of ACM PCA certificate authorities to save.
+    """
+    _save_data(authorities, f"acm_pca_certificate_authorities_{region}", account_id)
+
+
+def get_acm_pca_certificate_authorities(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get ACM PCA certificate authorities for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"acm_pca_certificate_authorities_{region}", account_id) or []

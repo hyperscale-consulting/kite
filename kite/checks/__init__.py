@@ -382,6 +382,12 @@ from kite.checks.implement_versioning_and_object_locking.check import (
 from kite.checks.cert_deployment_and_renewal.check import (
     check_cert_deployment_and_renewal,
 )
+from kite.checks.protect_root_ca.check import (
+    check_protect_root_ca,
+)
+from kite.checks.establish_logging_and_audit_trails_for_private_ca.check import (
+    check_establish_logging_and_audit_trails_for_private_ca,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -526,4 +532,6 @@ __all__ = [
     "check_restore_testing",
     "check_implement_versioning_and_object_locking",
     "check_cert_deployment_and_renewal",
+    "check_protect_root_ca",
+    "check_establish_logging_and_audit_trails_for_private_ca",
 ]

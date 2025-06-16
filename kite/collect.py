@@ -36,6 +36,7 @@ from . import (
     guardduty,
     backup,
     acm,
+    acm_pca,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -100,6 +101,7 @@ from kite.data import (
     save_backup_vaults,
     save_backup_protected_resources,
     save_acm_certificates,
+    save_acm_pca_certificate_authorities,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -836,6 +838,18 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching ACM certificates for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect ACM PCA certificate authorities
+        console.print(f"  [yellow]Fetching ACM PCA certificate authorities for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                authorities = acm_pca.get_certificate_authorities(session, region)
+                save_acm_pca_certificate_authorities(account_id, region, authorities)
+                console.print(f"  [green]✓ Saved {len(authorities)} ACM PCA certificate authorities for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching ACM PCA certificate authorities for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

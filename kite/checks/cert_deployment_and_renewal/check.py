@@ -104,10 +104,15 @@ def check_cert_deployment_and_renewal() -> Dict[str, Any]:
         message += "No ACM certificates found in any account or region.\n\n"
 
     message += (
-        "A certificate is considered eligible for automatic renewal if:\n"
+        "An ACM certificate is considered eligible for automatic renewal if:\n"
         "- RenewalEligibility is 'ELIGIBLE'\n"
         "- DomainValidationOptions.ValidationMethod is 'DNS'\n"
         "- InUseBy list is non-empty\n\n"
+    )
+
+    message += (
+        "Please also consider any public or private certificates issues outside of "
+        "ACM.\n"
     )
 
     prompt = (

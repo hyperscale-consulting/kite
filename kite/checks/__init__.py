@@ -379,6 +379,9 @@ from kite.checks.restore_testing.check import (
 from kite.checks.implement_versioning_and_object_locking.check import (
     check_implement_versioning_and_object_locking,
 )
+from kite.checks.cert_deployment_and_renewal.check import (
+    check_cert_deployment_and_renewal,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -522,4 +525,5 @@ __all__ = [
     "check_air_gapped_backup_vault",
     "check_restore_testing",
     "check_implement_versioning_and_object_locking",
+    "check_cert_deployment_and_renewal",
 ]

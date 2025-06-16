@@ -144,6 +144,7 @@ from kite.checks import (
     check_air_gapped_backup_vault,
     check_restore_testing,
     check_implement_versioning_and_object_locking,
+    check_cert_deployment_and_renewal,
 )
 
 # Define check themes and their associated checks
@@ -561,8 +562,13 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Implement secure key and certificate management": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks relating to the secure management of TLS certificates and their "
+            "private keys"
+        ),
+        "checks": [
+            check_cert_deployment_and_renewal,
+        ],
     },
     "Enforce encryption in transit": {
         "description": "",

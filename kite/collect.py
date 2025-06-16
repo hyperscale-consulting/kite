@@ -35,6 +35,7 @@ from . import (
     securityhub,
     guardduty,
     backup,
+    acm,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -98,6 +99,7 @@ from kite.data import (
     save_guardduty_detectors,
     save_backup_vaults,
     save_backup_protected_resources,
+    save_acm_certificates,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -822,6 +824,18 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching Backup protected resources for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect ACM certificates
+        console.print(f"  [yellow]Fetching ACM certificates for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                certificates = acm.get_certificates(session, region)
+                save_acm_certificates(account_id, region, certificates)
+                console.print(f"  [green]✓ Saved {len(certificates)} ACM certificates for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching ACM certificates for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

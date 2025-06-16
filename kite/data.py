@@ -1379,3 +1379,24 @@ def get_backup_protected_resources(account_id: str, region: str) -> List[Dict[st
         region: The AWS region.
     """
     return _load_data(f"backup_protected_resources_{region}", account_id) or []
+
+
+def save_acm_certificates(account_id: str, region: str, certificates: List[Dict[str, Any]]) -> None:
+    """Save ACM certificates for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        certificates: The list of ACM certificates to save.
+    """
+    _save_data(certificates, f"acm_certificates_{region}", account_id)
+
+
+def get_acm_certificates(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get ACM certificates for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"acm_certificates_{region}", account_id) or []

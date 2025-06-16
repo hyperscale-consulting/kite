@@ -147,6 +147,7 @@ from kite.checks import (
     check_cert_deployment_and_renewal,
     check_protect_root_ca,
     check_establish_logging_and_audit_trails_for_private_ca,
+    check_enforce_https,
 )
 
 # Define check themes and their associated checks
@@ -575,8 +576,12 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Enforce encryption in transit": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to enforcing encryption in transit"
+        ),
+        "checks": [
+            check_enforce_https,
+        ],
     },
     "Authenticate network communications": {
         "description": "",

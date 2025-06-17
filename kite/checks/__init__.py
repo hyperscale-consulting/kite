@@ -394,6 +394,9 @@ from kite.checks.enforce_https.check import (
 from kite.checks.avoid_insecure_ssl_ciphers.check import (
     check_avoid_insecure_ssl_ciphers,
 )
+from kite.checks.define_and_document_workload_network_flows.check import (
+    check_define_and_document_workload_network_flows,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -542,4 +545,5 @@ __all__ = [
     "check_establish_logging_and_audit_trails_for_private_ca",
     "check_enforce_https",
     "check_avoid_insecure_ssl_ciphers",
+    "check_define_and_document_workload_network_flows",
 ]

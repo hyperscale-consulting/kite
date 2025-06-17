@@ -149,6 +149,7 @@ from kite.checks import (
     check_establish_logging_and_audit_trails_for_private_ca,
     check_enforce_https,
     check_avoid_insecure_ssl_ciphers,
+    check_define_and_document_workload_network_flows,
 )
 
 # Define check themes and their associated checks
@@ -586,8 +587,12 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Authenticate network communications": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to authenticating network communications"
+        ),
+        "checks": [
+            check_define_and_document_workload_network_flows,
+        ],
     },
     "Identify key personnel and external resources": {
         "description": "",

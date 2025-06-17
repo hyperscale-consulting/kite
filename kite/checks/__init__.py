@@ -400,6 +400,9 @@ from kite.checks.define_and_document_workload_network_flows.check import (
 from kite.checks.implement_auth_across_services.check import (
     check_implement_auth_across_services,
 )
+from kite.checks.monitor_network_traffic_for_unauthorized_access.check import (
+    check_monitor_network_traffic_for_unauthorized_access,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -550,4 +553,5 @@ __all__ = [
     "check_avoid_insecure_ssl_ciphers",
     "check_define_and_document_workload_network_flows",
     "check_implement_auth_across_services",
+    "check_monitor_network_traffic_for_unauthorized_access",
 ]

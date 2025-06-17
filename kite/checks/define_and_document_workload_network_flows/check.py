@@ -54,3 +54,7 @@ def check_define_and_document_workload_network_flows() -> Dict[str, Any]:
     )
 
     return result
+
+
+check_define_and_document_workload_network_flows._CHECK_ID = CHECK_ID
+check_define_and_document_workload_network_flows._CHECK_NAME = CHECK_NAME

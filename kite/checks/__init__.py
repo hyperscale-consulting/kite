@@ -397,6 +397,9 @@ from kite.checks.avoid_insecure_ssl_ciphers.check import (
 from kite.checks.define_and_document_workload_network_flows.check import (
     check_define_and_document_workload_network_flows,
 )
+from kite.checks.implement_auth_across_services.check import (
+    check_implement_auth_across_services,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -546,4 +549,5 @@ __all__ = [
     "check_enforce_https",
     "check_avoid_insecure_ssl_ciphers",
     "check_define_and_document_workload_network_flows",
+    "check_implement_auth_across_services",
 ]

@@ -150,6 +150,7 @@ from kite.checks import (
     check_enforce_https,
     check_avoid_insecure_ssl_ciphers,
     check_define_and_document_workload_network_flows,
+    check_implement_auth_across_services,
 )
 
 # Define check themes and their associated checks
@@ -592,6 +593,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ),
         "checks": [
             check_define_and_document_workload_network_flows,
+            check_implement_auth_across_services,
         ],
     },
     "Identify key personnel and external resources": {

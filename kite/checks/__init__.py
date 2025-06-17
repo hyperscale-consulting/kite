@@ -391,6 +391,9 @@ from kite.checks.establish_logging_and_audit_trails_for_private_ca.check import 
 from kite.checks.enforce_https.check import (
     check_enforce_https,
 )
+from kite.checks.avoid_insecure_ssl_ciphers.check import (
+    check_avoid_insecure_ssl_ciphers,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -538,4 +541,5 @@ __all__ = [
     "check_protect_root_ca",
     "check_establish_logging_and_audit_trails_for_private_ca",
     "check_enforce_https",
+    "check_avoid_insecure_ssl_ciphers",
 ]

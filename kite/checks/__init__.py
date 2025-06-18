@@ -413,6 +413,7 @@ from kite.checks.perform_dast.check import check_perform_dast
 from kite.checks.automated_security_tests.check import check_automated_security_tests
 from kite.checks.penetration_testing.check import check_perform_regular_pen_testing
 from kite.checks.code_reviews.check import check_conduct_code_reviews
+from kite.checks.centralized_artifact_repos.check import check_use_centralized_artifact_repos
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -570,4 +571,5 @@ __all__ = [
     "check_automated_security_tests",
     "check_perform_regular_pen_testing",
     "check_conduct_code_reviews",
+    "check_use_centralized_artifact_repos",
 ]

@@ -158,6 +158,7 @@ from kite.checks import (
     check_automated_security_tests,
     check_perform_regular_pen_testing,
     check_conduct_code_reviews,
+    check_use_centralized_artifact_repos,
 )
 
 # Define check themes and their associated checks
@@ -662,8 +663,10 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Centralize services for packages and dependencies": {
-        "description": "",
-        "checks": [],
+        "description": "Checks related to using centralized services for packages and dependencies",
+        "checks": [
+            check_use_centralized_artifact_repos,
+        ],
     },
     "Deploy software programmatically": {
         "description": "",

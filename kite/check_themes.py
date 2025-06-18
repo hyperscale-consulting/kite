@@ -153,6 +153,7 @@ from kite.checks import (
     check_implement_auth_across_services,
     check_monitor_network_traffic_for_unauthorized_access,
     check_train_for_application_security,
+    check_perform_sast,
 )
 
 # Define check themes and their associated checks
@@ -581,18 +582,14 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Enforce encryption in transit": {
-        "description": (
-            "Checks related to enforcing encryption in transit"
-        ),
+        "description": ("Checks related to enforcing encryption in transit"),
         "checks": [
             check_enforce_https,
             check_avoid_insecure_ssl_ciphers,
         ],
     },
     "Authenticate network communications": {
-        "description": (
-            "Checks related to authenticating network communications"
-        ),
+        "description": ("Checks related to authenticating network communications"),
         "checks": [
             check_define_and_document_workload_network_flows,
             check_implement_auth_across_services,
@@ -632,16 +629,19 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [],
     },
     "Train for application security": {
-        "description": (
-            "Checks related to training for application security"
-        ),
+        "description": ("Checks related to training for application security"),
         "checks": [
             check_train_for_application_security,
         ],
     },
     "Automate testing throughout the development and release lifecycle": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks relating to the automated testing for security properties "
+            "throughout the development and release lifecycle"
+        ),
+        "checks": [
+            check_perform_sast,
+        ],
     },
     "Perform regular penetration testing": {
         "description": "",

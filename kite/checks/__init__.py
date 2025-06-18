@@ -406,6 +406,9 @@ from kite.checks.monitor_network_traffic_for_unauthorized_access.check import (
 from kite.checks.train_for_application_security.check import (
     check_train_for_application_security,
 )
+from kite.checks.perform_sast.check import (
+    check_perform_sast,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -558,4 +561,5 @@ __all__ = [
     "check_implement_auth_across_services",
     "check_monitor_network_traffic_for_unauthorized_access",
     "check_train_for_application_security",
+    "check_perform_sast",
 ]

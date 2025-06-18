@@ -410,6 +410,7 @@ from kite.checks.perform_sast.check import (
     check_perform_sast,
 )
 from kite.checks.perform_dast.check import check_perform_dast
+from kite.checks.automated_security_tests.check import check_automated_security_tests
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -564,4 +565,5 @@ __all__ = [
     "check_train_for_application_security",
     "check_perform_sast",
     "check_perform_dast",
+    "check_automated_security_tests",
 ]

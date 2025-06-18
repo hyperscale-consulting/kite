@@ -155,6 +155,7 @@ from kite.checks import (
     check_train_for_application_security,
     check_perform_sast,
     check_perform_dast,
+    check_automated_security_tests,
 )
 
 # Define check themes and their associated checks
@@ -643,6 +644,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [
             check_perform_sast,
             check_perform_dast,
+            check_automated_security_tests,
         ],
     },
     "Perform regular penetration testing": {

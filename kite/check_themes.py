@@ -157,6 +157,7 @@ from kite.checks import (
     check_perform_dast,
     check_automated_security_tests,
     check_perform_regular_pen_testing,
+    check_conduct_code_reviews,
 )
 
 # Define check themes and their associated checks
@@ -655,8 +656,10 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Conduct code reviews": {
-        "description": "",
-        "checks": [],
+        "description": "Checks related to conducting code reviews to detect security vulnerabilities",
+        "checks": [
+            check_conduct_code_reviews,
+        ],
     },
     "Centralize services for packages and dependencies": {
         "description": "",

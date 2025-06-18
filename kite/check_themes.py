@@ -152,6 +152,7 @@ from kite.checks import (
     check_define_and_document_workload_network_flows,
     check_implement_auth_across_services,
     check_monitor_network_traffic_for_unauthorized_access,
+    check_train_for_application_security,
 )
 
 # Define check themes and their associated checks
@@ -631,8 +632,12 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [],
     },
     "Train for application security": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to training for application security"
+        ),
+        "checks": [
+            check_train_for_application_security,
+        ],
     },
     "Automate testing throughout the development and release lifecycle": {
         "description": "",

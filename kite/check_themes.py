@@ -154,6 +154,7 @@ from kite.checks import (
     check_monitor_network_traffic_for_unauthorized_access,
     check_train_for_application_security,
     check_perform_sast,
+    check_perform_dast,
 )
 
 # Define check themes and their associated checks
@@ -641,6 +642,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ),
         "checks": [
             check_perform_sast,
+            check_perform_dast,
         ],
     },
     "Perform regular penetration testing": {

@@ -159,6 +159,7 @@ from kite.checks import (
     check_perform_regular_pen_testing,
     check_conduct_code_reviews,
     check_use_centralized_artifact_repos,
+    check_automate_deployments,
 )
 
 # Define check themes and their associated checks
@@ -657,20 +658,28 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Conduct code reviews": {
-        "description": "Checks related to conducting code reviews to detect security vulnerabilities",
+        "description": (
+            "Checks related to conducting code reviews to detect security "
+            "vulnerabilities"
+        ),
         "checks": [
             check_conduct_code_reviews,
         ],
     },
     "Centralize services for packages and dependencies": {
-        "description": "Checks related to using centralized services for packages and dependencies",
+        "description": (
+            "Checks related to using centralized services for packages and "
+            "dependencies"
+        ),
         "checks": [
             check_use_centralized_artifact_repos,
         ],
     },
     "Deploy software programmatically": {
-        "description": "",
-        "checks": [],
+        "description": "Checks related to deploying software programmatically",
+        "checks": [
+            check_automate_deployments,
+        ],
     },
     "Regularly assess security properties of the pipelines": {
         "description": "",

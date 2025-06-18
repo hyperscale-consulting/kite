@@ -160,6 +160,7 @@ from kite.checks import (
     check_conduct_code_reviews,
     check_use_centralized_artifact_repos,
     check_automate_deployments,
+    check_immutable_builds,
 )
 
 # Define check themes and their associated checks
@@ -679,6 +680,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "description": "Checks related to deploying software programmatically",
         "checks": [
             check_automate_deployments,
+            check_immutable_builds,
         ],
     },
     "Regularly assess security properties of the pipelines": {

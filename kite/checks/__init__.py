@@ -421,6 +421,9 @@ from kite.checks.immutable_builds.check import check_immutable_builds
 from kite.checks.pipelines_use_least_privilege.check import (
     check_pipelines_use_least_privilege,
 )
+from kite.checks.review_pipeline_permissions_regularly.check import (
+    check_review_pipeline_permissions_regularly,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -582,4 +585,5 @@ __all__ = [
     "check_automate_deployments",
     "check_immutable_builds",
     "check_pipelines_use_least_privilege",
+    "check_review_pipeline_permissions_regularly",
 ]

@@ -161,6 +161,7 @@ from kite.checks import (
     check_use_centralized_artifact_repos,
     check_automate_deployments,
     check_immutable_builds,
+    check_pipelines_use_least_privilege,
 )
 
 # Define check themes and their associated checks
@@ -684,8 +685,13 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Regularly assess security properties of the pipelines": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to regularly assessing security properties of the "
+            "pipelines"
+        ),
+        "checks": [
+            check_pipelines_use_least_privilege,
+        ],
     },
     "Build a program that embeds security ownership in workload teams": {
         "description": "",

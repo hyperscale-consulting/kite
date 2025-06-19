@@ -418,6 +418,9 @@ from kite.checks.centralized_artifact_repos.check import (
 )
 from kite.checks.automate_deployments.check import check_automate_deployments
 from kite.checks.immutable_builds.check import check_immutable_builds
+from kite.checks.pipelines_use_least_privilege.check import (
+    check_pipelines_use_least_privilege,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -578,4 +581,5 @@ __all__ = [
     "check_use_centralized_artifact_repos",
     "check_automate_deployments",
     "check_immutable_builds",
+    "check_pipelines_use_least_privilege",
 ]

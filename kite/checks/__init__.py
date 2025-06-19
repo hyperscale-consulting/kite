@@ -427,6 +427,9 @@ from kite.checks.review_pipeline_permissions_regularly.check import (
 from kite.checks.threat_model_pipelines.check import (
     check_threat_model_pipelines,
 )
+from kite.checks.security_guardians_program.check import (
+    check_security_guardians_program,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -590,4 +593,5 @@ __all__ = [
     "check_pipelines_use_least_privilege",
     "check_review_pipeline_permissions_regularly",
     "check_threat_model_pipelines",
+    "check_security_guardians_program",
 ]

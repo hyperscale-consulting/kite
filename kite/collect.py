@@ -37,6 +37,7 @@ from . import (
     backup,
     acm,
     acm_pca,
+    inspector2,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -102,6 +103,8 @@ from kite.data import (
     save_backup_protected_resources,
     save_acm_certificates,
     save_acm_pca_certificate_authorities,
+    save_inspector2_configuration,
+    save_inspector2_coverage,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -850,6 +853,30 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching ACM PCA certificate authorities for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect Inspector2 configuration
+        console.print(f"  [yellow]Fetching Inspector2 configuration for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                configuration = inspector2.get_configuration(session, region)
+                save_inspector2_configuration(account_id, region, configuration)
+                console.print(f"  [green]✓ Saved Inspector2 configuration for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching Inspector2 configuration for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect Inspector2 coverage
+        console.print(f"  [yellow]Fetching Inspector2 coverage for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                coverage = inspector2.get_coverage(session, region)
+                save_inspector2_coverage(account_id, region, coverage)
+                console.print(f"  [green]✓ Saved {len(coverage)} Inspector2 coverage for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching Inspector2 coverage for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

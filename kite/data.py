@@ -1421,3 +1421,35 @@ def get_acm_pca_certificate_authorities(account_id: str, region: str) -> List[Di
         region: The AWS region.
     """
     return _load_data(f"acm_pca_certificate_authorities_{region}", account_id) or []
+
+
+def save_inspector2_configuration(account_id: str, region: str, configuration: Dict[str, Any]) -> None:
+    """Save Inspector2 configuration for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        configuration: The Inspector2 configuration to save.
+    """
+    _save_data(configuration, f"inspector2_configuration_{region}", account_id)
+
+
+def get_inspector2_configuration(account_id: str, region: str) -> Dict[str, Any]:
+    """Get Inspector2 configuration for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"inspector2_configuration_{region}", account_id) or {}
+
+
+def save_inspector2_coverage(account_id: str, region: str, coverage: List[Dict[str, Any]]) -> None:
+    """Save Inspector2 coverage for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        coverage: The Inspector2 coverage to save.
+    """
+    _save_data(coverage, f"inspector2_coverage_{region}", account_id)

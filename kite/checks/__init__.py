@@ -433,6 +433,9 @@ from kite.checks.security_guardians_program.check import (
 from kite.checks.scan_workloads_for_vulnerabilities.check import (
     check_scan_workloads_for_vulnerabilities,
 )
+from kite.checks.remediate_vulnerabilities.check import (
+    check_remediate_vulnerabilities,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -598,4 +601,5 @@ __all__ = [
     "check_threat_model_pipelines",
     "check_security_guardians_program",
     "check_scan_workloads_for_vulnerabilities",
+    "check_remediate_vulnerabilities",
 ]

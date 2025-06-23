@@ -165,6 +165,7 @@ from kite.checks import (
     check_review_pipeline_permissions_regularly,
     check_threat_model_pipelines,
     check_security_guardians_program,
+    check_scan_workloads_for_vulnerabilities,
 )
 
 # Define check themes and their associated checks
@@ -480,8 +481,13 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [],
     },
     "Perform vulnerability management": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to performing vulnerability management for your "
+            "workloads"
+        ),
+        "checks": [
+            check_scan_workloads_for_vulnerabilities,
+        ],
     },
     "Provision compute from hardened images": {
         "description": "",

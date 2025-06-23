@@ -1453,3 +1453,13 @@ def save_inspector2_coverage(account_id: str, region: str, coverage: List[Dict[s
         coverage: The Inspector2 coverage to save.
     """
     _save_data(coverage, f"inspector2_coverage_{region}", account_id)
+
+
+def get_inspector2_coverage(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Inspector2 coverage for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"inspector2_coverage_{region}", account_id) or []

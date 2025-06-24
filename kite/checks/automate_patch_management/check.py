@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 
 from kite.data import get_ec2_instances, get_maintenance_windows
 from kite.config import Config
-from kite.helpers import get_account_ids_in_scope, manual_check
+from kite.helpers import get_account_ids_in_scope, manual_check, get_prowler_output
 
 
 CHECK_ID = "automate-patch-management"
@@ -62,6 +62,83 @@ def _format_maintenance_window_details(maintenance_windows: List[Dict[str, Any]]
     return details
 
 
+def _format_prowler_results(
+    accounts_with_ec2: Dict[str, Dict[str, List[Dict[str, Any]]]]
+) -> str:
+    """
+    Format prowler results for SSM managed compliant patching.
+
+    Args:
+        accounts_with_ec2: Dict mapping account IDs to regions with EC2 instances
+
+    Returns:
+        Formatted string with prowler results
+    """
+    prowler_results = get_prowler_output()
+    check_id = "ssm_managed_compliant_patching"
+
+    if check_id not in prowler_results:
+        return "  No SSM managed compliant patching prowler results found.\n"
+
+    results = prowler_results[check_id]
+
+    # Filter results to only include accounts and regions with EC2 instances
+    relevant_results = []
+    for result in results:
+        account_id = result.account_id
+        region = result.region
+        if (account_id in accounts_with_ec2 and
+                region in accounts_with_ec2[account_id]):
+            relevant_results.append(result)
+
+    if not relevant_results:
+        return (
+            "  No SSM managed compliant patching results found for "
+            "accounts with EC2 instances.\n"
+        )
+
+    details = "  SSM Managed Compliant Patching Results:\n"
+
+    # Group by account and region
+    by_account = {}
+    for result in relevant_results:
+        account_id = result.account_id
+        region = result.region
+        if account_id not in by_account:
+            by_account[account_id] = {}
+        if region not in by_account[account_id]:
+            by_account[account_id][region] = []
+        by_account[account_id][region].append(result)
+
+    for account_id, regions in by_account.items():
+        details += f"    Account: {account_id}\n"
+        for region, region_results in regions.items():
+            details += f"      Region: {region}\n"
+
+            # Count by status
+            pass_count = sum(1 for r in region_results if r.status == "PASS")
+            fail_count = sum(1 for r in region_results if r.status == "FAIL")
+            error_count = sum(1 for r in region_results if r.status == "ERROR")
+
+            details += (
+                f"        Status: PASS={pass_count}, "
+                f"FAIL={fail_count}, ERROR={error_count}\n"
+            )
+
+            # Show failing resources
+            failing_resources = [r for r in region_results if r.status != "PASS"]
+            if failing_resources:
+                details += f"        Failing Resources ({len(failing_resources)}):\n"
+                for resource in failing_resources:
+                    resource_name = resource.resource_name or resource.resource_uid
+                    details += f"          - {resource_name}\n"
+                    details += f"            Details: {resource.resource_details}\n"
+            else:
+                details += "        All resources compliant with SSM managed patching.\n"
+
+    return details
+
+
 def check_automate_patch_management() -> Dict[str, Any]:
     """
     Check if automatic patch management is implemented for EC2 instances.
@@ -69,7 +146,8 @@ def check_automate_patch_management() -> Dict[str, Any]:
     This check:
     1. Identifies accounts and regions containing EC2 instances
     2. Displays maintenance window details for those accounts and regions
-    3. Prompts the user to confirm if automatic patch management is implemented
+    3. Shows SSM managed compliant patching prowler results for accounts with EC2 instances
+    4. Prompts the user to confirm if automatic patch management is implemented
 
     Returns:
         Dict containing:
@@ -135,9 +213,13 @@ def check_automate_patch_management() -> Dict[str, Any]:
             message += _format_maintenance_window_details(maintenance_windows)
         message += "\n"
 
+    # Add prowler results for SSM managed compliant patching
+    message += _format_prowler_results(accounts_with_ec2)
+    message += "\n"
+
     message += (
-        "Please review the above maintenance window details and confirm that "
-        "automatic patch management is implemented for EC2 instances\n"
+        "Please review the above maintenance window details and SSM patching results, "
+        "then confirm that automatic patch management is implemented for EC2 instances\n"
     )
 
     return manual_check(
@@ -146,15 +228,15 @@ def check_automate_patch_management() -> Dict[str, Any]:
         message=message,
         prompt=(
             "Is automatic patch management implemented for EC2 instances using "
-            "AWS Systems Manager Maintenance Windows?"
+            "AWS Systems Manager Maintenance Windows and SSM managed patching?"
         ),
         pass_message=(
             "Automatic patch management is implemented for EC2 instances using "
-            "AWS Systems Manager Maintenance Windows."
+            "AWS Systems Manager Maintenance Windows and SSM managed patching."
         ),
         fail_message=(
             "Automatic patch management should be implemented for EC2 instances "
-            "using AWS Systems Manager Maintenance Windows."
+            "using AWS Systems Manager Maintenance Windows and SSM managed patching."
         ),
         default=True,
     )

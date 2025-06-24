@@ -170,6 +170,7 @@ from kite.checks import (
     check_automate_patch_management,
     vulnerability_scanning_in_cicd_pipelines,
     automate_malware_and_threat_detection,
+    check_use_hardened_images,
 )
 
 # Define check themes and their associated checks
@@ -498,8 +499,12 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Provision compute from hardened images": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to provisioning compute from hardened images"
+        ),
+        "checks": [
+            check_use_hardened_images,
+        ],
     },
     "Reduce manual management and interactive access": {
         "description": "",

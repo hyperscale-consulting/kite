@@ -451,6 +451,9 @@ from kite.checks.use_hardened_images.check import (
 from kite.checks.no_rdp_or_ssh_access.check import (
     check_no_rdp_or_ssh_access,
 )
+from kite.checks.avoid_interactive_access.check import (
+    check_avoid_interactive_access,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -622,4 +625,5 @@ __all__ = [
     "automate_malware_and_threat_detection",
     "check_use_hardened_images",
     "check_no_rdp_or_ssh_access",
+    "check_avoid_interactive_access",
 ]

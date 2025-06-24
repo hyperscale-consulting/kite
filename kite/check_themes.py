@@ -173,6 +173,7 @@ from kite.checks import (
     check_use_hardened_images,
     check_no_rdp_or_ssh_access,
     check_avoid_interactive_access,
+    check_audit_interactive_access_with_ssm,
 )
 
 # Define check themes and their associated checks
@@ -516,6 +517,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [
             check_no_rdp_or_ssh_access,
             check_avoid_interactive_access,
+            check_audit_interactive_access_with_ssm,
         ],
     },
     "Validate software integrity": {

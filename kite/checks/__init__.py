@@ -454,6 +454,9 @@ from kite.checks.no_rdp_or_ssh_access.check import (
 from kite.checks.avoid_interactive_access.check import (
     check_avoid_interactive_access,
 )
+from kite.checks.audit_interactive_access_with_ssm.check import (
+    check_audit_interactive_access_with_ssm,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -626,4 +629,5 @@ __all__ = [
     "check_use_hardened_images",
     "check_no_rdp_or_ssh_access",
     "check_avoid_interactive_access",
+    "check_audit_interactive_access_with_ssm",
 ]

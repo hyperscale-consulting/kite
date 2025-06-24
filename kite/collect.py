@@ -107,6 +107,7 @@ from kite.data import (
     save_inspector2_configuration,
     save_inspector2_coverage,
     save_maintenance_windows,
+    save_ecs_clusters,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -726,6 +727,18 @@ def collect_account_data(account_id: str) -> None:
                     f"  [red]✗ Error fetching EKS clusters for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
+        # Collect ECS clusters
+        console.print(f"  [yellow]Fetching ECS clusters for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                clusters = ecs.get_clusters(session, region)
+                save_ecs_clusters(account_id, region, clusters)
+                console.print(f"  [green]✓ Saved {len(clusters)} ECS clusters for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching ECS clusters for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
         # Collect detective graphs
         console.print(
             f"  [yellow]Fetching detective graphs for account {account_id}...[/]"
@@ -1033,7 +1046,7 @@ def collect_mgmt_account_workload_resources() -> None:
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="ECS",
-                    resource_id=cluster.cluster_arn,
+                    resource_id=cluster['clusterArn'],
                     region=region,
                 )
             )

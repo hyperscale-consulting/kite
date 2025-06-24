@@ -1,18 +1,10 @@
 """ECS service module for Kite."""
 
-from typing import List
-from dataclasses import dataclass
+from typing import List, Dict, Any
+import boto3
 
 
-@dataclass
-class ECSCluster:
-    """ECS cluster data class."""
-
-    cluster_arn: str
-    region: str
-
-
-def get_clusters(session, region: str) -> List[ECSCluster]:
+def get_clusters(session: boto3.Session, region: str) -> List[str]:
     """
     Get all ECS clusters in a region.
 
@@ -25,14 +17,17 @@ def get_clusters(session, region: str) -> List[ECSCluster]:
     """
     ecs_client = session.client("ecs", region_name=region)
     clusters = []
-
-    response = ecs_client.list_clusters()
-    for cluster_arn in response.get("clusterArns", []):
-        clusters.append(
-            ECSCluster(
-                cluster_arn=cluster_arn,
-                region=region,
-            )
-        )
+    paginator = ecs_client.get_paginator("list_clusters")
+    for page in paginator.paginate():
+        for cluster_arn in page.get("clusterArns", []):
+            cluster = get_cluster(ecs_client, cluster_arn)
+            clusters.append(cluster)
 
     return clusters
+
+
+def get_cluster(client: boto3.client, name: str) -> Dict[str, Any]:
+    """
+    Get an ECS cluster by name.
+    """
+    return client.describe_clusters(clusters=[name])["clusters"][0]

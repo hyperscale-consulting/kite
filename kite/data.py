@@ -1485,3 +1485,24 @@ def get_maintenance_windows(account_id: str, region: str) -> List[Dict[str, Any]
         region: The AWS region.
     """
     return _load_data(f"maintenance_windows_{region}", account_id) or []
+
+
+def save_ecs_clusters(account_id: str, region: str, clusters: List[Dict[str, Any]]) -> None:
+    """Save ECS clusters for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        clusters: The list of ECS clusters to save.
+    """
+    _save_data(clusters, f"ecs_clusters_{region}", account_id)
+
+
+def get_ecs_clusters(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get ECS clusters for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"ecs_clusters_{region}", account_id) or []

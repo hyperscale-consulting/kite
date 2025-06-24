@@ -442,6 +442,9 @@ from kite.checks.automate_patch_management.check import (
 from kite.checks.vulnerability_scanning_in_cicd_pipelines.check import (
     vulnerability_scanning_in_cicd_pipelines,
 )
+from kite.checks.automate_malware_and_threat_detection.check import (
+    automate_malware_and_threat_detection,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -610,4 +613,5 @@ __all__ = [
     "check_remediate_vulnerabilities",
     "check_automate_patch_management",
     "vulnerability_scanning_in_cicd_pipelines",
+    "automate_malware_and_threat_detection",
 ]

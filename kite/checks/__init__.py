@@ -448,6 +448,9 @@ from kite.checks.automate_malware_and_threat_detection.check import (
 from kite.checks.use_hardened_images.check import (
     check_use_hardened_images,
 )
+from kite.checks.no_rdp_or_ssh_access.check import (
+    check_no_rdp_or_ssh_access,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -618,4 +621,5 @@ __all__ = [
     "vulnerability_scanning_in_cicd_pipelines",
     "automate_malware_and_threat_detection",
     "check_use_hardened_images",
+    "check_no_rdp_or_ssh_access",
 ]

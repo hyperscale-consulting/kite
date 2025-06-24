@@ -171,6 +171,7 @@ from kite.checks import (
     vulnerability_scanning_in_cicd_pipelines,
     automate_malware_and_threat_detection,
     check_use_hardened_images,
+    check_no_rdp_or_ssh_access,
 )
 
 # Define check themes and their associated checks
@@ -444,7 +445,8 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ),
         "checks": [
             check_security_data_published_to_log_archive_account,
-            # TODO: where should we check for log tampering prevention and access control?
+            # TODO: where should we check for log tampering prevention and
+            # access control?
             check_deploy_log_analysis_tools_in_audit_account,
         ],
     },
@@ -507,8 +509,12 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Reduce manual management and interactive access": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to reducing manual management and interactive access"
+        ),
+        "checks": [
+            check_no_rdp_or_ssh_access,
+        ],
     },
     "Validate software integrity": {
         "description": "",

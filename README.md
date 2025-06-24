@@ -143,11 +143,12 @@ prowler aws \
 Or for a list of accounts in an AWS Organization:
 
 ```zsh
-ACCOUNT_IDS=$(kite list-account-ids)
+ACCOUNT_IDS=$(kite list-accounts)
 for ACCOUNT in ${(f)ACCOUNT_IDS} ; do
     prowler aws \
         -O arn:aws:iam::<MGMT-ACCOUNT-ID>:role/KiteAssessmentRole \
         -R arn:aws:iam::${ACCOUNT}:role/KiteAssessmentRole \
+        --external-id <EXTERNAL-ID> \
         --config-file prowler.yaml
 done
 ```

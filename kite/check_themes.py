@@ -168,6 +168,7 @@ from kite.checks import (
     check_scan_workloads_for_vulnerabilities,
     check_remediate_vulnerabilities,
     check_automate_patch_management,
+    vulnerability_scanning_in_cicd_pipelines,
 )
 
 # Define check themes and their associated checks
@@ -491,6 +492,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
             check_scan_workloads_for_vulnerabilities,
             check_remediate_vulnerabilities,
             check_automate_patch_management,
+            vulnerability_scanning_in_cicd_pipelines,
         ],
     },
     "Provision compute from hardened images": {

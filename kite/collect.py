@@ -38,6 +38,7 @@ from . import (
     acm,
     acm_pca,
     inspector2,
+    ssm,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -105,6 +106,7 @@ from kite.data import (
     save_acm_pca_certificate_authorities,
     save_inspector2_configuration,
     save_inspector2_coverage,
+    save_maintenance_windows,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -877,6 +879,18 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching Inspector2 coverage for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect maintenance windows
+        console.print(f"  [yellow]Fetching maintenance windows for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                maintenance_windows = ssm.get_maintenance_windows(session, region)
+                save_maintenance_windows(account_id, region, maintenance_windows)
+                console.print(f"  [green]✓ Saved {len(maintenance_windows)} maintenance windows for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching maintenance windows for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

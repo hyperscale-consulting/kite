@@ -1463,3 +1463,24 @@ def get_inspector2_coverage(account_id: str, region: str) -> List[Dict[str, Any]
         region: The AWS region.
     """
     return _load_data(f"inspector2_coverage_{region}", account_id) or []
+
+
+def save_maintenance_windows(account_id: str, region: str, maintenance_windows: List[Dict[str, Any]]) -> None:
+    """Save maintenance windows for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        maintenance_windows: The list of maintenance windows to save.
+    """
+    _save_data(maintenance_windows, f"maintenance_windows_{region}", account_id)
+
+
+def get_maintenance_windows(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get maintenance windows for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"maintenance_windows_{region}", account_id) or []

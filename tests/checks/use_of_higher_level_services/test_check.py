@@ -27,7 +27,7 @@ def some_ec2_instances(workload_account_id, organization):
             state="running",
         )
     ]
-    save_ec2_instances(workload_account_id, instances)
+    save_ec2_instances(workload_account_id, "eu-west-2", instances)
     return instances
 
 

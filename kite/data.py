@@ -255,27 +255,28 @@ def get_identity_center_instances(account_id: str = "organization") -> Optional[
     return data.get("instances", [])
 
 
-def save_ec2_instances(account_id: str, instances: List[EC2Instance]) -> None:
+def save_ec2_instances(account_id: str, region: str, instances: List[EC2Instance]) -> None:
     """Save EC2 instances for an account.
 
     Args:
         account_id: The AWS account ID to save the instances for.
+        region: The AWS region to save the instances for.
         instances: The list of EC2 instances to save.
     """
     _save_data([asdict(instance) for instance in instances],
-               "ec2_instances", account_id)
+               f"ec2_instances_{region}", account_id)
 
 
-def get_ec2_instances(account_id: str) -> Optional[List[Dict[str, Any]]]:
+def get_ec2_instances(account_id: str, region: str) -> Optional[List[Dict[str, Any]]]:
     """Get EC2 instances for an account.
 
     Args:
         account_id: The AWS account ID to get the instances for.
-
+        region: The AWS region to get the instances for.
     Returns:
         The list of EC2 instances, or None if not found.
     """
-    data = _load_data("ec2_instances", account_id)
+    data = _load_data(f"ec2_instances_{region}", account_id)
     if data is None:
         return None
     return [EC2Instance.from_dict(instance) for instance in data]

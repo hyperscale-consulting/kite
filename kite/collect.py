@@ -191,18 +191,20 @@ def collect_account_data(account_id: str) -> None:
         console.print(
             f"  [yellow]Fetching EC2 instances for account {account_id}...[/]"
         )
-        instances = []
         for region in Config.get().active_regions:
             try:
-                instances.extend(ec2.get_running_instances(session, region))
+                console.print(
+                    f"  [yellow]Fetching EC2 instances for account {account_id} in region {region}...[/]"
+                )
+                instances = ec2.get_running_instances(session, region)
+                save_ec2_instances(account_id, region, instances)
+                console.print(
+                    f"  [green]✓ Saved {len(instances)} EC2 instances for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"    [red]✗ Error fetching EC2 instances in region {region}: {str(e)}[/]"
                 )
-        save_ec2_instances(account_id, instances)
-        console.print(
-            f"  [green]✓ Saved {len(instances)} EC2 instances for account {account_id}[/]"
-        )
 
         # Collect secrets
         for region in Config.get().active_regions:

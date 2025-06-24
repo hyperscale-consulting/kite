@@ -4,6 +4,7 @@ from typing import Dict, Any
 
 from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.data import get_ec2_instances
+from kite.config import Config
 
 CHECK_ID = "use-of-higher-level-services"
 CHECK_NAME = "Use of Higher-Level Services"
@@ -45,9 +46,10 @@ def check_use_of_higher_level_services() -> Dict[str, Any]:
 
     # Get EC2 instances for each account from collected data
     for account_id in account_ids:
-        instances = get_ec2_instances(account_id)
-        if instances:
-            ec2_instances_by_account[account_id] = instances
+        for region in Config.get().active_regions:
+            instances = get_ec2_instances(account_id, region)
+            if instances:
+                ec2_instances_by_account[account_id] = instances
 
     # If no EC2 instances found, automatically pass
     if not ec2_instances_by_account:

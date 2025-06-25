@@ -175,6 +175,7 @@ from kite.checks import (
     check_avoid_interactive_access,
     check_audit_interactive_access_with_ssm,
     check_validate_software_integrity,
+    check_capture_key_contacts,
 )
 
 # Define check themes and their associated checks
@@ -633,8 +634,10 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Identify key personnel and external resources": {
-        "description": "",
-        "checks": [],
+        "description": "Checks related to identifying key personnel and external resources",
+        "checks": [
+            check_capture_key_contacts,
+        ],
     },
     "Develop incident management plans": {
         "description": "",

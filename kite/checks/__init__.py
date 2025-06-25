@@ -472,6 +472,9 @@ from kite.checks.forensics_ou.check import (
 from kite.checks.automate_forensics.check import (
     check_automate_forensics,
 )
+from kite.checks.security_ir_playbooks.check import (
+    check_security_ir_playbooks,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -650,4 +653,5 @@ __all__ = [
     "check_incident_response_plans",
     "check_forensics_ou",
     "check_automate_forensics",
+    "check_security_ir_playbooks",
 ]

@@ -179,6 +179,7 @@ from kite.checks import (
     check_incident_response_plans,
     check_forensics_ou,
     check_automate_forensics,
+    check_security_ir_playbooks,
 )
 
 # Define check themes and their associated checks
@@ -658,8 +659,13 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Develop and test security incident response playbooks": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to developing security incident response "
+            "playbooks"
+        ),
+        "checks": [
+            check_security_ir_playbooks,
+        ],
     },
     "Pre-provision access": {
         "description": "",

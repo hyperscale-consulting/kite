@@ -463,6 +463,9 @@ from kite.checks.validate_software_integrity.check import (
 from kite.checks.capture_key_contacts.check import (
     check_capture_key_contacts,
 )
+from kite.checks.incident_response_plans.check import (
+    check_incident_response_plans,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -638,4 +641,5 @@ __all__ = [
     "check_audit_interactive_access_with_ssm",
     "check_validate_software_integrity",
     "check_capture_key_contacts",
+    "check_incident_response_plans",
 ]

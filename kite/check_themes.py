@@ -176,6 +176,7 @@ from kite.checks import (
     check_audit_interactive_access_with_ssm,
     check_validate_software_integrity,
     check_capture_key_contacts,
+    check_incident_response_plans,
 )
 
 # Define check themes and their associated checks
@@ -634,14 +635,18 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Identify key personnel and external resources": {
-        "description": "Checks related to identifying key personnel and external resources",
+        "description": (
+            "Checks related to identifying key personnel and external resources"
+        ),
         "checks": [
             check_capture_key_contacts,
         ],
     },
     "Develop incident management plans": {
-        "description": "",
-        "checks": [],
+        "description": "Checks related to developing incident management plans",
+        "checks": [
+            check_incident_response_plans,
+        ],
     },
     "Prepare forensic capabilities": {
         "description": "",
@@ -701,7 +706,8 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     },
     "Centralize services for packages and dependencies": {
         "description": (
-            "Checks related to using centralized services for packages and dependencies"
+            "Checks related to using centralized services for packages and "
+            "dependencies"
         ),
         "checks": [
             check_use_centralized_artifact_repos,

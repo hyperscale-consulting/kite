@@ -492,8 +492,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     },
     "Perform vulnerability management": {
         "description": (
-            "Checks related to performing vulnerability management for your "
-            "workloads"
+            "Checks related to performing vulnerability management for your workloads"
         ),
         "checks": [
             check_scan_workloads_for_vulnerabilities,
@@ -504,9 +503,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Provision compute from hardened images": {
-        "description": (
-            "Checks related to provisioning compute from hardened images"
-        ),
+        "description": ("Checks related to provisioning compute from hardened images"),
         "checks": [
             check_use_hardened_images,
         ],
@@ -526,10 +523,6 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         "checks": [
             check_validate_software_integrity,
         ],
-    },
-    "Automate compute protection": {
-        "description": "",
-        "checks": [],
     },
     "Understand your data classification scheme": {
         "description": "Checks relating to the classification of data",
@@ -705,8 +698,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     },
     "Centralize services for packages and dependencies": {
         "description": (
-            "Checks related to using centralized services for packages and "
-            "dependencies"
+            "Checks related to using centralized services for packages and dependencies"
         ),
         "checks": [
             check_use_centralized_artifact_repos,

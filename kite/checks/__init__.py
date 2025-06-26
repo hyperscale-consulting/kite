@@ -476,6 +476,7 @@ from kite.checks.security_ir_playbooks.check import (
     check_security_ir_playbooks,
 )
 from .use_identity_broker import check_use_identity_broker
+from .pre_deploy_tools import check_pre_deploy_tools
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -656,4 +657,5 @@ __all__ = [
     "check_automate_forensics",
     "check_security_ir_playbooks",
     "check_use_identity_broker",
+    "check_pre_deploy_tools",
 ]

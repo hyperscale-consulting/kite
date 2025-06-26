@@ -180,6 +180,7 @@ from kite.checks import (
     check_forensics_ou,
     check_automate_forensics,
     check_security_ir_playbooks,
+    check_use_identity_broker,
 )
 
 # Define check themes and their associated checks
@@ -668,8 +669,12 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Pre-provision access": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to pre-provisioning access for incident response"
+        ),
+        "checks": [
+            check_use_identity_broker,
+        ],
     },
     "Pre-deploy tools": {
         "description": "",

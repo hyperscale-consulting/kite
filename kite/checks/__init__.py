@@ -475,6 +475,7 @@ from kite.checks.automate_forensics.check import (
 from kite.checks.security_ir_playbooks.check import (
     check_security_ir_playbooks,
 )
+from .use_identity_broker import check_use_identity_broker
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -654,4 +655,5 @@ __all__ = [
     "check_forensics_ou",
     "check_automate_forensics",
     "check_security_ir_playbooks",
+    "check_use_identity_broker",
 ]

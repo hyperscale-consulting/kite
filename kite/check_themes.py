@@ -182,6 +182,7 @@ from kite.checks import (
     check_security_ir_playbooks,
     check_use_identity_broker,
     check_pre_deploy_tools,
+    check_run_simulations,
 )
 
 # Define check themes and their associated checks
@@ -687,8 +688,13 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Run simulations": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to running regular simulations to test and "
+            "validate incident response capabilities"
+        ),
+        "checks": [
+            check_run_simulations,
+        ],
     },
     "Establish a framework for learning from incidents": {
         "description": "",

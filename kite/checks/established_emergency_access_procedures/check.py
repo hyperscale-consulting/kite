@@ -30,18 +30,19 @@ def check_emergency_access_procedures() -> Dict[str, Any]:
         "the 3 primary failure modes (IdP failure, IdP misconfiguration, Identity Center failure)?\n"
         "- Do processes have pre-conditions and assumptions documented explaining when "
         "the process should be used and when it should not be used, for each failure mode?\n"
-        "- Is there a dedicated account that is used for emergency access?\n"
+        "- Is there a dedicated AWS account that is used for emergency access?\n"
+        "- Are there dedicated IAM accounts, protected by strong passwords and MFA, \n"
+        "for each emergency incident responder?\n"
         "- Are all resources required by the emergency access processes pre-created?\n"
         "- Are emergency access processes included in incident management plans?\n"
-        "- Are emergency access requests processed in a service request workflow system?\n"
+        "- Can the emergency access process only be initiated by authorized users?\n"
+        "- Does the emergency access process require approval from peers / management\n"
         "- Is robust logging, monitoring and alerting in place for the emergency access "
         "process and mechanisms?\n"
         "- Are emergency access processes tested periodically?\n"
         "- Are emergency access mechanisms disabled during normal operation?"
     )
-    prompt = (
-        "Are emergency access procedures properly established?"
-    )
+    prompt = "Are emergency access procedures properly established?"
 
     # Use the manual_check function
     result = manual_check(

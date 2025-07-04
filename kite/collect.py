@@ -108,6 +108,7 @@ from kite.data import (
     save_inspector2_coverage,
     save_maintenance_windows,
     save_ecs_clusters,
+    save_rds_instances,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -908,6 +909,18 @@ def collect_account_data(account_id: str) -> None:
                     f"  [red]✗ Error fetching maintenance windows for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
+        # Collect RDS instances
+        console.print(f"  [yellow]Fetching RDS instances for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                instances = rds.get_instances(session, region)
+                save_rds_instances(account_id, region, instances)
+                console.print(f"  [green]✓ Saved {len(instances)} RDS instances for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching RDS instances for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
     except Exception as e:
         console.print(
             f"  [red]✗ Error collecting data for account {account_id}: {str(e)}[/]"
@@ -1032,11 +1045,11 @@ def collect_mgmt_account_workload_resources() -> None:
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="EC2",
-                    resource_id=instance.instance_id,
+                    resource_id=instance.get("InstanceId"),
                     region=region,
                     details={
-                        "instance_type": instance.instance_type,
-                        "state": instance.state,
+                        "instance_type": instance.get("InstanceType"),
+                        "state": instance.get("State", {}).get("Name"),
                     },
                 )
             )
@@ -1076,9 +1089,9 @@ def collect_mgmt_account_workload_resources() -> None:
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="RDS",
-                    resource_id=instance.instance_id,
+                    resource_id=instance.get("DBInstanceIdentifier"),
                     region=region,
-                    details={"engine": instance.engine},
+                    details={"engine": instance.get("Engine")},
                 )
             )
 

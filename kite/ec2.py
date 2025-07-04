@@ -1,11 +1,9 @@
 """EC2 service module for Kite."""
 
 import boto3
-from typing import List, Dict, Any
-from kite.models import EC2Instance
 
 
-def get_running_instances(session, region: str) -> List[EC2Instance]:
+def get_running_instances(session, region: str) -> list[dict[str, object]]:
     """
     Get all non-terminated EC2 instances in a region.
 
@@ -27,19 +25,12 @@ def get_running_instances(session, region: str) -> List[EC2Instance]:
         for reservation in page.get("Reservations", []):
             for instance in reservation.get("Instances", []):
                 if instance.get("State", {}).get("Name") != "terminated":
-                    instances.append(
-                        EC2Instance(
-                            instance_id=instance.get("InstanceId"),
-                            instance_type=instance.get("InstanceType"),
-                            state=instance.get("State", {}).get("Name"),
-                            region=region,
-                        )
-                    )
+                    instances.append(instance)
 
     return instances
 
 
-def get_key_pairs(session: boto3.Session) -> List[Dict[str, Any]]:
+def get_key_pairs(session: boto3.Session) -> list[dict[str, object]]:
     """
     Get all EC2 key pairs in the account.
 
@@ -54,7 +45,7 @@ def get_key_pairs(session: boto3.Session) -> List[Dict[str, Any]]:
     return response.get('KeyPairs', [])
 
 
-def get_vpc_endpoints(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+def get_vpc_endpoints(session: boto3.Session, region: str) -> list[dict[str, object]]:
     """
     Get all VPC endpoints in the account.
 
@@ -72,7 +63,7 @@ def get_vpc_endpoints(session: boto3.Session, region: str) -> List[Dict[str, Any
     return endpoints
 
 
-def get_flow_logs(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+def get_flow_logs(session: boto3.Session, region: str) -> list[dict[str, object]]:
     """
     Get all flow logs in the account.
     """
@@ -84,7 +75,7 @@ def get_flow_logs(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
     return flow_logs
 
 
-def get_vpcs(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+def get_vpcs(session: boto3.Session, region: str) -> list[dict[str, object]]:
     """
     Get all VPCs in the account.
     """

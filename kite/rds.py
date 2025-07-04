@@ -27,14 +27,8 @@ def get_instances(session, region: str) -> List[RDSInstance]:
     rds_client = session.client("rds", region_name=region)
     instances = []
 
-    response = rds_client.describe_db_instances()
-    for instance in response.get("DBInstances", []):
-        instances.append(
-            RDSInstance(
-                instance_id=instance.get("DBInstanceIdentifier"),
-                engine=instance.get("Engine"),
-                region=region,
-            )
-        )
+    paginator = rds_client.get_paginator("describe_db_instances")
+    for page in paginator.paginate():
+        instances.extend(page.get("DBInstances"), [])
 
     return instances

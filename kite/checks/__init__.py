@@ -479,6 +479,7 @@ from .use_identity_broker import check_use_identity_broker
 from .pre_deploy_tools import check_pre_deploy_tools
 from .run_simulations import check_run_simulations
 from .lessons_learned_framework import check_lessons_learned_framework
+from .create_network_layers.check import check_create_network_layers
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -662,4 +663,5 @@ __all__ = [
     "check_pre_deploy_tools",
     "check_run_simulations",
     "check_lessons_learned_framework",
+    "check_create_network_layers",
 ]

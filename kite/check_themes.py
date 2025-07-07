@@ -184,6 +184,7 @@ from kite.checks import (
     check_pre_deploy_tools,
     check_run_simulations,
     check_lessons_learned_framework,
+    check_create_network_layers,
 )
 
 # Define check themes and their associated checks
@@ -484,8 +485,12 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Create network layers": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to creating network layers for your workloads"
+        ),
+        "checks": [
+            check_create_network_layers,
+        ],
     },
     "Control traffic flow within your network layers": {
         "description": "",

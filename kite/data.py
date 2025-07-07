@@ -1522,3 +1522,24 @@ def get_rds_instances(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"rds_instances_{region}", account_id) or []
+
+
+def save_subnets(account_id: str, region: str, subnets: List[Dict[str, Any]]) -> None:
+    """Save subnets for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        subnets: The list of subnets to save.
+    """
+    _save_data(subnets, f"subnets_{region}", account_id)
+
+
+def get_subnets(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get subnets for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"subnets_{region}", account_id) or []

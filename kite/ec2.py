@@ -85,3 +85,15 @@ def get_vpcs(session: boto3.Session, region: str) -> list[dict[str, object]]:
     for page in paginator.paginate():
         vpcs.extend(page.get('Vpcs', []))
     return vpcs
+
+
+def get_subnets(session: boto3.Session, region: str) -> list[dict[str, object]]:
+    """
+    Get all subnets in the account.
+    """
+    ec2 = session.client('ec2', region_name=region)
+    paginator = ec2.get_paginator('describe_subnets')
+    subnets = []
+    for page in paginator.paginate():
+        subnets.extend(page.get('Subnets', []))
+    return subnets

@@ -109,6 +109,7 @@ from kite.data import (
     save_maintenance_windows,
     save_ecs_clusters,
     save_rds_instances,
+    save_subnets,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -919,6 +920,18 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching RDS instances for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect subnets
+        console.print(f"  [yellow]Fetching subnets for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                subnets = ec2.get_subnets(session, region)
+                save_subnets(account_id, region, subnets)
+                console.print(f"  [green]✓ Saved {len(subnets)} subnets for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching subnets for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

@@ -10,11 +10,15 @@ def fetch_rules(session, region):
             rules.append(rule)
             rule_names.append(rule["ConfigRuleName"])
 
-    # Batch fetch all remediation configurations in one API call
+    # Batch fetch all remediation configurations in chunks of 25 (API limit)
     if rule_names:
-        all_remediation_configs = fetch_remediation_configurations(
-            session, rule_names
-        )
+        all_remediation_configs = []
+        # Process in chunks of 25 to respect API limits
+        chunk_size = 25
+        for i in range(0, len(rule_names), chunk_size):
+            chunk = rule_names[i:i + chunk_size]
+            chunk_configs = fetch_remediation_configurations(session, chunk)
+            all_remediation_configs.extend(chunk_configs)
 
         # Create a mapping of rule name to remediation configurations
         remediation_map = {}

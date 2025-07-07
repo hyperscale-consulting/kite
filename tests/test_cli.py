@@ -8,7 +8,7 @@ from click.testing import CliRunner
 
 from kite.config import Config
 from kite.cli import main
-from kite.models import DelegatedAdmin, EC2Instance
+from kite.models import DelegatedAdmin
 from kite import (
     organizations,
     sts,
@@ -58,14 +58,11 @@ def delegated_admins(audit_account_id):
 
 @pytest.fixture
 def ec2_instances():
-    yield [
-        EC2Instance(
-            instance_id="asdfasfasdf",
-            instance_type="t3.micro",
-            state="running",
-            region="us-west-2",
-        )
-    ]
+    yield [{
+        "InstanceId": "i-1234567890abcdef0",
+        "InstanceType": "t2.micro",
+        "State": {"Name": "running"},
+    }]
 
 
 @pytest.fixture

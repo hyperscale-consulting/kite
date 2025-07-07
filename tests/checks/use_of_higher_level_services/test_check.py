@@ -8,24 +8,21 @@ from kite.checks.use_of_higher_level_services.check import (
     check_use_of_higher_level_services,
 )
 from kite.data import save_ec2_instances
-from kite.ec2 import EC2Instance
 
 
 @pytest.fixture
 def some_ec2_instances(workload_account_id, organization):
     instances = [
-        EC2Instance(
-            instance_id="i-1234567890abcdef0",
-            instance_type="t2.micro",
-            region="eu-west-2",
-            state="running",
-        ),
-        EC2Instance(
-            instance_id="i-1234567890abcdef1",
-            instance_type="t2.micro",
-            region="eu-west-2",
-            state="running",
-        )
+        {
+            "InstanceId": "i-1234567890abcdef0",
+            "InstanceType": "t2.micro",
+            "State": {"Name": "running"},
+        },
+        {
+            "InstanceId": "i-1234567890abcdef1",
+            "InstanceType": "t2.micro",
+            "State": {"Name": "running"},
+        },
     ]
     save_ec2_instances(workload_account_id, "eu-west-2", instances)
     return instances

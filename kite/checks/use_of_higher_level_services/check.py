@@ -42,14 +42,19 @@ def check_use_of_higher_level_services() -> Dict[str, Any]:
             },
         }
 
+    config = Config.get()
     ec2_instances_by_account = {}
 
     # Get EC2 instances for each account from collected data
     for account_id in account_ids:
-        for region in Config.get().active_regions:
+        account_instances = {}
+        for region in config.active_regions:
             instances = get_ec2_instances(account_id, region)
             if instances:
-                ec2_instances_by_account[account_id] = instances
+                account_instances[region] = instances
+
+        if account_instances:
+            ec2_instances_by_account[account_id] = account_instances
 
     # If no EC2 instances found, automatically pass
     if not ec2_instances_by_account:
@@ -76,14 +81,16 @@ def check_use_of_higher_level_services() -> Dict[str, Any]:
         "EC2 Instances Found:\n"
     )
 
-    # Add EC2 instance details to message
-    for account_id, instances in ec2_instances_by_account.items():
-        for instance in instances:
-            message += (
-                f"- Instance {instance.instance_id} in account "
-                f"{account_id} ({instance.region}) - "
-                f"State: {instance.state}\n"
-            )
+    # Add EC2 instance details to message, organized by account and region
+    for account_id, regions in ec2_instances_by_account.items():
+        message += f"\nAccount: {account_id}\n"
+        for region, instances in regions.items():
+            message += f"  Region: {region}\n"
+            for instance in instances:
+                message += (
+                    f"    - Instance {instance.get("InstanceId")} - "
+                    f"State: {instance.get("State", {}).get("Name")}\n"
+                )
 
     # Use manual_check to get the user's response
     return manual_check(

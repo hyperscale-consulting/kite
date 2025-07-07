@@ -10,7 +10,6 @@ import click
 
 from kite.config import Config
 from kite.models import Organization, DelegatedAdmin, WorkloadResources
-from kite.ec2 import EC2Instance
 
 
 def _save_data(
@@ -255,7 +254,7 @@ def get_identity_center_instances(account_id: str = "organization") -> Optional[
     return data.get("instances", [])
 
 
-def save_ec2_instances(account_id: str, region: str, instances: List[EC2Instance]) -> None:
+def save_ec2_instances(account_id: str, region: str, instances: list[dict[str, object]]) -> None:
     """Save EC2 instances for an account.
 
     Args:
@@ -263,8 +262,7 @@ def save_ec2_instances(account_id: str, region: str, instances: List[EC2Instance
         region: The AWS region to save the instances for.
         instances: The list of EC2 instances to save.
     """
-    _save_data([asdict(instance) for instance in instances],
-               f"ec2_instances_{region}", account_id)
+    _save_data(instances, f"ec2_instances_{region}", account_id)
 
 
 def get_ec2_instances(account_id: str, region: str) -> Optional[List[Dict[str, Any]]]:
@@ -276,10 +274,7 @@ def get_ec2_instances(account_id: str, region: str) -> Optional[List[Dict[str, A
     Returns:
         The list of EC2 instances, or None if not found.
     """
-    data = _load_data(f"ec2_instances_{region}", account_id)
-    if data is None:
-        return None
-    return [EC2Instance.from_dict(instance) for instance in data]
+    return _load_data(f"ec2_instances_{region}", account_id)
 
 
 def save_collection_metadata() -> None:

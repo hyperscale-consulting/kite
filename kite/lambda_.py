@@ -33,11 +33,7 @@ def get_functions(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
             except lambda_client.exceptions.ResourceNotFoundException:
                 policy = None
 
-            functions.append({
-                "function_arn": function_arn,
-                "function_name": function["FunctionName"],
-                "policy": policy,
-                "region": region,
-            })
+            function["Policy"] = policy
+            functions.append(function)
 
     return functions

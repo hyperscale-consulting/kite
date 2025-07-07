@@ -55,8 +55,8 @@ def check_lambda_confused_deputy_protection() -> Dict[str, Any]:
             functions = get_lambda_functions(account_id, region)
 
             for function in functions:
-                function_arn = function["function_arn"]
-                policy = function.get("policy")
+                function_arn = function["FunctionArn"]
+                policy = function.get("Policy")
 
                 if not policy:
                     continue

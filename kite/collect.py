@@ -1215,7 +1215,7 @@ def collect_data() -> None:
 
     # Collect data for each account in parallel
     console.print("\n[bold blue]Gathering account data in parallel...[/]")
-    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=15) as executor:
         # Submit all account data collection tasks
         futures = {
             executor.submit(collect_account_data, account_id): account_id

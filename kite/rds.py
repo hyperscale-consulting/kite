@@ -29,6 +29,6 @@ def get_instances(session, region: str) -> List[RDSInstance]:
 
     paginator = rds_client.get_paginator("describe_db_instances")
     for page in paginator.paginate():
-        instances.extend(page.get("DBInstances"), [])
+        instances.extend(page.get("DBInstances", []))
 
     return instances

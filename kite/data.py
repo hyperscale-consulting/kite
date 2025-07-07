@@ -1543,3 +1543,24 @@ def get_subnets(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"subnets_{region}", account_id) or []
+
+
+def save_efs_file_systems(account_id: str, region: str, file_systems: List[Dict[str, Any]]) -> None:
+    """Save EFS file systems for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        file_systems: The list of EFS file systems to save.
+    """
+    _save_data(file_systems, f"efs_file_systems_{region}", account_id)
+
+
+def get_efs_file_systems(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get EFS file systems for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"efs_file_systems_{region}", account_id) or []

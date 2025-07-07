@@ -112,6 +112,7 @@ from kite.data import (
     save_rds_instances,
     save_subnets,
     save_efs_file_systems,
+    save_rtbs,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -948,6 +949,18 @@ def collect_account_data(account_id: str) -> None:
                     f"  [red]✗ Error fetching EFS file systems for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
+        # Collect route tables
+        console.print(f"  [yellow]Fetching route tables for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                rtbs = ec2.get_rtbs(session, region)
+                save_rtbs(account_id, region, rtbs)
+                console.print(f"  [green]✓ Saved {len(rtbs)} route tables for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching route tables for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
     except Exception as e:
         console.print(
             f"  [red]✗ Error collecting data for account {account_id}: {str(e)}[/]"
@@ -1106,7 +1119,7 @@ def collect_mgmt_account_workload_resources() -> None:
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="Lambda",
-                    resource_id=function["function_name"],
+                    resource_id=function["FunctionName"],
                     region=region,
                 )
             )
@@ -1229,7 +1242,7 @@ def collect_data() -> None:
 
     # Collect data for each account in parallel
     console.print("\n[bold blue]Gathering account data in parallel...[/]")
-    with concurrent.futures.ThreadPoolExecutor(max_workers=15) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
         # Submit all account data collection tasks
         futures = {
             executor.submit(collect_account_data, account_id): account_id

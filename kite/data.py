@@ -1564,3 +1564,24 @@ def get_efs_file_systems(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"efs_file_systems_{region}", account_id) or []
+
+
+def save_rtbs(account_id: str, region: str, rtbs: List[Dict[str, Any]]) -> None:
+    """Save route tables for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        rtbs: The list of route tables to save.
+    """
+    _save_data(rtbs, f"rtbs_{region}", account_id)
+
+
+def get_rtbs(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get route tables for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"rtbs_{region}", account_id) or []

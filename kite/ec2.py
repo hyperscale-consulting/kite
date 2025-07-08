@@ -133,3 +133,15 @@ def get_security_groups(session: boto3.Session, region: str) -> list[dict[str, o
     for page in paginator.paginate():
         security_groups.extend(page.get('SecurityGroups', []))
     return security_groups
+
+
+def get_vpc_peering_connections(session: boto3.Session, region: str) -> list[dict[str, object]]:
+    """
+    Get all VPC peering connections in the account.
+    """
+    ec2 = session.client('ec2', region_name=region)
+    paginator = ec2.get_paginator('describe_vpc_peering_connections')
+    vpc_peering_connections = []
+    for page in paginator.paginate():
+        vpc_peering_connections.extend(page.get('VpcPeeringConnections', []))
+    return vpc_peering_connections

@@ -1627,3 +1627,24 @@ def get_security_groups(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"security_groups_{region}", account_id) or []
+
+
+def save_vpc_peering_connections(account_id: str, region: str, vpc_peering_connections: List[Dict[str, Any]]) -> None:
+    """Save VPC peering connections for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        vpc_peering_connections: The list of VPC peering connections to save.
+    """
+    _save_data(vpc_peering_connections, f"vpc_peering_connections_{region}", account_id)
+
+
+def get_vpc_peering_connections(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get VPC peering connections for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"vpc_peering_connections_{region}", account_id) or []

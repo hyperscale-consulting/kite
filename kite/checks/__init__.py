@@ -489,6 +489,9 @@ from .control_network_flows_with_sgs.check import (
 from .control_network_flows_with_route_tables.check import (
     check_control_network_flows_with_route_tables,
 )
+from .use_private_link_for_vpc_routing.check import (
+    check_use_private_link_for_vpc_routing,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -676,4 +679,5 @@ __all__ = [
     "check_control_network_flow_with_nacls",
     "check_control_network_flows_with_sgs",
     "check_control_network_flows_with_route_tables",
+    "check_use_private_link_for_vpc_routing",
 ]

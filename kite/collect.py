@@ -115,6 +115,7 @@ from kite.data import (
     save_rtbs,
     save_nacls,
     save_security_groups,
+    save_vpc_peering_connections,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -985,6 +986,18 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching security groups for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect VPC peering connections
+        console.print(f"  [yellow]Fetching VPC peering connections for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                vpc_peering_connections = ec2.get_vpc_peering_connections(session, region)
+                save_vpc_peering_connections(account_id, region, vpc_peering_connections)
+                console.print(f"  [green]✓ Saved {len(vpc_peering_connections)} VPC peering connections for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching VPC peering connections for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

@@ -483,6 +483,9 @@ from .create_network_layers.check import check_create_network_layers
 from .control_network_flow_with_nacls.check import (
     check_control_network_flow_with_nacls,
 )
+from .control_network_flows_with_sgs.check import (
+    check_control_network_flows_with_sgs,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -668,4 +671,5 @@ __all__ = [
     "check_lessons_learned_framework",
     "check_create_network_layers",
     "check_control_network_flow_with_nacls",
+    "check_control_network_flows_with_sgs",
 ]

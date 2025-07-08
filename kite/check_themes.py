@@ -186,6 +186,7 @@ from kite.checks import (
     check_lessons_learned_framework,
     check_create_network_layers,
     check_control_network_flow_with_nacls,
+    check_control_network_flows_with_sgs,
 )
 
 # Define check themes and their associated checks
@@ -499,6 +500,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ),
         "checks": [
             check_control_network_flow_with_nacls,
+            check_control_network_flows_with_sgs,
         ],
     },
     "Implement inspection-based protection": {

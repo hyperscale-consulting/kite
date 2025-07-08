@@ -486,6 +486,9 @@ from .control_network_flow_with_nacls.check import (
 from .control_network_flows_with_sgs.check import (
     check_control_network_flows_with_sgs,
 )
+from .control_network_flows_with_route_tables.check import (
+    check_control_network_flows_with_route_tables,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -672,4 +675,5 @@ __all__ = [
     "check_create_network_layers",
     "check_control_network_flow_with_nacls",
     "check_control_network_flows_with_sgs",
+    "check_control_network_flows_with_route_tables",
 ]

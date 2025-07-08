@@ -106,6 +106,12 @@ def _get_resources_in_subnet(
 def _summarize_nacl_rules(nacl: Dict[str, Any]) -> Dict[str, List[str]]:
     """Summarize NACL rules for easy display."""
     summary = {"ingress": [], "egress": []}
+    protocol_map = {
+        "-1": "ALL",
+        "1": "ICMP",
+        "6": "TCP",
+        "17": "UDP",
+    }
     entries = sorted(
         nacl.get("Entries", []), key=lambda e: e.get("RuleNumber", 32767)
     )
@@ -113,8 +119,8 @@ def _summarize_nacl_rules(nacl: Dict[str, Any]) -> Dict[str, List[str]]:
         action = entry.get("RuleAction", "allow")
         egress = entry.get("Egress", False)
         direction = "egress" if egress else "ingress"
-        protocol = entry.get("Protocol", "-1")
-        proto_str = "ALL" if protocol == "-1" else protocol
+        protocol = str(entry.get("Protocol", "-1"))
+        proto_str = protocol_map.get(protocol, protocol)
         cidr = entry.get("CidrBlock", "?")
         port_range = entry.get("PortRange")
         if port_range:
@@ -123,9 +129,10 @@ def _summarize_nacl_rules(nacl: Dict[str, Any]) -> Dict[str, List[str]]:
             )
         else:
             port_str = "all ports"
+        direction_word = "to" if direction == "egress" else "from"
         summary[direction].append(
             f"Rule {entry.get('RuleNumber')}: {action.upper()} {proto_str} "
-            f"{port_str} to/from {cidr}"
+            f"{port_str} {direction_word} {cidr}"
         )
     return summary
 

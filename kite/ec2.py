@@ -121,3 +121,15 @@ def get_nacls(session: boto3.Session, region: str) -> list[dict[str, object]]:
     for page in paginator.paginate():
         nacls.extend(page.get('NetworkAcls', []))
     return nacls
+
+
+def get_security_groups(session: boto3.Session, region: str) -> list[dict[str, object]]:
+    """
+    Get all security groups in the account.
+    """
+    ec2 = session.client('ec2', region_name=region)
+    paginator = ec2.get_paginator('describe_security_groups')
+    security_groups = []
+    for page in paginator.paginate():
+        security_groups.extend(page.get('SecurityGroups', []))
+    return security_groups

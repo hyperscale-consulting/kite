@@ -114,6 +114,7 @@ from kite.data import (
     save_efs_file_systems,
     save_rtbs,
     save_nacls,
+    save_security_groups,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -972,6 +973,18 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching network ACLs for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect security groups
+        console.print(f"  [yellow]Fetching security groups for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                security_groups = ec2.get_security_groups(session, region)
+                save_security_groups(account_id, region, security_groups)
+                console.print(f"  [green]✓ Saved {len(security_groups)} security groups for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching security groups for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

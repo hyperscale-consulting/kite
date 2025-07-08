@@ -1606,3 +1606,24 @@ def get_nacls(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"nacls_{region}", account_id) or []
+
+
+def save_security_groups(account_id: str, region: str, security_groups: List[Dict[str, Any]]) -> None:
+    """Save security groups for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        security_groups: The list of security groups to save.
+    """
+    _save_data(security_groups, f"security_groups_{region}", account_id)
+
+
+def get_security_groups(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get security groups for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"security_groups_{region}", account_id) or []

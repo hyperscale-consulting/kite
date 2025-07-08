@@ -13,7 +13,7 @@ from kite.data import (
     get_efs_file_systems,
     get_elbv2_load_balancers,
 )
-from kite.helpers import get_account_ids_in_scope, manual_check
+from kite.helpers import get_account_ids_in_scope, manual_check, get_prowler_output
 from kite.config import Config
 
 CHECK_ID = "control-network-flow-with-nacls"
@@ -148,6 +148,12 @@ def _get_nacl_for_subnet(subnet_id: str, nacls: List[Dict[str, Any]]) -> Dict[st
 def _analyze_nacls() -> str:
     accounts = get_account_ids_in_scope()
     config = Config.get()
+    prowler_checks = [
+        "ec2_networkacl_allow_ingress_tcp_port_22",
+        "ec2_networkacl_allow_ingress_tcp_port_3389",
+        "ec2_networkacl_allow_ingress_any_port",
+    ]
+    prowler_output = get_prowler_output()
     analysis = "NACL Network Flow Analysis:\n\n"
     for account_id in accounts:
         account_has_resources = False
@@ -210,12 +216,28 @@ def _analyze_nacls() -> str:
                     nacl = _get_nacl_for_subnet(subnet_id, nacls)
                     if nacl:
                         nacl_summary = _summarize_nacl_rules(nacl)
-                        vpc_analysis += "    NACL Rules (Ingress):\n"
+                        nacl_id = nacl.get("NetworkAclId")
+                        vpc_analysis += f"    NACL ({nacl_id}) Rules (Ingress):\n"
                         for rule in nacl_summary["ingress"]:
                             vpc_analysis += f"      {rule}\n"
-                        vpc_analysis += "    NACL Rules (Egress):\n"
+                        vpc_analysis += f"    NACL ({nacl_id}) Rules (Egress):\n"
                         for rule in nacl_summary["egress"]:
                             vpc_analysis += f"      {rule}\n"
+                        # Print prowler warnings for this NACL
+                        warnings = []
+                        for check_id in prowler_checks:
+                            for prowler_result in prowler_output.get(check_id, []):
+                                if (
+                                    prowler_result.resource_name == nacl_id
+                                    and prowler_result.status != "PASS"
+                                ):
+                                    warnings.append(
+                                        f"⚠️ {check_id} failed: "
+                                        f"{prowler_result.extended_status or prowler_result.status}"
+                                    )
+                        if warnings:
+                            for warning in warnings:
+                                vpc_analysis += f"      {warning}\n"
                     else:
                         vpc_analysis += "    No NACL associated with this subnet.\n"
                 if region_has_resources:

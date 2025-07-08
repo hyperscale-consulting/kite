@@ -480,6 +480,9 @@ from .pre_deploy_tools import check_pre_deploy_tools
 from .run_simulations import check_run_simulations
 from .lessons_learned_framework import check_lessons_learned_framework
 from .create_network_layers.check import check_create_network_layers
+from .control_network_flow_with_nacls.check import (
+    check_control_network_flow_with_nacls,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -664,4 +667,5 @@ __all__ = [
     "check_run_simulations",
     "check_lessons_learned_framework",
     "check_create_network_layers",
+    "check_control_network_flow_with_nacls",
 ]

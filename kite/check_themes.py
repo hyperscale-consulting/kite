@@ -185,6 +185,7 @@ from kite.checks import (
     check_run_simulations,
     check_lessons_learned_framework,
     check_create_network_layers,
+    check_control_network_flow_with_nacls,
 )
 
 # Define check themes and their associated checks
@@ -493,8 +494,12 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Control traffic flow within your network layers": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to controlling traffic flow within your network layers"
+        ),
+        "checks": [
+            check_control_network_flow_with_nacls,
+        ],
     },
     "Implement inspection-based protection": {
         "description": "",

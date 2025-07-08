@@ -113,6 +113,7 @@ from kite.data import (
     save_subnets,
     save_efs_file_systems,
     save_rtbs,
+    save_nacls,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -961,6 +962,18 @@ def collect_account_data(account_id: str) -> None:
                     f"  [red]✗ Error fetching route tables for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
+        # Collect network ACLs
+        console.print(f"  [yellow]Fetching network ACLs for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                nacls = ec2.get_nacls(session, region)
+                save_nacls(account_id, region, nacls)
+                console.print(f"  [green]✓ Saved {len(nacls)} network ACLs for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching network ACLs for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
     except Exception as e:
         console.print(
             f"  [red]✗ Error collecting data for account {account_id}: {str(e)}[/]"
@@ -1242,7 +1255,7 @@ def collect_data() -> None:
 
     # Collect data for each account in parallel
     console.print("\n[bold blue]Gathering account data in parallel...[/]")
-    with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=15) as executor:
         # Submit all account data collection tasks
         futures = {
             executor.submit(collect_account_data, account_id): account_id

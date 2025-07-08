@@ -1585,3 +1585,24 @@ def get_rtbs(account_id: str, region: str) -> List[Dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"rtbs_{region}", account_id) or []
+
+
+def save_nacls(account_id: str, region: str, nacls: List[Dict[str, Any]]) -> None:
+    """Save network ACLs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        nacls: The list of network ACLs to save.
+    """
+    _save_data(nacls, f"nacls_{region}", account_id)
+
+
+def get_nacls(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get network ACLs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"nacls_{region}", account_id) or []

@@ -21,5 +21,17 @@ def get_mount_targets(
     mount_targets = []
     for page in paginator.paginate(FileSystemId=file_system_id):
         for mount_target in page["MountTargets"]:
+            mount_target["SecurityGroups"] = get_security_groups(
+                client, mount_target["MountTargetId"]
+            )
             mount_targets.append(mount_target)
     return mount_targets
+
+
+def get_security_groups(
+    client: boto3.client, mount_target_id: str
+) -> list[dict[str, object]]:
+    response = client.describe_mount_target_security_groups(
+        MountTargetId=mount_target_id
+    )
+    return response["SecurityGroups"]

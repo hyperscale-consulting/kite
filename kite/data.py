@@ -1648,3 +1648,66 @@ def get_vpc_peering_connections(account_id: str, region: str) -> List[Dict[str, 
         region: The AWS region.
     """
     return _load_data(f"vpc_peering_connections_{region}", account_id) or []
+
+
+def save_route53resolver_firewall_rule_groups(account_id: str, region: str, firewall_rule_groups: List[Dict[str, Any]]) -> None:
+    """Save Route 53 Resolver firewall rule groups for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        firewall_rule_groups: The list of Route 53 Resolver firewall rule groups to save.
+    """
+    _save_data(firewall_rule_groups, f"route53resolver_firewall_rule_groups_{region}", account_id)
+
+
+def get_route53resolver_firewall_rule_groups(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Route 53 Resolver firewall rule groups for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"route53resolver_firewall_rule_groups_{region}", account_id) or []
+
+
+def save_route53resolver_firewall_rule_group_associations(account_id: str, region: str, firewall_rule_group_associations: List[Dict[str, Any]]) -> None:
+    """Save Route 53 Resolver firewall rule group associations for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        firewall_rule_group_associations: The list of Route 53 Resolver firewall rule group associations to save.
+    """
+    _save_data(firewall_rule_group_associations, f"route53resolver_firewall_rule_group_associations_{region}", account_id)
+
+
+def get_route53resolver_firewall_rule_group_associations(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Route 53 Resolver firewall rule group associations for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"route53resolver_firewall_rule_group_associations_{region}", account_id) or []
+
+
+def save_route53resolver_firewall_domain_lists(account_id: str, region: str, firewall_domain_lists: List[Dict[str, Any]]) -> None:
+    """Save Route 53 Resolver firewall domain lists for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        firewall_domain_lists: The list of Route 53 Resolver firewall domain lists to save.
+    """
+    _save_data(firewall_domain_lists, f"route53resolver_firewall_domain_lists_{region}", account_id)
+
+
+def get_route53resolver_firewall_domain_lists(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Route 53 Resolver firewall domain lists for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"route53resolver_firewall_domain_lists_{region}", account_id) or []

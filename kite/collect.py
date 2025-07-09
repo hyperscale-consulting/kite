@@ -116,6 +116,9 @@ from kite.data import (
     save_nacls,
     save_security_groups,
     save_vpc_peering_connections,
+    save_route53resolver_firewall_rule_groups,
+    save_route53resolver_firewall_rule_group_associations,
+    save_route53resolver_firewall_domain_lists,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -998,6 +1001,42 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching VPC peering connections for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect Route 53 Resolver firewall rule groups
+        console.print(f"  [yellow]Fetching Route 53 Resolver firewall rule groups for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                firewall_rule_groups = route53resolver.get_firewall_rule_groups(session, region)
+                save_route53resolver_firewall_rule_groups(account_id, region, firewall_rule_groups)
+                console.print(f"  [green]✓ Saved {len(firewall_rule_groups)} Route 53 Resolver firewall rule groups for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching Route 53 Resolver firewall rule groups for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect Route 53 Resolver firewall rule group associations
+        console.print(f"  [yellow]Fetching Route 53 Resolver firewall rule group associations for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                firewall_rule_group_associations = route53resolver.get_firewall_rule_group_associations(session, region)
+                save_route53resolver_firewall_rule_group_associations(account_id, region, firewall_rule_group_associations)
+                console.print(f"  [green]✓ Saved {len(firewall_rule_group_associations)} Route 53 Resolver firewall rule group associations for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching Route 53 Resolver firewall rule group associations for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect Route 53 Resolver firewall domain lists
+        console.print(f"  [yellow]Fetching Route 53 Resolver firewall domain lists for account {account_id}...[/]")
+        for region in Config.get().active_regions:
+            try:
+                firewall_domain_lists = route53resolver.get_firewall_domain_lists(session, region)
+                save_route53resolver_firewall_domain_lists(account_id, region, firewall_domain_lists)
+                console.print(f"  [green]✓ Saved {len(firewall_domain_lists)} Route 53 Resolver firewall domain lists for account {account_id} in region {region}[/]")
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching Route 53 Resolver firewall domain lists for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

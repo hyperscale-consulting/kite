@@ -189,6 +189,7 @@ from kite.checks import (
     check_control_network_flows_with_sgs,
     check_control_network_flows_with_route_tables,
     check_use_private_link_for_vpc_routing,
+    check_use_route53resolver_dns_firewall,
 )
 
 # Define check themes and their associated checks
@@ -505,6 +506,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
             check_control_network_flows_with_sgs,
             check_control_network_flows_with_route_tables,
             check_use_private_link_for_vpc_routing,
+            check_use_route53resolver_dns_firewall,
         ],
     },
     "Implement inspection-based protection": {

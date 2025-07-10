@@ -27,15 +27,14 @@ def check_security_services_evaluation() -> Dict[str, Any]:
         "This check verifies that teams evaluate and implement new security "
         "services and features regularly.\n\n"
         "Consider the following factors:\n"
-        "- How to teams keep up to date with new security services and features? For "
+        "- How do teams keep up to date with new security services and features? For "
         "example, do they subscribe to AWS or partner security blogs?\n"
         "- How are teams within the organisation encouraged to stay on top of "
         "security services and features?\n"
         "- Are innovation / sandbox accounts available for teams to experiment with?"
     )
     prompt = (
-        "Do teams evaluate and implement new security services and features "
-        "regularly?"
+        "Do teams evaluate and implement new security services and features regularly?"
     )
 
     # Use the manual_check function
@@ -45,8 +44,7 @@ def check_security_services_evaluation() -> Dict[str, Any]:
         message=message,
         prompt=prompt,
         pass_message=(
-            "Teams regularly evaluate and implement new security services and "
-            "features."
+            "Teams regularly evaluate and implement new security services and features."
         ),
         fail_message=(
             "Teams should regularly evaluate and implement new security services "

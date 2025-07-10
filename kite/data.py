@@ -129,7 +129,7 @@ def save_organization_features(features: List[str]) -> None:
     Args:
         features: The list of organization features to save.
     """
-    _save_data({"features": features}, "organization_features")
+    _save_data(features, "organization_features")
 
 
 def get_organization_features() -> Optional[List[str]]:
@@ -138,10 +138,7 @@ def get_organization_features() -> Optional[List[str]]:
     Returns:
         The list of organization features, or None if not found.
     """
-    data = _load_data("organization_features")
-    if data is None:
-        return None
-    return data.get("features", [])
+    return _load_data("organization_features") or []
 
 
 def save_credentials_report(account_id: str, report: Dict[str, Any]) -> None:
@@ -195,7 +192,7 @@ def save_saml_providers(providers: List[Dict[str, Any]], account_id: str = "orga
         providers: The list of SAML providers to save.
         account_id: The AWS account ID to save the providers for.
     """
-    _save_data({"providers": providers}, "saml_providers", account_id)
+    _save_data(providers, "saml_providers", account_id)
 
 
 def get_saml_providers(account_id: str = "organization") -> Optional[List[Dict[str, Any]]]:
@@ -204,10 +201,7 @@ def get_saml_providers(account_id: str = "organization") -> Optional[List[Dict[s
     Returns:
         The list of SAML providers, or None if not found.
     """
-    data = _load_data("saml_providers", account_id)
-    if data is None:
-        return None
-    return data.get("providers", [])
+    return _load_data("saml_providers", account_id) or []
 
 
 def save_oidc_providers(providers: List[Dict[str, Any]], account_id: str = "organization") -> None:
@@ -217,7 +211,7 @@ def save_oidc_providers(providers: List[Dict[str, Any]], account_id: str = "orga
         providers: The list of OIDC providers to save.
         account_id: The AWS account ID to save the providers for.
     """
-    _save_data({"providers": providers}, "oidc_providers", account_id)
+    _save_data(providers, "oidc_providers", account_id)
 
 
 def get_oidc_providers(account_id: str = "organization") -> Optional[List[Dict[str, Any]]]:
@@ -226,10 +220,7 @@ def get_oidc_providers(account_id: str = "organization") -> Optional[List[Dict[s
     Returns:
         The list of OIDC providers, or None if not found.
     """
-    data = _load_data("oidc_providers", account_id)
-    if data is None:
-        return None
-    return data.get("providers", [])
+    return _load_data("oidc_providers", account_id) or []
 
 
 def save_identity_center_instances(instances: List[Dict[str, Any]], account_id: str = "organization") -> None:
@@ -239,7 +230,7 @@ def save_identity_center_instances(instances: List[Dict[str, Any]], account_id: 
         instances: The list of Identity Center instances to save.
         account_id: The AWS account ID to save the instances for.
     """
-    _save_data({"instances": instances}, "identity_center_instances", account_id)
+    _save_data(instances, "identity_center_instances", account_id)
 
 
 def get_identity_center_instances(account_id: str = "organization") -> Optional[List[Dict[str, Any]]]:
@@ -248,10 +239,7 @@ def get_identity_center_instances(account_id: str = "organization") -> Optional[
     Returns:
         The list of Identity Center instances, or None if not found.
     """
-    data = _load_data("identity_center_instances", account_id)
-    if data is None:
-        return None
-    return data.get("instances", [])
+    return _load_data("identity_center_instances", account_id) or []
 
 
 def save_ec2_instances(account_id: str, region: str, instances: list[dict[str, object]]) -> None:
@@ -610,7 +598,7 @@ def save_sns_topics(account_id: str, region: str, topics: List[Dict[str, Any]]) 
         region: The AWS region to save the topics for.
         topics: The list of SNS topics to save.
     """
-    _save_data({"topics": topics}, f"sns_topics_{region}", account_id)
+    _save_data(topics, f"sns_topics_{region}", account_id)
 
 
 def get_sns_topics(account_id: str, region: str) -> List[Dict[str, Any]]:
@@ -623,10 +611,7 @@ def get_sns_topics(account_id: str, region: str) -> List[Dict[str, Any]]:
     Returns:
         The list of SNS topics, or an empty list if not found.
     """
-    data = _load_data(f"sns_topics_{region}", account_id)
-    if data is None:
-        return []
-    return data.get("topics", [])
+    return _load_data(f"sns_topics_{region}", account_id) or []
 
 
 def save_sqs_queues(account_id: str, region: str, queues: List[Dict[str, Any]]) -> None:
@@ -637,7 +622,7 @@ def save_sqs_queues(account_id: str, region: str, queues: List[Dict[str, Any]]) 
         region: The AWS region to save the queues for.
         queues: The list of SQS queues to save.
     """
-    _save_data({"queues": queues}, f"sqs_queues_{region}", account_id)
+    _save_data(queues, f"sqs_queues_{region}", account_id)
 
 
 def get_sqs_queues(account_id: str, region: str) -> List[Dict[str, Any]]:
@@ -650,10 +635,7 @@ def get_sqs_queues(account_id: str, region: str) -> List[Dict[str, Any]]:
     Returns:
         The list of SQS queues, or an empty list if not found.
     """
-    data = _load_data(f"sqs_queues_{region}", account_id)
-    if data is None:
-        return []
-    return data.get("queues", [])
+    return _load_data(f"sqs_queues_{region}", account_id) or []
 
 
 def save_lambda_functions(account_id: str, region: str, functions: List[Dict[str, Any]]) -> None:
@@ -664,7 +646,7 @@ def save_lambda_functions(account_id: str, region: str, functions: List[Dict[str
         region: The AWS region to save the functions for.
         functions: The list of Lambda functions to save.
     """
-    _save_data({"functions": functions}, f"lambda_functions_{region}", account_id)
+    _save_data(functions, f"lambda_functions_{region}", account_id)
 
 
 def get_lambda_functions(account_id: str, region: str) -> List[Dict[str, Any]]:
@@ -677,10 +659,7 @@ def get_lambda_functions(account_id: str, region: str) -> List[Dict[str, Any]]:
     Returns:
         The list of Lambda functions, or an empty list if not found.
     """
-    data = _load_data(f"lambda_functions_{region}", account_id)
-    if data is None:
-        return []
-    return data.get("functions", [])
+    return _load_data(f"lambda_functions_{region}", account_id) or []
 
 
 def save_kms_keys(account_id: str, region: str, keys: List[Dict[str, Any]]) -> None:
@@ -691,7 +670,7 @@ def save_kms_keys(account_id: str, region: str, keys: List[Dict[str, Any]]) -> N
         region: The AWS region to save the keys for.
         keys: The list of KMS keys to save.
     """
-    _save_data({"keys": keys}, f"kms_keys_{region}", account_id)
+    _save_data(keys, f"kms_keys_{region}", account_id)
 
 
 def get_kms_keys(account_id: str, region: str) -> List[Dict[str, Any]]:
@@ -704,10 +683,7 @@ def get_kms_keys(account_id: str, region: str) -> List[Dict[str, Any]]:
     Returns:
         The list of KMS keys, or an empty list if not found.
     """
-    data = _load_data(f"kms_keys_{region}", account_id)
-    if data is None:
-        return []
-    return data.get("keys", [])
+    return _load_data(f"kms_keys_{region}", account_id) or []
 
 
 def save_identity_center_permission_sets(account_id: str, instance_id: str, permission_sets: List[Dict[str, Any]]) -> None:
@@ -718,7 +694,7 @@ def save_identity_center_permission_sets(account_id: str, instance_id: str, perm
         instance_id: The ID of the Identity Center instance.
         permission_sets: The list of permission sets to save.
     """
-    _save_data({"permission_sets": permission_sets}, f"identity_center_permission_sets_{instance_id}", account_id)
+    _save_data(permission_sets, f"identity_center_permission_sets_{instance_id}", account_id)
 
 
 def get_identity_center_permission_sets(account_id: str, instance_id: str) -> List[Dict[str, Any]]:
@@ -731,10 +707,7 @@ def get_identity_center_permission_sets(account_id: str, instance_id: str) -> Li
     Returns:
         The list of Identity Center permission sets, or an empty list if not found.
     """
-    data = _load_data(f"identity_center_permission_sets_{instance_id}", account_id)
-    if data is None:
-        return []
-    return data.get("permission_sets", [])
+    return _load_data(f"identity_center_permission_sets_{instance_id}", account_id) or []
 
 
 def save_identity_store_users(account_id: str, instance_id: str, users: List[Dict[str, Any]]) -> None:
@@ -745,7 +718,7 @@ def save_identity_store_users(account_id: str, instance_id: str, users: List[Dic
         instance_id: The ID of the Identity Center instance.
         users: The list of users to save.
     """
-    _save_data({"users": users}, f"identity_store_users_{instance_id}", account_id)
+    _save_data(users, f"identity_store_users_{instance_id}", account_id)
 
 
 def get_identity_store_users(account_id: str, instance_id: str) -> List[Dict[str, Any]]:
@@ -758,10 +731,7 @@ def get_identity_store_users(account_id: str, instance_id: str) -> List[Dict[str
     Returns:
         The list of Identity Store users, or an empty list if not found.
     """
-    data = _load_data(f"identity_store_users_{instance_id}", account_id)
-    if data is None:
-        return []
-    return data.get("users", [])
+    return _load_data(f"identity_store_users_{instance_id}", account_id) or []
 
 
 def save_identity_store_groups(account_id: str, instance_id: str, groups: List[Dict[str, Any]]) -> None:
@@ -772,7 +742,7 @@ def save_identity_store_groups(account_id: str, instance_id: str, groups: List[D
         instance_id: The ID of the Identity Center instance.
         groups: The list of groups to save.
     """
-    _save_data({"groups": groups}, f"identity_store_groups_{instance_id}", account_id)
+    _save_data(groups, f"identity_store_groups_{instance_id}", account_id)
 
 
 def get_identity_store_groups(account_id: str, instance_id: str) -> List[Dict[str, Any]]:
@@ -785,10 +755,7 @@ def get_identity_store_groups(account_id: str, instance_id: str) -> List[Dict[st
     Returns:
         The list of Identity Store groups, or an empty list if not found.
     """
-    data = _load_data(f"identity_store_groups_{instance_id}", account_id)
-    if data is None:
-        return []
-    return data.get("groups", [])
+    return _load_data(f"identity_store_groups_{instance_id}", account_id) or []
 
 
 def save_access_analyzers(account_id: str, analyzers: List[Dict[str, Any]]) -> None:
@@ -798,7 +765,7 @@ def save_access_analyzers(account_id: str, analyzers: List[Dict[str, Any]]) -> N
         account_id: The AWS account ID.
         analyzers: The list of Access Analyzer analyzers to save.
     """
-    _save_data({"analyzers": analyzers}, "access_analyzers", account_id)
+    _save_data(analyzers, "access_analyzers", account_id)
 
 
 def get_access_analyzers(account_id: str) -> List[Dict[str, Any]]:
@@ -810,10 +777,7 @@ def get_access_analyzers(account_id: str) -> List[Dict[str, Any]]:
     Returns:
         The list of Access Analyzer analyzers, or an empty list if not found.
     """
-    data = _load_data("access_analyzers", account_id)
-    if data is None:
-        return []
-    return data.get("analyzers", [])
+    return _load_data("access_analyzers", account_id) or []
 
 
 def save_iam_users(account_id: str, users: List[Dict[str, Any]]) -> None:

@@ -1,17 +1,9 @@
-"""AWS KMS functionality module."""
-
 import json
-import logging
-from typing import Dict, Any, List
 
 import boto3
-from botocore.exceptions import ClientError
 
 
-logger = logging.getLogger(__name__)
-
-
-def get_keys(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+def get_keys(session: boto3.Session, region: str) -> list[dict[str, object]]:
     """
     Get all KMS keys and their policies in the specified region.
 
@@ -36,41 +28,24 @@ def get_keys(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
             policy = json.loads(policy["Policy"])
 
             rotation_status = {}
-            try:
-                rotation_status_response = kms.get_key_rotation_status(KeyId=key_id)
-                rotation_status = dict(
-                    RotationEnabled=rotation_status_response["KeyRotationEnabled"],
-                    RotationPeriodInDays=rotation_status_response.get(
-                        "RotationPeriodInDays", None
-                    ),
-                )
-
-            except ClientError as e:
-                if e.response["Error"]["Code"] == "AccessDeniedException":
-                    logger.info(
-                        f"Unable to fetch key rotation status for key {key_id} - "
-                        "permission denied"
-                    )
-                else:
-                    raise e
-
-            metadata = kms.describe_key(KeyId=key_id)["KeyMetadata"]
-
-            keys.append(
-                {
-                    "KeyId": key_id,
-                    "KeyArn": key["KeyArn"],
-                    "Policy": policy,
-                    "Description": key.get("Description", "No description"),
-                    "RotationStatus": rotation_status,
-                    "Metadata": metadata,
-                }
+            rotation_status_response = kms.get_key_rotation_status(KeyId=key_id)
+            rotation_status = dict(
+                RotationEnabled=rotation_status_response["KeyRotationEnabled"],
+                RotationPeriodInDays=rotation_status_response.get(
+                    "RotationPeriodInDays", None
+                ),
             )
 
+            details = kms.describe_key(KeyId=key_id)["KeyMetadata"]
+            details["Policy"] = policy
+            details["RotationStatus"] = rotation_status
+            keys.append(details)
     return keys
 
 
-def get_custom_key_stores(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+def get_custom_key_stores(
+    session: boto3.Session, region: str
+) -> list[dict[str, object]]:
     """
     Get all custom key stores in the specified region.
 
@@ -81,7 +56,6 @@ def get_custom_key_stores(session: boto3.Session, region: str) -> List[Dict[str,
     kms = session.client("kms", region_name=region)
     custom_key_stores = []
 
-    # List all custom key stores
     paginator = kms.get_paginator("describe_custom_key_stores")
     for page in paginator.paginate():
         for store in page["CustomKeyStores"]:

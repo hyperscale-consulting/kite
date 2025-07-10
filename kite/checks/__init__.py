@@ -495,6 +495,9 @@ from .use_private_link_for_vpc_routing.check import (
 from .use_route53resolver_dns_firewall.check import (
     check_use_route53resolver_dns_firewall,
 )
+from .inspect_http_traffic_with_waf.check import (
+    check_inspect_http_traffic_with_waf,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -684,4 +687,5 @@ __all__ = [
     "check_control_network_flows_with_route_tables",
     "check_use_private_link_for_vpc_routing",
     "check_use_route53resolver_dns_firewall",
+    "check_inspect_http_traffic_with_waf",
 ]

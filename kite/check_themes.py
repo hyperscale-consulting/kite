@@ -190,6 +190,7 @@ from kite.checks import (
     check_control_network_flows_with_route_tables,
     check_use_private_link_for_vpc_routing,
     check_use_route53resolver_dns_firewall,
+    check_inspect_http_traffic_with_waf,
 )
 
 # Define check themes and their associated checks
@@ -510,8 +511,13 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Implement inspection-based protection": {
-        "description": "",
-        "checks": [],
+        "description": (
+            "Checks related to implementing inspection-based protection for your "
+            "workloads"
+        ),
+        "checks": [
+            check_inspect_http_traffic_with_waf,
+        ],
     },
     "Automate network protection": {
         "description": "",

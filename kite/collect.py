@@ -660,7 +660,7 @@ def collect_account_data(account_id: str) -> None:
 
         # Collect WAFv2 web ACLs
         console.print(
-            f"  [yellow]Fetching regional WAFv2 web ACLs for account {account_id}...[/]"
+            f"  [yellow]Fetching WAFv2 web ACLs for account {account_id}...[/]"
         )
         for region in Config.get().active_regions:
             try:
@@ -744,7 +744,9 @@ def collect_account_data(account_id: str) -> None:
             try:
                 clusters = ecs.get_clusters(session, region)
                 save_ecs_clusters(account_id, region, clusters)
-                console.print(f"  [green]✓ Saved {len(clusters)} ECS clusters for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(clusters)} ECS clusters for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching ECS clusters for account {account_id} in region {region}: {str(e)}[/]"
@@ -804,7 +806,9 @@ def collect_account_data(account_id: str) -> None:
                 )
 
         # Collect DynamoDB tables
-        console.print(f"  [yellow]Fetching DynamoDB tables for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching DynamoDB tables for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 tables = dynamodb.get_tables(session, region)
@@ -818,7 +822,9 @@ def collect_account_data(account_id: str) -> None:
                 )
 
         # Collect GuardDuty detectors
-        console.print(f"  [yellow]Fetching GuardDuty detectors for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching GuardDuty detectors for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 detectors = guardduty.get_detectors(session, region)
@@ -832,7 +838,9 @@ def collect_account_data(account_id: str) -> None:
                 )
 
         # Collect Backup vaults
-        console.print(f"  [yellow]Fetching Backup vaults for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching Backup vaults for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 vaults = backup.get_backup_vaults(session, region)
@@ -846,7 +854,9 @@ def collect_account_data(account_id: str) -> None:
                 )
 
         # Collect Backup protected resources
-        console.print(f"  [yellow]Fetching Backup protected resources for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching Backup protected resources for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 resources = backup.get_protected_resources(session, region)
@@ -860,72 +870,96 @@ def collect_account_data(account_id: str) -> None:
                 )
 
         # Collect ACM certificates
-        console.print(f"  [yellow]Fetching ACM certificates for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching ACM certificates for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 certificates = acm.get_certificates(session, region)
                 save_acm_certificates(account_id, region, certificates)
-                console.print(f"  [green]✓ Saved {len(certificates)} ACM certificates for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(certificates)} ACM certificates for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching ACM certificates for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect ACM PCA certificate authorities
-        console.print(f"  [yellow]Fetching ACM PCA certificate authorities for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching ACM PCA certificate authorities for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 authorities = acm_pca.get_certificate_authorities(session, region)
                 save_acm_pca_certificate_authorities(account_id, region, authorities)
-                console.print(f"  [green]✓ Saved {len(authorities)} ACM PCA certificate authorities for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(authorities)} ACM PCA certificate authorities for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching ACM PCA certificate authorities for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect Inspector2 configuration
-        console.print(f"  [yellow]Fetching Inspector2 configuration for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching Inspector2 configuration for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 configuration = inspector2.get_configuration(session, region)
                 save_inspector2_configuration(account_id, region, configuration)
-                console.print(f"  [green]✓ Saved Inspector2 configuration for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved Inspector2 configuration for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching Inspector2 configuration for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect Inspector2 coverage
-        console.print(f"  [yellow]Fetching Inspector2 coverage for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching Inspector2 coverage for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 coverage = inspector2.get_coverage(session, region)
                 save_inspector2_coverage(account_id, region, coverage)
-                console.print(f"  [green]✓ Saved {len(coverage)} Inspector2 coverage for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(coverage)} Inspector2 coverage for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching Inspector2 coverage for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect maintenance windows
-        console.print(f"  [yellow]Fetching maintenance windows for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching maintenance windows for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 maintenance_windows = ssm.get_maintenance_windows(session, region)
                 save_maintenance_windows(account_id, region, maintenance_windows)
-                console.print(f"  [green]✓ Saved {len(maintenance_windows)} maintenance windows for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(maintenance_windows)} maintenance windows for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching maintenance windows for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect RDS instances
-        console.print(f"  [yellow]Fetching RDS instances for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching RDS instances for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 instances = rds.get_instances(session, region)
                 save_rds_instances(account_id, region, instances)
-                console.print(f"  [green]✓ Saved {len(instances)} RDS instances for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(instances)} RDS instances for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching RDS instances for account {account_id} in region {region}: {str(e)}[/]"
@@ -937,19 +971,25 @@ def collect_account_data(account_id: str) -> None:
             try:
                 subnets = ec2.get_subnets(session, region)
                 save_subnets(account_id, region, subnets)
-                console.print(f"  [green]✓ Saved {len(subnets)} subnets for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(subnets)} subnets for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching subnets for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect EFS file systems
-        console.print(f"  [yellow]Fetching EFS file systems for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching EFS file systems for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 file_systems = efs.get_file_systems(session, region)
                 save_efs_file_systems(account_id, region, file_systems)
-                console.print(f"  [green]✓ Saved {len(file_systems)} EFS file systems for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(file_systems)} EFS file systems for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching EFS file systems for account {account_id} in region {region}: {str(e)}[/]"
@@ -961,7 +1001,9 @@ def collect_account_data(account_id: str) -> None:
             try:
                 rtbs = ec2.get_rtbs(session, region)
                 save_rtbs(account_id, region, rtbs)
-                console.print(f"  [green]✓ Saved {len(rtbs)} route tables for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(rtbs)} route tables for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching route tables for account {account_id} in region {region}: {str(e)}[/]"
@@ -973,67 +1015,107 @@ def collect_account_data(account_id: str) -> None:
             try:
                 nacls = ec2.get_nacls(session, region)
                 save_nacls(account_id, region, nacls)
-                console.print(f"  [green]✓ Saved {len(nacls)} network ACLs for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(nacls)} network ACLs for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching network ACLs for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect security groups
-        console.print(f"  [yellow]Fetching security groups for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching security groups for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
                 security_groups = ec2.get_security_groups(session, region)
                 save_security_groups(account_id, region, security_groups)
-                console.print(f"  [green]✓ Saved {len(security_groups)} security groups for account {account_id} in region {region}[/]")
+                console.print(
+                    f"  [green]✓ Saved {len(security_groups)} security groups for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching security groups for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect VPC peering connections
-        console.print(f"  [yellow]Fetching VPC peering connections for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching VPC peering connections for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
-                vpc_peering_connections = ec2.get_vpc_peering_connections(session, region)
-                save_vpc_peering_connections(account_id, region, vpc_peering_connections)
-                console.print(f"  [green]✓ Saved {len(vpc_peering_connections)} VPC peering connections for account {account_id} in region {region}[/]")
+                vpc_peering_connections = ec2.get_vpc_peering_connections(
+                    session, region
+                )
+                save_vpc_peering_connections(
+                    account_id, region, vpc_peering_connections
+                )
+                console.print(
+                    f"  [green]✓ Saved {len(vpc_peering_connections)} VPC peering connections for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching VPC peering connections for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect Route 53 Resolver firewall rule groups
-        console.print(f"  [yellow]Fetching Route 53 Resolver firewall rule groups for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching Route 53 Resolver firewall rule groups for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
-                firewall_rule_groups = route53resolver.get_firewall_rule_groups(session, region)
-                save_route53resolver_firewall_rule_groups(account_id, region, firewall_rule_groups)
-                console.print(f"  [green]✓ Saved {len(firewall_rule_groups)} Route 53 Resolver firewall rule groups for account {account_id} in region {region}[/]")
+                firewall_rule_groups = route53resolver.get_firewall_rule_groups(
+                    session, region
+                )
+                save_route53resolver_firewall_rule_groups(
+                    account_id, region, firewall_rule_groups
+                )
+                console.print(
+                    f"  [green]✓ Saved {len(firewall_rule_groups)} Route 53 Resolver firewall rule groups for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching Route 53 Resolver firewall rule groups for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect Route 53 Resolver firewall rule group associations
-        console.print(f"  [yellow]Fetching Route 53 Resolver firewall rule group associations for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching Route 53 Resolver firewall rule group associations for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
-                firewall_rule_group_associations = route53resolver.get_firewall_rule_group_associations(session, region)
-                save_route53resolver_firewall_rule_group_associations(account_id, region, firewall_rule_group_associations)
-                console.print(f"  [green]✓ Saved {len(firewall_rule_group_associations)} Route 53 Resolver firewall rule group associations for account {account_id} in region {region}[/]")
+                firewall_rule_group_associations = (
+                    route53resolver.get_firewall_rule_group_associations(
+                        session, region
+                    )
+                )
+                save_route53resolver_firewall_rule_group_associations(
+                    account_id, region, firewall_rule_group_associations
+                )
+                console.print(
+                    f"  [green]✓ Saved {len(firewall_rule_group_associations)} Route 53 Resolver firewall rule group associations for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching Route 53 Resolver firewall rule group associations for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
         # Collect Route 53 Resolver firewall domain lists
-        console.print(f"  [yellow]Fetching Route 53 Resolver firewall domain lists for account {account_id}...[/]")
+        console.print(
+            f"  [yellow]Fetching Route 53 Resolver firewall domain lists for account {account_id}...[/]"
+        )
         for region in Config.get().active_regions:
             try:
-                firewall_domain_lists = route53resolver.get_firewall_domain_lists(session, region)
-                save_route53resolver_firewall_domain_lists(account_id, region, firewall_domain_lists)
-                console.print(f"  [green]✓ Saved {len(firewall_domain_lists)} Route 53 Resolver firewall domain lists for account {account_id} in region {region}[/]")
+                firewall_domain_lists = route53resolver.get_firewall_domain_lists(
+                    session, region
+                )
+                save_route53resolver_firewall_domain_lists(
+                    account_id, region, firewall_domain_lists
+                )
+                console.print(
+                    f"  [green]✓ Saved {len(firewall_domain_lists)} Route 53 Resolver firewall domain lists for account {account_id} in region {region}[/]"
+                )
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching Route 53 Resolver firewall domain lists for account {account_id} in region {region}: {str(e)}[/]"
@@ -1177,7 +1259,7 @@ def collect_mgmt_account_workload_resources() -> None:
             workload_resources.resources.append(
                 WorkloadResource(
                     resource_type="ECS",
-                    resource_id=cluster['clusterArn'],
+                    resource_id=cluster["clusterArn"],
                     region=region,
                 )
             )

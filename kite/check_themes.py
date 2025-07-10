@@ -191,6 +191,7 @@ from kite.checks import (
     check_use_private_link_for_vpc_routing,
     check_use_route53resolver_dns_firewall,
     check_inspect_http_traffic_with_waf,
+    check_inspect_traffic_with_network_firewall,
 )
 
 # Define check themes and their associated checks
@@ -517,6 +518,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ),
         "checks": [
             check_inspect_http_traffic_with_waf,
+            check_inspect_traffic_with_network_firewall,
         ],
     },
     "Automate network protection": {

@@ -1773,3 +1773,24 @@ def get_cloudfront_distributions(account_id: str) -> List[Dict[str, Any]]:
         account_id: The AWS account ID.
     """
     return _load_data("cloudfront_distributions", account_id) or []
+
+
+def save_networkfirewall_firewalls(account_id: str, region: str, firewalls: List[Dict[str, Any]]) -> None:
+    """Save Network Firewall firewalls for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        firewalls: The list of Network Firewall firewalls to save.
+    """
+    _save_data(firewalls, f"networkfirewall_firewalls_{region}", account_id)
+
+
+def get_networkfirewall_firewalls(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get Network Firewall firewalls for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"networkfirewall_firewalls_{region}", account_id) or []

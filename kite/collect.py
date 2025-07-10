@@ -42,6 +42,7 @@ from . import (
     efs,
     apigateway,
     appsync,
+    networkfirewall,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -124,6 +125,7 @@ from kite.data import (
     save_apigateway_rest_apis,
     save_appsync_graphql_apis,
     save_cloudfront_distributions,
+    save_networkfirewall_firewalls,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -1166,6 +1168,22 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching AppSync GraphQL APIs for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect Network Firewalls
+        console.print(
+            f"  [yellow]Fetching Network Firewalls for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                firewalls = networkfirewall.get_firewalls(session, region)
+                save_networkfirewall_firewalls(account_id, region, firewalls)
+                console.print(
+                    f"  [green]✓ Saved {len(firewalls)} Network Firewalls for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching Network Firewalls for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

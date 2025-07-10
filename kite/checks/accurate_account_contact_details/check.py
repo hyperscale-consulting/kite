@@ -59,7 +59,7 @@ def check_accurate_account_contact_details() -> Dict[str, Any]:
                 "Consider the following factors:\n"
                 "- Are contact details accurate and up-to-date?\n"
                 "- Is the email address on a corporate domain and a distribution list "
-                "  locked down to appropriate users?\n"
+                "locked down to appropriate users?\n"
                 "- Is the phone number a secure phone dedicated for this purpose?"
             )
 

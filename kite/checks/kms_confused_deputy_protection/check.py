@@ -55,8 +55,8 @@ def check_kms_confused_deputy_protection() -> Dict[str, Any]:
             keys = get_kms_keys(account_id, region)
 
             for key in keys:
-                key_arn = key["key_arn"]
-                policy = key.get("policy")
+                key_arn = key["KeyArn"]
+                policy = key.get("Policy")
 
                 if not policy:
                     continue

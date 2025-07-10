@@ -40,6 +40,8 @@ from . import (
     inspector2,
     ssm,
     efs,
+    apigateway,
+    appsync,
 )
 from kite.helpers import (
     assume_organizational_role,
@@ -119,6 +121,9 @@ from kite.data import (
     save_route53resolver_firewall_rule_groups,
     save_route53resolver_firewall_rule_group_associations,
     save_route53resolver_firewall_domain_lists,
+    save_apigateway_rest_apis,
+    save_appsync_graphql_apis,
+    save_cloudfront_distributions,
 )
 from kite.config import Config
 from kite.models import WorkloadResources, WorkloadResource
@@ -523,6 +528,16 @@ def collect_account_data(account_id: str) -> None:
         save_cloudfront_origin_access_identities(account_id, identities)
         console.print(
             f"  [green]✓ Saved {len(identities)} CloudFront origin access identities for account {account_id}[/]"
+        )
+
+        # Collect CloudFront distributions
+        console.print(
+            f"  [yellow]Fetching CloudFront distributions for account {account_id}...[/]"
+        )
+        distributions = cloudfront.get_distributions(session)
+        save_cloudfront_distributions(account_id, distributions)
+        console.print(
+            f"  [green]✓ Saved {len(distributions)} CloudFront distributions for account {account_id}[/]"
         )
 
         # Collect VPC endpoints
@@ -1119,6 +1134,38 @@ def collect_account_data(account_id: str) -> None:
             except Exception as e:
                 console.print(
                     f"  [red]✗ Error fetching Route 53 Resolver firewall domain lists for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect API Gateway REST APIs
+        console.print(
+            f"  [yellow]Fetching API Gateway REST APIs for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                rest_apis = apigateway.get_rest_apis(session, region)
+                save_apigateway_rest_apis(account_id, region, rest_apis)
+                console.print(
+                    f"  [green]✓ Saved {len(rest_apis)} API Gateway REST APIs for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching API Gateway REST APIs for account {account_id} in region {region}: {str(e)}[/]"
+                )
+
+        # Collect AppSync GraphQL APIs
+        console.print(
+            f"  [yellow]Fetching AppSync GraphQL APIs for account {account_id}...[/]"
+        )
+        for region in Config.get().active_regions:
+            try:
+                graphql_apis = appsync.get_graphql_apis(session, region)
+                save_appsync_graphql_apis(account_id, region, graphql_apis)
+                console.print(
+                    f"  [green]✓ Saved {len(graphql_apis)} AppSync GraphQL APIs for account {account_id} in region {region}[/]"
+                )
+            except Exception as e:
+                console.print(
+                    f"  [red]✗ Error fetching AppSync GraphQL APIs for account {account_id} in region {region}: {str(e)}[/]"
                 )
 
     except Exception as e:

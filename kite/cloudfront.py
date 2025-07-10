@@ -2,6 +2,8 @@
 
 from typing import List, Dict, Any
 
+import boto3
+
 
 def get_distributions(session) -> List[Dict[str, Any]]:
     """
@@ -32,3 +34,16 @@ def get_origin_access_identities(session):
             page.get("CloudFrontOriginAccessIdentityList", {}).get("Items", [])
         )
     return identities
+
+
+def get_distributions_by_web_acl(
+    session: boto3.Session,
+    web_acl_arn: str,
+) -> List[Dict[str, Any]]:
+    """
+    Get all CloudFront distributions by Web ACL.
+    """
+    client = session.client("cloudfront")
+    response = client.list_distributions_by_web_acl_id(WebACLId=web_acl_arn)
+    arns = [e["ARN"] for e in response.get("DistributionList", {}).get("Items", [])]
+    return arns

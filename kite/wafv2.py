@@ -3,6 +3,8 @@ from enum import Enum
 
 import boto3
 
+from kite import cloudfront
+
 
 class Scope(Enum):
     CLOUDFRONT = "CLOUDFRONT"
@@ -20,8 +22,19 @@ def get_web_acls(
     for web_acl in response["WebACLs"]:
         detail = get_web_acl(session, web_acl["ARN"], region)
         detail["Scope"] = scope
+        if scope == Scope.REGIONAL.value:
+            detail["Resources"] = get_resources_for_web_acl(client, web_acl["ARN"])
+        else:
+            detail["Resources"] = cloudfront.get_distributions_by_web_acl(
+                session, web_acl["ARN"]
+            )
         web_acls.append(detail)
     return web_acls
+
+
+def get_resources_for_web_acl(client: boto3.client, web_acl_arn: str) -> List[Dict[str, Any]]:
+    response = client.list_resources_for_web_acl(WebACLArn=web_acl_arn)
+    return response["ResourceArns"]
 
 
 def get_web_acl(session: boto3.Session, web_acl_arn: str, region: str) -> Dict[str, Any]:

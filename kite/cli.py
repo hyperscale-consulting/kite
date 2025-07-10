@@ -22,6 +22,7 @@ from kite.data import save_collection_metadata, verify_collection_status
 from kite.accessanalyzer import list_analyzers
 from kite.s3 import get_buckets
 from kite.wafv2 import get_web_acls
+from kite.cloudfront import get_distributions_by_web_acl
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -557,6 +558,22 @@ def list_web_acls(config: str, account_id: str, region: str, scope: str):
     Config.load(config)
     session = assume_role(account_id)
     console.print(get_web_acls(session, scope, region))
+
+
+@main.command()
+@click.option(
+    "--config",
+    "-c",
+    default="kite.yaml",
+    help="Path to config file (default: kite.yaml)",
+    type=click.Path(exists=True),
+)
+@click.argument("account_id", required=True)
+@click.argument("web_acl_arn", required=True)
+def list_distributions_by_web_acl(config: str, account_id: str, web_acl_arn: str):
+    Config.load(config)
+    session = assume_role(account_id)
+    console.print(get_distributions_by_web_acl(session, web_acl_arn))
 
 
 if __name__ == "__main__":

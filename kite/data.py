@@ -1711,3 +1711,65 @@ def get_route53resolver_firewall_domain_lists(account_id: str, region: str) -> L
         region: The AWS region.
     """
     return _load_data(f"route53resolver_firewall_domain_lists_{region}", account_id) or []
+
+
+def save_apigateway_rest_apis(account_id: str, region: str, rest_apis: List[Dict[str, Any]]) -> None:
+    """Save API Gateway REST APIs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        rest_apis: The list of API Gateway REST APIs to save.
+    """
+    _save_data(rest_apis, f"apigateway_rest_apis_{region}", account_id)
+
+
+def get_apigateway_rest_apis(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get API Gateway REST APIs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"apigateway_rest_apis_{region}", account_id) or []
+
+
+def save_appsync_graphql_apis(account_id: str, region: str, graphql_apis: List[Dict[str, Any]]) -> None:
+    """Save AppSync GraphQL APIs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        graphql_apis: The list of AppSync GraphQL APIs to save.
+    """
+    _save_data(graphql_apis, f"appsync_graphql_apis_{region}", account_id)
+
+
+def get_appsync_graphql_apis(account_id: str, region: str) -> List[Dict[str, Any]]:
+    """Get AppSync GraphQL APIs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"appsync_graphql_apis_{region}", account_id) or []
+
+
+def save_cloudfront_distributions(account_id: str, distributions: List[Dict[str, Any]]) -> None:
+    """Save CloudFront distributions for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        distributions: The list of CloudFront distributions to save.
+    """
+    _save_data(distributions, "cloudfront_distributions", account_id)
+
+
+def get_cloudfront_distributions(account_id: str) -> List[Dict[str, Any]]:
+    """Get CloudFront distributions for an account.
+
+    Args:
+        account_id: The AWS account ID.
+    """
+    return _load_data("cloudfront_distributions", account_id) or []

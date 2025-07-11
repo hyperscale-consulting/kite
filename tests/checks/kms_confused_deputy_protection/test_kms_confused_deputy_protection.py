@@ -11,24 +11,20 @@ def kms_key_with_protection(workload_account_id, organization):
     keys = [
         {
             "KeyId": "1234567890",
-            "KeyArn": f"arn:aws:kms:us-east-1:{workload_account_id}:key/1234567890",
+            "Arn": f"arn:aws:kms:us-east-1:{workload_account_id}:key/1234567890",
             "Policy": {
                 "Statement": [
                     {
                         "Effect": "Allow",
-                        "Principal": {
-                            "Service": "sns.amazonaws.com"
-                        },
+                        "Principal": {"Service": "sns.amazonaws.com"},
                         "Action": "kms:Decrypt",
                         "Resource": "*",
                         "Condition": {
-                            "StringEquals": {
-                                "aws:SourceAccount": workload_account_id
-                            }
-                        }
+                            "StringEquals": {"aws:SourceAccount": workload_account_id}
+                        },
                     }
                 ]
-            }
+            },
         }
     ]
     save_kms_keys(workload_account_id, "us-east-1", keys)
@@ -40,19 +36,17 @@ def kms_key_without_protection(workload_account_id, organization):
     keys = [
         {
             "KeyId": "1234567890",
-            "KeyArn": f"arn:aws:kms:us-east-1:{workload_account_id}:key/1234567890",
+            "Arn": f"arn:aws:kms:us-east-1:{workload_account_id}:key/1234567890",
             "Policy": {
                 "Statement": [
                     {
                         "Effect": "Allow",
-                        "Principal": {
-                            "Service": "sns.amazonaws.com"
-                        },
+                        "Principal": {"Service": "sns.amazonaws.com"},
                         "Action": "kms:Decrypt",
                         "Resource": "*",
                     }
                 ]
-            }
+            },
         }
     ]
     save_kms_keys(workload_account_id, "us-east-1", keys)

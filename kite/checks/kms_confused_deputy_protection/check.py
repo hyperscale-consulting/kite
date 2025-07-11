@@ -55,7 +55,7 @@ def check_kms_confused_deputy_protection() -> Dict[str, Any]:
             keys = get_kms_keys(account_id, region)
 
             for key in keys:
-                key_arn = key["KeyArn"]
+                key_arn = key["Arn"]
                 policy = key.get("Policy")
 
                 if not policy:
@@ -80,12 +80,14 @@ def check_kms_confused_deputy_protection() -> Dict[str, Any]:
 
                     # Check if any principal is a service principal
                     if any(_is_service_principal(p) for p in principals):
-                        vulnerable_keys.append({
-                            "account_id": account_id,
-                            "region": region,
-                            "key_arn": key_arn,
-                            "statement": statement
-                        })
+                        vulnerable_keys.append(
+                            {
+                                "account_id": account_id,
+                                "region": region,
+                                "key_arn": key_arn,
+                                "statement": statement,
+                            }
+                        )
 
     return {
         "check_id": CHECK_ID,
@@ -98,8 +100,8 @@ def check_kms_confused_deputy_protection() -> Dict[str, Any]:
                 "vulnerable to confused deputy attacks. These policies allow actions to "
                 "be performed by service principals without proper source account/ARN/"
                 "organization conditions."
-            )
-        }
+            ),
+        },
     }
 
 

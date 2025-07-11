@@ -1,10 +1,10 @@
-"""Main CLI module for Kite."""
-
 import yaml
 from datetime import datetime
 import os
 import shutil
 import logging
+from dataclasses import dataclass, field, asdict
+from collections import defaultdict
 
 import click
 from rich.console import Console
@@ -113,6 +113,41 @@ def main():
     pass
 
 
+@dataclass
+class Assessment:
+    timestamp: str = datetime.now().isoformat()
+    config_file: str = "kite.yaml"
+    themes: dict = field(default_factory=lambda: defaultdict(list))
+
+    @classmethod
+    def load(cls):
+        try:
+            with open("kite-results.yaml", "r") as f:
+                data = yaml.safe_load(f)
+                data["themes"] = defaultdict(list, data.get("themes", {}))
+                return Assessment(**data)
+        except FileNotFoundError:
+            return None
+
+    def record(self, theme_name: str, finding):
+        self.themes[theme_name].append(finding)
+
+    def save(self):
+        with open("kite-results.yaml", "w") as f:
+            data = asdict(self)
+            data["themes"] = dict(
+                self.themes
+            )  # Convert defaultdict to dict for YAML serialization
+            yaml.dump(data, f, default_flow_style=False)
+
+    def has_finding(self, check_id: str):
+        for _, findings in self.themes.items():
+            for f in findings:
+                if f["check_id"] == check_id:
+                    return True
+        return False
+
+
 @main.command()
 @click.option(
     "--config",
@@ -121,7 +156,7 @@ def main():
     help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
-def start(config: str):
+def assess(config: str):
     """Start a security assessment using the specified config file."""
     config_data = Config.load(config)
 
@@ -133,9 +168,18 @@ def start(config: str):
         ", ".join(config_data.account_ids) if config_data.account_ids else "ALL"
     )
 
+    assessment = Assessment.load()
+    if assessment:
+        progress_msg = (
+            "Continuing AWS security assessment using results from ./kite-results.yaml"
+        )
+    else:
+        progress_msg = "Starting new AWS security assessment"
+        assessment = Assessment()
+
     console.print(
         Panel(
-            f"Starting AWS security assessment\n"
+            f"{progress_msg}\n"
             f"Management Account: {config_data.management_account_id}\n"
             f"Target Accounts: {account_ids_str}\n"
             f"Regions: {', '.join(config_data.active_regions)}\n"
@@ -146,13 +190,6 @@ def start(config: str):
     )
 
     try:
-        # Initialize results dictionary
-        results = {
-            "timestamp": datetime.now().isoformat(),
-            "config_file": config,
-            "themes": {},
-        }
-
         # Run checks by theme
         for theme_name, theme_data in CHECK_THEMES.items():
             console.print(
@@ -163,18 +200,24 @@ def start(config: str):
                 )
             )
 
-            theme_findings = []
-            results["themes"][theme_name] = theme_findings
+            # theme_findings = []
+            # results["themes"][theme_name] = theme_findings
             for check in theme_data["checks"]:
+                if assessment.has_finding(check._CHECK_ID):
+                    console.print(
+                        f"[yellow]Skipping {check._CHECK_NAME} - already assessed[/yellow]"
+                    )
+                    continue
                 finding = check()
-                theme_findings.append(finding)
+                assessment.record(theme_name, finding)
+                # theme_findings.append(finding)
                 display_finding(finding)
-                save_assessment(results)
+                assessment.save()
+                # save_assessment(results)
 
-            display_theme_results(theme_name, theme_findings)
+            display_theme_results(theme_name, assessment.themes[theme_name])
 
-        save_assessment(results)
-
+        assessment.save()
         console.print(
             Panel(
                 "Assessment results saved to kite-results.yaml",

@@ -1,6 +1,7 @@
 import json
 
 import boto3
+from botocore.exceptions import ClientError
 
 
 def get_keys(session: boto3.Session, region: str) -> list[dict[str, object]]:
@@ -27,18 +28,22 @@ def get_keys(session: boto3.Session, region: str) -> list[dict[str, object]]:
             policy = kms.get_key_policy(KeyId=key_id, PolicyName="default")
             policy = json.loads(policy["Policy"])
 
-            rotation_status = {}
-            rotation_status_response = kms.get_key_rotation_status(KeyId=key_id)
-            rotation_status = dict(
-                RotationEnabled=rotation_status_response["KeyRotationEnabled"],
-                RotationPeriodInDays=rotation_status_response.get(
-                    "RotationPeriodInDays", None
-                ),
-            )
-
             details = kms.describe_key(KeyId=key_id)["KeyMetadata"]
+
+            try:
+                # TODO: add permissions to get rotation status
+                rotation_status_response = kms.get_key_rotation_status(KeyId=key_id)
+                details["RotationStatus"] = dict(
+                    RotationEnabled=rotation_status_response["KeyRotationEnabled"],
+                    RotationPeriodInDays=rotation_status_response.get(
+                        "RotationPeriodInDays", None
+                    ),
+                )
+            except ClientError as e:
+                if e.response["Error"]["Code"] == "AccessDeniedException":
+                    details["RotationStatus"] = None
+
             details["Policy"] = policy
-            details["RotationStatus"] = rotation_status
             keys.append(details)
     return keys
 

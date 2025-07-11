@@ -164,17 +164,16 @@ def start(config: str):
             )
 
             theme_findings = []
+            results["themes"][theme_name] = theme_findings
             for check in theme_data["checks"]:
                 finding = check()
                 theme_findings.append(finding)
                 display_finding(finding)
+                save_assessment(results)
 
-            results["themes"][theme_name] = theme_findings
             display_theme_results(theme_name, theme_findings)
 
-        # Save results to file
-        with open("kite-results.yaml", "w") as f:
-            yaml.dump(results, f, default_flow_style=False)
+        save_assessment(results)
 
         console.print(
             Panel(
@@ -189,6 +188,11 @@ def start(config: str):
         raise click.ClickException(f"Error during assessment: {str(e)}")
 
 
+def save_assessment(assessment):
+    with open("kite-results.yaml", "w") as f:
+        yaml.dump(assessment, f, default_flow_style=False)
+
+
 @main.command()
 def list_checks():
     """List all available security checks."""
@@ -198,7 +202,6 @@ def list_checks():
     table.add_column("Check Name", style="green")
 
     for theme in CHECK_THEMES:
-
         for check in CHECK_THEMES[theme]["checks"]:
             if hasattr(check, "_CHECK_ID") and hasattr(check, "_CHECK_NAME"):
                 table.add_row(theme, check._CHECK_ID, check._CHECK_NAME)
@@ -258,7 +261,9 @@ def get_organization_account_details(account_id: str, config: str):
         account = get_account_details(session, account_id)
 
         if not account:
-            console.print(f"[red]Error: Account {account_id} not found in the organization[/red]")
+            console.print(
+                f"[red]Error: Account {account_id} not found in the organization[/red]"
+            )
             return
 
         # Create a table to display account details
@@ -315,9 +320,11 @@ def configure():
             continue
 
         # Convert account IDs to list, filtering out empty strings
-        account_ids = [
-            aid.strip() for aid in account_ids_input.split(",") if aid.strip()
-        ] if account_ids_input else []
+        account_ids = (
+            [aid.strip() for aid in account_ids_input.split(",") if aid.strip()]
+            if account_ids_input
+            else []
+        )
         break
 
     # Ask the user for the list of regions to include in the assessment
@@ -334,15 +341,20 @@ def configure():
 
         # Convert regions to list, filtering out empty strings
         active_regions = [
-            region.strip() for region in active_regions_input.split(",") if region.strip()
+            region.strip()
+            for region in active_regions_input.split(",")
+            if region.strip()
         ]
         break
 
     # Ask the user for the name of the role to use for the assessment
-    role_name = Prompt.ask(
-        "Role Name",
-        default="KiteAssessmentRole",
-    ).strip() or "KiteAssessmentRole"
+    role_name = (
+        Prompt.ask(
+            "Role Name",
+            default="KiteAssessmentRole",
+        ).strip()
+        or "KiteAssessmentRole"
+    )
 
     # Ask for the external ID
     while True:
@@ -356,16 +368,22 @@ def configure():
             console.print("[yellow]External ID is required[/yellow]")
 
     # Ask for the prowler output directory
-    prowler_output_dir = Prompt.ask(
-        "Prowler Output Directory",
-        default="output",
-    ).strip() or "output"
+    prowler_output_dir = (
+        Prompt.ask(
+            "Prowler Output Directory",
+            default="output",
+        ).strip()
+        or "output"
+    )
 
     # Ask for the data directory
-    data_dir = Prompt.ask(
-        "Data Directory",
-        default=".kite/audit",
-    ).strip() or ".kite/audit"
+    data_dir = (
+        Prompt.ask(
+            "Data Directory",
+            default=".kite/audit",
+        ).strip()
+        or ".kite/audit"
+    )
 
     # Create the config
     config = Config.create(
@@ -461,10 +479,7 @@ def get_prowler_check_status(config: str, check_id: str):
                 resource_name = result.resource_name or result.resource_uid
                 status_text = f"{status_emoji} {result.status}"
                 table.add_row(
-                    result.account_id,
-                    status_text,
-                    result.region,
-                    resource_name
+                    result.account_id, status_text, result.region, resource_name
                 )
 
         if not has_failures:
@@ -473,9 +488,7 @@ def get_prowler_check_status(config: str, check_id: str):
             console.print(table)
 
     except Exception as e:
-        raise click.ClickException(
-            f"Error getting prowler check status: {str(e)}"
-        )
+        raise click.ClickException(f"Error getting prowler check status: {str(e)}")
 
 
 @main.command()

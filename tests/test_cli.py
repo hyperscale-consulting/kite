@@ -58,11 +58,13 @@ def delegated_admins(audit_account_id):
 
 @pytest.fixture
 def ec2_instances():
-    yield [{
-        "InstanceId": "i-1234567890abcdef0",
-        "InstanceType": "t2.micro",
-        "State": {"Name": "running"},
-    }]
+    yield [
+        {
+            "InstanceId": "i-1234567890abcdef0",
+            "InstanceType": "t2.micro",
+            "State": {"Name": "running"},
+        }
+    ]
 
 
 @pytest.fixture
@@ -257,8 +259,8 @@ def test_run_list_checks(runner, config):
     assert result.exit_code == 0
 
 
-def test_run_start_without_collect(runner, config_path):
-    result = runner.invoke(main, ["start", "--config", str(config_path)])
+def test_run_assess_without_collect(runner, config_path):
+    result = runner.invoke(main, ["assess", "--config", str(config_path)])
     assert (
         "Data collection has not been run. Please run 'kite collect' first."
         in result.output
@@ -272,7 +274,7 @@ def test_run_collect(runner, config_path):
     assert result.exit_code == 0
 
 
-def test_run_start_after_collect(runner, config_path):
+def test_run_assess_after_collect(runner, config_path):
     runner.invoke(main, ["collect", "--config", str(config_path)])
 
     def responses():
@@ -318,7 +320,7 @@ def test_run_start_after_collect(runner, config_path):
             return False
 
     result = runner.invoke(
-        main, ["start", "--config", str(config_path)], input=TestInput(responses())
+        main, ["assess", "--config", str(config_path)], input=TestInput(responses())
     )
     print(result.output)
     assert result.exit_code == 0

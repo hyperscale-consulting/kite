@@ -60,3 +60,7 @@ def check_isolation_boundaries() -> dict:
         fail_message="Isolation boundaries could be improved.",
         default=True,
     )
+
+
+check_isolation_boundaries._CHECK_ID = CHECK_ID
+check_isolation_boundaries._CHECK_NAME = CHECK_NAME

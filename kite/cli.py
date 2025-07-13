@@ -203,6 +203,10 @@ def assess(config: str):
             # theme_findings = []
             # results["themes"][theme_name] = theme_findings
             for check in theme_data["checks"]:
+                if not hasattr(check, "_CHECK_ID") or not hasattr(check, "_CHECK_NAME"):
+                    raise Exception(
+                        f"Skipping check {check} - missing _CHECK_ID or _CHECK_NAME"
+                    )
                 if assessment.has_finding(check._CHECK_ID):
                     console.print(
                         f"[yellow]Skipping {check._CHECK_NAME} - already assessed[/yellow]"

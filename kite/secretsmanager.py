@@ -1,26 +1,8 @@
-"""Secrets Manager module for Kite."""
-
-from dataclasses import dataclass
-from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 from botocore.exceptions import ClientError
 
 
-@dataclass
-class SecretDetails:
-    """Details of a secret in AWS Secrets Manager."""
-    name: str
-    description: Optional[str]
-    last_accessed_date: Optional[datetime]
-    last_changed_date: Optional[datetime]
-    resource_policy: Optional[str]
-    tags: List[Dict[str, str]]
-    version_ids_to_stages: Dict[str, List[str]]
-    created_date: datetime
-    arn: str
-
-
-def fetch_secrets(session, region: Optional[str] = None) -> List[SecretDetails]:
+def fetch_secrets(session, region: Optional[str] = None) -> List[Dict[str, Any]]:
     """
     Fetch all secrets from AWS Secrets Manager, including their resource policies.
 
@@ -50,22 +32,10 @@ def fetch_secrets(session, region: Optional[str] = None) -> List[SecretDetails]:
             except ClientError as e:
                 if e.response["Error"]["Code"] == "ResourceNotFoundException":
                     # No resource policy exists
-                    resource_policy = None
+                    resource_policy = {}
                 else:
                     raise
-
-            # Create a SecretDetails object
-            secret_details = SecretDetails(
-                name=secret["Name"],
-                description=secret.get("Description"),
-                last_accessed_date=secret.get("LastAccessedDate"),
-                last_changed_date=secret.get("LastChangedDate"),
-                resource_policy=resource_policy,
-                tags=secret.get("Tags", []),
-                version_ids_to_stages=secret.get("VersionIdsToStages", {}),
-                created_date=secret["CreatedDate"],
-                arn=secret["ARN"]
-            )
-            secrets.append(secret_details)
+            secret["ResourcePolicy"] = resource_policy
+            secrets.append(secret)
 
     return secrets

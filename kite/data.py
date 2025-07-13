@@ -13,9 +13,7 @@ from kite.models import Organization, DelegatedAdmin, WorkloadResources
 
 
 def _save_data(
-    data: Dict[str, Any],
-    data_type: str,
-    account_id: str = "organization"
+    data: Dict[str, Any], data_type: str, account_id: str = "organization"
 ) -> None:
     """Save data to a file in the data directory.
 
@@ -40,8 +38,7 @@ def _save_data(
 
 
 def _load_data(
-    data_type: str,
-    account_id: str = "organization"
+    data_type: str, account_id: str = "organization"
 ) -> Optional[Dict[str, Any]]:
     """Load data from a file in the data directory.
 
@@ -185,7 +182,9 @@ def get_account_summary(account_id: str) -> Optional[Dict[str, Any]]:
     return _load_data("account_summary", account_id)
 
 
-def save_saml_providers(providers: List[Dict[str, Any]], account_id: str = "organization") -> None:
+def save_saml_providers(
+    providers: List[Dict[str, Any]], account_id: str = "organization"
+) -> None:
     """Save SAML providers.
 
     Args:
@@ -195,7 +194,9 @@ def save_saml_providers(providers: List[Dict[str, Any]], account_id: str = "orga
     _save_data(providers, "saml_providers", account_id)
 
 
-def get_saml_providers(account_id: str = "organization") -> Optional[List[Dict[str, Any]]]:
+def get_saml_providers(
+    account_id: str = "organization",
+) -> Optional[List[Dict[str, Any]]]:
     """Get SAML providers.
 
     Returns:
@@ -204,7 +205,9 @@ def get_saml_providers(account_id: str = "organization") -> Optional[List[Dict[s
     return _load_data("saml_providers", account_id) or []
 
 
-def save_oidc_providers(providers: List[Dict[str, Any]], account_id: str = "organization") -> None:
+def save_oidc_providers(
+    providers: List[Dict[str, Any]], account_id: str = "organization"
+) -> None:
     """Save OIDC providers.
 
     Args:
@@ -214,7 +217,9 @@ def save_oidc_providers(providers: List[Dict[str, Any]], account_id: str = "orga
     _save_data(providers, "oidc_providers", account_id)
 
 
-def get_oidc_providers(account_id: str = "organization") -> Optional[List[Dict[str, Any]]]:
+def get_oidc_providers(
+    account_id: str = "organization",
+) -> Optional[List[Dict[str, Any]]]:
     """Get OIDC providers.
 
     Returns:
@@ -223,7 +228,9 @@ def get_oidc_providers(account_id: str = "organization") -> Optional[List[Dict[s
     return _load_data("oidc_providers", account_id) or []
 
 
-def save_identity_center_instances(instances: List[Dict[str, Any]], account_id: str = "organization") -> None:
+def save_identity_center_instances(
+    instances: List[Dict[str, Any]], account_id: str = "organization"
+) -> None:
     """Save Identity Center instances.
 
     Args:
@@ -233,7 +240,9 @@ def save_identity_center_instances(instances: List[Dict[str, Any]], account_id: 
     _save_data(instances, "identity_center_instances", account_id)
 
 
-def get_identity_center_instances(account_id: str = "organization") -> Optional[List[Dict[str, Any]]]:
+def get_identity_center_instances(
+    account_id: str = "organization",
+) -> Optional[List[Dict[str, Any]]]:
     """Get Identity Center instances.
 
     Returns:
@@ -242,7 +251,9 @@ def get_identity_center_instances(account_id: str = "organization") -> Optional[
     return _load_data("identity_center_instances", account_id) or []
 
 
-def save_ec2_instances(account_id: str, region: str, instances: list[dict[str, object]]) -> None:
+def save_ec2_instances(
+    account_id: str, region: str, instances: list[dict[str, object]]
+) -> None:
     """Save EC2 instances for an account.
 
     Args:
@@ -363,9 +374,7 @@ def save_cognito_user_pools(account_id: str, pools: List[Dict[str, Any]]) -> Non
 
 
 def save_cognito_user_pool(
-    account_id: str,
-    user_pool_id: str,
-    pool_data: Dict[str, Any]
+    account_id: str, user_pool_id: str, pool_data: Dict[str, Any]
 ) -> None:
     """
     Save details for a specific Cognito user pool.
@@ -479,7 +488,27 @@ def get_roles(account_id: str) -> List[Dict[str, Any]]:
     return _load_data("iam_roles", account_id) or []
 
 
-def save_inline_policy_document(account_id: str, role_name: str, policy_name: str, policy_document: Dict[str, Any]) -> None:
+def get_role_by_arn(role_arn: str) -> Optional[Dict[str, Any]]:
+    """
+    Get a specific IAM role by arn.
+
+    Args:
+        role_arn: The arn of the IAM role.
+
+    Returns:
+        Dictionary containing the role information, or None if not found.
+    """
+    account_id = role_arn.split(":")[4]  # Extract account ID from ARN
+    roles = get_roles(account_id)
+    for role in roles:
+        if role["RoleArn"] == role_arn:
+            return role
+    return None
+
+
+def save_inline_policy_document(
+    account_id: str, role_name: str, policy_name: str, policy_document: Dict[str, Any]
+) -> None:
     """
     Save an inline policy document for a role.
 
@@ -492,12 +521,14 @@ def save_inline_policy_document(account_id: str, role_name: str, policy_name: st
     data = {
         "RoleName": role_name,
         "PolicyName": policy_name,
-        "PolicyDocument": policy_document
+        "PolicyDocument": policy_document,
     }
     _save_data(data, f"inline_policy_{role_name}_{policy_name}", account_id)
 
 
-def get_inline_policy_document(account_id: str, role_name: str, policy_name: str) -> Dict[str, Any]:
+def get_inline_policy_document(
+    account_id: str, role_name: str, policy_name: str
+) -> Dict[str, Any]:
     """
     Get an inline policy document for a role.
 
@@ -512,7 +543,9 @@ def get_inline_policy_document(account_id: str, role_name: str, policy_name: str
     return _load_data(f"inline_policy_{role_name}_{policy_name}", account_id) or {}
 
 
-def save_customer_managed_policies(account_id: str, policies: List[Dict[str, Any]]) -> None:
+def save_customer_managed_policies(
+    account_id: str, policies: List[Dict[str, Any]]
+) -> None:
     """
     Save customer managed policies for an account.
 
@@ -536,7 +569,9 @@ def get_customer_managed_policies(account_id: str) -> List[Dict[str, Any]]:
     return _load_data("customer_managed_policies", account_id) or []
 
 
-def save_policy_document(account_id: str, policy_arn: str, policy_document: Dict[str, Any]) -> None:
+def save_policy_document(
+    account_id: str, policy_arn: str, policy_document: Dict[str, Any]
+) -> None:
     """
     Save a policy document for a customer managed policy.
 
@@ -638,7 +673,9 @@ def get_sqs_queues(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"sqs_queues_{region}", account_id) or []
 
 
-def save_lambda_functions(account_id: str, region: str, functions: List[Dict[str, Any]]) -> None:
+def save_lambda_functions(
+    account_id: str, region: str, functions: List[Dict[str, Any]]
+) -> None:
     """Save Lambda functions for an account and region.
 
     Args:
@@ -686,7 +723,9 @@ def get_kms_keys(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"kms_keys_{region}", account_id) or []
 
 
-def save_identity_center_permission_sets(account_id: str, instance_id: str, permission_sets: List[Dict[str, Any]]) -> None:
+def save_identity_center_permission_sets(
+    account_id: str, instance_id: str, permission_sets: List[Dict[str, Any]]
+) -> None:
     """Save Identity Center permission sets for an account and instance.
 
     Args:
@@ -694,10 +733,14 @@ def save_identity_center_permission_sets(account_id: str, instance_id: str, perm
         instance_id: The ID of the Identity Center instance.
         permission_sets: The list of permission sets to save.
     """
-    _save_data(permission_sets, f"identity_center_permission_sets_{instance_id}", account_id)
+    _save_data(
+        permission_sets, f"identity_center_permission_sets_{instance_id}", account_id
+    )
 
 
-def get_identity_center_permission_sets(account_id: str, instance_id: str) -> List[Dict[str, Any]]:
+def get_identity_center_permission_sets(
+    account_id: str, instance_id: str
+) -> List[Dict[str, Any]]:
     """Get Identity Center permission sets for an account and instance.
 
     Args:
@@ -707,10 +750,14 @@ def get_identity_center_permission_sets(account_id: str, instance_id: str) -> Li
     Returns:
         The list of Identity Center permission sets, or an empty list if not found.
     """
-    return _load_data(f"identity_center_permission_sets_{instance_id}", account_id) or []
+    return (
+        _load_data(f"identity_center_permission_sets_{instance_id}", account_id) or []
+    )
 
 
-def save_identity_store_users(account_id: str, instance_id: str, users: List[Dict[str, Any]]) -> None:
+def save_identity_store_users(
+    account_id: str, instance_id: str, users: List[Dict[str, Any]]
+) -> None:
     """Save Identity Store users for an account and instance.
 
     Args:
@@ -734,7 +781,9 @@ def get_identity_store_users(account_id: str, instance_id: str) -> List[Dict[str
     return _load_data(f"identity_store_users_{instance_id}", account_id) or []
 
 
-def save_identity_store_groups(account_id: str, instance_id: str, groups: List[Dict[str, Any]]) -> None:
+def save_identity_store_groups(
+    account_id: str, instance_id: str, groups: List[Dict[str, Any]]
+) -> None:
     """Save Identity Store groups for an account and instance.
 
     Args:
@@ -745,7 +794,9 @@ def save_identity_store_groups(account_id: str, instance_id: str, groups: List[D
     _save_data(groups, f"identity_store_groups_{instance_id}", account_id)
 
 
-def get_identity_store_groups(account_id: str, instance_id: str) -> List[Dict[str, Any]]:
+def get_identity_store_groups(
+    account_id: str, instance_id: str
+) -> List[Dict[str, Any]]:
     """Get Identity Store groups for an account and instance.
 
     Args:
@@ -818,7 +869,9 @@ def get_iam_groups(account_id: str) -> List[Dict[str, Any]]:
     return _load_data("iam_groups", account_id) or []
 
 
-def save_config_recorders(account_id: str, region: str, recorders: List[Dict[str, Any]]) -> None:
+def save_config_recorders(
+    account_id: str, region: str, recorders: List[Dict[str, Any]]
+) -> None:
     """Save Config recorders for an account and region.
 
     Args:
@@ -839,7 +892,9 @@ def get_config_recorders(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"config_recorders_{region}", account_id) or []
 
 
-def save_config_delivery_channels(account_id: str, region: str, channels: List[Dict[str, Any]]) -> None:
+def save_config_delivery_channels(
+    account_id: str, region: str, channels: List[Dict[str, Any]]
+) -> None:
     """Save Config delivery channels for an account and region.
 
     Args:
@@ -860,7 +915,9 @@ def get_config_delivery_channels(account_id: str, region: str) -> List[Dict[str,
     return _load_data(f"config_delivery_channels_{region}", account_id) or []
 
 
-def save_config_rules(account_id: str, region: str, rules: List[Dict[str, Any]]) -> None:
+def save_config_rules(
+    account_id: str, region: str, rules: List[Dict[str, Any]]
+) -> None:
     """Save Config rules for an account and region.
 
     Args:
@@ -881,7 +938,9 @@ def get_config_rules(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"config_rules_{region}", account_id) or []
 
 
-def save_cloudfront_origin_access_identities(account_id: str, identities: List[Dict[str, Any]]) -> None:
+def save_cloudfront_origin_access_identities(
+    account_id: str, identities: List[Dict[str, Any]]
+) -> None:
     """Save CloudFront origin access identities for an account.
 
     Args:
@@ -900,7 +959,9 @@ def get_cloudfront_origin_access_identities(account_id: str) -> List[Dict[str, A
     return _load_data("cloudfront_origin_access_identities", account_id) or []
 
 
-def save_vpc_endpoints(account_id: str, region: str, endpoints: List[Dict[str, Any]]) -> None:
+def save_vpc_endpoints(
+    account_id: str, region: str, endpoints: List[Dict[str, Any]]
+) -> None:
     """Save VPC endpoints for an account and region.
 
     Args:
@@ -921,7 +982,9 @@ def get_vpc_endpoints(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"vpc_endpoints_{region}", account_id) or []
 
 
-def save_cloudtrail_trails(account_id: str, region: str, trails: List[Dict[str, Any]]) -> None:
+def save_cloudtrail_trails(
+    account_id: str, region: str, trails: List[Dict[str, Any]]
+) -> None:
     """Save CloudTrail trails for an account and region.
 
     Args:
@@ -984,7 +1047,9 @@ def get_vpcs(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"vpcs_{region}", account_id) or []
 
 
-def save_route53resolver_query_log_configs(account_id: str, region: str, query_log_configs: List[Dict[str, Any]]) -> None:
+def save_route53resolver_query_log_configs(
+    account_id: str, region: str, query_log_configs: List[Dict[str, Any]]
+) -> None:
     """Save Route 53 resolver query log configs for an account and region.
 
     Args:
@@ -992,10 +1057,14 @@ def save_route53resolver_query_log_configs(account_id: str, region: str, query_l
         region: The AWS region.
         query_log_configs: The list of Route 53 resolver query log configs to save.
     """
-    _save_data(query_log_configs, f"route53resolver_query_log_configs_{region}", account_id)
+    _save_data(
+        query_log_configs, f"route53resolver_query_log_configs_{region}", account_id
+    )
 
 
-def get_route53resolver_query_log_configs(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_route53resolver_query_log_configs(
+    account_id: str, region: str
+) -> List[Dict[str, Any]]:
     """Get Route 53 resolver query log configs for an account and region.
 
     Args:
@@ -1005,7 +1074,11 @@ def get_route53resolver_query_log_configs(account_id: str, region: str) -> List[
     return _load_data(f"route53resolver_query_log_configs_{region}", account_id) or []
 
 
-def save_route53resolver_query_log_config_associations(account_id: str, region: str, resolver_query_log_config_associations: List[Dict[str, Any]]) -> None:
+def save_route53resolver_query_log_config_associations(
+    account_id: str,
+    region: str,
+    resolver_query_log_config_associations: List[Dict[str, Any]],
+) -> None:
     """Save Route 53 resolver query log config associations for an account and region.
 
     Args:
@@ -1013,20 +1086,33 @@ def save_route53resolver_query_log_config_associations(account_id: str, region: 
         region: The AWS region.
         resolver_query_log_config_associations: The list of Route 53 resolver query log config associations to save.
     """
-    _save_data(resolver_query_log_config_associations, f"route53resolver_query_log_config_associations_{region}", account_id)
+    _save_data(
+        resolver_query_log_config_associations,
+        f"route53resolver_query_log_config_associations_{region}",
+        account_id,
+    )
 
 
-def get_route53resolver_query_log_config_associations(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_route53resolver_query_log_config_associations(
+    account_id: str, region: str
+) -> List[Dict[str, Any]]:
     """Get Route 53 resolver query log config associations for an account and region.
 
     Args:
         account_id: The AWS account ID.
         region: The AWS region.
     """
-    return _load_data(f"route53resolver_query_log_config_associations_{region}", account_id) or []
+    return (
+        _load_data(
+            f"route53resolver_query_log_config_associations_{region}", account_id
+        )
+        or []
+    )
 
 
-def save_log_groups(account_id: str, region: str, log_groups: List[Dict[str, Any]]) -> None:
+def save_log_groups(
+    account_id: str, region: str, log_groups: List[Dict[str, Any]]
+) -> None:
     """Save log groups for an account and region.
 
     Args:
@@ -1047,7 +1133,9 @@ def get_log_groups(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"log_groups_{region}", account_id) or []
 
 
-def save_export_tasks(account_id: str, region: str, export_tasks: List[Dict[str, Any]]) -> None:
+def save_export_tasks(
+    account_id: str, region: str, export_tasks: List[Dict[str, Any]]
+) -> None:
     """Save export tasks for an account and region.
 
     Args:
@@ -1068,7 +1156,9 @@ def get_export_tasks(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"export_tasks_{region}", account_id) or []
 
 
-def save_wafv2_web_acls(account_id: str, region: str, web_acls: List[Dict[str, Any]]) -> None:
+def save_wafv2_web_acls(
+    account_id: str, region: str, web_acls: List[Dict[str, Any]]
+) -> None:
     """Save WAFv2 web ACLs for an account and region.
 
     Args:
@@ -1089,7 +1179,9 @@ def get_wafv2_web_acls(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"wafv2_web_acls_{region}", account_id) or []
 
 
-def save_wafv2_logging_configurations(account_id: str, region: str, logging_configurations: List[Dict[str, Any]]) -> None:
+def save_wafv2_logging_configurations(
+    account_id: str, region: str, logging_configurations: List[Dict[str, Any]]
+) -> None:
     """Save WAFv2 logging configurations for an account and region.
 
     Args:
@@ -1097,10 +1189,14 @@ def save_wafv2_logging_configurations(account_id: str, region: str, logging_conf
         region: The AWS region.
         logging_configurations: The list of WAFv2 logging configurations to save.
     """
-    _save_data(logging_configurations, f"wafv2_logging_configurations_{region}", account_id)
+    _save_data(
+        logging_configurations, f"wafv2_logging_configurations_{region}", account_id
+    )
 
 
-def get_wafv2_logging_configurations(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_wafv2_logging_configurations(
+    account_id: str, region: str
+) -> List[Dict[str, Any]]:
     """Get WAFv2 logging configurations for an account and region.
 
     Args:
@@ -1110,7 +1206,9 @@ def get_wafv2_logging_configurations(account_id: str, region: str) -> List[Dict[
     return _load_data(f"wafv2_logging_configurations_{region}", account_id) or []
 
 
-def save_elbv2_load_balancers(account_id: str, region: str, load_balancers: List[Dict[str, Any]]) -> None:
+def save_elbv2_load_balancers(
+    account_id: str, region: str, load_balancers: List[Dict[str, Any]]
+) -> None:
     """Save ELBv2 load balancers for an account and region.
 
     Args:
@@ -1131,7 +1229,9 @@ def get_elbv2_load_balancers(account_id: str, region: str) -> List[Dict[str, Any
     return _load_data(f"elbv2_load_balancers_{region}", account_id) or []
 
 
-def save_eks_clusters(account_id: str, region: str, clusters: List[Dict[str, Any]]) -> None:
+def save_eks_clusters(
+    account_id: str, region: str, clusters: List[Dict[str, Any]]
+) -> None:
     """Save EKS clusters for an account and region.
 
     Args:
@@ -1152,7 +1252,9 @@ def get_eks_clusters(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"eks_clusters_{region}", account_id) or []
 
 
-def save_detective_graphs(account_id: str, region: str, graphs: List[Dict[str, Any]]) -> None:
+def save_detective_graphs(
+    account_id: str, region: str, graphs: List[Dict[str, Any]]
+) -> None:
     """Save Detective graphs for an account and region.
 
     Args:
@@ -1173,7 +1275,9 @@ def get_detective_graphs(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"detective_graphs_{region}", account_id) or []
 
 
-def save_securityhub_action_targets(account_id: str, region: str, action_targets: List[Dict[str, Any]]) -> None:
+def save_securityhub_action_targets(
+    account_id: str, region: str, action_targets: List[Dict[str, Any]]
+) -> None:
     """Save Security Hub action targets for an account and region.
 
     Args:
@@ -1184,7 +1288,9 @@ def save_securityhub_action_targets(account_id: str, region: str, action_targets
     _save_data(action_targets, f"securityhub_action_targets_{region}", account_id)
 
 
-def get_securityhub_action_targets(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_securityhub_action_targets(
+    account_id: str, region: str
+) -> List[Dict[str, Any]]:
     """Get Security Hub action targets for an account and region.
 
     Args:
@@ -1194,7 +1300,9 @@ def get_securityhub_action_targets(account_id: str, region: str) -> List[Dict[st
     return _load_data(f"securityhub_action_targets_{region}", account_id) or []
 
 
-def save_securityhub_automation_rules(account_id: str, region: str, automation_rules: List[Dict[str, Any]]) -> None:
+def save_securityhub_automation_rules(
+    account_id: str, region: str, automation_rules: List[Dict[str, Any]]
+) -> None:
     """Save Security Hub automation rules for an account and region.
 
     Args:
@@ -1205,7 +1313,9 @@ def save_securityhub_automation_rules(account_id: str, region: str, automation_r
     _save_data(automation_rules, f"securityhub_automation_rules_{region}", account_id)
 
 
-def get_securityhub_automation_rules(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_securityhub_automation_rules(
+    account_id: str, region: str
+) -> List[Dict[str, Any]]:
     """Get Security Hub automation rules for an account and region.
 
     Args:
@@ -1215,7 +1325,9 @@ def get_securityhub_automation_rules(account_id: str, region: str) -> List[Dict[
     return _load_data(f"securityhub_automation_rules_{region}", account_id) or []
 
 
-def save_dynamodb_tables(account_id: str, region: str, tables: List[Dict[str, Any]]) -> None:
+def save_dynamodb_tables(
+    account_id: str, region: str, tables: List[Dict[str, Any]]
+) -> None:
     """Save DynamoDB tables for an account and region.
 
     Args:
@@ -1236,7 +1348,9 @@ def get_dynamodb_tables(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"dynamodb_tables_{region}", account_id) or []
 
 
-def save_custom_key_stores(account_id: str, region: str, custom_key_stores: List[Dict[str, Any]]) -> None:
+def save_custom_key_stores(
+    account_id: str, region: str, custom_key_stores: List[Dict[str, Any]]
+) -> None:
     """Save custom key stores for an account and region.
 
     Args:
@@ -1257,7 +1371,9 @@ def get_custom_key_stores(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"custom_key_stores_{region}", account_id) or []
 
 
-def save_config_compliance_by_rule(account_id: str, region: str, compliance: List[Dict[str, Any]]) -> None:
+def save_config_compliance_by_rule(
+    account_id: str, region: str, compliance: List[Dict[str, Any]]
+) -> None:
     """Save Config compliance by rule for an account and region.
 
     Args:
@@ -1278,7 +1394,9 @@ def get_config_compliance_by_rule(account_id: str, region: str) -> List[Dict[str
     return _load_data(f"config_compliance_by_rule_{region}", account_id) or []
 
 
-def save_guardduty_detectors(account_id: str, region: str, detectors: List[Dict[str, Any]]) -> None:
+def save_guardduty_detectors(
+    account_id: str, region: str, detectors: List[Dict[str, Any]]
+) -> None:
     """Save GuardDuty detectors for an account and region.
 
     Args:
@@ -1299,7 +1417,9 @@ def get_guardduty_detectors(account_id: str, region: str) -> List[Dict[str, Any]
     return _load_data(f"guardduty_detectors_{region}", account_id) or []
 
 
-def save_backup_vaults(account_id: str, region: str, vaults: List[Dict[str, Any]]) -> None:
+def save_backup_vaults(
+    account_id: str, region: str, vaults: List[Dict[str, Any]]
+) -> None:
     """Save Backup vaults for an account and region.
 
     Args:
@@ -1320,7 +1440,9 @@ def get_backup_vaults(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"backup_vaults_{region}", account_id) or []
 
 
-def save_backup_protected_resources(account_id: str, region: str, resources: List[Dict[str, Any]]) -> None:
+def save_backup_protected_resources(
+    account_id: str, region: str, resources: List[Dict[str, Any]]
+) -> None:
     """Save Backup protected resources for an account and region.
 
     Args:
@@ -1331,7 +1453,9 @@ def save_backup_protected_resources(account_id: str, region: str, resources: Lis
     _save_data(resources, f"backup_protected_resources_{region}", account_id)
 
 
-def get_backup_protected_resources(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_backup_protected_resources(
+    account_id: str, region: str
+) -> List[Dict[str, Any]]:
     """Get Backup protected resources for an account and region.
 
     Args:
@@ -1341,7 +1465,9 @@ def get_backup_protected_resources(account_id: str, region: str) -> List[Dict[st
     return _load_data(f"backup_protected_resources_{region}", account_id) or []
 
 
-def save_acm_certificates(account_id: str, region: str, certificates: List[Dict[str, Any]]) -> None:
+def save_acm_certificates(
+    account_id: str, region: str, certificates: List[Dict[str, Any]]
+) -> None:
     """Save ACM certificates for an account and region.
 
     Args:
@@ -1362,7 +1488,9 @@ def get_acm_certificates(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"acm_certificates_{region}", account_id) or []
 
 
-def save_acm_pca_certificate_authorities(account_id: str, region: str, authorities: List[Dict[str, Any]]) -> None:
+def save_acm_pca_certificate_authorities(
+    account_id: str, region: str, authorities: List[Dict[str, Any]]
+) -> None:
     """Save ACM PCA certificate authorities for an account and region.
 
     Args:
@@ -1373,7 +1501,9 @@ def save_acm_pca_certificate_authorities(account_id: str, region: str, authoriti
     _save_data(authorities, f"acm_pca_certificate_authorities_{region}", account_id)
 
 
-def get_acm_pca_certificate_authorities(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_acm_pca_certificate_authorities(
+    account_id: str, region: str
+) -> List[Dict[str, Any]]:
     """Get ACM PCA certificate authorities for an account and region.
 
     Args:
@@ -1383,7 +1513,9 @@ def get_acm_pca_certificate_authorities(account_id: str, region: str) -> List[Di
     return _load_data(f"acm_pca_certificate_authorities_{region}", account_id) or []
 
 
-def save_inspector2_configuration(account_id: str, region: str, configuration: Dict[str, Any]) -> None:
+def save_inspector2_configuration(
+    account_id: str, region: str, configuration: Dict[str, Any]
+) -> None:
     """Save Inspector2 configuration for an account and region.
 
     Args:
@@ -1404,7 +1536,9 @@ def get_inspector2_configuration(account_id: str, region: str) -> Dict[str, Any]
     return _load_data(f"inspector2_configuration_{region}", account_id) or {}
 
 
-def save_inspector2_coverage(account_id: str, region: str, coverage: List[Dict[str, Any]]) -> None:
+def save_inspector2_coverage(
+    account_id: str, region: str, coverage: List[Dict[str, Any]]
+) -> None:
     """Save Inspector2 coverage for an account and region.
 
     Args:
@@ -1425,7 +1559,9 @@ def get_inspector2_coverage(account_id: str, region: str) -> List[Dict[str, Any]
     return _load_data(f"inspector2_coverage_{region}", account_id) or []
 
 
-def save_maintenance_windows(account_id: str, region: str, maintenance_windows: List[Dict[str, Any]]) -> None:
+def save_maintenance_windows(
+    account_id: str, region: str, maintenance_windows: List[Dict[str, Any]]
+) -> None:
     """Save maintenance windows for an account and region.
 
     Args:
@@ -1446,7 +1582,9 @@ def get_maintenance_windows(account_id: str, region: str) -> List[Dict[str, Any]
     return _load_data(f"maintenance_windows_{region}", account_id) or []
 
 
-def save_ecs_clusters(account_id: str, region: str, clusters: List[Dict[str, Any]]) -> None:
+def save_ecs_clusters(
+    account_id: str, region: str, clusters: List[Dict[str, Any]]
+) -> None:
     """Save ECS clusters for an account and region.
 
     Args:
@@ -1467,7 +1605,9 @@ def get_ecs_clusters(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"ecs_clusters_{region}", account_id) or []
 
 
-def save_rds_instances(account_id: str, region: str, instances: List[Dict[str, Any]]) -> None:
+def save_rds_instances(
+    account_id: str, region: str, instances: List[Dict[str, Any]]
+) -> None:
     """Save RDS instances for an account and region.
 
     Args:
@@ -1509,7 +1649,9 @@ def get_subnets(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"subnets_{region}", account_id) or []
 
 
-def save_efs_file_systems(account_id: str, region: str, file_systems: List[Dict[str, Any]]) -> None:
+def save_efs_file_systems(
+    account_id: str, region: str, file_systems: List[Dict[str, Any]]
+) -> None:
     """Save EFS file systems for an account and region.
 
     Args:
@@ -1572,7 +1714,9 @@ def get_nacls(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"nacls_{region}", account_id) or []
 
 
-def save_security_groups(account_id: str, region: str, security_groups: List[Dict[str, Any]]) -> None:
+def save_security_groups(
+    account_id: str, region: str, security_groups: List[Dict[str, Any]]
+) -> None:
     """Save security groups for an account and region.
 
     Args:
@@ -1593,7 +1737,9 @@ def get_security_groups(account_id: str, region: str) -> List[Dict[str, Any]]:
     return _load_data(f"security_groups_{region}", account_id) or []
 
 
-def save_vpc_peering_connections(account_id: str, region: str, vpc_peering_connections: List[Dict[str, Any]]) -> None:
+def save_vpc_peering_connections(
+    account_id: str, region: str, vpc_peering_connections: List[Dict[str, Any]]
+) -> None:
     """Save VPC peering connections for an account and region.
 
     Args:
@@ -1614,7 +1760,9 @@ def get_vpc_peering_connections(account_id: str, region: str) -> List[Dict[str, 
     return _load_data(f"vpc_peering_connections_{region}", account_id) or []
 
 
-def save_route53resolver_firewall_rule_groups(account_id: str, region: str, firewall_rule_groups: List[Dict[str, Any]]) -> None:
+def save_route53resolver_firewall_rule_groups(
+    account_id: str, region: str, firewall_rule_groups: List[Dict[str, Any]]
+) -> None:
     """Save Route 53 Resolver firewall rule groups for an account and region.
 
     Args:
@@ -1622,20 +1770,30 @@ def save_route53resolver_firewall_rule_groups(account_id: str, region: str, fire
         region: The AWS region.
         firewall_rule_groups: The list of Route 53 Resolver firewall rule groups to save.
     """
-    _save_data(firewall_rule_groups, f"route53resolver_firewall_rule_groups_{region}", account_id)
+    _save_data(
+        firewall_rule_groups,
+        f"route53resolver_firewall_rule_groups_{region}",
+        account_id,
+    )
 
 
-def get_route53resolver_firewall_rule_groups(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_route53resolver_firewall_rule_groups(
+    account_id: str, region: str
+) -> List[Dict[str, Any]]:
     """Get Route 53 Resolver firewall rule groups for an account and region.
 
     Args:
         account_id: The AWS account ID.
         region: The AWS region.
     """
-    return _load_data(f"route53resolver_firewall_rule_groups_{region}", account_id) or []
+    return (
+        _load_data(f"route53resolver_firewall_rule_groups_{region}", account_id) or []
+    )
 
 
-def save_route53resolver_firewall_rule_group_associations(account_id: str, region: str, firewall_rule_group_associations: List[Dict[str, Any]]) -> None:
+def save_route53resolver_firewall_rule_group_associations(
+    account_id: str, region: str, firewall_rule_group_associations: List[Dict[str, Any]]
+) -> None:
     """Save Route 53 Resolver firewall rule group associations for an account and region.
 
     Args:
@@ -1643,20 +1801,33 @@ def save_route53resolver_firewall_rule_group_associations(account_id: str, regio
         region: The AWS region.
         firewall_rule_group_associations: The list of Route 53 Resolver firewall rule group associations to save.
     """
-    _save_data(firewall_rule_group_associations, f"route53resolver_firewall_rule_group_associations_{region}", account_id)
+    _save_data(
+        firewall_rule_group_associations,
+        f"route53resolver_firewall_rule_group_associations_{region}",
+        account_id,
+    )
 
 
-def get_route53resolver_firewall_rule_group_associations(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_route53resolver_firewall_rule_group_associations(
+    account_id: str, region: str
+) -> List[Dict[str, Any]]:
     """Get Route 53 Resolver firewall rule group associations for an account and region.
 
     Args:
         account_id: The AWS account ID.
         region: The AWS region.
     """
-    return _load_data(f"route53resolver_firewall_rule_group_associations_{region}", account_id) or []
+    return (
+        _load_data(
+            f"route53resolver_firewall_rule_group_associations_{region}", account_id
+        )
+        or []
+    )
 
 
-def save_route53resolver_firewall_domain_lists(account_id: str, region: str, firewall_domain_lists: List[Dict[str, Any]]) -> None:
+def save_route53resolver_firewall_domain_lists(
+    account_id: str, region: str, firewall_domain_lists: List[Dict[str, Any]]
+) -> None:
     """Save Route 53 Resolver firewall domain lists for an account and region.
 
     Args:
@@ -1664,20 +1835,30 @@ def save_route53resolver_firewall_domain_lists(account_id: str, region: str, fir
         region: The AWS region.
         firewall_domain_lists: The list of Route 53 Resolver firewall domain lists to save.
     """
-    _save_data(firewall_domain_lists, f"route53resolver_firewall_domain_lists_{region}", account_id)
+    _save_data(
+        firewall_domain_lists,
+        f"route53resolver_firewall_domain_lists_{region}",
+        account_id,
+    )
 
 
-def get_route53resolver_firewall_domain_lists(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_route53resolver_firewall_domain_lists(
+    account_id: str, region: str
+) -> List[Dict[str, Any]]:
     """Get Route 53 Resolver firewall domain lists for an account and region.
 
     Args:
         account_id: The AWS account ID.
         region: The AWS region.
     """
-    return _load_data(f"route53resolver_firewall_domain_lists_{region}", account_id) or []
+    return (
+        _load_data(f"route53resolver_firewall_domain_lists_{region}", account_id) or []
+    )
 
 
-def save_apigateway_rest_apis(account_id: str, region: str, rest_apis: List[Dict[str, Any]]) -> None:
+def save_apigateway_rest_apis(
+    account_id: str, region: str, rest_apis: List[Dict[str, Any]]
+) -> None:
     """Save API Gateway REST APIs for an account and region.
 
     Args:
@@ -1698,7 +1879,9 @@ def get_apigateway_rest_apis(account_id: str, region: str) -> List[Dict[str, Any
     return _load_data(f"apigateway_rest_apis_{region}", account_id) or []
 
 
-def save_appsync_graphql_apis(account_id: str, region: str, graphql_apis: List[Dict[str, Any]]) -> None:
+def save_appsync_graphql_apis(
+    account_id: str, region: str, graphql_apis: List[Dict[str, Any]]
+) -> None:
     """Save AppSync GraphQL APIs for an account and region.
 
     Args:
@@ -1719,7 +1902,9 @@ def get_appsync_graphql_apis(account_id: str, region: str) -> List[Dict[str, Any
     return _load_data(f"appsync_graphql_apis_{region}", account_id) or []
 
 
-def save_cloudfront_distributions(account_id: str, distributions: List[Dict[str, Any]]) -> None:
+def save_cloudfront_distributions(
+    account_id: str, distributions: List[Dict[str, Any]]
+) -> None:
     """Save CloudFront distributions for an account and region.
 
     Args:
@@ -1739,7 +1924,9 @@ def get_cloudfront_distributions(account_id: str) -> List[Dict[str, Any]]:
     return _load_data("cloudfront_distributions", account_id) or []
 
 
-def save_networkfirewall_firewalls(account_id: str, region: str, firewalls: List[Dict[str, Any]]) -> None:
+def save_networkfirewall_firewalls(
+    account_id: str, region: str, firewalls: List[Dict[str, Any]]
+) -> None:
     """Save Network Firewall firewalls for an account and region.
 
     Args:

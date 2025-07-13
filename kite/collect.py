@@ -232,8 +232,7 @@ def collect_account_data(account_id: str) -> None:
                     f"  [yellow]Fetching secrets for account {account_id} in region {region}...[/]"
                 )
                 secrets = secretsmanager.fetch_secrets(session, region)
-                secrets_dicts = [asdict(secret) for secret in secrets]
-                save_secrets(account_id, region, secrets_dicts)
+                save_secrets(account_id, region, secrets)
                 console.print(
                     f"  [green]✓ Saved {len(secrets)} secrets for account {account_id} in region {region}[/]"
                 )

@@ -108,7 +108,7 @@ def check_restricted_role_for_secrets_access() -> Dict[str, Any]:
         "{\n"
         '  "Statement": [\n'
         "    {\n"
-        '      "Effect": "Allow",'
+        '      "Effect": "Allow",\n'
         '      "Principal": {"AWS": "arn:aws:iam::123456789012:role/SecretAdmin"}\n'
         "    },\n"
         "    {\n"
@@ -125,8 +125,6 @@ def check_restricted_role_for_secrets_access() -> Dict[str, Any]:
     )
 
     if secrets_without_policy or secrets_without_deny:
-        message += "Secrets without proper access restrictions:\n\n"
-
         if secrets_without_policy:
             message += "Secrets without resource policies:\n"
             for secret in secrets_without_policy:

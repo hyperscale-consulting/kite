@@ -90,7 +90,6 @@ def test_no_resource_policy(workload_account_id, organization, mock_manual_check
     assert kwargs["check_id"] == "restricted-role-for-secrets-access"
     assert kwargs["check_name"] == "Restricted Role for Secrets Access"
     assert (
-        "Secrets without proper access restrictions:\n\n"
         "Secrets without resource policies:\n"
         f"- SecretWithNoResourcePolicy in account {workload_account_id} region us-east-1\n"
     ) in kwargs.get("message", "")
@@ -121,7 +120,6 @@ def test_no_deny_statements(workload_account_id, organization, mock_manual_check
     assert kwargs["check_id"] == "restricted-role-for-secrets-access"
     assert kwargs["check_name"] == "Restricted Role for Secrets Access"
     assert (
-        "Secrets without proper access restrictions:\n\n"
         "Secrets without deny statements:\n"
         f"- SecretWithNoDenyStatements in account {workload_account_id} region us-east-1\n"
     ) in kwargs.get("message", "")

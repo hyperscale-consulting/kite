@@ -3,7 +3,7 @@ from rich.panel import Panel
 from rich.prompt import Confirm, Prompt
 
 
-console = Console()
+console = Console(emoji=False)
 
 
 def prompt(prompt):

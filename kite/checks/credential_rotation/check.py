@@ -89,15 +89,9 @@ def check_credential_rotation() -> Dict[str, Any]:
         check_id=CHECK_ID,
         check_name=CHECK_NAME,
         message=context_message,
-        prompt=(
-            "Are long-term credentials rotated regularly?"
-        ),
-        pass_message=(
-            "Long-term credentials are rotated regularly"
-        ),
-        fail_message=(
-            "Long-term credentials should be rotated regularly"
-        ),
+        prompt=("Are long-term credentials rotated regularly?"),
+        pass_message=("Long-term credentials are rotated regularly"),
+        fail_message=("Long-term credentials should be rotated regularly"),
         default=True,
     )
 

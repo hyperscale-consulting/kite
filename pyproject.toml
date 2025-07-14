@@ -1,14 +1,11 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
 name = "kite"
 version = "0.1.0"
 description = "A CLI tool for cloud security assessments"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { name = "Andy Caine", email = "andy@hyperscale.consulting" },
     { name = "Henry Addico", email = "henry@hyperscale.consulting" }
@@ -16,9 +13,9 @@ authors = [
 urls = { repository = "https://github.com/hyperscale-consulting/kite" }
 dependencies = [
     "click>=8.0.0",
-    "rich>=10.0.0",  # For beautiful terminal output
-    "boto3>=1.26.0",  # For AWS support
-    "pyyaml>=6.0.0",  # For YAML config file support
+    "rich>=10.0.0",
+    "boto3>=1.26.0",
+    "pyyaml>=6.0.0",
 ]
 
 [project.scripts]
@@ -26,24 +23,47 @@ kite = "kite.cli:main"
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.0.0",
-    "black>=22.0.0",
-    "isort>=5.0.0",
-    "flake8>=4.0.0",
-    "mypy>=0.900",
-    "pytest-mock>=3.14.0",
+  "ruff",
+  "pytest",
+  "mypy",
+  "pyright",
+  "pytest-mock",
+  "pre-commit",
+  "pre-commit-uv",
 ]
 
-[tool.black]
-line-length = 88
-target-version = ["py38"]
-
-[tool.isort]
-profile = "black"
-multi_line_output = 3
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.mypy]
-python_version = "3.8"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
+python_version = "3.10"
+show_error_codes = true
+pretty = true
+strict = true
+
+[tool.pyright]
+pythonVersion = "3.10"
+typeCheckingMode = "basic"
+
+[tool.ruff]
+fix = true
+show-fixes = true
+output-format = "full"
+
+[tool.ruff.lint]
+select = [
+    "B",  # flake8-bugbear
+    "E",  # pycodestyle error
+    "F",  # pyflakes
+    "I",  # isort
+    "UP",  # pyupgrade
+    "W",  # pycodestyle warning
+]
+ignore = [
+    "UP038",  # keep isinstance tuple
+]
+
+[tool.ruff.lint.isort]
+force-single-line = true
+order-by-type = false

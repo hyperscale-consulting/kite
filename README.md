@@ -1,6 +1,6 @@
 # Kite - Cloud Security Assessments
 
-Kite is a command-line interface tool designed to help security professionals perform cloud security assessments efficiently. It provides a suite of commands to analyze and assess security configurations and best practices. Currently, only AWS is supported, and the checks align closely with the security pillar of the AWS Well-Architected framework.
+Kite is a command-line interface tool designed to help perform cloud security assessments efficiently. It provides a suite of commands to analyze and assess security configurations and best practices. Currently, only AWS is supported, and the checks align closely with the security pillar of the AWS Well-Architected framework.
 
 ## Installation
 
@@ -170,8 +170,8 @@ kite assess
 
 ### Prerequisites
 
-- Python 3.8+
-- pip
+- Python 3.10+
+- uv
 - AWS credentials configured (via AWS CLI or environment variables)
 
 ### Setup Development Environment
@@ -186,14 +186,13 @@ cd kite
 2. Create a virtual environment:
 
 ```bash
-python -m venv venv
-source venv/bin/activate
+uv venv
 ```
 
 3. Install development dependencies:
 
 ```bash
-pip install -e ".[dev]"
+uv pip install -e ".[dev]"
 ```
 
 ## Contributing

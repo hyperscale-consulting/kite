@@ -187,6 +187,7 @@ cd kite
 
 ```bash
 uv venv
+source .venv/bin/activate
 ```
 
 3. Install development dependencies:

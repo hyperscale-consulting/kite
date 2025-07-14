@@ -207,7 +207,6 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
             check_management_account_workloads,
             check_delegated_admins_security_services,
             check_trusted_delegated_admins,
-            check_region_deny_scp,
         ],
     },
     "Root User Security": {
@@ -492,9 +491,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
         ],
     },
     "Create network layers": {
-        "description": (
-            "Checks related to creating network layers for your workloads"
-        ),
+        "description": ("Checks related to creating network layers for your workloads"),
         "checks": [
             check_create_network_layers,
         ],
@@ -690,8 +687,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     },
     "Develop and test security incident response playbooks": {
         "description": (
-            "Checks related to developing security incident response "
-            "playbooks"
+            "Checks related to developing security incident response playbooks"
         ),
         "checks": [
             check_security_ir_playbooks,
@@ -766,8 +762,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
     },
     "Centralize services for packages and dependencies": {
         "description": (
-            "Checks related to using centralized services for packages and "
-            "dependencies"
+            "Checks related to using centralized services for packages and dependencies"
         ),
         "checks": [
             check_use_centralized_artifact_repos,

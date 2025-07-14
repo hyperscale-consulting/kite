@@ -2,7 +2,6 @@
 
 Kite is a command-line interface tool designed to help security professionals perform cloud security assessments efficiently. It provides a suite of commands to analyze and assess security configurations and best practices. Currently, only AWS is supported, and the checks align closely with the security pillar of the AWS Well-Architected framework.
 
-
 ## Installation
 
 ```bash
@@ -41,6 +40,7 @@ aws cloudformation deploy \
 ```
 
 Replace:
+
 - `<ASSESSOR-ACCOUNT-ID>` with the AWS account ID of the assessor
 - `<ROLE-NAME>` with the name of the role the assessor will use
 - `<USER>` with the username or session name of the assessor
@@ -92,6 +92,7 @@ aws cloudformation create-stack-instances \
 ```
 
 Replace:
+
 - `<ASSESSOR-ACCOUNT-ID>` with the AWS account ID of the assessor
 - `<ROLE-NAME>` with the name of the role the assessor will use
 - `<USER>` with the username or session name of the assessor
@@ -162,7 +163,7 @@ kite collect
 Then, when `prowler` has finished scanning and `kite` has collected the data it needs, you can start an assessment:
 
 ```bash
-kite start
+kite assess
 ```
 
 ## Development
@@ -176,18 +177,21 @@ kite start
 ### Setup Development Environment
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/hyperscale-consulting/kite
 cd kite
 ```
 
 2. Create a virtual environment:
+
 ```bash
 python -m venv venv
 source venv/bin/activate
 ```
 
 3. Install development dependencies:
+
 ```bash
 pip install -e ".[dev]"
 ```

@@ -1,9 +1,10 @@
 """Check for confused deputy protection in KMS key policies."""
 
-from typing import Dict, Any
+from typing import Any
+
+from kite.config import Config
 from kite.data import get_kms_keys
 from kite.helpers import get_account_ids_in_scope
-from kite.config import Config
 from kite.utils.aws_context_keys import has_confused_deputy_protection
 
 # Define check ID and name
@@ -28,7 +29,7 @@ def _is_service_principal(principal: Any) -> bool:
     return principal.endswith(".amazonaws.com")
 
 
-def check_kms_confused_deputy_protection() -> Dict[str, Any]:
+def check_kms_confused_deputy_protection() -> dict[str, Any]:
     """
     Check for KMS key policies that could be vulnerable to confused deputy attacks.
 

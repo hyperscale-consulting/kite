@@ -1,15 +1,14 @@
 """Check for root credentials management enabled."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization_features
-
 
 CHECK_ID = "root-credentials-management-enabled"
 CHECK_NAME = "Root Credentials Management Enabled"
 
 
-def check_root_credentials_management_enabled() -> Dict[str, Any]:
+def check_root_credentials_management_enabled() -> dict[str, Any]:
     """
     Check if root credentials management is enabled at the organizational level.
 

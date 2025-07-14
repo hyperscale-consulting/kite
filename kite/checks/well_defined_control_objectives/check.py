@@ -1,15 +1,14 @@
 """Check for Well-Defined Security Control Objectives."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "well-defined-control-objectives"
 CHECK_NAME = "Well-Defined Control Objectives"
 
 
-def check_well_defined_control_objectives() -> Dict[str, Any]:
+def check_well_defined_control_objectives() -> dict[str, Any]:
     """
     Check if security control objectives are well-defined and aligned with
     compliance requirements.

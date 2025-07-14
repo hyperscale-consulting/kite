@@ -1,6 +1,6 @@
 """Check for monitoring network traffic for unauthorized access."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
 
@@ -8,7 +8,7 @@ CHECK_ID = "monitor-network-traffic-for-unauthorized-access"
 CHECK_NAME = "Monitor Network Traffic for Unauthorized Access"
 
 
-def check_monitor_network_traffic_for_unauthorized_access() -> Dict[str, Any]:
+def check_monitor_network_traffic_for_unauthorized_access() -> dict[str, Any]:
     """
     Check if network traffic is continually monitored for unintended communication
     channels, unauthorized principals attempting to access protected resources, and

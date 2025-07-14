@@ -5,8 +5,8 @@ import pytest
 from kite.checks.data_perimeter_trusted_identities.check import (
     check_establish_data_perimeter_trusted_identities,
 )
-from kite.models import ControlPolicy
 from kite.data import save_organization
+from kite.models import ControlPolicy
 
 
 @pytest.fixture
@@ -33,18 +33,16 @@ def trusted_identities_policy(organization_id):
                             "sts:GetFederationToken",
                             "sts:GetServiceBearerToken",
                             "sts:GetSessionToken",
-                            "sts:SetContext"
+                            "sts:SetContext",
                         ],
                         Resource="*",
                         Principal="*",
                         Condition={
                             "StringNotEqualsIfExists": {
                                 "aws:PrincipalOrgID": organization_id,
-                                "aws:ResourceTag/dp:exclude:identity": "true"
+                                "aws:ResourceTag/dp:exclude:identity": "true",
                             },
-                            "BoolIfExists": {
-                                "aws:PrincipalIsAWSService": "false"
-                            },
+                            "BoolIfExists": {"aws:PrincipalIsAWSService": "false"},
                         },
                     )
                 ]

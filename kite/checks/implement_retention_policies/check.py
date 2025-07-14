@@ -1,15 +1,14 @@
 """Check for implementation of data retention policies."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "implement-retention-policies"
 CHECK_NAME = "Implement Retention Policies"
 
 
-def check_implement_retention_policies() -> Dict[str, Any]:
+def check_implement_retention_policies() -> dict[str, Any]:
     """
     Check if automated data retention policies are implemented that align with
     legal, regulatory and organizational requirements.

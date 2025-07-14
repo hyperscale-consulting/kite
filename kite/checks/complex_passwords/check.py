@@ -1,29 +1,24 @@
 """Check for complex passwords."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.helpers import (
-    is_identity_center_enabled,
-    is_identity_center_identity_store_used,
-    get_account_ids_in_scope,
-    get_password_policy,
-    is_complex,
-    get_cognito_user_pools,
-    is_cognito_password_policy_complex,
-    manual_check,
-    get_user_pool_password_policy,
-)
-from kite.data import (
-    get_oidc_providers,
-    get_saml_providers,
-)
-
+from kite.data import get_oidc_providers
+from kite.data import get_saml_providers
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import get_cognito_user_pools
+from kite.helpers import get_password_policy
+from kite.helpers import get_user_pool_password_policy
+from kite.helpers import is_cognito_password_policy_complex
+from kite.helpers import is_complex
+from kite.helpers import is_identity_center_enabled
+from kite.helpers import is_identity_center_identity_store_used
+from kite.helpers import manual_check
 
 CHECK_ID = "complex-passwords"
 CHECK_NAME = "Complex Passwords"
 
 
-def check_complex_passwords() -> Dict[str, Any]:
+def check_complex_passwords() -> dict[str, Any]:
     """
     Check if complex passwords are enforced across all accounts.
 
@@ -59,7 +54,7 @@ def check_complex_passwords() -> Dict[str, Any]:
         message += "SAML Providers:\n"
         for provider in saml_providers:
             message += f"- {provider['Arn']}\n"
-            if 'ValidUntil' in provider:
+            if "ValidUntil" in provider:
                 message += f"  Valid until: {provider['ValidUntil']}\n"
     else:
         message += "No SAML providers configured\n"
@@ -70,7 +65,7 @@ def check_complex_passwords() -> Dict[str, Any]:
         message += "OIDC Providers:\n"
         for provider in oidc_providers:
             message += f"- {provider['Arn']}\n"
-            if 'Url' in provider:
+            if "Url" in provider:
                 message += f"  URL: {provider['Url']}\n"
     else:
         message += "No OIDC providers configured\n"

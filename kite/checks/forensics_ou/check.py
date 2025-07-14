@@ -1,19 +1,16 @@
 """Check for forensic OU with dedicated accounts."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization
-from kite.helpers import (
-    get_organization_structure_str,
-    manual_check,
-)
-
+from kite.helpers import get_organization_structure_str
+from kite.helpers import manual_check
 
 CHECK_ID = "forensics-ou"
 CHECK_NAME = "Forensics OU"
 
 
-def check_forensics_ou() -> Dict[str, Any]:
+def check_forensics_ou() -> dict[str, Any]:
     """
     Check if there is a forensic OU with one or more accounts dedicated to
     capturing forensics for analysis in the event of a security incident.
@@ -71,8 +68,7 @@ def check_forensics_ou() -> Dict[str, Any]:
             "capturing forensics for analysis in the event of a security incident?"
         ),
         pass_message=(
-            "A forensic OU with dedicated accounts for capturing forensics "
-            "is in place."
+            "A forensic OU with dedicated accounts for capturing forensics is in place."
         ),
         fail_message=(
             "A forensic OU with dedicated accounts for capturing forensics "

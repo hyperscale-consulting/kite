@@ -1,17 +1,16 @@
 """Check for GuardDuty configuration for data at rest protection."""
 
-from typing import Dict, Any, List, Set
+from typing import Any
 
-from kite.data import get_guardduty_detectors
 from kite.config import Config
+from kite.data import get_guardduty_detectors
 from kite.helpers import get_account_ids_in_scope
-
 
 CHECK_ID = "automate-data-at-rest-protection-with-guardduty"
 CHECK_NAME = "Automate Data at Rest Protection with GuardDuty"
 
 
-def _get_required_features() -> Set[str]:
+def _get_required_features() -> set[str]:
     """
     Get the set of required GuardDuty features.
 
@@ -28,7 +27,7 @@ def _get_required_features() -> Set[str]:
     }
 
 
-def _check_detector_features(detector: Dict[str, Any]) -> List[str]:
+def _check_detector_features(detector: dict[str, Any]) -> list[str]:
     """
     Check if a detector has all required features enabled.
 
@@ -57,7 +56,7 @@ def _check_detector_features(detector: Dict[str, Any]) -> List[str]:
     return missing_features
 
 
-def check_automate_data_at_rest_protection_with_guardduty() -> Dict[str, Any]:
+def check_automate_data_at_rest_protection_with_guardduty() -> dict[str, Any]:
     """
     Check if GuardDuty is properly configured for data at rest protection.
 

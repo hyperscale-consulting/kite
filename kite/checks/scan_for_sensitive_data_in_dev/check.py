@@ -1,15 +1,14 @@
 """Check for scanning sensitive data in development environments."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "scan-for-sensitive-data-in-dev"
 CHECK_NAME = "Scan for Sensitive Data in Development"
 
 
-def check_scan_for_sensitive_data_in_dev() -> Dict[str, Any]:
+def check_scan_for_sensitive_data_in_dev() -> dict[str, Any]:
     """
     Check if tools are used to automatically scan data for sensitivity while
     workloads are in development to alert when sensitive data is unexpected and

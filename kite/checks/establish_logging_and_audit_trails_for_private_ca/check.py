@@ -1,15 +1,14 @@
 """Check for logging and audit trails for private CAs."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "establish-logging-and-audit-trails-for-private-ca"
 CHECK_NAME = "Establish Logging and Audit Trails for Private CA"
 
 
-def check_establish_logging_and_audit_trails_for_private_ca() -> Dict[str, Any]:
+def check_establish_logging_and_audit_trails_for_private_ca() -> dict[str, Any]:
     """
     Check if logging and audit trails are established for private CAs.
 

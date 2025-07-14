@@ -1,16 +1,17 @@
 """Check for use of higher-level services."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.helpers import get_account_ids_in_scope, manual_check
-from kite.data import get_ec2_instances
 from kite.config import Config
+from kite.data import get_ec2_instances
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "use-of-higher-level-services"
 CHECK_NAME = "Use of Higher-Level Services"
 
 
-def check_use_of_higher_level_services() -> Dict[str, Any]:
+def check_use_of_higher_level_services() -> dict[str, Any]:
     """
     Check if higher-level AWS services are preferred over lower-level services like EC2.
 
@@ -88,8 +89,8 @@ def check_use_of_higher_level_services() -> Dict[str, Any]:
             message += f"  Region: {region}\n"
             for instance in instances:
                 message += (
-                    f"    - Instance {instance.get("InstanceId")} - "
-                    f"State: {instance.get("State", {}).get("Name")}\n"
+                    f"    - Instance {instance.get('InstanceId')} - "
+                    f"State: {instance.get('State', {}).get('Name')}\n"
                 )
 
     # Use manual_check to get the user's response

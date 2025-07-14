@@ -1,15 +1,14 @@
 """Check for defining and documenting workload network flows."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "define-and-document-workload-network-flows"
 CHECK_NAME = "Define and Document Workload Network Flows"
 
 
-def check_define_and_document_workload_network_flows() -> Dict[str, Any]:
+def check_define_and_document_workload_network_flows() -> dict[str, Any]:
     """
     Check if workload network flows have been defined and documented in a data flow
     diagram.

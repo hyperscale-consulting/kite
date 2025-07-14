@@ -1,15 +1,14 @@
 """Check for Macie scanning of sensitive data."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "macie-scans-for-sensitive-data"
 CHECK_NAME = "Macie Scans for Sensitive Data"
 
 
-def check_macie_scans_for_sensitive_data() -> Dict[str, Any]:
+def check_macie_scans_for_sensitive_data() -> dict[str, Any]:
     # TODO: Add permissions so we can do some automated support with this check.
     """
     Check if Macie is used to scan for sensitive data across workloads.
@@ -31,12 +30,8 @@ def check_macie_scans_for_sensitive_data() -> Dict[str, Any]:
             "Note: Data can be exported from data sources such as RDS and DynamoDB "
             "into an S3 bucket for scanning by Macie."
         ),
-        prompt=(
-            "Is Macie used to scan for sensitive data across workloads?"
-        ),
-        pass_message=(
-            "Macie is used to scan for sensitive data across workloads."
-        ),
+        prompt=("Is Macie used to scan for sensitive data across workloads?"),
+        pass_message=("Macie is used to scan for sensitive data across workloads."),
         fail_message=(
             "Macie should be used to scan for sensitive data across workloads."
         ),

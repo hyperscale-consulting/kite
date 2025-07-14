@@ -1,11 +1,8 @@
 """OU structure check module."""
 
 from kite.data import get_organization
-
-from kite.helpers import (
-    get_organization_structure_str,
-    manual_check,
-)
+from kite.helpers import get_organization_structure_str
+from kite.helpers import manual_check
 
 CHECK_ID = "ou-structure"
 CHECK_NAME = "OU Structure"

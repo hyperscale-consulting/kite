@@ -1,15 +1,14 @@
 """Check for identification and addressing of security risks."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "security-risks"
 CHECK_NAME = "Security Risks"
 
 
-def check_security_risks() -> Dict[str, Any]:
+def check_security_risks() -> dict[str, Any]:
     """
     Check if teams have done a good job at identifying and addressing security risks.
 

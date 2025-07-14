@@ -1,5 +1,6 @@
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
 from botocore.exceptions import ClientError
 
 from kite.identity_center import list_identity_center_instances
@@ -45,7 +46,7 @@ def test_list_identity_center_instances_success(mock_session, mock_sso_admin_cli
                     "Status": "ACTIVE",
                 }
             ]
-        }
+        },
     ]
 
     # Call the function

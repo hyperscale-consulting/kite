@@ -1,16 +1,15 @@
 """Check for log analysis tools deployment in audit account."""
 
-from typing import Dict, Any, Optional
+from typing import Any
 
 from kite.data import get_organization
 from kite.helpers import manual_check
-
 
 CHECK_ID = "deploy-log-analysis-tools-in-audit-account"
 CHECK_NAME = "Deploy Log Analysis Tools in Audit Account"
 
 
-def _find_audit_account(org) -> Optional[str]:
+def _find_audit_account(org) -> str | None:
     """
     Find the audit/security tooling account in the organization.
 
@@ -26,7 +25,7 @@ def _find_audit_account(org) -> Optional[str]:
     return None
 
 
-def check_deploy_log_analysis_tools_in_audit_account() -> Dict[str, Any]:
+def check_deploy_log_analysis_tools_in_audit_account() -> dict[str, Any]:
     """
     Check if log analysis tools are deployed in the audit/security tooling account.
 

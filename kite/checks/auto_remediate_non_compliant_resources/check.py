@@ -1,17 +1,18 @@
 """Check for auto-remediation of non-compliant resources."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.helpers import get_account_ids_in_scope, manual_check
-from kite.data import get_config_rules, get_securityhub_action_targets
 from kite.config import Config
-
+from kite.data import get_config_rules
+from kite.data import get_securityhub_action_targets
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "auto-remediate-non-compliant-resources"
 CHECK_NAME = "Auto-Remediate Non-Compliant Resources"
 
 
-def check_auto_remediate_non_compliant_resources() -> Dict[str, Any]:
+def check_auto_remediate_non_compliant_resources() -> dict[str, Any]:
     """
     Check for mechanisms to identify and automatically remediate non-compliant resource
     configurations.
@@ -34,22 +35,26 @@ def check_auto_remediate_non_compliant_resources() -> Dict[str, Any]:
             rules = get_config_rules(account_id, region)
             for rule in rules:
                 if rule.get("RemediationConfigurations"):
-                    config_rules_with_remediation.append({
-                        "account_id": account_id,
-                        "region": region,
-                        "name": rule.get("ConfigRuleName"),
-                        "description": rule.get("Description", "")
-                    })
+                    config_rules_with_remediation.append(
+                        {
+                            "account_id": account_id,
+                            "region": region,
+                            "name": rule.get("ConfigRuleName"),
+                            "description": rule.get("Description", ""),
+                        }
+                    )
 
             # Get Security Hub action targets
             targets = get_securityhub_action_targets(account_id, region)
             for target in targets:
-                security_hub_action_targets.append({
-                    "account_id": account_id,
-                    "region": region,
-                    "name": target.get("Name"),
-                    "description": target.get("Description", "")
-                })
+                security_hub_action_targets.append(
+                    {
+                        "account_id": account_id,
+                        "region": region,
+                        "name": target.get("Name"),
+                        "description": target.get("Description", ""),
+                    }
+                )
 
     # Format the message with the findings
     message = "The following mechanisms for auto-remediation were found:\n\n"
@@ -61,7 +66,7 @@ def check_auto_remediate_non_compliant_resources() -> Dict[str, Any]:
                 f"- Account: {rule['account_id']}, Region: {rule['region']}\n"
                 f"  Name: {rule['name']}\n"
             )
-            if rule['description']:
+            if rule["description"]:
                 message += f"  Description: {rule['description']}\n"
         message += "\n"
 
@@ -72,7 +77,7 @@ def check_auto_remediate_non_compliant_resources() -> Dict[str, Any]:
                 f"- Account: {target['account_id']}, Region: {target['region']}\n"
                 f"  Name: {target['name']}\n"
             )
-            if target['description']:
+            if target["description"]:
                 message += f"  Description: {target['description']}\n"
         message += "\n"
 

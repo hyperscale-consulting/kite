@@ -1,15 +1,14 @@
 """Check for IaC templates stored in version control with CI/CD testing."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "iac-version-control"
 CHECK_NAME = "IaC Version Control"
 
 
-def check_iac_version_control() -> Dict[str, Any]:
+def check_iac_version_control() -> dict[str, Any]:
     """
     Check if IaC templates are stored in version control, tested as part of a CI/CD
     pipeline and automatically deployed to production.

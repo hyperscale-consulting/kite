@@ -1,17 +1,19 @@
 """Check for continuous vulnerability scanning of workloads."""
 
-from typing import Dict, Any, Set
 from collections import defaultdict
+from typing import Any
 
-from kite.helpers import get_account_ids_in_scope, manual_check
-from kite.data import get_inspector2_configuration, get_inspector2_coverage
 from kite.config import Config
+from kite.data import get_inspector2_configuration
+from kite.data import get_inspector2_coverage
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "scan-workloads-for-vulnerabilities"
 CHECK_NAME = "Scan Workloads for Vulnerabilities"
 
 
-def _inspector_usage_summary() -> Dict[str, Any]:
+def _inspector_usage_summary() -> dict[str, Any]:
     """
     Gather Inspector usage details.
     Returns a dict with:
@@ -20,7 +22,7 @@ def _inspector_usage_summary() -> Dict[str, Any]:
       - scanned_resource_types: set of all resource types scanned by Inspector
     """
     accounts_missing_scanning = defaultdict(list)
-    scanned_resource_types: Set[str] = set()
+    scanned_resource_types: set[str] = set()
     config = Config.get()
     account_ids = get_account_ids_in_scope()
 
@@ -55,7 +57,7 @@ def _inspector_usage_summary() -> Dict[str, Any]:
     }
 
 
-def check_scan_workloads_for_vulnerabilities() -> Dict[str, Any]:
+def check_scan_workloads_for_vulnerabilities() -> dict[str, Any]:
     """
     Check if workloads are continuously scanned for software vulnerabilities,
     potential defects, and unintended network exposure.

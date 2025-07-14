@@ -1,15 +1,14 @@
 """Check for capturing key contacts for security incident response."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "capture-key-contacts"
 CHECK_NAME = "Capture Key Contacts"
 
 
-def check_capture_key_contacts() -> Dict[str, Any]:
+def check_capture_key_contacts() -> dict[str, Any]:
     """
     Check if the contact details of key personnel and external resources are
     captured and documented so that the right people can be involved in

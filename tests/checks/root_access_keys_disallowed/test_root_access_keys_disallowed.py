@@ -1,11 +1,14 @@
 """Tests for the root access keys disallowed check."""
 
 import json
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 from kite.checks.root_access_keys_disallowed.check import (
-    check_root_access_keys_disallowed,
     _is_root_access_keys_disallow_scp,
+)
+from kite.checks.root_access_keys_disallowed.check import (
+    check_root_access_keys_disallowed,
 )
 
 
@@ -138,7 +141,7 @@ def test_check_root_access_keys_disallowed_root_has_scp(mock_get_org):
 
     result = check_root_access_keys_disallowed()
     assert result["status"] == "PASS"
-    msg = "Root access keys disallow SCP is attached " "to the root OU"
+    msg = "Root access keys disallow SCP is attached to the root OU"
     assert msg in result["details"]["message"]
     assert result["details"]["scp"]["id"] == "scp-123"
 
@@ -174,7 +177,7 @@ def test_check_root_access_keys_disallowed_top_level_ous_have_scp(mock_get_org):
 
     result = check_root_access_keys_disallowed()
     assert result["status"] == "PASS"
-    msg = "Root access keys disallow SCP is attached " "to all top-level OUs"
+    msg = "Root access keys disallow SCP is attached to all top-level OUs"
     assert msg in result["details"]["message"]
 
 
@@ -225,7 +228,7 @@ def test_check_root_access_keys_disallowed_no_top_level_ous(mock_get_org):
 
     result = check_root_access_keys_disallowed()
     assert result["status"] == "FAIL"
-    msg = "Root access keys disallow SCP is not attached " "to the root OU"
+    msg = "Root access keys disallow SCP is not attached to the root OU"
     assert msg in result["details"]["message"]
 
 

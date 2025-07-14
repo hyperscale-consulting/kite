@@ -1,15 +1,14 @@
 """Check for established emergency access procedures."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "established-emergency-access-procedures"
 CHECK_NAME = "Establish emergency access procedures"
 
 
-def check_emergency_access_procedures() -> Dict[str, Any]:
+def check_emergency_access_procedures() -> dict[str, Any]:
     """
     Check if emergency access procedures are properly established and documented.
 

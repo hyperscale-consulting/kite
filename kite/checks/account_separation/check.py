@@ -1,12 +1,8 @@
 """Account separation check module."""
 
-
 from kite.data import get_organization
-
-from kite.helpers import (
-    get_organization_structure_str,
-    prompt_user_with_panel,
-)
+from kite.helpers import get_organization_structure_str
+from kite.helpers import prompt_user_with_panel
 
 CHECK_ID = "account-separation"
 CHECK_NAME = "Account Separation"

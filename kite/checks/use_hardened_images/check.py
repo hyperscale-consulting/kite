@@ -1,15 +1,14 @@
 """Check for use of hardened images with security controls."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "use-hardened-images"
 CHECK_NAME = "Use Hardened Images"
 
 
-def check_use_hardened_images() -> Dict[str, Any]:
+def check_use_hardened_images() -> dict[str, Any]:
     """
     Check if compute is provisioned from hardened images, applying controls such as
     those from the Center for Internet Security (CIS) and the Defense Information

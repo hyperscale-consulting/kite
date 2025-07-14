@@ -1,15 +1,14 @@
 """Check for disabled S3 bucket ACLs."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.helpers import get_prowler_output
-
 
 CHECK_ID = "s3-bucket-acl-disabled"
 CHECK_NAME = "S3 Bucket ACL Disabled"
 
 
-def check_s3_bucket_acl_disabled() -> Dict[str, Any]:
+def check_s3_bucket_acl_disabled() -> dict[str, Any]:
     """
     Check if S3 bucket ACLs are disabled.
 
@@ -33,7 +32,7 @@ def check_s3_bucket_acl_disabled() -> Dict[str, Any]:
     check_id = "s3_bucket_acl_prohibited"
 
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Check results for the check ID
     if check_id in prowler_results:
@@ -43,14 +42,16 @@ def check_s3_bucket_acl_disabled() -> Dict[str, Any]:
         # Add failing resources to the list
         for result in results:
             if result.status != "PASS":
-                failing_resources.append({
-                    "account_id": result.account_id,
-                    "resource_uid": result.resource_uid,
-                    "resource_name": result.resource_name,
-                    "resource_details": result.resource_details,
-                    "region": result.region,
-                    "status": result.status
-                })
+                failing_resources.append(
+                    {
+                        "account_id": result.account_id,
+                        "resource_uid": result.resource_uid,
+                        "resource_name": result.resource_name,
+                        "resource_details": result.resource_details,
+                        "region": result.region,
+                        "status": result.status,
+                    }
+                )
 
     # Determine if the check passed
     passed = len(failing_resources) == 0
@@ -63,9 +64,7 @@ def check_s3_bucket_acl_disabled() -> Dict[str, Any]:
             "message": (
                 "All S3 buckets have ACLs disabled."
                 if passed
-                else (
-                    f"Found {len(failing_resources)} S3 buckets with ACLs enabled."
-                )
+                else (f"Found {len(failing_resources)} S3 buckets with ACLs enabled.")
             ),
             "failing_resources": failing_resources,
         },

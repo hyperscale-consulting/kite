@@ -1,16 +1,16 @@
 """Check for sts:ExternalId condition on cross-account role assumptions."""
 
-from typing import Dict, Any, List, Set
+from typing import Any
 
-from kite.data import get_organization, get_roles
+from kite.data import get_organization
+from kite.data import get_roles
 from kite.helpers import get_account_ids_in_scope
-
 
 CHECK_ID = "cross-account-confused-deputy-prevention"
 CHECK_NAME = "Cross-Account Confused Deputy Prevention"
 
 
-def _is_principal_in_organization(principal: str, org_account_ids: Set[str]) -> bool:
+def _is_principal_in_organization(principal: str, org_account_ids: set[str]) -> bool:
     """
     Check if a principal is from an account within the organization.
 
@@ -33,7 +33,7 @@ def _is_principal_in_organization(principal: str, org_account_ids: Set[str]) -> 
         return False
 
 
-def _has_external_id_condition(statement: Dict[str, Any]) -> bool:
+def _has_external_id_condition(statement: dict[str, Any]) -> bool:
     """
     Check if a statement has the sts:ExternalId condition.
 
@@ -45,12 +45,11 @@ def _has_external_id_condition(statement: Dict[str, Any]) -> bool:
     """
     conditions = statement.get("Condition", {})
     return (
-        "StringEquals" in conditions
-        and "sts:ExternalId" in conditions["StringEquals"]
+        "StringEquals" in conditions and "sts:ExternalId" in conditions["StringEquals"]
     )
 
 
-def check_cross_account_confused_deputy_prevention() -> Dict[str, Any]:
+def check_cross_account_confused_deputy_prevention() -> dict[str, Any]:
     """
     Check if cross-account role assumptions have the sts:ExternalId condition.
 
@@ -73,7 +72,7 @@ def check_cross_account_confused_deputy_prevention() -> Dict[str, Any]:
                 - failing_resources: List of resources that failed the check
     """
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Get organization data
     org = get_organization()
@@ -94,10 +93,7 @@ def check_cross_account_confused_deputy_prevention() -> Dict[str, Any]:
                 if statement.get("Effect") == "Allow":
                     principals = statement.get("Principal", {})
                     if isinstance(principals, dict):
-                        for (
-                            principal_type,
-                            principal_value
-                        ) in principals.items():
+                        for principal_type, principal_value in principals.items():
                             if isinstance(principal_value, list):
                                 for principal in principal_value:
                                     if not _is_principal_in_organization(
@@ -119,17 +115,19 @@ def check_cross_account_confused_deputy_prevention() -> Dict[str, Any]:
             # If the role can be assumed by external principals but doesn't have
             # the sts:ExternalId condition, it fails the check
             if has_external_principal and not has_external_id_condition:
-                failing_resources.append({
-                    "account_id": account_id,
-                    "resource_uid": role["RoleId"],
-                    "resource_name": role["RoleName"],
-                    "resource_details": (
-                        "Role can be assumed by principals from other accounts "
-                        "without the sts:ExternalId condition"
-                    ),
-                    "region": "global",
-                    "status": "FAIL"
-                })
+                failing_resources.append(
+                    {
+                        "account_id": account_id,
+                        "resource_uid": role["RoleId"],
+                        "resource_name": role["RoleName"],
+                        "resource_details": (
+                            "Role can be assumed by principals from other accounts "
+                            "without the sts:ExternalId condition"
+                        ),
+                        "region": "global",
+                        "status": "FAIL",
+                    }
+                )
 
     # Determine if the check passed
     passed = len(failing_resources) == 0
@@ -140,8 +138,7 @@ def check_cross_account_confused_deputy_prevention() -> Dict[str, Any]:
         "status": "PASS" if passed else "FAIL",
         "details": {
             "message": (
-                "All cross-account role assumptions have the sts:ExternalId "
-                "condition."
+                "All cross-account role assumptions have the sts:ExternalId condition."
                 if passed
                 else (
                     f"Found {len(failing_resources)} roles that can be assumed by "

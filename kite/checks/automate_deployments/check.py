@@ -1,15 +1,14 @@
 """Check for fully automated deployments."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "automate-deployments"
 CHECK_NAME = "Automated Deployments"
 
 
-def check_automate_deployments() -> Dict[str, Any]:
+def check_automate_deployments() -> dict[str, Any]:
     """
     Check if deployments are fully automated, removing all need for persistent human
     access to production environments.

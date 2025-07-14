@@ -1,9 +1,9 @@
-from typing import List, Dict, Any
+from typing import Any
 
 import boto3
 
 
-def get_action_targets(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+def get_action_targets(session: boto3.Session, region: str) -> list[dict[str, Any]]:
     """
     Get the action targets for a given region.
 
@@ -25,7 +25,7 @@ def get_action_targets(session: boto3.Session, region: str) -> List[Dict[str, An
         return []
 
 
-def get_automation_rules(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+def get_automation_rules(session: boto3.Session, region: str) -> list[dict[str, Any]]:
     """
     Get the automation rules for a given region.
 

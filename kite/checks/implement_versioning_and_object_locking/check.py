@@ -1,17 +1,16 @@
 """Check for S3 bucket versioning and object locking."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.data import get_bucket_metadata
-from kite.config import Config
-from kite.helpers import get_account_ids_in_scope, manual_check
-
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "implement-versioning-and-object-locking"
 CHECK_NAME = "Implement Versioning and Object Locking"
 
 
-def _get_buckets_without_protection() -> Dict[str, Dict[str, List[Dict[str, Any]]]]:
+def _get_buckets_without_protection() -> dict[str, dict[str, list[dict[str, Any]]]]:
     """
     Get all S3 buckets that don't have both versioning and object locking enabled.
 
@@ -23,7 +22,6 @@ def _get_buckets_without_protection() -> Dict[str, Dict[str, List[Dict[str, Any]
 
     # Check each account
     for account_id in get_account_ids_in_scope():
-
         buckets = get_bucket_metadata(account_id)
         unprotected_buckets = []
 
@@ -34,15 +32,19 @@ def _get_buckets_without_protection() -> Dict[str, Dict[str, List[Dict[str, Any]
 
             # Check if object locking is enabled
             object_lock = bucket.get("ObjectLockConfiguration")
-            is_locked = object_lock and object_lock.get("ObjectLockEnabled") == "Enabled"
+            is_locked = (
+                object_lock and object_lock.get("ObjectLockEnabled") == "Enabled"
+            )
 
             # If either versioning or object locking is not enabled, add to list
             if not (is_versioned and is_locked):
-                unprotected_buckets.append({
-                    "bucket": bucket,
-                    "missing_versioning": not is_versioned,
-                    "missing_object_lock": not is_locked,
-                })
+                unprotected_buckets.append(
+                    {
+                        "bucket": bucket,
+                        "missing_versioning": not is_versioned,
+                        "missing_object_lock": not is_locked,
+                    }
+                )
 
         if unprotected_buckets:
             buckets_without_protection[account_id] = unprotected_buckets
@@ -50,7 +52,7 @@ def _get_buckets_without_protection() -> Dict[str, Dict[str, List[Dict[str, Any]
     return buckets_without_protection
 
 
-def check_implement_versioning_and_object_locking() -> Dict[str, Any]:
+def check_implement_versioning_and_object_locking() -> dict[str, Any]:
     """
     Check if S3 buckets have versioning and object locking enabled where appropriate.
 

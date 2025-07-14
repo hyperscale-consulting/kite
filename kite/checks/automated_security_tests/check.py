@@ -1,6 +1,6 @@
 """Check for automated security tests."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
 
@@ -8,7 +8,7 @@ CHECK_ID = "automated-security-tests"
 CHECK_NAME = "Automated Security Tests"
 
 
-def check_automated_security_tests() -> Dict[str, Any]:
+def check_automated_security_tests() -> dict[str, Any]:
     """
     Check if automated unit and integration tests are used to verify the security
     properties of applications.

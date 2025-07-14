@@ -1,20 +1,18 @@
 """Check for Network Firewall configuration and coverage."""
 
-from typing import Dict, Any, Tuple
+from typing import Any
 
-from kite.helpers import manual_check, get_account_ids_in_scope
-from kite.data import (
-    get_networkfirewall_firewalls,
-    get_vpcs,
-)
 from kite.config import Config
-
+from kite.data import get_networkfirewall_firewalls
+from kite.data import get_vpcs
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "inspect-traffic-with-network-firewall"
 CHECK_NAME = "Inspect Traffic with Network Firewall"
 
 
-def _pre_check() -> Tuple[bool, Dict[str, Any]]:
+def _pre_check() -> tuple[bool, dict[str, Any]]:
     """Pre-check function that automatically fails if no network firewalls exist."""
     accounts = get_account_ids_in_scope()
     regions = Config.get().active_regions
@@ -39,7 +37,7 @@ def _pre_check() -> Tuple[bool, Dict[str, Any]]:
     return True, {}
 
 
-def _get_vpc_name(vpc: Dict[str, Any]) -> str:
+def _get_vpc_name(vpc: dict[str, Any]) -> str:
     tags = vpc.get("Tags", [])
     for tag in tags:
         if tag.get("Key") == "Name":
@@ -77,29 +75,23 @@ def _analyze_network_firewalls() -> str:
                 account_has_firewalls = True
                 total_firewalls += len(firewalls)
 
-                analysis_lines.append(
-                    f"Account {account_id} - Region {region}:"
-                )
+                analysis_lines.append(f"Account {account_id} - Region {region}:")
                 analysis_lines.append("-" * 60)
 
                 for firewall in firewalls:
                     analysis_lines.append(
                         f"  Firewall: {firewall.get('FirewallName', 'N/A')}"
                     )
-                    analysis_lines.append(
-                        f"  VPC ID: {firewall.get('VpcId', 'N/A')}"
-                    )
+                    analysis_lines.append(f"  VPC ID: {firewall.get('VpcId', 'N/A')}")
                     analysis_lines.append(
                         f"  Description: {firewall.get('Description', 'N/A')}"
                     )
-                    status = firewall.get('FirewallStatus', {})
-                    analysis_lines.append(
-                        f"  Status: {status.get('Status', 'N/A')}"
-                    )
+                    status = firewall.get("FirewallStatus", {})
+                    analysis_lines.append(f"  Status: {status.get('Status', 'N/A')}")
                     analysis_lines.append("")
 
                     # Track VPC with firewall
-                    vpc_id = firewall.get('VpcId')
+                    vpc_id = firewall.get("VpcId")
                     if vpc_id:
                         vpc_key = f"{account_id}:{region}:{vpc_id}"
                         vpcs_with_firewalls.add(vpc_key)
@@ -125,23 +117,25 @@ def _analyze_network_firewalls() -> str:
         for region in regions:
             vpcs = get_vpcs(account_id, region)
             for vpc in vpcs:
-                vpc_id = vpc.get('VpcId')
+                vpc_id = vpc.get("VpcId")
                 if vpc_id:
                     vpc_key = f"{account_id}:{region}:{vpc_id}"
                     if vpc_key not in vpcs_with_firewalls:
-                        vpcs_without_firewalls.append({
-                            'account_id': account_id,
-                            'region': region,
-                            'vpc_id': vpc_id,
-                            'vpc_name': _get_vpc_name(vpc)
-                        })
+                        vpcs_without_firewalls.append(
+                            {
+                                "account_id": account_id,
+                                "region": region,
+                                "vpc_id": vpc_id,
+                                "vpc_name": _get_vpc_name(vpc),
+                            }
+                        )
 
     if vpcs_without_firewalls:
         for vpc_info in vpcs_without_firewalls:
-            vpc_id = vpc_info['vpc_id']
-            vpc_name = vpc_info['vpc_name']
-            account_id = vpc_info['account_id']
-            region = vpc_info['region']
+            vpc_id = vpc_info["vpc_id"]
+            vpc_name = vpc_info["vpc_name"]
+            account_id = vpc_info["account_id"]
+            region = vpc_info["region"]
 
             warning_msg = (
                 f"  WARNING: VPC {vpc_id} ({vpc_name}) in account "
@@ -153,14 +147,12 @@ def _analyze_network_firewalls() -> str:
 
     analysis_lines.append("")
     analysis_lines.append(f"Summary: {total_firewalls} Network Firewalls found")
-    analysis_lines.append(
-        f"VPCs without firewalls: {len(vpcs_without_firewalls)}"
-    )
+    analysis_lines.append(f"VPCs without firewalls: {len(vpcs_without_firewalls)}")
 
     return "\n".join(analysis_lines)
 
 
-def check_inspect_traffic_with_network_firewall() -> Dict[str, Any]:
+def check_inspect_traffic_with_network_firewall() -> dict[str, Any]:
     """Check Network Firewall configuration and coverage."""
     analysis = _analyze_network_firewalls()
 
@@ -178,12 +170,8 @@ def check_inspect_traffic_with_network_firewall() -> Dict[str, Any]:
         check_id=CHECK_ID,
         check_name=CHECK_NAME,
         message=message,
-        prompt=(
-            "Do you use Network Firewall to inspect traffic in your VPCs?"
-        ),
-        pass_message=(
-            "Network Firewall is used to inspect traffic in VPCs."
-        ),
+        prompt=("Do you use Network Firewall to inspect traffic in your VPCs?"),
+        pass_message=("Network Firewall is used to inspect traffic in VPCs."),
         fail_message=(
             "Network Firewall should be used to inspect traffic in VPCs where "
             "appropriate."

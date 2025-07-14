@@ -16,9 +16,7 @@ def get_maintenance_windows(
             mw["Targets"] = get_maintenance_window_targets(
                 session, region, mw["WindowId"]
             )
-            mw["Tasks"] = get_maintenance_window_tasks(
-                session, region, mw["WindowId"]
-            )
+            mw["Tasks"] = get_maintenance_window_tasks(session, region, mw["WindowId"])
             maintenance_windows.append(mw)
     return maintenance_windows
 

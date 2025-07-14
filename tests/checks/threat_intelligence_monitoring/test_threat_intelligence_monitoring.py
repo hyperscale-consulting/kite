@@ -1,7 +1,7 @@
-"""Tests for threat intelligence monitoring check."""
+from unittest.mock import patch
 
 import pytest
-from unittest.mock import patch
+from botocore.exceptions import ClientError
 
 from kite.checks.threat_intelligence_monitoring.check import (
     check_threat_intelligence_monitoring,
@@ -16,7 +16,7 @@ def test_check_threat_intelligence_monitoring_pass():
             "status": "PASS",
             "details": {
                 "message": "Teams have established reliable and repeatable mechanisms"
-            }
+            },
         }
         result = check_threat_intelligence_monitoring()
         assert result["status"] == "PASS"
@@ -32,9 +32,7 @@ def test_check_threat_intelligence_monitoring_fail():
     with patch(patch_path) as mock_check:
         mock_check.return_value = {
             "status": "FAIL",
-            "details": {
-                "message": "Teams lack reliable and repeatable mechanisms"
-            }
+            "details": {"message": "Teams lack reliable and repeatable mechanisms"},
         }
         result = check_threat_intelligence_monitoring()
         assert result["status"] == "FAIL"
@@ -48,6 +46,8 @@ def test_check_threat_intelligence_monitoring_error():
     """Test error handling in threat intelligence monitoring check."""
     patch_path = "kite.checks.threat_intelligence_monitoring.check.manual_check"
     with patch(patch_path) as mock_check:
-        mock_check.side_effect = Exception("Test error")
-        with pytest.raises(Exception):
+        mock_check.side_effect = ClientError(
+            dict(code="error", message="Test error"), "Operation"
+        )
+        with pytest.raises(ClientError):
             check_threat_intelligence_monitoring()

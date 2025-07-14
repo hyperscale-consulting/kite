@@ -1,8 +1,9 @@
-from typing import List, Dict, Any
+from typing import Any
+
 import boto3
 
 
-def get_load_balancers(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+def get_load_balancers(session: boto3.Session, region: str) -> list[dict[str, Any]]:
     client = session.client("elbv2", region_name=region)
     paginator = client.get_paginator("describe_load_balancers")
     load_balancers = []
@@ -16,7 +17,9 @@ def get_load_balancers(session: boto3.Session, region: str) -> List[Dict[str, An
     return load_balancers
 
 
-def get_load_balancer_attributes(session: boto3.Session, load_balancer_arn: str, region: str) -> Dict[str, Any]:
+def get_load_balancer_attributes(
+    session: boto3.Session, load_balancer_arn: str, region: str
+) -> dict[str, Any]:
     client = session.client("elbv2", region_name=region)
     response = client.describe_load_balancer_attributes(
         LoadBalancerArn=load_balancer_arn

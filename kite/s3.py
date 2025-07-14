@@ -1,10 +1,11 @@
 """S3 service module for Kite."""
 
-from typing import List, Dict, Any
+from typing import Any
+
 from botocore.exceptions import ClientError
 
 
-def get_bucket_names(session) -> List[Dict[str, Any]]:
+def get_bucket_names(session) -> list[dict[str, Any]]:
     """
     Get all S3 bucket names.
     """
@@ -18,7 +19,7 @@ def get_bucket_names(session) -> List[Dict[str, Any]]:
     ]
 
 
-def get_buckets(session) -> List[Dict[str, Any]]:
+def get_buckets(session) -> list[dict[str, Any]]:
     """
     Get all S3 buckets.
 

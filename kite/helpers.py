@@ -1,29 +1,33 @@
 """Helper functions for Kite."""
 
+import glob
+from collections.abc import Callable
+from dataclasses import dataclass
+from typing import Any
+
 import boto3
 import click
-import glob
 from rich.console import Console
 from rich.tree import Tree
-from typing import Optional, Dict, List, Any, Set, Tuple, Callable
-from dataclasses import dataclass
 
-from . import ui, sts
 from kite.config import Config
+from kite.data import get_cloudtrail_trails
+from kite.data import get_cognito_user_pool as get_saved_cognito_user_pool
+from kite.data import get_cognito_user_pools as get_saved_cognito_user_pools
 from kite.data import (
-    get_organization,
-    get_identity_center_instances,
-    get_virtual_mfa_devices,
-    get_password_policy as get_saved_password_policy,
-    get_cognito_user_pools as get_saved_cognito_user_pools,
-    get_cognito_user_pool as get_saved_cognito_user_pool,
-    get_key_pairs as get_saved_key_pairs,
-    get_secrets as get_saved_secrets,
-    get_roles as get_saved_roles,
     get_customer_managed_policies as get_saved_customer_managed_policies,
-    get_policy_document as get_saved_policy_document,
-    get_cloudtrail_trails,
 )
+from kite.data import get_identity_center_instances
+from kite.data import get_key_pairs as get_saved_key_pairs
+from kite.data import get_organization
+from kite.data import get_password_policy as get_saved_password_policy
+from kite.data import get_policy_document as get_saved_policy_document
+from kite.data import get_roles as get_saved_roles
+from kite.data import get_secrets as get_saved_secrets
+from kite.data import get_virtual_mfa_devices
+
+from . import sts
+from . import ui
 
 console = Console()
 
@@ -34,7 +38,7 @@ def prompt_user_with_panel(
     prompt: str,
     default: bool = True,
     info_required: bool = True,
-) -> Tuple[bool, Dict[str, Any]]:
+) -> tuple[bool, dict[str, Any]]:
     """
     Display a panel with context and prompt the user for a response.
 
@@ -75,9 +79,9 @@ def manual_check(
     pass_message: str,
     fail_message: str,
     default: bool = True,
-    pre_check: Optional[Callable[[], Tuple[bool, Dict[str, Any]]]] = None,
+    pre_check: Callable[[], tuple[bool, dict[str, Any]]] | None = None,
     error_message_prefix: str = "Error checking",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Generic function for manual checks that need to ask the user questions.
 
@@ -238,7 +242,7 @@ def get_organization_structure_str(org) -> str:
     return string_buffer.getvalue()
 
 
-def get_account_ids_in_scope() -> Set[str]:
+def get_account_ids_in_scope() -> set[str]:
     """
     Get all account IDs in scope of the assessment.
 
@@ -269,9 +273,7 @@ def get_account_ids_in_scope() -> Set[str]:
     # If we have a management account but no specific account IDs,
     # get all accounts in the organization
     if config.management_account_id and not config.account_ids:
-        org_account_ids = [
-            account.id for account in get_organization().get_accounts()
-        ]
+        org_account_ids = [account.id for account in get_organization().get_accounts()]
         # Normalize all account IDs to strings
         account_ids.update(str(account_id) for account_id in org_account_ids)
 
@@ -285,7 +287,7 @@ def get_account_ids_in_scope() -> Set[str]:
     return account_ids
 
 
-def get_root_virtual_mfa_device(account_id: str) -> Optional[str]:
+def get_root_virtual_mfa_device(account_id: str) -> str | None:
     """
     Get the virtual MFA device for the root user in the specified account.
 
@@ -334,7 +336,7 @@ def is_identity_center_enabled() -> bool:
     return instances is not None and len(instances) > 0
 
 
-def get_password_policy(account_id: str) -> Optional[Dict[str, Any]]:
+def get_password_policy(account_id: str) -> dict[str, Any] | None:
     """
     Get the IAM password policy for the specified account.
 
@@ -348,7 +350,7 @@ def get_password_policy(account_id: str) -> Optional[Dict[str, Any]]:
     return get_saved_password_policy(account_id)
 
 
-def is_complex(policy: Optional[Dict[str, Any]]) -> bool:
+def is_complex(policy: dict[str, Any] | None) -> bool:
     """
     Determine if the given password policy meets complexity requirements.
 
@@ -387,7 +389,7 @@ def is_identity_center_identity_store_used() -> bool:
     )
 
 
-def get_cognito_user_pools(account_id: str) -> List[Dict[str, Any]]:
+def get_cognito_user_pools(account_id: str) -> list[dict[str, Any]]:
     """
     Get the list of Cognito user pools for the specified account from saved data.
 
@@ -403,7 +405,7 @@ def get_cognito_user_pools(account_id: str) -> List[Dict[str, Any]]:
     return get_saved_cognito_user_pools(account_id)
 
 
-def get_cognito_user_pool(account_id: str, user_pool_id: str) -> Dict[str, Any]:
+def get_cognito_user_pool(account_id: str, user_pool_id: str) -> dict[str, Any]:
     """
     Get Cognito user pool details from saved data.
 
@@ -419,7 +421,7 @@ def get_cognito_user_pool(account_id: str, user_pool_id: str) -> Dict[str, Any]:
     return get_saved_cognito_user_pool(account_id, user_pool_id)
 
 
-def is_cognito_password_policy_complex(policy: Dict[str, Any]) -> bool:
+def is_cognito_password_policy_complex(policy: dict[str, Any]) -> bool:
     """
     Determine if the given Cognito password policy meets complexity requirements.
 
@@ -445,7 +447,7 @@ def is_cognito_password_policy_complex(policy: Dict[str, Any]) -> bool:
     )
 
 
-def get_user_pool_password_policy(account_id: str, user_pool_id: str) -> Dict[str, Any]:
+def get_user_pool_password_policy(account_id: str, user_pool_id: str) -> dict[str, Any]:
     """
     Get the password policy for a Cognito user pool.
 
@@ -459,8 +461,10 @@ def get_user_pool_password_policy(account_id: str, user_pool_id: str) -> Dict[st
     Raises:
         ClickException: If data collection hasn't been run.
     """
-    return get_cognito_user_pool(account_id, user_pool_id).get('Policies', {}).get(
-        "PasswordPolicy", {}
+    return (
+        get_cognito_user_pool(account_id, user_pool_id)
+        .get("Policies", {})
+        .get("PasswordPolicy", {})
     )
 
 
@@ -478,13 +482,15 @@ def get_user_pool_mfa_config(account_id: str, user_pool_id: str) -> str:
     Raises:
         ClickException: If data collection hasn't been run.
     """
-    return get_cognito_user_pool(account_id, user_pool_id).get("MfaConfiguration",
-                                                               "OFF")
+    return get_cognito_user_pool(account_id, user_pool_id).get(
+        "MfaConfiguration", "OFF"
+    )
 
 
 @dataclass
 class ProwlerResult:
     """Represents a single prowler check result."""
+
     account_id: str
     status: str
     extended_status: str
@@ -494,7 +500,7 @@ class ProwlerResult:
     region: str
 
 
-def get_prowler_output() -> Dict[str, List[ProwlerResult]]:
+def get_prowler_output() -> dict[str, list[ProwlerResult]]:
     """
     Read and cache prowler output files.
 
@@ -515,7 +521,7 @@ def get_prowler_output() -> Dict[str, List[ProwlerResult]]:
 
         results = {}
         for file_path in prowler_files:
-            with open(file_path, "r") as f:
+            with open(file_path) as f:
                 # Skip header line
                 next(f)
                 for line in f:
@@ -529,7 +535,7 @@ def get_prowler_output() -> Dict[str, List[ProwlerResult]]:
                             resource_uid=records[20],
                             resource_name=records[21],
                             resource_details=records[22],
-                            region=records[25]
+                            region=records[25],
                         )
 
                         if check_id not in results:
@@ -541,7 +547,7 @@ def get_prowler_output() -> Dict[str, List[ProwlerResult]]:
     return get_prowler_output._cache
 
 
-def get_account_key_pairs(account_id: str) -> List[Dict[str, Any]]:
+def get_account_key_pairs(account_id: str) -> list[dict[str, Any]]:
     """
     Get all EC2 key pairs in the specified account from saved data.
 
@@ -557,7 +563,7 @@ def get_account_key_pairs(account_id: str) -> List[Dict[str, Any]]:
     return get_saved_key_pairs(account_id)
 
 
-def get_secrets(account_id: str, region: str) -> List[Dict[str, Any]]:
+def get_secrets(account_id: str, region: str) -> list[dict[str, Any]]:
     """
     Get secrets from AWS Secrets Manager from saved data.
 
@@ -574,7 +580,7 @@ def get_secrets(account_id: str, region: str) -> List[Dict[str, Any]]:
     return get_saved_secrets(account_id, region)
 
 
-def get_account_roles(account_id: str) -> List[Dict[str, Any]]:
+def get_account_roles(account_id: str) -> list[dict[str, Any]]:
     """
     Get all IAM roles in the specified account from saved data.
 
@@ -590,7 +596,7 @@ def get_account_roles(account_id: str) -> List[Dict[str, Any]]:
     return get_saved_roles(account_id)
 
 
-def get_customer_managed_policies(account_id: str) -> List[Dict[str, Any]]:
+def get_customer_managed_policies(account_id: str) -> list[dict[str, Any]]:
     """
     Get all customer managed policies in the specified account from saved data.
 
@@ -606,7 +612,7 @@ def get_customer_managed_policies(account_id: str) -> List[Dict[str, Any]]:
     return get_saved_customer_managed_policies(account_id)
 
 
-def get_policy_document(account_id: str, policy_arn: str) -> Dict[str, Any]:
+def get_policy_document(account_id: str, policy_arn: str) -> dict[str, Any]:
     """
     Get the policy document for a customer managed policy from saved data.
 
@@ -623,8 +629,7 @@ def get_policy_document(account_id: str, policy_arn: str) -> Dict[str, Any]:
     return get_saved_policy_document(account_id, policy_arn)
 
 
-def get_organizational_trail(
-) -> Tuple[Optional[Dict[str, Any]], Optional[str], Optional[str]]:
+def get_organizational_trail() -> tuple[dict[str, Any] | None, str | None, str | None]:
     """
     Get the organizational trail for the account.
     """

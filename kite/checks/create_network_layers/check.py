@@ -1,27 +1,26 @@
 """Manual check for creating network layers based on workload components."""
 
-from typing import Dict, Any, List
-from kite.data import (
-    get_vpcs,
-    get_rtbs,
-    get_subnets,
-    get_rds_instances,
-    get_eks_clusters,
-    get_ecs_clusters,
-    get_ec2_instances,
-    get_lambda_functions,
-    get_efs_file_systems,
-    get_elbv2_load_balancers,
-)
-from kite.helpers import get_account_ids_in_scope, manual_check
-from kite.config import Config
+from typing import Any
 
+from kite.config import Config
+from kite.data import get_ec2_instances
+from kite.data import get_ecs_clusters
+from kite.data import get_efs_file_systems
+from kite.data import get_eks_clusters
+from kite.data import get_elbv2_load_balancers
+from kite.data import get_lambda_functions
+from kite.data import get_rds_instances
+from kite.data import get_rtbs
+from kite.data import get_subnets
+from kite.data import get_vpcs
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "create-network-layers"
 CHECK_NAME = "Create Network Layers"
 
 
-def _get_vpc_name(vpc: Dict[str, Any]) -> str:
+def _get_vpc_name(vpc: dict[str, Any]) -> str:
     """Extract VPC name from tags."""
     tags = vpc.get("Tags", [])
     for tag in tags:
@@ -30,7 +29,7 @@ def _get_vpc_name(vpc: Dict[str, Any]) -> str:
     return ""
 
 
-def _get_subnet_name(subnet: Dict[str, Any]) -> str:
+def _get_subnet_name(subnet: dict[str, Any]) -> str:
     """Extract subnet name from tags."""
     tags = subnet.get("Tags", [])
     for tag in tags:
@@ -39,7 +38,7 @@ def _get_subnet_name(subnet: Dict[str, Any]) -> str:
     return ""
 
 
-def _is_subnet_private(subnet_id: str, route_tables: List[Dict[str, Any]]) -> bool:
+def _is_subnet_private(subnet_id: str, route_tables: list[dict[str, Any]]) -> bool:
     """
     Determine if a subnet is private by checking if it has routes to internet gateway.
 
@@ -56,8 +55,10 @@ def _is_subnet_private(subnet_id: str, route_tables: List[Dict[str, Any]]) -> bo
         subnet_associated = False
 
         for assoc in associations:
-            if (assoc.get("SubnetId") == subnet_id and
-                    assoc.get("AssociationState", {}).get("State") == "associated"):
+            if (
+                assoc.get("SubnetId") == subnet_id
+                and assoc.get("AssociationState", {}).get("State") == "associated"
+            ):
                 subnet_associated = True
                 break
 
@@ -70,7 +71,7 @@ def _is_subnet_private(subnet_id: str, route_tables: List[Dict[str, Any]]) -> bo
             gateway_id = route.get("GatewayId", "")
             destination = route.get("DestinationCidrBlock", "")
 
-            if (gateway_id.startswith("igw-") and destination == "0.0.0.0/0"):
+            if gateway_id.startswith("igw-") and destination == "0.0.0.0/0":
                 return False  # Subnet has internet access, so it's public
 
     return True  # No internet gateway route found, so it's private
@@ -78,14 +79,14 @@ def _is_subnet_private(subnet_id: str, route_tables: List[Dict[str, Any]]) -> bo
 
 def _get_resources_in_subnet(
     subnet_id: str,
-    rds_instances: List[Dict[str, Any]],
-    eks_clusters: List[Dict[str, Any]],
-    ecs_clusters: List[Dict[str, Any]],
-    ec2_instances: List[Dict[str, Any]],
-    lambda_functions: List[Dict[str, Any]],
-    efs_file_systems: List[Dict[str, Any]],
-    elbv2_load_balancers: List[Dict[str, Any]],
-) -> Dict[str, List[str]]:
+    rds_instances: list[dict[str, Any]],
+    eks_clusters: list[dict[str, Any]],
+    ecs_clusters: list[dict[str, Any]],
+    ec2_instances: list[dict[str, Any]],
+    lambda_functions: list[dict[str, Any]],
+    efs_file_systems: list[dict[str, Any]],
+    elbv2_load_balancers: list[dict[str, Any]],
+) -> dict[str, list[str]]:
     """Get all resources in a specific subnet."""
     resources = {
         "RDS": [],
@@ -103,9 +104,7 @@ def _get_resources_in_subnet(
         subnets = db_subnet_group.get("Subnets", [])
         for subnet in subnets:
             if subnet.get("SubnetIdentifier") == subnet_id:
-                resources["RDS"].append(
-                    rds.get("DBInstanceIdentifier", "Unknown")
-                )
+                resources["RDS"].append(rds.get("DBInstanceIdentifier", "Unknown"))
                 break
 
     # Check EKS clusters
@@ -137,9 +136,7 @@ def _get_resources_in_subnet(
         vpc_config = lambda_func.get("VpcConfig", {})
         subnet_ids = vpc_config.get("SubnetIds", [])
         if subnet_id in subnet_ids:
-            resources["Lambda"].append(
-                lambda_func.get("FunctionName", "Unknown")
-            )
+            resources["Lambda"].append(lambda_func.get("FunctionName", "Unknown"))
 
     # Check EFS file systems
     for efs in efs_file_systems:
@@ -228,9 +225,7 @@ def _analyze_network_topology() -> str:
                     vpc_has_resources = True
                     region_has_resources = True
                     account_has_resources = True
-                    vpc_analysis += (
-                        f"  Subnet: {subnet_id}"
-                    )
+                    vpc_analysis += f"  Subnet: {subnet_id}"
                     if subnet_name:
                         vpc_analysis += f" (Name: {subnet_name})"
                     vpc_analysis += (
@@ -242,11 +237,15 @@ def _analyze_network_topology() -> str:
                         if resource_list:
                             has_resources = True
                             vpc_analysis += (
-                                f"    {resource_type}: "
-                                f"{', '.join(resource_list)}\n"
+                                f"    {resource_type}: {', '.join(resource_list)}\n"
                             )
                             if subnet_type == "Public" and resource_type in [
-                                "RDS", "EFS", "EKS", "ECS", "EC2", "Lambda"
+                                "RDS",
+                                "EFS",
+                                "EKS",
+                                "ECS",
+                                "EC2",
+                                "Lambda",
                             ]:
                                 for res in resource_list:
                                     public_warnings.append(
@@ -267,22 +266,18 @@ def _analyze_network_topology() -> str:
             "(should be deployed in a VPC unless there's a good reason):\n"
         )
         for lambda_name in lambdas_without_vpc:
-            analysis += (
-                f"  - {lambda_name}\n"
-            )
+            analysis += f"  - {lambda_name}\n"
     if public_warnings:
         analysis += (
             "\n⚠️ The following resources are running in public subnets "
             "(should be private unless there's a good reason):\n"
         )
         for warning in public_warnings:
-            analysis += (
-                f"  - {warning}\n"
-            )
+            analysis += f"  - {warning}\n"
     return analysis
 
 
-def check_create_network_layers() -> Dict[str, Any]:
+def check_create_network_layers() -> dict[str, Any]:
     """
     Check if network topology is segmented into different layers based on logical
     groupings of workload components according to their data sensitivity and access requirements.

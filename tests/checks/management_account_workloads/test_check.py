@@ -1,23 +1,24 @@
 """Tests for the Management Account Workloads check."""
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 import pytest
-
-from kite.models import WorkloadResources, WorkloadResource
-from kite.data import save_mgmt_account_workload_resources
 
 from kite.checks.management_account_workloads.check import (
     check_management_account_workloads,
 )
+from kite.data import save_mgmt_account_workload_resources
+from kite.models import WorkloadResource
+from kite.models import WorkloadResources
 
 
 @pytest.fixture
 def workload_resources_in_mgmt_account():
     resources = WorkloadResources(
         resources=[
-            WorkloadResource(resource_type="ECS", resource_id="test-cluster",
-                             region="us-east-1"),
+            WorkloadResource(
+                resource_type="ECS", resource_id="test-cluster", region="us-east-1"
+            ),
         ]
     )
     save_mgmt_account_workload_resources(resources)
@@ -26,15 +27,13 @@ def workload_resources_in_mgmt_account():
 
 @pytest.fixture
 def no_workload_resources():
-    resources = WorkloadResources(
-        resources=[]
-    )
+    resources = WorkloadResources(resources=[])
     save_mgmt_account_workload_resources(resources)
     return resources
 
 
 def test_check_management_account_workloads_no_management_account(
-        workload_resources_in_mgmt_account, config
+    workload_resources_in_mgmt_account, config
 ):
     """Test the check when no management account ID is provided."""
     config.management_account_id = None
@@ -65,7 +64,7 @@ def test_check_management_account_workloads_no_resources(no_workload_resources):
 
 
 def test_check_management_account_workloads_with_resources_pass(
-        workload_resources_in_mgmt_account
+    workload_resources_in_mgmt_account,
 ):
     """Test the check when resources are found but user confirms no workloads."""
     with patch(
@@ -85,7 +84,7 @@ def test_check_management_account_workloads_with_resources_pass(
 
 
 def test_check_management_account_workloads_with_resources_fail(
-        workload_resources_in_mgmt_account
+    workload_resources_in_mgmt_account,
 ):
     """Test the check when resources are found and user confirms workloads exist."""
     with patch(

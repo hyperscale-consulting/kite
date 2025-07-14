@@ -1,10 +1,9 @@
 """SCP prevents common admin role changes check module."""
 
 import json
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "scp-prevents-common-admin-role-changes"
 CHECK_NAME = "SCP Prevents Common Admin Role Changes"
@@ -138,7 +137,7 @@ def check_scp_prevents_common_admin_role_changes() -> dict:
     }
 
 
-def _is_admin_role_deny_scp(content: Dict[str, Any]) -> bool:
+def _is_admin_role_deny_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively denies changes to common admin roles.
 
@@ -188,9 +187,8 @@ def _is_admin_role_deny_scp(content: Dict[str, Any]) -> bool:
                 resources = [resources]
 
             for resource in resources:
-                if (
-                    isinstance(resource, str)
-                    and resource.startswith("arn:aws:iam::*:role/")
+                if isinstance(resource, str) and resource.startswith(
+                    "arn:aws:iam::*:role/"
                 ):
                     return True
 

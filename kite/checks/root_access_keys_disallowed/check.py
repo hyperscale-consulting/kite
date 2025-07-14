@@ -1,16 +1,15 @@
 """Check for disallow root access keys SCP."""
 
 import json
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "root-access-keys-disallowed"
 CHECK_NAME = "Root Access Keys Disallowed"
 
 
-def check_root_access_keys_disallowed() -> Dict[str, Any]:
+def check_root_access_keys_disallowed() -> dict[str, Any]:
     """
     Check if there is an effective SCP that disallows root access keys.
 
@@ -146,7 +145,7 @@ def check_root_access_keys_disallowed() -> Dict[str, Any]:
         }
 
 
-def _is_root_access_keys_disallow_scp(content: Dict[str, Any]) -> bool:
+def _is_root_access_keys_disallow_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively disallows root access keys.
 

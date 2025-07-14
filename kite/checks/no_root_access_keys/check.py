@@ -1,16 +1,15 @@
 """Check for absence of root access keys."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.helpers import get_account_ids_in_scope
 from kite.data import get_account_summary
-
+from kite.helpers import get_account_ids_in_scope
 
 CHECK_ID = "no-root-access-keys"
 CHECK_NAME = "No Root Access Keys"
 
 
-def check_no_root_access_keys() -> Dict[str, Any]:
+def check_no_root_access_keys() -> dict[str, Any]:
     """
     Check if any accounts have root access keys.
 

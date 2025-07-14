@@ -1,7 +1,5 @@
 """Tests for the root credentials management enabled check."""
 
-from unittest.mock import patch
-
 import pytest
 
 from kite.checks.root_credentials_management_enabled.check import (
@@ -37,7 +35,9 @@ def test_root_credentials_management_enabled(root_credentials_management_enabled
     )
 
 
-def test_root_credentials_management_not_enabled(root_credentials_management_not_enabled):
+def test_root_credentials_management_not_enabled(
+    root_credentials_management_not_enabled,
+):
     """Test when root credentials management is not enabled."""
 
     result = check_root_credentials_management_enabled()

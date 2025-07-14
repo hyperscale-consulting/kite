@@ -1,20 +1,17 @@
 """Tests for helper functions."""
 
+from unittest.mock import MagicMock
+from unittest.mock import patch
+
 import pytest
-from unittest.mock import patch, MagicMock
 
-
-from kite.organizations import (
-    Organization,
-    OrganizationalUnit,
-    Account,
-    ControlPolicy,
-)
-from kite.helpers import (
-    get_organization_structure_str,
-    get_account_ids_in_scope,
-)
 from kite.config import Config
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import get_organization_structure_str
+from kite.organizations import Account
+from kite.organizations import ControlPolicy
+from kite.organizations import Organization
+from kite.organizations import OrganizationalUnit
 
 
 @pytest.fixture
@@ -142,17 +139,22 @@ def mock_config_instance(mock_config):
         yield mock_config
 
 
-def test_get_organization_structure_str(organization, root_ou, security_ou,
-                                        workload_account, full_access_scp):
+def test_get_organization_structure_str(
+    organization, root_ou, security_ou, workload_account, full_access_scp
+):
     """Test getting organization structure as a string."""
     result = get_organization_structure_str(organization)
 
     # Verify the structure contains all the expected elements
     assert f"Root: Root ({root_ou.id}) [SCPs: {full_access_scp.name}]" in result
-    assert (f"OU: {security_ou.name} ({security_ou.id}) [SCPs: {full_access_scp.name}]"
-            in result)
-    assert (f"Account: {workload_account.name} ({workload_account.id})"
-            f" [SCPs: {full_access_scp.name}]" in result)
+    assert (
+        f"OU: {security_ou.name} ({security_ou.id}) [SCPs: {full_access_scp.name}]"
+        in result
+    )
+    assert (
+        f"Account: {workload_account.name} ({workload_account.id})"
+        f" [SCPs: {full_access_scp.name}]" in result
+    )
 
 
 def test_get_account_ids_in_scope_with_management_and_account_ids(mock_config):
@@ -168,12 +170,12 @@ def test_get_account_ids_in_scope_with_management_and_account_ids(mock_config):
 
 
 def test_get_account_ids_in_scope_with_only_management_account(
-        config,
-        organization,
-        audit_account_id,
-        log_account_id,
-        workload_account_id,
-        mgmt_account_id
+    config,
+    organization,
+    audit_account_id,
+    log_account_id,
+    workload_account_id,
+    mgmt_account_id,
 ):
     """Test get_account_ids_in_scope with only management account."""
     config.management_account_id = mgmt_account_id
@@ -183,28 +185,21 @@ def test_get_account_ids_in_scope_with_only_management_account(
         audit_account_id,
         log_account_id,
         workload_account_id,
-        mgmt_account_id
+        mgmt_account_id,
     ]
     assert sorted(account_ids) == sorted(expected_accounts)
 
 
-def test_get_account_ids_in_scope_with_only_account_ids(
-        config,
-        workload_account_id
-):
+def test_get_account_ids_in_scope_with_only_account_ids(config, workload_account_id):
     """Test get_account_ids_in_scope with only account IDs."""
     # Create a config with only account IDs
     config.management_account_id = None
-    config.account_ids = [
-        workload_account_id
-    ]
+    config.account_ids = [workload_account_id]
 
     account_ids = get_account_ids_in_scope()
 
     # Should include only account IDs
-    expected_accounts = [
-        workload_account_id
-    ]
+    expected_accounts = [workload_account_id]
     assert sorted(account_ids) == sorted(expected_accounts)
 
 
@@ -220,11 +215,7 @@ def test_get_account_ids_in_scope_with_no_accounts(config):
 
 
 def test_get_account_ids_in_scope_normalizes_account_ids(
-        config,
-        organization,
-        workload_account_id,
-        log_account_id,
-        mgmt_account_id
+    config, organization, workload_account_id, log_account_id, mgmt_account_id
 ):
     """Test get_account_ids_in_scope normalizes account IDs to strings."""
     # Create a config with mixed account ID types
@@ -233,9 +224,5 @@ def test_get_account_ids_in_scope_normalizes_account_ids(
 
     account_ids = get_account_ids_in_scope()
 
-    expected_accounts = [
-        workload_account_id,
-        log_account_id,
-        mgmt_account_id
-    ]
+    expected_accounts = [workload_account_id, log_account_id, mgmt_account_id]
     assert sorted(account_ids) == sorted(expected_accounts)

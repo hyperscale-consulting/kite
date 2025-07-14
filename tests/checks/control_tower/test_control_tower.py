@@ -41,8 +41,7 @@ def test_control_tower_fail():
             "status": "FAIL",
             "details": {
                 "message": (
-                    "Control Tower should be used to enable suitable standard "
-                    "controls."
+                    "Control Tower should be used to enable suitable standard controls."
                 ),
             },
         },

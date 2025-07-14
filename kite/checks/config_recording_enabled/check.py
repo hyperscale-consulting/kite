@@ -1,17 +1,16 @@
 """Check for AWS Config recorders."""
 
-from typing import Dict, Any
+from typing import Any
 
+from kite.config import Config
 from kite.data import get_config_recorders
 from kite.helpers import get_account_ids_in_scope
-from kite.config import Config
-
 
 CHECK_ID = "config-recording-enabled"
 CHECK_NAME = "AWS Config Recording Enabled"
 
 
-def check_config_recording_enabled() -> Dict[str, Any]:
+def check_config_recording_enabled() -> dict[str, Any]:
     """
     Check if AWS Config recorders are enabled in all active regions.
 

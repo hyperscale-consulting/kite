@@ -1,20 +1,17 @@
 """Check for accurate account contact details."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.config import Config
-from kite.helpers import (
-    get_account_ids_in_scope,
-    manual_check,
-)
 from kite.data import get_organization_features
-
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "accurate-account-contact-details"
 CHECK_NAME = "Accurate Account Contact Details"
 
 
-def check_accurate_account_contact_details() -> Dict[str, Any]:
+def check_accurate_account_contact_details() -> dict[str, Any]:
     """
     Check if account contact details are accurate and secure.
 

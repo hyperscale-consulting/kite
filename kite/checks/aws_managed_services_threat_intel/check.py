@@ -5,7 +5,6 @@ updates."""
 
 from kite.helpers import manual_check
 
-
 CHECK_ID = "aws-managed-services-threat-intel"
 CHECK_NAME = "AWS Managed Services Threat Intelligence"
 

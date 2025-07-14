@@ -1,15 +1,14 @@
 """Check for new accounts vended with suitable standards already defined."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "account-standards"
 CHECK_NAME = "Account Standards"
 
 
-def check_account_standards() -> Dict[str, Any]:
+def check_account_standards() -> dict[str, Any]:
     """
     Check if new accounts are vended with suitable standards already defined.
 
@@ -31,9 +30,7 @@ def check_account_standards() -> Dict[str, Any]:
         "- Are the standards defined before account creation?\n"
         "- Are the standards consistently applied across all new accounts?"
     )
-    prompt = (
-        "Are new accounts vended with suitable standards already defined?"
-    )
+    prompt = "Are new accounts vended with suitable standards already defined?"
 
     # Use the manual_check function
     result = manual_check(

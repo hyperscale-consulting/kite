@@ -1,15 +1,14 @@
 """Check for automated security event correlation and enrichment."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import prompt_user_with_panel
-
 
 CHECK_ID = "security-event-correlation"
 CHECK_NAME = "Security Event Correlation and Enrichment"
 
 
-def check_security_event_correlation() -> Dict[str, Any]:
+def check_security_event_correlation() -> dict[str, Any]:
     """
     Check if there are automated mechanisms for security event correlation and enrichment.
 

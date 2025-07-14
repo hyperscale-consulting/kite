@@ -1,15 +1,14 @@
 """Check for incorporation of AWS control and compliance documentation."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "aws-control-documentation"
 CHECK_NAME = "AWS Control Documentation"
 
 
-def check_aws_control_documentation() -> Dict[str, Any]:
+def check_aws_control_documentation() -> dict[str, Any]:
     """
     Check if AWS control and compliance documentation is incorporated into control
     evaluation and verification procedures.

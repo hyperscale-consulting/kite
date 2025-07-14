@@ -1,15 +1,14 @@
 """Check for regular review of CI/CD pipeline permissions."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "review-pipeline-permissions-regularly"
 CHECK_NAME = "Regular Pipeline Permissions Review"
 
 
-def check_review_pipeline_permissions_regularly() -> Dict[str, Any]:
+def check_review_pipeline_permissions_regularly() -> dict[str, Any]:
     """
     Check if permissions granted to CI/CD pipeline roles are reviewed regularly.
 
@@ -28,9 +27,7 @@ def check_review_pipeline_permissions_regularly() -> Dict[str, Any]:
         "- Are pipeline role permissions reviewed on a regular schedule?\n"
         "- Are unused permissions identified and removed?"
     )
-    prompt = (
-        "Are permissions granted to CI/CD pipeline roles reviewed regularly?"
-    )
+    prompt = "Are permissions granted to CI/CD pipeline roles reviewed regularly?"
 
     return manual_check(
         check_id=CHECK_ID,

@@ -1,16 +1,16 @@
 """Check for active unused access analyzer across all accounts."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.data import get_access_analyzers
-
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "active-unused-access-analyzer"
 CHECK_NAME = "Active Unused Access Analyzer"
 
 
-def _check_analyzer_configuration(analyzer: Dict[str, Any]) -> bool:
+def _check_analyzer_configuration(analyzer: dict[str, Any]) -> bool:
     """
     Check if an analyzer's configuration meets the requirements.
 
@@ -21,8 +21,10 @@ def _check_analyzer_configuration(analyzer: Dict[str, Any]) -> bool:
         bool: True if the analyzer configuration meets the requirements
     """
     # Check if it's an unused access analyzer
-    if analyzer.get("type") not in ["ORGANIZATION_UNUSED_ACCESS",
-                                    "ACCOUNT_UNUSED_ACCESS"]:
+    if analyzer.get("type") not in [
+        "ORGANIZATION_UNUSED_ACCESS",
+        "ACCOUNT_UNUSED_ACCESS",
+    ]:
         return False
 
     # Check if it's active
@@ -45,7 +47,7 @@ def _check_analyzer_configuration(analyzer: Dict[str, Any]) -> bool:
     return True
 
 
-def _get_analyzer_summary(analyzers: List[Dict[str, Any]]) -> Dict[str, Any]:
+def _get_analyzer_summary(analyzers: list[dict[str, Any]]) -> dict[str, Any]:
     """
     Get a summary of the analyzers.
 
@@ -85,7 +87,7 @@ def _get_analyzer_summary(analyzers: List[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
 
-def check_active_unused_access_analyzer() -> Dict[str, Any]:
+def check_active_unused_access_analyzer() -> dict[str, Any]:
     """
     Check if there is an active unused access analyzer across all accounts.
 
@@ -181,8 +183,7 @@ def check_active_unused_access_analyzer() -> Dict[str, Any]:
 
     if summary["has_org_analyzer"]:
         message += (
-            f"\nOrganization-wide analyzer configuration:\n"
-            f"{summary['org_analyzer']}\n"
+            f"\nOrganization-wide analyzer configuration:\n{summary['org_analyzer']}\n"
         )
 
     if summary["account_analyzers"]:

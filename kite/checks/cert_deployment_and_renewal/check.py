@@ -1,18 +1,18 @@
 """Check for automated certificate deployment and renewal."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.helpers import manual_check, get_account_ids_in_scope
-from kite.data import get_acm_certificates
 from kite.config import Config
-
+from kite.data import get_acm_certificates
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "automate-cert-deployment-and-renewal"
 CHECK_NAME = "Automate Certificate Deployment and Renewal"
 
 
 def analyze_certificate_renewal_status() -> tuple[
-    List[Dict[str, Any]], List[Dict[str, Any]]
+    list[dict[str, Any]], list[dict[str, Any]]
 ]:
     """
     Analyze ACM certificates for renewal eligibility.
@@ -36,12 +36,12 @@ def analyze_certificate_renewal_status() -> tuple[
             for cert in certificates:
                 # Check if certificate meets all criteria for auto-renewal
                 is_eligible = (
-                    cert.get("RenewalEligibility") == "ELIGIBLE" and
-                    any(
+                    cert.get("RenewalEligibility") == "ELIGIBLE"
+                    and any(
                         opt.get("ValidationMethod") == "DNS"
                         for opt in cert.get("DomainValidationOptions", [])
-                    ) and
-                    cert.get("InUseBy", [])
+                    )
+                    and cert.get("InUseBy", [])
                 )
 
                 # Add account and region info to certificate
@@ -50,7 +50,7 @@ def analyze_certificate_renewal_status() -> tuple[
                     "DomainName": cert.get("DomainName"),
                     "Status": cert.get("Status"),
                     "AccountId": account_id,
-                    "Region": region
+                    "Region": region,
                 }
 
                 if is_eligible:
@@ -61,7 +61,7 @@ def analyze_certificate_renewal_status() -> tuple[
     return eligible_certs, ineligible_certs
 
 
-def check_cert_deployment_and_renewal() -> Dict[str, Any]:
+def check_cert_deployment_and_renewal() -> dict[str, Any]:
     """
     Check if certificate deployment and renewal is automated.
 
@@ -115,9 +115,7 @@ def check_cert_deployment_and_renewal() -> Dict[str, Any]:
         "ACM.\n"
     )
 
-    prompt = (
-        "Is certificate deployment and renewal automated?"
-    )
+    prompt = "Is certificate deployment and renewal automated?"
 
     # Use the manual_check function
     result = manual_check(
@@ -125,12 +123,8 @@ def check_cert_deployment_and_renewal() -> Dict[str, Any]:
         check_name=CHECK_NAME,
         message=message,
         prompt=prompt,
-        pass_message=(
-            "Certificate deployment and renewal is automated."
-        ),
-        fail_message=(
-            "Certificate deployment and renewal should be automated."
-        ),
+        pass_message=("Certificate deployment and renewal is automated."),
+        fail_message=("Certificate deployment and renewal should be automated."),
         default=True,
     )
 

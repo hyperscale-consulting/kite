@@ -1,10 +1,9 @@
 """SCP prevents GuardDuty changes check module."""
 
 import json
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "scp-prevents-guardduty-changes"
 CHECK_NAME = "SCP Prevents GuardDuty Changes"
@@ -166,15 +165,14 @@ def check_scp_prevents_guardduty_changes() -> dict:
         "status": "PASS",
         "details": {
             "message": (
-                "SCP preventing GuardDuty changes is attached to all "
-                "top-level OUs."
+                "SCP preventing GuardDuty changes is attached to all top-level OUs."
             ),
             "scps_by_ou": ous_with_guardduty_deny,
         },
     }
 
 
-def _is_guardduty_deny_scp(content: Dict[str, Any]) -> bool:
+def _is_guardduty_deny_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively denies GuardDuty changes.
 

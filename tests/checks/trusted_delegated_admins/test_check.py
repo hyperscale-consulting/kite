@@ -1,18 +1,18 @@
 """Tests for the Trusted Delegated Admins check."""
 
-from unittest.mock import patch
-
 import pytest
 
-from kite.data import save_delegated_admins
 from kite.checks.trusted_delegated_admins.check import check_trusted_delegated_admins
+from kite.data import save_delegated_admins
 from kite.organizations import DelegatedAdmin
 
 
 @pytest.fixture
 def mock_prompt_user_with_panel(mocker):
     """Mock the prompt_user_with_panel function."""
-    return mocker.patch("kite.checks.trusted_delegated_admins.check.prompt_user_with_panel")
+    return mocker.patch(
+        "kite.checks.trusted_delegated_admins.check.prompt_user_with_panel"
+    )
 
 
 def delegated_admin(account, service_principal):
@@ -24,8 +24,8 @@ def delegated_admin(account, service_principal):
         status=account.status,
         joined_method=account.joined_method,
         joined_timestamp=account.joined_timestamp,
-        delegation_enabled_date='2021-01-01T00:00:00Z',
-        service_principal=service_principal
+        delegation_enabled_date="2021-01-01T00:00:00Z",
+        service_principal=service_principal,
     )
 
 
@@ -61,7 +61,9 @@ def test_check_trusted_delegated_admins_no_admins(no_delegated_admins):
     assert result["details"] == {}
 
 
-def test_check_trusted_delegated_admins_pass(delegated_admins, mock_prompt_user_with_panel):
+def test_check_trusted_delegated_admins_pass(
+    delegated_admins, mock_prompt_user_with_panel
+):
     """Test the check when all delegated admins are trusted."""
 
     mock_prompt_user_with_panel.return_value = (True, None)
@@ -76,7 +78,9 @@ def test_check_trusted_delegated_admins_pass(delegated_admins, mock_prompt_user_
     assert len(result["details"]["delegated_admins"]) == 2
 
 
-def test_check_trusted_delegated_admins_fail(delegated_admins, mock_prompt_user_with_panel):
+def test_check_trusted_delegated_admins_fail(
+    delegated_admins, mock_prompt_user_with_panel
+):
     """Test the check when some delegated admins are not trusted."""
 
     mock_prompt_user_with_panel.return_value = (False, None)

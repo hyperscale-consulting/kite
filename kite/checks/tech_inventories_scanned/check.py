@@ -5,7 +5,6 @@
 
 from kite.helpers import manual_check
 
-
 CHECK_ID = "tech-inventories-scanned"
 CHECK_NAME = "Technology Inventory Scanning"
 

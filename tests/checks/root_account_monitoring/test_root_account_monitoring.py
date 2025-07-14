@@ -2,9 +2,7 @@
 
 from unittest.mock import patch
 
-from kite.checks.root_account_monitoring.check import (
-    check_root_account_monitoring,
-)
+from kite.checks.root_account_monitoring.check import check_root_account_monitoring
 
 
 @patch("kite.checks.root_account_monitoring.check.manual_check")
@@ -52,13 +50,11 @@ def test_check_root_account_monitoring_yes_with_details(mock_manual_check):
             "Are there systems and procedures in place to monitor for and respond to "
             "root account misuse?"
         ),
-        pass_message=(
-            "Root account monitoring and response procedures are in place."
-        ),
+        pass_message=("Root account monitoring and response procedures are in place."),
         fail_message=(
             "Root account monitoring and response procedures are not in place."
         ),
-        default=True
+        default=True,
     )
 
 
@@ -87,8 +83,10 @@ def test_check_root_account_monitoring_yes_without_details(mock_manual_check):
         "Root account monitoring and response procedures are in place"
         in result["details"]["message"]
     )
-    assert result["details"]["info"] == \
-        "We use CloudWatch alarms and have a 24/7 response team"
+    assert (
+        result["details"]["info"]
+        == "We use CloudWatch alarms and have a 24/7 response team"
+    )
 
     # Verify the manual_check was called correctly
     mock_manual_check.assert_called_once()

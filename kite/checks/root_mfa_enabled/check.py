@@ -1,20 +1,18 @@
 """Check for root user MFA enabled."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.config import Config
-from kite.helpers import (
-    get_account_ids_in_scope,
-    get_root_virtual_mfa_device,
-)
-from kite.data import get_account_summary, get_organization_features
-
+from kite.data import get_account_summary
+from kite.data import get_organization_features
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import get_root_virtual_mfa_device
 
 CHECK_ID = "root-mfa-enabled"
 CHECK_NAME = "Root MFA Enabled"
 
 
-def check_root_mfa_enabled() -> Dict[str, Any]:
+def check_root_mfa_enabled() -> dict[str, Any]:
     """
     Check if root user MFA is enabled in all accounts.
 

@@ -1,8 +1,8 @@
 """SNS service module for Kite."""
 
-from typing import List, Optional, Dict, Any
-from dataclasses import dataclass
 import json
+from dataclasses import dataclass
+from typing import Any
 
 
 @dataclass
@@ -11,10 +11,10 @@ class SNSTopic:
 
     topic_arn: str
     region: str
-    policy: Optional[Dict[str, Any]] = None
+    policy: dict[str, Any] | None = None
 
 
-def get_topics(session, region: str) -> List[SNSTopic]:
+def get_topics(session, region: str) -> list[SNSTopic]:
     """
     Get all SNS topics in a region.
 

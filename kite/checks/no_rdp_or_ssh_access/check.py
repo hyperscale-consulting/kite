@@ -1,15 +1,14 @@
 """Check for no RDP or SSH access exposed to internet."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.helpers import get_prowler_output
-
 
 CHECK_ID = "no-rdp-or-ssh-access"
 CHECK_NAME = "No RDP or SSH Access Exposed to Internet"
 
 
-def check_no_rdp_or_ssh_access() -> Dict[str, Any]:
+def check_no_rdp_or_ssh_access() -> dict[str, Any]:
     """
     Check if RDP or SSH ports are exposed to the internet.
 
@@ -40,7 +39,7 @@ def check_no_rdp_or_ssh_access() -> Dict[str, Any]:
     ]
 
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Check results for each check ID
     for check_id in check_ids:
@@ -51,15 +50,17 @@ def check_no_rdp_or_ssh_access() -> Dict[str, Any]:
             # Add failing resources to the list
             for result in results:
                 if result.status != "PASS":
-                    failing_resources.append({
-                        "account_id": result.account_id,
-                        "resource_uid": result.resource_uid,
-                        "resource_name": result.resource_name,
-                        "resource_details": result.resource_details,
-                        "region": result.region,
-                        "status": result.status,
-                        "check_id": check_id
-                    })
+                    failing_resources.append(
+                        {
+                            "account_id": result.account_id,
+                            "resource_uid": result.resource_uid,
+                            "resource_name": result.resource_name,
+                            "resource_details": result.resource_details,
+                            "region": result.region,
+                            "status": result.status,
+                            "check_id": check_id,
+                        }
+                    )
 
     # Determine if the check passed
     passed = len(failing_resources) == 0

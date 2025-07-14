@@ -1,15 +1,14 @@
 """Check for CI/CD pipeline least privilege."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "pipelines-use-least-privilege"
 CHECK_NAME = "Pipeline Least Privilege"
 
 
-def check_pipelines_use_least_privilege() -> Dict[str, Any]:
+def check_pipelines_use_least_privilege() -> dict[str, Any]:
     """
     Check if roles used by CI/CD pipelines are assigned only the privileges needed
     to deploy their workloads.

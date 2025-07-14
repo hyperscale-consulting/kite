@@ -1,15 +1,14 @@
 """Check for lessons learned framework."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "lessons-learned-framework"
 CHECK_NAME = "Lessons Learned Framework"
 
 
-def check_lessons_learned_framework() -> Dict[str, Any]:
+def check_lessons_learned_framework() -> dict[str, Any]:
     """
     Check if a lessons learned framework is in place to help prevent incidents
     from recurring and improve incident response.

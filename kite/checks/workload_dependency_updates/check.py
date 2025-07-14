@@ -2,7 +2,6 @@
 
 from kite.helpers import manual_check
 
-
 CHECK_ID = "workload-dependency-updates"
 CHECK_NAME = "Workload and Dependency Updates"
 

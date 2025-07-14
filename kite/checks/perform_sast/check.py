@@ -1,6 +1,6 @@
 """Check for performing Static Application Security Testing (SAST)."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
 
@@ -8,7 +8,7 @@ CHECK_ID = "perform-sast"
 CHECK_NAME = "Perform Static Application Security Testing"
 
 
-def check_perform_sast() -> Dict[str, Any]:
+def check_perform_sast() -> dict[str, Any]:
     """
     Check if SAST (Static Application Security Testing) is used to analyze source code
     for anomalous security patterns and provide indications for defect prone code.

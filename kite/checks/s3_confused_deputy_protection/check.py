@@ -1,11 +1,11 @@
 """Check for confused deputy protection in S3 bucket policies."""
 
 import json
-from typing import Dict, Any
+from typing import Any
+
 from kite.data import get_bucket_metadata
 from kite.helpers import get_account_ids_in_scope
 from kite.utils.aws_context_keys import has_confused_deputy_protection
-
 
 # Define check ID and name
 CHECK_ID = "s3-confused-deputy-protection"
@@ -29,7 +29,7 @@ def _is_service_principal(principal: Any) -> bool:
     return principal.endswith(".amazonaws.com")
 
 
-def check_s3_confused_deputy_protection() -> Dict[str, Any]:
+def check_s3_confused_deputy_protection() -> dict[str, Any]:
     """
     Check for S3 bucket policies that could be vulnerable to confused deputy attacks.
 
@@ -84,11 +84,13 @@ def check_s3_confused_deputy_protection() -> Dict[str, Any]:
 
                 # Check if any principal is a service principal
                 if any(_is_service_principal(p) for p in principals):
-                    vulnerable_buckets.append({
-                        "account_id": account_id,
-                        "bucket_name": bucket_name,
-                        "statement": statement
-                    })
+                    vulnerable_buckets.append(
+                        {
+                            "account_id": account_id,
+                            "bucket_name": bucket_name,
+                            "statement": statement,
+                        }
+                    )
 
     return {
         "check_id": CHECK_ID,
@@ -101,8 +103,8 @@ def check_s3_confused_deputy_protection() -> Dict[str, Any]:
                 "vulnerable to confused deputy attacks. These policies allow actions to be "
                 "performed by service principals without proper source account/ARN/organization "
                 "conditions."
-            )
-        }
+            ),
+        },
     }
 
 

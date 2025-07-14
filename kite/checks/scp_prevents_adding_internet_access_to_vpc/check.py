@@ -1,10 +1,9 @@
 """SCP prevents adding internet access to VPC check module."""
 
 import json
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "scp-prevents-adding-internet-access-to-vpc"
 CHECK_NAME = "SCP Prevents Adding Internet Access to VPC"
@@ -75,7 +74,7 @@ def check_scp_prevents_adding_internet_access_to_vpc() -> dict:
     }
 
 
-def _find_matching_scps(ou) -> List[Dict[str, Any]]:
+def _find_matching_scps(ou) -> list[dict[str, Any]]:
     """
     Recursively find all OUs with SCPs that prevent adding internet access to VPC.
 
@@ -112,7 +111,7 @@ def _find_matching_scps(ou) -> List[Dict[str, Any]]:
     return matching_scps
 
 
-def _is_vpc_internet_access_deny_scp(content: Dict[str, Any]) -> bool:
+def _is_vpc_internet_access_deny_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively denies adding internet access to VPC.
 

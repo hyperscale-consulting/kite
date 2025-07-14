@@ -1,23 +1,19 @@
 """Check for HR system integration with identity provider."""
 
-from typing import Dict, Any
+from typing import Any
+
 from botocore.exceptions import ClientError
 
-from kite.helpers import (
-    is_identity_center_enabled,
-    manual_check,
-)
-from kite.data import (
-    get_oidc_providers,
-    get_saml_providers,
-)
-
+from kite.data import get_oidc_providers
+from kite.data import get_saml_providers
+from kite.helpers import is_identity_center_enabled
+from kite.helpers import manual_check
 
 CHECK_ID = "hr-idp-integration"
 CHECK_NAME = "HR / IdP Integration"
 
 
-def check_hr_system_integration() -> Dict[str, Any]:
+def check_hr_system_integration() -> dict[str, Any]:
     """
     Check if the organization's HR systems are integrated with the identity provider
     to automatically synchronize personnel changes.
@@ -64,9 +60,7 @@ def check_hr_system_integration() -> Dict[str, Any]:
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
             "status": "ERROR",
-            "details": {
-                "message": error_message
-            }
+            "details": {"message": error_message},
         }
 
     # Build the context message
@@ -76,7 +70,7 @@ def check_hr_system_integration() -> Dict[str, Any]:
         context_message += "SAML Providers:\n"
         for provider in saml_providers:
             context_message += f"- {provider['Arn']}\n"
-            if 'ValidUntil' in provider:
+            if "ValidUntil" in provider:
                 context_message += f"  Valid until: {provider['ValidUntil']}\n"
     else:
         context_message += "No SAML providers configured\n"
@@ -87,7 +81,7 @@ def check_hr_system_integration() -> Dict[str, Any]:
         context_message += "OIDC Providers:\n"
         for provider in oidc_providers:
             context_message += f"- {provider['Arn']}\n"
-            if 'Url' in provider:
+            if "Url" in provider:
                 context_message += f"  URL: {provider['Url']}\n"
     else:
         context_message += "No OIDC providers configured\n"

@@ -3,7 +3,6 @@
 from kite.data import get_delegated_admins
 from kite.helpers import prompt_user_with_panel
 
-
 CHECK_ID = "delegated-admin-for-security-services"
 CHECK_NAME = "Delegated admin for security services"
 
@@ -107,12 +106,11 @@ def check_delegated_admins_security_services() -> dict:
                     "security tooling account."
                 ),
                 "delegated_admins": {
-                    service:
-                        {
-                            "id": admin.id,
-                            "name": admin.name,
-                            "email": admin.email,
-                        }
+                    service: {
+                        "id": admin.id,
+                        "name": admin.name,
+                        "email": admin.email,
+                    }
                     for service, admin in security_service_admins.items()
                 },
             },
@@ -128,12 +126,11 @@ def check_delegated_admins_security_services() -> dict:
                     "security tooling account."
                 ),
                 "delegated_admins": {
-                    service:
-                        {
-                            "id": admin.id,
-                            "name": admin.name,
-                            "email": admin.email,
-                        }
+                    service: {
+                        "id": admin.id,
+                        "name": admin.name,
+                        "email": admin.email,
+                    }
                     for service, admin in security_service_admins.items()
                 },
             },

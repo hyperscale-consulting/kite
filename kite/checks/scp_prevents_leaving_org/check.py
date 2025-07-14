@@ -1,10 +1,9 @@
 """SCP prevents leaving organization check module."""
 
 import json
-from typing import List, Dict, Any
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "scp-prevents-leaving-org"
 CHECK_NAME = "SCP Prevents Leaving Organization"
@@ -122,14 +121,13 @@ def check_scp_prevents_leaving_org() -> dict:
         "status": "PASS",
         "details": {
             "message": (
-                "SCP preventing leaving organization is attached to all "
-                "top-level OUs."
+                "SCP preventing leaving organization is attached to all top-level OUs."
             ),
         },
     }
 
 
-def _is_leave_deny_scp(content: Dict[str, Any]) -> bool:
+def _is_leave_deny_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively denies the organizations:LeaveOrganization action.
 

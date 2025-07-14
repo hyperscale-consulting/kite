@@ -2,7 +2,6 @@
 
 from kite.helpers import manual_check
 
-
 CHECK_ID = "threat-intelligence-monitoring"
 CHECK_NAME = "Threat Intelligence Monitoring"
 

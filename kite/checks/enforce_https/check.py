@@ -1,15 +1,14 @@
 """Check for HTTPS enforcement across AWS services."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.helpers import get_prowler_output
-
 
 CHECK_ID = "enforce-https"
 CHECK_NAME = "Enforce HTTPS"
 
 
-def check_enforce_https() -> Dict[str, Any]:
+def check_enforce_https() -> dict[str, Any]:
     """
     Check if HTTPS is enforced across AWS services.
 
@@ -47,7 +46,7 @@ def check_enforce_https() -> Dict[str, Any]:
     ]
 
     # Track failing resources by service
-    failing_resources: Dict[str, List[Dict[str, Any]]] = {}
+    failing_resources: dict[str, list[dict[str, Any]]] = {}
 
     # Check results for each check ID
     for check_id in check_ids:
@@ -74,20 +73,20 @@ def check_enforce_https() -> Dict[str, Any]:
                     if service_name not in failing_resources:
                         failing_resources[service_name] = []
 
-                    failing_resources[service_name].append({
-                        "account_id": result.account_id,
-                        "resource_uid": result.resource_uid,
-                        "resource_name": result.resource_name,
-                        "resource_details": result.resource_details,
-                        "region": result.region,
-                        "status": result.status,
-                        "check_id": check_id
-                    })
+                    failing_resources[service_name].append(
+                        {
+                            "account_id": result.account_id,
+                            "resource_uid": result.resource_uid,
+                            "resource_name": result.resource_name,
+                            "resource_details": result.resource_details,
+                            "region": result.region,
+                            "status": result.status,
+                            "check_id": check_id,
+                        }
+                    )
 
     # Build the message
-    message = (
-        "This check verifies that HTTPS is enforced across AWS services.\n\n"
-    )
+    message = "This check verifies that HTTPS is enforced across AWS services.\n\n"
 
     if failing_resources:
         message += "The following resources do not have HTTPS enforced:\n\n"

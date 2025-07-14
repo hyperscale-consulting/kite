@@ -1,17 +1,21 @@
 """Check for automated patch management."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.data import get_ec2_instances, get_maintenance_windows
 from kite.config import Config
-from kite.helpers import get_account_ids_in_scope, manual_check, get_prowler_output
-
+from kite.data import get_ec2_instances
+from kite.data import get_maintenance_windows
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import get_prowler_output
+from kite.helpers import manual_check
 
 CHECK_ID = "automate-patch-management"
 CHECK_NAME = "Automate Patch Management"
 
 
-def _format_maintenance_window_details(maintenance_windows: List[Dict[str, Any]]) -> str:
+def _format_maintenance_window_details(
+    maintenance_windows: list[dict[str, Any]],
+) -> str:
     """
     Format maintenance window details for display.
 
@@ -37,7 +41,7 @@ def _format_maintenance_window_details(maintenance_windows: List[Dict[str, Any]]
         details += f"    Cutoff: {mw.get('Cutoff', 'Unknown')} hours\n"
 
         # Show targets
-        targets = mw.get('Targets', [])
+        targets = mw.get("Targets", [])
         if targets:
             details += f"    Targets ({len(targets)}):\n"
             for target in targets:
@@ -47,7 +51,7 @@ def _format_maintenance_window_details(maintenance_windows: List[Dict[str, Any]]
             details += "    Targets: None\n"
 
         # Show tasks
-        tasks = mw.get('Tasks', [])
+        tasks = mw.get("Tasks", [])
         if tasks:
             details += f"    Tasks ({len(tasks)}):\n"
             for task in tasks:
@@ -63,7 +67,7 @@ def _format_maintenance_window_details(maintenance_windows: List[Dict[str, Any]]
 
 
 def _format_prowler_results(
-    accounts_with_ec2: Dict[str, Dict[str, List[Dict[str, Any]]]]
+    accounts_with_ec2: dict[str, dict[str, list[dict[str, Any]]]],
 ) -> str:
     """
     Format prowler results for SSM managed compliant patching.
@@ -87,8 +91,7 @@ def _format_prowler_results(
     for result in results:
         account_id = result.account_id
         region = result.region
-        if (account_id in accounts_with_ec2 and
-                region in accounts_with_ec2[account_id]):
+        if account_id in accounts_with_ec2 and region in accounts_with_ec2[account_id]:
             relevant_results.append(result)
 
     if not relevant_results:
@@ -134,12 +137,14 @@ def _format_prowler_results(
                     details += f"          - {resource_name}\n"
                     details += f"            Details: {resource.resource_details}\n"
             else:
-                details += "        All resources compliant with SSM managed patching.\n"
+                details += (
+                    "        All resources compliant with SSM managed patching.\n"
+                )
 
     return details
 
 
-def check_automate_patch_management() -> Dict[str, Any]:
+def check_automate_patch_management() -> dict[str, Any]:
     """
     Check if automatic patch management is implemented for EC2 instances.
 
@@ -189,7 +194,9 @@ def check_automate_patch_management() -> Dict[str, Any]:
     message = "Automated Patch Management Check:\n\n"
 
     if not has_ec2_instances:
-        message += "No EC2 instances found in any account. This check is not applicable.\n"
+        message += (
+            "No EC2 instances found in any account. This check is not applicable.\n"
+        )
         return {
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,

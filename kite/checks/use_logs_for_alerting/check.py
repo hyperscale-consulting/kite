@@ -1,20 +1,17 @@
 """Check for log-based alerting mechanisms."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.config import Config
-from kite.helpers import (
-    manual_check,
-    ProwlerResult,
-    get_prowler_output,
-)
-
+from kite.helpers import get_prowler_output
+from kite.helpers import manual_check
+from kite.helpers import ProwlerResult
 
 CHECK_ID = "use-logs-for-alerting"
 CHECK_NAME = "Log-Based Alerting"
 
 
-def _check_passed(checks: Dict[str, List[ProwlerResult]], check_id: str) -> bool:
+def _check_passed(checks: dict[str, list[ProwlerResult]], check_id: str) -> bool:
     """
     Get the status of a specific Prowler check.
 
@@ -35,7 +32,7 @@ def _check_passed(checks: Dict[str, List[ProwlerResult]], check_id: str) -> bool
     raise ValueError(f"Check {check_id} not found")
 
 
-def check_log_alerting() -> Dict[str, Any]:
+def check_log_alerting() -> dict[str, Any]:
     """
     Check if logs are being used for alerting on potentially malicious or
     unauthorized behavior.

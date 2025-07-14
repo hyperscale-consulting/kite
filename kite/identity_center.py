@@ -34,21 +34,18 @@ def list_permission_sets(session, instance_arn: str) -> list:
     for page in paginator.paginate(InstanceArn=instance_arn):
         for permission_set_arn in page["PermissionSets"]:
             permission_set = sso_client.describe_permission_set(
-                InstanceArn=instance_arn,
-                PermissionSetArn=permission_set_arn
+                InstanceArn=instance_arn, PermissionSetArn=permission_set_arn
             )["PermissionSet"]
 
             managed_policies = []
             for policy in sso_client.list_managed_policies_in_permission_set(
-                InstanceArn=instance_arn,
-                PermissionSetArn=permission_set_arn
+                InstanceArn=instance_arn, PermissionSetArn=permission_set_arn
             )["AttachedManagedPolicies"]:
                 managed_policies.append(policy["Name"])
 
             try:
                 inline_policy = sso_client.get_inline_policy_for_permission_set(
-                    InstanceArn=instance_arn,
-                    PermissionSetArn=permission_set_arn
+                    InstanceArn=instance_arn, PermissionSetArn=permission_set_arn
                 )["InlinePolicy"]
             except sso_client.exceptions.ResourceNotFoundException:
                 inline_policy = None

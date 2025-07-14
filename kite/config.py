@@ -1,7 +1,8 @@
 """Configuration module for Kite."""
 
 from dataclasses import dataclass
-from typing import ClassVar, List, Optional
+from typing import ClassVar
+from typing import Optional
 
 import click
 import yaml
@@ -15,9 +16,9 @@ class Config:
     global access to the configuration throughout the application.
     """
 
-    management_account_id: Optional[str]
-    account_ids: Optional[List[str]]
-    active_regions: List[str]
+    management_account_id: str | None
+    account_ids: list[str] | None
+    active_regions: list[str]
     role_name: str
     prowler_output_dir: str
     external_id: str
@@ -27,9 +28,16 @@ class Config:
     _instance: ClassVar[Optional["Config"]] = None
 
     @classmethod
-    def create(cls, management_account_id: str, account_ids: List[str],
-               active_regions: List[str], role_name: str, prowler_output_dir: str,
-               external_id: str, data_dir: str):
+    def create(
+        cls,
+        management_account_id: str,
+        account_ids: list[str],
+        active_regions: list[str],
+        role_name: str,
+        prowler_output_dir: str,
+        external_id: str,
+        data_dir: str,
+    ):
         cls._instance = cls(
             management_account_id=management_account_id,
             account_ids=account_ids,
@@ -69,12 +77,16 @@ class Config:
             ClickException: If the config file is not found or invalid.
         """
         try:
-            with open(config_path, "r") as f:
+            with open(config_path) as f:
                 data = yaml.safe_load(f) or {}
 
             # Check for required fields
-            required_fields = ["active_regions", "role_name", "prowler_output_dir",
-                               "external_id"]
+            required_fields = [
+                "active_regions",
+                "role_name",
+                "prowler_output_dir",
+                "external_id",
+            ]
             missing_fields = [field for field in required_fields if not data.get(field)]
 
             # Check account field requirements

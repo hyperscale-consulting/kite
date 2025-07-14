@@ -1,15 +1,14 @@
 """Check for enabled API Gateway logging."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.helpers import get_prowler_output
-
 
 CHECK_ID = "api-gateway-logging-enabled"
 CHECK_NAME = "API Gateway Logging Enabled"
 
 
-def check_api_gateway_logging_enabled() -> Dict[str, Any]:
+def check_api_gateway_logging_enabled() -> dict[str, Any]:
     """
     Check if API Gateway logging is enabled.
 
@@ -39,7 +38,7 @@ def check_api_gateway_logging_enabled() -> Dict[str, Any]:
     ]
 
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Check results for each check ID
     for check_id in check_ids:
@@ -50,15 +49,17 @@ def check_api_gateway_logging_enabled() -> Dict[str, Any]:
             # Add failing resources to the list
             for result in results:
                 if result.status != "PASS":
-                    failing_resources.append({
-                        "account_id": result.account_id,
-                        "resource_uid": result.resource_uid,
-                        "resource_name": result.resource_name,
-                        "resource_details": result.resource_details,
-                        "region": result.region,
-                        "status": result.status,
-                        "check_id": check_id
-                    })
+                    failing_resources.append(
+                        {
+                            "account_id": result.account_id,
+                            "resource_uid": result.resource_uid,
+                            "resource_name": result.resource_name,
+                            "resource_details": result.resource_details,
+                            "region": result.region,
+                            "status": result.status,
+                            "check_id": check_id,
+                        }
+                    )
 
     # Determine if the check passed
     passed = len(failing_resources) == 0

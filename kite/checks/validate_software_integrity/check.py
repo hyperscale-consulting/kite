@@ -1,15 +1,14 @@
 """Check for software integrity validation using cryptographic signatures."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "validate-software-integrity"
 CHECK_NAME = "Validate Software Integrity"
 
 
-def check_validate_software_integrity() -> Dict[str, Any]:
+def check_validate_software_integrity() -> dict[str, Any]:
     """
     Check if the integrity of software is validated using cryptographic signatures
     where available, and that published artifacts are cryptographically signed.

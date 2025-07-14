@@ -1,15 +1,11 @@
 """Check for data perimeter trusted identities."""
 
 import json
-from typing import Dict
 
 from kite.data import get_organization
 from kite.models import ControlPolicy
-from kite.utils.aws_context_keys import (
-    has_not_principal_org_id_condition,
-    has_principal_is_not_aws_service_condition,
-)
-
+from kite.utils.aws_context_keys import has_not_principal_org_id_condition
+from kite.utils.aws_context_keys import has_principal_is_not_aws_service_condition
 
 CHECK_ID = "data-perimeter-trusted-identities"
 CHECK_NAME = "Data Perimeter Enforces Trusted Identities"
@@ -52,7 +48,7 @@ def _has_data_perimeter_trusted_identities(policy: ControlPolicy, org_id: str) -
             "sts:GetFederationToken",
             "sts:GetServiceBearerToken",
             "sts:GetSessionToken",
-            "sts:SetContext"
+            "sts:SetContext",
         }
 
         if (
@@ -80,7 +76,7 @@ def _has_data_perimeter_trusted_identities(policy: ControlPolicy, org_id: str) -
     return False
 
 
-def check_establish_data_perimeter_trusted_identities() -> Dict:
+def check_establish_data_perimeter_trusted_identities() -> dict:
     """
     Check if there is data perimeter trusted identities protection in place.
 
@@ -98,9 +94,7 @@ def check_establish_data_perimeter_trusted_identities() -> Dict:
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
             "status": "FAIL",
-            "details": {
-                "message": "AWS Organizations is not being used"
-            }
+            "details": {"message": "AWS Organizations is not being used"},
         }
 
     # Get organization ID from the Organization model
@@ -108,8 +102,7 @@ def check_establish_data_perimeter_trusted_identities() -> Dict:
 
     # Check if root OU has the required RCP
     root_has_protection = any(
-        _has_data_perimeter_trusted_identities(rcp, org_id)
-        for rcp in org.root.rcps
+        _has_data_perimeter_trusted_identities(rcp, org_id) for rcp in org.root.rcps
     )
 
     if root_has_protection:
@@ -122,7 +115,7 @@ def check_establish_data_perimeter_trusted_identities() -> Dict:
                     "Data perimeter trusted identities protection is attached to the "
                     "root OU"
                 )
-            }
+            },
         }
 
     # Check if all top-level OUs have the required RCP
@@ -136,14 +129,13 @@ def check_establish_data_perimeter_trusted_identities() -> Dict:
                     "Data perimeter trusted identities protection is not attached to "
                     "the root OU and there are no top-level OUs"
                 )
-            }
+            },
         }
 
     missing_ous = []
     for ou in org.root.child_ous:
         has_protection = any(
-            _has_data_perimeter_trusted_identities(rcp, org_id)
-            for rcp in ou.rcps
+            _has_data_perimeter_trusted_identities(rcp, org_id) for rcp in ou.rcps
         )
         if not has_protection:
             missing_ous.append(ou.name)
@@ -158,7 +150,7 @@ def check_establish_data_perimeter_trusted_identities() -> Dict:
                     "Data perimeter trusted identities protection is attached to all "
                     "top-level OUs"
                 )
-            }
+            },
         }
 
     return {
@@ -171,7 +163,7 @@ def check_establish_data_perimeter_trusted_identities() -> Dict:
                 "root OU or all top-level OUs. Missing protection in OUs: "
                 f"{', '.join(missing_ous)}"
             )
-        }
+        },
     }
 
 

@@ -1,15 +1,14 @@
 """Check for security guardians program."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "security-guardians-program"
 CHECK_NAME = "Security Guardians Program"
 
 
-def check_security_guardians_program() -> Dict[str, Any]:
+def check_security_guardians_program() -> dict[str, Any]:
     """
     Check if there is a program to embed security ownership and decision making in
     workload teams.

@@ -1,6 +1,8 @@
 """Tests for the avoid_root_usage check."""
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 from unittest.mock import patch
 
 import pytest

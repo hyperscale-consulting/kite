@@ -1,15 +1,14 @@
 """Check for implementing authentication across services."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "implement-auth-across-services"
 CHECK_NAME = "Implement Authentication Across Services"
 
 
-def check_implement_auth_across_services() -> Dict[str, Any]:
+def check_implement_auth_across_services() -> dict[str, Any]:
     """
     Check if appropriate authentication solutions have been implemented to authenticate
     and authorize traffic flows across the workload.

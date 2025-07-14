@@ -1,12 +1,12 @@
 """AWS Lambda functionality module."""
 
 import json
-from typing import Dict, Any, List
+from typing import Any
 
 import boto3
 
 
-def get_functions(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+def get_functions(session: boto3.Session, region: str) -> list[dict[str, Any]]:
     """
     Get all Lambda functions and their policies in the specified region.
 

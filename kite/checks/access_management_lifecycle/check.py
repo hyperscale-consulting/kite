@@ -1,15 +1,14 @@
 """Check if access management lifecycle process is defined and documented."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "access-management-lifecycle-defined"
 CHECK_NAME = "Access Management Lifecycle Process is Defined and Documented"
 
 
-def check_access_management_lifecycle() -> Dict[str, Any]:
+def check_access_management_lifecycle() -> dict[str, Any]:
     """
     Check if access management lifecycle process is defined and documented.
 
@@ -42,9 +41,7 @@ def check_access_management_lifecycle() -> Dict[str, Any]:
             "Is there a defined and documented process for managing user access throughout "
             "the user lifecycle?"
         ),
-        pass_message=(
-            "Access management lifecycle process is defined and documented."
-        ),
+        pass_message=("Access management lifecycle process is defined and documented."),
         fail_message=(
             "Access management lifecycle process should be defined and documented."
         ),

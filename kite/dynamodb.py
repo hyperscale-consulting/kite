@@ -1,6 +1,5 @@
 """DynamoDB service module for Kite."""
 
-from typing import List
 from dataclasses import dataclass
 
 
@@ -12,7 +11,7 @@ class DynamoDBTable:
     region: str
 
 
-def get_tables(session, region: str) -> List[DynamoDBTable]:
+def get_tables(session, region: str) -> list[DynamoDBTable]:
     """
     Get all DynamoDB tables in a region.
 

@@ -1,19 +1,16 @@
 """Check for use of IAM users for console access."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.helpers import (
-    get_account_ids_in_scope,
-    manual_check,
-)
 from kite.data import get_credentials_report
-
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "no-iam-user-access"
 CHECK_NAME = "No IAM User Access"
 
 
-def check_no_iam_user_access() -> Dict[str, Any]:
+def check_no_iam_user_access() -> dict[str, Any]:
     """
     Check if IAM users are used for console access, rather than federation.
 
@@ -45,10 +42,12 @@ def check_no_iam_user_access() -> Dict[str, Any]:
                 # Check both root and user accounts
                 for user in report["users"]:
                     if user.get("password_enabled", "false").lower() == "true":
-                        users_with_console_access.append({
-                            "account_id": account_id,
-                            "user_name": user["user"],
-                        })
+                        users_with_console_access.append(
+                            {
+                                "account_id": account_id,
+                                "user_name": user["user"],
+                            }
+                        )
             except Exception as e:
                 return {
                     "check_id": CHECK_ID,
@@ -81,9 +80,7 @@ def check_no_iam_user_access() -> Dict[str, Any]:
 
         # Add user details to message
         for user in users_with_console_access:
-            message += (
-                f"- User {user['user_name']} in account {user['account_id']}\n"
-            )
+            message += f"- User {user['user_name']} in account {user['account_id']}\n"
 
         # Use manual_check to get the user's response
         result = manual_check(

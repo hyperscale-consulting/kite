@@ -1,15 +1,14 @@
 """Check for avoiding interactive access in production environments."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "avoid-interactive-access"
 CHECK_NAME = "Avoid Interactive Access"
 
 
-def check_avoid_interactive_access() -> Dict[str, Any]:
+def check_avoid_interactive_access() -> dict[str, Any]:
     """
     Check if automated mechanisms are used instead of interactive access for
     production environments.

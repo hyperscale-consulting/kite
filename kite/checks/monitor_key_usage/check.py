@@ -1,15 +1,14 @@
 """Check if key usage is audited and monitored for unusual patterns."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "monitor-key-usage"
 CHECK_NAME = "Monitor Key Usage"
 
 
-def check_monitor_key_usage() -> Dict[str, Any]:
+def check_monitor_key_usage() -> dict[str, Any]:
     """
     Check if key usage is audited and monitored for unusual patterns.
 

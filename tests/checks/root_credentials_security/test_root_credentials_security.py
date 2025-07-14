@@ -2,9 +2,7 @@
 
 from unittest.mock import patch
 
-from kite.checks.root_credentials_security.check import (
-    check_root_credentials_security,
-)
+from kite.checks.root_credentials_security.check import check_root_credentials_security
 
 
 @patch("kite.checks.root_credentials_security.check.manual_check")
@@ -30,8 +28,7 @@ def test_check_root_credentials_security_pass(mock_manual_check):
     assert result["status"] == "PASS"
     assert (
         "Root credentials are stored securely and accessed according to proper "
-        "procedures"
-        in result["details"]["message"]
+        "procedures" in result["details"]["message"]
     )
 
     # Verify the manual_check was called correctly
@@ -58,7 +55,7 @@ def test_check_root_credentials_security_pass(mock_manual_check):
         fail_message=(
             "Root credentials storage or access procedures need improvement."
         ),
-        default=True
+        default=True,
     )
 
 

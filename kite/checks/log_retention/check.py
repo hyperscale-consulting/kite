@@ -1,26 +1,24 @@
 """Check for log retention settings."""
 
-from typing import Dict, Any, List
 from collections import defaultdict
+from typing import Any
 
-from kite.data import (
-    get_log_groups,
-    get_export_tasks,
-    get_bucket_metadata,
-    get_cloudtrail_trails,
-    get_route53resolver_query_log_configs,
-    get_flow_logs,
-    get_config_delivery_channels,
-)
-from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
-
+from kite.data import get_bucket_metadata
+from kite.data import get_cloudtrail_trails
+from kite.data import get_config_delivery_channels
+from kite.data import get_export_tasks
+from kite.data import get_flow_logs
+from kite.data import get_log_groups
+from kite.data import get_route53resolver_query_log_configs
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "log-retention"
 CHECK_NAME = "Log Retention Settings"
 
 
-def _format_log_groups_by_retention(log_groups: List[Dict[str, Any]]) -> str:
+def _format_log_groups_by_retention(log_groups: list[dict[str, Any]]) -> str:
     """
     Format log groups grouped by their retention period.
 
@@ -44,7 +42,7 @@ def _format_log_groups_by_retention(log_groups: List[Dict[str, Any]]) -> str:
     # Sort by retention period, handling "Never Expire" specially
     sorted_retentions = sorted(
         retention_groups.keys(),
-        key=lambda x: float('inf') if x == "Never Expire" else float(x)
+        key=lambda x: float("inf") if x == "Never Expire" else float(x),
     )
     for retention in sorted_retentions:
         groups = retention_groups[retention]
@@ -56,7 +54,7 @@ def _format_log_groups_by_retention(log_groups: List[Dict[str, Any]]) -> str:
 
 
 def _format_export_tasks_by_retention(
-    export_tasks: List[Dict[str, Any]], buckets: List[Dict[str, Any]]
+    export_tasks: list[dict[str, Any]], buckets: list[dict[str, Any]]
 ) -> str:
     """
     Format export tasks grouped by their S3 bucket retention period.
@@ -98,9 +96,7 @@ def _format_export_tasks_by_retention(
         # Extract bucket name from destination
         bucket_name = destination.split("/")[0]
         retention = bucket_retention.get(bucket_name, "Never Expire")
-        retention_groups[retention].append(
-            f"{task['logGroupName']} -> {bucket_name}"
-        )
+        retention_groups[retention].append(f"{task['logGroupName']} -> {bucket_name}")
 
     # Format the output
     output = []
@@ -112,7 +108,7 @@ def _format_export_tasks_by_retention(
     return "\n".join(output)
 
 
-def check_log_retention() -> Dict[str, Any]:
+def check_log_retention() -> dict[str, Any]:
     """
     Check if logs are retained for a suitable period.
 
@@ -190,8 +186,10 @@ def check_log_retention() -> Dict[str, Any]:
                         lifecycle_rules = bucket.get("LifecycleRules")
                         if lifecycle_rules is not None:
                             for rule in lifecycle_rules:
-                                if ("Expiration" in rule and
-                                    "Days" in rule["Expiration"]):
+                                if (
+                                    "Expiration" in rule
+                                    and "Days" in rule["Expiration"]
+                                ):
                                     days = rule["Expiration"]["Days"]
                                     if retention is None or days < retention:
                                         retention = days
@@ -240,8 +238,10 @@ def check_log_retention() -> Dict[str, Any]:
                             lifecycle_rules = bucket.get("LifecycleRules")
                             if lifecycle_rules is not None:
                                 for rule in lifecycle_rules:
-                                    if ("Expiration" in rule and
-                                        "Days" in rule["Expiration"]):
+                                    if (
+                                        "Expiration" in rule
+                                        and "Days" in rule["Expiration"]
+                                    ):
                                         days = rule["Expiration"]["Days"]
                                         if retention is None or days < retention:
                                             retention = days
@@ -284,14 +284,18 @@ def check_log_retention() -> Dict[str, Any]:
                                 lifecycle_rules = bucket.get("LifecycleRules")
                                 if lifecycle_rules is not None:
                                     for rule in lifecycle_rules:
-                                        if ("Expiration" in rule and
-                                            "Days" in rule["Expiration"]):
+                                        if (
+                                            "Expiration" in rule
+                                            and "Days" in rule["Expiration"]
+                                        ):
                                             days = rule["Expiration"]["Days"]
                                             if retention is None or days < retention:
                                                 retention = days
 
                                 retention = (
-                                    retention if retention is not None else "Never Expire"
+                                    retention
+                                    if retention is not None
+                                    else "Never Expire"
                                 )
                                 flow_log_buckets.append(
                                     f"Flow Log: {flow_log.get('FlowLogId', 'Unknown')} -> "
@@ -323,8 +327,10 @@ def check_log_retention() -> Dict[str, Any]:
                         lifecycle_rules = bucket.get("LifecycleRules")
                         if lifecycle_rules is not None:
                             for rule in lifecycle_rules:
-                                if ("Expiration" in rule and
-                                    "Days" in rule["Expiration"]):
+                                if (
+                                    "Expiration" in rule
+                                    and "Days" in rule["Expiration"]
+                                ):
                                     days = rule["Expiration"]["Days"]
                                     if retention is None or days < retention:
                                         retention = days

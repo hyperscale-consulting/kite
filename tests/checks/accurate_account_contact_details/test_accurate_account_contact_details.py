@@ -1,6 +1,7 @@
 """Tests for the Accurate Account Contact Details check."""
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 import pytest
 
@@ -13,8 +14,7 @@ from kite.checks.accurate_account_contact_details.check import (
 def mock_get_organization_features():
     """Mock the get_organization_features function."""
     with patch(
-        "kite.checks.accurate_account_contact_details.check."
-        "get_organization_features"
+        "kite.checks.accurate_account_contact_details.check.get_organization_features"
     ) as mock:
         yield mock
 
@@ -30,7 +30,7 @@ def mock_config():
 def mock_get_account_ids():
     """Mock the get_account_ids_in_scope function."""
     with patch(
-        "kite.checks.accurate_account_contact_details.check." "get_account_ids_in_scope"
+        "kite.checks.accurate_account_contact_details.check.get_account_ids_in_scope"
     ) as mock:
         mock.return_value = ["123456789012", "098765432109"]
         yield mock
@@ -97,9 +97,7 @@ def test_acc_contact_details_org_managed_fail(
         "check_name": "Accurate Account Contact Details",
         "status": "FAIL",
         "details": {
-            "message": (
-                "Contact details for the management account need improvement."
-            ),
+            "message": ("Contact details for the management account need improvement."),
         },
     }
 
@@ -156,9 +154,7 @@ def test_acc_contact_details_not_org_managed_pass(
         "check_name": "Accurate Account Contact Details",
         "status": "PASS",
         "details": {
-            "message": (
-                "Contact details for all accounts are accurate and secure."
-            ),
+            "message": ("Contact details for all accounts are accurate and secure."),
         },
     }
 
@@ -190,9 +186,7 @@ def test_acc_contact_details_not_org_managed_fail(
         "check_name": "Accurate Account Contact Details",
         "status": "FAIL",
         "details": {
-            "message": (
-                "Contact details for some accounts need improvement."
-            ),
+            "message": ("Contact details for some accounts need improvement."),
         },
     }
 

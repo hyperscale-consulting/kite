@@ -2,9 +2,7 @@
 
 from unittest.mock import patch
 
-from kite.checks.root_access_testing.check import (
-    check_root_access_testing,
-)
+from kite.checks.root_access_testing.check import check_root_access_testing
 
 
 @patch("kite.checks.root_access_testing.check.manual_check")
@@ -30,8 +28,7 @@ def test_check_root_access_testing_pass(mock_manual_check):
     assert result["status"] == "PASS"
     assert (
         "Root user access is periodically tested to ensure it is functioning in "
-        "emergency situations"
-        in result["details"]["message"]
+        "emergency situations" in result["details"]["message"]
     )
 
     # Verify the manual_check was called correctly
@@ -54,10 +51,8 @@ def test_check_root_access_testing_pass(mock_manual_check):
             "Root user access is periodically tested to ensure it is functioning in "
             "emergency situations."
         ),
-        fail_message=(
-            "Root user access testing procedures need improvement."
-        ),
-        default=True
+        fail_message=("Root user access testing procedures need improvement."),
+        default=True,
     )
 
 
@@ -71,9 +66,7 @@ def test_check_root_access_testing_fail(mock_manual_check):
         "check_name": "Root Access Testing",
         "status": "FAIL",
         "details": {
-            "message": (
-                "Root user access testing procedures need improvement."
-            ),
+            "message": ("Root user access testing procedures need improvement."),
         },
     }
 

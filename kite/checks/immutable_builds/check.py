@@ -1,15 +1,14 @@
 """Check for immutable builds."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "immutable-builds"
 CHECK_NAME = "Immutable Builds"
 
 
-def check_immutable_builds() -> Dict[str, Any]:
+def check_immutable_builds() -> dict[str, Any]:
     """
     Check if builds are immutable as they pass through the deployment pipeline.
 

@@ -1,15 +1,14 @@
 """Check for root account monitoring and response procedures."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "root-account-monitoring"
 CHECK_NAME = "Root Account Monitoring"
 
 
-def check_root_account_monitoring() -> Dict[str, Any]:
+def check_root_account_monitoring() -> dict[str, Any]:
     """
     Check if there are systems and procedures in place to monitor for and respond to
     root account misuse.

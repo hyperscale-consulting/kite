@@ -1,16 +1,15 @@
 """Check for data sensitivity level tagging."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.helpers import manual_check
 from kite.data import get_organization
-
+from kite.helpers import manual_check
 
 CHECK_ID = "tag-data-with-sensitivity-level"
 CHECK_NAME = "Tag Data with Sensitivity Level"
 
 
-def _get_tag_policies(org) -> List[Dict[str, Any]]:
+def _get_tag_policies(org) -> list[dict[str, Any]]:
     """
     Get all tag policies in the organization.
 
@@ -25,12 +24,14 @@ def _get_tag_policies(org) -> List[Dict[str, Any]]:
     def process_ou(ou):
         # Add tag policies from this OU
         for policy in ou.tag_policies:
-            tag_policies.append({
-                "name": policy.name,
-                "description": policy.description,
-                "target": f"OU: {ou.name}",
-                "content": policy.content
-            })
+            tag_policies.append(
+                {
+                    "name": policy.name,
+                    "description": policy.description,
+                    "target": f"OU: {ou.name}",
+                    "content": policy.content,
+                }
+            )
 
         # Process child OUs
         for child_ou in ou.child_ous:
@@ -39,19 +40,21 @@ def _get_tag_policies(org) -> List[Dict[str, Any]]:
         # Process accounts in this OU
         for account in ou.accounts:
             for policy in account.tag_policies:
-                tag_policies.append({
-                    "name": policy.name,
-                    "description": policy.description,
-                    "target": f"Account: {account.name}",
-                    "content": policy.content
-                })
+                tag_policies.append(
+                    {
+                        "name": policy.name,
+                        "description": policy.description,
+                        "target": f"Account: {account.name}",
+                        "content": policy.content,
+                    }
+                )
 
     if org:
         process_ou(org.root)
     return tag_policies
 
 
-def check_tag_data_with_sensitivity_level() -> Dict[str, Any]:
+def check_tag_data_with_sensitivity_level() -> dict[str, Any]:
     """
     Check if resource and data-level tagging is used to label data with its
     sensitivity level.
@@ -83,7 +86,7 @@ def check_tag_data_with_sensitivity_level() -> Dict[str, Any]:
         for policy in tag_policies:
             message += f"- Name: {policy['name']}\n"
             message += f"  Target: {policy['target']}\n"
-            if policy['description']:
+            if policy["description"]:
                 message += f"  Description: {policy['description']}\n"
         message += "\n"
 

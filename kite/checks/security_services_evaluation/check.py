@@ -1,15 +1,14 @@
 """Check for evaluation and implementation of new security services."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "security-services-evaluation"
 CHECK_NAME = "Security Services Evaluation"
 
 
-def check_security_services_evaluation() -> Dict[str, Any]:
+def check_security_services_evaluation() -> dict[str, Any]:
     """
     Check if teams evaluate and implement new security services and features regularly.
 

@@ -1,15 +1,15 @@
 """Check for use of customer managed keys."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.helpers import get_prowler_output, manual_check
-
+from kite.helpers import get_prowler_output
+from kite.helpers import manual_check
 
 CHECK_ID = "use-customer-managed-keys"
 CHECK_NAME = "Use Customer Managed Keys"
 
 
-def check_use_customer_managed_keys() -> Dict[str, Any]:
+def check_use_customer_managed_keys() -> dict[str, Any]:
     """
     Check if customer managed keys are used to protect sensitive data.
 
@@ -41,7 +41,7 @@ def check_use_customer_managed_keys() -> Dict[str, Any]:
     ]
 
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Check results for each check ID
     for check_id in check_ids:

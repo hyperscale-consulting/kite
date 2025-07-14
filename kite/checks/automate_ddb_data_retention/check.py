@@ -1,17 +1,16 @@
 """Check for automated DynamoDB data retention."""
 
-from typing import Dict, Any
+from typing import Any
 
+from kite.config import Config
 from kite.data import get_dynamodb_tables
 from kite.helpers import get_account_ids_in_scope
-from kite.config import Config
-
 
 CHECK_ID = "automate-ddb-data-retention"
 CHECK_NAME = "Automate DynamoDB Data Retention"
 
 
-def check_automate_ddb_data_retention() -> Dict[str, Any]:
+def check_automate_ddb_data_retention() -> dict[str, Any]:
     """
     Check if DynamoDB TTL is enabled on all tables to automatically delete
     data when it reaches the end of its retention period.

@@ -1,15 +1,14 @@
 """Check for formal incident response plans."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "incident-response-plans"
 CHECK_NAME = "Incident Response Plans"
 
 
-def check_incident_response_plans() -> Dict[str, Any]:
+def check_incident_response_plans() -> dict[str, Any]:
     """
     Check if an incident response plan is captured in a formal document covering
     all required components.

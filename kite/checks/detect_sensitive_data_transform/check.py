@@ -1,15 +1,14 @@
 """Check for Glue ETL jobs using detect sensitive data transform."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "detect-sensitive-data-transform"
 CHECK_NAME = "Detect Sensitive Data Transform"
 
 
-def check_detect_sensitive_data_transform() -> Dict[str, Any]:
+def check_detect_sensitive_data_transform() -> dict[str, Any]:
     """
     Check if the detect sensitive data transform is used in any Glue ETL jobs to
     detect and handle sensitive data.

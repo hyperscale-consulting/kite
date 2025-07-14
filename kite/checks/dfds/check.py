@@ -1,15 +1,14 @@
 """Check for up-to-date DFDs capturing trust boundaries and data flows."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "dfds"
 CHECK_NAME = "Data Flow Diagrams"
 
 
-def check_dfds() -> Dict[str, Any]:
+def check_dfds() -> dict[str, Any]:
     """
     Check if there are up-to-date DFDs capturing all major trust boundaries,
     data flows and components.

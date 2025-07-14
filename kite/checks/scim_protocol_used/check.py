@@ -1,18 +1,15 @@
 """Check if SCIM protocol is used for IAM Identity Center synchronization."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.helpers import (
-    is_identity_center_enabled,
-    manual_check,
-)
-
+from kite.helpers import is_identity_center_enabled
+from kite.helpers import manual_check
 
 CHECK_ID = "scim-protocol-used"
 CHECK_NAME = "SCIM Protocol Used for IAM Identity Center"
 
 
-def check_scim_protocol_used() -> Dict[str, Any]:
+def check_scim_protocol_used() -> dict[str, Any]:
     """
     Check if SCIM protocol is used to synchronize user and group information from
     the external identity provider into IAM Identity Center's data store.
@@ -37,9 +34,7 @@ def check_scim_protocol_used() -> Dict[str, Any]:
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
             "status": "FAIL",
-            "details": {
-                "message": "Identity Center is not enabled."
-            }
+            "details": {"message": "Identity Center is not enabled."},
         }
 
     # Build the context message
@@ -62,9 +57,7 @@ def check_scim_protocol_used() -> Dict[str, Any]:
             "Is SCIM protocol used to synchronize user and group information "
             "from the external identity provider into IAM Identity Center's data store?"
         ),
-        pass_message=(
-            "SCIM protocol is used for IAM Identity Center synchronization."
-        ),
+        pass_message=("SCIM protocol is used for IAM Identity Center synchronization."),
         fail_message=(
             "SCIM protocol should be used for IAM Identity Center synchronization."
         ),

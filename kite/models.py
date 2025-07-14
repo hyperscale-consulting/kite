@@ -1,8 +1,10 @@
 """Data models for Kite."""
 
-from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional
-from datetime import datetime, UTC
+from dataclasses import dataclass
+from dataclasses import field
+from datetime import datetime
+from datetime import UTC
+from typing import Any
 
 
 @dataclass
@@ -17,7 +19,7 @@ class ControlPolicy:
     type: str
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "ControlPolicy":
+    def from_dict(cls, data: dict[str, Any]) -> "ControlPolicy":
         """Create a ControlPolicy from a dictionary."""
         return cls(**data)
 
@@ -33,12 +35,12 @@ class Account:
     status: str
     joined_method: str
     joined_timestamp: str
-    scps: List[ControlPolicy]
-    rcps: List[ControlPolicy] = field(default_factory=list)
-    tag_policies: List[ControlPolicy] = field(default_factory=list)
+    scps: list[ControlPolicy]
+    rcps: list[ControlPolicy] = field(default_factory=list)
+    tag_policies: list[ControlPolicy] = field(default_factory=list)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Account":
+    def from_dict(cls, data: dict[str, Any]) -> "Account":
         """Create an Account from a dictionary."""
         scps = [ControlPolicy.from_dict(scp) for scp in data.pop("scps", [])]
         rcps = [ControlPolicy.from_dict(rcp) for rcp in data.pop("rcps", [])]
@@ -59,7 +61,7 @@ class EC2Instance:
     region: str
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "EC2Instance":
+    def from_dict(cls, data: dict[str, Any]) -> "EC2Instance":
         """Create an EC2Instance from a dictionary."""
         return cls(**data)
 
@@ -79,7 +81,7 @@ class DelegatedAdmin:
     service_principal: str
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "DelegatedAdmin":
+    def from_dict(cls, data: dict[str, Any]) -> "DelegatedAdmin":
         """Create a DelegatedAdmin from a dictionary."""
         return cls(**data)
 
@@ -91,14 +93,14 @@ class OrganizationalUnit:
     id: str
     arn: str
     name: str
-    accounts: List[Account]
-    child_ous: List["OrganizationalUnit"]
-    scps: List[ControlPolicy]
-    rcps: List[ControlPolicy] = field(default_factory=list)
-    tag_policies: List[ControlPolicy] = field(default_factory=list)
+    accounts: list[Account]
+    child_ous: list["OrganizationalUnit"]
+    scps: list[ControlPolicy]
+    rcps: list[ControlPolicy] = field(default_factory=list)
+    tag_policies: list[ControlPolicy] = field(default_factory=list)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "OrganizationalUnit":
+    def from_dict(cls, data: dict[str, Any]) -> "OrganizationalUnit":
         """Create an OrganizationalUnit from a dictionary."""
         accounts = [Account.from_dict(acc) for acc in data.pop("accounts", [])]
         child_ous = [cls.from_dict(ou) for ou in data.pop("child_ous", [])]
@@ -117,7 +119,7 @@ class OrganizationalUnit:
             tag_policies=tag_policies,
         )
 
-    def get_accounts(self) -> List[Account]:
+    def get_accounts(self) -> list[Account]:
         """Get all accounts in the organizational unit and its child organizational units."""
         accounts = self.accounts
         for child_ou in self.child_ous:
@@ -136,12 +138,12 @@ class Organization:
     root: OrganizationalUnit
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Organization":
+    def from_dict(cls, data: dict[str, Any]) -> "Organization":
         """Create an Organization from a dictionary."""
         root = OrganizationalUnit.from_dict(data.pop("root"))
         return cls(**data, root=root)
 
-    def get_accounts(self) -> List[Account]:
+    def get_accounts(self) -> list[Account]:
         """Get all accounts in the organization."""
         return self.root.get_accounts()
 
@@ -152,18 +154,18 @@ class WorkloadResource:
 
     resource_type: str
     resource_id: str
-    region: Optional[str] = None
-    details: Dict[str, Any] = field(default_factory=dict)
+    region: str | None = None
+    details: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
 class WorkloadResources:
     """Collection of workload resources."""
 
-    resources: List[WorkloadResource] = field(default_factory=list)
+    resources: list[WorkloadResource] = field(default_factory=list)
     collected_at: datetime = field(default_factory=lambda: datetime.now(UTC))
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert the model to a dictionary."""
         return {
             "resources": [
@@ -179,7 +181,7 @@ class WorkloadResources:
         }
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "WorkloadResources":
+    def from_dict(cls, data: dict[str, Any]) -> "WorkloadResources":
         """Create a model from a dictionary."""
         return cls(
             resources=[

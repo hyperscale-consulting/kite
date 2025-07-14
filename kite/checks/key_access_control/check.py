@@ -1,25 +1,23 @@
 """Check for KMS key access control."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.data import (
-    get_roles,
-    get_policy_document,
-    get_inline_policy_document,
-    get_customer_managed_policies,
-    get_iam_users,
-    get_iam_groups,
-    get_kms_keys,
-)
-from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
-
+from kite.data import get_customer_managed_policies
+from kite.data import get_iam_groups
+from kite.data import get_iam_users
+from kite.data import get_inline_policy_document
+from kite.data import get_kms_keys
+from kite.data import get_policy_document
+from kite.data import get_roles
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "key-access-control"
 CHECK_NAME = "Key Access Control"
 
 
-def _has_kms_permissions(policy_doc: Dict[str, Any]) -> bool:
+def _has_kms_permissions(policy_doc: dict[str, Any]) -> bool:
     """
     Check if a policy document contains KMS permissions.
 
@@ -54,7 +52,7 @@ def _has_kms_permissions(policy_doc: Dict[str, Any]) -> bool:
     return False
 
 
-def _has_broad_kms_resource(policy_doc: Dict[str, Any]) -> bool:
+def _has_broad_kms_resource(policy_doc: dict[str, Any]) -> bool:
     """
     Check if a policy document contains broad KMS resource patterns.
 
@@ -111,7 +109,7 @@ def _has_broad_kms_resource(policy_doc: Dict[str, Any]) -> bool:
     return False
 
 
-def _has_key_creation_permissions(policy_doc: Dict[str, Any]) -> bool:
+def _has_key_creation_permissions(policy_doc: dict[str, Any]) -> bool:
     """
     Check if a policy document contains key creation permissions.
 
@@ -146,7 +144,7 @@ def _has_key_creation_permissions(policy_doc: Dict[str, Any]) -> bool:
     return False
 
 
-def _has_broad_key_policy_sharing(policy_doc: Dict[str, Any]) -> bool:
+def _has_broad_key_policy_sharing(policy_doc: dict[str, Any]) -> bool:
     """
     Check if a key policy has overly broad sharing with principals.
 
@@ -188,7 +186,10 @@ def _has_broad_key_policy_sharing(policy_doc: Dict[str, Any]) -> bool:
 
                                 # Check for kms:CallerAccount condition
                                 if "StringEquals" in conditions:
-                                    if "kms:CallerAccount" in conditions["StringEquals"]:
+                                    if (
+                                        "kms:CallerAccount"
+                                        in conditions["StringEquals"]
+                                    ):
                                         has_restrictive_condition = True
 
                                 # Check for kms:ViaService condition
@@ -199,11 +200,7 @@ def _has_broad_key_policy_sharing(policy_doc: Dict[str, Any]) -> bool:
                                 # Check for kms:EncryptionContext conditions
                                 if "StringEquals" in conditions:
                                     for key in conditions["StringEquals"]:
-                                        if (
-                                            key.startswith(
-                                                "kms:EncryptionContext:"
-                                            )
-                                        ):
+                                        if key.startswith("kms:EncryptionContext:"):
                                             has_restrictive_condition = True
                                             break
 
@@ -232,11 +229,7 @@ def _has_broad_key_policy_sharing(policy_doc: Dict[str, Any]) -> bool:
                             # Check for kms:EncryptionContext conditions
                             if "StringEquals" in conditions:
                                 for key in conditions["StringEquals"]:
-                                    if (
-                                        key.startswith(
-                                            "kms:EncryptionContext:"
-                                        )
-                                    ):
+                                    if key.startswith("kms:EncryptionContext:"):
                                         has_restrictive_condition = True
                                         break
 
@@ -246,7 +239,7 @@ def _has_broad_key_policy_sharing(policy_doc: Dict[str, Any]) -> bool:
     return False
 
 
-def check_key_access_control() -> Dict[str, Any]:
+def check_key_access_control() -> dict[str, Any]:
     """
     Check if KMS key access is tightly controlled through appropriate use of key
     policies and IAM policies.
@@ -292,29 +285,33 @@ def check_key_access_control() -> Dict[str, Any]:
             policy_doc = get_policy_document(account_id, policy_arn)
 
             if policy_doc and _has_kms_permissions(policy_doc):
-                kms_policies.append({
-                    "account_id": account_id,
-                    "policy_name": policy["PolicyName"],
-                    "policy_arn": policy_arn,
-                    "policy_type": "customer_managed",
-                })
-
-                if _has_broad_kms_resource(policy_doc):
-                    broad_resource_policies.append({
+                kms_policies.append(
+                    {
                         "account_id": account_id,
                         "policy_name": policy["PolicyName"],
                         "policy_arn": policy_arn,
                         "policy_type": "customer_managed",
-                    })
+                    }
+                )
+
+                if _has_broad_kms_resource(policy_doc):
+                    broad_resource_policies.append(
+                        {
+                            "account_id": account_id,
+                            "policy_name": policy["PolicyName"],
+                            "policy_arn": policy_arn,
+                            "policy_type": "customer_managed",
+                        }
+                    )
 
         # Check users, groups, and roles
         for entity in users + groups + roles:
             # Check inline policies
             for policy_name in entity.get("InlinePolicyNames", []):
                 entity_name = (
-                    entity.get("UserName") or
-                    entity.get("GroupName") or
-                    entity["RoleName"]
+                    entity.get("UserName")
+                    or entity.get("GroupName")
+                    or entity["RoleName"]
                 )
                 policy_doc = get_inline_policy_document(
                     account_id, entity_name, policy_name
@@ -328,20 +325,26 @@ def check_key_access_control() -> Dict[str, Any]:
                     }
 
                     if "UserName" in entity:
-                        policy_info.update({
-                            "user_name": entity["UserName"],
-                            "user_arn": entity["Arn"],
-                        })
+                        policy_info.update(
+                            {
+                                "user_name": entity["UserName"],
+                                "user_arn": entity["Arn"],
+                            }
+                        )
                     elif "GroupName" in entity:
-                        policy_info.update({
-                            "group_name": entity["GroupName"],
-                            "group_arn": entity["Arn"],
-                        })
+                        policy_info.update(
+                            {
+                                "group_name": entity["GroupName"],
+                                "group_arn": entity["Arn"],
+                            }
+                        )
                     else:
-                        policy_info.update({
-                            "role_name": entity["RoleName"],
-                            "role_arn": entity["Arn"],
-                        })
+                        policy_info.update(
+                            {
+                                "role_name": entity["RoleName"],
+                                "role_arn": entity["Arn"],
+                            }
+                        )
 
                     kms_policies.append(policy_info)
 
@@ -366,9 +369,9 @@ def check_key_access_control() -> Dict[str, Any]:
             if not has_key_creation:
                 for policy_name in entity.get("InlinePolicyNames", []):
                     entity_name = (
-                        entity.get("UserName") or
-                        entity.get("GroupName") or
-                        entity["RoleName"]
+                        entity.get("UserName")
+                        or entity.get("GroupName")
+                        or entity["RoleName"]
                     )
                     policy_doc = get_inline_policy_document(
                         account_id, entity_name, policy_name
@@ -383,20 +386,26 @@ def check_key_access_control() -> Dict[str, Any]:
                 }
 
                 if "UserName" in entity:
-                    creator_info.update({
-                        "user_name": entity["UserName"],
-                        "user_arn": entity["Arn"],
-                    })
+                    creator_info.update(
+                        {
+                            "user_name": entity["UserName"],
+                            "user_arn": entity["Arn"],
+                        }
+                    )
                 elif "GroupName" in entity:
-                    creator_info.update({
-                        "group_name": entity["GroupName"],
-                        "group_arn": entity["Arn"],
-                    })
+                    creator_info.update(
+                        {
+                            "group_name": entity["GroupName"],
+                            "group_arn": entity["Arn"],
+                        }
+                    )
                 else:
-                    creator_info.update({
-                        "role_name": entity["RoleName"],
-                        "role_arn": entity["Arn"],
-                    })
+                    creator_info.update(
+                        {
+                            "role_name": entity["RoleName"],
+                            "role_arn": entity["Arn"],
+                        }
+                    )
 
                 key_creators.append(creator_info)
 
@@ -410,13 +419,15 @@ def check_key_access_control() -> Dict[str, Any]:
 
                 # Check key policy for broad sharing
                 if _has_broad_key_policy_sharing(key.get("Policy", {})):
-                    broad_key_policies.append({
-                        "account_id": account_id,
-                        "region": region,
-                        "key_id": key["KeyId"],
-                        "key_arn": key["KeyArn"],
-                        "alias": key.get("AliasName", "No alias"),
-                    })
+                    broad_key_policies.append(
+                        {
+                            "account_id": account_id,
+                            "region": region,
+                            "key_id": key["KeyId"],
+                            "key_arn": key["KeyArn"],
+                            "alias": key.get("AliasName", "No alias"),
+                        }
+                    )
 
     # Build message for manual check
     message = "Customer Managed IAM Policies with KMS Permissions:\n\n"

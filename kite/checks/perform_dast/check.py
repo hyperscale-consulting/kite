@@ -1,6 +1,6 @@
 """Check for performing Dynamic Application Security Testing (DAST)."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
 
@@ -8,7 +8,7 @@ CHECK_ID = "perform-dast"
 CHECK_NAME = "Perform Dynamic Application Security Testing"
 
 
-def check_perform_dast() -> Dict[str, Any]:
+def check_perform_dast() -> dict[str, Any]:
     """
     Check if DAST (Dynamic Application Security Testing) is used to detect potential
     runtime security issues.

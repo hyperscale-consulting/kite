@@ -1,16 +1,15 @@
 """Check for absence of access keys for any user."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.helpers import get_account_ids_in_scope
 from kite.data import get_credentials_report
-
+from kite.helpers import get_account_ids_in_scope
 
 CHECK_ID = "no-access-keys"
 CHECK_NAME = "No Access Keys"
 
 
-def check_no_access_keys() -> Dict[str, Any]:
+def check_no_access_keys() -> dict[str, Any]:
     """
     Check if any users have access keys enabled.
 
@@ -32,7 +31,7 @@ def check_no_access_keys() -> Dict[str, Any]:
         account_ids = get_account_ids_in_scope()
 
         # Track users with access keys
-        users_with_keys: List[Dict[str, str]] = []
+        users_with_keys: list[dict[str, str]] = []
 
         # Check each account
         for account_id in account_ids:
@@ -42,12 +41,13 @@ def check_no_access_keys() -> Dict[str, Any]:
             # Check each user in the report
             for user in report["users"]:
                 # Check if access keys are enabled
-                if (user["access_key_1_active"] == "true" or
-                    user["access_key_2_active"] == "true"):
-                    users_with_keys.append({
-                        "account_id": account_id,
-                        "user_name": user["user"]
-                    })
+                if (
+                    user["access_key_1_active"] == "true"
+                    or user["access_key_2_active"] == "true"
+                ):
+                    users_with_keys.append(
+                        {"account_id": account_id, "user_name": user["user"]}
+                    )
 
         # Determine if the check passed
         passed = len(users_with_keys) == 0

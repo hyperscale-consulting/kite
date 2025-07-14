@@ -1,11 +1,8 @@
 """Isolation boundaries check module."""
 
 from kite.data import get_organization
-
-from kite.helpers import (
-    get_organization_structure_str,
-    manual_check,
-)
+from kite.helpers import get_organization_structure_str
+from kite.helpers import manual_check
 
 CHECK_ID = "define-and-enforce-isolation-boundaries"
 CHECK_NAME = "Define and Enforce Isolation Boundaries"

@@ -1,11 +1,9 @@
-"""Tests for technology inventory scanning check."""
-
-import pytest
 from unittest.mock import patch
 
-from kite.checks.tech_inventories_scanned.check import (
-    check_tech_inventories_scanned,
-)
+import pytest
+from botocore.exceptions import ClientError
+
+from kite.checks.tech_inventories_scanned.check import check_tech_inventories_scanned
 
 
 def test_check_tech_inventories_scanned_pass():
@@ -16,7 +14,7 @@ def test_check_tech_inventories_scanned_pass():
             "status": "PASS",
             "details": {
                 "message": "Teams maintain comprehensive technology inventories"
-            }
+            },
         }
         result = check_tech_inventories_scanned()
         assert result["status"] == "PASS"
@@ -34,7 +32,7 @@ def test_check_tech_inventories_scanned_fail():
             "status": "FAIL",
             "details": {
                 "message": "Teams do not maintain complete technology inventories"
-            }
+            },
         }
         result = check_tech_inventories_scanned()
         assert result["status"] == "FAIL"
@@ -48,6 +46,8 @@ def test_check_tech_inventories_scanned_error():
     """Test error handling in technology inventory scanning check."""
     patch_path = "kite.checks.tech_inventories_scanned.check.manual_check"
     with patch(patch_path) as mock_check:
-        mock_check.side_effect = Exception("Test error")
-        with pytest.raises(Exception):
+        mock_check.side_effect = ClientError(
+            dict(code="error", message="Test error"), "Operation"
+        )
+        with pytest.raises(ClientError):
             check_tech_inventories_scanned()

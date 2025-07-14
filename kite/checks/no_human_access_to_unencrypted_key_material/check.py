@@ -1,19 +1,19 @@
 """Check for prevention of human access to unencrypted key material."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.data import get_kms_keys
-from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
-
+from kite.data import get_kms_keys
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "no-human-access-to-unencrypted-key-material"
 CHECK_NAME = "No Human Access to Unencrypted Key Material"
 
 
 def _format_external_keys(
-    keys: List[Dict[str, Any]], account: str, region: str
-) -> tuple[List[str], List[str]]:
+    keys: list[dict[str, Any]], account: str, region: str
+) -> tuple[list[str], list[str]]:
     """
     Format KMS keys that could potentially be accessed in unencrypted form.
 
@@ -48,7 +48,7 @@ def _format_external_keys(
     return external_keys, external_store_keys
 
 
-def check_no_human_access_to_unencrypted_key_material() -> Dict[str, Any]:
+def check_no_human_access_to_unencrypted_key_material() -> dict[str, Any]:
     """
     Check if human access to unencrypted key material is prevented.
 
@@ -114,21 +114,25 @@ def check_no_human_access_to_unencrypted_key_material() -> Dict[str, Any]:
     ]
 
     if all_external_store_keys:
-        message_parts.extend([
-            "The following KMS keys are in external key stores. Please verify "
-            "that appropriate controls are in place to prevent human access to "
-            "unencrypted key material:\n"
-            + "\n".join(sorted(all_external_store_keys))
-            + "\n\n"
-        ])
+        message_parts.extend(
+            [
+                "The following KMS keys are in external key stores. Please verify "
+                "that appropriate controls are in place to prevent human access to "
+                "unencrypted key material:\n"
+                + "\n".join(sorted(all_external_store_keys))
+                + "\n\n"
+            ]
+        )
 
-    message_parts.extend([
-        "Please verify that:\n"
-        "- All data keys used by workloads are envelope encrypted with a key "
-        "stored in a HSM-backed KMS\n"
-        "- No human access to unencrypted data keys is possible\n"
-        "- Data keys are only used in memory and never stored in unencrypted form"
-    ])
+    message_parts.extend(
+        [
+            "Please verify that:\n"
+            "- All data keys used by workloads are envelope encrypted with a key "
+            "stored in a HSM-backed KMS\n"
+            "- No human access to unencrypted data keys is possible\n"
+            "- Data keys are only used in memory and never stored in unencrypted form"
+        ]
+    )
 
     return manual_check(
         check_id=CHECK_ID,

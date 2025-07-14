@@ -1,11 +1,10 @@
 """Region deny SCP check module."""
 
 import json
-from typing import List, Dict, Any
+from typing import Any
 
-from kite.data import get_organization
 from kite.config import Config
-
+from kite.data import get_organization
 
 CHECK_ID = "region-deny-scp"
 CHECK_NAME = "Region Deny SCP"
@@ -152,7 +151,7 @@ def check_region_deny_scp() -> dict:
         }
 
 
-def _is_region_deny_scp(content: Dict[str, Any], allowed_regions: List[str]) -> bool:
+def _is_region_deny_scp(content: dict[str, Any], allowed_regions: list[str]) -> bool:
     """
     Check if an SCP effectively denies access to all regions except the allowed ones.
 

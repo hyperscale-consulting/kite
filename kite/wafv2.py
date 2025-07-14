@@ -1,5 +1,5 @@
-from typing import List, Dict, Any
 from enum import Enum
+from typing import Any
 
 import boto3
 
@@ -12,10 +12,10 @@ class Scope(Enum):
 
 
 def get_web_acls(
-        session: boto3.Session,
-        scope: str,
-        region: str,
-) -> List[Dict[str, Any]]:
+    session: boto3.Session,
+    scope: str,
+    region: str,
+) -> list[dict[str, Any]]:
     client = session.client("wafv2", region_name=region)
     web_acls = []
     response = client.list_web_acls(Scope=scope)
@@ -32,12 +32,16 @@ def get_web_acls(
     return web_acls
 
 
-def get_resources_for_web_acl(client: boto3.client, web_acl_arn: str) -> List[Dict[str, Any]]:
+def get_resources_for_web_acl(
+    client: boto3.client, web_acl_arn: str
+) -> list[dict[str, Any]]:
     response = client.list_resources_for_web_acl(WebACLArn=web_acl_arn)
     return response["ResourceArns"]
 
 
-def get_web_acl(session: boto3.Session, web_acl_arn: str, region: str) -> Dict[str, Any]:
+def get_web_acl(
+    session: boto3.Session, web_acl_arn: str, region: str
+) -> dict[str, Any]:
     client = session.client("wafv2", region_name=region)
     response = client.get_web_acl(ARN=web_acl_arn)
     web_acl = response["WebACL"]
@@ -46,10 +50,8 @@ def get_web_acl(session: boto3.Session, web_acl_arn: str, region: str) -> Dict[s
 
 
 def get_logging_configurations(
-        session: boto3.Session,
-        scope: str,
-        region: str
-) -> List[Dict[str, Any]]:
+    session: boto3.Session, scope: str, region: str
+) -> list[dict[str, Any]]:
     client = session.client("wafv2", region_name=region)
     logging_configurations = []
     response = client.list_logging_configurations(Scope=scope)

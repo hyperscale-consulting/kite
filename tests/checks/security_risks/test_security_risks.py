@@ -25,10 +25,7 @@ def test_security_risks_pass(mock_manual_check):
     assert result["check_id"] == "security-risks"
     assert result["check_name"] == "Security Risks"
     assert result["status"] == "PASS"
-    assert (
-        "Teams have done a good job"
-        in result["details"]["message"]
-    )
+    assert "Teams have done a good job" in result["details"]["message"]
 
 
 @patch("kite.checks.security_risks.check.manual_check")
@@ -51,7 +48,4 @@ def test_security_risks_fail(mock_manual_check):
     assert result["check_id"] == "security-risks"
     assert result["check_name"] == "Security Risks"
     assert result["status"] == "FAIL"
-    assert (
-        "Teams should do a better job"
-        in result["details"]["message"]
-    )
+    assert "Teams should do a better job" in result["details"]["message"]

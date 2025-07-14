@@ -1,10 +1,9 @@
 """SCP prevents unencrypted S3 uploads check module."""
 
 import json
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "scp-prevents-unencrypted-s3-uploads"
 CHECK_NAME = "SCP Prevents Unencrypted S3 Uploads"
@@ -69,8 +68,7 @@ def check_scp_prevents_unencrypted_s3_uploads() -> dict:
             "status": "PASS",
             "details": {
                 "message": (
-                    "SCP preventing unencrypted S3 uploads is attached to the "
-                    "root OU."
+                    "SCP preventing unencrypted S3 uploads is attached to the root OU."
                 ),
                 "scp": {
                     "id": root_s3_deny_scp.id,
@@ -153,7 +151,7 @@ def check_scp_prevents_unencrypted_s3_uploads() -> dict:
     }
 
 
-def _is_s3_encryption_deny_scp(content: Dict[str, Any]) -> bool:
+def _is_s3_encryption_deny_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively denies unencrypted S3 uploads.
 

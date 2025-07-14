@@ -1,12 +1,13 @@
 """Check for AWS Detective coverage across the organization."""
 
-from typing import Dict, Any, Set
 from collections import defaultdict
+from typing import Any
 
-from kite.data import get_organization, get_delegated_admins, get_detective_graphs
 from kite.config import Config
+from kite.data import get_delegated_admins
+from kite.data import get_detective_graphs
+from kite.data import get_organization
 from kite.helpers import get_account_ids_in_scope
-
 
 CHECK_ID = "detective-enabled"
 CHECK_NAME = "AWS Detective Enabled"
@@ -36,8 +37,8 @@ def _get_detective_delegated_admin(org) -> str:
 
 
 def _check_detective_membership(
-    account_ids: Set[str], region: str, admin_account: str
-) -> tuple[Dict[str, list], Dict[str, list]]:
+    account_ids: set[str], region: str, admin_account: str
+) -> tuple[dict[str, list], dict[str, list]]:
     """
     Check Detective membership for a set of accounts in a region.
 
@@ -74,7 +75,7 @@ def _check_detective_membership(
     return missing_accounts, disabled_accounts
 
 
-def check_detective_enabled() -> Dict[str, Any]:
+def check_detective_enabled() -> dict[str, Any]:
     """
     Check if AWS Detective is enabled for all organization accounts.
 

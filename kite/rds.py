@@ -1,6 +1,5 @@
 """RDS service module for Kite."""
 
-from typing import List
 from dataclasses import dataclass
 
 
@@ -13,7 +12,7 @@ class RDSInstance:
     region: str
 
 
-def get_instances(session, region: str) -> List[RDSInstance]:
+def get_instances(session, region: str) -> list[RDSInstance]:
     """
     Get all RDS instances in a region.
 

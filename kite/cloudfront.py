@@ -1,11 +1,11 @@
 """CloudFront service module for Kite."""
 
-from typing import List, Dict, Any
+from typing import Any
 
 import boto3
 
 
-def get_distributions(session) -> List[Dict[str, Any]]:
+def get_distributions(session) -> list[dict[str, Any]]:
     """
     Get all CloudFront distributions.
 
@@ -39,7 +39,7 @@ def get_origin_access_identities(session):
 def get_distributions_by_web_acl(
     session: boto3.Session,
     web_acl_arn: str,
-) -> List[Dict[str, Any]]:
+) -> list[dict[str, Any]]:
     """
     Get all CloudFront distributions by Web ACL.
     """

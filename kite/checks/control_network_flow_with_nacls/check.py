@@ -1,26 +1,27 @@
 """Manual check for controlling network flow with NACLs."""
 
-from typing import Dict, Any, List
-from kite.data import (
-    get_vpcs,
-    get_subnets,
-    get_nacls,
-    get_rds_instances,
-    get_eks_clusters,
-    get_ecs_clusters,
-    get_ec2_instances,
-    get_lambda_functions,
-    get_efs_file_systems,
-    get_elbv2_load_balancers,
-)
-from kite.helpers import get_account_ids_in_scope, manual_check, get_prowler_output
+from typing import Any
+
 from kite.config import Config
+from kite.data import get_ec2_instances
+from kite.data import get_ecs_clusters
+from kite.data import get_efs_file_systems
+from kite.data import get_eks_clusters
+from kite.data import get_elbv2_load_balancers
+from kite.data import get_lambda_functions
+from kite.data import get_nacls
+from kite.data import get_rds_instances
+from kite.data import get_subnets
+from kite.data import get_vpcs
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import get_prowler_output
+from kite.helpers import manual_check
 
 CHECK_ID = "control-network-flow-with-nacls"
 CHECK_NAME = "Control Network Flow with NACLs"
 
 
-def _get_vpc_name(vpc: Dict[str, Any]) -> str:
+def _get_vpc_name(vpc: dict[str, Any]) -> str:
     tags = vpc.get("Tags", [])
     for tag in tags:
         if tag.get("Key") == "Name":
@@ -28,7 +29,7 @@ def _get_vpc_name(vpc: Dict[str, Any]) -> str:
     return ""
 
 
-def _get_subnet_name(subnet: Dict[str, Any]) -> str:
+def _get_subnet_name(subnet: dict[str, Any]) -> str:
     tags = subnet.get("Tags", [])
     for tag in tags:
         if tag.get("Key") == "Name":
@@ -38,14 +39,14 @@ def _get_subnet_name(subnet: Dict[str, Any]) -> str:
 
 def _get_resources_in_subnet(
     subnet_id: str,
-    rds_instances: List[Dict[str, Any]],
-    eks_clusters: List[Dict[str, Any]],
-    ecs_clusters: List[Dict[str, Any]],
-    ec2_instances: List[Dict[str, Any]],
-    lambda_functions: List[Dict[str, Any]],
-    efs_file_systems: List[Dict[str, Any]],
-    elbv2_load_balancers: List[Dict[str, Any]],
-) -> Dict[str, List[str]]:
+    rds_instances: list[dict[str, Any]],
+    eks_clusters: list[dict[str, Any]],
+    ecs_clusters: list[dict[str, Any]],
+    ec2_instances: list[dict[str, Any]],
+    lambda_functions: list[dict[str, Any]],
+    efs_file_systems: list[dict[str, Any]],
+    elbv2_load_balancers: list[dict[str, Any]],
+) -> dict[str, list[str]]:
     resources = {
         "RDS": [],
         "EKS": [],
@@ -103,7 +104,7 @@ def _get_resources_in_subnet(
     return resources
 
 
-def _summarize_nacl_rules(nacl: Dict[str, Any]) -> Dict[str, List[str]]:
+def _summarize_nacl_rules(nacl: dict[str, Any]) -> dict[str, list[str]]:
     """Summarize NACL rules for easy display."""
     summary = {"ingress": [], "egress": []}
     protocol_map = {
@@ -112,9 +113,7 @@ def _summarize_nacl_rules(nacl: Dict[str, Any]) -> Dict[str, List[str]]:
         "6": "TCP",
         "17": "UDP",
     }
-    entries = sorted(
-        nacl.get("Entries", []), key=lambda e: e.get("RuleNumber", 32767)
-    )
+    entries = sorted(nacl.get("Entries", []), key=lambda e: e.get("RuleNumber", 32767))
     for entry in entries:
         action = entry.get("RuleAction", "allow")
         egress = entry.get("Egress", False)
@@ -124,9 +123,7 @@ def _summarize_nacl_rules(nacl: Dict[str, Any]) -> Dict[str, List[str]]:
         cidr = entry.get("CidrBlock", "?")
         port_range = entry.get("PortRange")
         if port_range:
-            port_str = (
-                f"ports {port_range.get('From')}–{port_range.get('To')}"
-            )
+            port_str = f"ports {port_range.get('From')}–{port_range.get('To')}"
         else:
             port_str = "all ports"
         direction_word = "to" if direction == "egress" else "from"
@@ -137,7 +134,7 @@ def _summarize_nacl_rules(nacl: Dict[str, Any]) -> Dict[str, List[str]]:
     return summary
 
 
-def _get_nacl_for_subnet(subnet_id: str, nacls: List[Dict[str, Any]]) -> Dict[str, Any]:
+def _get_nacl_for_subnet(subnet_id: str, nacls: list[dict[str, Any]]) -> dict[str, Any]:
     for nacl in nacls:
         for assoc in nacl.get("Associations", []):
             if assoc.get("SubnetId") == subnet_id:
@@ -210,8 +207,7 @@ def _analyze_nacls() -> str:
                     for resource_type, resource_list in resources.items():
                         if resource_list:
                             vpc_analysis += (
-                                f"    {resource_type}: "
-                                f"{', '.join(resource_list)}\n"
+                                f"    {resource_type}: {', '.join(resource_list)}\n"
                             )
                     nacl = _get_nacl_for_subnet(subnet_id, nacls)
                     if nacl:
@@ -249,7 +245,7 @@ def _analyze_nacls() -> str:
     return analysis
 
 
-def check_control_network_flow_with_nacls() -> Dict[str, Any]:
+def check_control_network_flow_with_nacls() -> dict[str, Any]:
     """
     Manual check to confirm whether NACLs are used to restrict ingress and egress traffic
     to only the flows necessary for each workload at each network layer. Prints a summary

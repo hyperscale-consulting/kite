@@ -3,11 +3,12 @@
 import csv
 import io
 import time
-from typing import Dict, Any, List
+from typing import Any
+
 from botocore.exceptions import ClientError
 
 
-def fetch_credentials_report(session) -> Dict[str, Any]:
+def fetch_credentials_report(session) -> dict[str, Any]:
     """
     Fetch the IAM credentials report.
 
@@ -74,7 +75,7 @@ def fetch_credentials_report(session) -> Dict[str, Any]:
     return {"root": root_account, "users": user_accounts}
 
 
-def fetch_organization_features(session) -> List[str]:
+def fetch_organization_features(session) -> list[str]:
     """
     Fetch the IAM organization features.
 
@@ -99,7 +100,7 @@ def fetch_organization_features(session) -> List[str]:
         raise
 
 
-def fetch_account_summary(session) -> Dict[str, Any]:
+def fetch_account_summary(session) -> dict[str, Any]:
     """
     Fetch the IAM account summary.
 
@@ -123,7 +124,7 @@ def fetch_account_summary(session) -> Dict[str, Any]:
         raise
 
 
-def fetch_virtual_mfa_devices(session) -> List[Dict[str, Any]]:
+def fetch_virtual_mfa_devices(session) -> list[dict[str, Any]]:
     """
     Fetch all virtual MFA devices in the account.
 
@@ -149,7 +150,7 @@ def fetch_virtual_mfa_devices(session) -> List[Dict[str, Any]]:
     return virtual_mfa_devices
 
 
-def list_saml_providers(session) -> List[Dict[str, Any]]:
+def list_saml_providers(session) -> list[dict[str, Any]]:
     """
     List all SAML providers in the account.
 
@@ -175,7 +176,7 @@ def list_saml_providers(session) -> List[Dict[str, Any]]:
         raise
 
 
-def list_oidc_providers(session) -> List[Dict[str, Any]]:
+def list_oidc_providers(session) -> list[dict[str, Any]]:
     """
     List all OpenID Connect (OIDC) providers in the account.
 
@@ -227,7 +228,7 @@ def list_oidc_providers(session) -> List[Dict[str, Any]]:
         raise
 
 
-def get_password_policy(session) -> Dict[str, Any]:
+def get_password_policy(session) -> dict[str, Any]:
     """
     Fetch the IAM password policy for the account.
 
@@ -260,7 +261,7 @@ def get_password_policy(session) -> Dict[str, Any]:
         raise
 
 
-def get_role_attached_policies(session, role_name: str) -> List[Dict[str, Any]]:
+def get_role_attached_policies(session, role_name: str) -> list[dict[str, Any]]:
     """
     Get all attached managed policies for an IAM role.
 
@@ -286,7 +287,7 @@ def get_role_attached_policies(session, role_name: str) -> List[Dict[str, Any]]:
 
 def get_role_inline_policy_document(
     session, role_name: str, policy_name: str
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Get the policy document for an inline policy attached to a role.
 
@@ -311,7 +312,7 @@ def get_role_inline_policy_document(
     }
 
 
-def get_role_inline_policies(session, role_name: str) -> List[str]:
+def get_role_inline_policies(session, role_name: str) -> list[str]:
     """
     Get all inline policy names for an IAM role.
 
@@ -335,7 +336,7 @@ def get_role_inline_policies(session, role_name: str) -> List[str]:
     return policy_names
 
 
-def list_roles(session) -> List[Dict[str, Any]]:
+def list_roles(session) -> list[dict[str, Any]]:
     """
     List all IAM roles in the account with their attached and inline policies.
 
@@ -388,7 +389,7 @@ def list_roles(session) -> List[Dict[str, Any]]:
     return roles
 
 
-def list_customer_managed_policies(session) -> List[Dict[str, Any]]:
+def list_customer_managed_policies(session) -> list[dict[str, Any]]:
     """
     List all customer managed policies in the account.
 
@@ -421,7 +422,7 @@ def list_customer_managed_policies(session) -> List[Dict[str, Any]]:
     return policies
 
 
-def get_policy_and_document(session, policy_arn: str) -> Dict[str, Any]:
+def get_policy_and_document(session, policy_arn: str) -> dict[str, Any]:
     """
     Get policy details and the policy document for a customer managed policy.
 
@@ -454,7 +455,7 @@ def get_policy_and_document(session, policy_arn: str) -> Dict[str, Any]:
     return {"PolicyDetails": policy, "PolicyDocument": policy_document}
 
 
-def list_users(session) -> List[Dict[str, Any]]:
+def list_users(session) -> list[dict[str, Any]]:
     """
     List all IAM users in the account with their groups, policies, and inline policies.
 
@@ -502,7 +503,7 @@ def list_users(session) -> List[Dict[str, Any]]:
     return users
 
 
-def list_groups(session) -> List[Dict[str, Any]]:
+def list_groups(session) -> list[dict[str, Any]]:
     """
     List all IAM groups in the account with their attached policies.
 

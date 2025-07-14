@@ -1,15 +1,14 @@
 """Check for IAM policies that allow permissive role assumption."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.helpers import get_prowler_output
-
 
 CHECK_ID = "no-permissive-role-assumption"
 CHECK_NAME = "No Permissive Role Assumption"
 
 
-def check_no_permissive_role_assumption() -> Dict[str, Any]:
+def check_no_permissive_role_assumption() -> dict[str, Any]:
     """
     Check if IAM policies allow permissive role assumption.
 
@@ -33,7 +32,7 @@ def check_no_permissive_role_assumption() -> Dict[str, Any]:
     check_id = "iam_no_custom_policy_permissive_role_assumption"
 
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Check results for the check ID
     if check_id in prowler_results:
@@ -43,14 +42,16 @@ def check_no_permissive_role_assumption() -> Dict[str, Any]:
         # Add failing resources to the list
         for result in results:
             if result.status != "PASS":
-                failing_resources.append({
-                    "account_id": result.account_id,
-                    "resource_uid": result.resource_uid,
-                    "resource_name": result.resource_name,
-                    "resource_details": result.resource_details,
-                    "region": result.region,
-                    "status": result.status
-                })
+                failing_resources.append(
+                    {
+                        "account_id": result.account_id,
+                        "resource_uid": result.resource_uid,
+                        "resource_name": result.resource_name,
+                        "resource_details": result.resource_details,
+                        "region": result.region,
+                        "status": result.status,
+                    }
+                )
 
     # Determine if the check passed
     passed = len(failing_resources) == 0

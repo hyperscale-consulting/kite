@@ -5,8 +5,8 @@ import pytest
 from kite.checks.data_perimeter_confused_deputy_protection.check import (
     check_data_perimeter_confused_deputy_protection,
 )
-from kite.models import ControlPolicy
 from kite.data import save_organization
+from kite.models import ControlPolicy
 
 
 @pytest.fixture
@@ -29,12 +29,8 @@ def confused_deputy_protection_policy(organization_id):
                             "StringNotEqualsIfExists": {
                                 "aws:SourceOrgID": organization_id
                             },
-                            "Null": {
-                                "AWS:SourceAccount": "false"
-                            },
-                            "Bool": {
-                                "aws:PrincipalIsAWSService": "true"
-                            },
+                            "Null": {"AWS:SourceAccount": "false"},
+                            "Bool": {"aws:PrincipalIsAWSService": "true"},
                         },
                     )
                 ]

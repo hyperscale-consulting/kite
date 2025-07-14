@@ -1,15 +1,14 @@
 """Check for regular review and removal of unused permissions."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "regularly-review-permissions"
 CHECK_NAME = "Regularly Review Permissions"
 
 
-def check_regularly_review_permissions() -> Dict[str, Any]:
+def check_regularly_review_permissions() -> dict[str, Any]:
     """
     Check if permissions are reviewed regularly and unused permissions,
     identities, and policies are removed.

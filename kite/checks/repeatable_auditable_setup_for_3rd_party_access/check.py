@@ -1,16 +1,17 @@
 """Check for repeatable and auditable setup of third-party access."""
 
-from typing import Dict, Any, List, Set
+from typing import Any
 
-from kite.data import get_organization, get_roles
-from kite.helpers import get_account_ids_in_scope, manual_check
-
+from kite.data import get_organization
+from kite.data import get_roles
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "repeatable-auditable-setup-for-3rd-party-access"
 CHECK_NAME = "Repeatable and Auditable Setup for Third-Party Access"
 
 
-def _is_principal_in_organization(principal: str, org_account_ids: Set[str]) -> bool:
+def _is_principal_in_organization(principal: str, org_account_ids: set[str]) -> bool:
     """
     Check if a principal is from an account within the organization.
 
@@ -33,7 +34,7 @@ def _is_principal_in_organization(principal: str, org_account_ids: Set[str]) -> 
         return False
 
 
-def _has_external_id_condition(statement: Dict[str, Any]) -> bool:
+def _has_external_id_condition(statement: dict[str, Any]) -> bool:
     """
     Check if a statement has the sts:ExternalId condition.
 
@@ -45,12 +46,11 @@ def _has_external_id_condition(statement: Dict[str, Any]) -> bool:
     """
     conditions = statement.get("Condition", {})
     return (
-        "StringEquals" in conditions
-        and "sts:ExternalId" in conditions["StringEquals"]
+        "StringEquals" in conditions and "sts:ExternalId" in conditions["StringEquals"]
     )
 
 
-def check_repeatable_auditable_setup_for_3rd_party_access() -> Dict[str, Any]:
+def check_repeatable_auditable_setup_for_3rd_party_access() -> dict[str, Any]:
     """
     Check for roles that can be assumed by external principals with ExternalId
     conditions and prompt for review of the setup process.
@@ -66,7 +66,7 @@ def check_repeatable_auditable_setup_for_3rd_party_access() -> Dict[str, Any]:
                 - roles_to_review: List of roles that need review
     """
     # Track roles that need review
-    roles_to_review: List[Dict[str, Any]] = []
+    roles_to_review: list[dict[str, Any]] = []
 
     # Get organization data
     org = get_organization()
@@ -100,10 +100,7 @@ def check_repeatable_auditable_setup_for_3rd_party_access() -> Dict[str, Any]:
                 if statement.get("Effect") == "Allow":
                     principals = statement.get("Principal", {})
                     if isinstance(principals, dict):
-                        for (
-                            principal_type,
-                            principal_value
-                        ) in principals.items():
+                        for principal_type, principal_value in principals.items():
                             if isinstance(principal_value, list):
                                 for principal in principal_value:
                                     if not _is_principal_in_organization(
@@ -125,18 +122,20 @@ def check_repeatable_auditable_setup_for_3rd_party_access() -> Dict[str, Any]:
             # If the role can be assumed by external principals and has the
             # sts:ExternalId condition, it needs review
             if has_external_principal and has_external_id_condition:
-                roles_to_review.append({
-                    "account_id": account_id,
-                    "resource_uid": role["RoleId"],
-                    "resource_name": role["RoleName"],
-                    "resource_details": (
-                        "Role can be assumed by external principals and has the "
-                        "sts:ExternalId condition. Review the setup process to "
-                        "ensure it is repeatable and auditable."
-                    ),
-                    "region": "global",
-                    "status": "REVIEW"
-                })
+                roles_to_review.append(
+                    {
+                        "account_id": account_id,
+                        "resource_uid": role["RoleId"],
+                        "resource_name": role["RoleName"],
+                        "resource_details": (
+                            "Role can be assumed by external principals and has the "
+                            "sts:ExternalId condition. Review the setup process to "
+                            "ensure it is repeatable and auditable."
+                        ),
+                        "region": "global",
+                        "status": "REVIEW",
+                    }
+                )
 
     if not roles_to_review:
         return {
@@ -158,9 +157,7 @@ def check_repeatable_auditable_setup_for_3rd_party_access() -> Dict[str, Any]:
     )
 
     for role in roles_to_review:
-        message += (
-            f"- {role['resource_name']} in account {role['account_id']}\n"
-        )
+        message += f"- {role['resource_name']} in account {role['account_id']}\n"
 
     message += (
         "\nFor each role, review whether there is a repeatable and auditable "

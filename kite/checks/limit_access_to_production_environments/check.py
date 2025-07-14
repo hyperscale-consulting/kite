@@ -2,15 +2,13 @@
 
 import json
 import os
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.helpers import (
-    get_account_ids_in_scope,
-    manual_check,
-)
-from kite.data import get_roles, get_credentials_report
 from kite.config import Config
-
+from kite.data import get_credentials_report
+from kite.data import get_roles
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "limit-access-to-prod"
 CHECK_NAME = "Limit Access to Production Environments"
@@ -41,7 +39,7 @@ def _is_human_principal(principal: str) -> bool:
     return False
 
 
-def _save_identity_data(account_id: str, data: Dict[str, Any]) -> str:
+def _save_identity_data(account_id: str, data: dict[str, Any]) -> str:
     """
     Save identity data to a file in the data directory.
 
@@ -67,7 +65,7 @@ def _save_identity_data(account_id: str, data: Dict[str, Any]) -> str:
     return file_path
 
 
-def check_limit_access_to_production_environments() -> Dict[str, Any]:
+def check_limit_access_to_production_environments() -> dict[str, Any]:
     """
     Check if access to production environments is limited to specific tasks.
 
@@ -91,8 +89,8 @@ def check_limit_access_to_production_environments() -> Dict[str, Any]:
                 - human_accessible_identities: List of identities that can be accessed by humans
     """
     # Track identities that can be accessed by humans
-    human_accessible_identities: List[Dict[str, Any]] = []
-    saved_files: Dict[str, str] = {}
+    human_accessible_identities: list[dict[str, Any]] = []
+    saved_files: dict[str, str] = {}
 
     # Get in-scope accounts
     account_ids = get_account_ids_in_scope()
@@ -124,26 +122,28 @@ def check_limit_access_to_production_environments() -> Dict[str, Any]:
                                     break
 
             if has_human_principal:
-                human_accessible_identities.append({
-                    "account_id": account_id,
-                    "identity_type": "role",
-                    "name": role["RoleName"],
-                    "arn": role["Arn"],
-                    "trust_policy": trust_policy,
-                })
+                human_accessible_identities.append(
+                    {
+                        "account_id": account_id,
+                        "identity_type": "role",
+                        "name": role["RoleName"],
+                        "arn": role["Arn"],
+                        "trust_policy": trust_policy,
+                    }
+                )
 
         # Get credentials report to check IAM users
         report = get_credentials_report(account_id)
         for user in report["users"]:
             if user.get("password_enabled", "false").lower() == "true":
-                human_accessible_identities.append({
-                    "account_id": account_id,
-                    "identity_type": "user",
-                    "name": user["user"],
-                    "arn": (
-                        f"arn:aws:iam::{account_id}:user/{user['user']}"
-                    ),
-                })
+                human_accessible_identities.append(
+                    {
+                        "account_id": account_id,
+                        "identity_type": "user",
+                        "name": user["user"],
+                        "arn": (f"arn:aws:iam::{account_id}:user/{user['user']}"),
+                    }
+                )
 
         # Save the data for this account
         if human_accessible_identities:
@@ -152,10 +152,11 @@ def check_limit_access_to_production_environments() -> Dict[str, Any]:
                 {
                     "account_id": account_id,
                     "identities": [
-                        identity for identity in human_accessible_identities
+                        identity
+                        for identity in human_accessible_identities
                         if identity["account_id"] == account_id
-                    ]
-                }
+                    ],
+                },
             )
             saved_files[account_id] = file_path
 
@@ -168,7 +169,8 @@ def check_limit_access_to_production_environments() -> Dict[str, Any]:
         message += "\nSummary of findings:\n"
         for account_id in account_ids:
             account_identities = [
-                identity for identity in human_accessible_identities
+                identity
+                for identity in human_accessible_identities
                 if identity["account_id"] == account_id
             ]
             if account_identities:

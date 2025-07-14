@@ -1,18 +1,18 @@
 """Tests for the organizations module."""
 
-import pytest
-from unittest.mock import MagicMock
 from datetime import datetime
+from unittest.mock import MagicMock
 
-from kite.organizations import (
-    Organization,
-    OrganizationalUnit,
-    fetch_organization,
-    build_ou_structure,
-    fetch_delegated_admins,
-    DelegatedAdmin,
-    ControlPolicy,
-)
+import pytest
+from botocore.exceptions import ClientError
+
+from kite.organizations import build_ou_structure
+from kite.organizations import ControlPolicy
+from kite.organizations import DelegatedAdmin
+from kite.organizations import fetch_delegated_admins
+from kite.organizations import fetch_organization
+from kite.organizations import Organization
+from kite.organizations import OrganizationalUnit
 
 
 @pytest.fixture
@@ -110,6 +110,7 @@ def mock_policies_for_target_paginator(mock_policies_for_target_response):
             return [mock_policies_for_target_response]
         else:
             return [{"Policies": []}]
+
     mock_paginator.paginate.side_effect = paginate_side_effect
     return mock_paginator
 
@@ -152,8 +153,7 @@ def mock_ou_response():
         "OrganizationalUnit": {
             "Id": "ou-exampleouid1",
             "Arn": (
-                "arn:aws:organizations::123456789012:ou/o-exampleorgid/"
-                "ou-exampleouid1"
+                "arn:aws:organizations::123456789012:ou/o-exampleorgid/ou-exampleouid1"
             ),
             "Name": "OU 1",
         }
@@ -344,10 +344,12 @@ def test_fetch_organization_not_in_use(mock_session, mock_orgs_client):
 def test_fetch_organization_error(mock_session, mock_orgs_client):
     """Test when an error occurs."""
     # Set up mock to raise exception
-    mock_orgs_client.describe_organization.side_effect = Exception("Test error")
+    mock_orgs_client.describe_organization.side_effect = ClientError(
+        dict(code="error", message="Test error"), "DescribeOrganization"
+    )
 
     # Call the function and expect exception
-    with pytest.raises(Exception):
+    with pytest.raises(ClientError):
         fetch_organization(mock_session)
 
 

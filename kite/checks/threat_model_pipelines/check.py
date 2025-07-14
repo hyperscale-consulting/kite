@@ -1,15 +1,14 @@
 """Check for CI/CD pipeline threat modeling."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "threat-model-pipelines"
 CHECK_NAME = "Pipeline Threat Modeling"
 
 
-def check_threat_model_pipelines() -> Dict[str, Any]:
+def check_threat_model_pipelines() -> dict[str, Any]:
     """
     Check if CI/CD pipelines are threat modeled in the same way as other production
     workloads to identify and address risks to the software supply chain.

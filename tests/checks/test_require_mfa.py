@@ -1,5 +1,7 @@
+from unittest.mock import MagicMock
+from unittest.mock import patch
+
 import pytest
-from unittest.mock import MagicMock, patch
 from botocore.exceptions import ClientError
 
 from kite.checks.require_mfa.check import check_require_mfa

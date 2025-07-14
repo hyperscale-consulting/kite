@@ -1,15 +1,14 @@
 """Check if access management lifecycle process is effectively implemented."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "access-management-lifecycle-implemented"
 CHECK_NAME = "Access Management Lifecycle Process is Effectively Implemented"
 
 
-def check_access_management_lifecycle_implemented() -> Dict[str, Any]:
+def check_access_management_lifecycle_implemented() -> dict[str, Any]:
     """
     Check if access management lifecycle process is effectively implemented.
 

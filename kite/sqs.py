@@ -1,12 +1,12 @@
 """AWS SQS functionality module."""
 
 import json
-from typing import Dict, Any, List
+from typing import Any
 
 import boto3
 
 
-def get_queues(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
+def get_queues(session: boto3.Session, region: str) -> list[dict[str, Any]]:
     """
     Get all SQS queues and their policies in the specified region.
 
@@ -27,8 +27,7 @@ def get_queues(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
     # Get attributes for each queue
     for queue_url in queue_urls:
         attributes = sqs.get_queue_attributes(
-            QueueUrl=queue_url,
-            AttributeNames=["QueueArn", "Policy"]
+            QueueUrl=queue_url, AttributeNames=["QueueArn", "Policy"]
         )
 
         queue_arn = attributes["Attributes"]["QueueArn"]
@@ -37,11 +36,13 @@ def get_queues(session: boto3.Session, region: str) -> List[Dict[str, Any]]:
         if policy:
             policy = json.loads(policy)
 
-        queues.append({
-            "queue_url": queue_url,
-            "queue_arn": queue_arn,
-            "policy": policy,
-            "region": region,
-        })
+        queues.append(
+            {
+                "queue_url": queue_url,
+                "queue_arn": queue_arn,
+                "policy": policy,
+                "region": region,
+            }
+        )
 
     return queues

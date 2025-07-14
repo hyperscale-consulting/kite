@@ -2,8 +2,8 @@
 
 from kite.checks.grant_least_privilege_access.check import (
     check_grant_least_privilege_access,
-    CHECK_ID,
-    CHECK_NAME,
 )
+from kite.checks.grant_least_privilege_access.check import CHECK_ID
+from kite.checks.grant_least_privilege_access.check import CHECK_NAME
 
 __all__ = ["check_grant_least_privilege_access", "CHECK_ID", "CHECK_NAME"]

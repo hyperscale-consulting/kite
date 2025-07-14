@@ -1,6 +1,6 @@
 """Check for vulnerability remediation processes."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
 
@@ -8,7 +8,7 @@ CHECK_ID = "remediate-vulnerabilities"
 CHECK_NAME = "Remediate Vulnerabilities"
 
 
-def check_remediate_vulnerabilities() -> Dict[str, Any]:
+def check_remediate_vulnerabilities() -> dict[str, Any]:
     """
     Check if there are processes and procedures in place to prioritize and remediate
     identified vulnerabilities based on risk assessment criteria.

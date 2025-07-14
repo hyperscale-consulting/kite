@@ -1,27 +1,23 @@
 """Check for MFA requirements."""
 
-from typing import Dict, Any
+from typing import Any
+
 from botocore.exceptions import ClientError
 
-from kite.helpers import (
-    is_identity_center_enabled,
-    manual_check,
-    get_account_ids_in_scope,
-    get_cognito_user_pools,
-    get_user_pool_mfa_config,
-)
-from kite.data import (
-    get_credentials_report,
-    get_saml_providers,
-    get_oidc_providers,
-)
-
+from kite.data import get_credentials_report
+from kite.data import get_oidc_providers
+from kite.data import get_saml_providers
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import get_cognito_user_pools
+from kite.helpers import get_user_pool_mfa_config
+from kite.helpers import is_identity_center_enabled
+from kite.helpers import manual_check
 
 CHECK_ID = "require-mfa"
 CHECK_NAME = "Require MFA"
 
 
-def check_require_mfa() -> Dict[str, Any]:
+def check_require_mfa() -> dict[str, Any]:
     """
     Check if MFA is required for AWS access.
 
@@ -68,9 +64,7 @@ def check_require_mfa() -> Dict[str, Any]:
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
             "status": "ERROR",
-            "details": {
-                "message": error_message
-            }
+            "details": {"message": error_message},
         }
 
     # Build the context message
@@ -80,7 +74,7 @@ def check_require_mfa() -> Dict[str, Any]:
         context_message += "SAML Providers:\n"
         for provider in saml_providers:
             context_message += f"- {provider['Arn']}\n"
-            if 'ValidUntil' in provider:
+            if "ValidUntil" in provider:
                 context_message += f"  Valid until: {provider['ValidUntil']}\n"
     else:
         context_message += "No SAML providers configured\n"
@@ -91,7 +85,7 @@ def check_require_mfa() -> Dict[str, Any]:
         context_message += "OIDC Providers:\n"
         for provider in oidc_providers:
             context_message += f"- {provider['Arn']}\n"
-            if 'Url' in provider:
+            if "Url" in provider:
                 context_message += f"  URL: {provider['Url']}\n"
     else:
         context_message += "No OIDC providers configured\n"

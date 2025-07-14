@@ -1,15 +1,14 @@
 """Check for CloudWatch data protection policies."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "cw-data-protection-policies"
 CHECK_NAME = "CloudWatch Data Protection Policies"
 
 
-def check_cw_data_protection_policies() -> Dict[str, Any]:
+def check_cw_data_protection_policies() -> dict[str, Any]:
     # TODO: Add permissions so we can do some automated support with this check.
     """
     Check if CloudWatch data protection policies are used to automatically identify

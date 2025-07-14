@@ -1,198 +1,196 @@
 """Check themes module for Kite."""
 
-from typing import Callable
+from collections.abc import Callable
 
-from kite.checks import (
-    check_aws_organizations_usage,
-    check_account_separation,
-    check_ou_structure,
-    check_management_account_workloads,
-    check_delegated_admins_security_services,
-    check_trusted_delegated_admins,
-    check_region_deny_scp,
-    check_root_user_usage,
-    check_root_credentials_management_enabled,
-    check_no_root_access_keys,
-    check_root_mfa_enabled,
-    check_accurate_account_contact_details,
-    check_root_access_keys_disallowed,
-    check_root_actions_disallowed,
-    check_root_account_monitoring,
-    check_root_credentials_security,
-    check_root_access_testing,
-    check_well_defined_control_objectives,
-    check_control_implementation_validation,
-    check_threat_intelligence_monitoring,
-    check_tech_inventories_scanned,
-    check_workload_dependency_updates,
-    check_aws_managed_services_threat_intel,
-    check_use_of_higher_level_services,
-    check_aws_control_documentation,
-    check_aws_service_evaluation,
-    check_iac_templates,
-    check_iac_version_control,
-    check_iac_guardrails,
-    check_service_catalog,
-    check_account_standards,
-    check_control_tower,
-    check_threat_modeling,
-    check_dfds,
-    check_security_risks,
-    check_security_services_evaluation,
-    check_require_mfa,
-    check_complex_passwords,
-    check_no_access_keys,
-    check_no_key_pairs,
-    check_no_iam_user_access,
-    check_no_secrets_in_aws_resources,
-    check_prevent_and_detect_secrets,
-    check_secure_secrets_storage,
-    check_monitor_secrets,
-    check_restricted_role_for_secrets_access,
-    check_use_centralized_idp,
-    check_hr_system_integration,
-    check_credential_rotation,
-    check_identity_audit,
-    check_employ_user_groups_and_attributes,
-    check_define_access_requirements,
-    check_no_full_admin_policies,
-    check_no_policy_allows_privilege_escalation,
-    check_no_permissive_role_assumption,
-    check_no_full_access_to_sensitive_services,
-    check_no_readonly_third_party_access,
-    check_cross_account_confused_deputy_prevention,
-    check_admin_privileges_are_restricted,
-    check_limit_access_to_production_environments,
-    check_s3_confused_deputy_protection,
-    check_sns_confused_deputy_protection,
-    check_sqs_confused_deputy_protection,
-    check_lambda_confused_deputy_protection,
-    check_kms_confused_deputy_protection,
-    check_emergency_access_procedures,
-    check_active_unused_access_analyzer,
-    check_active_external_access_analyzer,
-    check_regularly_review_permissions,
-    check_scp_prevents_leaving_org,
-    check_scp_prevents_common_admin_role_changes,
-    check_scp_prevents_cloudwatch_changes,
-    check_scp_prevents_config_changes,
-    check_scp_prevents_guardduty_changes,
-    check_scp_prevents_ram_external_sharing,
-    check_scp_prevents_unencrypted_s3_uploads,
-    check_scp_prevents_deleting_logs,
-    check_scp_prevents_adding_internet_access_to_vpc,
-    check_delegate_iam_with_permission_boundaries,
-    check_access_management_lifecycle,
-    check_access_management_lifecycle_implemented,
-    check_scim_protocol_used,
-    check_monitor_and_response_to_s3_public_access,
-    check_maintain_inventory_of_shared_resources,
-    check_approval_process_for_resource_sharing,
-    check_s3_bucket_acl_disabled,
-    check_migrate_from_oai,
-    check_establish_data_perimeter_trusted_identities,
-    check_data_perimeter_confused_deputy_protection,
-    check_data_perimeter_trusted_resources,
-    check_vpc_endpoints_enforce_data_perimeter,
-    check_data_perimeter_trusted_networks,
-    check_scp_prevents_ram_invitations,
-    check_repeatable_auditable_setup_for_3rd_party_access,
-    check_organizational_cloudtrail,
-    check_vpc_flow_logs_enabled,
-    check_resolver_query_logs_enabled,
-    check_log_retention,
-    check_waf_web_acl_logging_enabled,
-    check_elb_logging_enabled,
-    check_eks_control_plane_logging_enabled,
-    check_network_firewall_logging_enabled,
-    check_rds_logging_enabled,
-    check_cloudfront_logging_enabled,
-    check_api_gateway_logging_enabled,
-    check_config_recording_enabled,
-    check_log_querying,
-    check_log_alerting,
-    check_security_data_published_to_log_archive_account,
-    check_deploy_log_analysis_tools_in_audit_account,
-    check_detective_enabled,
-    check_security_event_correlation,
-    check_auto_remediate_non_compliant_resources,
-    check_documented_data_classification_scheme,
-    check_data_catalog,
-    check_tag_data_with_sensitivity_level,
-    check_isolation_boundaries,
-    check_controls_implemented_based_on_sensitivity,
-    check_tokenization_and_anonymization,
-    check_cw_data_protection_policies,
-    check_sns_data_protection_policies,
-    check_detect_sensitive_data_transform,
-    check_macie_scans_for_sensitive_data,
-    check_scan_for_sensitive_data_in_dev,
-    check_automate_s3_data_retention,
-    check_automate_ddb_data_retention,
-    check_implement_retention_policies,
-    check_detect_missing_automated_lifecycle_management,
-    check_use_a_kms,
-    check_no_human_access_to_unencrypted_key_material,
-    check_rotate_encryption_keys,
-    check_monitor_key_usage,
-    check_key_access_control,
-    check_use_service_encryption_at_rest,
-    check_use_customer_managed_keys,
-    check_detect_encryption_at_rest_misconfig,
-    check_enforce_data_protection_at_rest_with_policy_as_code,
-    check_automate_data_at_rest_protection_with_guardduty,
-    check_air_gapped_backup_vault,
-    check_restore_testing,
-    check_implement_versioning_and_object_locking,
-    check_cert_deployment_and_renewal,
-    check_protect_root_ca,
-    check_establish_logging_and_audit_trails_for_private_ca,
-    check_enforce_https,
-    check_avoid_insecure_ssl_ciphers,
-    check_define_and_document_workload_network_flows,
-    check_implement_auth_across_services,
-    check_monitor_network_traffic_for_unauthorized_access,
-    check_train_for_application_security,
-    check_perform_sast,
-    check_perform_dast,
-    check_automated_security_tests,
-    check_perform_regular_pen_testing,
-    check_conduct_code_reviews,
-    check_use_centralized_artifact_repos,
-    check_automate_deployments,
-    check_immutable_builds,
-    check_pipelines_use_least_privilege,
-    check_review_pipeline_permissions_regularly,
-    check_threat_model_pipelines,
-    check_security_guardians_program,
-    check_scan_workloads_for_vulnerabilities,
-    check_remediate_vulnerabilities,
-    check_automate_patch_management,
-    vulnerability_scanning_in_cicd_pipelines,
-    automate_malware_and_threat_detection,
-    check_use_hardened_images,
-    check_no_rdp_or_ssh_access,
-    check_avoid_interactive_access,
-    check_audit_interactive_access_with_ssm,
-    check_validate_software_integrity,
-    check_capture_key_contacts,
-    check_incident_response_plans,
-    check_forensics_ou,
-    check_automate_forensics,
-    check_security_ir_playbooks,
-    check_use_identity_broker,
-    check_pre_deploy_tools,
-    check_run_simulations,
-    check_lessons_learned_framework,
-    check_create_network_layers,
-    check_control_network_flow_with_nacls,
-    check_control_network_flows_with_sgs,
-    check_control_network_flows_with_route_tables,
-    check_use_private_link_for_vpc_routing,
-    check_use_route53resolver_dns_firewall,
-    check_inspect_http_traffic_with_waf,
-    check_inspect_traffic_with_network_firewall,
-)
+from kite.checks import automate_malware_and_threat_detection
+from kite.checks import check_access_management_lifecycle
+from kite.checks import check_access_management_lifecycle_implemented
+from kite.checks import check_account_separation
+from kite.checks import check_account_standards
+from kite.checks import check_accurate_account_contact_details
+from kite.checks import check_active_external_access_analyzer
+from kite.checks import check_active_unused_access_analyzer
+from kite.checks import check_admin_privileges_are_restricted
+from kite.checks import check_air_gapped_backup_vault
+from kite.checks import check_api_gateway_logging_enabled
+from kite.checks import check_approval_process_for_resource_sharing
+from kite.checks import check_audit_interactive_access_with_ssm
+from kite.checks import check_auto_remediate_non_compliant_resources
+from kite.checks import check_automate_data_at_rest_protection_with_guardduty
+from kite.checks import check_automate_ddb_data_retention
+from kite.checks import check_automate_deployments
+from kite.checks import check_automate_forensics
+from kite.checks import check_automate_patch_management
+from kite.checks import check_automate_s3_data_retention
+from kite.checks import check_automated_security_tests
+from kite.checks import check_avoid_insecure_ssl_ciphers
+from kite.checks import check_avoid_interactive_access
+from kite.checks import check_aws_control_documentation
+from kite.checks import check_aws_managed_services_threat_intel
+from kite.checks import check_aws_organizations_usage
+from kite.checks import check_aws_service_evaluation
+from kite.checks import check_capture_key_contacts
+from kite.checks import check_cert_deployment_and_renewal
+from kite.checks import check_cloudfront_logging_enabled
+from kite.checks import check_complex_passwords
+from kite.checks import check_conduct_code_reviews
+from kite.checks import check_config_recording_enabled
+from kite.checks import check_control_implementation_validation
+from kite.checks import check_control_network_flow_with_nacls
+from kite.checks import check_control_network_flows_with_route_tables
+from kite.checks import check_control_network_flows_with_sgs
+from kite.checks import check_control_tower
+from kite.checks import check_controls_implemented_based_on_sensitivity
+from kite.checks import check_create_network_layers
+from kite.checks import check_credential_rotation
+from kite.checks import check_cross_account_confused_deputy_prevention
+from kite.checks import check_cw_data_protection_policies
+from kite.checks import check_data_catalog
+from kite.checks import check_data_perimeter_confused_deputy_protection
+from kite.checks import check_data_perimeter_trusted_networks
+from kite.checks import check_data_perimeter_trusted_resources
+from kite.checks import check_define_access_requirements
+from kite.checks import check_define_and_document_workload_network_flows
+from kite.checks import check_delegate_iam_with_permission_boundaries
+from kite.checks import check_delegated_admins_security_services
+from kite.checks import check_deploy_log_analysis_tools_in_audit_account
+from kite.checks import check_detect_encryption_at_rest_misconfig
+from kite.checks import check_detect_missing_automated_lifecycle_management
+from kite.checks import check_detect_sensitive_data_transform
+from kite.checks import check_detective_enabled
+from kite.checks import check_dfds
+from kite.checks import check_documented_data_classification_scheme
+from kite.checks import check_eks_control_plane_logging_enabled
+from kite.checks import check_elb_logging_enabled
+from kite.checks import check_emergency_access_procedures
+from kite.checks import check_employ_user_groups_and_attributes
+from kite.checks import check_enforce_data_protection_at_rest_with_policy_as_code
+from kite.checks import check_enforce_https
+from kite.checks import check_establish_data_perimeter_trusted_identities
+from kite.checks import check_establish_logging_and_audit_trails_for_private_ca
+from kite.checks import check_forensics_ou
+from kite.checks import check_hr_system_integration
+from kite.checks import check_iac_guardrails
+from kite.checks import check_iac_templates
+from kite.checks import check_iac_version_control
+from kite.checks import check_identity_audit
+from kite.checks import check_immutable_builds
+from kite.checks import check_implement_auth_across_services
+from kite.checks import check_implement_retention_policies
+from kite.checks import check_implement_versioning_and_object_locking
+from kite.checks import check_incident_response_plans
+from kite.checks import check_inspect_http_traffic_with_waf
+from kite.checks import check_inspect_traffic_with_network_firewall
+from kite.checks import check_isolation_boundaries
+from kite.checks import check_key_access_control
+from kite.checks import check_kms_confused_deputy_protection
+from kite.checks import check_lambda_confused_deputy_protection
+from kite.checks import check_lessons_learned_framework
+from kite.checks import check_limit_access_to_production_environments
+from kite.checks import check_log_alerting
+from kite.checks import check_log_querying
+from kite.checks import check_log_retention
+from kite.checks import check_macie_scans_for_sensitive_data
+from kite.checks import check_maintain_inventory_of_shared_resources
+from kite.checks import check_management_account_workloads
+from kite.checks import check_migrate_from_oai
+from kite.checks import check_monitor_and_response_to_s3_public_access
+from kite.checks import check_monitor_key_usage
+from kite.checks import check_monitor_network_traffic_for_unauthorized_access
+from kite.checks import check_monitor_secrets
+from kite.checks import check_network_firewall_logging_enabled
+from kite.checks import check_no_access_keys
+from kite.checks import check_no_full_access_to_sensitive_services
+from kite.checks import check_no_full_admin_policies
+from kite.checks import check_no_human_access_to_unencrypted_key_material
+from kite.checks import check_no_iam_user_access
+from kite.checks import check_no_key_pairs
+from kite.checks import check_no_permissive_role_assumption
+from kite.checks import check_no_policy_allows_privilege_escalation
+from kite.checks import check_no_rdp_or_ssh_access
+from kite.checks import check_no_readonly_third_party_access
+from kite.checks import check_no_root_access_keys
+from kite.checks import check_no_secrets_in_aws_resources
+from kite.checks import check_organizational_cloudtrail
+from kite.checks import check_ou_structure
+from kite.checks import check_perform_dast
+from kite.checks import check_perform_regular_pen_testing
+from kite.checks import check_perform_sast
+from kite.checks import check_pipelines_use_least_privilege
+from kite.checks import check_pre_deploy_tools
+from kite.checks import check_prevent_and_detect_secrets
+from kite.checks import check_protect_root_ca
+from kite.checks import check_rds_logging_enabled
+from kite.checks import check_region_deny_scp
+from kite.checks import check_regularly_review_permissions
+from kite.checks import check_remediate_vulnerabilities
+from kite.checks import check_repeatable_auditable_setup_for_3rd_party_access
+from kite.checks import check_require_mfa
+from kite.checks import check_resolver_query_logs_enabled
+from kite.checks import check_restore_testing
+from kite.checks import check_restricted_role_for_secrets_access
+from kite.checks import check_review_pipeline_permissions_regularly
+from kite.checks import check_root_access_keys_disallowed
+from kite.checks import check_root_access_testing
+from kite.checks import check_root_account_monitoring
+from kite.checks import check_root_actions_disallowed
+from kite.checks import check_root_credentials_management_enabled
+from kite.checks import check_root_credentials_security
+from kite.checks import check_root_mfa_enabled
+from kite.checks import check_root_user_usage
+from kite.checks import check_rotate_encryption_keys
+from kite.checks import check_run_simulations
+from kite.checks import check_s3_bucket_acl_disabled
+from kite.checks import check_s3_confused_deputy_protection
+from kite.checks import check_scan_for_sensitive_data_in_dev
+from kite.checks import check_scan_workloads_for_vulnerabilities
+from kite.checks import check_scim_protocol_used
+from kite.checks import check_scp_prevents_adding_internet_access_to_vpc
+from kite.checks import check_scp_prevents_cloudwatch_changes
+from kite.checks import check_scp_prevents_common_admin_role_changes
+from kite.checks import check_scp_prevents_config_changes
+from kite.checks import check_scp_prevents_deleting_logs
+from kite.checks import check_scp_prevents_guardduty_changes
+from kite.checks import check_scp_prevents_leaving_org
+from kite.checks import check_scp_prevents_ram_external_sharing
+from kite.checks import check_scp_prevents_ram_invitations
+from kite.checks import check_scp_prevents_unencrypted_s3_uploads
+from kite.checks import check_secure_secrets_storage
+from kite.checks import check_security_data_published_to_log_archive_account
+from kite.checks import check_security_event_correlation
+from kite.checks import check_security_guardians_program
+from kite.checks import check_security_ir_playbooks
+from kite.checks import check_security_risks
+from kite.checks import check_security_services_evaluation
+from kite.checks import check_service_catalog
+from kite.checks import check_sns_confused_deputy_protection
+from kite.checks import check_sns_data_protection_policies
+from kite.checks import check_sqs_confused_deputy_protection
+from kite.checks import check_tag_data_with_sensitivity_level
+from kite.checks import check_tech_inventories_scanned
+from kite.checks import check_threat_intelligence_monitoring
+from kite.checks import check_threat_model_pipelines
+from kite.checks import check_threat_modeling
+from kite.checks import check_tokenization_and_anonymization
+from kite.checks import check_train_for_application_security
+from kite.checks import check_trusted_delegated_admins
+from kite.checks import check_use_a_kms
+from kite.checks import check_use_centralized_artifact_repos
+from kite.checks import check_use_centralized_idp
+from kite.checks import check_use_customer_managed_keys
+from kite.checks import check_use_hardened_images
+from kite.checks import check_use_identity_broker
+from kite.checks import check_use_of_higher_level_services
+from kite.checks import check_use_private_link_for_vpc_routing
+from kite.checks import check_use_route53resolver_dns_firewall
+from kite.checks import check_use_service_encryption_at_rest
+from kite.checks import check_validate_software_integrity
+from kite.checks import check_vpc_endpoints_enforce_data_perimeter
+from kite.checks import check_vpc_flow_logs_enabled
+from kite.checks import check_waf_web_acl_logging_enabled
+from kite.checks import check_well_defined_control_objectives
+from kite.checks import check_workload_dependency_updates
+from kite.checks import vulnerability_scanning_in_cicd_pipelines
 
 # Define check themes and their associated checks
 CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {

@@ -1,10 +1,9 @@
 """SCP prevents CloudWatch changes check module."""
 
 import json
-from typing import Dict, Any, List, Tuple
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "scp-prevents-cloudwatch-changes"
 CHECK_NAME = "SCP Prevents CloudWatch Changes"
@@ -48,7 +47,7 @@ def check_scp_prevents_cloudwatch_changes() -> dict:
         }
 
     # Check all OUs for CloudWatch deny SCPs
-    def check_ou_for_cloudwatch_deny(ou) -> List[Tuple[str, Dict[str, str]]]:
+    def check_ou_for_cloudwatch_deny(ou) -> list[tuple[str, dict[str, str]]]:
         matching_scps = []
         for scp in ou.scps:
             try:
@@ -69,7 +68,7 @@ def check_scp_prevents_cloudwatch_changes() -> dict:
         return matching_scps
 
     # Check all OUs recursively
-    def check_ous_recursively(ou) -> List[Tuple[str, Dict[str, str]]]:
+    def check_ous_recursively(ou) -> list[tuple[str, dict[str, str]]]:
         matching_scps = []
 
         # Check current OU
@@ -98,8 +97,7 @@ def check_scp_prevents_cloudwatch_changes() -> dict:
             "status": "PASS",
             "details": {
                 "message": (
-                    "Found SCPs preventing CloudWatch changes in the following "
-                    "OUs: "
+                    "Found SCPs preventing CloudWatch changes in the following OUs: "
                 )
                 + ", ".join(scps_by_ou.keys()),
                 "scps_by_ou": scps_by_ou,
@@ -119,7 +117,7 @@ def check_scp_prevents_cloudwatch_changes() -> dict:
     }
 
 
-def _is_cloudwatch_deny_scp(content: Dict[str, Any]) -> bool:
+def _is_cloudwatch_deny_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively denies CloudWatch changes.
 

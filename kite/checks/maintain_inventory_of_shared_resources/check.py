@@ -1,15 +1,14 @@
 """Check for maintaining an inventory of shared resources."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "maintain-inventory-of-shared-resources"
 CHECK_NAME = "Maintain Inventory of Shared Resources"
 
 
-def check_maintain_inventory_of_shared_resources() -> Dict[str, Any]:
+def check_maintain_inventory_of_shared_resources() -> dict[str, Any]:
     """
     Check if an inventory of shared resources is maintained.
 

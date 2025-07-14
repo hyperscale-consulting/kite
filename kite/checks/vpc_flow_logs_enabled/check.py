@@ -1,17 +1,17 @@
 """Check for VPC flow logs being enabled."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.data import get_vpcs, get_flow_logs
-from kite.helpers import get_account_ids_in_scope
 from kite.config import Config
-
+from kite.data import get_flow_logs
+from kite.data import get_vpcs
+from kite.helpers import get_account_ids_in_scope
 
 CHECK_ID = "vpc-flow-logs-enabled"
 CHECK_NAME = "VPC Flow Logs Enabled"
 
 
-def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
+def check_vpc_flow_logs_enabled() -> dict[str, Any]:
     """
     Check if all VPCs have flow logs enabled.
 
@@ -29,7 +29,7 @@ def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
                 - failing_resources: List of VPCs that don't have flow logs enabled
     """
     config = Config.get()
-    failing_vpcs: List[Dict[str, str]] = []
+    failing_vpcs: list[dict[str, str]] = []
 
     # Get all in-scope accounts
     accounts = get_account_ids_in_scope()
@@ -43,7 +43,8 @@ def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
 
             # Create a set of VPC IDs that have flow logs enabled
             vpcs_with_flow_logs = {
-                log["ResourceId"] for log in flow_logs
+                log["ResourceId"]
+                for log in flow_logs
                 if log.get("ResourceId") and log.get("FlowLogStatus") == "ACTIVE"
             }
 
@@ -54,21 +55,21 @@ def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
                     continue
 
                 if vpc_id not in vpcs_with_flow_logs:
-                    failing_vpcs.append({
-                        "id": vpc_id,
-                        "account": account,
-                        "region": region,
-                        "reason": "No active flow logs found"
-                    })
+                    failing_vpcs.append(
+                        {
+                            "id": vpc_id,
+                            "account": account,
+                            "region": region,
+                            "reason": "No active flow logs found",
+                        }
+                    )
 
     if not failing_vpcs:
         return {
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
             "status": "PASS",
-            "details": {
-                "message": "All VPCs have flow logs enabled"
-            }
+            "details": {"message": "All VPCs have flow logs enabled"},
         }
 
     return {
@@ -76,11 +77,9 @@ def check_vpc_flow_logs_enabled() -> Dict[str, Any]:
         "check_name": CHECK_NAME,
         "status": "FAIL",
         "details": {
-            "message": (
-                f"Found {len(failing_vpcs)} VPC(s) without flow logs enabled"
-            ),
-            "failing_resources": failing_vpcs
-        }
+            "message": (f"Found {len(failing_vpcs)} VPC(s) without flow logs enabled"),
+            "failing_resources": failing_vpcs,
+        },
     }
 
 

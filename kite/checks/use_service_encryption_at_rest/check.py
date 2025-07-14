@@ -1,15 +1,14 @@
 """Check for service encryption at rest."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.helpers import get_prowler_output
-
 
 CHECK_ID = "use-service-encryption-at-rest"
 CHECK_NAME = "Use Service Encryption at Rest"
 
 
-def check_use_service_encryption_at_rest() -> Dict[str, Any]:
+def check_use_service_encryption_at_rest() -> dict[str, Any]:
     """
     Check if all services have encryption at rest enabled.
 
@@ -54,7 +53,7 @@ def check_use_service_encryption_at_rest() -> Dict[str, Any]:
     ]
 
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Check results for each check ID
     for check_id in check_ids:

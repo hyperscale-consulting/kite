@@ -1,15 +1,14 @@
 """Check for policy-as-code enforcement of data protection at rest."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "enforce-data-protection-at-rest-with-policy-as-code"
 CHECK_NAME = "Enforce Data Protection at Rest with Policy as Code"
 
 
-def check_enforce_data_protection_at_rest_with_policy_as_code() -> Dict[str, Any]:
+def check_enforce_data_protection_at_rest_with_policy_as_code() -> dict[str, Any]:
     """
     Check if policy-as-code evaluation tools are used to enforce data protection at rest.
 

@@ -1,9 +1,9 @@
 """Check for absence of secrets in AWS resources."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.helpers import get_prowler_output, manual_check
-
+from kite.helpers import get_prowler_output
+from kite.helpers import manual_check
 
 CHECK_ID = "no-secrets-in-aws-resources"
 CHECK_NAME = "No Secrets in AWS Resources"
@@ -21,7 +21,7 @@ SECRETS_CHECKS = [
 ]
 
 
-def check_no_secrets_in_aws_resources() -> Dict[str, Any]:
+def check_no_secrets_in_aws_resources() -> dict[str, Any]:
     """
     Check if any AWS resources contain secrets.
 
@@ -52,7 +52,7 @@ def check_no_secrets_in_aws_resources() -> Dict[str, Any]:
         prowler_results = get_prowler_output()
 
         # Track failed checks
-        failed_checks: List[Dict[str, Any]] = []
+        failed_checks: list[dict[str, Any]] = []
 
         # Check each secrets-related prowler check
         for check_id in SECRETS_CHECKS:
@@ -63,31 +63,35 @@ def check_no_secrets_in_aws_resources() -> Dict[str, Any]:
                     if result.status == "FAIL":
                         # Find or create account entry
                         account_entry = next(
-                            (acc for acc in failed_accounts
-                             if acc["account_id"] == result.account_id),
-                            None
+                            (
+                                acc
+                                for acc in failed_accounts
+                                if acc["account_id"] == result.account_id
+                            ),
+                            None,
                         )
                         if not account_entry:
                             account_entry = {
                                 "account_id": result.account_id,
-                                "resources": []
+                                "resources": [],
                             }
                             failed_accounts.append(account_entry)
 
                         # Add resource details
-                        account_entry["resources"].append({
-                            "resource_uid": result.resource_uid,
-                            "resource_name": result.resource_name,
-                            "resource_details": result.resource_details,
-                            "region": result.region,
-                            "extended_status": result.extended_status
-                        })
+                        account_entry["resources"].append(
+                            {
+                                "resource_uid": result.resource_uid,
+                                "resource_name": result.resource_name,
+                                "resource_details": result.resource_details,
+                                "region": result.region,
+                                "extended_status": result.extended_status,
+                            }
+                        )
 
                 if failed_accounts:
-                    failed_checks.append({
-                        "check_id": check_id,
-                        "accounts": failed_accounts
-                    })
+                    failed_checks.append(
+                        {"check_id": check_id, "accounts": failed_accounts}
+                    )
 
         # If no failures found, return PASS
         if not failed_checks:
@@ -109,7 +113,9 @@ def check_no_secrets_in_aws_resources() -> Dict[str, Any]:
             for account in check["accounts"]:
                 findings_message += f"  Account: {account['account_id']}\n"
                 for resource in account["resources"]:
-                    resource_name = resource['resource_name'] or resource['resource_uid']
+                    resource_name = (
+                        resource["resource_name"] or resource["resource_uid"]
+                    )
                     findings_message += f"    Resource: {resource_name}\n"
                     findings_message += f"    Region: {resource['region']}\n"
                     findings_message += f"    Details: {resource['resource_details']}\n"

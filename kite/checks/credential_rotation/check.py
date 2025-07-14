@@ -1,18 +1,15 @@
 """Check for credential rotation."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.helpers import (
-    get_prowler_output,
-    manual_check,
-)
-
+from kite.helpers import get_prowler_output
+from kite.helpers import manual_check
 
 CHECK_ID = "credential-rotation"
 CHECK_NAME = "Credential Rotation"
 
 
-def check_credential_rotation() -> Dict[str, Any]:
+def check_credential_rotation() -> dict[str, Any]:
     """
     Check if long-term credentials are rotated regularly.
 

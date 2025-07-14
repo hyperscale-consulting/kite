@@ -1,19 +1,15 @@
 """Module for interacting with AWS Organizations."""
 
-from typing import List, Optional, Dict
-
-from kite.models import (
-    Organization,
-    Account,
-    ControlPolicy,
-    OrganizationalUnit,
-    DelegatedAdmin,
-)
+from kite.models import Account
+from kite.models import ControlPolicy
+from kite.models import DelegatedAdmin
+from kite.models import Organization
+from kite.models import OrganizationalUnit
 
 
 def fetch_policies_for_target(
     orgs_client, target_id: str
-) -> Dict[str, List[ControlPolicy]]:
+) -> dict[str, list[ControlPolicy]]:
     """
     Fetch all SCPs and RCPs attached to a target (account or OU).
 
@@ -59,7 +55,7 @@ def fetch_policies_for_target(
     return policies
 
 
-def fetch_organization(session) -> Optional[Organization]:
+def fetch_organization(session) -> Organization | None:
     """
     Describe the AWS organization structure.
 
@@ -201,7 +197,7 @@ def build_ou_structure(orgs_client, ou_id):
     )
 
 
-def fetch_delegated_admins(session) -> Dict[str, List[DelegatedAdmin]]:
+def fetch_delegated_admins(session) -> dict[str, list[DelegatedAdmin]]:
     """
     Fetch all delegated administrators for the organization.
 
@@ -270,7 +266,7 @@ def fetch_delegated_admins(session) -> Dict[str, List[DelegatedAdmin]]:
         raise
 
 
-def get_account_details(session, account_id: str) -> Optional[Account]:
+def get_account_details(session, account_id: str) -> Account | None:
     """
     Fetch details for a specific account in the organization.
 
@@ -312,7 +308,7 @@ def get_account_details(session, account_id: str) -> Optional[Account]:
         raise
 
 
-def fetch_account_ids(session) -> List[str]:
+def fetch_account_ids(session) -> list[str]:
     """
     Fetch all account IDs in the organization.
 

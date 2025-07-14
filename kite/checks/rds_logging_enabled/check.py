@@ -1,15 +1,14 @@
 """Check for enabled RDS logging."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.helpers import get_prowler_output
-
 
 CHECK_ID = "rds-logging-enabled"
 CHECK_NAME = "RDS Logging Enabled"
 
 
-def check_rds_logging_enabled() -> Dict[str, Any]:
+def check_rds_logging_enabled() -> dict[str, Any]:
     """
     Check if RDS logging is enabled.
 
@@ -33,7 +32,7 @@ def check_rds_logging_enabled() -> Dict[str, Any]:
     check_id = "rds_instance_integration_cloudwatch_logs"
 
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Check results for the check ID
     if check_id in prowler_results:
@@ -43,14 +42,16 @@ def check_rds_logging_enabled() -> Dict[str, Any]:
         # Add failing resources to the list
         for result in results:
             if result.status != "PASS":
-                failing_resources.append({
-                    "account_id": result.account_id,
-                    "resource_uid": result.resource_uid,
-                    "resource_name": result.resource_name,
-                    "resource_details": result.resource_details,
-                    "region": result.region,
-                    "status": result.status
-                })
+                failing_resources.append(
+                    {
+                        "account_id": result.account_id,
+                        "resource_uid": result.resource_uid,
+                        "resource_name": result.resource_name,
+                        "resource_details": result.resource_details,
+                        "region": result.region,
+                        "status": result.status,
+                    }
+                )
 
     # Determine if the check passed
     passed = len(failing_resources) == 0

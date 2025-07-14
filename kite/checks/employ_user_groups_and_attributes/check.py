@@ -1,17 +1,14 @@
 """Check for use of user groups and attributes."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.helpers import (
-    manual_check,
-)
-
+from kite.helpers import manual_check
 
 CHECK_ID = "employ-user-groups-and-attributes"
 CHECK_NAME = "Employ User Groups and Attributes"
 
 
-def check_employ_user_groups_and_attributes() -> Dict[str, Any]:
+def check_employ_user_groups_and_attributes() -> dict[str, Any]:
     """
     Manual check to confirm if permissions are defined according to user groups and
     attributes.
@@ -43,17 +40,12 @@ def check_employ_user_groups_and_attributes() -> Dict[str, Any]:
         check_id=CHECK_ID,
         check_name=CHECK_NAME,
         message=message,
-        prompt=(
-            "Are permissions defined according to user groups and "
-            "attributes?"
-        ),
+        prompt=("Are permissions defined according to user groups and attributes?"),
         pass_message=(
-            "Permissions are defined according to user groups and "
-            "attributes"
+            "Permissions are defined according to user groups and attributes"
         ),
         fail_message=(
-            "Permissions should be defined according to user groups and "
-            "attributes"
+            "Permissions should be defined according to user groups and attributes"
         ),
         default=True,
     )

@@ -1,15 +1,14 @@
 """Check for periodic testing of root user access."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "root-access-testing"
 CHECK_NAME = "Root Access Testing"
 
 
-def check_root_access_testing() -> Dict[str, Any]:
+def check_root_access_testing() -> dict[str, Any]:
     """
     Check if root user access is periodically tested to ensure it is functioning in
     emergency situations.

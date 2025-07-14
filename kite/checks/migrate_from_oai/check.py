@@ -1,16 +1,15 @@
 """Check for legacy CloudFront Origin Access Identities."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.data import get_cloudfront_origin_access_identities
 from kite.helpers import get_account_ids_in_scope
-
 
 CHECK_ID = "migrate-from-oai"
 CHECK_NAME = "Migrate from CloudFront Origin Access Identities"
 
 
-def check_migrate_from_oai() -> Dict[str, Any]:
+def check_migrate_from_oai() -> dict[str, Any]:
     """
     Check if any accounts are using legacy CloudFront Origin Access Identities.
 
@@ -31,18 +30,15 @@ def check_migrate_from_oai() -> Dict[str, Any]:
     in_scope_accounts = get_account_ids_in_scope()
 
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Check each in-scope account for OAIs
     for account_id in in_scope_accounts:
         account_oais = get_cloudfront_origin_access_identities(account_id)
         if account_oais:
-            failing_resources.append({
-                "account_id": account_id,
-                "resource_details": {
-                    "oais": account_oais
-                }
-            })
+            failing_resources.append(
+                {"account_id": account_id, "resource_details": {"oais": account_oais}}
+            )
 
     # Determine if the check passed
     passed = len(failing_resources) == 0

@@ -1,15 +1,14 @@
 """Check for running regular security event simulations."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "run-simulations"
 CHECK_NAME = "Run Security Event Simulations"
 
 
-def check_run_simulations() -> Dict[str, Any]:
+def check_run_simulations() -> dict[str, Any]:
     """
     Check if regular simulations of real-world security event scenarios are run
     to exercise and evaluate incident response capabilities.

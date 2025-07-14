@@ -1,22 +1,20 @@
 """Check if administrator privileges are restricted to a small, trusted group."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.data import (
-    get_saml_providers,
-    get_roles,
-    get_policy_document,
-    get_customer_managed_policies,
-    get_inline_policy_document,
-)
-from kite.helpers import get_account_ids_in_scope, manual_check
-
+from kite.data import get_customer_managed_policies
+from kite.data import get_inline_policy_document
+from kite.data import get_policy_document
+from kite.data import get_roles
+from kite.data import get_saml_providers
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "admin-privileges-are-restricted"
 CHECK_NAME = "Admin Privileges Are Restricted"
 
 
-def _is_admin_policy(policy_doc: Dict[str, Any]) -> bool:
+def _is_admin_policy(policy_doc: dict[str, Any]) -> bool:
     """
     Check if a policy document grants administrator privileges.
 
@@ -36,7 +34,7 @@ def _is_admin_policy(policy_doc: Dict[str, Any]) -> bool:
     return False
 
 
-def _is_service_linked_role(role: Dict[str, Any]) -> bool:
+def _is_service_linked_role(role: dict[str, Any]) -> bool:
     """
     Check if a role is a service-linked role.
 
@@ -83,7 +81,7 @@ def _is_service_linked_role(role: Dict[str, Any]) -> bool:
     return False
 
 
-def check_admin_privileges_are_restricted() -> Dict[str, Any]:
+def check_admin_privileges_are_restricted() -> dict[str, Any]:
     """
     Check if administrator privileges are restricted to a small, trusted group.
 
@@ -106,18 +104,20 @@ def check_admin_privileges_are_restricted() -> Dict[str, Any]:
                 - admin_roles: List of roles with administrator privileges
     """
     # Track SAML providers and admin roles
-    saml_providers: List[Dict[str, Any]] = []
-    admin_roles: List[Dict[str, Any]] = []
+    saml_providers: list[dict[str, Any]] = []
+    admin_roles: list[dict[str, Any]] = []
 
     # Get SAML providers
     providers = get_saml_providers()
     if providers:
         for provider in providers:
-            saml_providers.append({
-                "arn": provider["Arn"],
-                "valid_until": provider.get("ValidUntil"),
-                "create_date": provider["CreateDate"],
-            })
+            saml_providers.append(
+                {
+                    "arn": provider["Arn"],
+                    "valid_until": provider.get("ValidUntil"),
+                    "create_date": provider["CreateDate"],
+                }
+            )
 
     # Get roles with admin privileges for each account
     for account_id in get_account_ids_in_scope():
@@ -175,12 +175,14 @@ def check_admin_privileges_are_restricted() -> Dict[str, Any]:
                         break
 
             if has_admin_access and admin_policy_info:
-                admin_roles.append({
-                    "account_id": account_id,
-                    "role_name": role["RoleName"],
-                    "role_arn": role["Arn"],
-                    **admin_policy_info,
-                })
+                admin_roles.append(
+                    {
+                        "account_id": account_id,
+                        "role_name": role["RoleName"],
+                        "role_arn": role["Arn"],
+                        **admin_policy_info,
+                    }
+                )
 
     # Build message for manual check
     message = "SAML Providers:\n\n"
@@ -194,8 +196,7 @@ def check_admin_privileges_are_restricted() -> Dict[str, Any]:
         message += "No SAML providers configured\n\n"
 
     message += (
-        "Roles with Administrator Privileges "
-        "(excluding AWS service-linked roles):\n\n"
+        "Roles with Administrator Privileges (excluding AWS service-linked roles):\n\n"
     )
     if admin_roles:
         for role in admin_roles:
@@ -209,16 +210,19 @@ def check_admin_privileges_are_restricted() -> Dict[str, Any]:
             message += "Assume Role Policy:\n"
             # Get the role's assume role policy
             role_data = next(
-                (r for r in get_roles(role['account_id'])
-                 if r['RoleName'] == role['role_name']),
-                None
+                (
+                    r
+                    for r in get_roles(role["account_id"])
+                    if r["RoleName"] == role["role_name"]
+                ),
+                None,
             )
-            if role_data and 'AssumeRolePolicyDocument' in role_data:
-                policy_doc = role_data['AssumeRolePolicyDocument']
-                for statement in policy_doc.get('Statement', []):
+            if role_data and "AssumeRolePolicyDocument" in role_data:
+                policy_doc = role_data["AssumeRolePolicyDocument"]
+                for statement in policy_doc.get("Statement", []):
                     message += f"  Effect: {statement.get('Effect', 'N/A')}\n"
                     message += "  Principal:\n"
-                    principal = statement.get('Principal', {})
+                    principal = statement.get("Principal", {})
                     if isinstance(principal, dict):
                         for key, value in principal.items():
                             if isinstance(value, list):
@@ -227,9 +231,9 @@ def check_admin_privileges_are_restricted() -> Dict[str, Any]:
                             else:
                                 message += f"    {key}: {value}\n"
                     message += f"  Action: {statement.get('Action', 'N/A')}\n"
-                    if 'Condition' in statement:
+                    if "Condition" in statement:
                         message += "  Condition:\n"
-                        for key, value in statement['Condition'].items():
+                        for key, value in statement["Condition"].items():
                             message += f"    {key}: {value}\n"
             message += "\n"
     else:

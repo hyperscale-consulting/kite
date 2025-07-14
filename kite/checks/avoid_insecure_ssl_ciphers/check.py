@@ -1,15 +1,14 @@
 """Check for secure SSL cipher usage across AWS services."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.helpers import get_prowler_output
-
 
 CHECK_ID = "avoid-insecure-ssl-ciphers"
 CHECK_NAME = "Avoid Insecure SSL Ciphers"
 
 
-def check_avoid_insecure_ssl_ciphers() -> Dict[str, Any]:
+def check_avoid_insecure_ssl_ciphers() -> dict[str, Any]:
     """
     Check if secure SSL ciphers are used across AWS services.
 
@@ -39,7 +38,7 @@ def check_avoid_insecure_ssl_ciphers() -> Dict[str, Any]:
     ]
 
     # Track failing resources by service
-    failing_resources: Dict[str, List[Dict[str, Any]]] = {}
+    failing_resources: dict[str, list[dict[str, Any]]] = {}
 
     # Check results for each check ID
     for check_id in check_ids:
@@ -62,15 +61,17 @@ def check_avoid_insecure_ssl_ciphers() -> Dict[str, Any]:
                     if service_name not in failing_resources:
                         failing_resources[service_name] = []
 
-                    failing_resources[service_name].append({
-                        "account_id": result.account_id,
-                        "resource_uid": result.resource_uid,
-                        "resource_name": result.resource_name,
-                        "resource_details": result.resource_details,
-                        "region": result.region,
-                        "status": result.status,
-                        "check_id": check_id
-                    })
+                    failing_resources[service_name].append(
+                        {
+                            "account_id": result.account_id,
+                            "resource_uid": result.resource_uid,
+                            "resource_name": result.resource_name,
+                            "resource_details": result.resource_details,
+                            "region": result.region,
+                            "status": result.status,
+                            "check_id": check_id,
+                        }
+                    )
 
     # Build the message
     message = (

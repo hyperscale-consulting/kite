@@ -2,7 +2,6 @@
 
 from kite.data import get_organization
 
-
 CHECK_ID = "aws-organizations-usage"
 CHECK_NAME = "AWS Organizations Usage"
 
@@ -36,9 +35,7 @@ def check_aws_organizations_usage() -> dict:
                 "master_account_id": org.master_account_id,
                 "arn": org.arn,
                 "feature_set": org.feature_set,
-                "message": (
-                    "AWS Organizations is being used for account management."
-                ),
+                "message": ("AWS Organizations is being used for account management."),
             },
         }
 

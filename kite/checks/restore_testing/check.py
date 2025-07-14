@@ -1,16 +1,15 @@
 """Check for restore testing of backups."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "restore-testing"
 CHECK_NAME = "Restore Testing"
 
 
 # TODO: add permissions to fetch restore testing plans and automate this check
-def check_restore_testing() -> Dict[str, Any]:
+def check_restore_testing() -> dict[str, Any]:
     """
     Check if backups are regularly tested for restore viability and duration.
 

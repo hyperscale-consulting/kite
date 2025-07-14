@@ -1,15 +1,14 @@
 """Check for use of centralized artifact repositories."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "use-centralized-artifact-repos"
 CHECK_NAME = "Use Centralized Artifact Repositories"
 
 
-def check_use_centralized_artifact_repos() -> Dict[str, Any]:
+def check_use_centralized_artifact_repos() -> dict[str, Any]:
     """
     Check if centralized artifact repositories are used to mitigate threats such as
     dependency confusion attacks.

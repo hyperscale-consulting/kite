@@ -1,28 +1,26 @@
 """Check if Route 53 Resolver DNS firewall is used to control DNS egress from VPCs."""
 
-from typing import Dict, Any, List, Tuple
+from typing import Any
 
-from kite.data import (
-    get_vpcs,
-    get_ec2_instances,
-    get_lambda_functions,
-    get_rds_instances,
-    get_elbv2_load_balancers,
-    get_eks_clusters,
-    get_ecs_clusters,
-    get_route53resolver_firewall_rule_group_associations,
-    get_route53resolver_firewall_rule_groups,
-    get_route53resolver_firewall_domain_lists,
-)
-from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
-
+from kite.data import get_ec2_instances
+from kite.data import get_ecs_clusters
+from kite.data import get_eks_clusters
+from kite.data import get_elbv2_load_balancers
+from kite.data import get_lambda_functions
+from kite.data import get_rds_instances
+from kite.data import get_route53resolver_firewall_domain_lists
+from kite.data import get_route53resolver_firewall_rule_group_associations
+from kite.data import get_route53resolver_firewall_rule_groups
+from kite.data import get_vpcs
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "use-route53resolver-dns-firewall"
 CHECK_NAME = "Use Route 53 Resolver DNS Firewall"
 
 
-def _get_vpcs_with_resources() -> Dict[str, List[str]]:
+def _get_vpcs_with_resources() -> dict[str, list[str]]:
     """Get VPCs that have resources in them, organized by account."""
     vpcs_with_resources = {}
     accounts = get_account_ids_in_scope()
@@ -98,7 +96,7 @@ def _get_vpcs_with_resources() -> Dict[str, List[str]]:
     return vpcs_with_resources
 
 
-def _get_dns_firewall_details() -> Dict[str, Dict[str, Any]]:
+def _get_dns_firewall_details() -> dict[str, dict[str, Any]]:
     """Get DNS firewall details organized by VPC ID."""
     dns_firewalls = {}
     accounts = get_account_ids_in_scope()
@@ -136,7 +134,7 @@ def _get_dns_firewall_details() -> Dict[str, Dict[str, Any]]:
                 firewall_info = {
                     "association": association,
                     "rule_group": rule_group,
-                    "rules": []
+                    "rules": [],
                 }
 
                 # Get rules for this rule group
@@ -144,10 +142,7 @@ def _get_dns_firewall_details() -> Dict[str, Dict[str, Any]]:
                     domain_list_id = rule.get("FirewallDomainListId")
                     domain_list = all_domain_lists.get(domain_list_id, {})
 
-                    rule_info = {
-                        "rule": rule,
-                        "domain_list": domain_list
-                    }
+                    rule_info = {"rule": rule, "domain_list": domain_list}
                     firewall_info["rules"].append(rule_info)
 
                 dns_firewalls[vpc_id] = firewall_info
@@ -206,9 +201,7 @@ def _analyze_dns_firewall_usage() -> str:
                         rule = rule_info["rule"]
                         domain_list = rule_info["domain_list"]
 
-                        account_analysis += (
-                            f"        - {rule.get('Name', 'Unnamed')}\n"
-                        )
+                        account_analysis += f"        - {rule.get('Name', 'Unnamed')}\n"
                         account_analysis += (
                             f"          Action: {rule.get('Action', 'Unknown')}\n"
                         )
@@ -227,9 +220,7 @@ def _analyze_dns_firewall_usage() -> str:
                                 f"          Domains: {', '.join(domains[:5])}"
                             )
                             if len(domains) > 5:
-                                account_analysis += (
-                                    f" (and {len(domains) - 5} more)"
-                                )
+                                account_analysis += f" (and {len(domains) - 5} more)"
                             account_analysis += "\n"
 
                         # Show block response for BLOCK actions
@@ -253,21 +244,19 @@ def _analyze_dns_firewall_usage() -> str:
         analysis += "\nSummary:\n"
         analysis += f"  Total VPCs with resources: {total_vpcs}\n"
         analysis += f"  VPCs with DNS firewall: {vpcs_with_firewall}\n"
-        analysis += (
-            f"  VPCs without DNS firewall: {total_vpcs - vpcs_with_firewall}\n"
-        )
+        analysis += f"  VPCs without DNS firewall: {total_vpcs - vpcs_with_firewall}\n"
 
     return analysis
 
 
-def _pre_check() -> Tuple[bool, Dict[str, Any]]:
+def _pre_check() -> tuple[bool, dict[str, Any]]:
     """Pre-check function that automatically passes if no VPCs with resources exist."""
     analysis = _analyze_dns_firewall_usage()
 
     if "No VPCs with resources found" in analysis:
         msg_parts = [
             "No VPCs with resources found.",
-            "This check passes automatically as there are no VPCs to evaluate."
+            "This check passes automatically as there are no VPCs to evaluate.",
         ]
         msg = " ".join(msg_parts)
         result = {}
@@ -282,7 +271,7 @@ def _pre_check() -> Tuple[bool, Dict[str, Any]]:
     return True, {}
 
 
-def check_use_route53resolver_dns_firewall() -> Dict[str, Any]:
+def check_use_route53resolver_dns_firewall() -> dict[str, Any]:
     """Check if Route 53 Resolver DNS firewall is used to control DNS egress from VPCs."""
     analysis = _analyze_dns_firewall_usage()
 
@@ -302,8 +291,7 @@ def check_use_route53resolver_dns_firewall() -> Dict[str, Any]:
         check_name=CHECK_NAME,
         message=message,
         prompt=(
-            "Do you use Route 53 Resolver DNS firewall to control DNS egress from "
-            "VPCs?"
+            "Do you use Route 53 Resolver DNS firewall to control DNS egress from VPCs?"
         ),
         pass_message=(
             "Route 53 Resolver DNS firewall is used to control DNS egress from VPCs."

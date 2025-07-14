@@ -1,10 +1,9 @@
 """SCP prevents RAM resource share invitations check module."""
 
 import json
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "scp-prevents-ram-invitations"
 CHECK_NAME = "SCP Prevents RAM Resource Share Invitations"
@@ -148,7 +147,7 @@ def check_scp_prevents_ram_invitations() -> dict:
     }
 
 
-def _is_ram_invitation_deny_scp(content: Dict[str, Any]) -> bool:
+def _is_ram_invitation_deny_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively denies RAM resource share invitations.
 

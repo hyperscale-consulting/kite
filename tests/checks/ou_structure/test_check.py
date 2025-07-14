@@ -1,6 +1,7 @@
 """Tests for the OU Structure check."""
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 from kite.checks.ou_structure.check import check_ou_structure
 

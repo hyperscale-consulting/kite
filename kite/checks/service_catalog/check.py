@@ -1,15 +1,14 @@
 """Check for use of Service Catalog or similar for approved service configurations."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "service-catalog"
 CHECK_NAME = "Service Catalog"
 
 
-def check_service_catalog() -> Dict[str, Any]:
+def check_service_catalog() -> dict[str, Any]:
     """
     Check if Service Catalog or similar is used to allow teams to deploy approved
     service configurations.

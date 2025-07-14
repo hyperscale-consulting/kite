@@ -1,11 +1,11 @@
 """Check if AWS Private Link is used for VPC routing instead of VPC peering."""
 
-from typing import Dict, Any, Tuple
+from typing import Any
 
-from kite.data import get_vpc_peering_connections
-from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
-
+from kite.data import get_vpc_peering_connections
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "use-private-link-for-vpc-routing"
 CHECK_NAME = "Use Private Link for VPC Routing"
@@ -34,17 +34,17 @@ def _analyze_vpc_peering_connections() -> str:
                 for connection in peering_connections:
                     connection_id = connection.get("VpcPeeringConnectionId", "Unknown")
                     status = connection.get("Status", {}).get("Code", "Unknown")
-                    requester_vpc = (
-                        connection.get("RequesterVpcInfo", {}).get("VpcId", "Unknown")
+                    requester_vpc = connection.get("RequesterVpcInfo", {}).get(
+                        "VpcId", "Unknown"
                     )
-                    accepter_vpc = (
-                        connection.get("AccepterVpcInfo", {}).get("VpcId", "Unknown")
+                    accepter_vpc = connection.get("AccepterVpcInfo", {}).get(
+                        "VpcId", "Unknown"
                     )
-                    requester_owner = (
-                        connection.get("RequesterVpcInfo", {}).get("OwnerId", "Unknown")
+                    requester_owner = connection.get("RequesterVpcInfo", {}).get(
+                        "OwnerId", "Unknown"
                     )
-                    accepter_owner = (
-                        connection.get("AccepterVpcInfo", {}).get("OwnerId", "Unknown")
+                    accepter_owner = connection.get("AccepterVpcInfo", {}).get(
+                        "OwnerId", "Unknown"
                     )
 
                     account_analysis += f"    VPC Peering Connection: {connection_id}\n"
@@ -77,7 +77,7 @@ def _analyze_vpc_peering_connections() -> str:
     return analysis
 
 
-def _pre_check() -> Tuple[bool, Dict[str, Any]]:
+def _pre_check() -> tuple[bool, dict[str, Any]]:
     """Pre-check function that automatically passes if no VPC peering connections exist."""
     peering_analysis = _analyze_vpc_peering_connections()
 
@@ -85,7 +85,7 @@ def _pre_check() -> Tuple[bool, Dict[str, Any]]:
         msg_parts = [
             "No VPC peering connections found.",
             "This check passes automatically as there are no VPC peering",
-            "connections to evaluate."
+            "connections to evaluate.",
         ]
         msg = " ".join(msg_parts)
         result = {}
@@ -100,7 +100,7 @@ def _pre_check() -> Tuple[bool, Dict[str, Any]]:
     return True, {}
 
 
-def check_use_private_link_for_vpc_routing() -> Dict[str, Any]:
+def check_use_private_link_for_vpc_routing() -> dict[str, Any]:
     """Check if AWS Private Link is used for VPC routing instead of VPC peering."""
     peering_analysis = _analyze_vpc_peering_connections()
 

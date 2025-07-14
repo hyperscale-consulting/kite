@@ -1,19 +1,16 @@
 """Check for EKS control plane logging configuration."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.data import (
-    get_eks_clusters,
-)
-from kite.helpers import get_account_ids_in_scope
 from kite.config import Config
-
+from kite.data import get_eks_clusters
+from kite.helpers import get_account_ids_in_scope
 
 CHECK_ID = "eks-control-plane-logging-enabled"
 CHECK_NAME = "EKS Control Plane Logging Enabled"
 
 
-def check_eks_control_plane_logging_enabled() -> Dict[str, Any]:
+def check_eks_control_plane_logging_enabled() -> dict[str, Any]:
     """
     Check if logging is enabled for all EKS clusters with all required log types.
 
@@ -74,8 +71,7 @@ def check_eks_control_plane_logging_enabled() -> Dict[str, Any]:
                         enabled_types.update(log_config.get("types", []))
 
                 cluster_info = (
-                    f"Cluster: {cluster_name} "
-                    f"(Account: {account}, Region: {region})"
+                    f"Cluster: {cluster_name} (Account: {account}, Region: {region})"
                 )
 
                 if not enabled:
@@ -98,7 +94,9 @@ def check_eks_control_plane_logging_enabled() -> Dict[str, Any]:
     if clusters_without_logging:
         message += (
             "The following clusters do not have logging enabled:\n"
-            + "\n".join(f"  - {cluster}" for cluster in sorted(clusters_without_logging))
+            + "\n".join(
+                f"  - {cluster}" for cluster in sorted(clusters_without_logging)
+            )
             + "\n\n"
         )
 
@@ -106,7 +104,9 @@ def check_eks_control_plane_logging_enabled() -> Dict[str, Any]:
         message += (
             "The following clusters have logging enabled but are missing "
             "required log types:\n"
-            + "\n".join(f"  - {cluster}" for cluster in sorted(clusters_with_incomplete_logging))
+            + "\n".join(
+                f"  - {cluster}" for cluster in sorted(clusters_with_incomplete_logging)
+            )
             + "\n\n"
         )
 
@@ -118,7 +118,11 @@ def check_eks_control_plane_logging_enabled() -> Dict[str, Any]:
             + "\n\n"
         )
 
-    if not clusters_without_logging and not clusters_with_incomplete_logging and not clusters_with_logging:
+    if (
+        not clusters_without_logging
+        and not clusters_with_incomplete_logging
+        and not clusters_with_logging
+    ):
         message += "No EKS clusters found in any account or region.\n\n"
 
     # Determine status based on whether any clusters are missing logging or required log types

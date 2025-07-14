@@ -1,20 +1,17 @@
 """Check for data perimeter trusted resources SCP."""
 
 import json
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization
 from kite.models import ControlPolicy
 from kite.utils.aws_context_keys import has_not_resource_org_id_condition
 
-
 CHECK_ID = "data-perimeter-trusted-resources"
 CHECK_NAME = "Data Perimeter Enforces Trusted Resources"
 
 
-def _has_data_perimeter_trusted_resources(
-    policy: ControlPolicy, org_id: str
-) -> bool:
+def _has_data_perimeter_trusted_resources(policy: ControlPolicy, org_id: str) -> bool:
     """
     Check if a policy has the required data perimeter trusted resources protection.
 
@@ -51,7 +48,7 @@ def _has_data_perimeter_trusted_resources(
     return False
 
 
-def check_data_perimeter_trusted_resources() -> Dict[str, Any]:
+def check_data_perimeter_trusted_resources() -> dict[str, Any]:
     """
     Check if there is a data perimeter trusted resources SCP in place.
 
@@ -75,9 +72,7 @@ def check_data_perimeter_trusted_resources() -> Dict[str, Any]:
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
             "status": "FAIL",
-            "details": {
-                "message": "AWS Organizations is not being used"
-            }
+            "details": {"message": "AWS Organizations is not being used"},
         }
 
     # Get organization ID from the Organization model
@@ -85,8 +80,7 @@ def check_data_perimeter_trusted_resources() -> Dict[str, Any]:
 
     # Check if root OU has the required SCP
     root_has_protection = any(
-        _has_data_perimeter_trusted_resources(scp, org_id)
-        for scp in org.root.scps
+        _has_data_perimeter_trusted_resources(scp, org_id) for scp in org.root.scps
     )
 
     if root_has_protection:
@@ -96,10 +90,9 @@ def check_data_perimeter_trusted_resources() -> Dict[str, Any]:
             "status": "PASS",
             "details": {
                 "message": (
-                    "Data perimeter trusted resources SCP is attached to "
-                    "the root OU"
+                    "Data perimeter trusted resources SCP is attached to the root OU"
                 )
-            }
+            },
         }
 
     # Check if all top-level OUs have the required SCP
@@ -113,14 +106,13 @@ def check_data_perimeter_trusted_resources() -> Dict[str, Any]:
                     "Data perimeter trusted resources SCP is not attached to "
                     "the root OU and there are no top-level OUs"
                 )
-            }
+            },
         }
 
     missing_ous = []
     for ou in org.root.child_ous:
         has_protection = any(
-            _has_data_perimeter_trusted_resources(scp, org_id)
-            for scp in ou.scps
+            _has_data_perimeter_trusted_resources(scp, org_id) for scp in ou.scps
         )
         if not has_protection:
             missing_ous.append(ou.name)
@@ -135,7 +127,7 @@ def check_data_perimeter_trusted_resources() -> Dict[str, Any]:
                     "Data perimeter trusted resources SCP is attached to "
                     "all top-level OUs"
                 )
-            }
+            },
         }
 
     return {
@@ -148,7 +140,7 @@ def check_data_perimeter_trusted_resources() -> Dict[str, Any]:
                 "the root OU or all top-level OUs. Missing protection in OUs: "
                 f"{', '.join(missing_ous)}"
             )
-        }
+        },
     }
 
 

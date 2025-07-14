@@ -1,9 +1,9 @@
 """EKS service module for Kite."""
 
-from typing import List, Dict, Any
+from typing import Any
 
 
-def get_cluster_names(session, region: str) -> List[str]:
+def get_cluster_names(session, region: str) -> list[str]:
     """
     Get all EKS cluster names in a region.
     """
@@ -15,7 +15,7 @@ def get_cluster_names(session, region: str) -> List[str]:
     return clusters
 
 
-def get_clusters(session, region: str) -> List[Dict[str, Any]]:
+def get_clusters(session, region: str) -> list[dict[str, Any]]:
     """
     Get all EKS clusters in a region.
 

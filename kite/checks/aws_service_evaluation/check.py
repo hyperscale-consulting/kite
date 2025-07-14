@@ -1,15 +1,14 @@
 """Check for evaluation of new AWS services."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "aws-service-evaluation"
 CHECK_NAME = "AWS Service Evaluation"
 
 
-def check_aws_service_evaluation() -> Dict[str, Any]:
+def check_aws_service_evaluation() -> dict[str, Any]:
     """
     Check if teams keep up to date with the launch of new AWS services and evaluate
     their potential for use.

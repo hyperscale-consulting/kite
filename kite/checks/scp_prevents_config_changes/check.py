@@ -1,10 +1,9 @@
 """SCP prevents AWS Config changes check module."""
 
 import json
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "scp-prevents-config-changes"
 CHECK_NAME = "SCP Prevents AWS Config Changes"
@@ -139,15 +138,14 @@ def check_scp_prevents_config_changes() -> dict:
         "status": "PASS",
         "details": {
             "message": (
-                "SCP preventing AWS Config changes is attached to all "
-                "top-level OUs."
+                "SCP preventing AWS Config changes is attached to all top-level OUs."
             ),
             "scps_by_ou": ous_with_config_deny,
         },
     }
 
 
-def _is_config_deny_scp(content: Dict[str, Any]) -> bool:
+def _is_config_deny_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively denies AWS Config changes.
 

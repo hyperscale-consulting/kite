@@ -1,15 +1,14 @@
 """Check for approval process for resource sharing."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "approval-process-for-resource-sharing"
 CHECK_NAME = "Approval Process for Resource Sharing"
 
 
-def check_approval_process_for_resource_sharing() -> Dict[str, Any]:
+def check_approval_process_for_resource_sharing() -> dict[str, Any]:
     """
     Check if there is an approval process for resource sharing.
 

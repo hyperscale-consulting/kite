@@ -1,15 +1,14 @@
 """Check for guardrails to detect and alert on misconfigurations in templates."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "iac-guardrails"
 CHECK_NAME = "IaC Guardrails"
 
 
-def check_iac_guardrails() -> Dict[str, Any]:
+def check_iac_guardrails() -> dict[str, Any]:
     """
     Check if guardrails are in place to detect and alert on misconfigurations in
     templates before deployment.

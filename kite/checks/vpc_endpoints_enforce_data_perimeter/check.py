@@ -1,24 +1,20 @@
 """Check for VPC endpoint policies enforcing data perimeter controls."""
 
 import json
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.data import get_organization, get_vpc_endpoints
-from kite.helpers import get_account_ids_in_scope
 from kite.config import Config
-from kite.utils.aws_context_keys import (
-    has_principal_org_id_condition,
-    has_resource_org_id_condition
-)
-
+from kite.data import get_organization
+from kite.data import get_vpc_endpoints
+from kite.helpers import get_account_ids_in_scope
+from kite.utils.aws_context_keys import has_principal_org_id_condition
+from kite.utils.aws_context_keys import has_resource_org_id_condition
 
 CHECK_ID = "vpc-endpoints-enforce-data-perimeter"
 CHECK_NAME = "VPC Endpoints Enforce Data Perimeter Controls"
 
 
-def _has_required_org_conditions(
-    policy_doc: Dict[str, Any], org_id: str
-) -> bool:
+def _has_required_org_conditions(policy_doc: dict[str, Any], org_id: str) -> bool:
     """
     Check if a policy has the required organization conditions.
 
@@ -43,14 +39,15 @@ def _has_required_org_conditions(
         if not isinstance(conditions, dict):
             continue
 
-        if has_principal_org_id_condition(conditions, org_id) and \
-                has_resource_org_id_condition(conditions, org_id):
+        if has_principal_org_id_condition(
+            conditions, org_id
+        ) and has_resource_org_id_condition(conditions, org_id):
             return True
 
     return False
 
 
-def check_vpc_endpoints_enforce_data_perimeter() -> Dict[str, Any]:
+def check_vpc_endpoints_enforce_data_perimeter() -> dict[str, Any]:
     """
     Check if all VPC endpoints have the required endpoint policies for data
     perimeter controls.
@@ -76,9 +73,7 @@ def check_vpc_endpoints_enforce_data_perimeter() -> Dict[str, Any]:
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
             "status": "FAIL",
-            "details": {
-                "message": "AWS Organizations is not being used"
-            }
+            "details": {"message": "AWS Organizations is not being used"},
         }
 
     # Get organization ID from the Organization model
@@ -88,7 +83,7 @@ def check_vpc_endpoints_enforce_data_perimeter() -> Dict[str, Any]:
     accounts = get_account_ids_in_scope()
 
     config = Config.get()
-    failing_endpoints: List[Dict[str, str]] = []
+    failing_endpoints: list[dict[str, str]] = []
     for account in accounts:
         # Get VPC endpoints for each account in each region
         for region in config.active_regions:
@@ -97,35 +92,41 @@ def check_vpc_endpoints_enforce_data_perimeter() -> Dict[str, Any]:
                 continue
 
             for endpoint in vpc_endpoints:
-                if 'PolicyDocument' not in endpoint:
-                    failing_endpoints.append({
-                        "id": endpoint['VpcEndpointId'],
-                        "account": account,
-                        "region": region,
-                        "reason": "No endpoint policy found"
-                    })
+                if "PolicyDocument" not in endpoint:
+                    failing_endpoints.append(
+                        {
+                            "id": endpoint["VpcEndpointId"],
+                            "account": account,
+                            "region": region,
+                            "reason": "No endpoint policy found",
+                        }
+                    )
                     continue
 
                 try:
-                    policy_doc = json.loads(endpoint['PolicyDocument'])
+                    policy_doc = json.loads(endpoint["PolicyDocument"])
                 except json.JSONDecodeError:
-                    failing_endpoints.append({
-                        "id": endpoint['VpcEndpointId'],
-                        "account": account,
-                        "region": region,
-                        "reason": "Invalid policy document"
-                    })
+                    failing_endpoints.append(
+                        {
+                            "id": endpoint["VpcEndpointId"],
+                            "account": account,
+                            "region": region,
+                            "reason": "Invalid policy document",
+                        }
+                    )
                     continue
 
                 has_org_conditions = _has_required_org_conditions(policy_doc, org_id)
 
                 if not has_org_conditions:
-                    failing_endpoints.append({
-                        "id": endpoint['VpcEndpointId'],
-                        "account": account,
-                        "region": region,
-                        "reason": "Missing required organization conditions"
-                    })
+                    failing_endpoints.append(
+                        {
+                            "id": endpoint["VpcEndpointId"],
+                            "account": account,
+                            "region": region,
+                            "reason": "Missing required organization conditions",
+                        }
+                    )
 
     if not failing_endpoints:
         return {
@@ -134,7 +135,7 @@ def check_vpc_endpoints_enforce_data_perimeter() -> Dict[str, Any]:
             "status": "PASS",
             "details": {
                 "message": "All VPC endpoints have the required endpoint policies"
-            }
+            },
         }
 
     return {
@@ -142,11 +143,9 @@ def check_vpc_endpoints_enforce_data_perimeter() -> Dict[str, Any]:
         "check_name": CHECK_NAME,
         "status": "FAIL",
         "details": {
-            "message": (
-                "Some VPC endpoints are missing required endpoint policies"
-            ),
-            "failing_resources": failing_endpoints
-        }
+            "message": ("Some VPC endpoints are missing required endpoint policies"),
+            "failing_resources": failing_endpoints,
+        },
     }
 
 

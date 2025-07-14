@@ -1,15 +1,14 @@
 """Check for detection of missing automated lifecycle management."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "detect-missing-automated-lifecycle-management"
 CHECK_NAME = "Detect Missing Automated Lifecycle Management"
 
 
-def check_detect_missing_automated_lifecycle_management() -> Dict[str, Any]:
+def check_detect_missing_automated_lifecycle_management() -> dict[str, Any]:
     """
     Check if there are config rules in place that detect and alert when automated
     lifecycle management is not turned on when it should be.

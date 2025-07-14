@@ -1,135 +1,130 @@
 """Data collection module for Kite."""
 
 import concurrent.futures
+
 import botocore
 from rich.console import Console
-from dataclasses import asdict
-from . import (
-    organizations,
-    ec2,
-    ecs,
-    eks,
-    lambda_,
-    rds,
-    dynamodb,
-    redshift,
-    sagemaker,
-    sns,
-    sqs,
-    s3,
-    kms,
-    cloudfront,
-    iam,
-    identity_center,
-    identity_store,
-    cognito,
-    secretsmanager,
-    accessanalyzer,
-    configservice,
-    cloudtrail,
-    route53resolver,
-    logs,
-    wafv2,
-    elbv2,
-    detective,
-    securityhub,
-    guardduty,
-    backup,
-    acm,
-    acm_pca,
-    inspector2,
-    ssm,
-    efs,
-    apigateway,
-    appsync,
-    networkfirewall,
-)
-from kite.helpers import (
-    assume_organizational_role,
-    get_account_ids_in_scope,
-    assume_role,
-)
-from kite.data import (
-    save_organization,
-    save_delegated_admins,
-    save_mgmt_account_workload_resources,
-    save_organization_features,
-    save_credentials_report,
-    save_account_summary,
-    save_saml_providers,
-    save_oidc_providers,
-    save_identity_center_instances,
-    save_ec2_instances,
-    save_virtual_mfa_devices,
-    save_password_policy,
-    save_cognito_user_pools,
-    save_cognito_user_pool,
-    save_key_pairs,
-    save_secrets,
-    save_roles,
-    save_inline_policy_document,
-    save_customer_managed_policies,
-    save_policy_document,
-    save_bucket_metadata,
-    save_sns_topics,
-    save_sqs_queues,
-    save_lambda_functions,
-    save_kms_keys,
-    # save_identity_center_permission_sets,
-    save_identity_store_users,
-    save_identity_store_groups,
-    save_access_analyzers,
-    save_iam_users,
-    save_iam_groups,
-    save_config_rules,
-    save_cloudfront_origin_access_identities,
-    save_vpc_endpoints,
-    save_cloudtrail_trails,
-    save_flow_logs,
-    save_vpcs,
-    save_route53resolver_query_log_configs,
-    save_route53resolver_query_log_config_associations,
-    save_log_groups,
-    save_export_tasks,
-    save_wafv2_web_acls,
-    save_wafv2_logging_configurations,
-    save_elbv2_load_balancers,
-    save_eks_clusters,
-    save_config_recorders,
-    save_config_delivery_channels,
-    save_detective_graphs,
-    save_securityhub_action_targets,
-    save_securityhub_automation_rules,
-    save_dynamodb_tables,
-    save_custom_key_stores,
-    save_config_compliance_by_rule,
-    save_guardduty_detectors,
-    save_backup_vaults,
-    save_backup_protected_resources,
-    save_acm_certificates,
-    save_acm_pca_certificate_authorities,
-    save_inspector2_configuration,
-    save_inspector2_coverage,
-    save_maintenance_windows,
-    save_ecs_clusters,
-    save_rds_instances,
-    save_subnets,
-    save_efs_file_systems,
-    save_rtbs,
-    save_nacls,
-    save_security_groups,
-    save_vpc_peering_connections,
-    save_route53resolver_firewall_rule_groups,
-    save_route53resolver_firewall_rule_group_associations,
-    save_route53resolver_firewall_domain_lists,
-    save_apigateway_rest_apis,
-    save_appsync_graphql_apis,
-    save_cloudfront_distributions,
-    save_networkfirewall_firewalls,
-)
-from kite.config import Config
-from kite.models import WorkloadResources, WorkloadResource
 
+from kite.config import Config
+from kite.data import save_access_analyzers
+from kite.data import save_account_summary
+from kite.data import save_acm_certificates
+from kite.data import save_acm_pca_certificate_authorities
+from kite.data import save_apigateway_rest_apis
+from kite.data import save_appsync_graphql_apis
+from kite.data import save_backup_protected_resources
+from kite.data import save_backup_vaults
+from kite.data import save_bucket_metadata
+from kite.data import save_cloudfront_distributions
+from kite.data import save_cloudfront_origin_access_identities
+from kite.data import save_cloudtrail_trails
+from kite.data import save_cognito_user_pool
+from kite.data import save_cognito_user_pools
+from kite.data import save_config_compliance_by_rule
+from kite.data import save_config_delivery_channels
+from kite.data import save_config_recorders
+from kite.data import save_config_rules
+from kite.data import save_credentials_report
+from kite.data import save_custom_key_stores
+from kite.data import save_customer_managed_policies
+from kite.data import save_delegated_admins
+from kite.data import save_detective_graphs
+from kite.data import save_dynamodb_tables
+from kite.data import save_ec2_instances
+from kite.data import save_ecs_clusters
+from kite.data import save_efs_file_systems
+from kite.data import save_eks_clusters
+from kite.data import save_elbv2_load_balancers
+from kite.data import save_export_tasks
+from kite.data import save_flow_logs
+from kite.data import save_guardduty_detectors
+from kite.data import save_iam_groups
+from kite.data import save_iam_users
+from kite.data import save_identity_center_instances
+from kite.data import save_identity_store_groups
+from kite.data import save_identity_store_users  # save_identity_center_permission_sets,
+from kite.data import save_inline_policy_document
+from kite.data import save_inspector2_configuration
+from kite.data import save_inspector2_coverage
+from kite.data import save_key_pairs
+from kite.data import save_kms_keys
+from kite.data import save_lambda_functions
+from kite.data import save_log_groups
+from kite.data import save_maintenance_windows
+from kite.data import save_mgmt_account_workload_resources
+from kite.data import save_nacls
+from kite.data import save_networkfirewall_firewalls
+from kite.data import save_oidc_providers
+from kite.data import save_organization
+from kite.data import save_organization_features
+from kite.data import save_password_policy
+from kite.data import save_policy_document
+from kite.data import save_rds_instances
+from kite.data import save_roles
+from kite.data import save_route53resolver_firewall_domain_lists
+from kite.data import save_route53resolver_firewall_rule_group_associations
+from kite.data import save_route53resolver_firewall_rule_groups
+from kite.data import save_route53resolver_query_log_config_associations
+from kite.data import save_route53resolver_query_log_configs
+from kite.data import save_rtbs
+from kite.data import save_saml_providers
+from kite.data import save_secrets
+from kite.data import save_security_groups
+from kite.data import save_securityhub_action_targets
+from kite.data import save_securityhub_automation_rules
+from kite.data import save_sns_topics
+from kite.data import save_sqs_queues
+from kite.data import save_subnets
+from kite.data import save_virtual_mfa_devices
+from kite.data import save_vpc_endpoints
+from kite.data import save_vpc_peering_connections
+from kite.data import save_vpcs
+from kite.data import save_wafv2_logging_configurations
+from kite.data import save_wafv2_web_acls
+from kite.helpers import assume_organizational_role
+from kite.helpers import assume_role
+from kite.helpers import get_account_ids_in_scope
+from kite.models import WorkloadResource
+from kite.models import WorkloadResources
+
+from . import accessanalyzer
+from . import acm
+from . import acm_pca
+from . import apigateway
+from . import appsync
+from . import backup
+from . import cloudfront
+from . import cloudtrail
+from . import cognito
+from . import configservice
+from . import detective
+from . import dynamodb
+from . import ec2
+from . import ecs
+from . import efs
+from . import eks
+from . import elbv2
+from . import guardduty
+from . import iam
+from . import identity_center
+from . import identity_store
+from . import inspector2
+from . import kms
+from . import lambda_
+from . import logs
+from . import networkfirewall
+from . import organizations
+from . import rds
+from . import redshift
+from . import route53resolver
+from . import s3
+from . import sagemaker
+from . import secretsmanager
+from . import securityhub
+from . import sns
+from . import sqs
+from . import ssm
+from . import wafv2
 
 console = Console()
 

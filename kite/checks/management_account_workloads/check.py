@@ -1,13 +1,12 @@
 """Management account workloads check module."""
 
-from typing import Dict, Any
+from typing import Any
 
 from rich.console import Console
 
 from kite.config import Config
-from kite.helpers import prompt_user_with_panel
 from kite.data import get_mgmt_account_workload_resources
-from kite.models import WorkloadResources
+from kite.helpers import prompt_user_with_panel
 
 console = Console()
 
@@ -16,7 +15,7 @@ CHECK_ID = "no-management-account-workloads"
 CHECK_NAME = "No Management Account Workloads"
 
 
-def check_management_account_workloads(config: Config = None) -> Dict[str, Any]:
+def check_management_account_workloads(config: Config = None) -> dict[str, Any]:
     """
     Check if there are workloads running in the management account.
 
@@ -56,30 +55,23 @@ def check_management_account_workloads(config: Config = None) -> Dict[str, Any]:
             "check_name": CHECK_NAME,
             "status": "PASS",
             "details": {
-                "message": (
-                    "No workload resources found in the management account."
-                ),
+                "message": ("No workload resources found in the management account."),
             },
         }
 
     # Initialize message with guidance
     message = (
-        "This check evaluates if there are workloads running in"
-        " the management account."
+        "This check evaluates if there are workloads running in the management account."
     )
 
     # Add assessment guidance
-    message += (
-        "\nConsider the following factors for management account workloads:\n"
-    )
+    message += "\nConsider the following factors for management account workloads:\n"
     message += "- Are there any workloads running in the management account?\n"
     message += (
         "- If so, are there valid reasons for these workloads to be in"
         " the management account?\n"
     )
-    message += (
-        "- Could these workloads be moved to a dedicated workload" " account?\n"
-    )
+    message += "- Could these workloads be moved to a dedicated workload account?\n"
 
     # Format workload resources for display
     formatted_resources = []
@@ -88,17 +80,14 @@ def check_management_account_workloads(config: Config = None) -> Dict[str, Any]:
         if resource.region:
             resource_str += f" in {resource.region}"
         if resource.details:
-            details_str = ", ".join(
-                f"{k}={v}" for k, v in resource.details.items()
-            )
+            details_str = ", ".join(f"{k}={v}" for k, v in resource.details.items())
             resource_str += f" ({details_str})"
         formatted_resources.append(resource_str)
 
     # Add workload resources to the message if any were found
     if formatted_resources:
         message += (
-            "\nThe following workload resources were found in the "
-            "management account:\n"
+            "\nThe following workload resources were found in the management account:\n"
         )
         for resource in formatted_resources:
             message += f"- {resource}\n"

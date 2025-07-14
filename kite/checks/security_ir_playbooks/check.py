@@ -1,15 +1,14 @@
 """Check for security incident response playbooks."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "security-ir-playbooks"
 CHECK_NAME = "Security Incident Response Playbooks"
 
 
-def check_security_ir_playbooks() -> Dict[str, Any]:
+def check_security_ir_playbooks() -> dict[str, Any]:
     """
     Check if security incident response playbooks are in place for anticipated
     incidents such as DoS, ransomware, or credential compromise.

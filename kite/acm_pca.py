@@ -1,7 +1,9 @@
 import boto3
 
 
-def get_certificate_authorities(session: boto3.Session, region: str) -> list[dict[str, object]]:
+def get_certificate_authorities(
+    session: boto3.Session, region: str
+) -> list[dict[str, object]]:
     """
     Get all certificate authorities in a given region.
     """

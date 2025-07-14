@@ -1,16 +1,16 @@
 """Check for IAM roles with cross-account readonly access policies."""
 
-from typing import Dict, Any, List, Set
+from typing import Any
 
+from kite.data import get_organization
+from kite.data import get_roles
 from kite.helpers import get_prowler_output
-from kite.data import get_organization, get_roles
-
 
 CHECK_ID = "no-readonly-third-party-access"
 CHECK_NAME = "No Readonly Third Party Access"
 
 
-def _is_principal_in_organization(principal: str, org_account_ids: Set[str]) -> bool:
+def _is_principal_in_organization(principal: str, org_account_ids: set[str]) -> bool:
     """
     Check if a principal is from an account within the organization.
 
@@ -29,7 +29,7 @@ def _is_principal_in_organization(principal: str, org_account_ids: Set[str]) -> 
         return False
 
 
-def check_no_readonly_third_party_access() -> Dict[str, Any]:
+def check_no_readonly_third_party_access() -> dict[str, Any]:
     """
     Check if IAM roles have cross-account readonly access policies.
 
@@ -57,7 +57,7 @@ def check_no_readonly_third_party_access() -> Dict[str, Any]:
     check_id = "iam_role_cross_account_readonlyaccess_policy"
 
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Check results for the check ID
     if check_id in prowler_results:
@@ -70,14 +70,16 @@ def check_no_readonly_third_party_access() -> Dict[str, Any]:
             # If not in an organization, all findings are valid
             for result in results:
                 if result.status != "PASS":
-                    failing_resources.append({
-                        "account_id": result.account_id,
-                        "resource_uid": result.resource_uid,
-                        "resource_name": result.resource_name,
-                        "resource_details": result.resource_details,
-                        "region": result.region,
-                        "status": result.status
-                    })
+                    failing_resources.append(
+                        {
+                            "account_id": result.account_id,
+                            "resource_uid": result.resource_uid,
+                            "resource_name": result.resource_name,
+                            "resource_details": result.resource_details,
+                            "region": result.region,
+                            "status": result.status,
+                        }
+                    )
         else:
             # Get all account IDs in the organization
             org_account_ids = {account.id for account in org.get_accounts()}
@@ -88,8 +90,7 @@ def check_no_readonly_third_party_access() -> Dict[str, Any]:
                     # Get the role data which includes AssumeRolePolicyDocument
                     roles = get_roles(result.account_id)
                     role = next(
-                        (r for r in roles if r["RoleId"] == result.resource_uid),
-                        None
+                        (r for r in roles if r["RoleId"] == result.resource_uid), None
                     )
 
                     if role is None:
@@ -97,15 +98,15 @@ def check_no_readonly_third_party_access() -> Dict[str, Any]:
 
                     # Check if any principal in the trust policy is from outside the org
                     has_external_principal = False
-                    for statement in (
-                        role["AssumeRolePolicyDocument"].get("Statement", [])
+                    for statement in role["AssumeRolePolicyDocument"].get(
+                        "Statement", []
                     ):
                         if statement.get("Effect") == "Allow":
                             principals = statement.get("Principal", {})
                             if isinstance(principals, dict):
                                 for (
                                     principal_type,
-                                    principal_value
+                                    principal_value,
                                 ) in principals.items():
                                     if isinstance(principal_value, list):
                                         for principal in principal_value:
@@ -123,17 +124,19 @@ def check_no_readonly_third_party_access() -> Dict[str, Any]:
 
                     # Only add to failing resources if there's an external principal
                     if has_external_principal:
-                        failing_resources.append({
-                            "account_id": result.account_id,
-                            "resource_uid": result.resource_uid,
-                            "resource_name": result.resource_name,
-                            "resource_details": (
-                                "Role can be assumed by principals outside the "
-                                "organization"
-                            ),
-                            "region": result.region,
-                            "status": result.status
-                        })
+                        failing_resources.append(
+                            {
+                                "account_id": result.account_id,
+                                "resource_uid": result.resource_uid,
+                                "resource_name": result.resource_name,
+                                "resource_details": (
+                                    "Role can be assumed by principals outside the "
+                                    "organization"
+                                ),
+                                "region": result.region,
+                                "status": result.status,
+                            }
+                        )
 
     # Determine if the check passed
     passed = len(failing_resources) == 0

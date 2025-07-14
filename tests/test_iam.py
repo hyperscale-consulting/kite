@@ -1,15 +1,14 @@
 """Tests for IAM module."""
 
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
 from botocore.exceptions import ClientError
 
-from kite.iam import (
-    fetch_credentials_report,
-    fetch_virtual_mfa_devices,
-    list_saml_providers,
-    list_oidc_providers,
-)
+from kite.iam import fetch_credentials_report
+from kite.iam import fetch_virtual_mfa_devices
+from kite.iam import list_oidc_providers
+from kite.iam import list_saml_providers
 
 
 def _get_csv_header():
@@ -191,8 +190,7 @@ def test_fetch_credentials_report_other_error(mock_session, mock_iam_client):
         "Error": {
             "Code": "AccessDenied",
             "Message": (
-                "User is not authorized to perform: "
-                "iam:GenerateCredentialReport"
+                "User is not authorized to perform: iam:GenerateCredentialReport"
             ),
         }
     }
@@ -472,7 +470,7 @@ def test_fetch_virtual_mfa_devices(mock_session, mock_iam_client):
     ]
 
     # Verify the paginator was used correctly
-    mock_iam_client.get_paginator.assert_called_once_with('list_virtual_mfa_devices')
+    mock_iam_client.get_paginator.assert_called_once_with("list_virtual_mfa_devices")
     mock_paginator.paginate.assert_called_once()
 
 

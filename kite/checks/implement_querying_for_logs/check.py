@@ -1,15 +1,14 @@
 """Check for log querying mechanisms."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "implement-querying-for-logs"
 CHECK_NAME = "Log Querying Mechanisms"
 
 
-def check_log_querying() -> Dict[str, Any]:
+def check_log_querying() -> dict[str, Any]:
     """
     Check if there are mechanisms in place for querying and analyzing logs.
 

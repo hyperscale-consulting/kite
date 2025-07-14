@@ -16,7 +16,7 @@ def fetch_rules(session, region):
         # Process in chunks of 25 to respect API limits
         chunk_size = 25
         for i in range(0, len(rule_names), chunk_size):
-            chunk = rule_names[i:i + chunk_size]
+            chunk = rule_names[i : i + chunk_size]
             chunk_configs = fetch_remediation_configurations(session, chunk)
             all_remediation_configs.extend(chunk_configs)
 

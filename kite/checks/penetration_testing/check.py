@@ -1,15 +1,14 @@
 """Check for regular penetration testing of security controls."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "perform-regular-pen-testing"
 CHECK_NAME = "Perform Regular Penetration Testing"
 
 
-def check_perform_regular_pen_testing() -> Dict[str, Any]:
+def check_perform_regular_pen_testing() -> dict[str, Any]:
     """
     Check if regular penetration testing is performed to validate security controls.
 
@@ -32,9 +31,7 @@ def check_perform_regular_pen_testing() -> Dict[str, Any]:
         " inform automated tests and developer training?\n"
         "- Are penetration test results reviewed and shared with relevant stakeholders?"
     )
-    prompt = (
-        "Is regular penetration testing performed to validate security controls?"
-    )
+    prompt = "Is regular penetration testing performed to validate security controls?"
 
     # Use the manual_check function
     result = manual_check(

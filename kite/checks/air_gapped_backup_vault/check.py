@@ -1,19 +1,20 @@
 """Check for air-gapped backup vaults."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.data import get_backup_vaults, get_backup_protected_resources
 from kite.config import Config
-from kite.helpers import get_account_ids_in_scope, manual_check
-
+from kite.data import get_backup_protected_resources
+from kite.data import get_backup_vaults
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "air-gapped-backup-vault"
 CHECK_NAME = "Air Gapped Backup Vault"
 
 
 def _get_protected_resources_for_vault(
-    vault_arn: str, protected_resources: List[Dict[str, Any]]
-) -> List[Dict[str, Any]]:
+    vault_arn: str, protected_resources: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
     """
     Get all protected resources that are backed up to a specific vault.
 
@@ -32,7 +33,7 @@ def _get_protected_resources_for_vault(
 
 
 def _is_air_gapped_vault(
-    vault: Dict[str, Any], protected_resources: List[Dict[str, Any]]
+    vault: dict[str, Any], protected_resources: list[dict[str, Any]]
 ) -> bool:
     """
     Check if a vault is air-gapped.
@@ -79,7 +80,7 @@ def _is_air_gapped_vault(
     return True
 
 
-def check_air_gapped_backup_vault() -> Dict[str, Any]:
+def check_air_gapped_backup_vault() -> dict[str, Any]:
     """
     Check if critical resources are backed up to air-gapped vaults.
 

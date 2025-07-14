@@ -1,26 +1,27 @@
 """Manual check for controlling network flows with Security Groups."""
 
-from typing import Dict, Any, List
-from kite.data import (
-    get_vpcs,
-    get_subnets,
-    get_security_groups,
-    get_rds_instances,
-    get_eks_clusters,
-    get_ecs_clusters,
-    get_ec2_instances,
-    get_lambda_functions,
-    get_efs_file_systems,
-    get_elbv2_load_balancers,
-)
-from kite.helpers import get_account_ids_in_scope, manual_check, get_prowler_output
+from typing import Any
+
 from kite.config import Config
+from kite.data import get_ec2_instances
+from kite.data import get_ecs_clusters
+from kite.data import get_efs_file_systems
+from kite.data import get_eks_clusters
+from kite.data import get_elbv2_load_balancers
+from kite.data import get_lambda_functions
+from kite.data import get_rds_instances
+from kite.data import get_security_groups
+from kite.data import get_subnets
+from kite.data import get_vpcs
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import get_prowler_output
+from kite.helpers import manual_check
 
 CHECK_ID = "control-network-flows-with-sgs"
 CHECK_NAME = "Control Network Flows with Security Groups"
 
 
-def _get_vpc_name(vpc: Dict[str, Any]) -> str:
+def _get_vpc_name(vpc: dict[str, Any]) -> str:
     tags = vpc.get("Tags", [])
     for tag in tags:
         if tag.get("Key") == "Name":
@@ -28,7 +29,7 @@ def _get_vpc_name(vpc: Dict[str, Any]) -> str:
     return ""
 
 
-def _get_subnet_name(subnet: Dict[str, Any]) -> str:
+def _get_subnet_name(subnet: dict[str, Any]) -> str:
     tags = subnet.get("Tags", [])
     for tag in tags:
         if tag.get("Key") == "Name":
@@ -36,7 +37,7 @@ def _get_subnet_name(subnet: Dict[str, Any]) -> str:
     return ""
 
 
-def _get_security_group_name(sg: Dict[str, Any]) -> str:
+def _get_security_group_name(sg: dict[str, Any]) -> str:
     tags = sg.get("Tags", [])
     for tag in tags:
         if tag.get("Key") == "Name":
@@ -46,14 +47,14 @@ def _get_security_group_name(sg: Dict[str, Any]) -> str:
 
 def _get_resources_in_subnet(
     subnet_id: str,
-    rds_instances: List[Dict[str, Any]],
-    eks_clusters: List[Dict[str, Any]],
-    ecs_clusters: List[Dict[str, Any]],
-    ec2_instances: List[Dict[str, Any]],
-    lambda_functions: List[Dict[str, Any]],
-    efs_file_systems: List[Dict[str, Any]],
-    elbv2_load_balancers: List[Dict[str, Any]],
-) -> Dict[str, List[Dict[str, Any]]]:
+    rds_instances: list[dict[str, Any]],
+    eks_clusters: list[dict[str, Any]],
+    ecs_clusters: list[dict[str, Any]],
+    ec2_instances: list[dict[str, Any]],
+    lambda_functions: list[dict[str, Any]],
+    efs_file_systems: list[dict[str, Any]],
+    elbv2_load_balancers: list[dict[str, Any]],
+) -> dict[str, list[dict[str, Any]]]:
     resources = {
         "RDS": [],
         "EKS": [],
@@ -106,7 +107,7 @@ def _get_resources_in_subnet(
     return resources
 
 
-def _summarize_security_group_rules(sg: Dict[str, Any]) -> Dict[str, List[str]]:
+def _summarize_security_group_rules(sg: dict[str, Any]) -> dict[str, list[str]]:
     """Summarize security group rules for easy display."""
     summary = {"ingress": [], "egress": []}
 
@@ -127,9 +128,7 @@ def _summarize_security_group_rules(sg: Dict[str, Any]) -> Dict[str, List[str]]:
         ip_ranges = rule.get("IpRanges", [])
         for ip_range in ip_ranges:
             cidr = ip_range.get("CidrIp", "?")
-            summary["ingress"].append(
-                f"ALLOW {proto_str} {port_str} from {cidr}"
-            )
+            summary["ingress"].append(f"ALLOW {proto_str} {port_str} from {cidr}")
 
         # Process security group references
         user_id_group_pairs = rule.get("UserIdGroupPairs", [])
@@ -156,24 +155,20 @@ def _summarize_security_group_rules(sg: Dict[str, Any]) -> Dict[str, List[str]]:
         ip_ranges = rule.get("IpRanges", [])
         for ip_range in ip_ranges:
             cidr = ip_range.get("CidrIp", "?")
-            summary["egress"].append(
-                f"ALLOW {proto_str} {port_str} to {cidr}"
-            )
+            summary["egress"].append(f"ALLOW {proto_str} {port_str} to {cidr}")
 
         # Process security group references
         user_id_group_pairs = rule.get("UserIdGroupPairs", [])
         for group_pair in user_id_group_pairs:
             group_id = group_pair.get("GroupId", "?")
-            summary["egress"].append(
-                f"ALLOW {proto_str} {port_str} to SG {group_id}"
-            )
+            summary["egress"].append(f"ALLOW {proto_str} {port_str} to SG {group_id}")
 
     return summary
 
 
 def _get_security_groups_for_resource(
-    resource: Dict[str, Any], resource_type: str, security_groups: List[Dict[str, Any]]
-) -> List[str]:
+    resource: dict[str, Any], resource_type: str, security_groups: list[dict[str, Any]]
+) -> list[str]:
     """Get security group IDs associated with a resource."""
     sg_ids = []
 
@@ -298,21 +293,36 @@ def _analyze_security_groups() -> str:
                             vpc_analysis += f"    {resource_type}:\n"
                             for resource in resource_list:
                                 if resource_type == "RDS":
-                                    resource_name = resource.get("DBInstanceIdentifier", "Unknown")
+                                    resource_name = resource.get(
+                                        "DBInstanceIdentifier", "Unknown"
+                                    )
                                 elif resource_type == "EKS":
                                     resource_name = resource.get("name", "Unknown")
                                 elif resource_type == "ECS":
-                                    cluster_name = resource.get("clusterName", "Unknown")
-                                    service_name = resource.get("serviceName", "Unknown")
+                                    cluster_name = resource.get(
+                                        "clusterName", "Unknown"
+                                    )
+                                    service_name = resource.get(
+                                        "serviceName", "Unknown"
+                                    )
                                     resource_name = f"{cluster_name}/{service_name}"
                                 elif resource_type == "EC2":
-                                    resource_name = resource.get("InstanceId", "Unknown")
+                                    resource_name = resource.get(
+                                        "InstanceId", "Unknown"
+                                    )
                                 elif resource_type == "Lambda":
-                                    resource_name = resource.get("FunctionName", "Unknown")
+                                    resource_name = resource.get(
+                                        "FunctionName", "Unknown"
+                                    )
                                 elif resource_type == "EFS":
-                                    resource_name = resource.get("Name", resource.get("FileSystemId", "Unknown"))
+                                    resource_name = resource.get(
+                                        "Name", resource.get("FileSystemId", "Unknown")
+                                    )
                                 elif resource_type == "ELBv2":
-                                    resource_name = resource.get("LoadBalancerName", resource.get("LoadBalancerArn", "Unknown"))
+                                    resource_name = resource.get(
+                                        "LoadBalancerName",
+                                        resource.get("LoadBalancerArn", "Unknown"),
+                                    )
                                 else:
                                     resource_name = "Unknown"
 
@@ -333,30 +343,44 @@ def _analyze_security_groups() -> str:
                                                 break
 
                                         if sg_details:
-                                            sg_name = _get_security_group_name(sg_details)
+                                            sg_name = _get_security_group_name(
+                                                sg_details
+                                            )
                                             vpc_analysis += f"        SG {sg_id}"
                                             if sg_name:
                                                 vpc_analysis += f" ({sg_name})"
                                             vpc_analysis += ":\n"
 
                                             # Show security group rules
-                                            sg_summary = _summarize_security_group_rules(sg_details)
+                                            sg_summary = (
+                                                _summarize_security_group_rules(
+                                                    sg_details
+                                                )
+                                            )
                                             if sg_summary["ingress"]:
                                                 vpc_analysis += "          Ingress:\n"
                                                 for rule in sg_summary["ingress"]:
-                                                    vpc_analysis += f"            {rule}\n"
+                                                    vpc_analysis += (
+                                                        f"            {rule}\n"
+                                                    )
                                             if sg_summary["egress"]:
                                                 vpc_analysis += "          Egress:\n"
                                                 for rule in sg_summary["egress"]:
-                                                    vpc_analysis += f"            {rule}\n"
+                                                    vpc_analysis += (
+                                                        f"            {rule}\n"
+                                                    )
 
                                             # Show prowler warnings for this security group
                                             warnings = []
                                             for check_id in prowler_checks:
-                                                for prowler_result in prowler_output.get(check_id, []):
+                                                for (
+                                                    prowler_result
+                                                ) in prowler_output.get(check_id, []):
                                                     if (
-                                                        prowler_result.resource_name == sg_id
-                                                        and prowler_result.status != "PASS"
+                                                        prowler_result.resource_name
+                                                        == sg_id
+                                                        and prowler_result.status
+                                                        != "PASS"
                                                     ):
                                                         warnings.append(
                                                             f"⚠️ {check_id} failed: "
@@ -364,9 +388,13 @@ def _analyze_security_groups() -> str:
                                                         )
                                             if warnings:
                                                 for warning in warnings:
-                                                    vpc_analysis += f"          {warning}\n"
+                                                    vpc_analysis += (
+                                                        f"          {warning}\n"
+                                                    )
                                         else:
-                                            vpc_analysis += f"        SG {sg_id} (not found)\n"
+                                            vpc_analysis += (
+                                                f"        SG {sg_id} (not found)\n"
+                                            )
                                 else:
                                     vpc_analysis += "        No security groups found\n"
 
@@ -380,7 +408,7 @@ def _analyze_security_groups() -> str:
     return analysis
 
 
-def check_control_network_flows_with_sgs() -> Dict[str, Any]:
+def check_control_network_flows_with_sgs() -> dict[str, Any]:
     """
     Manual check to confirm whether Security Groups are used to restrict ingress and egress traffic
     to only the flows necessary for each workload at each network layer. Prints a summary

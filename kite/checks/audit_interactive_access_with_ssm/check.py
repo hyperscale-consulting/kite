@@ -1,15 +1,14 @@
 """Check for auditing interactive access with SSM Session Manager."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "audit-interactive-access-with-ssm"
 CHECK_NAME = "Audit Interactive Access with SSM"
 
 
-def check_audit_interactive_access_with_ssm() -> Dict[str, Any]:
+def check_audit_interactive_access_with_ssm() -> dict[str, Any]:
     """
     Check if interactive access, where required, is provided via SSM Session Manager
     and that session activity is logged in CloudWatch or S3 to provide an audit trail.

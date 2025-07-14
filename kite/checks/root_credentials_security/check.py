@@ -1,15 +1,14 @@
 """Check for secure root credentials storage and access procedures."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "root-credentials-security"
 CHECK_NAME = "Root Credentials Security"
 
 
-def check_root_credentials_security() -> Dict[str, Any]:
+def check_root_credentials_security() -> dict[str, Any]:
     """
     Check if root credentials are stored securely and accessed according to proper
     procedures.

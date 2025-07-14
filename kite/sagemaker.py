@@ -1,6 +1,5 @@
 """SageMaker service module for Kite."""
 
-from typing import List
 from dataclasses import dataclass
 
 
@@ -12,7 +11,7 @@ class SageMakerNotebook:
     region: str
 
 
-def get_notebook_instances(session, region: str) -> List[SageMakerNotebook]:
+def get_notebook_instances(session, region: str) -> list[SageMakerNotebook]:
     """
     Get all SageMaker notebook instances in a region.
 

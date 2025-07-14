@@ -6,9 +6,7 @@ def assume_role(account_id: str, role_name: str, external_id: str):
     role_arn = f"arn:aws:iam::{account_id}:role/{role_name}"
 
     assumed_role = sts_client.assume_role(
-        RoleArn=role_arn,
-        RoleSessionName="KiteAssessment",
-        ExternalId=external_id
+        RoleArn=role_arn, RoleSessionName="KiteAssessment", ExternalId=external_id
     )
 
     return boto3.Session(

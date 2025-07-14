@@ -1,15 +1,15 @@
 """Check for absence of EC2 key pairs."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.helpers import get_account_key_pairs, get_account_ids_in_scope
-
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import get_account_key_pairs
 
 CHECK_ID = "no-key-pairs"
 CHECK_NAME = "No EC2 Key Pairs"
 
 
-def check_no_key_pairs() -> Dict[str, Any]:
+def check_no_key_pairs() -> dict[str, Any]:
     """
     Check if any EC2 key pairs exist in any account.
 
@@ -32,7 +32,7 @@ def check_no_key_pairs() -> Dict[str, Any]:
         account_ids = get_account_ids_in_scope()
 
         # Track accounts with key pairs
-        accounts_with_key_pairs: List[Dict[str, Any]] = []
+        accounts_with_key_pairs: list[dict[str, Any]] = []
 
         # Check each account
         for account_id in account_ids:
@@ -40,10 +40,12 @@ def check_no_key_pairs() -> Dict[str, Any]:
             key_pairs = get_account_key_pairs(account_id)
 
             if key_pairs:
-                accounts_with_key_pairs.append({
-                    "account_id": account_id,
-                    "key_pairs": [kp["KeyName"] for kp in key_pairs]
-                })
+                accounts_with_key_pairs.append(
+                    {
+                        "account_id": account_id,
+                        "key_pairs": [kp["KeyName"] for kp in key_pairs],
+                    }
+                )
 
         # Determine if the check passed
         passed = len(accounts_with_key_pairs) == 0

@@ -1,20 +1,17 @@
 """Check for WAF Web ACL logging configuration."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.data import (
-    get_wafv2_web_acls,
-    get_wafv2_logging_configurations,
-)
-from kite.helpers import get_account_ids_in_scope
 from kite.config import Config
-
+from kite.data import get_wafv2_logging_configurations
+from kite.data import get_wafv2_web_acls
+from kite.helpers import get_account_ids_in_scope
 
 CHECK_ID = "waf-web-acl-logging-enabled"
 CHECK_NAME = "WAF Web ACL Logging Enabled"
 
 
-def check_waf_web_acl_logging_enabled() -> Dict[str, Any]:
+def check_waf_web_acl_logging_enabled() -> dict[str, Any]:
     """
     Check if logging is enabled for all WAF Web ACLs.
 
@@ -47,10 +44,7 @@ def check_waf_web_acl_logging_enabled() -> Dict[str, Any]:
             logging_configs = get_wafv2_logging_configurations(account, region)
 
             # Create a set of web ACL ARNs that have logging enabled
-            logging_enabled_arns = {
-                config["ResourceArn"]
-                for config in logging_configs
-            }
+            logging_enabled_arns = {config["ResourceArn"] for config in logging_configs}
 
             # Check each web ACL
             for web_acl in web_acls:
@@ -69,9 +63,7 @@ def check_waf_web_acl_logging_enabled() -> Dict[str, Any]:
                     web_acls_without_logging.append(web_acl_info)
 
     # Build the message
-    message = (
-        "This check verifies that logging is enabled for all WAF Web ACLs.\n\n"
-    )
+    message = "This check verifies that logging is enabled for all WAF Web ACLs.\n\n"
 
     if web_acls_without_logging:
         message += (

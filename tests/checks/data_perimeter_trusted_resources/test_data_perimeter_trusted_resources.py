@@ -5,8 +5,8 @@ import pytest
 from kite.checks.data_perimeter_trusted_resources.check import (
     check_data_perimeter_trusted_resources,
 )
-from kite.models import ControlPolicy
 from kite.data import save_organization
+from kite.models import ControlPolicy
 
 
 @pytest.fixture
@@ -49,16 +49,16 @@ def trusted_resources_scp(organization_id):
                             "lambda:GetLayerVersion",
                             "ec2:CreateTags",
                             "ec2:DeleteTags",
-                            "ec2:GetManagedPrefixListEntries"
+                            "ec2:GetManagedPrefixListEntries",
                         ],
                         Resource="*",
                         Principal="*",
                         Condition={
                             "StringNotEqualsIfExists": {
                                 "AWS:ResourceOrgID": organization_id,
-                                "aws:PrincipalTag/dp:exclude:resource": "true"
+                                "aws:PrincipalTag/dp:exclude:resource": "true",
                             }
-                        }
+                        },
                     )
                 ]
             }

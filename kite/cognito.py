@@ -1,10 +1,11 @@
 """Cognito module for Kite."""
 
-from typing import Dict, Any, List
+from typing import Any
+
 from botocore.exceptions import ClientError
 
 
-def list_user_pools(session) -> List[Dict[str, Any]]:
+def list_user_pools(session) -> list[dict[str, Any]]:
     """
     List all Cognito user pools in the account.
 
@@ -26,7 +27,7 @@ def list_user_pools(session) -> List[Dict[str, Any]]:
         raise
 
 
-def fetch_cognito_user_pool(session, user_pool_id: str) -> Dict[str, Any]:
+def fetch_cognito_user_pool(session, user_pool_id: str) -> dict[str, Any]:
     """
     Describe a Cognito user pool.
     """

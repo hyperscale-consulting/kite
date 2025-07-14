@@ -1,15 +1,14 @@
 """Check for regular threat modeling by teams."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "threat-modeling"
 CHECK_NAME = "Threat Modeling"
 
 
-def check_threat_modeling() -> Dict[str, Any]:
+def check_threat_modeling() -> dict[str, Any]:
     """
     Check if teams perform threat modeling regularly.
 

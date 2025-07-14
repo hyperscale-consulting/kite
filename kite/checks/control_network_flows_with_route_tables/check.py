@@ -1,26 +1,26 @@
 """Manual check for controlling network flows with Route Tables."""
 
-from typing import Dict, Any, List
-from kite.data import (
-    get_vpcs,
-    get_subnets,
-    get_rtbs,
-    get_rds_instances,
-    get_eks_clusters,
-    get_ecs_clusters,
-    get_ec2_instances,
-    get_lambda_functions,
-    get_efs_file_systems,
-    get_elbv2_load_balancers,
-)
-from kite.helpers import get_account_ids_in_scope, manual_check
+from typing import Any
+
 from kite.config import Config
+from kite.data import get_ec2_instances
+from kite.data import get_ecs_clusters
+from kite.data import get_efs_file_systems
+from kite.data import get_eks_clusters
+from kite.data import get_elbv2_load_balancers
+from kite.data import get_lambda_functions
+from kite.data import get_rds_instances
+from kite.data import get_rtbs
+from kite.data import get_subnets
+from kite.data import get_vpcs
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "control-network-flows-with-route-tables"
 CHECK_NAME = "Control Network Flows with Route Tables"
 
 
-def _get_vpc_name(vpc: Dict[str, Any]) -> str:
+def _get_vpc_name(vpc: dict[str, Any]) -> str:
     tags = vpc.get("Tags", [])
     for tag in tags:
         if tag.get("Key") == "Name":
@@ -28,7 +28,7 @@ def _get_vpc_name(vpc: Dict[str, Any]) -> str:
     return ""
 
 
-def _get_subnet_name(subnet: Dict[str, Any]) -> str:
+def _get_subnet_name(subnet: dict[str, Any]) -> str:
     tags = subnet.get("Tags", [])
     for tag in tags:
         if tag.get("Key") == "Name":
@@ -38,14 +38,14 @@ def _get_subnet_name(subnet: Dict[str, Any]) -> str:
 
 def _get_resources_in_subnet(
     subnet_id: str,
-    rds_instances: List[Dict[str, Any]],
-    eks_clusters: List[Dict[str, Any]],
-    ecs_clusters: List[Dict[str, Any]],
-    ec2_instances: List[Dict[str, Any]],
-    lambda_functions: List[Dict[str, Any]],
-    efs_file_systems: List[Dict[str, Any]],
-    elbv2_load_balancers: List[Dict[str, Any]],
-) -> Dict[str, List[str]]:
+    rds_instances: list[dict[str, Any]],
+    eks_clusters: list[dict[str, Any]],
+    ecs_clusters: list[dict[str, Any]],
+    ec2_instances: list[dict[str, Any]],
+    lambda_functions: list[dict[str, Any]],
+    efs_file_systems: list[dict[str, Any]],
+    elbv2_load_balancers: list[dict[str, Any]],
+) -> dict[str, list[str]]:
     resources = {
         "RDS": [],
         "EKS": [],
@@ -103,7 +103,7 @@ def _get_resources_in_subnet(
     return resources
 
 
-def _summarize_route_table(rtb: Dict[str, Any]) -> List[str]:
+def _summarize_route_table(rtb: dict[str, Any]) -> list[str]:
     summary = []
     rtb_id = rtb.get("RouteTableId", "Unknown")
     summary.append(f"Route Table: {rtb_id}")
@@ -129,8 +129,8 @@ def _summarize_route_table(rtb: Dict[str, Any]) -> List[str]:
 
 
 def _get_route_tables_for_subnet(
-    subnet_id: str, rtbs: List[Dict[str, Any]]
-) -> List[Dict[str, Any]]:
+    subnet_id: str, rtbs: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
     associated = []
     for rtb in rtbs:
         associations = rtb.get("Associations", [])
@@ -223,7 +223,7 @@ def _analyze_route_tables() -> str:
     return analysis
 
 
-def check_control_network_flows_with_route_tables() -> Dict[str, Any]:
+def check_control_network_flows_with_route_tables() -> dict[str, Any]:
     """
     Manual check to confirm whether route tables are used to restrict network traffic flows
     to only the flows necessary for each workload. Prints a summary of VPCs, subnets, resources,

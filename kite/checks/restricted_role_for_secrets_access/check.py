@@ -1,14 +1,12 @@
 """Check for restricted role access to secrets."""
 
-import json
-from typing import Dict, Any
-from kite.helpers import (
-    get_account_ids_in_scope,
-    manual_check,
-)
-from kite.config import Config
-from kite.data import get_role_by_arn, get_secrets
+from typing import Any
 
+from kite.config import Config
+from kite.data import get_role_by_arn
+from kite.data import get_secrets
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "restricted-role-for-secrets-access"
 CHECK_NAME = "Restricted Role for Secrets Access"
@@ -21,7 +19,7 @@ def get_trust_policy(role_arn):
     return None
 
 
-def check_restricted_role_for_secrets_access() -> Dict[str, Any]:
+def check_restricted_role_for_secrets_access() -> dict[str, Any]:
     """
     Check if secrets access is restricted to specific roles with limited access.
 

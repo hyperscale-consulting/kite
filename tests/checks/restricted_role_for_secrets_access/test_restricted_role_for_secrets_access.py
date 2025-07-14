@@ -1,10 +1,12 @@
 from unittest.mock import patch
+
 import pytest
 
 from kite.checks.restricted_role_for_secrets_access.check import (
     check_restricted_role_for_secrets_access,
 )
-from kite.data import save_roles, save_secrets
+from kite.data import save_roles
+from kite.data import save_secrets
 
 
 @pytest.fixture

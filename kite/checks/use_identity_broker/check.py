@@ -1,15 +1,14 @@
 """Check for use of identity broker for temporary privilege escalation."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "use-identity-broker"
 CHECK_NAME = "Use Identity Broker for Temporary Privilege Escalation"
 
 
-def check_use_identity_broker() -> Dict[str, Any]:
+def check_use_identity_broker() -> dict[str, Any]:
     """
     Check if an identity broker is used for temporary privilege escalation.
 

@@ -23,10 +23,7 @@ def test_threat_modeling_pass():
     assert result["check_id"] == "threat-modeling"
     assert result["check_name"] == "Threat Modeling"
     assert result["status"] == "PASS"
-    assert (
-        "Teams perform threat modeling regularly"
-        in result["details"]["message"]
-    )
+    assert "Teams perform threat modeling regularly" in result["details"]["message"]
 
 
 def test_threat_modeling_fail():
@@ -48,6 +45,5 @@ def test_threat_modeling_fail():
     assert result["check_name"] == "Threat Modeling"
     assert result["status"] == "FAIL"
     assert (
-        "Teams should perform threat modeling regularly"
-        in result["details"]["message"]
+        "Teams should perform threat modeling regularly" in result["details"]["message"]
     )

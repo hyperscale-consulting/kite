@@ -1,12 +1,13 @@
 """Check for encryption at rest misconfigurations using AWS Config."""
 
 import re
-from typing import Dict, Any
+from typing import Any
 
-from kite.helpers import manual_check, get_account_ids_in_scope
-from kite.data import get_config_rules, get_config_compliance_by_rule
 from kite.config import Config
-
+from kite.data import get_config_compliance_by_rule
+from kite.data import get_config_rules
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "detect-encryption-at-rest-misconfig"
 CHECK_NAME = "Detect Encryption at Rest Misconfigurations"
@@ -78,7 +79,7 @@ def _is_encryption_rule(rule_name: str) -> bool:
     ]
 
 
-def check_detect_encryption_at_rest_misconfig() -> Dict[str, Any]:
+def check_detect_encryption_at_rest_misconfig() -> dict[str, Any]:
     """
     Check if AWS Config is used to detect encryption at rest misconfigurations.
 

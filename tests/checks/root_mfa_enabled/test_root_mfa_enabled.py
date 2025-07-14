@@ -1,6 +1,7 @@
 """Tests for the Root MFA Enabled check."""
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 import pytest
 
@@ -68,9 +69,7 @@ def test_root_mfa_org_managed_pass(
     assert result["check_id"] == "root-mfa-enabled"
     assert result["check_name"] == "Root MFA Enabled"
     assert result["status"] == "PASS"
-    message = (
-        "Root MFA is enabled with hardware MFA device in the " "management account"
-    )
+    message = "Root MFA is enabled with hardware MFA device in the management account"
     assert message in result["details"]["message"]
     assert result["details"]["accounts_without_mfa"] == []
     assert result["details"]["accounts_with_virtual_mfa"] == []

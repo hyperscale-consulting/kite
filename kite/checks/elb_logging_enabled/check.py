@@ -1,19 +1,16 @@
 """Check for ELB logging configuration."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.data import (
-    get_elbv2_load_balancers,
-)
-from kite.helpers import get_account_ids_in_scope
 from kite.config import Config
-
+from kite.data import get_elbv2_load_balancers
+from kite.helpers import get_account_ids_in_scope
 
 CHECK_ID = "elb-logging-enabled"
 CHECK_NAME = "ELB Logging Enabled"
 
 
-def check_elb_logging_enabled() -> Dict[str, Any]:
+def check_elb_logging_enabled() -> dict[str, Any]:
     """
     Check if logging is enabled for all ELBs.
 
@@ -49,10 +46,7 @@ def check_elb_logging_enabled() -> Dict[str, Any]:
                 attributes = elb.get("Attributes", {})
                 access_logs_enabled = attributes.get("access_logs.s3.enabled", "false")
 
-                elb_info = (
-                    f"ELB: {elb_name} "
-                    f"(Account: {account}, Region: {region})"
-                )
+                elb_info = f"ELB: {elb_name} (Account: {account}, Region: {region})"
 
                 if access_logs_enabled.lower() == "true":
                     elbs_with_logging.append(elb_info)
@@ -60,16 +54,12 @@ def check_elb_logging_enabled() -> Dict[str, Any]:
                     elbs_without_logging.append(elb_info)
 
     # Build the message
-    message = (
-        "This check verifies that logging is enabled for all ELBs.\n\n"
-    )
+    message = "This check verifies that logging is enabled for all ELBs.\n\n"
 
     if elbs_without_logging:
         message += (
             "The following ELBs do not have logging enabled:\n"
-            + "\n".join(
-                f"  - {elb}" for elb in sorted(elbs_without_logging)
-            )
+            + "\n".join(f"  - {elb}" for elb in sorted(elbs_without_logging))
             + "\n\n"
         )
 

@@ -1,16 +1,15 @@
 """Check for active external access analyzer across all accounts."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.helpers import get_account_ids_in_scope
 from kite.data import get_access_analyzers
-
+from kite.helpers import get_account_ids_in_scope
 
 CHECK_ID = "active-external-access-analyzer"
 CHECK_NAME = "Active External Access Analyzer"
 
 
-def _check_analyzer_configuration(analyzer: Dict[str, Any]) -> bool:
+def _check_analyzer_configuration(analyzer: dict[str, Any]) -> bool:
     """
     Check if an analyzer's configuration meets the requirements.
 
@@ -27,7 +26,7 @@ def _check_analyzer_configuration(analyzer: Dict[str, Any]) -> bool:
     return True
 
 
-def _get_analyzer_summary(analyzers: List[Dict[str, Any]]) -> Dict[str, Any]:
+def _get_analyzer_summary(analyzers: list[dict[str, Any]]) -> dict[str, Any]:
     """
     Get a summary of the analyzers.
 
@@ -67,7 +66,7 @@ def _get_analyzer_summary(analyzers: List[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
 
-def check_active_external_access_analyzer() -> Dict[str, Any]:
+def check_active_external_access_analyzer() -> dict[str, Any]:
     """
     Check if there is an active external access analyzer across all accounts.
 

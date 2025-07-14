@@ -1,15 +1,14 @@
 """Check for IAM policies that allow privilege escalation."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.helpers import get_prowler_output
-
 
 CHECK_ID = "no-policy-allows-privilege-escalation"
 CHECK_NAME = "No IAM Policy Allows Privilege Escalation"
 
 
-def check_no_policy_allows_privilege_escalation() -> Dict[str, Any]:
+def check_no_policy_allows_privilege_escalation() -> dict[str, Any]:
     """
     Check if IAM policies allow privilege escalation.
 
@@ -33,11 +32,11 @@ def check_no_policy_allows_privilege_escalation() -> Dict[str, Any]:
     # The check IDs we're interested in
     check_ids = [
         "iam_inline_policy_allows_privilege_escalation",
-        "iam_policy_allows_privilege_escalation"
+        "iam_policy_allows_privilege_escalation",
     ]
 
     # Track failing resources
-    failing_resources: List[Dict[str, Any]] = []
+    failing_resources: list[dict[str, Any]] = []
 
     # Check results for each check ID
     for check_id in check_ids:
@@ -48,15 +47,17 @@ def check_no_policy_allows_privilege_escalation() -> Dict[str, Any]:
             # Add failing resources to the list
             for result in results:
                 if result.status != "PASS":
-                    failing_resources.append({
-                        "account_id": result.account_id,
-                        "resource_uid": result.resource_uid,
-                        "resource_name": result.resource_name,
-                        "resource_details": result.resource_details,
-                        "region": result.region,
-                        "check_id": check_id,
-                        "status": result.status
-                    })
+                    failing_resources.append(
+                        {
+                            "account_id": result.account_id,
+                            "resource_uid": result.resource_uid,
+                            "resource_name": result.resource_name,
+                            "resource_details": result.resource_details,
+                            "region": result.region,
+                            "check_id": check_id,
+                            "status": result.status,
+                        }
+                    )
 
     # Determine if the check passed
     passed = len(failing_resources) == 0

@@ -1,18 +1,18 @@
 """Check for automated S3 data retention."""
 
-from typing import Dict, Any, List
 from collections import defaultdict
+from typing import Any
 
-from kite.data import get_bucket_metadata
-from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
-
+from kite.data import get_bucket_metadata
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "automate-s3-data-retention"
 CHECK_NAME = "Automate S3 Data Retention"
 
 
-def _format_buckets_by_retention(buckets: List[Dict[str, Any]]) -> str:
+def _format_buckets_by_retention(buckets: list[dict[str, Any]]) -> str:
     """
     Format buckets grouped by their retention period.
 
@@ -58,7 +58,7 @@ def _format_buckets_by_retention(buckets: List[Dict[str, Any]]) -> str:
     return "\n".join(output)
 
 
-def check_automate_s3_data_retention() -> Dict[str, Any]:
+def check_automate_s3_data_retention() -> dict[str, Any]:
     """
     Check if S3 lifecycle policies are used consistently to automatically delete
     data stored in S3 as it reaches the end of its defined retention period.

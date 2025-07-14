@@ -1,15 +1,14 @@
 """Check for standard security controls and configurations defined using IaC templates."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "iac-templates"
 CHECK_NAME = "IaC Templates"
 
 
-def check_iac_templates() -> Dict[str, Any]:
+def check_iac_templates() -> dict[str, Any]:
     """
     Check if standard security controls and configurations are defined using
     Infrastructure as Code (IaC) templates.

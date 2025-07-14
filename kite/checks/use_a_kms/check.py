@@ -1,19 +1,19 @@
 """Check for use of KMS with HSM protection."""
 
-from typing import Dict, Any, List, Tuple
+from typing import Any
 
-from kite.data import get_kms_keys
-from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
-
+from kite.data import get_kms_keys
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "use-a-kms"
 CHECK_NAME = "Use a KMS"
 
 
 def _format_keys_by_origin(
-    keys: List[Dict[str, Any]], account: str, region: str
-) -> Tuple[List[str], List[str]]:
+    keys: list[dict[str, Any]], account: str, region: str
+) -> tuple[list[str], list[str]]:
     """
     Format KMS keys grouped by their origin.
 
@@ -49,7 +49,7 @@ def _format_keys_by_origin(
     return hsm_keys, external_store_keys
 
 
-def check_use_a_kms() -> Dict[str, Any]:
+def check_use_a_kms() -> dict[str, Any]:
     """
     Check if all keys are stored in a Key Management System using hardware
     security modules to protect keys.
@@ -107,9 +107,7 @@ def check_use_a_kms() -> Dict[str, Any]:
         "using hardware security modules to protect keys.\n\n"
         "This includes keys used by workloads to encrypt data, which should be "
         "envelope encrypted with a key that is stored in a HSM-backed KMS.\n\n"
-        "Current KMS Keys:\n"
-        + "\n".join(output)
-        + "\n\nPlease verify that:\n"
+        "Current KMS Keys:\n" + "\n".join(output) + "\n\nPlease verify that:\n"
         "- All keys used for data encryption are envelope encrypted with a key "
         "stored in a HSM-backed KMS\n"
         "- All external key stores use hardware security modules to protect keys"

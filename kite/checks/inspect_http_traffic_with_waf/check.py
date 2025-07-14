@@ -1,23 +1,21 @@
 """Check if AWS WAF is used to inspect and block HTTP-based traffic."""
 
-from typing import Dict, Any, Tuple, Set
+from typing import Any
 
-from kite.data import (
-    get_wafv2_web_acls,
-    get_cloudfront_distributions,
-    get_elbv2_load_balancers,
-    get_apigateway_rest_apis,
-    get_appsync_graphql_apis,
-)
-from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
-
+from kite.data import get_apigateway_rest_apis
+from kite.data import get_appsync_graphql_apis
+from kite.data import get_cloudfront_distributions
+from kite.data import get_elbv2_load_balancers
+from kite.data import get_wafv2_web_acls
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "inspect-http-traffic-with-waf"
 CHECK_NAME = "Inspect HTTP Traffic with WAF"
 
 
-def _get_waf_summary() -> Tuple[str, Dict[str, Set[str]]]:
+def _get_waf_summary() -> tuple[str, dict[str, set[str]]]:
     """Get summary of WAF web ACLs and their attached resources."""
     analysis = ""
     waf_resources = {}  # Map of resource ARNs to WAF ACL names
@@ -87,7 +85,7 @@ def _get_waf_summary() -> Tuple[str, Dict[str, Set[str]]]:
     return analysis, waf_resources
 
 
-def _get_rule_action_summary(rule: Dict[str, Any]) -> str:
+def _get_rule_action_summary(rule: dict[str, Any]) -> str:
     """Get a summary of the rule action."""
     action = rule.get("Action", {})
     override_action = rule.get("OverrideAction", {})
@@ -106,7 +104,7 @@ def _get_rule_action_summary(rule: Dict[str, Any]) -> str:
         return "Unknown"
 
 
-def _get_rule_statement_summary(rule: Dict[str, Any]) -> str:
+def _get_rule_statement_summary(rule: dict[str, Any]) -> str:
     """Get a summary of the rule statement type."""
     statement = rule.get("Statement", {})
 
@@ -207,9 +205,7 @@ def _get_unprotected_resources() -> str:
                 api_arn = api.get("ARN", "")
                 if api_arn and api_arn not in protected_arns:
                     region_unprotected += 1
-                    region_analysis += (
-                        f"    ⚠️  AppSync: {api.get('Name', 'Unknown')}\n"
-                    )
+                    region_analysis += f"    ⚠️  AppSync: {api.get('Name', 'Unknown')}\n"
 
             if region_has_resources:
                 if region_unprotected > 0:
@@ -234,7 +230,7 @@ def _get_unprotected_resources() -> str:
     return analysis
 
 
-def _pre_check() -> Tuple[bool, Dict[str, Any]]:
+def _pre_check() -> tuple[bool, dict[str, Any]]:
     """Pre-check function that automatically fails if no WAFs are found."""
     # Check for WAFs across all accounts and regions
     accounts = get_account_ids_in_scope()
@@ -251,7 +247,7 @@ def _pre_check() -> Tuple[bool, Dict[str, Any]]:
     if total_wafs == 0:
         msg_parts = [
             "No WAF web ACLs found in any account or region.",
-            "This check fails automatically as no WAF protection is configured."
+            "This check fails automatically as no WAF protection is configured.",
         ]
         msg = " ".join(msg_parts)
         result = {}
@@ -266,7 +262,7 @@ def _pre_check() -> Tuple[bool, Dict[str, Any]]:
     return True, {}
 
 
-def check_inspect_http_traffic_with_waf() -> Dict[str, Any]:
+def check_inspect_http_traffic_with_waf() -> dict[str, Any]:
     """Check if AWS WAF is used to inspect and block HTTP-based traffic."""
     waf_analysis, _ = _get_waf_summary()
     unprotected_analysis = _get_unprotected_resources()
@@ -287,12 +283,8 @@ def check_inspect_http_traffic_with_waf() -> Dict[str, Any]:
         check_id=CHECK_ID,
         check_name=CHECK_NAME,
         message=message,
-        prompt=(
-            "Do you use AWS WAF to inspect and block HTTP-based traffic?"
-        ),
-        pass_message=(
-            "AWS WAF is used to inspect and block HTTP-based traffic."
-        ),
+        prompt=("Do you use AWS WAF to inspect and block HTTP-based traffic?"),
+        pass_message=("AWS WAF is used to inspect and block HTTP-based traffic."),
         fail_message=(
             "AWS WAF should be used to inspect and block HTTP-based traffic "
             "for web applications and APIs."

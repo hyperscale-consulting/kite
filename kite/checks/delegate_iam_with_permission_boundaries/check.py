@@ -1,23 +1,21 @@
 """Check if IAM delegation is done using permission boundaries."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.data import (
-    get_roles,
-    get_policy_document,
-    get_inline_policy_document,
-    get_customer_managed_policies,
-    get_iam_users,
-    get_iam_groups,
-)
-from kite.helpers import get_account_ids_in_scope, manual_check
-
+from kite.data import get_customer_managed_policies
+from kite.data import get_iam_groups
+from kite.data import get_iam_users
+from kite.data import get_inline_policy_document
+from kite.data import get_policy_document
+from kite.data import get_roles
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "delegate-iam-with-permission-boundaries"
 CHECK_NAME = "Delegate IAM with Permission Boundaries"
 
 
-def _has_permission_boundary_condition(policy_doc: Dict[str, Any]) -> bool:
+def _has_permission_boundary_condition(policy_doc: dict[str, Any]) -> bool:
     """
     Check if a policy document has a condition on permission boundaries.
 
@@ -46,14 +44,16 @@ def _has_permission_boundary_condition(policy_doc: Dict[str, Any]) -> bool:
         # Check for StringEquals or ArnEquals conditions on aws:PermissionsBoundary
         for condition_type in ["StringEquals", "ArnEquals"]:
             if condition_type in condition:
-                boundary_condition = condition[condition_type].get("aws:PermissionsBoundary")
+                boundary_condition = condition[condition_type].get(
+                    "aws:PermissionsBoundary"
+                )
                 if boundary_condition:
                     return True
 
     return False
 
 
-def check_delegate_iam_with_permission_boundaries() -> Dict[str, Any]:
+def check_delegate_iam_with_permission_boundaries() -> dict[str, Any]:
     """
     Check if IAM delegation is done using permission boundaries.
 
@@ -72,7 +72,7 @@ def check_delegate_iam_with_permission_boundaries() -> Dict[str, Any]:
                 - roles_with_delegation: List of roles with IAM delegation policies
     """
     # Track roles with IAM delegation policies
-    entities_with_delegation: List[Dict[str, Any]] = []
+    entities_with_delegation: list[dict[str, Any]] = []
 
     # Get in-scope accounts
     account_ids = get_account_ids_in_scope()
@@ -97,7 +97,9 @@ def check_delegate_iam_with_permission_boundaries() -> Dict[str, Any]:
                 for customer_policy in customer_policies:
                     if customer_policy["Arn"] == policy_arn:
                         policy_doc = get_policy_document(account_id, policy_arn)
-                        if policy_doc and _has_permission_boundary_condition(policy_doc):
+                        if policy_doc and _has_permission_boundary_condition(
+                            policy_doc
+                        ):
                             has_iam_delegation = True
                             delegation_policy_info = {
                                 "policy_name": customer_policy["Name"],
@@ -123,13 +125,14 @@ def check_delegate_iam_with_permission_boundaries() -> Dict[str, Any]:
                         break
 
             if has_iam_delegation and delegation_policy_info:
-                entities_with_delegation.append({
-                    "account_id": account_id,
-                    "entity_name": entity["RoleName"],
-                    "entity_arn": entity["Arn"],
-                    **delegation_policy_info,
-                })
-
+                entities_with_delegation.append(
+                    {
+                        "account_id": account_id,
+                        "entity_name": entity["RoleName"],
+                        "entity_arn": entity["Arn"],
+                        **delegation_policy_info,
+                    }
+                )
 
     if not entities_with_delegation:
         return {

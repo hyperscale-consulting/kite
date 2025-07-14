@@ -1,15 +1,14 @@
 """Check for data catalog."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "data-catalog"
 CHECK_NAME = "Data Catalog"
 
 
-def check_data_catalog() -> Dict[str, Any]:
+def check_data_catalog() -> dict[str, Any]:
     """
     Check if there is an inventory of all data within the organization.
 

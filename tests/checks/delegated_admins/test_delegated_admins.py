@@ -1,9 +1,10 @@
 """Tests for the delegated admins for security services check."""
 
 import pytest
+
 from kite.checks.delegated_admins.check import check_delegated_admins_security_services
-from kite.models import DelegatedAdmin
 from kite.data import save_delegated_admins
+from kite.models import DelegatedAdmin
 
 
 @pytest.fixture
@@ -21,8 +22,8 @@ def delegated_admin(account, service_principal):
         status=account.status,
         joined_method=account.joined_method,
         joined_timestamp=account.joined_timestamp,
-        delegation_enabled_date='2021-01-01T00:00:00Z',
-        service_principal=service_principal
+        delegation_enabled_date="2021-01-01T00:00:00Z",
+        service_principal=service_principal,
     )
 
 
@@ -135,6 +136,5 @@ def test_check_delegated_admins_security_services_only_guardduty_delegated_admin
     assert (
         "The following security services do not have delegated administrators: "
         "securityhub.amazonaws.com, inspector2.amazonaws.com, macie.amazonaws.com, "
-        "detective.amazonaws.com"
-        in result["details"]["message"]
+        "detective.amazonaws.com" in result["details"]["message"]
     )

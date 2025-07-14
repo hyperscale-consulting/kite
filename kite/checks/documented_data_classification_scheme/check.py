@@ -1,15 +1,14 @@
 """Check for documented data classification scheme."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "documented-data-classification-scheme"
 CHECK_NAME = "Documented Data Classification Scheme"
 
 
-def check_documented_data_classification_scheme() -> Dict[str, Any]:
+def check_documented_data_classification_scheme() -> dict[str, Any]:
     """
     Check if there is a documented data classification scheme.
 

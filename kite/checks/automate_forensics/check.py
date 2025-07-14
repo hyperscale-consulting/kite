@@ -1,15 +1,14 @@
 """Check for automated forensics collection."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "automate-forensics"
 CHECK_NAME = "Automate Forensics"
 
 
-def check_automate_forensics() -> Dict[str, Any]:
+def check_automate_forensics() -> dict[str, Any]:
     """
     Check if the collection of forensics, such as snapshots of EBS volumes,
     memory dumps, process lists etc is automated.

@@ -1,17 +1,17 @@
 """Check for protection of root CA."""
 
-from typing import Dict, Any, List, Set
+from typing import Any
 
-from kite.helpers import manual_check, get_account_ids_in_scope
-from kite.data import get_acm_pca_certificate_authorities
 from kite.config import Config
-
+from kite.data import get_acm_pca_certificate_authorities
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "protect-root-ca"
 CHECK_NAME = "Protect Root CA"
 
 
-def get_certificate_authorities() -> List[Dict[str, Any]]:
+def get_certificate_authorities() -> list[dict[str, Any]]:
     """
     Get all certificate authorities across all accounts and regions.
 
@@ -19,7 +19,7 @@ def get_certificate_authorities() -> List[Dict[str, Any]]:
         List of unique certificate authorities, deduplicated by ARN.
     """
     # Use a set to track seen ARNs
-    seen_arns: Set[str] = set()
+    seen_arns: set[str] = set()
     unique_authorities = []
 
     # Get all accounts in scope
@@ -39,7 +39,7 @@ def get_certificate_authorities() -> List[Dict[str, Any]]:
     return unique_authorities
 
 
-def check_protect_root_ca() -> Dict[str, Any]:
+def check_protect_root_ca() -> dict[str, Any]:
     """
     Check if the root CA is properly protected.
 
@@ -60,9 +60,7 @@ def check_protect_root_ca() -> Dict[str, Any]:
     authorities = get_certificate_authorities()
 
     # Build the message with certificate authority information
-    message = (
-        "This check verifies that the root CA is properly protected.\n\n"
-    )
+    message = "This check verifies that the root CA is properly protected.\n\n"
 
     if authorities:
         message += "Private Certificate Authorities found:\n"

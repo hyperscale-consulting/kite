@@ -1,15 +1,13 @@
 """Check for least privilege access."""
 
 import json
-from typing import Dict, Any
+from typing import Any
 
 from rich.console import Console
-from kite.helpers import (
-    get_account_ids_in_scope,
-    manual_check,
-    assume_role,
-)
 
+from kite.helpers import assume_role
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "NOT_USED_grant-least-privilege-access"
 CHECK_NAME = "NOT_USED Grant Least Privilege Access"
@@ -17,7 +15,7 @@ CHECK_NAME = "NOT_USED Grant Least Privilege Access"
 console = Console()
 
 
-def _get_role_usage(session, role_name: str) -> Dict[str, Any]:
+def _get_role_usage(session, role_name: str) -> dict[str, Any]:
     """
     THIS CHECK IS NOT USED.
 
@@ -42,16 +40,13 @@ def _get_role_usage(session, role_name: str) -> Dict[str, Any]:
     # Get service last accessed details
     try:
         response = iam_client.generate_service_last_accessed_details(
-            Arn=role_arn,
-            Granularity="ACTION_LEVEL"
+            Arn=role_arn, Granularity="ACTION_LEVEL"
         )
         job_id = response["JobId"]
 
         # Wait for the job to complete
         while True:
-            status = iam_client.get_service_last_accessed_details(
-                JobId=job_id
-            )
+            status = iam_client.get_service_last_accessed_details(JobId=job_id)
             if status["JobStatus"] == "COMPLETED":
                 break
             elif status["JobStatus"] == "FAILED":
@@ -62,9 +57,7 @@ def _get_role_usage(session, role_name: str) -> Dict[str, Any]:
                 }
 
         # Get the results
-        details = iam_client.get_service_last_accessed_details(
-            JobId=job_id
-        )
+        details = iam_client.get_service_last_accessed_details(JobId=job_id)
 
         # Process the results
         unused_actions = []
@@ -72,10 +65,12 @@ def _get_role_usage(session, role_name: str) -> Dict[str, Any]:
             service_name = service["ServiceName"]
             for action in service.get("TrackedActionsLastAccessed", []):
                 if not action.get("LastAccessedDate"):
-                    unused_actions.append({
-                        "service": service_name,
-                        "action": action["ActionName"],
-                    })
+                    unused_actions.append(
+                        {
+                            "service": service_name,
+                            "action": action["ActionName"],
+                        }
+                    )
 
         return {
             "role_name": role_name,
@@ -91,7 +86,7 @@ def _get_role_usage(session, role_name: str) -> Dict[str, Any]:
         }
 
 
-def _save_role_usage(account_id: str, data: Dict[str, Any]) -> str:
+def _save_role_usage(account_id: str, data: dict[str, Any]) -> str:
     """
     Save role usage data to a file in the .kite/audit directory.
 
@@ -104,6 +99,7 @@ def _save_role_usage(account_id: str, data: Dict[str, Any]) -> str:
     """
     # Create .kite/audit directory if it doesn't exist
     import os
+
     os.makedirs(".kite/audit", exist_ok=True)
 
     # Create account-specific directory
@@ -118,7 +114,7 @@ def _save_role_usage(account_id: str, data: Dict[str, Any]) -> str:
     return file_path
 
 
-def check_grant_least_privilege_access() -> Dict[str, Any]:
+def check_grant_least_privilege_access() -> dict[str, Any]:
     """
     Check if least privilege access has been granted for users and workloads.
 
@@ -159,9 +155,7 @@ def check_grant_least_privilege_access() -> Dict[str, Any]:
                 # Get usage details for each role
                 role_usage = {}
                 for role in roles:
-                    console.print(
-                        f"  [yellow]Analyzing role {role['RoleName']}...[/]"
-                    )
+                    console.print(f"  [yellow]Analyzing role {role['RoleName']}...[/]")
                     role_usage[role["RoleName"]] = _get_role_usage(
                         session, role["RoleName"]
                     )
@@ -169,9 +163,7 @@ def check_grant_least_privilege_access() -> Dict[str, Any]:
                 # Save the data
                 file_path = _save_role_usage(account_id, role_usage)
                 saved_files[account_id] = file_path
-                console.print(
-                    f"  [green]✓ Saved role usage data to {file_path}[/]"
-                )
+                console.print(f"  [green]✓ Saved role usage data to {file_path}[/]")
 
                 console.print(
                     f"[bold green]✓ Completed analyzing IAM roles for account "
@@ -214,9 +206,7 @@ def check_grant_least_privilege_access() -> Dict[str, Any]:
             check_id=CHECK_ID,
             check_name=CHECK_NAME,
             message=message,
-            prompt=(
-                "Has least privilege access been granted for users and workloads?"
-            ),
+            prompt=("Has least privilege access been granted for users and workloads?"),
             pass_message=(
                 "Least privilege access has been granted for users and workloads"
             ),

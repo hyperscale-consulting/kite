@@ -1,15 +1,12 @@
 """Check for data perimeter trusted network controls in SCPs and RCPs."""
 
 import json
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.data import get_organization
-from kite.utils.aws_context_keys import (
-    has_not_source_ip_condition,
-    has_not_source_vpc_condition,
-    has_not_principal_arn_condition,
-)
-
+from kite.utils.aws_context_keys import has_not_principal_arn_condition
+from kite.utils.aws_context_keys import has_not_source_ip_condition
+from kite.utils.aws_context_keys import has_not_source_vpc_condition
 
 CHECK_ID = "data-perimeter-trusted-networks"
 CHECK_NAME = "Data Perimeter Enforces Trusted Networks"
@@ -53,7 +50,7 @@ def _has_required_conditions(policy_content: str) -> bool:
     return False
 
 
-def check_data_perimeter_trusted_networks() -> Dict[str, Any]:
+def check_data_perimeter_trusted_networks() -> dict[str, Any]:
     """
     Check if SCPs and RCPs have the required data perimeter trusted network
     controls.
@@ -84,9 +81,7 @@ def check_data_perimeter_trusted_networks() -> Dict[str, Any]:
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
             "status": "FAIL",
-            "details": {
-                "message": "AWS Organizations is not being used"
-            }
+            "details": {"message": "AWS Organizations is not being used"},
         }
 
     # Get root and top-level OUs
@@ -95,7 +90,7 @@ def check_data_perimeter_trusted_networks() -> Dict[str, Any]:
 
     # Check SCPs
     has_scp_controls = False
-    failing_scps: List[Dict[str, str]] = []
+    failing_scps: list[dict[str, str]] = []
 
     # Check root SCPs
     root_scps = root.scps
@@ -104,12 +99,14 @@ def check_data_perimeter_trusted_networks() -> Dict[str, Any]:
             has_scp_controls = True
             break
         else:
-            failing_scps.append({
-                "id": scp.id,
-                "type": "SCP",
-                "target": "Root",
-                "reason": "Missing required trusted network conditions"
-            })
+            failing_scps.append(
+                {
+                    "id": scp.id,
+                    "type": "SCP",
+                    "target": "Root",
+                    "reason": "Missing required trusted network conditions",
+                }
+            )
 
     # Check top-level OU SCPs
     if not has_scp_controls:
@@ -119,18 +116,20 @@ def check_data_perimeter_trusted_networks() -> Dict[str, Any]:
                     has_scp_controls = True
                     break
                 else:
-                    failing_scps.append({
-                        "id": scp.id,
-                        "type": "SCP",
-                        "target": ou.name,
-                        "reason": "Missing required trusted network conditions"
-                    })
+                    failing_scps.append(
+                        {
+                            "id": scp.id,
+                            "type": "SCP",
+                            "target": ou.name,
+                            "reason": "Missing required trusted network conditions",
+                        }
+                    )
             if has_scp_controls:
                 break
 
     # Check RCPs
     has_rcp_controls = False
-    failing_rcps: List[Dict[str, str]] = []
+    failing_rcps: list[dict[str, str]] = []
 
     # Check root RCPs
     root_rcps = root.rcps
@@ -139,12 +138,14 @@ def check_data_perimeter_trusted_networks() -> Dict[str, Any]:
             has_rcp_controls = True
             break
         else:
-            failing_rcps.append({
-                "id": rcp.id,
-                "type": "RCP",
-                "target": "Root",
-                "reason": "Missing required trusted network conditions"
-            })
+            failing_rcps.append(
+                {
+                    "id": rcp.id,
+                    "type": "RCP",
+                    "target": "Root",
+                    "reason": "Missing required trusted network conditions",
+                }
+            )
 
     # Check top-level OU RCPs
     if not has_rcp_controls:
@@ -154,12 +155,14 @@ def check_data_perimeter_trusted_networks() -> Dict[str, Any]:
                     has_rcp_controls = True
                     break
                 else:
-                    failing_rcps.append({
-                        "id": rcp.id,
-                        "type": "RCP",
-                        "target": ou.name,
-                        "reason": "Missing required trusted network conditions"
-                    })
+                    failing_rcps.append(
+                        {
+                            "id": rcp.id,
+                            "type": "RCP",
+                            "target": ou.name,
+                            "reason": "Missing required trusted network conditions",
+                        }
+                    )
             if has_rcp_controls:
                 break
 
@@ -173,7 +176,7 @@ def check_data_perimeter_trusted_networks() -> Dict[str, Any]:
                     "Data perimeter trusted network controls are enforced by both "
                     "SCPs and RCPs"
                 )
-            }
+            },
         }
 
     failing_resources = failing_scps + failing_rcps
@@ -186,8 +189,8 @@ def check_data_perimeter_trusted_networks() -> Dict[str, Any]:
                 "Data perimeter trusted network controls are not enforced by both "
                 "SCPs and RCPs"
             ),
-            "failing_resources": failing_resources
-        }
+            "failing_resources": failing_resources,
+        },
     }
 
 

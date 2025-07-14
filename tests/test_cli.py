@@ -6,28 +6,26 @@ from unittest.mock import Mock
 import pytest
 from click.testing import CliRunner
 
-from kite.config import Config
+from kite import cloudfront
+from kite import dynamodb
+from kite import ec2
+from kite import ecs
+from kite import eks
+from kite import iam
+from kite import identity_center
+from kite import kms
+from kite import lambda_
+from kite import organizations
+from kite import rds
+from kite import redshift
+from kite import s3
+from kite import sagemaker
+from kite import sns
+from kite import sqs
+from kite import sts
 from kite.cli import main
+from kite.config import Config
 from kite.models import DelegatedAdmin
-from kite import (
-    organizations,
-    sts,
-    ecs,
-    ec2,
-    eks,
-    lambda_,
-    rds,
-    dynamodb,
-    redshift,
-    sagemaker,
-    sns,
-    sqs,
-    kms,
-    s3,
-    cloudfront,
-    iam,
-    identity_center,
-)
 
 
 @pytest.fixture

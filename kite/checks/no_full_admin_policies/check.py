@@ -1,10 +1,9 @@
 """Check for policies with administrative privileges using Prowler."""
 
-from typing import Dict, Any
 from collections import defaultdict
+from typing import Any
 
 from kite.helpers import get_prowler_output
-
 
 CHECK_ID = "no-full-admin-policies"
 CHECK_NAME = "No Administrative Privilege Policies"
@@ -18,7 +17,7 @@ PROWLER_CHECK_IDS = [
 ]
 
 
-def check_no_full_admin_policies() -> Dict[str, Any]:
+def check_no_full_admin_policies() -> dict[str, Any]:
     """
     Check if there are any policies with administrative privileges.
 
@@ -46,11 +45,13 @@ def check_no_full_admin_policies() -> Dict[str, Any]:
         for result in check_results:
             if result.status != "PASS":
                 account_id = result.account_id
-                failed_policies[account_id][check_id].append({
-                    "PolicyName": result.resource_name,
-                    "ResourceId": result.resource_uid,
-                    "Details": result.resource_details,
-                })
+                failed_policies[account_id][check_id].append(
+                    {
+                        "PolicyName": result.resource_name,
+                        "ResourceId": result.resource_uid,
+                        "Details": result.resource_details,
+                    }
+                )
 
                 # Track which checks found issues
                 checks_with_findings.add(check_id)
@@ -64,14 +65,10 @@ def check_no_full_admin_policies() -> Dict[str, Any]:
 
         # Map check IDs to friendly names for display
         check_friendly_names = {
-            "iam_customer_attached_policy_no_administrative_privileges":
-                "Customer Managed Attached Policies",
-            "iam_aws_attached_policy_no_administrative_privileges":
-                "AWS Managed Attached Policies",
-            "iam_customer_unattached_policy_no_administrative_privileges":
-                "Customer Managed Unattached Policies",
-            "iam_inline_policy_no_administrative_privileges":
-                "Inline Policies",
+            "iam_customer_attached_policy_no_administrative_privileges": "Customer Managed Attached Policies",
+            "iam_aws_attached_policy_no_administrative_privileges": "AWS Managed Attached Policies",
+            "iam_customer_unattached_policy_no_administrative_privileges": "Customer Managed Unattached Policies",
+            "iam_inline_policy_no_administrative_privileges": "Inline Policies",
         }
 
         # Process results by account
@@ -86,7 +83,7 @@ def check_no_full_admin_policies() -> Dict[str, Any]:
                 # List each policy with its details
                 for policy in policies:
                     message += f"  - {policy['PolicyName']} ({policy['ResourceId']})\n"
-                    if policy['Details']:
+                    if policy["Details"]:
                         message += f"    Details: {policy['Details']}\n"
 
             message += "\n"
@@ -112,8 +109,8 @@ def check_no_full_admin_policies() -> Dict[str, Any]:
             "message": message,
             "failed_policies": converted_policies,
             "prowler_check_ids": PROWLER_CHECK_IDS,
-            "checks_with_findings": list(checks_with_findings)
-        }
+            "checks_with_findings": list(checks_with_findings),
+        },
     }
 
 

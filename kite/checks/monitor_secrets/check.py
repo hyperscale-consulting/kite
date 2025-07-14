@@ -1,15 +1,14 @@
 """Check for monitoring of secrets for unusual activity."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "monitor-secrets"
 CHECK_NAME = "Monitor Secrets"
 
 
-def check_monitor_secrets() -> Dict[str, Any]:
+def check_monitor_secrets() -> dict[str, Any]:
     """
     Check if secrets are monitored for unusual activity and if automated
     remediation actions are triggered where appropriate.

@@ -1,10 +1,9 @@
 """SCP prevents RAM external sharing check module."""
 
 import json
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "scp-prevents-ram-external-sharing"
 CHECK_NAME = "SCP Prevents RAM External Sharing"
@@ -70,8 +69,7 @@ def check_scp_prevents_ram_external_sharing() -> dict:
             "status": "PASS",
             "details": {
                 "message": (
-                    "SCP preventing RAM external sharing is attached to the "
-                    "root OU."
+                    "SCP preventing RAM external sharing is attached to the root OU."
                 ),
                 "scp": {
                     "id": root_ram_deny_scp.id,
@@ -146,15 +144,14 @@ def check_scp_prevents_ram_external_sharing() -> dict:
         "status": "PASS",
         "details": {
             "message": (
-                "SCP preventing RAM external sharing is attached to all "
-                "top-level OUs."
+                "SCP preventing RAM external sharing is attached to all top-level OUs."
             ),
             "scps_by_ou": ous_with_ram_deny,
         },
     }
 
 
-def _is_ram_external_sharing_deny_scp(content: Dict[str, Any]) -> bool:
+def _is_ram_external_sharing_deny_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively denies RAM external sharing.
 

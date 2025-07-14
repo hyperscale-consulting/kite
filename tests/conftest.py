@@ -6,8 +6,11 @@ from pathlib import Path
 import pytest
 
 from kite.config import Config
-from kite.models import Organization, OrganizationalUnit, Account, ControlPolicy
 from kite.data import save_organization
+from kite.models import Account
+from kite.models import ControlPolicy
+from kite.models import Organization
+from kite.models import OrganizationalUnit
 
 
 @pytest.fixture
@@ -38,9 +41,7 @@ def data_dir():
 
 
 @pytest.fixture(autouse=True)
-def config(
-    mgmt_account_id, active_regions, role_name, prowler_output_dir, data_dir
-):
+def config(mgmt_account_id, active_regions, role_name, prowler_output_dir, data_dir):
     # We want an empty data directory for each test
     if os.path.exists(data_dir):
         shutil.rmtree(data_dir)
@@ -52,7 +53,7 @@ def config(
         role_name=role_name,
         prowler_output_dir=str(prowler_output_dir),
         data_dir=data_dir,
-        external_id='123456',
+        external_id="123456",
     )
     return Config.get()
 
@@ -98,7 +99,7 @@ def mgmt_account(mgmt_account_id, full_access_scp):
 
 @pytest.fixture
 def audit_account_id():
-    return '222222222222'
+    return "222222222222"
 
 
 @pytest.fixture
@@ -119,7 +120,7 @@ def audit_account(mgmt_account_id, full_access_scp, audit_account_id):
 
 @pytest.fixture
 def log_account_id():
-    return '333333333333'
+    return "333333333333"
 
 
 @pytest.fixture
@@ -139,9 +140,10 @@ def log_account(mgmt_account_id, full_access_scp, log_account_id):
 
 
 @pytest.fixture
-def security_ou(mgmt_account, organization_id, audit_account, log_account,
-                full_access_scp):
-    ou_id = 'ou-999999999999'
+def security_ou(
+    mgmt_account, organization_id, audit_account, log_account, full_access_scp
+):
+    ou_id = "ou-999999999999"
     return OrganizationalUnit(
         id=ou_id,
         name="Security",
@@ -159,7 +161,7 @@ def security_ou(mgmt_account, organization_id, audit_account, log_account,
 
 @pytest.fixture
 def workload_account_id():
-    return '444444444444'
+    return "444444444444"
 
 
 @pytest.fixture
@@ -180,7 +182,7 @@ def workload_account(mgmt_account_id, full_access_scp, workload_account_id):
 
 @pytest.fixture
 def workloads_ou(mgmt_account, organization_id, workload_account, full_access_scp):
-    ou_id = 'ou-999999999999'
+    ou_id = "ou-999999999999"
     return OrganizationalUnit(
         id=ou_id,
         name="Workloads",
@@ -197,7 +199,7 @@ def workloads_ou(mgmt_account, organization_id, workload_account, full_access_sc
 
 @pytest.fixture
 def root_ou(mgmt_account, security_ou, workloads_ou, organization_id, full_access_scp):
-    ou_id = 'r-fas3'
+    ou_id = "r-fas3"
     return OrganizationalUnit(
         id=ou_id,
         name="Root",
@@ -209,7 +211,7 @@ def root_ou(mgmt_account, security_ou, workloads_ou, organization_id, full_acces
         child_ous=[
             security_ou,
             workloads_ou,
-        ]
+        ],
     )
 
 

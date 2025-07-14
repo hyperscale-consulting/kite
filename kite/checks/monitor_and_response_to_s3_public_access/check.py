@@ -1,17 +1,17 @@
 """Check for monitoring and response to S3 public access."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.helpers import get_account_ids_in_scope, manual_check
-from kite.data import get_config_rules
 from kite.config import Config
-
+from kite.data import get_config_rules
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "monitor-and-respond-to-s3-public-access"
 CHECK_NAME = "Monitor and Respond to S3 Public Access"
 
 
-def _check_config_rules(rules: List[Dict[str, Any]]) -> Dict[str, Any]:
+def _check_config_rules(rules: list[dict[str, Any]]) -> dict[str, Any]:
     """
     Check if the required Config rules are present and properly configured.
 
@@ -67,7 +67,7 @@ def _check_config_rules(rules: List[Dict[str, Any]]) -> Dict[str, Any]:
     return result
 
 
-def check_monitor_and_response_to_s3_public_access() -> Dict[str, Any]:
+def check_monitor_and_response_to_s3_public_access() -> dict[str, Any]:
     """
     Check if there is proper monitoring and response to S3 public access.
 
@@ -97,8 +97,8 @@ def check_monitor_and_response_to_s3_public_access() -> Dict[str, Any]:
 
             # Check if both rules have remediation
             if not (
-                rule_status["read_rule_has_remediation"] and
-                rule_status["write_rule_has_remediation"]
+                rule_status["read_rule_has_remediation"]
+                and rule_status["write_rule_has_remediation"]
             ):
                 accounts_without_remediation.append(f"{account_id} ({region})")
 

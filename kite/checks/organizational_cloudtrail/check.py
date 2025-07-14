@@ -1,16 +1,15 @@
 """Check for organizational CloudTrail trail."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.data import get_organization
 from kite.helpers import get_organizational_trail
-
 
 CHECK_ID = "organizational-cloudtrail"
 CHECK_NAME = "Organizational CloudTrail"
 
 
-def check_organizational_cloudtrail() -> Dict[str, Any]:
+def check_organizational_cloudtrail() -> dict[str, Any]:
     """
     Check if there is an organizational CloudTrail trail.
 
@@ -71,7 +70,7 @@ def check_organizational_cloudtrail() -> Dict[str, Any]:
                     "region": region,
                     "s3_bucket": trail["S3BucketName"],
                     "log_group_arn": trail["CloudWatchLogsLogGroupArn"],
-                    "validation_enabled": validation_enabled
+                    "validation_enabled": validation_enabled,
                 },
             },
         }
@@ -81,16 +80,14 @@ def check_organizational_cloudtrail() -> Dict[str, Any]:
         "check_name": CHECK_NAME,
         "status": "PASS",
         "details": {
-            "message": (
-                "An organizational CloudTrail trail is configured."
-            ),
+            "message": ("An organizational CloudTrail trail is configured."),
             "trail": {
                 "name": trail["Name"],
                 "account": account,
                 "region": region,
                 "s3_bucket": trail["S3BucketName"],
                 "log_group_arn": trail["CloudWatchLogsLogGroupArn"],
-                "validation_enabled": validation_enabled
+                "validation_enabled": validation_enabled,
             },
         },
     }

@@ -1,19 +1,17 @@
 """Check if security data is published to a centralized log archive account."""
 
-from typing import Dict, Any, List
 from collections import defaultdict
+from typing import Any
 
-from kite.data import (
-    get_organization,
-    get_export_tasks,
-    get_cloudtrail_trails,
-    get_route53resolver_query_log_configs,
-    get_flow_logs,
-    get_config_delivery_channels,
-)
-from kite.helpers import manual_check, get_account_ids_in_scope
 from kite.config import Config
-
+from kite.data import get_cloudtrail_trails
+from kite.data import get_config_delivery_channels
+from kite.data import get_export_tasks
+from kite.data import get_flow_logs
+from kite.data import get_organization
+from kite.data import get_route53resolver_query_log_configs
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "security-data-published-to-log-archive-account"
 CHECK_NAME = "Security Data Published to Log Archive Account"
@@ -47,7 +45,7 @@ def _extract_bucket_name(destination: str) -> str:
     return destination.split("/")[0]
 
 
-def check_security_data_published_to_log_archive_account() -> Dict[str, Any]:
+def check_security_data_published_to_log_archive_account() -> dict[str, Any]:
     """
     Check if security data is published to a centralized log archive account.
 

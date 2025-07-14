@@ -1,19 +1,19 @@
 """Check for key rotation in line with defined crypto periods."""
 
-from typing import Dict, Any, List
+from typing import Any
 
-from kite.data import get_kms_keys
-from kite.helpers import get_account_ids_in_scope, manual_check
 from kite.config import Config
-
+from kite.data import get_kms_keys
+from kite.helpers import get_account_ids_in_scope
+from kite.helpers import manual_check
 
 CHECK_ID = "rotate-encryption-keys"
 CHECK_NAME = "Rotate Encryption Keys"
 
 
 def _format_keys_by_rotation_status(
-    keys: List[Dict[str, Any]], account: str, region: str
-) -> tuple[List[str], List[str]]:
+    keys: list[dict[str, Any]], account: str, region: str
+) -> tuple[list[str], list[str]]:
     """
     Format KMS keys grouped by their rotation status.
 
@@ -48,7 +48,7 @@ def _format_keys_by_rotation_status(
     return enabled_keys, disabled_keys
 
 
-def check_rotate_encryption_keys() -> Dict[str, Any]:
+def check_rotate_encryption_keys() -> dict[str, Any]:
     """
     Check if all encryption keys are rotated in line with a defined crypto period.
 
@@ -93,40 +93,43 @@ def check_rotate_encryption_keys() -> Dict[str, Any]:
     ]
 
     if all_enabled_keys:
-        message_parts.extend([
-            "KMS keys with rotation enabled:\n"
-            + "\n".join(sorted(all_enabled_keys))
-            + "\n\n"
-        ])
+        message_parts.extend(
+            [
+                "KMS keys with rotation enabled:\n"
+                + "\n".join(sorted(all_enabled_keys))
+                + "\n\n"
+            ]
+        )
 
     if all_disabled_keys:
-        message_parts.extend([
-            "KMS keys with rotation disabled:\n"
-            + "\n".join(sorted(all_disabled_keys))
-            + "\n\n"
-        ])
+        message_parts.extend(
+            [
+                "KMS keys with rotation disabled:\n"
+                + "\n".join(sorted(all_disabled_keys))
+                + "\n\n"
+            ]
+        )
 
-    message_parts.extend([
-        "Please verify that:\n"
-        "- All keys are rotated according to defined crypto periods\n"
-        "- Rotation periods align with security requirements\n"
-        "- Rotation is automated where possible\n"
-        "- Consider any envelope encrypted data keys used by workloads."
-    ])
+    message_parts.extend(
+        [
+            "Please verify that:\n"
+            "- All keys are rotated according to defined crypto periods\n"
+            "- Rotation periods align with security requirements\n"
+            "- Rotation is automated where possible\n"
+            "- Consider any envelope encrypted data keys used by workloads."
+        ]
+    )
 
     return manual_check(
         check_id=CHECK_ID,
         check_name=CHECK_NAME,
         message="".join(message_parts),
-        prompt=(
-            "Are all encryption keys rotated in line with defined crypto periods?"
-        ),
+        prompt=("Are all encryption keys rotated in line with defined crypto periods?"),
         pass_message=(
             "All encryption keys are rotated in line with defined crypto periods."
         ),
         fail_message=(
-            "All encryption keys should be rotated in line with defined crypto "
-            "periods."
+            "All encryption keys should be rotated in line with defined crypto periods."
         ),
         default=True,
     )

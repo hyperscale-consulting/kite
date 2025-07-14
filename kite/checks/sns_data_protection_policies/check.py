@@ -1,15 +1,14 @@
 """Check for SNS data protection policies."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "sns-data-protection-policies"
 CHECK_NAME = "SNS Data Protection Policies"
 
 
-def check_sns_data_protection_policies() -> Dict[str, Any]:
+def check_sns_data_protection_policies() -> dict[str, Any]:
     """
     Check if SNS data protection policies are used to automatically identify
     and mask unexpected sensitive data in SNS messages.

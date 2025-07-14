@@ -1,13 +1,11 @@
 """Utility functions for handling AWS context keys in a case-insensitive way."""
 
-from typing import Any, Dict, Optional
+from typing import Any
 
 
 def get_case_insensitive_value(
-    conditions: Dict[str, Any],
-    condition_type: str,
-    context_key: str
-) -> Optional[Any]:
+    conditions: dict[str, Any], condition_type: str, context_key: str
+) -> Any | None:
     """
     Get a value from conditions dictionary in a case-insensitive way.
 
@@ -41,9 +39,9 @@ def get_case_insensitive_value(
 
 
 def has_not_source_org_id_condition(
-    conditions: Dict[str, Any],
+    conditions: dict[str, Any],
     org_id: str,
-    condition_type: str = "StringNotEqualsIfExists"
+    condition_type: str = "StringNotEqualsIfExists",
 ) -> bool:
     """
     Check if conditions have the required aws:SourceOrgID condition.
@@ -57,16 +55,11 @@ def has_not_source_org_id_condition(
     Returns:
         True if the condition exists and matches, False otherwise
     """
-    value = get_case_insensitive_value(
-        conditions, condition_type, "aws:SourceOrgID"
-    )
+    value = get_case_insensitive_value(conditions, condition_type, "aws:SourceOrgID")
     return value == org_id
 
 
-def has_not_resource_org_id_condition(
-    conditions: Dict[str, Any],
-    org_id: str
-) -> bool:
+def has_not_resource_org_id_condition(conditions: dict[str, Any], org_id: str) -> bool:
     """
     Check if the 'not resource org ID condition' is present.
 
@@ -83,10 +76,7 @@ def has_not_resource_org_id_condition(
     return value == org_id
 
 
-def has_principal_org_id_condition(
-    conditions: Dict[str, Any],
-    org_id: str
-) -> bool:
+def has_principal_org_id_condition(conditions: dict[str, Any], org_id: str) -> bool:
     """
     Check if conditions have the required aws:PrincipalOrgID condition.
 
@@ -97,16 +87,12 @@ def has_principal_org_id_condition(
     Returns:
         True if the condition exists and matches, False otherwise
     """
-    value = get_case_insensitive_value(
-        conditions, "StringEquals", "aws:PrincipalOrgID"
-    )
+    value = get_case_insensitive_value(conditions, "StringEquals", "aws:PrincipalOrgID")
     return value == org_id
 
 
 def has_resource_org_id_condition(
-    conditions: Dict[str, Any],
-    org_id: str,
-    condition_type: str = "StringEquals"
+    conditions: dict[str, Any], org_id: str, condition_type: str = "StringEquals"
 ) -> bool:
     """
     Check if conditions have the required aws:ResourceOrgID condition.
@@ -119,15 +105,11 @@ def has_resource_org_id_condition(
     Returns:
         True if the condition exists and matches, False otherwise
     """
-    value = get_case_insensitive_value(
-        conditions, condition_type, "aws:ResourceOrgID"
-    )
+    value = get_case_insensitive_value(conditions, condition_type, "aws:ResourceOrgID")
     return value == org_id
 
 
-def has_no_source_account_condition(
-    conditions: Dict[str, Any]
-) -> bool:
+def has_no_source_account_condition(conditions: dict[str, Any]) -> bool:
     """
     Check if the 'no source account' condition is present.
 
@@ -137,15 +119,11 @@ def has_no_source_account_condition(
     Returns:
         True if the condition exists and matches, False otherwise
     """
-    value = get_case_insensitive_value(
-        conditions, "Null", "aws:SourceAccount"
-    )
+    value = get_case_insensitive_value(conditions, "Null", "aws:SourceAccount")
     return value == "false"
 
 
-def has_principal_is_aws_service_condition(
-    conditions: Dict[str, Any]
-) -> bool:
+def has_principal_is_aws_service_condition(conditions: dict[str, Any]) -> bool:
     """
     Check if the 'principal is AWS service' condition is present.
 
@@ -157,15 +135,11 @@ def has_principal_is_aws_service_condition(
     Returns:
         True if the condition exists and matches, False otherwise
     """
-    value = get_case_insensitive_value(
-        conditions, "Bool", "aws:PrincipalIsAWSService"
-    )
+    value = get_case_insensitive_value(conditions, "Bool", "aws:PrincipalIsAWSService")
     return value == "true"
 
 
-def has_not_source_ip_condition(
-    conditions: Dict[str, Any]
-) -> bool:
+def has_not_source_ip_condition(conditions: dict[str, Any]) -> bool:
     """
     Check if there is a NotIpAddressIfExists condition on source IP.
 
@@ -182,9 +156,7 @@ def has_not_source_ip_condition(
     return isinstance(value, list) and len(value) > 0
 
 
-def has_not_source_vpc_condition(
-    conditions: Dict[str, Any]
-) -> bool:
+def has_not_source_vpc_condition(conditions: dict[str, Any]) -> bool:
     """
     Check if conditions have the required aws:SourceVpc condition.
 
@@ -202,7 +174,7 @@ def has_not_source_vpc_condition(
 
 
 def has_not_principal_arn_condition(
-    conditions: Dict[str, Any],
+    conditions: dict[str, Any],
 ) -> bool:
     """
     Check if conditions have the required aws:PrincipalArn condition.
@@ -220,10 +192,7 @@ def has_not_principal_arn_condition(
     return isinstance(value, list) and len(value) > 0
 
 
-def has_not_principal_org_id_condition(
-    conditions: Dict[str, Any],
-    org_id: str
-) -> bool:
+def has_not_principal_org_id_condition(conditions: dict[str, Any], org_id: str) -> bool:
     """
     Check if conditions have the required aws:PrincipalOrgID condition.
 
@@ -239,16 +208,14 @@ def has_not_principal_org_id_condition(
     return value == org_id
 
 
-def has_principal_is_not_aws_service_condition(
-    conditions: Dict[str, Any]
-) -> bool:
+def has_principal_is_not_aws_service_condition(conditions: dict[str, Any]) -> bool:
     value = get_case_insensitive_value(
         conditions, "BoolIfExists", "aws:PrincipalIsAWSService"
     )
     return value == "false"
 
 
-def has_confused_deputy_protection(condition: Dict[str, Any]) -> bool:
+def has_confused_deputy_protection(condition: dict[str, Any]) -> bool:
     """
     Check if a resource-based policy statement condition has confused
     deputy protection.
@@ -258,7 +225,7 @@ def has_confused_deputy_protection(condition: Dict[str, Any]) -> bool:
             "aws:sourceaccount",
             "aws:sourcearn",
             "aws:sourceorgid",
-            "aws:sourceorgpaths"
+            "aws:sourceorgpaths",
         }
         provided_keys = set([key.lower() for key in condition["StringEquals"].keys()])
         if any(key in protected_keys for key in provided_keys):

@@ -1,17 +1,14 @@
 """Check for identity auditing."""
 
-from typing import Dict, Any
+from typing import Any
 
-from kite.helpers import (
-    manual_check,
-)
-
+from kite.helpers import manual_check
 
 CHECK_ID = "identity-audit"
 CHECK_NAME = "Identity Audit"
 
 
-def check_identity_audit() -> Dict[str, Any]:
+def check_identity_audit() -> dict[str, Any]:
     """
     Check if credentials and identities are regularly audited.
 

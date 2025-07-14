@@ -1,6 +1,6 @@
 """Check for training engineers on application security topics."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
 
@@ -8,7 +8,7 @@ CHECK_ID = "train-for-application-security"
 CHECK_NAME = "Train for Application Security"
 
 
-def check_train_for_application_security() -> Dict[str, Any]:
+def check_train_for_application_security() -> dict[str, Any]:
     """
     Check if engineers receive training on application security topics including threat
     modeling, secure coding, security testing, and secure deployment practices.

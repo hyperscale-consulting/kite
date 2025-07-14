@@ -1,8 +1,9 @@
-from typing import Dict, List, Optional, Any
+from typing import Any
+
 from botocore.exceptions import ClientError
 
 
-def fetch_secrets(session, region: Optional[str] = None) -> List[Dict[str, Any]]:
+def fetch_secrets(session, region: str | None = None) -> list[dict[str, Any]]:
     """
     Fetch all secrets from AWS Secrets Manager, including their resource policies.
 

@@ -1,28 +1,35 @@
-import yaml
-from datetime import datetime
+import logging
 import os
 import shutil
-import logging
-from dataclasses import dataclass, field, asdict
 from collections import defaultdict
+from dataclasses import asdict
+from dataclasses import dataclass
+from dataclasses import field
+from datetime import datetime
 
 import click
+import yaml
 from rich.console import Console
 from rich.panel import Panel
+from rich.prompt import Confirm
+from rich.prompt import Prompt
 from rich.table import Table
-from rich.prompt import Prompt, Confirm
 
-from kite.config import Config
-from kite.check_themes import CHECK_THEMES, ALL_CHECKS
-from kite.organizations import get_account_details
-from kite.helpers import assume_organizational_role, get_prowler_output, assume_role
-from kite.collect import collect_data
-from kite.organizations import fetch_account_ids
-from kite.data import save_collection_metadata, verify_collection_status
 from kite.accessanalyzer import list_analyzers
+from kite.check_themes import ALL_CHECKS
+from kite.check_themes import CHECK_THEMES
+from kite.cloudfront import get_distributions_by_web_acl
+from kite.collect import collect_data
+from kite.config import Config
+from kite.data import save_collection_metadata
+from kite.data import verify_collection_status
+from kite.helpers import assume_organizational_role
+from kite.helpers import assume_role
+from kite.helpers import get_prowler_output
+from kite.organizations import fetch_account_ids
+from kite.organizations import get_account_details
 from kite.s3 import get_buckets
 from kite.wafv2 import get_web_acls
-from kite.cloudfront import get_distributions_by_web_acl
 
 logger = logging.getLogger(__name__)
 console = Console()
@@ -122,7 +129,7 @@ class Assessment:
     @classmethod
     def load(cls):
         try:
-            with open("kite-results.yaml", "r") as f:
+            with open("kite-results.yaml") as f:
                 data = yaml.safe_load(f)
                 data["themes"] = defaultdict(list, data.get("themes", {}))
                 return Assessment(**data)

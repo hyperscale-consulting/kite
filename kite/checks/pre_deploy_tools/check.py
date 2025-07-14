@@ -1,15 +1,14 @@
 """Check for pre-deployment of incident response tools."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "pre-deploy-tools"
 CHECK_NAME = "Pre-deploy Incident Response Tools"
 
 
-def check_pre_deploy_tools() -> Dict[str, Any]:
+def check_pre_deploy_tools() -> dict[str, Any]:
     """
     Check if tools required to support incident response are deployed in advance.
 

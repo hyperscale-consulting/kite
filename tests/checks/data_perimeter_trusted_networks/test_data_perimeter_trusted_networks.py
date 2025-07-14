@@ -5,8 +5,8 @@ import pytest
 from kite.checks.data_perimeter_trusted_networks.check import (
     check_data_perimeter_trusted_networks,
 )
-from kite.models import ControlPolicy
 from kite.data import save_organization
+from kite.models import ControlPolicy
 
 
 @pytest.fixture
@@ -17,56 +17,56 @@ def trusted_networks_rcp():
         description="Trusted Networks RCP",
         arn="arn:aws:iam::1234567890:policy/TrustedNetworksRCP",
         type="RESOURCE_CONTROL_POLICY",
-        content=json.dumps({
-            "Statement": [
-                dict(
-                    Effect="Deny",
-                    Action=[
-                        "s3:*",
-                        "sqs:*",
-                        "kms:*",
-                        "secretsmanager:*",
-                        "sts:AssumeRole",
-                        "sts:DecodeAuthorizationMessage",
-                        "sts:GetAccessKeyInfo",
-                        "sts:GetFederationToken",
-                        "sts:GetServiceBearerToken",
-                        "sts:GetSessionToken",
-                        "sts:SetContext"
-                    ],
-                    Resource="*",
-                    Principal="*",
-                    Condition={
-                        "NotIpAddressIfExists": {
-                            "aws:SourceIp": ["66.0.0.0/8"]
+        content=json.dumps(
+            {
+                "Statement": [
+                    dict(
+                        Effect="Deny",
+                        Action=[
+                            "s3:*",
+                            "sqs:*",
+                            "kms:*",
+                            "secretsmanager:*",
+                            "sts:AssumeRole",
+                            "sts:DecodeAuthorizationMessage",
+                            "sts:GetAccessKeyInfo",
+                            "sts:GetFederationToken",
+                            "sts:GetServiceBearerToken",
+                            "sts:GetSessionToken",
+                            "sts:SetContext",
+                        ],
+                        Resource="*",
+                        Principal="*",
+                        Condition={
+                            "NotIpAddressIfExists": {"aws:SourceIp": ["66.0.0.0/8"]},
+                            "StringNotEqualsIfExists": {
+                                "aws:SourceVpc": ["vpc-12345678"],
+                                "aws:PrincipalTag/dp:exclude:network": "true",
+                                "aws:PrincipalAccount": [
+                                    "1234567890",
+                                    "1234567891",
+                                    "1234567892",
+                                    "1234567893",
+                                ],
+                                "aws:ResourceTag/dp:exclude:network": "true",
+                            },
+                            "BoolIfExists": {
+                                "aws:PrincipalIsAWSService": "false",
+                                "aws:ViaAWSService": "false",
+                            },
+                            "ArnNotLikeIfExists": {
+                                "aws:PrincipalArn": [
+                                    "arn:aws:iam::*:role/aws:ec2-infrastructure"
+                                ]
+                            },
+                            "StringEquals": {
+                                "aws:PrincipalTag/dp:include:network": "true"
+                            },
                         },
-                        "StringNotEqualsIfExists": {
-                            "aws:SourceVpc": ["vpc-12345678"],
-                            "aws:PrincipalTag/dp:exclude:network": "true",
-                            "aws:PrincipalAccount": [
-                                "1234567890",
-                                "1234567891",
-                                "1234567892",
-                                "1234567893"
-                            ],
-                            "aws:ResourceTag/dp:exclude:network": "true"
-                        },
-                        "BoolIfExists": {
-                            "aws:PrincipalIsAWSService": "false",
-                            "aws:ViaAWSService": "false"
-                        },
-                        "ArnNotLikeIfExists": {
-                            "aws:PrincipalArn": [
-                                "arn:aws:iam::*:role/aws:ec2-infrastructure"
-                            ]
-                        },
-                        "StringEquals": {
-                            "aws:PrincipalTag/dp:include:network": "true"
-                        }
-                    }
-                )
-            ]
-        }),
+                    )
+                ]
+            }
+        ),
     )
 
 
@@ -97,17 +97,13 @@ def trusted_networks_scp():
                             "neptune-db:*",
                             "kafka-cluster:*",
                             "elasticfilesystem:client*",
-                            "rds-db:connect"
+                            "rds-db:connect",
                         ],
                         Resource="*",
                         Principal="*",
                         Condition={
-                            "BoolIfExists": {
-                                "aws:ViaAWSService": "false"
-                            },
-                            "NotIpAddressIfExists": {
-                                "aws:SourceIp": ["66.0.0.0/8"]
-                            },
+                            "BoolIfExists": {"aws:ViaAWSService": "false"},
+                            "NotIpAddressIfExists": {"aws:SourceIp": ["66.0.0.0/8"]},
                             "StringNotEqualsIfExists": {
                                 "aws:SourceVpc": ["vpc-12345678"]
                             },
@@ -115,8 +111,8 @@ def trusted_networks_scp():
                                 "aws:PrincipalArn": [
                                     "arn:aws:iam::12345676887:role/trusted-role"
                                 ]
-                            }
-                        }
+                            },
+                        },
                     )
                 ]
             }

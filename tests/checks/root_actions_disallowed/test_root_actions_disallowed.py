@@ -1,12 +1,11 @@
 """Tests for the root actions disallowed check."""
 
 import json
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
-from kite.checks.root_actions_disallowed.check import (
-    check_root_actions_disallowed,
-    _is_root_actions_disallow_scp,
-)
+from kite.checks.root_actions_disallowed.check import _is_root_actions_disallow_scp
+from kite.checks.root_actions_disallowed.check import check_root_actions_disallowed
 
 
 def test_is_root_actions_disallow_scp_with_arnlike_condition():
@@ -157,7 +156,7 @@ def test_check_root_actions_disallowed_root_has_scp(mock_get_org):
 
     result = check_root_actions_disallowed()
     assert result["status"] == "PASS"
-    msg = "Root actions disallow SCP is attached " "to the root OU"
+    msg = "Root actions disallow SCP is attached to the root OU"
     assert msg in result["details"]["message"]
     assert result["details"]["scp"]["id"] == "scp-123"
 
@@ -194,7 +193,7 @@ def test_check_root_actions_disallowed_top_level_ous_have_scp(mock_get_org):
 
     result = check_root_actions_disallowed()
     assert result["status"] == "PASS"
-    msg = "Root actions disallow SCP is attached " "to all top-level OUs"
+    msg = "Root actions disallow SCP is attached to all top-level OUs"
     assert msg in result["details"]["message"]
 
 
@@ -246,7 +245,7 @@ def test_check_root_actions_disallowed_no_top_level_ous(mock_get_org):
 
     result = check_root_actions_disallowed()
     assert result["status"] == "FAIL"
-    msg = "Root actions disallow SCP is not attached " "to the root OU"
+    msg = "Root actions disallow SCP is not attached to the root OU"
     assert msg in result["details"]["message"]
 
 

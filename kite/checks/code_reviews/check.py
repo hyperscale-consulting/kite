@@ -1,15 +1,14 @@
 """Check for code reviews to detect security vulnerabilities."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "conduct-code-reviews"
 CHECK_NAME = "Conduct Code Reviews"
 
 
-def check_conduct_code_reviews() -> Dict[str, Any]:
+def check_conduct_code_reviews() -> dict[str, Any]:
     """
     Check if code reviews are used to detect security vulnerabilities in production
     code.

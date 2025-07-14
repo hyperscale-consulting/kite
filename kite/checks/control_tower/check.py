@@ -1,15 +1,14 @@
 """Check for use of Control Tower to enable suitable standard controls."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "control-tower"
 CHECK_NAME = "Control Tower"
 
 
-def check_control_tower() -> Dict[str, Any]:
+def check_control_tower() -> dict[str, Any]:
     """
     Check if Control Tower is used to enable suitable standard controls.
 
@@ -31,9 +30,7 @@ def check_control_tower() -> Dict[str, Any]:
         "- Are the standard controls suitable for the organization?\n"
         "- Are the standard controls consistently applied across all accounts?"
     )
-    prompt = (
-        "Is Control Tower used to enable suitable standard controls?"
-    )
+    prompt = "Is Control Tower used to enable suitable standard controls?"
 
     # Use the manual_check function
     result = manual_check(
@@ -41,9 +38,7 @@ def check_control_tower() -> Dict[str, Any]:
         check_name=CHECK_NAME,
         message=message,
         prompt=prompt,
-        pass_message=(
-            "Control Tower is used to enable suitable standard controls."
-        ),
+        pass_message=("Control Tower is used to enable suitable standard controls."),
         fail_message=(
             "Control Tower should be used to enable suitable standard controls."
         ),

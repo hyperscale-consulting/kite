@@ -1,13 +1,12 @@
 """Tests for the Region Deny SCP check."""
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 from kite.checks.region_deny_scp.check import check_region_deny_scp
-from kite.organizations import (
-    Organization,
-    OrganizationalUnit,
-    ControlPolicy,
-)
+from kite.organizations import ControlPolicy
+from kite.organizations import Organization
+from kite.organizations import OrganizationalUnit
 
 
 def test_check_region_deny_scp_pass_root():
@@ -47,11 +46,14 @@ def test_check_region_deny_scp_pass_root():
     )
 
     # Mock the get_organization function to return our mock organization
-    with patch(
-        "kite.checks.region_deny_scp.check.get_organization", return_value=mock_org
-    ), patch(
-        "kite.checks.region_deny_scp.check.Config.get",
-        return_value=MagicMock(active_regions=["us-east-1", "us-west-2"]),
+    with (
+        patch(
+            "kite.checks.region_deny_scp.check.get_organization", return_value=mock_org
+        ),
+        patch(
+            "kite.checks.region_deny_scp.check.Config.get",
+            return_value=MagicMock(active_regions=["us-east-1", "us-west-2"]),
+        ),
     ):
         result = check_region_deny_scp()
 
@@ -133,11 +135,14 @@ def test_check_region_deny_scp_pass_top_level_ous():
     )
 
     # Mock the get_organization function to return our mock organization
-    with patch(
-        "kite.checks.region_deny_scp.check.get_organization", return_value=mock_org
-    ), patch(
-        "kite.checks.region_deny_scp.check.Config.get",
-        return_value=MagicMock(active_regions=["us-east-1", "us-west-2"]),
+    with (
+        patch(
+            "kite.checks.region_deny_scp.check.get_organization", return_value=mock_org
+        ),
+        patch(
+            "kite.checks.region_deny_scp.check.Config.get",
+            return_value=MagicMock(active_regions=["us-east-1", "us-west-2"]),
+        ),
     ):
         result = check_region_deny_scp()
 
@@ -172,11 +177,14 @@ def test_check_region_deny_scp_fail_no_scp():
     )
 
     # Mock the get_organization function to return our mock organization
-    with patch(
-        "kite.checks.region_deny_scp.check.get_organization", return_value=mock_org
-    ), patch(
-        "kite.checks.region_deny_scp.check.Config.get",
-        return_value=MagicMock(active_regions=["us-east-1", "us-west-2"]),
+    with (
+        patch(
+            "kite.checks.region_deny_scp.check.get_organization", return_value=mock_org
+        ),
+        patch(
+            "kite.checks.region_deny_scp.check.Config.get",
+            return_value=MagicMock(active_regions=["us-east-1", "us-west-2"]),
+        ),
     ):
         result = check_region_deny_scp()
 
@@ -245,11 +253,14 @@ def test_check_region_deny_scp_fail_missing_ou():
     )
 
     # Mock the get_organization function to return our mock organization
-    with patch(
-        "kite.checks.region_deny_scp.check.get_organization", return_value=mock_org
-    ), patch(
-        "kite.checks.region_deny_scp.check.Config.get",
-        return_value=MagicMock(active_regions=["us-east-1", "us-west-2"]),
+    with (
+        patch(
+            "kite.checks.region_deny_scp.check.get_organization", return_value=mock_org
+        ),
+        patch(
+            "kite.checks.region_deny_scp.check.Config.get",
+            return_value=MagicMock(active_regions=["us-east-1", "us-west-2"]),
+        ),
     ):
         result = check_region_deny_scp()
 
@@ -298,11 +309,14 @@ def test_check_region_deny_scp_no_active_regions():
     )
 
     # Mock the get_organization function to return our mock organization
-    with patch(
-        "kite.checks.region_deny_scp.check.get_organization", return_value=mock_org
-    ), patch(
-        "kite.checks.region_deny_scp.check.Config.get",
-        return_value=MagicMock(active_regions=[]),
+    with (
+        patch(
+            "kite.checks.region_deny_scp.check.get_organization", return_value=mock_org
+        ),
+        patch(
+            "kite.checks.region_deny_scp.check.Config.get",
+            return_value=MagicMock(active_regions=[]),
+        ),
     ):
         result = check_region_deny_scp()
 

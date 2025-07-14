@@ -1,10 +1,9 @@
 """SCP prevents deleting logs check module."""
 
 import json
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.data import get_organization
-
 
 CHECK_ID = "scp-prevents-deleting-logs"
 CHECK_NAME = "SCP Prevents Deleting Logs"
@@ -71,7 +70,7 @@ def check_scp_prevents_deleting_logs() -> dict:
     }
 
 
-def _find_matching_scps(ou) -> List[Dict[str, Any]]:
+def _find_matching_scps(ou) -> list[dict[str, Any]]:
     """
     Recursively find all OUs with SCPs that prevent log deletion.
 
@@ -108,7 +107,7 @@ def _find_matching_scps(ou) -> List[Dict[str, Any]]:
     return matching_scps
 
 
-def _is_log_deletion_deny_scp(content: Dict[str, Any]) -> bool:
+def _is_log_deletion_deny_scp(content: dict[str, Any]) -> bool:
     """
     Check if an SCP effectively denies log deletion.
 

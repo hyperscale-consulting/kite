@@ -1,15 +1,14 @@
 """Check for secure storage of secrets in a secure platform."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "secure-secrets-storage"
 CHECK_NAME = "Secure Secrets Storage"
 
 
-def check_secure_secrets_storage() -> Dict[str, Any]:
+def check_secure_secrets_storage() -> dict[str, Any]:
     """
     Check if all secrets are stored in a secure platform (i.e. encrypted, auditable, etc).
 

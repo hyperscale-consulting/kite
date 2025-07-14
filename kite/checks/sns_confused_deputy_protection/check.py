@@ -1,11 +1,11 @@
 """Check for confused deputy protection in SNS topic policies."""
 
-from typing import Dict, Any
+from typing import Any
+
+from kite.config import Config
 from kite.data import get_sns_topics
 from kite.helpers import get_account_ids_in_scope
-from kite.config import Config
 from kite.utils.aws_context_keys import has_confused_deputy_protection
-
 
 # Define check ID and name
 CHECK_ID = "sns-confused-deputy-protection"
@@ -29,7 +29,7 @@ def _is_service_principal(principal: Any) -> bool:
     return principal.endswith(".amazonaws.com")
 
 
-def check_sns_confused_deputy_protection() -> Dict[str, Any]:
+def check_sns_confused_deputy_protection() -> dict[str, Any]:
     """
     Check for SNS topic policies that could be vulnerable to confused deputy attacks.
 
@@ -81,12 +81,14 @@ def check_sns_confused_deputy_protection() -> Dict[str, Any]:
 
                     # Check if any principal is a service principal
                     if any(_is_service_principal(p) for p in principals):
-                        vulnerable_topics.append({
-                            "account_id": account_id,
-                            "region": region,
-                            "topic_arn": topic_arn,
-                            "statement": statement
-                        })
+                        vulnerable_topics.append(
+                            {
+                                "account_id": account_id,
+                                "region": region,
+                                "topic_arn": topic_arn,
+                                "statement": statement,
+                            }
+                        )
 
     return {
         "check_id": CHECK_ID,
@@ -99,8 +101,8 @@ def check_sns_confused_deputy_protection() -> Dict[str, Any]:
                 "vulnerable to confused deputy attacks. These policies allow actions to "
                 "be performed by service principals without proper source account/ARN/"
                 "organization conditions."
-            )
-        }
+            ),
+        },
     }
 
 

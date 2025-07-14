@@ -1,17 +1,16 @@
 """Check that all delegated admins are trusted accounts."""
 
-from typing import Dict, Any, List
+from typing import Any
 
 from kite.data import get_delegated_admins
 from kite.helpers import prompt_user_with_panel
 from kite.organizations import DelegatedAdmin
 
-
 CHECK_ID = "trusted-delegated-admins"
 CHECK_NAME = "Trusted Delegated Admins"
 
 
-def check_trusted_delegated_admins() -> Dict[str, Any]:
+def check_trusted_delegated_admins() -> dict[str, Any]:
     """
     Check that all delegated admins are trusted accounts.
 
@@ -46,14 +45,14 @@ def check_trusted_delegated_admins() -> Dict[str, Any]:
             "details": {},
         }
 
-    services_by_admin: Dict[str, List[DelegatedAdmin]] = {}
+    services_by_admin: dict[str, list[DelegatedAdmin]] = {}
     for admin in delegated_admins:
         if admin.id not in services_by_admin:
             services_by_admin[admin.id] = []
         services_by_admin[admin.id].append(admin.service_principal)
 
     # Collect all unique delegated admin accounts
-    all_admins: Dict[str, DelegatedAdmin] = {}
+    all_admins: dict[str, DelegatedAdmin] = {}
     for admin in delegated_admins:
         if admin.id not in all_admins:
             all_admins[admin.id] = admin

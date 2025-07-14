@@ -1,7 +1,5 @@
 """Tests for the AWS Organizations usage check."""
 
-from unittest.mock import patch, MagicMock
-
 from kite.checks.aws_organizations.check import check_aws_organizations_usage
 
 

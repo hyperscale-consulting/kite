@@ -1,15 +1,14 @@
 """Check for controls to prevent and detect secrets in source code."""
 
-from typing import Dict, Any
+from typing import Any
 
 from kite.helpers import manual_check
-
 
 CHECK_ID = "prevent-and-detect-secrets-in-source-code"
 CHECK_NAME = "Prevent and Detect Secrets in Source Code"
 
 
-def check_prevent_and_detect_secrets() -> Dict[str, Any]:
+def check_prevent_and_detect_secrets() -> dict[str, Any]:
     """
     Check if there are controls in place to prevent and detect secrets in source code.
 
@@ -33,9 +32,7 @@ def check_prevent_and_detect_secrets() -> Dict[str, Any]:
         "- Are there tools like AWS CodeGuru or similar to detect secrets?\n"
         "- Are these controls consistently applied across all repositories?"
     )
-    prompt = (
-        "Are there controls in place to prevent and detect secrets in source code?"
-    )
+    prompt = "Are there controls in place to prevent and detect secrets in source code?"
 
     # Use the manual_check function
     result = manual_check(

@@ -1,17 +1,18 @@
 """Check for root user security."""
 
-from typing import Dict, Any
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
+from typing import Any
 
-from kite.helpers import get_account_ids_in_scope
 from kite.data import get_credentials_report
-
+from kite.helpers import get_account_ids_in_scope
 
 CHECK_ID = "avoid-root-usage"
 CHECK_NAME = "Avoid Root Usage"
 
 
-def check_root_user_usage() -> Dict[str, Any]:
+def check_root_user_usage() -> dict[str, Any]:
     """
     Check if the root account is being used for day-to-day tasks.
 

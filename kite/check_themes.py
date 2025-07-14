@@ -387,7 +387,6 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
             check_scp_prevents_cloudwatch_changes,
             check_scp_prevents_config_changes,
             check_scp_prevents_guardduty_changes,
-            check_scp_prevents_ram_external_sharing,
             check_scp_prevents_unencrypted_s3_uploads,
             check_scp_prevents_deleting_logs,
             check_scp_prevents_adding_internet_access_to_vpc,

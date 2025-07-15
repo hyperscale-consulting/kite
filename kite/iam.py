@@ -257,27 +257,13 @@ def get_password_policy(session) -> dict[str, Any]:
     except ClientError as e:
         # If no password policy exists, return None
         if e.response["Error"]["Code"] == "NoSuchEntity":
-            return None
+            return {}
         raise
 
 
-def get_role_attached_policies(session, role_name: str) -> list[dict[str, Any]]:
-    """
-    Get all attached managed policies for an IAM role.
-
-    Args:
-        session: The boto3 session to use.
-        role_name: The name of the IAM role.
-
-    Returns:
-        List of dictionaries containing attached policy information.
-
-    Raises:
-        ClientError: If the IAM API call fails.
-    """
-    iam_client = session.client("iam")
+def _get_role_attached_policies(client, role_name: str) -> list[dict[str, Any]]:
     policies = []
-    paginator = iam_client.get_paginator("list_attached_role_policies")
+    paginator = client.get_paginator("list_attached_role_policies")
 
     for page in paginator.paginate(RoleName=role_name):
         policies.extend(page.get("AttachedPolicies", []))
@@ -285,50 +271,16 @@ def get_role_attached_policies(session, role_name: str) -> list[dict[str, Any]]:
     return policies
 
 
-def get_role_inline_policy_document(
-    session, role_name: str, policy_name: str
+def _get_role_inline_policy_document(
+    client, role_name: str, policy_name: str
 ) -> dict[str, Any]:
-    """
-    Get the policy document for an inline policy attached to a role.
-
-    Args:
-        session: The boto3 session to use.
-        role_name: The name of the IAM role.
-        policy_name: The name of the inline policy.
-
-    Returns:
-        Dict containing the policy document.
-
-    Raises:
-        ClientError: If the IAM API call fails.
-    """
-    iam_client = session.client("iam")
-
-    response = iam_client.get_role_policy(RoleName=role_name, PolicyName=policy_name)
-    return {
-        "PolicyName": policy_name,
-        "RoleName": role_name,
-        "PolicyDocument": response.get("PolicyDocument", {}),
-    }
+    response = client.get_role_policy(RoleName=role_name, PolicyName=policy_name)
+    return response.get("PolicyDocument", {})
 
 
-def get_role_inline_policies(session, role_name: str) -> list[str]:
-    """
-    Get all inline policy names for an IAM role.
-
-    Args:
-        session: The boto3 session to use.
-        role_name: The name of the IAM role.
-
-    Returns:
-        List of inline policy names.
-
-    Raises:
-        ClientError: If the IAM API call fails.
-    """
-    iam_client = session.client("iam")
+def _get_role_inline_policies(client, role_name: str) -> list[str]:
     policy_names = []
-    paginator = iam_client.get_paginator("list_role_policies")
+    paginator = client.get_paginator("list_role_policies")
 
     for page in paginator.paginate(RoleName=role_name):
         policy_names.extend(page.get("PolicyNames", []))
@@ -336,26 +288,15 @@ def get_role_inline_policies(session, role_name: str) -> list[str]:
     return policy_names
 
 
-def list_roles(session) -> list[dict[str, Any]]:
+def get_roles(session) -> list[dict[str, Any]]:
     """
-    List all IAM roles in the account with their attached and inline policies.
+    Get all IAM roles in the account with their attached and inline policies.
 
     Args:
         session: The boto3 session to use.
 
     Returns:
-        List of dictionaries containing role information, including:
-        - RoleName: The name of the role
-        - RoleId: The ID of the role
-        - Arn: The Amazon Resource Name (ARN) of the role
-        - Path: The path to the role
-        - AssumeRolePolicyDocument: The trust policy document for assuming the role
-        - CreateDate: The date and time when the role was created
-        - MaxSessionDuration: The maximum session duration in seconds
-        - PermissionsBoundary: The ARN of the policy used as permissions boundary
-        - Tags: The list of tags attached to the role
-        - AttachedPolicies: List of attached managed policies
-        - InlinePolicyNames: List of inline policy names
+        List of dictionaries containing role information.
 
     Raises:
         ClientError: If the IAM API call fails.
@@ -368,8 +309,8 @@ def list_roles(session) -> list[dict[str, Any]]:
         for role in page.get("Roles", []):
             # Get attached policies for the role
             try:
-                attached_policies = get_role_attached_policies(
-                    session, role["RoleName"]
+                attached_policies = _get_role_attached_policies(
+                    iam_client, role["RoleName"]
                 )
                 role["AttachedPolicies"] = attached_policies
             except ClientError:
@@ -377,36 +318,38 @@ def list_roles(session) -> list[dict[str, Any]]:
 
             # Get inline policy names for the role
             try:
-                inline_policy_names = get_role_inline_policies(
-                    session, role["RoleName"]
+                inline_policy_names = _get_role_inline_policies(
+                    iam_client, role["RoleName"]
                 )
-                role["InlinePolicyNames"] = inline_policy_names
+                inline_policies = []
+                for policy_name in inline_policy_names:
+                    doc = _get_role_inline_policy_document(
+                        iam_client, role["RoleName"], policy_name
+                    )
+                    inline_policies.append(
+                        {
+                            "PolicyName": policy_name,
+                            "PolicyDocument": doc,
+                        }
+                    )
+                role["InlinePolicies"] = inline_policies
             except ClientError:
-                role["InlinePolicyNames"] = []
+                role["InlinePolicies"] = []
 
             roles.append(role)
 
     return roles
 
 
-def list_customer_managed_policies(session) -> list[dict[str, Any]]:
+def get_customer_managed_policies(session) -> list[dict[str, Any]]:
     """
-    List all customer managed policies in the account.
+    Get all customer managed policies in the account.
 
     Args:
         session: The boto3 session to use.
 
     Returns:
-        List of dictionaries containing policy information, including:
-        - PolicyName: The name of the policy
-        - PolicyId: The ID of the policy
-        - Arn: The Amazon Resource Name (ARN) of the policy
-        - Path: The path to the policy
-        - DefaultVersionId: The ID of the default version of the policy
-        - AttachmentCount: The number of entities (users, groups, roles) to which the policy is attached
-        - CreateDate: The date and time when the policy was created
-        - UpdateDate: The date and time when the policy was last updated
-        - Description: The description of the policy
+        List of dictionaries containing policy information.
 
     Raises:
         ClientError: If the IAM API call fails.
@@ -417,12 +360,14 @@ def list_customer_managed_policies(session) -> list[dict[str, Any]]:
 
     # Only list customer managed policies (Scope=Local)
     for page in paginator.paginate(Scope="Local"):
-        policies.extend(page.get("Policies", []))
+        for policy in page.get("Policies", []):
+            policy["PolicyDocument"] = _get_policy_document(iam_client, policy["Arn"])
+            policies.append(policy)
 
     return policies
 
 
-def get_policy_and_document(session, policy_arn: str) -> dict[str, Any]:
+def _get_policy_document(client, policy_arn: str) -> dict[str, Any]:
     """
     Get policy details and the policy document for a customer managed policy.
 
@@ -436,23 +381,23 @@ def get_policy_and_document(session, policy_arn: str) -> dict[str, Any]:
     Raises:
         ClientError: If the IAM API call fails.
     """
-    iam_client = session.client("iam")
 
     # Get policy details, including the default version ID
-    policy_details = iam_client.get_policy(PolicyArn=policy_arn)
+    policy_details = client.get_policy(PolicyArn=policy_arn)
     policy = policy_details.get("Policy", {})
 
     # Get the policy document
     version_id = policy.get("DefaultVersionId")
     if version_id:
-        policy_version = iam_client.get_policy_version(
+        policy_version = client.get_policy_version(
             PolicyArn=policy_arn, VersionId=version_id
         )
         policy_document = policy_version.get("PolicyVersion", {}).get("Document", {})
     else:
         policy_document = {}
 
-    return {"PolicyDetails": policy, "PolicyDocument": policy_document}
+    policy["PolicyDocument"] = policy_document
+    return policy
 
 
 def list_users(session) -> list[dict[str, Any]]:
@@ -476,31 +421,40 @@ def list_users(session) -> list[dict[str, Any]]:
                 "Groups"
             ]:
                 groups.append(group["GroupName"])
+            user["Groups"] = groups
 
             # Get user's policies
             attached_policies = []
             paginator = iam_client.get_paginator("list_attached_user_policies")
             for page in paginator.paginate(UserName=user["UserName"]):
                 attached_policies.extend(page.get("AttachedPolicies", []))
+            user["AttachedPolicies"] = attached_policies
 
             # Get user's inline policies
             inline_policies = []
             paginator = iam_client.get_paginator("list_user_policies")
             for page in paginator.paginate(UserName=user["UserName"]):
-                inline_policies.extend(page.get("PolicyNames", []))
-
-            users.append(
-                {
-                    "UserName": user["UserName"],
-                    "Arn": user["Arn"],
-                    "CreateDate": user["CreateDate"],
-                    "Groups": groups,
-                    "AttachedPolicies": attached_policies,
-                    "InlinePolicyNames": inline_policies,
-                }
-            )
+                for policy_name in page.get("PolicyNames", []):
+                    doc = _get_user_inline_policy_document(
+                        iam_client, user["UserName"], policy_name
+                    )
+                    inline_policies.append(
+                        {
+                            "PolicyName": policy_name,
+                            "PolicyDocument": doc,
+                        }
+                    )
+            user["InlinePolicies"] = inline_policies
+            users.append(user)
 
     return users
+
+
+def _get_user_inline_policy_document(
+    client, user_name: str, policy_name: str
+) -> dict[str, Any]:
+    response = client.get_user_policy(UserName=user_name, PolicyName=policy_name)
+    return response.get("PolicyDocument", {})
 
 
 def list_groups(session) -> list[dict[str, Any]]:
@@ -528,16 +482,25 @@ def list_groups(session) -> list[dict[str, Any]]:
             inline_policies = []
             paginator = iam_client.get_paginator("list_group_policies")
             for page in paginator.paginate(GroupName=group["GroupName"]):
-                inline_policies.extend(page.get("PolicyNames", []))
-
-            groups.append(
-                {
-                    "Arn": group["Arn"],
-                    "GroupName": group["GroupName"],
-                    "CreateDate": group["CreateDate"],
-                    "AttachedPolicies": attached_policies,
-                    "InlinePolicyNames": inline_policies,
-                }
-            )
+                for policy_name in page.get("PolicyNames", []):
+                    doc = _get_group_inline_policy_document(
+                        iam_client, group["GroupName"], policy_name
+                    )
+                    inline_policies.append(
+                        {
+                            "PolicyName": policy_name,
+                            "PolicyDocument": doc,
+                        }
+                    )
+            group["AttachedPolicies"] = attached_policies
+            group["InlinePolicies"] = inline_policies
+            groups.append(group)
 
     return groups
+
+
+def _get_group_inline_policy_document(
+    client, group_name: str, policy_name: str
+) -> dict[str, Any]:
+    response = client.get_group_policy(GroupName=group_name, PolicyName=policy_name)
+    return response.get("PolicyDocument", {})

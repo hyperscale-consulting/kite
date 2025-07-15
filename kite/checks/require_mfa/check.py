@@ -7,11 +7,12 @@ from botocore.exceptions import ClientError
 from kite.data import get_credentials_report
 from kite.data import get_oidc_providers
 from kite.data import get_saml_providers
+from kite.data import get_cognito_user_pools
 from kite.helpers import get_account_ids_in_scope
-from kite.helpers import get_cognito_user_pools
 from kite.helpers import get_user_pool_mfa_config
 from kite.helpers import is_identity_center_enabled
 from kite.helpers import manual_check
+from kite.config import Config
 
 CHECK_ID = "require-mfa"
 CHECK_NAME = "Require MFA"
@@ -126,22 +127,15 @@ def check_require_mfa() -> dict[str, Any]:
     context_message += "\n\nCognito User Pools without MFA Required:\n"
     pools_without_mfa = []
     for account_id in get_account_ids_in_scope():
-        try:
-            user_pools = get_cognito_user_pools(account_id)
+        for region in Config.get().active_regions:
+            user_pools = get_cognito_user_pools(account_id, region)
             for pool in user_pools:
-                try:
-                    mfa_config = get_user_pool_mfa_config(account_id, pool["Id"])
-                    if mfa_config != "ON":
-                        pools_without_mfa.append(
-                            f"{pool.get('Name', 'Unknown')} ({account_id}) - "
-                            f"MFA: {mfa_config}"
-                        )
-                except Exception:
-                    # If we can't get the MFA config for this pool, skip it
-                    continue
-        except Exception:
-            # If we can't check Cognito for this account, skip it
-            continue
+                mfa_config = get_user_pool_mfa_config(account_id, region, pool["Id"])
+                if mfa_config != "ON":
+                    pools_without_mfa.append(
+                        f"{pool.get('Name', 'Unknown')} ({account_id}) - "
+                        f"MFA: {mfa_config}"
+                    )
 
     if pools_without_mfa:
         context_message += "\n".join(f"- {pool}" for pool in pools_without_mfa)

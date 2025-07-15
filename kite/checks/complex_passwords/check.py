@@ -1,11 +1,9 @@
-"""Check for complex passwords."""
-
 from typing import Any
 
 from kite.data import get_oidc_providers
 from kite.data import get_saml_providers
+from kite.data import get_cognito_user_pools
 from kite.helpers import get_account_ids_in_scope
-from kite.helpers import get_cognito_user_pools
 from kite.helpers import get_password_policy
 from kite.helpers import get_user_pool_password_policy
 from kite.helpers import is_cognito_password_policy_complex
@@ -13,6 +11,7 @@ from kite.helpers import is_complex
 from kite.helpers import is_identity_center_enabled
 from kite.helpers import is_identity_center_identity_store_used
 from kite.helpers import manual_check
+from kite.config import Config
 
 CHECK_ID = "complex-passwords"
 CHECK_NAME = "Complex Passwords"
@@ -80,21 +79,14 @@ def check_complex_passwords() -> dict[str, Any]:
     non_complex_cognito_pools = []
 
     for account_id in account_ids:
-        try:
-            user_pools = get_cognito_user_pools(account_id)
+        for region in Config.get().active_regions:
+            user_pools = get_cognito_user_pools(account_id, region)
             for pool in user_pools:
-                try:
-                    policy = get_user_pool_password_policy(account_id, pool["Id"])
-                    if not is_cognito_password_policy_complex(policy):
-                        non_complex_cognito_pools.append(
-                            f"{account_id}: {pool.get('Name', 'Unknown')}"
-                        )
-                except Exception:
-                    # If we can't get the policy for this pool, skip it
-                    continue
-        except Exception:
-            # If we can't check Cognito for this account, skip it
-            continue
+                policy = get_user_pool_password_policy(account_id, region, pool["Id"])
+                if not is_cognito_password_policy_complex(policy):
+                    non_complex_cognito_pools.append(
+                        f"{account_id}: {pool.get('Name', 'Unknown')}"
+                    )
 
     if non_complex_cognito_pools:
         message += "Cognito User Pools with non-complex password policies:\n"
@@ -107,6 +99,7 @@ def check_complex_passwords() -> dict[str, Any]:
 
     for account_id in account_ids:
         policy = get_password_policy(account_id)
+        print(policy)
         if not is_complex(policy):
             non_complex_accounts.append(account_id)
 

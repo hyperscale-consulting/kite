@@ -7,7 +7,8 @@ from kite.data import get_apigateway_rest_apis
 from kite.data import get_appsync_graphql_apis
 from kite.data import get_cloudfront_distributions
 from kite.data import get_elbv2_load_balancers
-from kite.data import get_wafv2_web_acls
+from kite.data import get_regional_web_acls
+from kite.data import get_cloudfront_web_acls
 from kite.helpers import get_account_ids_in_scope
 from kite.helpers import manual_check
 
@@ -29,51 +30,53 @@ def _get_waf_summary() -> tuple[str, dict[str, set[str]]]:
         account_wafs = 0
         account_has_wafs = False
 
+        web_acls = get_cloudfront_web_acls(account_id)
+
         for region in regions:
-            web_acls = get_wafv2_web_acls(account_id, region)
+            web_acls.extend(get_regional_web_acls(account_id, region))
 
-            if not web_acls:
-                continue
+        if not web_acls:
+            continue
 
-            account_has_wafs = True
-            account_analysis += f"  Region: {region}\n"
+        account_has_wafs = True
 
-            for acl in web_acls:
-                total_wafs += 1
-                account_wafs += 1
+        for acl in web_acls:
+            total_wafs += 1
+            account_wafs += 1
 
-                acl_name = acl.get("Name", "Unnamed")
-                acl_arn = acl.get("ARN", "Unknown")
-                resources = acl.get("Resources", [])
+            acl_name = acl.get("Name", "Unnamed")
+            acl_arn = acl.get("ARN", "Unknown")
+            resources = acl.get("Resources", [])
 
-                account_analysis += f"    WAF: {acl_name}\n"
-                account_analysis += f"      ARN: {acl_arn}\n"
-                account_analysis += f"      Resources: {len(resources)}\n"
+            account_analysis += f"    WAF: {acl_name}\n"
+            account_analysis += f"      ARN: {acl_arn}\n"
+            account_analysis += f"      Region: {acl.get('Region', 'Unknown')}\n"
+            account_analysis += f"      Resources: {len(resources)}\n"
 
-                # Track which resources are protected by this WAF
-                for resource_arn in resources:
-                    waf_resources[resource_arn] = acl_name
+            # Track which resources are protected by this WAF
+            for resource_arn in resources:
+                waf_resources[resource_arn] = acl_name
 
-                # Summarize rules
-                rules = acl.get("Rules", [])
-                if rules:
-                    account_analysis += f"      Rules ({len(rules)}):\n"
+            # Summarize rules
+            rules = acl.get("Rules", [])
+            if rules:
+                account_analysis += f"      Rules ({len(rules)}):\n"
 
-                    for rule in rules:
-                        rule_name = rule.get("Name", "Unnamed")
-                        priority = rule.get("Priority", "Unknown")
-                        action = _get_rule_action_summary(rule)
-                        statement = _get_rule_statement_summary(rule)
+                for rule in rules:
+                    rule_name = rule.get("Name", "Unnamed")
+                    priority = rule.get("Priority", "Unknown")
+                    action = _get_rule_action_summary(rule)
+                    statement = _get_rule_statement_summary(rule)
 
-                        account_analysis += (
-                            f"        - {rule_name} (Priority: {priority})\n"
-                        )
-                        account_analysis += f"          Action: {action}\n"
-                        account_analysis += f"          Type: {statement}\n"
-                else:
-                    account_analysis += "      No rules configured\n"
+                    account_analysis += (
+                        f"        - {rule_name} (Priority: {priority})\n"
+                    )
+                    account_analysis += f"          Action: {action}\n"
+                    account_analysis += f"          Type: {statement}\n"
+            else:
+                account_analysis += "      No rules configured\n"
 
-                account_analysis += "\n"
+            account_analysis += "\n"
 
         # Only include account if it has WAFs
         if account_has_wafs:
@@ -239,8 +242,10 @@ def _pre_check() -> tuple[bool, dict[str, Any]]:
     total_wafs = 0
 
     for account_id in accounts:
+        web_acls = get_cloudfront_web_acls(account_id)
+
         for region in regions:
-            web_acls = get_wafv2_web_acls(account_id, region)
+            web_acls.extend(get_regional_web_acls(account_id, region))
             if web_acls:
                 total_wafs += len(web_acls)
 

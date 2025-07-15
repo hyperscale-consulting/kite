@@ -1,20 +1,8 @@
-"""SNS service module for Kite."""
-
 import json
-from dataclasses import dataclass
 from typing import Any
 
 
-@dataclass
-class SNSTopic:
-    """SNS topic data class."""
-
-    topic_arn: str
-    region: str
-    policy: dict[str, Any] | None = None
-
-
-def get_topics(session, region: str) -> list[SNSTopic]:
+def get_topics(session, region: str) -> list[dict[str, Any]]:
     """
     Get all SNS topics in a region.
 
@@ -35,13 +23,7 @@ def get_topics(session, region: str) -> list[SNSTopic]:
         attributes = sns_client.get_topic_attributes(TopicArn=topic_arn)
         policy = attributes.get("Attributes", {}).get("Policy")
         policy_dict = json.loads(policy) if policy else None
-
-        topics.append(
-            SNSTopic(
-                topic_arn=topic_arn,
-                region=region,
-                policy=policy_dict,
-            )
-        )
+        topic["Policy"] = policy_dict
+        topics.append(topic)
 
     return topics

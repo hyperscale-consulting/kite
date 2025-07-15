@@ -1,5 +1,3 @@
-"""Data storage and retrieval module for Kite."""
-
 import json
 import os
 from dataclasses import asdict
@@ -11,7 +9,6 @@ import click
 from kite.config import Config
 from kite.models import DelegatedAdmin
 from kite.models import Organization
-from kite.models import WorkloadResources
 
 
 def _save_data(
@@ -39,9 +36,7 @@ def _save_data(
         json.dump(data, f, indent=2, default=str)
 
 
-def _load_data(
-    data_type: str, account_id: str = "organization"
-) -> dict[str, Any] | None:
+def _load_data(data_type: str, account_id: str = "organization") -> Any:
     """Load data from a file in the data directory.
 
     Args:
@@ -51,7 +46,7 @@ def _load_data(
             'organization'.
 
     Returns:
-        The loaded data, or None if the file doesn't exist.
+        The loaded data, or an empty list if the file doesn't exist.
     """
     file_path = f"{Config.get().data_dir}/{account_id}/{data_type}.json"
     try:
@@ -101,27 +96,6 @@ def save_delegated_admins(admins: list[DelegatedAdmin]) -> None:
     _save_data([asdict(admin) for admin in admins], "delegated_admins")
 
 
-def save_mgmt_account_workload_resources(resources: WorkloadResources) -> None:
-    """Save management account workload resources.
-
-    Args:
-        resources: The workload resources to save.
-    """
-    _save_data(resources.to_dict(), "mgmt_account_workload_resources")
-
-
-def get_mgmt_account_workload_resources() -> WorkloadResources | None:
-    """Get management account workload resources.
-
-    Returns:
-        The management account workload resources, or None if not found.
-    """
-    data = _load_data("mgmt_account_workload_resources")
-    if data is None:
-        return None
-    return WorkloadResources.from_dict(data)
-
-
 def save_organization_features(features: list[str]) -> None:
     """Save organization features.
 
@@ -131,13 +105,13 @@ def save_organization_features(features: list[str]) -> None:
     _save_data(features, "organization_features")
 
 
-def get_organization_features() -> list[str] | None:
+def get_organization_features() -> list[str]:
     """Get organization features.
 
     Returns:
         The list of organization features, or None if not found.
     """
-    return _load_data("organization_features") or []
+    return _load_data("organization_features")
 
 
 def save_credentials_report(account_id: str, report: dict[str, Any]) -> None:
@@ -231,7 +205,7 @@ def get_oidc_providers(
 
 
 def save_identity_center_instances(
-    instances: list[dict[str, Any]], account_id: str = "organization"
+    account_id: str, instances: list[dict[str, Any]]
 ) -> None:
     """Save Identity Center instances.
 
@@ -266,7 +240,7 @@ def save_ec2_instances(
     _save_data(instances, f"ec2_instances_{region}", account_id)
 
 
-def get_ec2_instances(account_id: str, region: str) -> list[dict[str, Any]] | None:
+def get_ec2_instances(account_id: str, region: str) -> list[dict[str, Any]]:
     """Get EC2 instances for an account.
 
     Args:
@@ -275,7 +249,7 @@ def get_ec2_instances(account_id: str, region: str) -> list[dict[str, Any]] | No
     Returns:
         The list of EC2 instances, or None if not found.
     """
-    return _load_data(f"ec2_instances_{region}", account_id)
+    return _load_data(f"ec2_instances_{region}", account_id) or []
 
 
 def save_collection_metadata() -> None:
@@ -364,56 +338,51 @@ def get_password_policy(account_id: str) -> dict[str, Any] | None:
     return _load_data("password_policy", account_id)
 
 
-def save_cognito_user_pools(account_id: str, pools: list[dict[str, Any]]) -> None:
+def save_cognito_user_pools(
+    account_id: str, region: str, pools: list[dict[str, Any]]
+) -> None:
     """
     Save Cognito user pools for an account.
 
     Args:
         account_id: The AWS account ID to save the pools for.
+        region: The AWS region to save the pools for.
         pools: The list of Cognito user pools to save.
     """
-    _save_data(pools, "cognito_user_pools", account_id)
+    _save_data(pools, f"cognito_user_pools_{region}", account_id)
 
 
-def save_cognito_user_pool(
-    account_id: str, user_pool_id: str, pool_data: dict[str, Any]
-) -> None:
-    """
-    Save details for a specific Cognito user pool.
-
-    Args:
-        account_id: The AWS account ID.
-        user_pool_id: The ID of the Cognito user pool.
-        pool_data: The user pool data to save.
-    """
-    _save_data(pool_data, f"cognito_user_pool_{user_pool_id}", account_id)
-
-
-def get_cognito_user_pools(account_id: str) -> list[dict[str, Any]]:
+def get_cognito_user_pools(account_id: str, region: str) -> list[dict[str, Any]]:
     """
     Get Cognito user pools for an account.
 
     Args:
         account_id: The AWS account ID to get the pools for.
-
+        region: The AWS region to get the pools for.
     Returns:
         List of dictionaries containing user pool information, or empty list.
     """
-    return _load_data("cognito_user_pools", account_id) or []
+    return _load_data(f"cognito_user_pools_{region}", account_id) or []
 
 
-def get_cognito_user_pool(account_id: str, user_pool_id: str) -> dict[str, Any]:
+def get_cognito_user_pool(
+    account_id: str, region: str, user_pool_id: str
+) -> dict[str, Any]:
     """
     Get details for a specific Cognito user pool.
 
     Args:
         account_id: The AWS account ID.
+        region: The AWS region to get the pool for.
         user_pool_id: The ID of the Cognito user pool.
 
     Returns:
         Dictionary containing the user pool information, or empty dict if not found.
     """
-    return _load_data(f"cognito_user_pool_{user_pool_id}", account_id) or {}
+    for pool in get_cognito_user_pools(account_id, region):
+        if pool["Id"] == user_pool_id:
+            return pool
+    return {}
 
 
 def save_key_pairs(account_id: str, key_pairs: list[dict[str, Any]]) -> None:
@@ -508,43 +477,6 @@ def get_role_by_arn(role_arn: str) -> dict[str, Any] | None:
     return None
 
 
-def save_inline_policy_document(
-    account_id: str, role_name: str, policy_name: str, policy_document: dict[str, Any]
-) -> None:
-    """
-    Save an inline policy document for a role.
-
-    Args:
-        account_id: The AWS account ID.
-        role_name: The name of the IAM role.
-        policy_name: The name of the inline policy.
-        policy_document: The inline policy document to save.
-    """
-    data = {
-        "RoleName": role_name,
-        "PolicyName": policy_name,
-        "PolicyDocument": policy_document,
-    }
-    _save_data(data, f"inline_policy_{role_name}_{policy_name}", account_id)
-
-
-def get_inline_policy_document(
-    account_id: str, role_name: str, policy_name: str
-) -> dict[str, Any]:
-    """
-    Get an inline policy document for a role.
-
-    Args:
-        account_id: The AWS account ID.
-        role_name: The name of the IAM role.
-        policy_name: The name of the inline policy.
-
-    Returns:
-        Dictionary containing the inline policy document, or empty dict.
-    """
-    return _load_data(f"inline_policy_{role_name}_{policy_name}", account_id) or {}
-
-
 def save_customer_managed_policies(
     account_id: str, policies: list[dict[str, Any]]
 ) -> None:
@@ -569,38 +501,6 @@ def get_customer_managed_policies(account_id: str) -> list[dict[str, Any]]:
         List of dictionaries containing policy information, or empty list.
     """
     return _load_data("customer_managed_policies", account_id) or []
-
-
-def save_policy_document(
-    account_id: str, policy_arn: str, policy_document: dict[str, Any]
-) -> None:
-    """
-    Save a policy document for a customer managed policy.
-
-    Args:
-        account_id: The AWS account ID.
-        policy_arn: The ARN of the customer managed policy.
-        policy_document: The policy document to save.
-    """
-    # Convert the ARN to a safe string for file name
-    safe_arn = policy_arn.replace("/", "_").replace(":", "_")
-    _save_data(policy_document, f"policy_document_{safe_arn}", account_id)
-
-
-def get_policy_document(account_id: str, policy_arn: str) -> dict[str, Any]:
-    """
-    Get a policy document for a customer managed policy.
-
-    Args:
-        account_id: The AWS account ID.
-        policy_arn: The ARN of the customer managed policy.
-
-    Returns:
-        Dictionary containing the policy document, or empty dict.
-    """
-    # Convert the ARN to a safe string for file name
-    safe_arn = policy_arn.replace("/", "_").replace(":", "_")
-    return _load_data(f"policy_document_{safe_arn}", account_id) or {}
 
 
 def save_bucket_metadata(account_id: str, buckets: list[dict[str, Any]]) -> None:
@@ -755,60 +655,6 @@ def get_identity_center_permission_sets(
     return (
         _load_data(f"identity_center_permission_sets_{instance_id}", account_id) or []
     )
-
-
-def save_identity_store_users(
-    account_id: str, instance_id: str, users: list[dict[str, Any]]
-) -> None:
-    """Save Identity Store users for an account and instance.
-
-    Args:
-        account_id: The AWS account ID.
-        instance_id: The ID of the Identity Center instance.
-        users: The list of users to save.
-    """
-    _save_data(users, f"identity_store_users_{instance_id}", account_id)
-
-
-def get_identity_store_users(account_id: str, instance_id: str) -> list[dict[str, Any]]:
-    """Get Identity Store users for an account and instance.
-
-    Args:
-        account_id: The AWS account ID.
-        instance_id: The ID of the Identity Center instance.
-
-    Returns:
-        The list of Identity Store users, or an empty list if not found.
-    """
-    return _load_data(f"identity_store_users_{instance_id}", account_id) or []
-
-
-def save_identity_store_groups(
-    account_id: str, instance_id: str, groups: list[dict[str, Any]]
-) -> None:
-    """Save Identity Store groups for an account and instance.
-
-    Args:
-        account_id: The AWS account ID.
-        instance_id: The ID of the Identity Center instance.
-        groups: The list of groups to save.
-    """
-    _save_data(groups, f"identity_store_groups_{instance_id}", account_id)
-
-
-def get_identity_store_groups(
-    account_id: str, instance_id: str
-) -> list[dict[str, Any]]:
-    """Get Identity Store groups for an account and instance.
-
-    Args:
-        account_id: The AWS account ID.
-        instance_id: The ID of the Identity Center instance.
-
-    Returns:
-        The list of Identity Store groups, or an empty list if not found.
-    """
-    return _load_data(f"identity_store_groups_{instance_id}", account_id) or []
 
 
 def save_access_analyzers(account_id: str, analyzers: list[dict[str, Any]]) -> None:
@@ -1156,56 +1002,6 @@ def get_export_tasks(account_id: str, region: str) -> list[dict[str, Any]]:
         region: The AWS region.
     """
     return _load_data(f"export_tasks_{region}", account_id) or []
-
-
-def save_wafv2_web_acls(
-    account_id: str, region: str, web_acls: list[dict[str, Any]]
-) -> None:
-    """Save WAFv2 web ACLs for an account and region.
-
-    Args:
-        account_id: The AWS account ID.
-        region: The AWS region.
-        web_acls: The list of WAFv2 web ACLs to save.
-    """
-    _save_data(web_acls, f"wafv2_web_acls_{region}", account_id)
-
-
-def get_wafv2_web_acls(account_id: str, region: str) -> list[dict[str, Any]]:
-    """Get WAFv2 web ACLs for an account and region.
-
-    Args:
-        account_id: The AWS account ID.
-        region: The AWS region.
-    """
-    return _load_data(f"wafv2_web_acls_{region}", account_id) or []
-
-
-def save_wafv2_logging_configurations(
-    account_id: str, region: str, logging_configurations: list[dict[str, Any]]
-) -> None:
-    """Save WAFv2 logging configurations for an account and region.
-
-    Args:
-        account_id: The AWS account ID.
-        region: The AWS region.
-        logging_configurations: The list of WAFv2 logging configurations to save.
-    """
-    _save_data(
-        logging_configurations, f"wafv2_logging_configurations_{region}", account_id
-    )
-
-
-def get_wafv2_logging_configurations(
-    account_id: str, region: str
-) -> list[dict[str, Any]]:
-    """Get WAFv2 logging configurations for an account and region.
-
-    Args:
-        account_id: The AWS account ID.
-        region: The AWS region.
-    """
-    return _load_data(f"wafv2_logging_configurations_{region}", account_id) or []
 
 
 def save_elbv2_load_balancers(
@@ -1947,3 +1743,145 @@ def get_networkfirewall_firewalls(account_id: str, region: str) -> list[dict[str
         region: The AWS region.
     """
     return _load_data(f"networkfirewall_firewalls_{region}", account_id) or []
+
+
+def save_regional_web_acls(
+    account_id: str, region: str, web_acls: list[dict[str, Any]]
+) -> None:
+    """Save regional web ACLs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        web_acls: The list of regional web ACLs to save.
+    """
+    _save_data(web_acls, f"regional_web_acls_{region}", account_id)
+
+
+def get_regional_web_acls(account_id: str, region: str) -> list[dict[str, Any]]:
+    """Get regional web ACLs for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"regional_web_acls_{region}", account_id) or []
+
+
+def save_regional_waf_logging_configurations(
+    account_id: str, region: str, logging_configurations: list[dict[str, Any]]
+) -> None:
+    """Save regional WAF logging configurations for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        logging_configurations: The list of regional WAF logging configurations to save.
+    """
+    _save_data(
+        logging_configurations,
+        f"regional_waf_logging_configurations_{region}",
+        account_id,
+    )
+
+
+def get_regional_waf_logging_configurations(
+    account_id: str, region: str
+) -> list[dict[str, Any]]:
+    """Get regional WAF logging configurations for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"regional_waf_logging_configurations_{region}", account_id) or []
+
+
+def save_cloudfront_web_acls(account_id: str, web_acls: list[dict[str, Any]]) -> None:
+    """Save CloudFront web ACLs for an account.
+
+    Args:
+        account_id: The AWS account ID.
+        web_acls: The list of CloudFront web ACLs to save.
+    """
+    _save_data(web_acls, "cloudfront_web_acls", account_id)
+
+
+def get_cloudfront_web_acls(account_id: str) -> list[dict[str, Any]]:
+    """Get CloudFront web ACLs for an account.
+
+    Args:
+        account_id: The AWS account ID.
+    """
+    return _load_data("cloudfront_web_acls", account_id) or []
+
+
+def save_cloudfront_waf_logging_configurations(
+    account_id: str, logging_configurations: list[dict[str, Any]]
+) -> None:
+    """Save CloudFront WAF logging configurations for an account.
+
+    Args:
+        account_id: The AWS account ID.
+        logging_configurations: The list of CloudFront WAF logging configurations to save.
+    """
+    _save_data(
+        logging_configurations, "cloudfront_waf_logging_configurations", account_id
+    )
+
+
+def get_cloudfront_waf_logging_configurations(account_id: str) -> list[dict[str, Any]]:
+    """Get CloudFront WAF logging configurations for an account.
+
+    Args:
+        account_id: The AWS account ID.
+    """
+    return _load_data("cloudfront_waf_logging_configurations", account_id) or []
+
+
+def save_redshift_clusters(
+    account_id: str, region: str, clusters: list[dict[str, Any]]
+) -> None:
+    """Save Redshift clusters for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        clusters: The list of Redshift clusters to save.
+    """
+    _save_data(clusters, f"redshift_clusters_{region}", account_id)
+
+
+def get_redshift_clusters(account_id: str, region: str) -> list[dict[str, Any]]:
+    """Get Redshift clusters for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"redshift_clusters_{region}", account_id) or []
+
+
+def save_sagemaker_notebook_instances(
+    account_id: str, region: str, instances: list[dict[str, Any]]
+) -> None:
+    """Save SageMaker notebook instances for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+        instances: The list of SageMaker notebook instances to save.
+    """
+    _save_data(instances, f"sagemaker_notebook_instances_{region}", account_id)
+
+
+def get_sagemaker_notebook_instances(
+    account_id: str, region: str
+) -> list[dict[str, Any]]:
+    """Get SageMaker notebook instances for an account and region.
+
+    Args:
+        account_id: The AWS account ID.
+        region: The AWS region.
+    """
+    return _load_data(f"sagemaker_notebook_instances_{region}", account_id) or []

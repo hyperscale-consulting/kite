@@ -56,8 +56,8 @@ def check_sns_confused_deputy_protection() -> dict[str, Any]:
             topics = get_sns_topics(account_id, region)
 
             for topic in topics:
-                topic_arn = topic["topic_arn"]
-                policy = topic.get("policy")
+                topic_arn = topic["TopicArn"]
+                policy = topic.get("Policy")
 
                 if not policy:
                     continue

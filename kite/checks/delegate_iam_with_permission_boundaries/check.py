@@ -5,8 +5,6 @@ from typing import Any
 from kite.data import get_customer_managed_policies
 from kite.data import get_iam_groups
 from kite.data import get_iam_users
-from kite.data import get_inline_policy_document
-from kite.data import get_policy_document
 from kite.data import get_roles
 from kite.helpers import get_account_ids_in_scope
 from kite.helpers import manual_check
@@ -96,7 +94,7 @@ def check_delegate_iam_with_permission_boundaries() -> dict[str, Any]:
                 # Check customer managed policies
                 for customer_policy in customer_policies:
                     if customer_policy["Arn"] == policy_arn:
-                        policy_doc = get_policy_document(account_id, policy_arn)
+                        policy_doc = customer_policy["PolicyDocument"]
                         if policy_doc and _has_permission_boundary_condition(
                             policy_doc
                         ):
@@ -112,14 +110,12 @@ def check_delegate_iam_with_permission_boundaries() -> dict[str, Any]:
 
             # Check inline policies
             if not has_iam_delegation:
-                for policy_name in entity.get("InlinePolicyNames", []):
-                    policy_doc = get_inline_policy_document(
-                        account_id, entity["RoleName"], policy_name
-                    )
+                for policy in entity.get("InlinePolicies", []):
+                    policy_doc = policy["PolicyDocument"]
                     if policy_doc and _has_permission_boundary_condition(policy_doc):
                         has_iam_delegation = True
                         delegation_policy_info = {
-                            "policy_name": policy_name,
+                            "policy_name": policy["PolicyName"],
                             "policy_type": "inline",
                         }
                         break

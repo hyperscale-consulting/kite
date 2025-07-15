@@ -1,9 +1,5 @@
-"""Data models for Kite."""
-
 from dataclasses import dataclass
 from dataclasses import field
-from datetime import datetime
-from datetime import UTC
 from typing import Any
 
 
@@ -146,54 +142,3 @@ class Organization:
     def get_accounts(self) -> list[Account]:
         """Get all accounts in the organization."""
         return self.root.get_accounts()
-
-
-@dataclass
-class WorkloadResource:
-    """Base class for workload resources."""
-
-    resource_type: str
-    resource_id: str
-    region: str | None = None
-    details: dict[str, Any] = field(default_factory=dict)
-
-
-@dataclass
-class WorkloadResources:
-    """Collection of workload resources."""
-
-    resources: list[WorkloadResource] = field(default_factory=list)
-    collected_at: datetime = field(default_factory=lambda: datetime.now(UTC))
-
-    def to_dict(self) -> dict[str, Any]:
-        """Convert the model to a dictionary."""
-        return {
-            "resources": [
-                {
-                    "resource_type": r.resource_type,
-                    "resource_id": r.resource_id,
-                    "region": r.region,
-                    "details": r.details,
-                }
-                for r in self.resources
-            ],
-            "collected_at": self.collected_at.isoformat(),
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "WorkloadResources":
-        """Create a model from a dictionary."""
-        return cls(
-            resources=[
-                WorkloadResource(
-                    resource_type=r["resource_type"],
-                    resource_id=r["resource_id"],
-                    region=r.get("region"),
-                    details=r.get("details", {}),
-                )
-                for r in data.get("resources", [])
-            ],
-            collected_at=datetime.fromisoformat(
-                data.get("collected_at", datetime.now(UTC).isoformat())
-            ),
-        )

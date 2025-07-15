@@ -38,10 +38,10 @@ def get_queues(session: boto3.Session, region: str) -> list[dict[str, Any]]:
 
         queues.append(
             {
-                "queue_url": queue_url,
-                "queue_arn": queue_arn,
-                "policy": policy,
-                "region": region,
+                "QueueUrl": queue_url,
+                "QueueArn": queue_arn,
+                "Policy": policy,
+                "Region": region,
             }
         )
 

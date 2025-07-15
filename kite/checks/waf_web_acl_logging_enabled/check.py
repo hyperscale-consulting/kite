@@ -3,8 +3,10 @@
 from typing import Any
 
 from kite.config import Config
-from kite.data import get_wafv2_logging_configurations
-from kite.data import get_wafv2_web_acls
+from kite.data import get_regional_waf_logging_configurations
+from kite.data import get_regional_web_acls
+from kite.data import get_cloudfront_waf_logging_configurations
+from kite.data import get_cloudfront_web_acls
 from kite.helpers import get_account_ids_in_scope
 
 CHECK_ID = "waf-web-acl-logging-enabled"
@@ -38,29 +40,34 @@ def check_waf_web_acl_logging_enabled() -> dict[str, Any]:
 
     # Check each account in each active region
     for account in accounts:
+        web_acls = get_cloudfront_web_acls(account)
+        logging_configs = get_cloudfront_waf_logging_configurations(account)
+
         for region in config.active_regions:
             # Get web ACLs and logging configurations for this account and region
-            web_acls = get_wafv2_web_acls(account, region)
-            logging_configs = get_wafv2_logging_configurations(account, region)
+            web_acls.extend(get_regional_web_acls(account, region))
+            logging_configs.extend(
+                get_regional_waf_logging_configurations(account, region)
+            )
 
-            # Create a set of web ACL ARNs that have logging enabled
-            logging_enabled_arns = {config["ResourceArn"] for config in logging_configs}
+        # Create a set of web ACL ARNs that have logging enabled
+        logging_enabled_arns = {config["ResourceArn"] for config in logging_configs}
 
-            # Check each web ACL
-            for web_acl in web_acls:
-                web_acl_arn = web_acl.get("ARN")
-                if not web_acl_arn:
-                    continue
+        # Check each web ACL
+        for web_acl in web_acls:
+            web_acl_arn = web_acl.get("ARN")
+            if not web_acl_arn:
+                continue
 
-                web_acl_info = (
-                    f"Web ACL: {web_acl.get('Name', 'Unknown')} "
-                    f"(Account: {account}, Region: {region})"
-                )
+            web_acl_info = (
+                f"Web ACL: {web_acl.get('Name', 'Unknown')} "
+                f"(Account: {account}, Region: {web_acl.get('Region', 'Unknown')})"
+            )
 
-                if web_acl_arn in logging_enabled_arns:
-                    web_acls_with_logging.append(web_acl_info)
-                else:
-                    web_acls_without_logging.append(web_acl_info)
+            if web_acl_arn in logging_enabled_arns:
+                web_acls_with_logging.append(web_acl_info)
+            else:
+                web_acls_without_logging.append(web_acl_info)
 
     # Build the message
     message = "This check verifies that logging is enabled for all WAF Web ACLs.\n\n"

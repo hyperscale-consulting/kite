@@ -3,8 +3,6 @@
 from typing import Any
 
 from kite.data import get_customer_managed_policies
-from kite.data import get_inline_policy_document
-from kite.data import get_policy_document
 from kite.data import get_roles
 from kite.data import get_saml_providers
 from kite.helpers import get_account_ids_in_scope
@@ -148,7 +146,7 @@ def check_admin_privileges_are_restricted() -> dict[str, Any]:
                 # Check customer managed policies
                 for customer_policy in customer_policies:
                     if customer_policy["Arn"] == policy_arn:
-                        policy_doc = get_policy_document(account_id, policy_arn)
+                        policy_doc = customer_policy["PolicyDocument"]
                         if policy_doc and _is_admin_policy(policy_doc):
                             has_admin_access = True
                             admin_policy_info = {
@@ -162,14 +160,12 @@ def check_admin_privileges_are_restricted() -> dict[str, Any]:
 
             # Check inline policies
             if not has_admin_access:
-                for policy_name in role.get("InlinePolicyNames", []):
-                    policy_doc = get_inline_policy_document(
-                        account_id, role["RoleName"], policy_name
-                    )
+                for policy in role.get("InlinePolicies", []):
+                    policy_doc = policy["PolicyDocument"]
                     if policy_doc and _is_admin_policy(policy_doc):
                         has_admin_access = True
                         admin_policy_info = {
-                            "policy_name": policy_name,
+                            "policy_name": policy["PolicyName"],
                             "policy_type": "inline",
                         }
                         break

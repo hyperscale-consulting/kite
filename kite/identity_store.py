@@ -34,15 +34,8 @@ def get_users(session, identity_store_id: str) -> list[dict[str, Any]]:
             ):
                 groups.extend(group_page["GroupMemberships"])
 
-            users.append(
-                {
-                    "name": user["UserName"],
-                    "user_id": user["UserId"],
-                    "display_name": user.get("DisplayName"),
-                    "email": user.get("Emails", [{}])[0].get("Value"),
-                    "groups": groups,
-                }
-            )
+            user["Groups"] = groups
+            users.append(user)
 
     return users
 
@@ -55,13 +48,6 @@ def get_groups(session, identity_store_id: str) -> list[dict[str, Any]]:
     groups = []
     paginator = identity_store_client.get_paginator("list_groups")
     for page in paginator.paginate(IdentityStoreId=identity_store_id):
-        for group in page["Groups"]:
-            groups.append(
-                {
-                    "name": group["DisplayName"],
-                    "group_id": group["GroupId"],
-                    "description": group.get("Description"),
-                }
-            )
+        groups.extend(page["Groups"])
 
     return groups

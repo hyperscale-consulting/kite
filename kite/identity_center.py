@@ -1,9 +1,9 @@
-"""Identity Center module for Kite."""
+from . import identity_store
 
 
-def list_identity_center_instances(session) -> list:
+def get_identity_center_instances(session) -> list:
     """
-    List all instances of Identity Center.
+    Get all instances of Identity Center.
 
     Args:
         session: The boto3 session to use.
@@ -19,7 +19,14 @@ def list_identity_center_instances(session) -> list:
     paginator = sso_client.get_paginator("list_instances")
 
     for page in paginator.paginate():
-        instances.extend(page.get("Instances", []))
+        for instance in page.get("Instances", []):
+            instance["IdentityStoreUsers"] = identity_store.get_users(
+                session, instance["IdentityStoreId"]
+            )
+            instance["IdentityStoreGroups"] = identity_store.get_groups(
+                session, instance["IdentityStoreId"]
+            )
+            instances.append(instance)
 
     return instances
 

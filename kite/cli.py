@@ -561,23 +561,18 @@ def collect(config: str):
     local filesystem for later analysis. The data is stored in the configured
     data directory, organized by account ID.
     """
-    try:
-        Config.load(config)
+    Config.load(config)
 
-        # Make sure we start with a clean slate
-        if os.path.exists(Config.get().data_dir):
-            shutil.rmtree(Config.get().data_dir)
-        os.makedirs(Config.get().data_dir, exist_ok=True)
+    # Make sure we start with a clean slate
+    if os.path.exists(Config.get().data_dir):
+        shutil.rmtree(Config.get().data_dir)
+    os.makedirs(Config.get().data_dir, exist_ok=True)
 
-        collect_data()
+    collect_data()
 
-        # Save collection metadata
-        save_collection_metadata()
-        console.print("[green]✓ Saved collection metadata[/green]")
-
-    except Exception as e:
-        console.print(f"[red]Error collecting data: {str(e)}[/red]")
-        raise click.Abort()
+    # Save collection metadata
+    save_collection_metadata()
+    console.print("[green]✓ Saved collection metadata[/green]")
 
 
 @main.command()

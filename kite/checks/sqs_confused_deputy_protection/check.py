@@ -56,8 +56,8 @@ def check_sqs_confused_deputy_protection() -> dict[str, Any]:
             queues = get_sqs_queues(account_id, region)
 
             for queue in queues:
-                queue_arn = queue["queue_arn"]
-                policy = queue.get("policy")
+                queue_arn = queue["QueueArn"]
+                policy = queue.get("Policy")
 
                 if not policy:
                     continue

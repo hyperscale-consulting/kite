@@ -5,7 +5,21 @@ from typing import Any
 from rich.console import Console
 
 from kite.config import Config
-from kite.data import get_mgmt_account_workload_resources
+from kite.data import (
+    get_ec2_instances,
+    get_ecs_clusters,
+    get_eks_clusters,
+    get_lambda_functions,
+    get_rds_instances,
+    get_dynamodb_tables,
+    get_redshift_clusters,
+    get_sagemaker_notebook_instances,
+    get_sns_topics,
+    get_sqs_queues,
+    get_kms_keys,
+    get_bucket_metadata,
+    get_cloudfront_distributions,
+)
 from kite.helpers import prompt_user_with_panel
 
 console = Console()
@@ -15,7 +29,60 @@ CHECK_ID = "no-management-account-workloads"
 CHECK_NAME = "No Management Account Workloads"
 
 
-def check_management_account_workloads(config: Config = None) -> dict[str, Any]:
+def _get_workload_resources(mgmt_account_id: str) -> dict[str, dict[str, list[str]]]:
+    results = {}
+    for region in Config.get().active_regions:
+        results[region] = {}
+
+        results[region]["EC2"] = get_ec2_instances(mgmt_account_id, region)
+        results[region]["ECS"] = get_ecs_clusters(mgmt_account_id, region)
+        results[region]["EKS"] = get_eks_clusters(mgmt_account_id, region)
+        results[region]["Lambda"] = get_lambda_functions(mgmt_account_id, region)
+        results[region]["RDS"] = get_rds_instances(mgmt_account_id, region)
+        results[region]["DynamoDB"] = get_dynamodb_tables(mgmt_account_id, region)
+        results[region]["Redshift"] = get_redshift_clusters(mgmt_account_id, region)
+        results[region]["SageMaker"] = get_sagemaker_notebook_instances(
+            mgmt_account_id, region
+        )
+        results[region]["SNS"] = get_sns_topics(mgmt_account_id, region)
+        results[region]["SQS"] = get_sqs_queues(mgmt_account_id, region)
+        results[region]["KMS"] = get_kms_keys(mgmt_account_id, region)
+
+    results["global"] = {}
+    results["global"]["S3"] = get_bucket_metadata(mgmt_account_id)
+    results["global"]["CloudFront"] = get_cloudfront_distributions(mgmt_account_id)
+    return results
+
+
+def _resources_exist(workload_resources: dict[str, dict[str, list[str]]]) -> bool:
+    for region in workload_resources:
+        for resource_type in workload_resources[region]:
+            if workload_resources[region][resource_type]:
+                return True
+    return False
+
+
+def _resource_details(resource: dict[str, Any]) -> dict[str, Any]:
+    for attr in [
+        "Name",
+        "Id",
+        "Arn",
+        "ARN",
+        "InstanceId",
+        "clusterArn",
+        "clusterName",
+        "TopicArn",
+        "QueueUrl",
+        "KeyId",
+        "FunctionName",
+        "DBInstanceIdentifier",
+    ]:
+        if attr in resource:
+            return {attr: resource[attr]}
+    return {}
+
+
+def check_management_account_workloads() -> dict[str, Any]:
     """
     Check if there are workloads running in the management account.
 
@@ -45,11 +112,9 @@ def check_management_account_workloads(config: Config = None) -> dict[str, Any]:
         }
 
     # Load the collected workload resources
-    workload_resources = get_mgmt_account_workload_resources()
-    if workload_resources is None:
-        raise Exception("No workload resources data found. Run 'kite collect' first.")
+    workload_resources = _get_workload_resources(mgmt_account_id)
 
-    if not workload_resources.resources:
+    if not _resources_exist(workload_resources):
         return {
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
@@ -75,14 +140,15 @@ def check_management_account_workloads(config: Config = None) -> dict[str, Any]:
 
     # Format workload resources for display
     formatted_resources = []
-    for resource in workload_resources.resources:
-        resource_str = f"{resource.resource_type}: {resource.resource_id}"
-        if resource.region:
-            resource_str += f" in {resource.region}"
-        if resource.details:
-            details_str = ", ".join(f"{k}={v}" for k, v in resource.details.items())
-            resource_str += f" ({details_str})"
-        formatted_resources.append(resource_str)
+    for region in workload_resources:
+        for resource_type in workload_resources[region]:
+            for resource in workload_resources[region][resource_type]:
+                resource_str = f"{resource_type}: ({region})"
+                details = _resource_details(resource)
+                if details:
+                    details_str = ", ".join(f"{k}={v}" for k, v in details.items())
+                    resource_str += f" ({details_str})"
+                formatted_resources.append(resource_str)
 
     # Add workload resources to the message if any were found
     if formatted_resources:

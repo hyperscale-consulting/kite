@@ -6,9 +6,7 @@ from kite.config import Config
 from kite.data import get_customer_managed_policies
 from kite.data import get_iam_groups
 from kite.data import get_iam_users
-from kite.data import get_inline_policy_document
 from kite.data import get_kms_keys
-from kite.data import get_policy_document
 from kite.data import get_roles
 from kite.helpers import get_account_ids_in_scope
 from kite.helpers import manual_check
@@ -282,7 +280,7 @@ def check_key_access_control() -> dict[str, Any]:
         # Check customer managed policies
         for policy in customer_policies:
             policy_arn = policy["Arn"]
-            policy_doc = get_policy_document(account_id, policy_arn)
+            policy_doc = policy["PolicyDocument"]
 
             if policy_doc and _has_kms_permissions(policy_doc):
                 kms_policies.append(
@@ -307,20 +305,13 @@ def check_key_access_control() -> dict[str, Any]:
         # Check users, groups, and roles
         for entity in users + groups + roles:
             # Check inline policies
-            for policy_name in entity.get("InlinePolicyNames", []):
-                entity_name = (
-                    entity.get("UserName")
-                    or entity.get("GroupName")
-                    or entity["RoleName"]
-                )
-                policy_doc = get_inline_policy_document(
-                    account_id, entity_name, policy_name
-                )
+            for policy in entity.get("InlinePolicies", []):
+                policy_doc = policy["PolicyDocument"]
 
                 if policy_doc and _has_kms_permissions(policy_doc):
                     policy_info = {
                         "account_id": account_id,
-                        "policy_name": policy_name,
+                        "policy_name": policy["PolicyName"],
                         "policy_type": "inline",
                     }
 
@@ -358,7 +349,7 @@ def check_key_access_control() -> dict[str, Any]:
                 # Check customer managed policies
                 for customer_policy in customer_policies:
                     if customer_policy["Arn"] == policy_arn:
-                        policy_doc = get_policy_document(account_id, policy_arn)
+                        policy_doc = customer_policy["PolicyDocument"]
                         if policy_doc and _has_key_creation_permissions(policy_doc):
                             has_key_creation = True
                             break
@@ -367,15 +358,8 @@ def check_key_access_control() -> dict[str, Any]:
 
             # Check inline policies
             if not has_key_creation:
-                for policy_name in entity.get("InlinePolicyNames", []):
-                    entity_name = (
-                        entity.get("UserName")
-                        or entity.get("GroupName")
-                        or entity["RoleName"]
-                    )
-                    policy_doc = get_inline_policy_document(
-                        account_id, entity_name, policy_name
-                    )
+                for policy in entity.get("InlinePolicies", []):
+                    policy_doc = policy["PolicyDocument"]
                     if policy_doc and _has_key_creation_permissions(policy_doc):
                         has_key_creation = True
                         break

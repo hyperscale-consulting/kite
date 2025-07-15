@@ -1,5 +1,3 @@
-"""Test the account separation check."""
-
 from unittest.mock import patch
 
 import pytest
@@ -9,7 +7,6 @@ from kite.helpers import get_organization_structure_str
 
 
 def test_account_separation_check_no_org():
-    """Test the account separation check when AWS Organizations is not in use."""
     result = check_account_separation()
     assert result["check_id"] == "account-separation"
     assert result["check_name"] == "Account Separation"

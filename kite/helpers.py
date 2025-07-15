@@ -12,8 +12,6 @@ from rich.tree import Tree
 
 from kite.config import Config
 from kite.data import get_cloudtrail_trails
-from kite.data import get_cognito_user_pool as get_saved_cognito_user_pool
-from kite.data import get_cognito_user_pools as get_saved_cognito_user_pools
 from kite.data import (
     get_customer_managed_policies as get_saved_customer_managed_policies,
 )
@@ -21,10 +19,10 @@ from kite.data import get_identity_center_instances
 from kite.data import get_key_pairs as get_saved_key_pairs
 from kite.data import get_organization
 from kite.data import get_password_policy as get_saved_password_policy
-from kite.data import get_policy_document as get_saved_policy_document
 from kite.data import get_roles as get_saved_roles
 from kite.data import get_secrets as get_saved_secrets
 from kite.data import get_virtual_mfa_devices
+from kite.data import get_cognito_user_pool
 
 from . import sts
 from . import ui
@@ -389,38 +387,6 @@ def is_identity_center_identity_store_used() -> bool:
     )
 
 
-def get_cognito_user_pools(account_id: str) -> list[dict[str, Any]]:
-    """
-    Get the list of Cognito user pools for the specified account from saved data.
-
-    Args:
-        account_id: The AWS account ID to check.
-
-    Returns:
-        List of dictionaries containing user pool information.
-
-    Raises:
-        ClickException: If data collection hasn't been run.
-    """
-    return get_saved_cognito_user_pools(account_id)
-
-
-def get_cognito_user_pool(account_id: str, user_pool_id: str) -> dict[str, Any]:
-    """
-    Get Cognito user pool details from saved data.
-
-    Args:
-        account_id: The AWS account ID containing the user pool.
-        user_pool_id: The ID of the user pool to get.
-    Returns:
-        Dict containing the user pool information.
-
-    Raises:
-        ClickException: If data collection hasn't been run.
-    """
-    return get_saved_cognito_user_pool(account_id, user_pool_id)
-
-
 def is_cognito_password_policy_complex(policy: dict[str, Any]) -> bool:
     """
     Determine if the given Cognito password policy meets complexity requirements.
@@ -447,12 +413,15 @@ def is_cognito_password_policy_complex(policy: dict[str, Any]) -> bool:
     )
 
 
-def get_user_pool_password_policy(account_id: str, user_pool_id: str) -> dict[str, Any]:
+def get_user_pool_password_policy(
+    account_id: str, region: str, user_pool_id: str
+) -> dict[str, Any]:
     """
     Get the password policy for a Cognito user pool.
 
     Args:
         account_id: The AWS account ID containing the user pool.
+        region: The AWS region containing the user pool.
         user_pool_id: The ID of the user pool to check.
 
     Returns:
@@ -462,18 +431,19 @@ def get_user_pool_password_policy(account_id: str, user_pool_id: str) -> dict[st
         ClickException: If data collection hasn't been run.
     """
     return (
-        get_cognito_user_pool(account_id, user_pool_id)
+        get_cognito_user_pool(account_id, region, user_pool_id)
         .get("Policies", {})
         .get("PasswordPolicy", {})
     )
 
 
-def get_user_pool_mfa_config(account_id: str, user_pool_id: str) -> str:
+def get_user_pool_mfa_config(account_id: str, region: str, user_pool_id: str) -> str:
     """
     Get the MFA configuration for a Cognito user pool.
 
     Args:
         account_id: The AWS account ID containing the user pool.
+        region: The AWS region containing the user pool.
         user_pool_id: The ID of the user pool to check.
 
     Returns:
@@ -482,7 +452,7 @@ def get_user_pool_mfa_config(account_id: str, user_pool_id: str) -> str:
     Raises:
         ClickException: If data collection hasn't been run.
     """
-    return get_cognito_user_pool(account_id, user_pool_id).get(
+    return get_cognito_user_pool(account_id, region, user_pool_id).get(
         "MfaConfiguration", "OFF"
     )
 
@@ -610,23 +580,6 @@ def get_customer_managed_policies(account_id: str) -> list[dict[str, Any]]:
         ClickException: If data collection hasn't been run
     """
     return get_saved_customer_managed_policies(account_id)
-
-
-def get_policy_document(account_id: str, policy_arn: str) -> dict[str, Any]:
-    """
-    Get the policy document for a customer managed policy from saved data.
-
-    Args:
-        account_id: AWS account ID to check
-        policy_arn: The ARN of the customer managed policy
-
-    Returns:
-        Dictionary containing the policy document
-
-    Raises:
-        ClickException: If data collection hasn't been run
-    """
-    return get_saved_policy_document(account_id, policy_arn)
 
 
 def get_organizational_trail() -> tuple[dict[str, Any] | None, str | None, str | None]:

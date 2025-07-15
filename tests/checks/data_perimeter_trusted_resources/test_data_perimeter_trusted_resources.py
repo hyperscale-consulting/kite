@@ -67,17 +67,19 @@ def trusted_resources_scp(organization_id):
 
 
 @pytest.fixture
-def scp_attached_to_root_ou(organization, trusted_resources_scp):
+def scp_attached_to_root_ou(organization, trusted_resources_scp, mgmt_account_id):
     organization.root.scps.append(trusted_resources_scp)
-    save_organization(organization)
+    save_organization(mgmt_account_id, organization)
     yield organization
 
 
 @pytest.fixture
-def scp_attached_to_all_top_level_ous(organization, trusted_resources_scp):
+def scp_attached_to_all_top_level_ous(
+    organization, trusted_resources_scp, mgmt_account_id
+):
     for ou in organization.root.child_ous:
         ou.scps.append(trusted_resources_scp)
-    save_organization(organization)
+    save_organization(mgmt_account_id, organization)
     yield organization
 
 

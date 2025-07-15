@@ -121,32 +121,36 @@ def trusted_networks_scp():
 
 
 @pytest.fixture
-def scp_attached_to_root_ou(organization, trusted_networks_scp):
+def scp_attached_to_root_ou(organization, trusted_networks_scp, mgmt_account_id):
     organization.root.scps.append(trusted_networks_scp)
-    save_organization(organization)
+    save_organization(mgmt_account_id, organization)
     yield organization
 
 
 @pytest.fixture
-def scp_attached_to_all_top_level_ous(organization, trusted_networks_scp):
+def scp_attached_to_all_top_level_ous(
+    organization, trusted_networks_scp, mgmt_account_id
+):
     for ou in organization.root.child_ous:
         ou.scps.append(trusted_networks_scp)
-    save_organization(organization)
+    save_organization(mgmt_account_id, organization)
     yield organization
 
 
 @pytest.fixture
-def rcp_attached_to_root_ou(organization, trusted_networks_rcp):
+def rcp_attached_to_root_ou(organization, trusted_networks_rcp, mgmt_account_id):
     organization.root.rcps.append(trusted_networks_rcp)
-    save_organization(organization)
+    save_organization(mgmt_account_id, organization)
     yield organization
 
 
 @pytest.fixture
-def rcp_attached_to_all_top_level_ous(organization, trusted_networks_rcp):
+def rcp_attached_to_all_top_level_ous(
+    organization, trusted_networks_rcp, mgmt_account_id
+):
     for ou in organization.root.child_ous:
         ou.rcps.append(trusted_networks_rcp)
-    save_organization(organization)
+    save_organization(mgmt_account_id, organization)
     yield organization
 
 
@@ -181,13 +185,13 @@ def test_rcp_attached_to_all_top_level_ous(rcp_attached_to_all_top_level_ous):
 
 
 def test_both_scp_and_rcp_attached_to_root_ou(
-    organization, trusted_networks_scp, trusted_networks_rcp
+    organization, trusted_networks_scp, trusted_networks_rcp, mgmt_account_id
 ):
     # Add SCP to root OU
     organization.root.scps.append(trusted_networks_scp)
     organization.root.rcps.append(trusted_networks_rcp)
 
-    save_organization(organization)
+    save_organization(mgmt_account_id, organization)
 
     result = check_data_perimeter_trusted_networks()
     assert result["status"] == "PASS"
@@ -195,7 +199,7 @@ def test_both_scp_and_rcp_attached_to_root_ou(
 
 
 def test_both_scp_and_rcp_attached_to_top_level_ous(
-    organization, trusted_networks_scp, trusted_networks_rcp
+    organization, trusted_networks_scp, trusted_networks_rcp, mgmt_account_id
 ):
     # Add SCP to all top-level OUs
     for ou in organization.root.child_ous:
@@ -205,7 +209,7 @@ def test_both_scp_and_rcp_attached_to_top_level_ous(
     for ou in organization.root.child_ous:
         ou.rcps.append(trusted_networks_rcp)
 
-    save_organization(organization)
+    save_organization(mgmt_account_id, organization)
 
     result = check_data_perimeter_trusted_networks()
     assert result["status"] == "PASS"

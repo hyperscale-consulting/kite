@@ -28,7 +28,7 @@ def delegated_admin(account, service_principal):
 
 
 @pytest.fixture
-def delegated_admins_all_services(audit_account):
+def delegated_admins_all_services(audit_account, mgmt_account_id):
     admins = [
         delegated_admin(audit_account, "securityhub.amazonaws.com"),
         delegated_admin(audit_account, "inspector2.amazonaws.com"),
@@ -36,23 +36,23 @@ def delegated_admins_all_services(audit_account):
         delegated_admin(audit_account, "detective.amazonaws.com"),
         delegated_admin(audit_account, "guardduty.amazonaws.com"),
     ]
-    save_delegated_admins(admins)
+    save_delegated_admins(mgmt_account_id, admins)
     return admins
 
 
 @pytest.fixture
-def no_delegated_admins():
+def no_delegated_admins(mgmt_account_id):
     admins = []
-    save_delegated_admins(admins)
+    save_delegated_admins(mgmt_account_id, admins)
     return admins
 
 
 @pytest.fixture
-def only_guardduty_delegated_admin(audit_account):
+def only_guardduty_delegated_admin(audit_account, mgmt_account_id):
     admins = [
         delegated_admin(audit_account, "guardduty.amazonaws.com"),
     ]
-    save_delegated_admins(admins)
+    save_delegated_admins(mgmt_account_id, admins)
     return admins
 
 

@@ -9,18 +9,18 @@ from kite.data import save_organization_features
 
 
 @pytest.fixture
-def root_credentials_management_enabled():
-    save_organization_features(["RootCredentialsManagement"])
+def root_credentials_management_enabled(mgmt_account_id):
+    save_organization_features(mgmt_account_id, ["RootCredentialsManagement"])
 
 
 @pytest.fixture
-def root_credentials_management_not_enabled():
-    save_organization_features(["RootSessions"])
+def root_credentials_management_not_enabled(mgmt_account_id):
+    save_organization_features(mgmt_account_id, ["RootSessions"])
 
 
 @pytest.fixture
-def no_features():
-    save_organization_features([])
+def no_features(mgmt_account_id):
+    save_organization_features(mgmt_account_id, [])
 
 
 def test_root_credentials_management_enabled(root_credentials_management_enabled):

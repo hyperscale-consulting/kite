@@ -229,5 +229,5 @@ def organization(mgmt_account_id, root_ou, organization_id):
         feature_set="ALL",
         root=root_ou,
     )
-    save_organization(result)
+    save_organization(mgmt_account_id, result)
     return result

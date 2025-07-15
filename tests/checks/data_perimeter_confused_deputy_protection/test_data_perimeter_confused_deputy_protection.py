@@ -40,17 +40,21 @@ def confused_deputy_protection_policy(organization_id):
 
 
 @pytest.fixture
-def rcp_attached_to_root_ou(organization, confused_deputy_protection_policy):
+def rcp_attached_to_root_ou(
+    organization, confused_deputy_protection_policy, mgmt_account_id
+):
     organization.root.rcps.append(confused_deputy_protection_policy)
-    save_organization(organization)
+    save_organization(mgmt_account_id, organization)
     yield organization
 
 
 @pytest.fixture
-def rcp_attached_to_all_top_level_ous(organization, confused_deputy_protection_policy):
+def rcp_attached_to_all_top_level_ous(
+    organization, confused_deputy_protection_policy, mgmt_account_id
+):
     for ou in organization.root.child_ous:
         ou.rcps.append(confused_deputy_protection_policy)
-    save_organization(organization)
+    save_organization(mgmt_account_id, organization)
     yield organization
 
 

@@ -34,7 +34,7 @@ def _save_data(data: Any, data_type: str, account_id: str | None = None) -> None
         json.dump(data, f, indent=2, default=str)
 
 
-def _load_data(data_type: str, account_id: str) -> Any:
+def _load_data(data_type: str, account_id: str | None = None) -> Any:
     """Load data from a file in the data directory.
 
     Args:
@@ -44,7 +44,10 @@ def _load_data(data_type: str, account_id: str) -> Any:
     Returns:
         The loaded data, or an empty list if the file doesn't exist.
     """
-    file_path = f"{Config.get().data_dir}/{account_id}/{data_type}.json"
+    config = Config.get()
+    if not account_id:
+        account_id = "global"
+    file_path = f"{config.data_dir}/{account_id}/{data_type}.json"
     try:
         with open(file_path) as f:
             return json.load(f)

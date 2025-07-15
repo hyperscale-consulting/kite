@@ -25,6 +25,7 @@ kite = "kite.cli:main"
 dev = [
   "ruff",
   "pytest",
+  "pytest-cov",
   "mypy",
   "pyright",
   "pytest-mock",
@@ -67,3 +68,7 @@ ignore = [
 [tool.ruff.lint.isort]
 force-single-line = true
 order-by-type = false
+
+[tool.coverage.run]
+branch = true
+source = ["kite", "tests"]

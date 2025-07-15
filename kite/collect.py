@@ -1,6 +1,5 @@
 import concurrent.futures
 from typing import Callable
-import logging
 
 from botocore.exceptions import ClientError
 from boto3 import Session
@@ -80,7 +79,6 @@ from kite.data import save_cloudfront_web_acls
 from kite.data import save_cloudfront_waf_logging_configurations
 from kite.data import save_redshift_clusters
 from kite.data import save_sagemaker_notebook_instances
-from kite.helpers import assume_organizational_role
 from kite.helpers import assume_role
 from kite.helpers import get_account_ids_in_scope
 
@@ -123,72 +121,6 @@ from . import ssm
 from . import wafv2
 
 console = Console()
-logger = logging.getLogger(__name__)
-
-
-def collect_organization_data() -> None:
-    """
-    Collect organization data and save it locally.
-
-    This function collects data about the AWS organization structure and saves it
-    to the .kite/audit directory for later use by the audit checks.
-    """
-    try:
-        console.print("\n[bold blue]Gathering organization data...[/]")
-
-        # Assume role in the management account
-        session = assume_organizational_role()
-
-        # Get organization data
-        console.print("  [yellow]Fetching organization details...[/]")
-        org = organizations.fetch_organization(session)
-        save_organization(org)
-        console.print("  [green]✓ Saved organization data[/]")
-
-        # Collect delegated admin data
-        console.print("  [yellow]Fetching delegated admins...[/]")
-        admins = organizations.fetch_delegated_admins(session)
-        save_delegated_admins(admins)
-        console.print("  [green]✓ Saved delegated admins[/]")
-
-        # Collect organization features
-        console.print("  [yellow]Fetching organization features...[/]")
-        features = iam.fetch_organization_features(session)
-        save_organization_features(features)
-        console.print("  [green]✓ Saved organization features[/]")
-
-        console.print("[bold green]✓ Completed gathering organization data[/]")
-
-    except Exception as e:
-        raise Exception(f"Error gathering organization data: {str(e)}")
-
-
-def collect_identity_providers() -> None:
-    """
-    Collect SAML and OIDC providers and save them locally.
-    """
-    try:
-        console.print("\n[bold blue]Gathering identity providers...[/]")
-
-        # Assume role in the management account
-        session = assume_organizational_role()
-
-        # Collect SAML providers
-        console.print("  [yellow]Fetching SAML providers...[/]")
-        saml_providers = iam.list_saml_providers(session)
-        save_saml_providers(saml_providers)
-        console.print("  [green]✓ Saved SAML providers[/]")
-
-        # Collect OIDC providers
-        console.print("  [yellow]Fetching OIDC providers...[/]")
-        oidc_providers = iam.list_oidc_providers(session)
-        save_oidc_providers(oidc_providers)
-        console.print("  [green]✓ Saved OIDC providers[/]")
-
-        console.print("[bold green]✓ Completed gathering identity providers[/]")
-
-    except Exception as e:
-        raise Exception(f"Error gathering identity providers: {str(e)}")
 
 
 def _get_regional_web_acls(session: Session, region: str) -> list[dict]:
@@ -247,8 +179,13 @@ class Collector:
             self.save_fn(self.account_id, self.region, resources)
         else:
             self.save_fn(self.account_id, resources)
+
+        try:
+            n = len(resources)
+        except TypeError:
+            n = 1
         console.print(
-            f"  [green]✓ Saved {len(resources)} {self.resource_type} for account "
+            f"  [green]✓ Saved {n} {self.resource_type} for account "
             f"{self.account_id}"
             f"{f' in region {self.region}' if self.region else ''}[/]"
         )
@@ -382,6 +319,8 @@ _global_collector_config = [
         iam.get_customer_managed_policies,
         save_customer_managed_policies,
     ),
+    ("SAML Providers", iam.list_saml_providers, save_saml_providers),
+    ("OIDC Providers", iam.list_oidc_providers, save_oidc_providers),
     ("CloudFront Web ACLs", _get_cloudfront_web_acls, save_cloudfront_web_acls),
     (
         "CloudFront WAF Logging Configurations",
@@ -412,6 +351,15 @@ _global_collector_config = [
     ),
 ]
 
+_mgmt_account_collector_config = [
+    ("Delegated Admins", organizations.fetch_delegated_admins, save_delegated_admins),
+    (
+        "Organization Features",
+        iam.fetch_organization_features,
+        save_organization_features,
+    ),
+]
+
 
 def collect_data() -> None:
     """
@@ -419,12 +367,32 @@ def collect_data() -> None:
     """
     console.print("\n[bold blue]Gathering AWS data...[/]")
 
-    collect_organization_data()
-
-    # Get all account IDs in scope
-    account_ids = get_account_ids_in_scope()
-
     collectors = []
+
+    config = Config.get()
+    if config.management_account_id:
+        session = assume_role(config.management_account_id)
+        org_collector = Collector(
+            session,
+            config.management_account_id,
+            "Organization",
+            organizations.fetch_organization,
+            save_organization,
+        )
+        org_collector()  # other collectors depend on this data so run it first
+
+        for resource_type, fetch_fn, save_fn in _mgmt_account_collector_config:
+            collectors.append(
+                Collector(
+                    session,
+                    config.management_account_id,
+                    resource_type,
+                    fetch_fn,
+                    save_fn,
+                )
+            )
+
+    account_ids = get_account_ids_in_scope()
     for account_id in account_ids:
         session = assume_role(account_id)
         for resource_type, fetch_fn, save_fn in _global_collector_config:

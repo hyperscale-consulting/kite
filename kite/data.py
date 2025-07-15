@@ -11,23 +11,21 @@ from kite.models import DelegatedAdmin
 from kite.models import Organization
 
 
-def _save_data(
-    data: dict[str, Any], data_type: str, account_id: str = "organization"
-) -> None:
+def _save_data(data: Any, data_type: str, account_id: str | None = None) -> None:
     """Save data to a file in the data directory.
 
     Args:
         data: The data to save.
-        data_type: The type of data being saved (e.g., 'organization',
-            'delegated_admins').
-        account_id: The AWS account ID to save the data for. Defaults to
-            'organization'.
+        data_type: The type of data being saved.
+        account_id: The AWS account ID to save the data for.
     """
+    config = Config.get()
     # Create data directory if it doesn't exist
-    os.makedirs(Config.get().data_dir, exist_ok=True)
+    os.makedirs(config.data_dir, exist_ok=True)
 
+    sub_dir = account_id if account_id else "global"
     # Create account-specific directory if needed
-    account_dir = f"{Config.get().data_dir}/{account_id}"
+    account_dir = f"{config.data_dir}/{sub_dir}"
     os.makedirs(account_dir, exist_ok=True)
 
     # Save data to file
@@ -36,14 +34,12 @@ def _save_data(
         json.dump(data, f, indent=2, default=str)
 
 
-def _load_data(data_type: str, account_id: str = "organization") -> Any:
+def _load_data(data_type: str, account_id: str) -> Any:
     """Load data from a file in the data directory.
 
     Args:
-        data_type: The type of data to load (e.g., 'organization',
-            'delegated_admins').
-        account_id: The AWS account ID to load the data for. Defaults to
-            'organization'.
+        data_type: The type of data to load.
+        account_id: The AWS account ID to load the data for.
 
     Returns:
         The loaded data, or an empty list if the file doesn't exist.
@@ -62,24 +58,30 @@ def get_organization() -> Organization | None:
     Returns:
         The organization data, or None if not found.
     """
-    data = _load_data("organization")
+    config = Config.get()
+    if not config.management_account_id:
+        return None
+    data = _load_data("organization", config.management_account_id)
     if data is None:
         return None
     return Organization.from_dict(data)
 
 
-def save_organization(org: Organization) -> None:
+def save_organization(account_id: str, org: Organization) -> None:
     """Save the organization data."""
-    _save_data(asdict(org), "organization")
+    _save_data(asdict(org), "organization", account_id)
 
 
-def get_delegated_admins() -> dict[str, list[DelegatedAdmin]] | None:
+def get_delegated_admins() -> list[DelegatedAdmin] | None:
     """Get the delegated administrators data.
 
     Returns:
         The delegated administrators data, or None if not found.
     """
-    data = _load_data("delegated_admins")
+    config = Config.get()
+    if not config.management_account_id:
+        return None
+    data = _load_data("delegated_admins", config.management_account_id)
     if data is None:
         return None
 
@@ -87,22 +89,23 @@ def get_delegated_admins() -> dict[str, list[DelegatedAdmin]] | None:
     return [DelegatedAdmin.from_dict(admin) for admin in data]
 
 
-def save_delegated_admins(admins: list[DelegatedAdmin]) -> None:
+def save_delegated_admins(account_id: str, admins: list[DelegatedAdmin]) -> None:
     """Save delegated administrators data.
 
     Args:
         admins: The delegated administrators data to save.
     """
-    _save_data([asdict(admin) for admin in admins], "delegated_admins")
+    _save_data([asdict(admin) for admin in admins], "delegated_admins", account_id)
 
 
-def save_organization_features(features: list[str]) -> None:
+def save_organization_features(account_id: str, features: list[str]) -> None:
     """Save organization features.
 
     Args:
         features: The list of organization features to save.
+        account_id: The AWS account ID to save the features for.
     """
-    _save_data(features, "organization_features")
+    _save_data(features, "organization_features", account_id)
 
 
 def get_organization_features() -> list[str]:
@@ -111,7 +114,10 @@ def get_organization_features() -> list[str]:
     Returns:
         The list of organization features, or None if not found.
     """
-    return _load_data("organization_features")
+    config = Config.get()
+    if not config.management_account_id:
+        return []
+    return _load_data("organization_features", config.management_account_id)
 
 
 def save_credentials_report(account_id: str, report: dict[str, Any]) -> None:

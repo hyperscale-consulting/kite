@@ -168,19 +168,20 @@ def get_account_summary(account_id: str) -> dict[str, Any] | None:
 
 
 def save_saml_providers(
-    providers: list[dict[str, Any]], account_id: str = "organization"
+    account_id: str,
+    providers: list[dict[str, Any]],
 ) -> None:
     """Save SAML providers.
 
     Args:
-        providers: The list of SAML providers to save.
         account_id: The AWS account ID to save the providers for.
+        providers: The list of SAML providers to save.
     """
     _save_data(providers, "saml_providers", account_id)
 
 
 def get_saml_providers(
-    account_id: str = "organization",
+    account_id: str,
 ) -> list[dict[str, Any]] | None:
     """Get SAML providers.
 
@@ -190,20 +191,18 @@ def get_saml_providers(
     return _load_data("saml_providers", account_id) or []
 
 
-def save_oidc_providers(
-    providers: list[dict[str, Any]], account_id: str = "organization"
-) -> None:
+def save_oidc_providers(account_id: str, providers: list[dict[str, Any]]) -> None:
     """Save OIDC providers.
 
     Args:
-        providers: The list of OIDC providers to save.
         account_id: The AWS account ID to save the providers for.
+        providers: The list of OIDC providers to save.
     """
     _save_data(providers, "oidc_providers", account_id)
 
 
 def get_oidc_providers(
-    account_id: str = "organization",
+    account_id: str,
 ) -> list[dict[str, Any]] | None:
     """Get OIDC providers.
 

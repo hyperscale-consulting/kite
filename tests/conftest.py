@@ -48,7 +48,7 @@ def config(mgmt_account_id, active_regions, role_name, prowler_output_dir, data_
 
     Config.create(
         management_account_id=mgmt_account_id,
-        account_ids=None,
+        account_ids=[],
         active_regions=active_regions,
         role_name=role_name,
         prowler_output_dir=str(prowler_output_dir),
@@ -237,10 +237,11 @@ def organization(mgmt_account_id, root_ou, organization_id):
 def organization_factory(ou_factory):
     def _create(
         mgmt_account_id="111111111111",
-        root_ou=ou_factory(),
+        root_ou=None,
         organization_id="o-123456789012",
         feature_set="ALL",
     ):
+        root_ou = root_ou or ou_factory()
         result = Organization(
             id=organization_id,
             master_account_id=mgmt_account_id,
@@ -261,10 +262,13 @@ def ou_factory(full_access_scp):
         ou_id="r-fas3",
         organization_id="o-123456789012",
         name="Root",
-        accounts=[],
-        child_ous=[],
-        scps=[full_access_scp],
+        accounts=None,
+        child_ous=None,
+        scps=None,
     ):
+        accounts = accounts or []
+        child_ous = child_ous or []
+        scps = scps or [full_access_scp]
         return OrganizationalUnit(
             id=ou_id,
             name=name,

@@ -1,60 +1,34 @@
-"""Check for up-to-date DFDs capturing trust boundaries and data flows."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "dfds"
-CHECK_NAME = "Data Flow Diagrams"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_dfds() -> dict[str, Any]:
-    """
-    Check if there are up-to-date DFDs capturing all major trust boundaries,
-    data flows and components.
+class DfdsCheck:
+    def __init__(self):
+        self.check_id = "dfds"
+        self.check_name = "Data Flow Diagrams"
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    # Define the message and prompts
-    message = (
-        "This check verifies that there are up-to-date DFDs capturing all major "
-        "trust boundaries, data flows and components.\n\n"
-        "Consider the following factors:\n"
-        "- Are DFDs up-to-date?\n"
-        "- Do DFDs capture all major trust boundaries?\n"
-        "- Do DFDs capture all data flows and components?"
-    )
-    prompt = (
-        "Are there up-to-date DFDs capturing all major trust boundaries, data "
-        "flows and components?"
-    )
+    @property
+    def question(self) -> str:
+        return (
+            "Are there up-to-date DFDs capturing all major trust boundaries, data "
+            "flows and components?"
+        )
 
-    # Use the manual_check function
-    result = manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=prompt,
-        pass_message=(
-            "There are up-to-date DFDs capturing all major trust boundaries, data "
-            "flows and components."
-        ),
-        fail_message=(
-            "There should be up-to-date DFDs capturing all major trust boundaries, "
-            "data flows and components."
-        ),
-        default=True,
-    )
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that there are up-to-date DFDs capturing all major "
+            "trust boundaries, data flows and components."
+        )
 
-    return result
-
-
-# Attach the check ID and name to the function
-check_dfds._CHECK_ID = CHECK_ID
-check_dfds._CHECK_NAME = CHECK_NAME
+    def run(self) -> CheckResult:
+        message = (
+            "Consider the following factors:\n"
+            "- Are DFDs up-to-date?\n"
+            "- Do DFDs capture all major trust boundaries?\n"
+            "- Do DFDs capture all data flows and components?"
+        )
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

@@ -1,38 +1,35 @@
-"""Check for documented data classification scheme."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "documented-data-classification-scheme"
-CHECK_NAME = "Documented Data Classification Scheme"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_documented_data_classification_scheme() -> dict[str, Any]:
-    """
-    Check if there is a documented data classification scheme.
+class DocumentedDataClassificationSchemeCheck:
+    def __init__(self):
+        self.check_id = "documented-data-classification-scheme"
+        self.check_name = "Documented Data Classification Scheme"
 
-    This check verifies that there is a documented data classification scheme that
-    describes:
-    - Data handling requirements
-    - Data lifecycle management
-    - Backup requirements
-    - Encryption policies
-    - Access control requirements
-    - Data destruction procedures
-    - Access auditing requirements
+    @property
+    def question(self) -> str:
+        return (
+            "Is there a documented data classification scheme that describes "
+            "handling requirements, lifecycle, backup, encryption policies, access "
+            "control, destruction and auditing of access?"
+        )
 
-    Returns:
-        Dictionary containing check results
-    """
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=(
+    @property
+    def description(self) -> str:
+        return (
             "This check verifies that there is a documented data classification "
-            "scheme that describes the data classification levels and, for each level"
-            " and for each state (at rest, in transit and in use), the controls that "
-            "should be in place including:\n\n"
+            "scheme that describes the data classification levels and, for each level "
+            "and for each state (at rest, in transit and in use), the controls that "
+            "should be in place."
+        )
+
+    def run(self) -> CheckResult:
+        message = (
+            "Confirm whether there is a documented data classification scheme that "
+            "describes the data classification levels and, for each level each state "
+            "(at rest, in transit and in use), the controls that should be in place "
+            "including:\n\n"
             "- Data handling requirements\n"
             "- Data lifecycle management\n"
             "- Backup requirements\n"
@@ -44,23 +41,8 @@ def check_documented_data_classification_scheme() -> dict[str, Any]:
             "- Is the classification scheme comprehensive and covers all data types?\n"
             "- Are the requirements clear and actionable?\n"
             "- Is the scheme regularly reviewed and updated?"
-        ),
-        prompt=(
-            "Is there a documented data classification scheme that describes "
-            "handling requirements, lifecycle, backup, encryption policies, access "
-            "control, destruction and auditing of access?"
-        ),
-        pass_message=(
-            "A documented data classification scheme exists and covers all required "
-            "aspects."
-        ),
-        fail_message=(
-            "No documented data classification scheme exists or it does not cover "
-            "all required aspects."
-        ),
-        default=True,
-    )
-
-
-check_documented_data_classification_scheme._CHECK_ID = CHECK_ID
-check_documented_data_classification_scheme._CHECK_NAME = CHECK_NAME
+        )
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

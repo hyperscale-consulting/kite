@@ -1,26 +1,29 @@
-"""Check for control implementation validation."""
-
-from kite.helpers import manual_check
-
-CHECK_ID = "control-implementation-validation"
-CHECK_NAME = "Control Implementation Validation"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_control_implementation_validation():
-    """Check if security controls are implemented and enforced through automation and
-    policy and continually evaluated for their effectiveness in achieving objectives.
+class ControlImplementationValidationCheck:
+    def __init__(self):
+        self.check_id = "control-implementation-validation"
+        self.check_name = "Control Implementation Validation"
 
+    @property
+    def question(self) -> str:
+        return (
+            "Are security controls implemented and enforced through automation and "
+            "policy and continually evaluated for their effectiveness?"
+        )
 
-    Returns:
-        dict: A dictionary containing the check results.
-    """
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=(
+    @property
+    def description(self) -> str:
+        return (
             "This check verifies that security controls are implemented and enforced "
             "through automation and policy and continually evaluated for their "
-            "effectiveness in achieving objectives.\n\n"
+            "effectiveness in achieving objectives."
+        )
+
+    def run(self) -> CheckResult:
+        message = (
             "Consider the following factors:\n"
             "- Are SCPs, resource policies, role trust policies, and other "
             "guardrails used to prevent non-compliant resource configurations?\n"
@@ -28,23 +31,8 @@ def check_control_implementation_validation():
             "track conformance?\n"
             "- Is evidence of effectiveness at both a point in time and over a period "
             "of time readily reportable to auditors?"
-        ),
-        prompt=(
-            "Are security controls implemented and enforced through automation and "
-            "policy and continually evaluated for their effectiveness?"
-        ),
-        pass_message=(
-            "Security controls are implemented and enforced through automation and "
-            "policy and continually evaluated for their effectiveness."
-        ),
-        fail_message=(
-            "Security controls are not fully implemented, enforced, or evaluated "
-            "for effectiveness."
-        ),
-        default=True,
-    )
-
-
-# Attach the check ID and name to the function
-check_control_implementation_validation._CHECK_ID = CHECK_ID
-check_control_implementation_validation._CHECK_NAME = CHECK_NAME
+        )
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

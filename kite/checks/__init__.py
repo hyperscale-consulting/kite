@@ -54,20 +54,12 @@ from kite.checks.aws_managed_services_threat_intel.check import (
 from kite.checks.aws_organizations.check import check_aws_organizations_usage
 from kite.checks.aws_service_evaluation.check import AwsServiceEvaluationCheck
 from kite.checks.capture_key_contacts.check import CaptureKeyContactsCheck
-from kite.checks.centralized_artifact_repos.check import (
-    check_use_centralized_artifact_repos,
-)
 from kite.checks.cert_deployment_and_renewal.check import (
     check_cert_deployment_and_renewal,
 )
 from kite.checks.cloudfront_logging_enabled import check_cloudfront_logging_enabled
-from kite.checks.code_reviews.check import check_conduct_code_reviews
 from kite.checks.complex_passwords.check import check_complex_passwords
 from kite.checks.config_recording_enabled.check import check_config_recording_enabled
-from kite.checks.control_implementation_validation.check import (
-    check_control_implementation_validation,
-)
-from kite.checks.control_tower.check import check_control_tower
 from kite.checks.credential_rotation.check import check_credential_rotation
 from kite.checks.cross_account_confused_deputy_prevention.check import (
     check_cross_account_confused_deputy_prevention,
@@ -75,7 +67,6 @@ from kite.checks.cross_account_confused_deputy_prevention.check import (
 from kite.checks.cw_data_protection_policies.check import (
     check_cw_data_protection_policies,
 )
-from kite.checks.data_catalog.check import check_data_catalog
 from kite.checks.data_perimeter_confused_deputy_protection.check import (
     check_data_perimeter_confused_deputy_protection,
 )
@@ -87,12 +78,6 @@ from kite.checks.data_perimeter_trusted_networks.check import (
 )
 from kite.checks.data_perimeter_trusted_resources.check import (
     check_data_perimeter_trusted_resources,
-)
-from kite.checks.define_access_requirements.check import (
-    check_define_access_requirements,
-)
-from kite.checks.define_and_document_workload_network_flows.check import (
-    check_define_and_document_workload_network_flows,
 )
 from kite.checks.delegate_iam_with_permission_boundaries.check import (
     check_delegate_iam_with_permission_boundaries,
@@ -111,10 +96,6 @@ from kite.checks.detect_sensitive_data_transform.check import (
     check_detect_sensitive_data_transform,
 )
 from kite.checks.detective_enabled.check import check_detective_enabled
-from kite.checks.dfds.check import check_dfds
-from kite.checks.documented_data_classification_scheme.check import (
-    check_documented_data_classification_scheme,
-)
 from kite.checks.eks_control_plane_logging_enabled import (
     check_eks_control_plane_logging_enabled,
 )
@@ -388,6 +369,21 @@ from .use_private_link_for_vpc_routing.check import (
 from .use_route53resolver_dns_firewall.check import (
     check_use_route53resolver_dns_firewall,
 )
+from .centralized_artifact_repos.check import CentralizedArtifactReposCheck
+from .code_reviews.check import CodeReviewsCheck
+from .control_implementation_validation.check import (
+    ControlImplementationValidationCheck,
+)
+from .control_tower.check import ControlTowerCheck
+from .data_catalog.check import DataCatalogCheck
+from .define_access_requirements.check import DefineAccessRequirementsCheck
+from .define_and_document_workload_network_flows.check import (
+    DefineAndDocumentWorkloadNetworkFlowsCheck,
+)
+from .dfds.check import DfdsCheck
+from .documented_data_classification_scheme.check import (
+    DocumentedDataClassificationSchemeCheck,
+)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -405,7 +401,6 @@ __all__ = [
     "check_iac_version_control",
     "check_iac_guardrails",
     "check_service_catalog",
-    "check_control_tower",
     "check_no_key_pairs",
     "check_no_secrets_in_aws_resources",
     "check_root_user_usage",
@@ -416,12 +411,10 @@ __all__ = [
     "check_root_credentials_security",
     "check_root_access_testing",
     "check_well_defined_control_objectives",
-    "check_control_implementation_validation",
     "check_threat_intelligence_monitoring",
     "check_tech_inventories_scanned",
     "check_workload_dependency_updates",
     "check_threat_modeling",
-    "check_dfds",
     "check_security_risks",
     "check_security_services_evaluation",
     "check_require_mfa",
@@ -437,7 +430,6 @@ __all__ = [
     "check_credential_rotation",
     "check_identity_audit",
     "check_employ_user_groups_and_attributes",
-    "check_define_access_requirements",
     "check_no_full_admin_policies",
     "check_no_policy_allows_privilege_escalation",
     "check_no_permissive_role_assumption",
@@ -498,8 +490,6 @@ __all__ = [
     "check_detective_enabled",
     "check_security_event_correlation",
     "check_auto_remediate_non_compliant_resources",
-    "check_documented_data_classification_scheme",
-    "check_data_catalog",
     "check_tag_data_with_sensitivity_level",
     "check_isolation_boundaries",
     "check_controls_implemented_based_on_sensitivity",
@@ -531,15 +521,12 @@ __all__ = [
     "check_establish_logging_and_audit_trails_for_private_ca",
     "check_enforce_https",
     "check_avoid_insecure_ssl_ciphers",
-    "check_define_and_document_workload_network_flows",
     "check_implement_auth_across_services",
     "check_monitor_network_traffic_for_unauthorized_access",
     "check_train_for_application_security",
     "check_perform_sast",
     "check_perform_dast",
     "check_perform_regular_pen_testing",
-    "check_conduct_code_reviews",
-    "check_use_centralized_artifact_repos",
     "check_immutable_builds",
     "check_pipelines_use_least_privilege",
     "check_review_pipeline_permissions_regularly",
@@ -583,4 +570,13 @@ __all__ = [
     "AwsControlDocumentationCheck",
     "AwsManagedServicesThreatIntelCheck",
     "AwsServiceEvaluationCheck",
+    "CentralizedArtifactReposCheck",
+    "CodeReviewsCheck",
+    "ControlImplementationValidationCheck",
+    "ControlTowerCheck",
+    "DataCatalogCheck",
+    "DefineAccessRequirementsCheck",
+    "DefineAndDocumentWorkloadNetworkFlowsCheck",
+    "DfdsCheck",
+    "DocumentedDataClassificationSchemeCheck",
 ]

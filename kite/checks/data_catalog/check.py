@@ -1,31 +1,31 @@
-"""Check for data catalog."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "data-catalog"
-CHECK_NAME = "Data Catalog"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_data_catalog() -> dict[str, Any]:
-    """
-    Check if there is an inventory of all data within the organization.
+class DataCatalogCheck:
+    def __init__(self):
+        self.check_id = "data-catalog"
+        self.check_name = "Data Catalog"
 
-    This check verifies that there is a data catalog that includes:
-    - Location of all data
-    - Sensitivity level of data
-    - Data ownership
-    - Controls in place to protect the data
+    @property
+    def question(self) -> str:
+        return (
+            "Is there an inventory of all data within the organization, including "
+            "its location, sensitivity level, owner, and the controls in place to "
+            "protect that data?"
+        )
 
-    Returns:
-        Dictionary containing check results
-    """
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=(
+    @property
+    def description(self) -> str:
+        return (
             "This check verifies that there is an inventory of all data within the "
+            "organization that includes location, sensitivity, ownership, retention, "
+            "and controls in place to protect the data."
+        )
+
+    def run(self) -> CheckResult:
+        message = (
+            "Please confirm whether there is an inventory of all data within the "
             "organization that includes:\n\n"
             "- Location\n"
             "- Sensitivity level\n"
@@ -37,21 +37,8 @@ def check_data_catalog() -> dict[str, Any]:
             "- Are data owners clearly identified and accountable?\n"
             "- Are sensitivity levels consistently applied?\n"
             "- Are security controls documented and validated?"
-        ),
-        prompt=(
-            "Is there an inventory of all data within the organization, including "
-            "its location, sensitivity level, owner, and the controls in place to "
-            "protect that data?"
-        ),
-        pass_message=(
-            "A comprehensive data catalog exists and includes all required information."
-        ),
-        fail_message=(
-            "No data catalog exists or it does not include all required information."
-        ),
-        default=True,
-    )
-
-
-check_data_catalog._CHECK_ID = CHECK_ID
-check_data_catalog._CHECK_NAME = CHECK_NAME
+        )
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

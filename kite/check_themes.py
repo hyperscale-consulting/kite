@@ -34,24 +34,18 @@ from kite.checks import check_aws_organizations_usage
 from kite.checks import check_cert_deployment_and_renewal
 from kite.checks import check_cloudfront_logging_enabled
 from kite.checks import check_complex_passwords
-from kite.checks import check_conduct_code_reviews
 from kite.checks import check_config_recording_enabled
-from kite.checks import check_control_implementation_validation
 from kite.checks import check_control_network_flow_with_nacls
 from kite.checks import check_control_network_flows_with_route_tables
 from kite.checks import check_control_network_flows_with_sgs
-from kite.checks import check_control_tower
 from kite.checks import check_controls_implemented_based_on_sensitivity
 from kite.checks import check_create_network_layers
 from kite.checks import check_credential_rotation
 from kite.checks import check_cross_account_confused_deputy_prevention
 from kite.checks import check_cw_data_protection_policies
-from kite.checks import check_data_catalog
 from kite.checks import check_data_perimeter_confused_deputy_protection
 from kite.checks import check_data_perimeter_trusted_networks
 from kite.checks import check_data_perimeter_trusted_resources
-from kite.checks import check_define_access_requirements
-from kite.checks import check_define_and_document_workload_network_flows
 from kite.checks import check_delegate_iam_with_permission_boundaries
 from kite.checks import check_delegated_admins_security_services
 from kite.checks import check_deploy_log_analysis_tools_in_audit_account
@@ -59,8 +53,6 @@ from kite.checks import check_detect_encryption_at_rest_misconfig
 from kite.checks import check_detect_missing_automated_lifecycle_management
 from kite.checks import check_detect_sensitive_data_transform
 from kite.checks import check_detective_enabled
-from kite.checks import check_dfds
-from kite.checks import check_documented_data_classification_scheme
 from kite.checks import check_eks_control_plane_logging_enabled
 from kite.checks import check_elb_logging_enabled
 from kite.checks import check_emergency_access_procedures
@@ -174,7 +166,6 @@ from kite.checks import check_tokenization_and_anonymization
 from kite.checks import check_train_for_application_security
 from kite.checks import check_trusted_delegated_admins
 from kite.checks import check_use_a_kms
-from kite.checks import check_use_centralized_artifact_repos
 from kite.checks import check_use_centralized_idp
 from kite.checks import check_use_customer_managed_keys
 from kite.checks import check_use_hardened_images
@@ -192,6 +183,15 @@ from kite.checks import check_workload_dependency_updates
 from kite.checks import ResolverQueryLogsEnabledCheck
 from kite.checks import RootActionsDisallowedCheck
 from kite.checks import vulnerability_scanning_in_cicd_pipelines
+from kite.checks import CentralizedArtifactReposCheck
+from kite.checks import CodeReviewsCheck
+from kite.checks import ControlImplementationValidationCheck
+from kite.checks import ControlTowerCheck
+from kite.checks import DataCatalogCheck
+from kite.checks import DefineAccessRequirementsCheck
+from kite.checks import DefineAndDocumentWorkloadNetworkFlowsCheck
+from kite.checks import DfdsCheck
+from kite.checks import DocumentedDataClassificationSchemeCheck
 
 # Define check themes and their associated checks
 CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
@@ -229,7 +229,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         ),
         "checks": [
             check_well_defined_control_objectives,
-            check_control_implementation_validation,
+            ControlImplementationValidationCheck(),
         ],
     },
     "Threat Intelligence": {
@@ -259,7 +259,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_iac_guardrails,
             check_service_catalog,
             AccountStandardsCheck(),
-            check_control_tower,
+            ControlTowerCheck(),
         ],
     },
     "Threat modeling": {
@@ -268,7 +268,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         ),
         "checks": [
             check_threat_modeling,
-            check_dfds,
+            DfdsCheck(),
             check_security_risks,
         ],
     },
@@ -336,7 +336,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "resources and components"
         ),
         "checks": [
-            check_define_access_requirements,
+            DefineAccessRequirementsCheck(),
         ],
     },
     "Grant least privilege access": {
@@ -557,8 +557,8 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Understand your data classification scheme": {
         "description": "Checks relating to the classification of data",
         "checks": [
-            check_documented_data_classification_scheme,
-            check_data_catalog,
+            DocumentedDataClassificationSchemeCheck(),
+            DataCatalogCheck(),
             check_tag_data_with_sensitivity_level,
         ],
     },
@@ -657,7 +657,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Authenticate network communications": {
         "description": ("Checks related to authenticating network communications"),
         "checks": [
-            check_define_and_document_workload_network_flows,
+            DefineAndDocumentWorkloadNetworkFlowsCheck(),
             check_implement_auth_across_services,
             check_monitor_network_traffic_for_unauthorized_access,
         ],
@@ -755,7 +755,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "vulnerabilities"
         ),
         "checks": [
-            check_conduct_code_reviews,
+            CodeReviewsCheck(),
         ],
     },
     "Centralize services for packages and dependencies": {
@@ -763,7 +763,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "Checks related to using centralized services for packages and dependencies"
         ),
         "checks": [
-            check_use_centralized_artifact_repos,
+            CentralizedArtifactReposCheck(),
         ],
     },
     "Deploy software programmatically": {

@@ -10,15 +10,15 @@ def make_finding(
     description: str,
     details: dict | None = None,
 ) -> dict:
-    if details is None:
-        details = dict(message=reason)
+    details = details or {}
+    details["message"] = reason  # backward compatibility with legacy checks
     return {
         "check_id": check_id,
         "check_name": check_name,
         "status": status,
         "description": description,
         "reason": reason,
-        "details": details or {},
+        "details": details,
     }
 
 
@@ -30,11 +30,16 @@ class CheckStatus(Enum):
 
 class CheckResult:
     def __init__(
-        self, status: CheckStatus, reason: str | None = None, context: str | None = None
+        self,
+        status: CheckStatus,
+        reason: str | None = None,
+        context: str | None = None,
+        details: dict | None = None,
     ):
         self.status = status
         self.reason = reason
         self.context = context
+        self.details = details
 
 
 class Check(Protocol):

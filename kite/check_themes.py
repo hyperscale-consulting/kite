@@ -127,7 +127,6 @@ from kite.checks import check_regularly_review_permissions
 from kite.checks import check_remediate_vulnerabilities
 from kite.checks import check_repeatable_auditable_setup_for_3rd_party_access
 from kite.checks import check_require_mfa
-from kite.checks import check_resolver_query_logs_enabled
 from kite.checks import check_restore_testing
 from kite.checks import check_restricted_role_for_secrets_access
 from kite.checks import check_review_pipeline_permissions_regularly
@@ -190,6 +189,7 @@ from kite.checks import check_vpc_flow_logs_enabled
 from kite.checks import check_waf_web_acl_logging_enabled
 from kite.checks import check_well_defined_control_objectives
 from kite.checks import check_workload_dependency_updates
+from kite.checks import ResolverQueryLogsEnabledCheck
 from kite.checks import RootActionsDisallowedCheck
 from kite.checks import vulnerability_scanning_in_cicd_pipelines
 
@@ -441,7 +441,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "checks": [
             check_organizational_cloudtrail,
             check_vpc_flow_logs_enabled,
-            check_resolver_query_logs_enabled,
+            ResolverQueryLogsEnabledCheck(),
             check_log_retention,
             check_waf_web_acl_logging_enabled,
             check_elb_logging_enabled,

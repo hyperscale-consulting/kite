@@ -259,6 +259,7 @@ def assess(config: str, auto_save: bool = True):
                             description=check.description,
                             status="PASS" if pass_ else "FAIL",
                             reason=reason,
+                            details=result.details,
                         )
                     else:
                         finding = make_finding(
@@ -267,6 +268,7 @@ def assess(config: str, auto_save: bool = True):
                             description=check.description,
                             status=result.status.value,
                             reason=result.reason,
+                            details=result.details,
                         )
 
                 assessment.record(theme_name, finding)
@@ -359,6 +361,7 @@ def run_check(config, check_id):
                 description=check.description,
                 status="PASS" if pass_ else "FAIL",
                 reason=reason,
+                details=result.details,
             )
         else:
             finding = make_finding(
@@ -367,6 +370,7 @@ def run_check(config, check_id):
                 description=check.description,
                 status=result.status.value,
                 reason=result.reason,
+                details=result.details,
             )
 
     # Display the result

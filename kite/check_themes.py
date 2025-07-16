@@ -4,33 +4,33 @@ from collections.abc import Callable
 
 from kite.checks import AccessManagementLifecycleCheck
 from kite.checks import AccessManagementLifecycleImplementedCheck
+from kite.checks import AccountStandardsCheck
+from kite.checks import ApprovalProcessForResourceSharingCheck
 from kite.checks import automate_malware_and_threat_detection
+from kite.checks import AutomateDeploymentsCheck
+from kite.checks import AutomatedSecurityTestsCheck
+from kite.checks import AutomateForensicsCheck
+from kite.checks import AwsControlDocumentationCheck
+from kite.checks import AwsManagedServicesThreatIntelCheck
+from kite.checks import AwsServiceEvaluationCheck
+from kite.checks import CaptureKeyContactsCheck
 from kite.checks import Check
 from kite.checks import check_account_separation
-from kite.checks import check_account_standards
 from kite.checks import check_accurate_account_contact_details
 from kite.checks import check_active_external_access_analyzer
 from kite.checks import check_active_unused_access_analyzer
 from kite.checks import check_admin_privileges_are_restricted
 from kite.checks import check_air_gapped_backup_vault
 from kite.checks import check_api_gateway_logging_enabled
-from kite.checks import check_approval_process_for_resource_sharing
 from kite.checks import check_audit_interactive_access_with_ssm
 from kite.checks import check_auto_remediate_non_compliant_resources
 from kite.checks import check_automate_data_at_rest_protection_with_guardduty
 from kite.checks import check_automate_ddb_data_retention
-from kite.checks import check_automate_deployments
-from kite.checks import check_automate_forensics
 from kite.checks import check_automate_patch_management
 from kite.checks import check_automate_s3_data_retention
-from kite.checks import check_automated_security_tests
 from kite.checks import check_avoid_insecure_ssl_ciphers
 from kite.checks import check_avoid_interactive_access
-from kite.checks import check_aws_control_documentation
-from kite.checks import check_aws_managed_services_threat_intel
 from kite.checks import check_aws_organizations_usage
-from kite.checks import check_aws_service_evaluation
-from kite.checks import check_capture_key_contacts
 from kite.checks import check_cert_deployment_and_renewal
 from kite.checks import check_cloudfront_logging_enabled
 from kite.checks import check_complex_passwords
@@ -238,15 +238,15 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_threat_intelligence_monitoring,
             check_tech_inventories_scanned,
             check_workload_dependency_updates,
-            check_aws_managed_services_threat_intel,
+            AwsManagedServicesThreatIntelCheck(),
         ],
     },
     "Reducing Security Management Scope": {
         "description": "Checks related to reducing the scope of security management",
         "checks": [
             check_use_of_higher_level_services,
-            check_aws_control_documentation,
-            check_aws_service_evaluation,
+            AwsControlDocumentationCheck(),
+            AwsServiceEvaluationCheck(),
         ],
     },
     "Automated Deployment of Standard Security Controls": {
@@ -258,7 +258,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_iac_version_control,
             check_iac_guardrails,
             check_service_catalog,
-            check_account_standards,
+            AccountStandardsCheck(),
             check_control_tower,
         ],
     },
@@ -406,7 +406,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_active_external_access_analyzer,
             check_monitor_and_response_to_s3_public_access,
             check_maintain_inventory_of_shared_resources,
-            check_approval_process_for_resource_sharing,
+            ApprovalProcessForResourceSharingCheck(),
         ],
     },
     "Share resources securely within your organization": {
@@ -667,7 +667,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "Checks related to identifying key personnel and external resources"
         ),
         "checks": [
-            check_capture_key_contacts,
+            CaptureKeyContactsCheck(),
         ],
     },
     "Develop incident management plans": {
@@ -680,7 +680,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": "Checks related to preparing forensic capabilities",
         "checks": [
             check_forensics_ou,
-            check_automate_forensics,
+            AutomateForensicsCheck(),
         ],
     },
     "Develop and test security incident response playbooks": {
@@ -740,7 +740,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "checks": [
             check_perform_sast,
             check_perform_dast,
-            check_automated_security_tests,
+            AutomatedSecurityTestsCheck(),
         ],
     },
     "Perform regular penetration testing": {
@@ -769,7 +769,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Deploy software programmatically": {
         "description": "Checks related to deploying software programmatically",
         "checks": [
-            check_automate_deployments,
+            AutomateDeploymentsCheck(),
             check_immutable_builds,
         ],
     },

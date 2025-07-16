@@ -1,5 +1,5 @@
 """Automated deployments check."""
 
-from kite.checks.automate_deployments.check import check_automate_deployments
+from .check import AutomateDeploymentsCheck
 
-__all__ = ["check_automate_deployments"]
+__all__ = ["AutomateDeploymentsCheck"]

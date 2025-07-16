@@ -1,5 +1,5 @@
 """Capture key contacts check module."""
 
-from .check import check_capture_key_contacts
+from .check import CaptureKeyContactsCheck
 
-__all__ = ["check_capture_key_contacts"]
+__all__ = ["CaptureKeyContactsCheck"]

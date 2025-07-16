@@ -5,7 +5,7 @@ from kite.checks.access_management_lifecycle_implemented.check import (
     AccessManagementLifecycleImplementedCheck,
 )
 from kite.checks.account_separation.check import check_account_separation
-from kite.checks.account_standards.check import check_account_standards
+from kite.checks.account_standards.check import AccountStandardsCheck
 from kite.checks.accurate_account_contact_details.check import (
     check_accurate_account_contact_details,
 )
@@ -20,9 +20,6 @@ from kite.checks.admin_privileges_are_restricted.check import (
 )
 from kite.checks.air_gapped_backup_vault.check import check_air_gapped_backup_vault
 from kite.checks.api_gateway_logging_enabled import check_api_gateway_logging_enabled
-from kite.checks.approval_process_for_resource_sharing.check import (
-    check_approval_process_for_resource_sharing,
-)
 from kite.checks.audit_interactive_access_with_ssm.check import (
     check_audit_interactive_access_with_ssm,
 )
@@ -35,8 +32,8 @@ from kite.checks.automate_data_at_rest_protection_with_guardduty.check import (
 from kite.checks.automate_ddb_data_retention.check import (
     check_automate_ddb_data_retention,
 )
-from kite.checks.automate_deployments.check import check_automate_deployments
-from kite.checks.automate_forensics.check import check_automate_forensics
+from kite.checks.automate_deployments.check import AutomateDeploymentsCheck
+from kite.checks.automate_forensics.check import AutomateForensicsCheck
 from kite.checks.automate_malware_and_threat_detection.check import (
     automate_malware_and_threat_detection,
 )
@@ -44,19 +41,19 @@ from kite.checks.automate_patch_management.check import check_automate_patch_man
 from kite.checks.automate_s3_data_retention.check import (
     check_automate_s3_data_retention,
 )
-from kite.checks.automated_security_tests.check import check_automated_security_tests
+from kite.checks.automated_security_tests.check import AutomatedSecurityTestsCheck
 from kite.checks.avoid_insecure_ssl_ciphers.check import (
     check_avoid_insecure_ssl_ciphers,
 )
 from kite.checks.avoid_interactive_access.check import check_avoid_interactive_access
 from kite.checks.avoid_root_usage.check import check_root_user_usage
-from kite.checks.aws_control_documentation.check import check_aws_control_documentation
+from kite.checks.aws_control_documentation.check import AwsControlDocumentationCheck
 from kite.checks.aws_managed_services_threat_intel.check import (
-    check_aws_managed_services_threat_intel,
+    AwsManagedServicesThreatIntelCheck,
 )
 from kite.checks.aws_organizations.check import check_aws_organizations_usage
-from kite.checks.aws_service_evaluation.check import check_aws_service_evaluation
-from kite.checks.capture_key_contacts.check import check_capture_key_contacts
+from kite.checks.aws_service_evaluation.check import AwsServiceEvaluationCheck
+from kite.checks.capture_key_contacts.check import CaptureKeyContactsCheck
 from kite.checks.centralized_artifact_repos.check import (
     check_use_centralized_artifact_repos,
 )
@@ -364,6 +361,9 @@ from kite.checks.workload_dependency_updates.check import (
     check_workload_dependency_updates,
 )
 
+from .approval_process_for_resource_sharing.check import (
+    ApprovalProcessForResourceSharingCheck,
+)
 from .control_network_flow_with_nacls.check import check_control_network_flow_with_nacls
 from .control_network_flows_with_route_tables.check import (
     check_control_network_flows_with_route_tables,
@@ -401,13 +401,10 @@ __all__ = [
     "check_root_access_keys_disallowed",
     "RootActionsDisallowedCheck",
     "check_use_of_higher_level_services",
-    "check_aws_control_documentation",
-    "check_aws_service_evaluation",
     "check_iac_templates",
     "check_iac_version_control",
     "check_iac_guardrails",
     "check_service_catalog",
-    "check_account_standards",
     "check_control_tower",
     "check_no_key_pairs",
     "check_no_secrets_in_aws_resources",
@@ -423,7 +420,6 @@ __all__ = [
     "check_threat_intelligence_monitoring",
     "check_tech_inventories_scanned",
     "check_workload_dependency_updates",
-    "check_aws_managed_services_threat_intel",
     "check_threat_modeling",
     "check_dfds",
     "check_security_risks",
@@ -474,7 +470,6 @@ __all__ = [
     "check_active_external_access_analyzer",
     "check_monitor_and_response_to_s3_public_access",
     "check_maintain_inventory_of_shared_resources",
-    "check_approval_process_for_resource_sharing",
     "check_s3_bucket_acl_disabled",
     "check_migrate_from_oai",
     "check_establish_data_perimeter_trusted_identities",
@@ -542,11 +537,9 @@ __all__ = [
     "check_train_for_application_security",
     "check_perform_sast",
     "check_perform_dast",
-    "check_automated_security_tests",
     "check_perform_regular_pen_testing",
     "check_conduct_code_reviews",
     "check_use_centralized_artifact_repos",
-    "check_automate_deployments",
     "check_immutable_builds",
     "check_pipelines_use_least_privilege",
     "check_review_pipeline_permissions_regularly",
@@ -562,10 +555,8 @@ __all__ = [
     "check_avoid_interactive_access",
     "check_audit_interactive_access_with_ssm",
     "check_validate_software_integrity",
-    "check_capture_key_contacts",
     "check_incident_response_plans",
     "check_forensics_ou",
-    "check_automate_forensics",
     "check_security_ir_playbooks",
     "check_use_identity_broker",
     "check_pre_deploy_tools",
@@ -583,4 +574,13 @@ __all__ = [
     "CheckResult",
     "CheckStatus",
     "make_finding",
+    "CaptureKeyContactsCheck",
+    "AccountStandardsCheck",
+    "ApprovalProcessForResourceSharingCheck",
+    "AutomateDeploymentsCheck",
+    "AutomateForensicsCheck",
+    "AutomatedSecurityTestsCheck",
+    "AwsControlDocumentationCheck",
+    "AwsManagedServicesThreatIntelCheck",
+    "AwsServiceEvaluationCheck",
 ]

@@ -1,8 +1,6 @@
 """Kite checks module."""
 
-from kite.checks.access_management_lifecycle.check import (
-    check_access_management_lifecycle,
-)
+from kite.checks.access_management_lifecycle.check import AccessManagementLifecycleCheck
 from kite.checks.access_management_lifecycle_implemented.check import (
     check_access_management_lifecycle_implemented,
 )
@@ -470,7 +468,7 @@ __all__ = [
     "check_scp_prevents_deleting_logs",
     "check_scp_prevents_adding_internet_access_to_vpc",
     "check_delegate_iam_with_permission_boundaries",
-    "check_access_management_lifecycle",
+    "AccessManagementLifecycleCheck",
     "check_access_management_lifecycle_implemented",
     "check_scim_protocol_used",
     "check_active_external_access_analyzer",

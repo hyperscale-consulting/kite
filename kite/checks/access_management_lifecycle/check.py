@@ -1,53 +1,39 @@
-"""Check if access management lifecycle process is defined and documented."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "access-management-lifecycle-defined"
-CHECK_NAME = "Access Management Lifecycle Process is Defined and Documented"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_access_management_lifecycle() -> dict[str, Any]:
-    """
-    Check if access management lifecycle process is defined and documented.
+class AccessManagementLifecycleCheck:
+    def __init__(self):
+        self.check_id = "access-management-lifecycle-defined"
+        self.check_name = (
+            "Access Management Lifecycle Process is Defined and Documented"
+        )
 
-    This check verifies that:
-    1. There is a defined process for granting initial access
-    2. There is a defined process for periodic access reviews
-    3. There is a defined process for offboarding
+    @property
+    def question(self) -> str:
+        return (
+            "Is there a defined and documented process for managing user access "
+            "throughout the user lifecycle?"
+        )
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    message = (
-        "Please consider the following:\n\n"
-        "- Is the access management lifecycle process clearly defined and documented?\n"
-        "- Does it include procedures for granting initial access?\n"
-        "- Does it include procedures for periodic access reviews?\n"
-        "- Does it include procedures for offboarding?"
-    )
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that there is a defined and documented process for "
+            "managing user access throughout the user lifecycle, including granting "
+            "initial access, periodic access reviews, and offboarding."
+        )
 
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=(
-            "Is there a defined and documented process for managing user access throughout "
-            "the user lifecycle?"
-        ),
-        pass_message=("Access management lifecycle process is defined and documented."),
-        fail_message=(
-            "Access management lifecycle process should be defined and documented."
-        ),
-        default=False,
-    )
-
-
-check_access_management_lifecycle._CHECK_ID = CHECK_ID
-check_access_management_lifecycle._CHECK_NAME = CHECK_NAME
+    def run(self) -> CheckResult:
+        message = (
+            "Please consider the following:\n\n"
+            "- Is the access management lifecycle process clearly defined and "
+            "documented?\n"
+            "- Does it include procedures for granting initial access?\n"
+            "- Does it include procedures for periodic access reviews?\n"
+            "- Does it include procedures for offboarding?"
+        )
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

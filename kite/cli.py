@@ -250,7 +250,7 @@ def assess(config: str, auto_save: bool = True):
                         question = check.question
                         pass_, reason = prompt_user_with_panel(
                             check_name=check.check_name,
-                            message="\n".join([description, context]),
+                            message="\n\n".join([description, context]),
                             prompt=question,
                         )
                         finding = make_finding(
@@ -352,7 +352,7 @@ def run_check(config, check_id):
             question = check.question
             pass_, reason = prompt_user_with_panel(
                 check_name=check.check_name,
-                message="\n".join([description, context]),
+                message="\n\n".join([description, context]),
                 prompt=question,
             )
             finding = make_finding(

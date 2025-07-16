@@ -2,7 +2,7 @@
 
 from kite.checks.access_management_lifecycle.check import AccessManagementLifecycleCheck
 from kite.checks.access_management_lifecycle_implemented.check import (
-    check_access_management_lifecycle_implemented,
+    AccessManagementLifecycleImplementedCheck,
 )
 from kite.checks.account_separation.check import check_account_separation
 from kite.checks.account_standards.check import check_account_standards
@@ -469,7 +469,7 @@ __all__ = [
     "check_scp_prevents_adding_internet_access_to_vpc",
     "check_delegate_iam_with_permission_boundaries",
     "AccessManagementLifecycleCheck",
-    "check_access_management_lifecycle_implemented",
+    "AccessManagementLifecycleImplementedCheck",
     "check_scim_protocol_used",
     "check_active_external_access_analyzer",
     "check_monitor_and_response_to_s3_public_access",

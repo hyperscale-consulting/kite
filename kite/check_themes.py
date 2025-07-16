@@ -3,9 +3,9 @@
 from collections.abc import Callable
 
 from kite.checks import AccessManagementLifecycleCheck
+from kite.checks import AccessManagementLifecycleImplementedCheck
 from kite.checks import automate_malware_and_threat_detection
 from kite.checks import Check
-from kite.checks import check_access_management_lifecycle_implemented
 from kite.checks import check_account_separation
 from kite.checks import check_account_standards
 from kite.checks import check_accurate_account_contact_details
@@ -396,7 +396,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": ("Checks related to managing access based on lifecycle"),
         "checks": [
             AccessManagementLifecycleCheck(),
-            check_access_management_lifecycle_implemented,
+            AccessManagementLifecycleImplementedCheck(),
             check_scim_protocol_used,
         ],
     },

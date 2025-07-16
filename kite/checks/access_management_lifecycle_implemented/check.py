@@ -1,54 +1,37 @@
-"""Check if access management lifecycle process is effectively implemented."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "access-management-lifecycle-implemented"
-CHECK_NAME = "Access Management Lifecycle Process is Effectively Implemented"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_access_management_lifecycle_implemented() -> dict[str, Any]:
-    """
-    Check if access management lifecycle process is effectively implemented.
+class AccessManagementLifecycleImplementedCheck:
+    def __init__(self):
+        self.check_id = "access-management-lifecycle-implemented"
+        self.check_name = (
+            "Access Management Lifecycle Process is Effectively Implemented"
+        )
 
-    This check verifies that:
-    1. Regular access reviews are being conducted
-    2. Access revocation is prompt and effective
-    3. There is a process for continuous improvement
-
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    message = (
-        "Please consider the following:\n\n"
-        "- Are regular access reviews being conducted as scheduled?\n"
-        "- Is access revoked promptly when no longer needed?\n"
-        "- Is there a process to identify and implement improvements?"
-    )
-
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=(
+    @property
+    def question(self) -> str:
+        return (
             "Is the access management lifecycle process effectively implemented "
             "and followed?"
-        ),
-        pass_message=(
-            "Access management lifecycle process is effectively implemented."
-        ),
-        fail_message=(
-            "Access management lifecycle process should be effectively implemented."
-        ),
-        default=False,
-    )
+        )
 
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that regular access reviews are being conducted, "
+            "access revocation is prompt and effective, and there is a process for "
+            "continuous improvement."
+        )
 
-check_access_management_lifecycle_implemented._CHECK_ID = CHECK_ID
-check_access_management_lifecycle_implemented._CHECK_NAME = CHECK_NAME
+    def run(self) -> CheckResult:
+        message = (
+            "Please consider the following:\n\n"
+            "- Are regular access reviews being conducted as scheduled?\n"
+            "- Is access revoked promptly when no longer needed?\n"
+            "- Is there a process to identify and implement improvements?"
+        )
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

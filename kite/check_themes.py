@@ -133,7 +133,7 @@ from kite.checks import check_review_pipeline_permissions_regularly
 from kite.checks import check_root_access_keys_disallowed
 from kite.checks import check_root_access_testing
 from kite.checks import check_root_account_monitoring
-from kite.checks import check_root_actions_disallowed
+from kite.checks import RootActionsDisallowedCheck
 from kite.checks import check_root_credentials_management_enabled
 from kite.checks import check_root_credentials_security
 from kite.checks import check_root_mfa_enabled
@@ -191,9 +191,10 @@ from kite.checks import check_waf_web_acl_logging_enabled
 from kite.checks import check_well_defined_control_objectives
 from kite.checks import check_workload_dependency_updates
 from kite.checks import vulnerability_scanning_in_cicd_pipelines
+from kite.checks import Check
 
 # Define check themes and their associated checks
-CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
+CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Multi-Account Architecture": {
         "description": (
             "Checks related to organizational structure, landing zone and guardrails"
@@ -216,7 +217,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable]]] = {
             check_root_mfa_enabled,
             check_accurate_account_contact_details,
             check_root_access_keys_disallowed,
-            check_root_actions_disallowed,
+            RootActionsDisallowedCheck(),
             check_root_account_monitoring,
             check_root_credentials_security,
             check_root_access_testing,

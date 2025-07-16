@@ -231,3 +231,77 @@ def organization(mgmt_account_id, root_ou, organization_id):
     )
     save_organization(mgmt_account_id, result)
     return result
+
+
+@pytest.fixture
+def organization_factory(ou_factory):
+    def _create(
+        mgmt_account_id="111111111111",
+        root_ou=ou_factory(),
+        organization_id="o-123456789012",
+        feature_set="ALL",
+    ):
+        result = Organization(
+            id=organization_id,
+            master_account_id=mgmt_account_id,
+            arn=f"arn:aws:organizations:::{mgmt_account_id}:organization/{organization_id}",
+            feature_set=feature_set,
+            root=root_ou,
+        )
+        save_organization(mgmt_account_id, result)
+        return result
+
+    return _create
+
+
+@pytest.fixture
+def ou_factory(full_access_scp):
+    def _create(
+        mgmt_account_id="111111111111",
+        ou_id="r-fas3",
+        organization_id="o-123456789012",
+        name="Root",
+        accounts=[],
+        child_ous=[],
+        scps=[full_access_scp],
+    ):
+        return OrganizationalUnit(
+            id=ou_id,
+            name=name,
+            arn=f"arn:aws:organizations:::{mgmt_account_id}:organizational-unit/{organization_id}/{ou_id}",
+            accounts=accounts,
+            scps=scps,
+            child_ous=child_ous,
+        )
+
+    return _create
+
+
+@pytest.fixture
+def scp_factory():
+    allow_all = dict(
+        Version="2012-10-17",
+        Statement=[
+            dict(
+                Effect="Allow",
+                Action="*",
+            )
+        ],
+        Resource="*",
+    )
+
+    def _create(
+        name="FullAWSAccess",
+        description="Full access to every operation",
+        content=allow_all,
+    ):
+        return ControlPolicy(
+            id=f"p-{name}",
+            name=f"{name}",
+            description=description,
+            arn=f"arn:aws:organizations:::service-control-policy/p-{name}",
+            content=json.dumps(content),
+            type="SERVICE_CONTROL_POLICY",
+        )
+
+    return _create

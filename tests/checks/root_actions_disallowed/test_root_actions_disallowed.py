@@ -1,16 +1,11 @@
-"""Tests for the root actions disallowed check."""
+import pytest
 
-import json
-from unittest.mock import MagicMock
-from unittest.mock import patch
-
-from kite.checks.root_actions_disallowed.check import _is_root_actions_disallow_scp
-from kite.checks.root_actions_disallowed.check import check_root_actions_disallowed
+from kite.checks import CheckStatus
+from kite.checks import RootActionsDisallowedCheck
 
 
-def test_is_root_actions_disallow_scp_with_arnlike_condition():
-    """Test that an SCP with ArnLike condition for root user is considered valid."""
-    scp_content = {
+def scp_with_deny_star_arnlike_root():
+    return {
         "Version": "2012-10-17",
         "Statement": [
             {
@@ -21,12 +16,10 @@ def test_is_root_actions_disallow_scp_with_arnlike_condition():
             }
         ],
     }
-    assert _is_root_actions_disallow_scp(scp_content) is True
 
 
-def test_is_root_actions_disallow_scp_with_stringlike_condition():
-    """Test that an SCP with StringLike condition for root user is considered valid."""
-    scp_content = {
+def scp_with_deny_star_stringlike_root():
+    return {
         "Version": "2012-10-17",
         "Statement": [
             {
@@ -37,12 +30,10 @@ def test_is_root_actions_disallow_scp_with_stringlike_condition():
             }
         ],
     }
-    assert _is_root_actions_disallow_scp(scp_content) is True
 
 
-def test_is_root_actions_disallow_scp_with_non_root_condition():
-    """Test that an SCP with a non-root user condition is not considered valid."""
-    scp_content = {
+def scp_with_deny_star_arnlike_non_root():
+    return {
         "Version": "2012-10-17",
         "Statement": [
             {
@@ -55,12 +46,10 @@ def test_is_root_actions_disallow_scp_with_non_root_condition():
             }
         ],
     }
-    assert _is_root_actions_disallow_scp(scp_content) is False
 
 
-def test_is_root_actions_disallow_scp_with_multiple_actions():
-    """Test SCP with multiple actions including "*" is considered valid."""
-    scp_content = {
+def scp_with_deny_star_arnlike_root_and_multiple_actions():
+    return {
         "Version": "2012-10-17",
         "Statement": [
             {
@@ -74,12 +63,10 @@ def test_is_root_actions_disallow_scp_with_multiple_actions():
             }
         ],
     }
-    assert _is_root_actions_disallow_scp(scp_content) is True
 
 
-def test_is_root_actions_disallow_scp_with_multiple_statements():
-    """Test SCP with multiple statements is valid if any deny all actions."""
-    scp_content = {
+def scp_with_deny_star_arnlike_root_and_multiple_statements():
+    return {
         "Version": "2012-10-17",
         "Statement": [
             {
@@ -95,12 +82,10 @@ def test_is_root_actions_disallow_scp_with_multiple_statements():
             },
         ],
     }
-    assert _is_root_actions_disallow_scp(scp_content) is True
 
 
-def test_is_root_actions_disallow_scp_without_condition():
-    """Test that an SCP without a condition is not considered valid."""
-    scp_content = {
+def scp_with_deny_star_without_condition():
+    return {
         "Version": "2012-10-17",
         "Statement": [
             {
@@ -110,150 +95,116 @@ def test_is_root_actions_disallow_scp_without_condition():
             }
         ],
     }
-    assert _is_root_actions_disallow_scp(scp_content) is False
 
 
-def test_is_root_actions_disallow_scp_invalid_json():
-    """Test that an SCP with invalid JSON is not considered valid."""
-    scp_content = {"invalid": "json"}
-    assert _is_root_actions_disallow_scp(scp_content) is False
+def invalid_scp():
+    return {"invalid": "json"}
 
 
-@patch("kite.checks.root_actions_disallowed.check.get_organization")
-def test_check_root_actions_disallowed_no_org(mock_get_org):
-    """Test that the check fails when AWS Organizations is not being used."""
-    mock_get_org.return_value = None
-    result = check_root_actions_disallowed()
-    assert result["status"] == "FAIL"
-    assert "AWS Organizations is not being used" in result["details"]["message"]
-
-
-@patch("kite.checks.root_actions_disallowed.check.get_organization")
-def test_check_root_actions_disallowed_root_has_scp(mock_get_org):
-    """Test that the check passes when the root OU has the required SCP."""
-    mock_org = MagicMock()
-    mock_root = MagicMock()
-    mock_scp = MagicMock()
-    mock_scp.content = json.dumps(
-        {
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Effect": "Deny",
-                    "Action": "*",
-                    "Resource": "*",
-                    "Condition": {"ArnLike": {"aws:PrincipalArn": "arn:*:iam::*:root"}},
-                }
-            ],
-        }
+def test_check_no_org():
+    check = RootActionsDisallowedCheck()
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert result.reason == (
+        "AWS Organizations is not being used, so SCPs cannot be used."
     )
-    mock_scp.id = "scp-123"
-    mock_scp.name = "DisallowRootActions"
-    mock_scp.arn = "arn:aws:organizations::123456789012:scp/scp-123"
-    mock_root.scps = [mock_scp]
-    mock_org.root = mock_root
-    mock_get_org.return_value = mock_org
-
-    result = check_root_actions_disallowed()
-    assert result["status"] == "PASS"
-    msg = "Root actions disallow SCP is attached to the root OU"
-    assert msg in result["details"]["message"]
-    assert result["details"]["scp"]["id"] == "scp-123"
 
 
-@patch("kite.checks.root_actions_disallowed.check.get_organization")
-def test_check_root_actions_disallowed_top_level_ous_have_scp(mock_get_org):
-    """Test that the check passes when all top-level OUs have the required SCP."""
-    mock_org = MagicMock()
-    mock_root = MagicMock()
-    mock_ou1 = MagicMock()
-    mock_ou2 = MagicMock()
-    mock_scp = MagicMock()
-    mock_scp.content = json.dumps(
-        {
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Effect": "Deny",
-                    "Action": "*",
-                    "Resource": "*",
-                    "Condition": {"ArnLike": {"aws:PrincipalArn": "arn:*:iam::*:root"}},
-                }
-            ],
-        }
+@pytest.mark.parametrize(
+    "scp_content",
+    [
+        scp_with_deny_star_arnlike_root(),
+        scp_with_deny_star_stringlike_root(),
+        scp_with_deny_star_arnlike_root_and_multiple_actions(),
+        scp_with_deny_star_arnlike_root_and_multiple_statements(),
+    ],
+)
+def test_check_root_has_scp(organization_factory, ou_factory, scp_factory, scp_content):
+    organization_factory(root_ou=ou_factory(scps=[scp_factory(content=scp_content)]))
+
+    check = RootActionsDisallowedCheck()
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+    assert result.reason == "Disallow root actions SCP is attached to the root OU."
+
+
+def test_check_all_top_level_have_scp(organization_factory, ou_factory, scp_factory):
+    organization_factory(
+        root_ou=ou_factory(
+            child_ous=[
+                ou_factory(
+                    scps=[scp_factory(content=scp_with_deny_star_arnlike_root())]
+                ),
+                ou_factory(
+                    scps=[scp_factory(content=scp_with_deny_star_arnlike_root())]
+                ),
+                ou_factory(
+                    scps=[
+                        scp_factory(
+                            content=scp_with_deny_star_arnlike_root_and_multiple_statements()
+                        )
+                    ]
+                ),
+                ou_factory(
+                    scps=[
+                        scp_factory(
+                            content=scp_with_deny_star_arnlike_root_and_multiple_actions()
+                        )
+                    ]
+                ),
+            ]
+        )
     )
-    mock_ou1.name = "OU1"
-    mock_ou2.name = "OU2"
-    mock_ou1.scps = [mock_scp]
-    mock_ou2.scps = [mock_scp]
-    mock_root.scps = []
-    mock_root.child_ous = [mock_ou1, mock_ou2]
-    mock_org.root = mock_root
-    mock_get_org.return_value = mock_org
 
-    result = check_root_actions_disallowed()
-    assert result["status"] == "PASS"
-    msg = "Root actions disallow SCP is attached to all top-level OUs"
-    assert msg in result["details"]["message"]
-
-
-@patch("kite.checks.root_actions_disallowed.check.get_organization")
-def test_check_root_actions_disallowed_some_top_level_ous_missing_scp(mock_get_org):
-    """Test check fails when some top-level OUs are missing the required SCP."""
-    mock_org = MagicMock()
-    mock_root = MagicMock()
-    mock_ou1 = MagicMock()
-    mock_ou2 = MagicMock()
-    mock_scp = MagicMock()
-    mock_scp.content = json.dumps(
-        {
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Effect": "Deny",
-                    "Action": "*",
-                    "Resource": "*",
-                    "Condition": {"ArnLike": {"aws:PrincipalArn": "arn:*:iam::*:root"}},
-                }
-            ],
-        }
+    check = RootActionsDisallowedCheck()
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+    assert (
+        result.reason == "Disallow root actions SCP is attached to all top-level OUs."
     )
-    mock_ou1.name = "OU1"
-    mock_ou2.name = "OU2"
-    mock_ou1.scps = [mock_scp]
-    mock_ou2.scps = []  # OU2 is missing the SCP
-    mock_root.scps = []
-    mock_root.child_ous = [mock_ou1, mock_ou2]
-    mock_org.root = mock_root
-    mock_get_org.return_value = mock_org
-
-    result = check_root_actions_disallowed()
-    assert result["status"] == "FAIL"
-    assert "OU2" in result["details"]["message"]
-    assert result["details"]["ous_without_scp"] == ["OU2"]
 
 
-@patch("kite.checks.root_actions_disallowed.check.get_organization")
-def test_check_root_actions_disallowed_no_top_level_ous(mock_get_org):
-    """Test that the check fails when there are no top-level OUs and root has no SCP."""
-    mock_org = MagicMock()
-    mock_root = MagicMock()
-    mock_root.scps = []
-    mock_root.child_ous = []
-    mock_org.root = mock_root
-    mock_get_org.return_value = mock_org
+def test_check_some_top_level_have_scp(organization_factory, ou_factory, scp_factory):
+    organization_factory(
+        root_ou=ou_factory(
+            child_ous=[
+                ou_factory(
+                    scps=[scp_factory(content=scp_with_deny_star_arnlike_root())]
+                ),
+                ou_factory(
+                    scps=[scp_factory(content=scp_with_deny_star_arnlike_root())]
+                ),
+                ou_factory(
+                    scps=[scp_factory(content=scp_with_deny_star_arnlike_non_root())]
+                ),
+            ]
+        )
+    )
 
-    result = check_root_actions_disallowed()
-    assert result["status"] == "FAIL"
-    msg = "Root actions disallow SCP is not attached to the root OU"
-    assert msg in result["details"]["message"]
+    check = RootActionsDisallowedCheck()
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert result.reason == (
+        "Root actions disallow SCP is not attached to the root OU or all top-level OUs."
+    )
 
 
-@patch("kite.checks.root_actions_disallowed.check.get_organization")
-def test_check_root_actions_disallowed_error(mock_get_org):
-    """Test that the check returns an error when an exception occurs."""
-    mock_get_org.side_effect = Exception("Test error")
-    result = check_root_actions_disallowed()
-    assert result["status"] == "ERROR"
-    msg = "Error checking root actions disallow SCP"
-    assert msg in result["details"]["message"]
+@pytest.mark.parametrize(
+    "scp_content",
+    [
+        scp_with_deny_star_without_condition(),
+        invalid_scp(),
+        scp_with_deny_star_arnlike_non_root(),
+    ],
+)
+def test_check_root_does_not_have_scp(
+    organization_factory, ou_factory, scp_factory, scp_content
+):
+    organization_factory(root_ou=ou_factory(scps=[scp_factory(content=scp_content)]))
+
+    check = RootActionsDisallowedCheck()
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert result.reason == (
+        "Root actions disallow SCP is not attached to the root OU or all top-level OUs."
+    )

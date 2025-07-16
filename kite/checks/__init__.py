@@ -247,7 +247,7 @@ from kite.checks.root_access_keys_disallowed.check import (
 )
 from kite.checks.root_access_testing.check import check_root_access_testing
 from kite.checks.root_account_monitoring.check import check_root_account_monitoring
-from kite.checks.root_actions_disallowed.check import check_root_actions_disallowed
+from kite.checks.root_actions_disallowed.check import RootActionsDisallowedCheck
 from kite.checks.root_credentials_management_enabled.check import (
     check_root_credentials_management_enabled,
 )
@@ -371,6 +371,10 @@ from .control_network_flows_with_route_tables.check import (
     check_control_network_flows_with_route_tables,
 )
 from .control_network_flows_with_sgs.check import check_control_network_flows_with_sgs
+from .core import Check
+from .core import CheckResult
+from .core import CheckStatus
+from .core import make_finding
 from .create_network_layers.check import check_create_network_layers
 from .inspect_http_traffic_with_waf.check import check_inspect_http_traffic_with_waf
 from .inspect_traffic_with_network_firewall.check import (
@@ -397,7 +401,7 @@ __all__ = [
     "check_region_deny_scp",
     "check_root_mfa_enabled",
     "check_root_access_keys_disallowed",
-    "check_root_actions_disallowed",
+    "RootActionsDisallowedCheck",
     "check_use_of_higher_level_services",
     "check_aws_control_documentation",
     "check_aws_service_evaluation",
@@ -577,4 +581,8 @@ __all__ = [
     "check_use_route53resolver_dns_firewall",
     "check_inspect_http_traffic_with_waf",
     "check_inspect_traffic_with_network_firewall",
+    "Check",
+    "CheckResult",
+    "CheckStatus",
+    "make_finding",
 ]

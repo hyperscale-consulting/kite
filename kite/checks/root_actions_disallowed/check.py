@@ -1,162 +1,18 @@
-"""Check for disallow root actions SCP."""
-
 import json
-from typing import Any
 
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.data import get_organization
+from kite.models import ControlPolicy
+from kite.models import Organization
 
-CHECK_ID = "root-actions-disallowed"
-CHECK_NAME = "Root Actions Disallowed"
 
-
-def check_root_actions_disallowed() -> dict[str, Any]:
-    """
-    Check if there is an effective SCP that disallows root user actions.
-
-    This check verifies that:
-    1. There is an SCP that denies all actions ("*") for root users
-    2. The SCP is either applied at the root OU level or at every OU in the level
-       directly below the root
-    3. The SCP has a condition that checks if the principal is the root user
-
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-                - ous_without_scp: List of OUs that don't have the required SCP
-                  (if applicable)
-    """
+def _is_root_actions_disallow_scp(scp: ControlPolicy) -> bool:
     try:
-        org = get_organization()
-        if org is None:
-            return {
-                "check_id": CHECK_ID,
-                "check_name": CHECK_NAME,
-                "status": "FAIL",
-                "details": {
-                    "message": (
-                        "AWS Organizations is not being used, so root actions "
-                        "disallow SCP cannot be assessed."
-                    ),
-                },
-            }
+        content = json.loads(scp.content)
+    except json.JSONDecodeError:
+        return False
 
-        # Check root OU for root actions disallow SCP
-        root_scps = org.root.scps
-        root_has_disallow_scp = False
-        root_disallow_scp = None
-
-        for scp in root_scps:
-            try:
-                content = json.loads(scp.content)
-                if _is_root_actions_disallow_scp(content):
-                    root_has_disallow_scp = True
-                    root_disallow_scp = scp
-                    break
-            except json.JSONDecodeError:
-                continue
-
-        # If root has disallow SCP, we're good
-        if root_has_disallow_scp:
-            return {
-                "check_id": CHECK_ID,
-                "check_name": CHECK_NAME,
-                "status": "PASS",
-                "details": {
-                    "message": (
-                        "Root actions disallow SCP is attached to the root OU."
-                    ),
-                    "scp": {
-                        "id": root_disallow_scp.id,
-                        "name": root_disallow_scp.name,
-                        "arn": root_disallow_scp.arn,
-                    },
-                },
-            }
-
-        # Check top-level OUs for root actions disallow SCP
-        top_level_ous = org.root.child_ous
-        ous_without_disallow_scp = []
-
-        # If there's no disallow SCP on root and no top-level OUs, that's a fail
-        if not top_level_ous:
-            return {
-                "check_id": CHECK_ID,
-                "check_name": CHECK_NAME,
-                "status": "FAIL",
-                "details": {
-                    "message": (
-                        "Root actions disallow SCP is not attached to the root OU "
-                        "and there are no top-level OUs."
-                    ),
-                },
-            }
-
-        for ou in top_level_ous:
-            ou_has_disallow_scp = False
-            for scp in ou.scps:
-                try:
-                    content = json.loads(scp.content)
-                    if _is_root_actions_disallow_scp(content):
-                        ou_has_disallow_scp = True
-                        break
-                except json.JSONDecodeError:
-                    continue
-
-            if not ou_has_disallow_scp:
-                ous_without_disallow_scp.append(ou.name)
-
-        if ous_without_disallow_scp:
-            return {
-                "check_id": CHECK_ID,
-                "check_name": CHECK_NAME,
-                "status": "FAIL",
-                "details": {
-                    "message": (
-                        "Root actions disallow SCP is not attached to the root OU "
-                        "or all top-level OUs. The following top-level OUs do not "
-                        "have a root actions disallow SCP: "
-                    )
-                    + ", ".join(ous_without_disallow_scp),
-                    "ous_without_scp": ous_without_disallow_scp,
-                },
-            }
-
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "PASS",
-            "details": {
-                "message": (
-                    "Root actions disallow SCP is attached to all top-level OUs."
-                ),
-            },
-        }
-
-    except Exception as e:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "ERROR",
-            "details": {
-                "message": f"Error checking root actions disallow SCP: {str(e)}",
-            },
-        }
-
-
-def _is_root_actions_disallow_scp(content: dict[str, Any]) -> bool:
-    """
-    Check if an SCP effectively disallows root user actions.
-
-    Args:
-        content: The SCP content as a dictionary
-
-    Returns:
-        True if the SCP disallows root user actions
-    """
     if not isinstance(content, dict) or "Statement" not in content:
         return False
 
@@ -211,6 +67,67 @@ def _is_root_actions_disallow_scp(content: dict[str, Any]) -> bool:
     return False
 
 
-# Attach the check ID and name to the function
-check_root_actions_disallowed._CHECK_ID = CHECK_ID
-check_root_actions_disallowed._CHECK_NAME = CHECK_NAME
+def _root_scp_disallows_root_actions(org: Organization) -> bool:
+    return _contains_root_actions_disallow_scp(org.root.scps)
+
+
+def _contains_root_actions_disallow_scp(scps: list[ControlPolicy]) -> bool:
+    for scp in scps:
+        if _is_root_actions_disallow_scp(scp):
+            return True
+    return False
+
+
+def _all_top_level_ous_have_root_actions_disallow_scp(org: Organization) -> bool:
+    if not org.root.child_ous:
+        return False
+
+    for ou in org.root.child_ous:
+        if not _contains_root_actions_disallow_scp(ou.scps):
+            return False
+    return True
+
+
+class RootActionsDisallowedCheck:
+    def __init__(self):
+        self.check_id = "root-actions-disallowed"
+        self.check_name = "Root Actions Disallowed"
+
+    @property
+    def question(self) -> str:
+        return "Does the root OU have a disallow root actions SCP?"
+
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that SCPs are applies that prevent root user "
+            "actions across the whole organization."
+        )
+
+    def run(self) -> CheckResult:
+        org = get_organization()
+        if org is None:
+            return CheckResult(
+                status=CheckStatus.FAIL,
+                reason="AWS Organizations is not being used, so SCPs cannot be used.",
+            )
+
+        if _root_scp_disallows_root_actions(org):
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason="Disallow root actions SCP is attached to the root OU.",
+            )
+
+        if _all_top_level_ous_have_root_actions_disallow_scp(org):
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason="Disallow root actions SCP is attached to all top-level OUs.",
+            )
+
+        return CheckResult(
+            status=CheckStatus.FAIL,
+            reason=(
+                "Root actions disallow SCP is not attached to the root OU or all "
+                "top-level OUs."
+            ),
+        )

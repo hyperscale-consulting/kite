@@ -16,6 +16,7 @@ from rich.prompt import Prompt
 from rich.table import Table
 
 from kite.accessanalyzer import list_analyzers
+from kite.checks import CheckStatus, make_finding
 from kite.check_themes import ALL_CHECKS
 from kite.check_themes import CHECK_THEMES
 from kite.cloudfront import get_distributions_by_web_acl
@@ -23,7 +24,7 @@ from kite.collect import collect_data
 from kite.config import Config
 from kite.data import save_collection_metadata
 from kite.data import verify_collection_status
-from kite.helpers import assume_organizational_role
+from kite.helpers import assume_organizational_role, prompt_user_with_panel
 from kite.helpers import assume_role
 from kite.helpers import get_prowler_output
 from kite.organizations import fetch_account_ids
@@ -109,6 +110,8 @@ def find_check_by_id(check_id: str):
     """Find a check function by its ID."""
     for check in ALL_CHECKS:
         if hasattr(check, "_CHECK_ID") and check._CHECK_ID == check_id:
+            return check
+        if hasattr(check, "check_id") and check.check_id == check_id:
             return check
     return None
 
@@ -220,16 +223,50 @@ def assess(config: str, auto_save: bool = True):
             )
 
             for check in theme_data["checks"]:
-                if not hasattr(check, "_CHECK_ID") or not hasattr(check, "_CHECK_NAME"):
+                if hasattr(check, "check_id"):
+                    check_id = check.check_id
+                elif hasattr(check, "_CHECK_ID"):
+                    check_id = check._CHECK_ID
+                else:
                     raise Exception(
-                        f"Skipping check {check} - missing _CHECK_ID or _CHECK_NAME"
+                        f"Skipping check {check} - missing check_id or _CHECK_ID"
                     )
-                if assessment.has_finding(check._CHECK_ID):
+
+                if assessment.has_finding(check_id):
                     console.print(
-                        f"[yellow]Skipping {check._CHECK_NAME} - already assessed[/yellow]"
+                        f"[yellow]Skipping {check_id} - already assessed[/yellow]"
                     )
                     continue
-                finding = check()
+                if callable(check):
+                    finding = check()
+                else:
+                    # new style checks...
+                    result = check.run()
+                    if result.status == CheckStatus.MANUAL:
+                        description = check.description
+                        context = result.context
+                        question = check.question
+                        pass_, reason = prompt_user_with_panel(
+                            check_name=check.check_name,
+                            message="\n".join([description, context]),
+                            prompt=question,
+                        )
+                        finding = make_finding(
+                            check_id=check.check_id,
+                            check_name=check.check_name,
+                            description=check.description,
+                            status="PASS" if pass_ else "FAIL",
+                            reason=reason,
+                        )
+                    else:
+                        finding = make_finding(
+                            check_id=check.check_id,
+                            check_name=check.check_name,
+                            description=check.description,
+                            status=result.status.value,
+                            reason=result.reason,
+                        )
+
                 assessment.record(theme_name, finding)
                 display_finding(finding)
 
@@ -268,7 +305,12 @@ def list_checks():
     for theme in CHECK_THEMES:
         for check in CHECK_THEMES[theme]["checks"]:
             if hasattr(check, "_CHECK_ID") and hasattr(check, "_CHECK_NAME"):
-                table.add_row(theme, check._CHECK_ID, check._CHECK_NAME)
+                check_id, check_name = (check._CHECK_ID, check._CHECK_NAME)
+            elif hasattr(check, "check_id") and hasattr(check, "check_name"):
+                check_id, check_name = (check.check_id, check.check_name)
+            else:
+                continue
+            table.add_row(theme, check_id, check_name)
 
     console.print(table)
 
@@ -294,18 +336,46 @@ def run_check(config, check_id):
         console.print(f"[red]Error: No check found with ID {check_id}[/red]")
         return
 
-    console.print(f"\n[bold]Running check: {check._CHECK_NAME} ({check_id})[/bold]")
-    result = check()
+    if hasattr(check, "_CHECK_NAME"):
+        console.print(f"\n[bold]Running check: {check._CHECK_NAME} ({check_id})[/bold]")
+        finding = check()
+    else:
+        # new style checks...
+        result = check.run()
+        if result.status == CheckStatus.MANUAL:
+            description = check.description
+            context = result.context
+            question = check.question
+            pass_, reason = prompt_user_with_panel(
+                check_name=check.check_name,
+                message="\n".join([description, context]),
+                prompt=question,
+            )
+            finding = make_finding(
+                check_id=check.check_id,
+                check_name=check.check_name,
+                description=check.description,
+                status="PASS" if pass_ else "FAIL",
+                reason=reason,
+            )
+        else:
+            finding = make_finding(
+                check_id=check.check_id,
+                check_name=check.check_name,
+                description=check.description,
+                status=result.status.value,
+                reason=result.reason,
+            )
 
     # Display the result
     status_color = {"PASS": "green", "FAIL": "red", "ERROR": "yellow"}.get(
-        result["status"], "white"
+        finding["status"], "white"
     )
 
-    console.print(f"\nStatus: [{status_color}]{result['status']}[/{status_color}]")
-    if "details" in result:
+    console.print(f"\nStatus: [{status_color}]{finding['status']}[/{status_color}]")
+    if "details" in finding:
         console.print("\nDetails:")
-        console.print(result["details"])
+        console.print(finding["details"])
 
 
 @main.command()

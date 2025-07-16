@@ -27,12 +27,12 @@ class DefineAccessRequirementsCheck:
             "access to each resource or component?\n\n"
             "This could be in the form of a simple table similar to the following:\n\n"
             "|--------------------------|---------------------------------------------|--------------|\n"
-            "| Who / what               | Resource / component                        | Access       |\n"
+            "| Who / what               | Resource / component                        | Access       |\n"  # noqa E501
             "|--------------------------|---------------------------------------------|--------------|\n"
-            "| MyApp ECS tasks          | All objects in the 'my-app-media' S3 bucket | read         |\n"
-            "| MyApp ECS tasks          | my-app dynamodb table                       | read / write |\n"
-            "| MyApp ECS task exec      | my-app/secret-key SM secret                 | read         |\n"
-            "| MyApp secrets admin user | my-app/secret-key SM secret                 | read / write |\n"
+            "| MyApp ECS tasks          | All objects in the 'my-app-media' S3 bucket | read         |\n"  # noqa E501
+            "| MyApp ECS tasks          | my-app dynamodb table                       | read / write |\n"  # noqa E501
+            "| MyApp ECS task exec      | my-app/secret-key SM secret                 | read         |\n"  # noqa E501
+            "| MyApp secrets admin user | my-app/secret-key SM secret                 | read / write |\n"  # noqa E501
             "|---------------------------------------------------------------------------------------|\n"
         )
         return CheckResult(

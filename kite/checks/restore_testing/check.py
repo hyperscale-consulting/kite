@@ -1,53 +1,36 @@
-"""Check for restore testing of backups."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "restore-testing"
-CHECK_NAME = "Restore Testing"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-# TODO: add permissions to fetch restore testing plans and automate this check
-def check_restore_testing() -> dict[str, Any]:
-    """
-    Check if backups are regularly tested for restore viability and duration.
+class RestoreTestingCheck:
+    def __init__(self):
+        self.check_id = "restore-testing"
+        self.check_name = "Restore Testing"
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS" or "FAIL")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    message = (
-        "Please review your backup restore testing procedures and confirm:\n\n"
-        "1. Backups are regularly tested automatically for restore viability\n"
-        "2. Restore job duration is monitored and documented\n"
-        "3. Restore testing results are reviewed and any issues are addressed\n"
-    )
+    @property
+    def question(self) -> str:
+        return (
+            "Are backups regularly tested automatically for restore viability and "
+            "restore job duration?"
+        )
 
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=(
-            "Are backups regularly tested automatically for restore viability and restore job "
-            "duration?"
-        ),
-        pass_message=(
-            "Backups are regularly tested automatically for restore viability and restore job "
-            "duration."
-        ),
-        fail_message=(
-            "Backups should be regularly tested automatically for restore viability and restore "
-            "job duration."
-        ),
-        default=True,
-    )
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that backups are regularly tested for restore "
+            "viability and duration. Backups should be tested automatically to ensure "
+            "they can be restored successfully and within acceptable timeframes."
+        )
 
+    def run(self) -> CheckResult:
+        context = (
+            "Please review your backup restore testing procedures and confirm:\n\n"
+            "1. Backups are regularly tested automatically for restore viability\n"
+            "2. Restore job duration is monitored and documented\n"
+            "3. Restore testing results are reviewed and any issues are addressed\n"
+        )
 
-# Attach the check ID and name to the function
-check_restore_testing._CHECK_ID = CHECK_ID
-check_restore_testing._CHECK_NAME = CHECK_NAME
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=context,
+        )

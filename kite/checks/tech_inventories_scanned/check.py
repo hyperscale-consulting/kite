@@ -1,49 +1,36 @@
-"""Check for technology inventory scanning."""
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-# TODO: automated support for this check - required addition permissions
+class TechInventoriesScannedCheck:
+    def __init__(self):
+        self.check_id = "tech-inventories-scanned"
+        self.check_name = "Technology Inventory Scanning"
 
-from kite.helpers import manual_check
+    @property
+    def question(self) -> str:
+        return (
+            "Do teams maintain inventories of technology components and continuously "
+            "scan them for potential vulnerabilities?"
+        )
 
-CHECK_ID = "tech-inventories-scanned"
-CHECK_NAME = "Technology Inventory Scanning"
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that teams maintain inventories of technology "
+            "components and continuously scan them for potential vulnerabilities."
+        )
 
-
-def check_tech_inventories_scanned():
-    """Check if teams maintain inventories of technology components and continuously
-    scan them for potential vulnerabilities.
-
-    Returns:
-        dict: A dictionary containing the check results.
-    """
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=(
-            "Do teams maintain inventories of technology "
-            "components and continuously scan them for potential vulnerabilities.\n\n"
+    def run(self) -> CheckResult:
+        context = (
             "Consider the following factors:\n"
             "- Do teams maintain up-to-date inventories of all technology "
             "components (e.g. SBOMs)?\n"
             "- Are these inventories regularly scanned for vulnerabilities (e.g. "
             "Inspector, ECR scanning)?"
-        ),
-        prompt=(
-            "Do teams maintain inventories of technology components and continuously "
-            "scan them for potential vulnerabilities?"
-        ),
-        pass_message=(
-            "Teams maintain comprehensive technology inventories and regularly scan "
-            "them for vulnerabilities."
-        ),
-        fail_message=(
-            "Teams do not maintain complete technology inventories or do not "
-            "regularly scan them for vulnerabilities."
-        ),
-        default=True,
-    )
+        )
 
-
-# Attach the check ID and name to the function
-check_tech_inventories_scanned._CHECK_ID = CHECK_ID
-check_tech_inventories_scanned._CHECK_NAME = CHECK_NAME
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=context,
+        )

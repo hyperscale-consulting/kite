@@ -1,63 +1,38 @@
-"""Check for Well-Defined Security Control Objectives."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "well-defined-control-objectives"
-CHECK_NAME = "Well-Defined Control Objectives"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_well_defined_control_objectives() -> dict[str, Any]:
-    """
-    Check if security control objectives are well-defined and aligned with
-    compliance requirements.
+class WellDefinedControlObjectivesCheck:
+    def __init__(self):
+        self.check_id = "well-defined-control-objectives"
+        self.check_name = "Well-Defined Control Objectives"
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    # Define the message and prompts
-    message = (
-        "This check verifies that security control objectives are well-defined and "
-        "aligned with compliance requirements.\n\n"
-        "Consider the following factors:\n"
-        "Things to consider:\n"
-        "- Are security control objectives documented?\n"
-        "- Is a cybersecurity framework, such as NIST CSF, CIS, ISO 27001, Cyber "
-        "Essentials etc. used as a basis for control objectives?\n"
-        "- Are compliance requirements well understood - e.g. GDPR, PCI DSS, market "
-        "expectations, etc. And are these aligned to the control objectives?\n"
-    )
-    prompt = (
-        "Are security control objectives well-defined and aligned with compliance "
-        "requirements?"
-    )
+    @property
+    def question(self) -> str:
+        return (
+            "Are security control objectives well-defined and aligned with compliance "
+            "requirements?"
+        )
 
-    # Use the manual_check function
-    result = manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=prompt,
-        pass_message=(
-            "Security control objectives are well-defined and aligned with "
-            "compliance requirements."
-        ),
-        fail_message=(
-            "Security control objectives need to be better defined or aligned with "
-            "compliance requirements."
-        ),
-        default=True,
-    )
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that security control objectives are well-defined and "
+            "aligned with compliance requirements."
+        )
 
-    return result
+    def run(self) -> CheckResult:
+        context = (
+            "Things to consider:\n"
+            "- Are security control objectives documented?\n"
+            "- Is a cybersecurity framework, such as NIST CSF, CIS, ISO 27001, Cyber "
+            "Essentials etc. used as a basis for control objectives?\n"
+            "- Are compliance requirements well understood - e.g. GDPR, PCI DSS, "
+            "market expectations, etc. And are these aligned to the control "
+            "objectives?\n"
+        )
 
-
-# Attach the check ID and name to the function
-check_well_defined_control_objectives._CHECK_ID = CHECK_ID
-check_well_defined_control_objectives._CHECK_NAME = CHECK_NAME
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=context,
+        )

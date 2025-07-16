@@ -1,49 +1,29 @@
-"""Check for regular threat modeling by teams."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "threat-modeling"
-CHECK_NAME = "Threat Modeling"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_threat_modeling() -> dict[str, Any]:
-    """
-    Check if teams perform threat modeling regularly.
+class ThreatModelingCheck:
+    def __init__(self):
+        self.check_id = "threat-modeling"
+        self.check_name = "Threat Modeling"
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    # Define the message and prompts
-    message = (
-        "This check verifies that teams perform threat modeling regularly.\n\n"
-        "Consider the following factors:\n"
-        "- Do teams perform threat modeling regularly?\n"
-        "- Is threat modeling part of the development process?\n"
-        "- Are threat modeling results documented and reviewed?"
-    )
-    prompt = "Do teams threat model regularly?"
+    @property
+    def question(self) -> str:
+        return "Do teams perform threat modeling regularly?"
 
-    # Use the manual_check function
-    result = manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=prompt,
-        pass_message="Teams perform threat modeling regularly.",
-        fail_message="Teams should perform threat modeling regularly.",
-        default=True,
-    )
+    @property
+    def description(self) -> str:
+        return "This check verifies that teams perform threat modeling regularly."
 
-    return result
+    def run(self) -> CheckResult:
+        context = (
+            "Consider the following factors:\n"
+            "- Do teams perform threat modeling regularly?\n"
+            "- Is threat modeling part of the development process?\n"
+            "- Are threat modeling results documented and reviewed?"
+        )
 
-
-# Attach the check ID and name to the function
-check_threat_modeling._CHECK_ID = CHECK_ID
-check_threat_modeling._CHECK_NAME = CHECK_NAME
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=context,
+        )

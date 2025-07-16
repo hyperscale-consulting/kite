@@ -1,53 +1,34 @@
-"""Check for secure storage of secrets in a secure platform."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "secure-secrets-storage"
-CHECK_NAME = "Secure Secrets Storage"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_secure_secrets_storage() -> dict[str, Any]:
-    """
-    Check if all secrets are stored in a secure platform (i.e. encrypted, auditable, etc).
+class SecureSecretsStorageCheck:
+    def __init__(self):
+        self.check_id = "secure-secrets-storage"
+        self.check_name = "Secure Secrets Storage"
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    # Define the message and prompts
-    message = (
-        "This check verifies that all secrets are stored in a secure platform "
-        "(e.g. AWS Secrets Manager, HashiCorp Vault, etc)."
-    )
-    prompt = (
-        "Are all secrets stored in a secure platform (i.e. encrypted, auditable, etc)?"
-    )
+    @property
+    def question(self) -> str:
+        return (
+            "Are all secrets stored in a secure platform (i.e. encrypted, auditable, "
+            "etc)?"
+        )
 
-    # Use the manual_check function
-    result = manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=prompt,
-        pass_message=(
-            "All secrets are stored in a secure platform with proper encryption "
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that all secrets are stored in a secure platform "
+            "with proper encryption and audit capabilities."
+        )
+
+    def run(self) -> CheckResult:
+        context = (
+            "Are all secrets are stored in a dedicated secret management service "
+            "(e.g. AWS Secrets Manager, HashiCorp Vault, etc) with proper encryption "
             "and audit capabilities."
-        ),
-        fail_message=(
-            "Secrets should be stored in a secure platform with proper encryption "
-            "and audit capabilities."
-        ),
-        default=True,
-    )
+        )
 
-    return result
-
-
-check_secure_secrets_storage._CHECK_ID = CHECK_ID
-check_secure_secrets_storage._CHECK_NAME = CHECK_NAME
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=context,
+        )

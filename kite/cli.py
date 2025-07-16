@@ -16,17 +16,19 @@ from rich.prompt import Prompt
 from rich.table import Table
 
 from kite.accessanalyzer import list_analyzers
-from kite.checks import CheckStatus, make_finding
 from kite.check_themes import ALL_CHECKS
 from kite.check_themes import CHECK_THEMES
+from kite.checks import CheckStatus
+from kite.checks import make_finding
 from kite.cloudfront import get_distributions_by_web_acl
 from kite.collect import collect_data
 from kite.config import Config
 from kite.data import save_collection_metadata
 from kite.data import verify_collection_status
-from kite.helpers import assume_organizational_role, prompt_user_with_panel
+from kite.helpers import assume_organizational_role
 from kite.helpers import assume_role
 from kite.helpers import get_prowler_output
+from kite.helpers import prompt_user_with_panel
 from kite.organizations import fetch_account_ids
 from kite.organizations import get_account_details
 from kite.s3 import get_buckets

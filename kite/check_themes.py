@@ -3,6 +3,7 @@
 from collections.abc import Callable
 
 from kite.checks import automate_malware_and_threat_detection
+from kite.checks import Check
 from kite.checks import check_access_management_lifecycle
 from kite.checks import check_access_management_lifecycle_implemented
 from kite.checks import check_account_separation
@@ -133,7 +134,6 @@ from kite.checks import check_review_pipeline_permissions_regularly
 from kite.checks import check_root_access_keys_disallowed
 from kite.checks import check_root_access_testing
 from kite.checks import check_root_account_monitoring
-from kite.checks import RootActionsDisallowedCheck
 from kite.checks import check_root_credentials_management_enabled
 from kite.checks import check_root_credentials_security
 from kite.checks import check_root_mfa_enabled
@@ -190,8 +190,8 @@ from kite.checks import check_vpc_flow_logs_enabled
 from kite.checks import check_waf_web_acl_logging_enabled
 from kite.checks import check_well_defined_control_objectives
 from kite.checks import check_workload_dependency_updates
+from kite.checks import RootActionsDisallowedCheck
 from kite.checks import vulnerability_scanning_in_cicd_pipelines
-from kite.checks import Check
 
 # Define check themes and their associated checks
 CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {

@@ -1,60 +1,34 @@
-"""Check for standard security controls and configurations defined using IaC templates."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "iac-templates"
-CHECK_NAME = "IaC Templates"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_iac_templates() -> dict[str, Any]:
-    """
-    Check if standard security controls and configurations are defined using
-    Infrastructure as Code (IaC) templates.
+class IacTemplatesCheck:
+    def __init__(self):
+        self.check_id = "iac-templates"
+        self.check_name = "IaC Templates"
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    # Define the message and prompts
-    message = (
-        "This check verifies that standard security controls and configurations "
-        "are defined using Infrastructure as Code (IaC) templates.\n\n"
-        "Consider the following factors:\n"
-        "- Are standard security controls defined using IaC templates?\n"
-        "- Are standard configurations defined using IaC templates?\n"
-        "- Are IaC templates used consistently across the organization?"
-    )
-    prompt = (
-        "Are standard security controls and configurations defined using "
-        "Infrastructure as Code (IaC) templates?"
-    )
+    @property
+    def question(self) -> str:
+        return (
+            "Are standard security controls and configurations defined using "
+            "Infrastructure as Code (IaC) templates?"
+        )
 
-    # Use the manual_check function
-    result = manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=prompt,
-        pass_message=(
-            "Standard security controls and configurations are defined using "
-            "Infrastructure as Code (IaC) templates."
-        ),
-        fail_message=(
-            "Standard security controls and configurations should be defined using "
-            "Infrastructure as Code (IaC) templates."
-        ),
-        default=True,
-    )
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that standard security controls and configurations "
+            "are defined using Infrastructure as Code (IaC) templates.\n\n"
+        )
 
-    return result
-
-
-# Attach the check ID and name to the function
-check_iac_templates._CHECK_ID = CHECK_ID
-check_iac_templates._CHECK_NAME = CHECK_NAME
+    def run(self) -> CheckResult:
+        message = (
+            "Consider the following factors:\n"
+            "- Are standard security controls defined using IaC templates?\n"
+            "- Are standard configurations defined using IaC templates?\n"
+            "- Are IaC templates used consistently across the organization?"
+        )
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

@@ -100,25 +100,25 @@ from kite.checks.eks_control_plane_logging_enabled import (
     check_eks_control_plane_logging_enabled,
 )
 from kite.checks.elb_logging_enabled import check_elb_logging_enabled
-from kite.checks.employ_user_groups_and_attributes.check import (
-    check_employ_user_groups_and_attributes,
+from kite.checks.employ_user_groups_and_attributes import (
+    EmployUserGroupsAndAttributesCheck,
 )
-from kite.checks.enforce_data_protection_at_rest_with_policy_as_code.check import (
-    check_enforce_data_protection_at_rest_with_policy_as_code,
+from kite.checks.enforce_data_protection_at_rest_with_policy_as_code import (
+    EnforceDataProtectionAtRestWithPolicyAsCodeCheck,
 )
 from kite.checks.enforce_https.check import check_enforce_https
-from kite.checks.establish_logging_and_audit_trails_for_private_ca.check import (
-    check_establish_logging_and_audit_trails_for_private_ca,
+from kite.checks.establish_logging_and_audit_trails_for_private_ca import (
+    EstablishLoggingAndAuditTrailsForPrivateCACheck,
 )
-from kite.checks.established_emergency_access_procedures.check import (
-    check_emergency_access_procedures,
+from kite.checks.established_emergency_access_procedures import (
+    EstablishedEmergencyAccessProceduresCheck,
 )
 from kite.checks.forensics_ou.check import check_forensics_ou
 from kite.checks.hr_system_integration.check import check_hr_system_integration
-from kite.checks.iac_guardrails.check import check_iac_guardrails
-from kite.checks.iac_templates.check import check_iac_templates
-from kite.checks.iac_version_control.check import check_iac_version_control
-from kite.checks.identity_audit.check import check_identity_audit
+from kite.checks.iac_guardrails import IacGuardrailsCheck
+from kite.checks.iac_templates import IacTemplatesCheck
+from kite.checks.iac_version_control import IacVersionControlCheck
+from kite.checks.identity_audit import IdentityAuditCheck
 from kite.checks.immutable_builds.check import check_immutable_builds
 from kite.checks.implement_auth_across_services.check import (
     check_implement_auth_across_services,
@@ -345,16 +345,31 @@ from kite.checks.workload_dependency_updates.check import (
 from .approval_process_for_resource_sharing.check import (
     ApprovalProcessForResourceSharingCheck,
 )
+from .centralized_artifact_repos.check import CentralizedArtifactReposCheck
+from .code_reviews.check import CodeReviewsCheck
+from .control_implementation_validation.check import (
+    ControlImplementationValidationCheck,
+)
 from .control_network_flow_with_nacls.check import check_control_network_flow_with_nacls
 from .control_network_flows_with_route_tables.check import (
     check_control_network_flows_with_route_tables,
 )
 from .control_network_flows_with_sgs.check import check_control_network_flows_with_sgs
+from .control_tower.check import ControlTowerCheck
 from .core import Check
 from .core import CheckResult
 from .core import CheckStatus
 from .core import make_finding
 from .create_network_layers.check import check_create_network_layers
+from .data_catalog.check import DataCatalogCheck
+from .define_access_requirements.check import DefineAccessRequirementsCheck
+from .define_and_document_workload_network_flows.check import (
+    DefineAndDocumentWorkloadNetworkFlowsCheck,
+)
+from .dfds.check import DfdsCheck
+from .documented_data_classification_scheme.check import (
+    DocumentedDataClassificationSchemeCheck,
+)
 from .inspect_http_traffic_with_waf.check import check_inspect_http_traffic_with_waf
 from .inspect_traffic_with_network_firewall.check import (
     check_inspect_traffic_with_network_firewall,
@@ -369,21 +384,6 @@ from .use_private_link_for_vpc_routing.check import (
 from .use_route53resolver_dns_firewall.check import (
     check_use_route53resolver_dns_firewall,
 )
-from .centralized_artifact_repos.check import CentralizedArtifactReposCheck
-from .code_reviews.check import CodeReviewsCheck
-from .control_implementation_validation.check import (
-    ControlImplementationValidationCheck,
-)
-from .control_tower.check import ControlTowerCheck
-from .data_catalog.check import DataCatalogCheck
-from .define_access_requirements.check import DefineAccessRequirementsCheck
-from .define_and_document_workload_network_flows.check import (
-    DefineAndDocumentWorkloadNetworkFlowsCheck,
-)
-from .dfds.check import DfdsCheck
-from .documented_data_classification_scheme.check import (
-    DocumentedDataClassificationSchemeCheck,
-)
 
 __all__ = [
     "check_aws_organizations_usage",
@@ -397,9 +397,9 @@ __all__ = [
     "check_root_access_keys_disallowed",
     "RootActionsDisallowedCheck",
     "check_use_of_higher_level_services",
-    "check_iac_templates",
-    "check_iac_version_control",
-    "check_iac_guardrails",
+    "IacTemplatesCheck",
+    "IacVersionControlCheck",
+    "IacGuardrailsCheck",
     "check_service_catalog",
     "check_no_key_pairs",
     "check_no_secrets_in_aws_resources",
@@ -428,8 +428,8 @@ __all__ = [
     "check_use_centralized_idp",
     "check_hr_system_integration",
     "check_credential_rotation",
-    "check_identity_audit",
-    "check_employ_user_groups_and_attributes",
+    "IdentityAuditCheck",
+    "EmployUserGroupsAndAttributesCheck",
     "check_no_full_admin_policies",
     "check_no_policy_allows_privilege_escalation",
     "check_no_permissive_role_assumption",
@@ -443,7 +443,7 @@ __all__ = [
     "check_sqs_confused_deputy_protection",
     "check_lambda_confused_deputy_protection",
     "check_kms_confused_deputy_protection",
-    "check_emergency_access_procedures",
+    "EstablishedEmergencyAccessProceduresCheck",
     "check_active_unused_access_analyzer",
     "check_regularly_review_permissions",
     "check_scp_prevents_leaving_org",
@@ -511,14 +511,14 @@ __all__ = [
     "check_use_service_encryption_at_rest",
     "check_use_customer_managed_keys",
     "check_detect_encryption_at_rest_misconfig",
-    "check_enforce_data_protection_at_rest_with_policy_as_code",
+    "EnforceDataProtectionAtRestWithPolicyAsCodeCheck",
+    "EstablishLoggingAndAuditTrailsForPrivateCACheck",
     "check_automate_data_at_rest_protection_with_guardduty",
     "check_air_gapped_backup_vault",
     "check_restore_testing",
     "check_implement_versioning_and_object_locking",
     "check_cert_deployment_and_renewal",
     "check_protect_root_ca",
-    "check_establish_logging_and_audit_trails_for_private_ca",
     "check_enforce_https",
     "check_avoid_insecure_ssl_ciphers",
     "check_implement_auth_across_services",

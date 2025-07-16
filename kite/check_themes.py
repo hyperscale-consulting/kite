@@ -14,6 +14,7 @@ from kite.checks import AwsControlDocumentationCheck
 from kite.checks import AwsManagedServicesThreatIntelCheck
 from kite.checks import AwsServiceEvaluationCheck
 from kite.checks import CaptureKeyContactsCheck
+from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import Check
 from kite.checks import check_account_separation
 from kite.checks import check_accurate_account_contact_details
@@ -55,18 +56,10 @@ from kite.checks import check_detect_sensitive_data_transform
 from kite.checks import check_detective_enabled
 from kite.checks import check_eks_control_plane_logging_enabled
 from kite.checks import check_elb_logging_enabled
-from kite.checks import check_emergency_access_procedures
-from kite.checks import check_employ_user_groups_and_attributes
-from kite.checks import check_enforce_data_protection_at_rest_with_policy_as_code
 from kite.checks import check_enforce_https
 from kite.checks import check_establish_data_perimeter_trusted_identities
-from kite.checks import check_establish_logging_and_audit_trails_for_private_ca
 from kite.checks import check_forensics_ou
 from kite.checks import check_hr_system_integration
-from kite.checks import check_iac_guardrails
-from kite.checks import check_iac_templates
-from kite.checks import check_iac_version_control
-from kite.checks import check_identity_audit
 from kite.checks import check_immutable_builds
 from kite.checks import check_implement_auth_across_services
 from kite.checks import check_implement_retention_policies
@@ -180,10 +173,6 @@ from kite.checks import check_vpc_flow_logs_enabled
 from kite.checks import check_waf_web_acl_logging_enabled
 from kite.checks import check_well_defined_control_objectives
 from kite.checks import check_workload_dependency_updates
-from kite.checks import ResolverQueryLogsEnabledCheck
-from kite.checks import RootActionsDisallowedCheck
-from kite.checks import vulnerability_scanning_in_cicd_pipelines
-from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CodeReviewsCheck
 from kite.checks import ControlImplementationValidationCheck
 from kite.checks import ControlTowerCheck
@@ -192,6 +181,17 @@ from kite.checks import DefineAccessRequirementsCheck
 from kite.checks import DefineAndDocumentWorkloadNetworkFlowsCheck
 from kite.checks import DfdsCheck
 from kite.checks import DocumentedDataClassificationSchemeCheck
+from kite.checks import EmployUserGroupsAndAttributesCheck
+from kite.checks import EnforceDataProtectionAtRestWithPolicyAsCodeCheck
+from kite.checks import EstablishedEmergencyAccessProceduresCheck
+from kite.checks import EstablishLoggingAndAuditTrailsForPrivateCACheck
+from kite.checks import IacGuardrailsCheck
+from kite.checks import IacTemplatesCheck
+from kite.checks import IacVersionControlCheck
+from kite.checks import IdentityAuditCheck
+from kite.checks import ResolverQueryLogsEnabledCheck
+from kite.checks import RootActionsDisallowedCheck
+from kite.checks import vulnerability_scanning_in_cicd_pipelines
 
 # Define check themes and their associated checks
 CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
@@ -254,9 +254,9 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "Checks related to the automated deployment of standard security controls"
         ),
         "checks": [
-            check_iac_templates,
-            check_iac_version_control,
-            check_iac_guardrails,
+            IacTemplatesCheck(),
+            IacVersionControlCheck(),
+            IacGuardrailsCheck(),
             check_service_catalog,
             AccountStandardsCheck(),
             ControlTowerCheck(),
@@ -318,7 +318,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         ),
         "checks": [
             check_credential_rotation,
-            check_identity_audit,
+            IdentityAuditCheck(),
         ],
     },
     "Employ user groups and attributes": {
@@ -327,7 +327,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "management"
         ),
         "checks": [
-            check_employ_user_groups_and_attributes,
+            EmployUserGroupsAndAttributesCheck(),
         ],
     },
     "Define access requirements": {
@@ -365,7 +365,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "procedures for critical failure scenarios"
         ),
         "checks": [
-            check_emergency_access_procedures,
+            EstablishedEmergencyAccessProceduresCheck(),
         ],
     },
     "Reduce permissions continuously": {
@@ -621,7 +621,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": "Use automation to validate and enforce data at rest controls.",
         "checks": [
             check_detect_encryption_at_rest_misconfig,
-            check_enforce_data_protection_at_rest_with_policy_as_code,
+            EnforceDataProtectionAtRestWithPolicyAsCodeCheck(),
             check_automate_data_at_rest_protection_with_guardduty,
             check_air_gapped_backup_vault,
             check_restore_testing,
@@ -644,7 +644,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "checks": [
             check_cert_deployment_and_renewal,
             check_protect_root_ca,
-            check_establish_logging_and_audit_trails_for_private_ca,
+            EstablishLoggingAndAuditTrailsForPrivateCACheck(),
         ],
     },
     "Enforce encryption in transit": {

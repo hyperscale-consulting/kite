@@ -1,0 +1,16 @@
+[
+  {
+    "Id": "rslvr-frgassoc-ee0bee318d3a411b",
+    "Arn": "arn:aws:route53resolver:us-west-2:111111111111:firewall-rule-group-association/rslvr-frgassoc-ee0bee318d3a411b",
+    "FirewallRuleGroupId": "rslvr-frg-f542b8e995bc474f",
+    "VpcId": "vpc-57696132",
+    "Name": "rgassoc-vpc-57696132-rslvr-frg-f542b8e995bc47",
+    "Priority": 101,
+    "MutationProtection": "DISABLED",
+    "Status": "COMPLETE",
+    "StatusMessage": "Finished rule group association update",
+    "CreatorRequestId": "AWSConsole.0.1743693525195",
+    "CreationTime": "2025-04-03T15:18:45.590591275Z",
+    "ModificationTime": "2025-04-03T15:19:37.858904437Z"
+  }
+]

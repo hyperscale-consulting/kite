@@ -1,0 +1,610 @@
+[
+  {
+    "clusterArn": "arn:aws:ecs:us-west-2:111111111111:cluster/foo-web-cluster",
+    "clusterName": "foo-web-cluster",
+    "status": "ACTIVE",
+    "registeredContainerInstancesCount": 0,
+    "runningTasksCount": 5,
+    "pendingTasksCount": 1,
+    "activeServicesCount": 1,
+    "statistics": [],
+    "tags": [],
+    "settings": [],
+    "capacityProviders": [
+      "FARGATE",
+      "FARGATE_SPOT"
+    ],
+    "defaultCapacityProviderStrategy": [],
+    "services": [
+      {
+        "serviceArn": "arn:aws:ecs:us-west-2:111111111111:service/foo-web-cluster/foo-web-3",
+        "serviceName": "foo-web-3",
+        "clusterArn": "arn:aws:ecs:us-west-2:111111111111:cluster/foo-web-cluster",
+        "loadBalancers": [
+          {
+            "targetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca",
+            "containerName": "foo-web-server",
+            "containerPort": 8000
+          }
+        ],
+        "serviceRegistries": [],
+        "status": "ACTIVE",
+        "desiredCount": 4,
+        "runningCount": 4,
+        "pendingCount": 0,
+        "launchType": "FARGATE",
+        "platformVersion": "1.4.0",
+        "platformFamily": "Linux",
+        "taskDefinition": "arn:aws:ecs:us-west-2:111111111111:task-definition/foo-web-server:340",
+        "deploymentConfiguration": {
+          "deploymentCircuitBreaker": {
+            "enable": true,
+            "rollback": false
+          },
+          "maximumPercent": 200,
+          "minimumHealthyPercent": 50
+        },
+        "deployments": [
+          {
+            "id": "ecs-svc/3321843030324760281",
+            "status": "PRIMARY",
+            "taskDefinition": "arn:aws:ecs:us-west-2:111111111111:task-definition/foo-web-server:340",
+            "desiredCount": 4,
+            "pendingCount": 0,
+            "runningCount": 4,
+            "failedTasks": 0,
+            "createdAt": "2025-07-13 18:21:49.643000+01:00",
+            "updatedAt": "2025-07-13 18:27:20.600000+01:00",
+            "launchType": "FARGATE",
+            "platformVersion": "1.4.0",
+            "platformFamily": "Linux",
+            "networkConfiguration": {
+              "awsvpcConfiguration": {
+                "subnets": [
+                  "subnet-0ae3f1866d2ab80e5",
+                  "subnet-0bac249b81289124a"
+                ],
+                "securityGroups": [
+                  "sg-0b4cc6ccfc0b78242",
+                  "sg-a5d933c2"
+                ],
+                "assignPublicIp": "DISABLED"
+              }
+            },
+            "rolloutState": "COMPLETED",
+            "rolloutStateReason": "ECS deployment ecs-svc/3321843030324760281 completed."
+          }
+        ],
+        "roleArn": "arn:aws:iam::111111111111:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+        "events": [
+          {
+            "id": "16ff6041-2aae-4bc4-b4b7-c747af5b75ba",
+            "createdAt": "2025-07-15 12:29:25.799000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "42355bde-1e7a-4b3f-baed-34287e21785a",
+            "createdAt": "2025-07-15 06:28:50.932000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "5ec1e173-05fb-424e-a0b7-20666031bf6a",
+            "createdAt": "2025-07-15 00:28:37.044000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "2fca51ca-32d1-4fcb-b9d2-f95ce602c976",
+            "createdAt": "2025-07-14 18:27:56.585000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "c732d532-d3b1-4328-9a6d-e2f7dc7905d1",
+            "createdAt": "2025-07-14 12:27:53.201000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "ba358cbb-2e28-42c8-aab1-5fc4f93f21f1",
+            "createdAt": "2025-07-14 06:27:48.131000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "0f23bd6b-c971-49b3-b90e-952433b6e504",
+            "createdAt": "2025-07-14 00:27:30.038000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "edc7dc86-1987-443b-bd5a-3a12f3510cd0",
+            "createdAt": "2025-07-13 18:27:20.606000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "bbf4402a-8f9e-435d-929e-512fd2d1d934",
+            "createdAt": "2025-07-13 18:27:20.605000+01:00",
+            "message": "(service foo-web-3) (deployment ecs-svc/3321843030324760281) deployment completed."
+          },
+          {
+            "id": "e23f265f-0ecc-45b4-b206-54760f893cd5",
+            "createdAt": "2025-07-13 18:26:19.934000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/5435433074134516505) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "0a298691-5b01-4cbd-a43b-0d1fb1f24eff",
+            "createdAt": "2025-07-13 18:26:19.930000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "a7b71e89-a67d-47f2-bf44-8b1d7d09736e",
+            "createdAt": "2025-07-13 18:26:10.460000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task 13b85d4648534d4aa0bfca6a10407350)."
+          },
+          {
+            "id": "cc76f940-0eb9-45b8-ac34-564b649778e1",
+            "createdAt": "2025-07-13 18:25:29.575000+01:00",
+            "message": "(service foo-web-3) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "29bf2cef-ffe5-48f0-9a19-d8108872f0df",
+            "createdAt": "2025-07-13 18:24:28.307000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/5435433074134516505) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "bd32684f-e536-484a-a72b-5397fb88745f",
+            "createdAt": "2025-07-13 18:24:28.304000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "5f36ce12-55ad-4716-9f4d-af191c84e71a",
+            "createdAt": "2025-07-13 18:24:18.134000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task bc6b6a2064f5484d9d32d309fdaeaccf)."
+          },
+          {
+            "id": "fa4bbb90-e69c-459e-a892-076243ae33cb",
+            "createdAt": "2025-07-13 18:24:07.798000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/5435433074134516505) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "5521b613-fe24-4d74-95bd-25ed06bae780",
+            "createdAt": "2025-07-13 18:24:07.794000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "a42bfe53-a209-498a-af9c-78a0562ba327",
+            "createdAt": "2025-07-13 18:23:58.267000+01:00",
+            "message": "(service foo-web-3) has started 3 tasks: (task 0af51adf650d4c2e889c13a9faf2555e) (task d1c58cf038324fdba7b6f65acc45aa23) (task e468fb6a1f1542e0aa9223936d8464de)."
+          },
+          {
+            "id": "b4493276-b372-4593-bed2-117f0e5f8823",
+            "createdAt": "2025-07-13 18:23:57.635000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task 79b93ed0344b482ba194ac1464948595)."
+          },
+          {
+            "id": "3d36453b-ef1e-4143-9e70-4b60434fd984",
+            "createdAt": "2025-07-13 18:23:37.110000+01:00",
+            "message": "(service foo-web-3) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "9647a98a-425c-45a1-ac71-107f9173f7f8",
+            "createdAt": "2025-07-13 18:22:05.242000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/5435433074134516505) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "04954b1a-18a2-4834-877d-10f02a72b93a",
+            "createdAt": "2025-07-13 18:22:05.237000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "baaa284a-d085-4374-ad49-17b6df7613f9",
+            "createdAt": "2025-07-13 18:21:55.736000+01:00",
+            "message": "(service foo-web-3) has started 1 tasks: (task a06a7a9e68cf44828aeb5285afc900b9)."
+          },
+          {
+            "id": "ac4f5314-4721-478c-b233-d89f5b20ecb0",
+            "createdAt": "2025-07-13 18:21:55.062000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task 9e9f8c3b74d04da7a975a5af5760639a)."
+          },
+          {
+            "id": "dadc2ec2-2c08-4dc1-ab68-b84b4b2b7b9c",
+            "createdAt": "2025-07-13 17:50:34.419000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "a168fd86-a956-43e7-a76c-c4cabd1c872b",
+            "createdAt": "2025-07-13 17:50:34.418000+01:00",
+            "message": "(service foo-web-3) (deployment ecs-svc/5435433074134516505) deployment completed."
+          },
+          {
+            "id": "c0c8cf53-3242-4598-8e4a-20294ab98b40",
+            "createdAt": "2025-07-13 17:49:32.502000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/4222087760783203383) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "54468951-82ab-472d-b579-043e458bf163",
+            "createdAt": "2025-07-13 17:49:32.498000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "36be2a97-7ff3-4b65-81b2-91b99da028ae",
+            "createdAt": "2025-07-13 17:49:23.040000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task e2ab797416ce420285b8bf66fa2880e1)."
+          },
+          {
+            "id": "e8cdea03-21bb-4e10-8c33-037cc4e25749",
+            "createdAt": "2025-07-13 17:48:52.797000+01:00",
+            "message": "(service foo-web-3) registered 2 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "42a7248e-f634-4b49-9f3e-034f3782e3e8",
+            "createdAt": "2025-07-13 17:48:42.537000+01:00",
+            "message": "(service foo-web-3) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "8c5a60c6-346b-4b4b-86dd-8b9f4bf06afa",
+            "createdAt": "2025-07-13 17:48:00.238000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/4222087760783203383) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "70364328-59f9-407f-a4d0-22790cb3e56b",
+            "createdAt": "2025-07-13 17:48:00.234000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "4cdda027-5abc-4923-be25-7caca80ed918",
+            "createdAt": "2025-07-13 17:47:50.860000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task 1480ff91241e4b69a6ca5a8dc0bb4197)."
+          },
+          {
+            "id": "97c039b5-b293-4c46-8c9c-992fbb6c0ce5",
+            "createdAt": "2025-07-13 17:47:20.540000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/4222087760783203383) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "540a6724-2fc9-44ae-84e7-d1d2f8fd1e00",
+            "createdAt": "2025-07-13 17:47:20.536000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "e43ffce0-3b6a-4d85-bd1a-0d99a5bd59ff",
+            "createdAt": "2025-07-13 17:47:20.474000+01:00",
+            "message": "(service foo-web-3) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "43944098-263c-4d4d-8bd5-1955018f00c6",
+            "createdAt": "2025-07-13 17:47:11.107000+01:00",
+            "message": "(service foo-web-3) has started 3 tasks: (task 13b85d4648534d4aa0bfca6a10407350) (task 79b93ed0344b482ba194ac1464948595) (task 9e9f8c3b74d04da7a975a5af5760639a)."
+          },
+          {
+            "id": "7740247f-d6a8-4835-beba-8dc919269fdb",
+            "createdAt": "2025-07-13 17:47:10.233000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task feef1bef15c14d61afc8b3cbfd072e00)."
+          },
+          {
+            "id": "3f3a4da6-1cc9-4acf-bda2-28bf02c9e2b3",
+            "createdAt": "2025-07-13 17:45:37.385000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/4222087760783203383) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "d6cf4070-d7f6-4dd6-b26e-ae2698e36466",
+            "createdAt": "2025-07-13 17:45:37.381000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "84d17dee-db6f-4de1-83a7-4b0ec82487ba",
+            "createdAt": "2025-07-13 17:45:28.012000+01:00",
+            "message": "(service foo-web-3) has started 1 tasks: (task bc6b6a2064f5484d9d32d309fdaeaccf)."
+          },
+          {
+            "id": "34b020d9-70e8-466b-a099-021914c61b35",
+            "createdAt": "2025-07-13 17:45:27.235000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task 3cc5cef5f46e4794ba01ebe8e166e00f)."
+          },
+          {
+            "id": "6e17e2da-991e-449d-8a7b-a5a8999eb375",
+            "createdAt": "2025-07-13 15:07:35.752000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "337b192f-bab7-4854-95f8-7eb2b41d0f65",
+            "createdAt": "2025-07-13 15:07:35.751000+01:00",
+            "message": "(service foo-web-3) (deployment ecs-svc/4222087760783203383) deployment completed."
+          },
+          {
+            "id": "33e9dd04-5368-490d-bd28-6507454c4b2c",
+            "createdAt": "2025-07-13 15:06:35.393000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/3653403169853063916) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "24f13044-1e1c-4530-97c6-2f09262b8163",
+            "createdAt": "2025-07-13 15:06:35.388000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "224f2820-d0d9-4468-aaba-2c19ae99df83",
+            "createdAt": "2025-07-13 15:06:25.255000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task b400cbff25c54074b3a7cf2deff14dcd)."
+          },
+          {
+            "id": "b46d2389-4be4-42ff-912f-274e94571ee1",
+            "createdAt": "2025-07-13 15:06:04.716000+01:00",
+            "message": "(service foo-web-3) registered 2 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "ae20641a-c3cf-4af7-ba13-e0bc42c79446",
+            "createdAt": "2025-07-13 15:05:54.847000+01:00",
+            "message": "(service foo-web-3) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "aa69e80c-e2b9-4b69-a18e-ae4c9332f8a3",
+            "createdAt": "2025-07-13 15:05:44.299000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/3653403169853063916) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "67123c59-b4cb-467e-85cc-4ca5b7566939",
+            "createdAt": "2025-07-13 15:05:44.294000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "321ecc00-2760-44ae-b5f6-c0125e8d852d",
+            "createdAt": "2025-07-13 15:05:33.402000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task 9be23bfd326b4fada615e9c0a593a395)."
+          },
+          {
+            "id": "1c2a7985-6166-48a1-8d2b-28916b5925f5",
+            "createdAt": "2025-07-13 15:04:53.019000+01:00",
+            "message": "(service foo-web-3) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "b3a8bd2e-e80a-443f-8883-c5fa64bf3d4a",
+            "createdAt": "2025-07-13 15:04:31.639000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/3653403169853063916) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "e95b72d3-5716-43c3-92c1-b5df24dcdada",
+            "createdAt": "2025-07-13 15:04:31.629000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "6fff5faa-1e5b-4328-910f-b0e5eb28ffb2",
+            "createdAt": "2025-07-13 15:04:22.430000+01:00",
+            "message": "(service foo-web-3) has started 3 tasks: (task 3cc5cef5f46e4794ba01ebe8e166e00f) (task e2ab797416ce420285b8bf66fa2880e1) (task feef1bef15c14d61afc8b3cbfd072e00)."
+          },
+          {
+            "id": "1f625190-87fe-49ae-9e6b-46b8cf9651d3",
+            "createdAt": "2025-07-13 15:04:21.583000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task c0872f1a26eb41ba91fd48e807e6e96d)."
+          },
+          {
+            "id": "02764b47-942c-4616-b2b9-6f4ab7a5a7ad",
+            "createdAt": "2025-07-13 15:03:30.822000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/3653403169853063916) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "f74e3049-ff40-44ff-ba44-90996909eab1",
+            "createdAt": "2025-07-13 15:03:30.818000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "f14ef42a-d43c-4923-9072-967ff5a7bc1b",
+            "createdAt": "2025-07-13 15:03:22.308000+01:00",
+            "message": "(service foo-web-3) has started 1 tasks: (task 1480ff91241e4b69a6ca5a8dc0bb4197)."
+          },
+          {
+            "id": "6ab234e9-2407-4650-af81-9dd13410cb70",
+            "createdAt": "2025-07-13 15:03:21.454000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task 02e50743aa654a2f8258ce95d6d9cccf)."
+          },
+          {
+            "id": "63003afa-bda5-411e-a1d0-2bd80365b00e",
+            "createdAt": "2025-07-13 09:38:18.476000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "7efe418d-7218-4bca-8496-e8b5fc03dda1",
+            "createdAt": "2025-07-13 03:37:37.251000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "98a61043-e04f-4c65-a12d-2a1682b8a83f",
+            "createdAt": "2025-07-12 21:37:30.212000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "4eaf9bf4-f70b-4653-b8d6-f470501e0f1e",
+            "createdAt": "2025-07-12 15:37:20.396000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "432155d8-e48b-461e-9093-fd47ddfdb8b8",
+            "createdAt": "2025-07-12 15:37:20.395000+01:00",
+            "message": "(service foo-web-3) (deployment ecs-svc/3653403169853063916) deployment completed."
+          },
+          {
+            "id": "705042ad-702c-4a49-8c2f-9b3b731e1f34",
+            "createdAt": "2025-07-12 15:36:29.366000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/4209457573044817134) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "9d2febf6-406c-4050-8587-5285ca1ce8fb",
+            "createdAt": "2025-07-12 15:36:29.362000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "19dbc63c-2588-4547-a3e4-1d1f0ea6a5c9",
+            "createdAt": "2025-07-12 15:36:19.172000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task f7abd20f2e1a4f3095a16f185fa939f8)."
+          },
+          {
+            "id": "323016a9-3ec7-4941-a354-65e9f4812411",
+            "createdAt": "2025-07-12 15:35:59.045000+01:00",
+            "message": "(service foo-web-3) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "952dd45e-87f8-4570-8a73-e6c6b1afa610",
+            "createdAt": "2025-07-12 15:35:48.631000+01:00",
+            "message": "(service foo-web-3) registered 2 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "489e4fdc-0a79-4d6d-8f40-21f6b28f22d6",
+            "createdAt": "2025-07-12 15:35:27.319000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/4209457573044817134) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "dff56d55-314e-4532-a9d7-62dae896024e",
+            "createdAt": "2025-07-12 15:35:27.316000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "66031419-449e-4f9a-964d-77352ea612dc",
+            "createdAt": "2025-07-12 15:35:17.825000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task b6e88a12831d46478c071603ad3f17fe)."
+          },
+          {
+            "id": "7c71cba7-8a4b-4142-8ca7-856686dc8b9f",
+            "createdAt": "2025-07-12 15:34:47.582000+01:00",
+            "message": "(service foo-web-3) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "0f5931db-fb2d-498d-afe3-e9658f02bd4f",
+            "createdAt": "2025-07-12 15:34:16.225000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/4209457573044817134) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "d2512e64-9396-48ac-8387-b434e9b21a8e",
+            "createdAt": "2025-07-12 15:34:16.221000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "30cfeb53-9a89-4c78-bf3e-fe2542aab1d4",
+            "createdAt": "2025-07-12 15:34:07.256000+01:00",
+            "message": "(service foo-web-3) has started 3 tasks: (task 02e50743aa654a2f8258ce95d6d9cccf) (task 9be23bfd326b4fada615e9c0a593a395) (task b400cbff25c54074b3a7cf2deff14dcd)."
+          },
+          {
+            "id": "83a1b312-5d46-403c-a9e6-5b18786449a6",
+            "createdAt": "2025-07-12 15:34:06.343000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task fb53f1cd97854e0cbce5a90cc24675d4)."
+          },
+          {
+            "id": "958af12c-9336-4a73-869d-4865c34105f8",
+            "createdAt": "2025-07-12 15:33:14.393000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/4209457573044817134) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "179d4ab7-ba3d-42aa-ad2b-a8951e280077",
+            "createdAt": "2025-07-12 15:33:14.388000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "14c8893b-ba53-476d-9cbd-748dccd40f0f",
+            "createdAt": "2025-07-12 15:33:05.363000+01:00",
+            "message": "(service foo-web-3) has started 1 tasks: (task c0872f1a26eb41ba91fd48e807e6e96d)."
+          },
+          {
+            "id": "a4af83b8-eeed-42a8-8951-9be0843e74db",
+            "createdAt": "2025-07-12 15:33:04.635000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task e32d3225060d4fe2949545162b50efc9)."
+          },
+          {
+            "id": "9e86a08e-f0e5-4f53-8b23-9a9af413b315",
+            "createdAt": "2025-07-12 15:20:08.174000+01:00",
+            "message": "(service foo-web-3) has reached a steady state."
+          },
+          {
+            "id": "26fc971e-17da-472a-af16-942505a5ed2c",
+            "createdAt": "2025-07-12 15:20:08.173000+01:00",
+            "message": "(service foo-web-3) (deployment ecs-svc/4209457573044817134) deployment completed."
+          },
+          {
+            "id": "05826440-27a9-4e51-ade9-57ad04f5a54a",
+            "createdAt": "2025-07-12 15:19:06.713000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/3837016663259613912) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "31da4c87-e812-49b2-b2d4-211237a4dd72",
+            "createdAt": "2025-07-12 15:19:06.709000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "f061cd6d-c2c4-44fd-8ea0-9301665aae39",
+            "createdAt": "2025-07-12 15:18:57.040000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task d25c06be1da249b0b8b98a4d2127417e)."
+          },
+          {
+            "id": "00b5a177-2934-4fd1-b6e1-5cb2c1ad709d",
+            "createdAt": "2025-07-12 15:18:36.728000+01:00",
+            "message": "(service foo-web-3) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "196f0688-0a8f-4061-9e35-f7d2d38f23d3",
+            "createdAt": "2025-07-12 15:18:15.278000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/3837016663259613912) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "756b5eec-ed23-467b-a58f-43a981abf20d",
+            "createdAt": "2025-07-12 15:18:15.273000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "0f859b70-9afb-437d-8fde-18f0a1bf0ecf",
+            "createdAt": "2025-07-12 15:18:04.800000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task b2add0d2072c42e6bbfc9242ac114891)."
+          },
+          {
+            "id": "551bba60-c7aa-4d61-bf8e-958ddf61ed7a",
+            "createdAt": "2025-07-12 15:17:24.118000+01:00",
+            "message": "(service foo-web-3) registered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "960301ca-5f5b-4aa4-99f9-b8df6e0cefdc",
+            "createdAt": "2025-07-12 15:17:13.591000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/3837016663259613912) has begun draining connections on 1 tasks."
+          },
+          {
+            "id": "0ec1175c-7e2a-4b7c-9937-1f978413c62a",
+            "createdAt": "2025-07-12 15:17:13.587000+01:00",
+            "message": "(service foo-web-3) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:us-west-2:111111111111:targetgroup/tf-20230506165006450600000001/9fa911f3835d95ca)"
+          },
+          {
+            "id": "24854def-c68c-4d0c-9127-f4f9230e8d2d",
+            "createdAt": "2025-07-12 15:17:04.494000+01:00",
+            "message": "(service foo-web-3) has started 3 tasks: (task b6e88a12831d46478c071603ad3f17fe) (task e32d3225060d4fe2949545162b50efc9) (task f7abd20f2e1a4f3095a16f185fa939f8)."
+          },
+          {
+            "id": "cf032614-653e-4d62-937d-6279ed2733e8",
+            "createdAt": "2025-07-12 15:17:03.643000+01:00",
+            "message": "(service foo-web-3) has stopped 1 running tasks: (task 78b64ff83ff74683958eafc877ea078a)."
+          },
+          {
+            "id": "ae41f583-08c7-4504-bee2-1ea08b160730",
+            "createdAt": "2025-07-12 15:16:02.607000+01:00",
+            "message": "(service foo-web-3, taskSet ecs-svc/3837016663259613912) has begun draining connections on 1 tasks."
+          }
+        ],
+        "createdAt": "2022-05-15 15:48:51.734000+01:00",
+        "placementConstraints": [],
+        "placementStrategy": [],
+        "networkConfiguration": {
+          "awsvpcConfiguration": {
+            "subnets": [
+              "subnet-0ae3f1866d2ab80e5",
+              "subnet-0bac249b81289124a"
+            ],
+            "securityGroups": [
+              "sg-0b4cc6ccfc0b78242",
+              "sg-a5d933c2"
+            ],
+            "assignPublicIp": "DISABLED"
+          }
+        },
+        "healthCheckGracePeriodSeconds": 10,
+        "schedulingStrategy": "REPLICA",
+        "deploymentController": {
+          "type": "ECS"
+        },
+        "createdBy": "arn:aws:iam::111111111111:user/bob",
+        "enableECSManagedTags": true,
+        "propagateTags": "NONE",
+        "enableExecuteCommand": false,
+        "availabilityZoneRebalancing": "DISABLED"
+      }
+    ]
+  }
+]

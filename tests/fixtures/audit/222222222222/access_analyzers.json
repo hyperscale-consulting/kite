@@ -1,0 +1,12 @@
+[
+  {
+    "arn": "arn:aws:access-analyzer:eu-west-2:222222222222:analyzer/ExternalAccess-ConsoleAnalyzer-efe8ccb4-04f5-4bcc-bc6f-799693208f46",
+    "name": "ExternalAccess-ConsoleAnalyzer-efe8ccb4-04f5-4bcc-bc6f-799693208f46",
+    "type": "ORGANIZATION",
+    "createdAt": "2025-05-22 08:44:50+00:00",
+    "lastResourceAnalyzed": "arn:aws:s3:::organisational-cfn-template-repo-orgassetsbucket-taygrozbeq8d",
+    "lastResourceAnalyzedAt": "2025-07-15 11:51:38.497000+00:00",
+    "tags": {},
+    "status": "ACTIVE"
+  }
+]

@@ -1,18 +1,16 @@
-"""Check for MFA requirements."""
-
 from typing import Any
 
 from botocore.exceptions import ClientError
 
+from kite.config import Config
+from kite.data import get_cognito_user_pools
 from kite.data import get_credentials_report
 from kite.data import get_oidc_providers
 from kite.data import get_saml_providers
-from kite.data import get_cognito_user_pools
 from kite.helpers import get_account_ids_in_scope
 from kite.helpers import get_user_pool_mfa_config
 from kite.helpers import is_identity_center_enabled
 from kite.helpers import manual_check
-from kite.config import Config
 
 CHECK_ID = "require-mfa"
 CHECK_NAME = "Require MFA"
@@ -33,16 +31,16 @@ def check_require_mfa() -> dict[str, Any]:
     """
     # Track if we encountered any errors
     error_message = None
+    config = Config.get()
 
-    # Gather information about sign-in mechanisms
     try:
-        saml_providers = get_saml_providers()
+        saml_providers = get_saml_providers(config.management_account_id)
     except ClientError as e:
         saml_providers = []
         error_message = f"Error checking SAML providers: {str(e)}"
 
     try:
-        oidc_providers = get_oidc_providers()
+        oidc_providers = get_oidc_providers(config.management_account_id)
     except ClientError as e:
         oidc_providers = []
         if error_message:

@@ -1,0 +1,523 @@
+[
+  {
+    "FunctionName": "SO0111-SHARR-CustomAction",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:SO0111-SHARR-CustomAction",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::222222222222:role/automated-security-respon-createCustomActionRoleF00-17vPAdVctLor",
+    "Handler": "action_target_provider.lambda_handler",
+    "CodeSize": 2762,
+    "Description": "Custom resource to create or retrieve an action target in Security Hub",
+    "Timeout": 600,
+    "MemorySize": 256,
+    "LastModified": "2025-02-19T15:33:46.411+0000",
+    "CodeSha256": "45NeoCAMMQe7jyHvTENbAvDwiVcfeCEoXDqjhl6Dan4=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "SOLUTION_ID": "SO0111",
+        "AWS_PARTITION": "aws",
+        "log_level": "info",
+        "SOLUTION_VERSION": "v2.2.1",
+        "sendAnonymizedMetrics": "Yes"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "17791818-6554-45e4-9f83-9cb6d0364f9a",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:222222222222:layer:ASRLambdaLayerDAD507E4:1",
+        "CodeSize": 26556336
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/SO0111-SHARR-CustomAction"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "SO0111-SHARR-sendNotifications",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:SO0111-SHARR-sendNotifications",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::222222222222:role/automated-security-response-admi-notifyRole40298120-Tfyr2NCzykTz",
+    "Handler": "send_notifications.lambda_handler",
+    "CodeSize": 2643,
+    "Description": "Sends notifications and log messages",
+    "Timeout": 600,
+    "MemorySize": 256,
+    "LastModified": "2025-02-19T15:34:03.623+0000",
+    "CodeSha256": "+6+0BKDmAEPRY32Prmq7YJMdcSSITWZTr7kBh00+g3M=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "SOLUTION_ID": "SO0111",
+        "ENHANCED_METRICS": "no",
+        "AWS_PARTITION": "aws",
+        "log_level": "info",
+        "SOLUTION_TMN": "automated-security-response-on-aws",
+        "SOLUTION_VERSION": "v2.2.1"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "Active"
+    },
+    "RevisionId": "ae7dd2a4-78f2-4c9a-958c-8c7d46e35e06",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:222222222222:layer:ASRLambdaLayerDAD507E4:1",
+        "CodeSize": 26556336
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/SO0111-SHARR-sendNotifications"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "automated-security-respon-ActionLogOrgIdLookupOrgI-jAMe56sP3mIh",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:automated-security-respon-ActionLogOrgIdLookupOrgI-jAMe56sP3mIh",
+    "Runtime": "nodejs20.x",
+    "Role": "arn:aws:iam::222222222222:role/automated-security-respon-ActionLogOrgIdLookupOrgId-8hWzHTlhY6ej",
+    "Handler": "index.handler",
+    "CodeSize": 1117,
+    "Description": "",
+    "Timeout": 15,
+    "MemorySize": 128,
+    "LastModified": "2025-02-19T15:34:02.104+0000",
+    "CodeSha256": "JiXgGhIXXX22HIcmh9GthDSo3/Drh59EXc7p6IO0M+A=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "58576ac7-0110-4674-87bc-de35d5ca86cf",
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/automated-security-respon-ActionLogOrgIdLookupOrgI-jAMe56sP3mIh"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "aws-controltower-NotificationForwarder",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:aws-controltower-NotificationForwarder",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::222222222222:role/aws-controltower-ForwardSnsNotificationRole",
+    "Handler": "index.lambda_handler",
+    "CodeSize": 473,
+    "Description": "SNS message forwarding function for aggregating account notifications.",
+    "Timeout": 60,
+    "MemorySize": 128,
+    "LastModified": "2024-03-23T12:01:13.494+0000",
+    "CodeSha256": "Z1Fc2tDpdY/Ts+g7JbMV/OEz/Nz+99zWtrdgFdH/+UI=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "sns_arn": "arn:aws:sns:eu-west-2:222222222222:aws-controltower-AggregateSecurityNotifications"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "25ebabb7-828f-4948-94a0-96a1a731b066",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/aws-controltower-NotificationForwarder"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-3076f811-4463--SNSInvokeLambdaPermission-8bKV9w7Yi3la",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "sns.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:eu-west-2:222222222222:function:aws-controltower-NotificationForwarder",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:sns:eu-west-2:222222222222:aws-controltower-SecurityNotifications"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "SO0111-SHARR-monitorSSMExecState",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:SO0111-SHARR-monitorSSMExecState",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Admin",
+    "Handler": "check_ssm_execution.lambda_handler",
+    "CodeSize": 3266,
+    "Description": "Checks the status of an SSM automation document execution",
+    "Timeout": 600,
+    "MemorySize": 256,
+    "LastModified": "2025-02-19T15:34:05.303+0000",
+    "CodeSha256": "gQHkNA2fwjE4BbAxoNIylQ1GvUr35vsRapYYE8fnc7M=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "SOLUTION_ID": "SO0111",
+        "AWS_PARTITION": "aws",
+        "log_level": "info",
+        "SOLUTION_TMN": "automated-security-response-on-aws",
+        "SOLUTION_VERSION": "v2.2.1"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "Active"
+    },
+    "RevisionId": "f5c4d585-9126-4781-bc9d-6997f5e66606",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:222222222222:layer:ASRLambdaLayerDAD507E4:1",
+        "CodeSize": 26556336
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/SO0111-SHARR-monitorSSMExecState"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "SO0111-SHARR-getApprovalRequirement",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:SO0111-SHARR-getApprovalRequirement",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Admin",
+    "Handler": "get_approval_requirement.lambda_handler",
+    "CodeSize": 2907,
+    "Description": "Determines if a manual approval is required for remediation",
+    "Timeout": 600,
+    "MemorySize": 256,
+    "LastModified": "2025-02-19T15:34:05.422+0000",
+    "CodeSha256": "eKmXlBmIIydCvuFdfIkjr1AOG9bRjj8edpmkN2SGAA8=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "SOLUTION_ID": "SO0111",
+        "AWS_PARTITION": "aws",
+        "log_level": "info",
+        "WORKFLOW_RUNBOOK": "",
+        "SOLUTION_TMN": "automated-security-response-on-aws",
+        "SOLUTION_VERSION": "v2.2.1"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "Active"
+    },
+    "RevisionId": "8ad21586-801f-4a50-9dba-586afb5745e2",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:222222222222:layer:ASRLambdaLayerDAD507E4:1",
+        "CodeSize": 26556336
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/SO0111-SHARR-getApprovalRequirement"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "SO0111-ASR-checkSSMDocumentState",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:SO0111-ASR-checkSSMDocumentState",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Admin",
+    "Handler": "check_ssm_doc_state.lambda_handler",
+    "CodeSize": 2153,
+    "Description": "Checks the status of an SSM Automation Document in the target account",
+    "Timeout": 600,
+    "MemorySize": 256,
+    "LastModified": "2025-02-19T15:34:05.354+0000",
+    "CodeSha256": "Z4BXGQ1vsR614pw95cAAERiGEUUcXub2p/7tqUSfFCI=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "SOLUTION_ID": "SO0111",
+        "AWS_PARTITION": "aws",
+        "log_level": "info",
+        "SOLUTION_TMN": "automated-security-response-on-aws",
+        "SOLUTION_VERSION": "v2.2.1"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "Active"
+    },
+    "RevisionId": "7b88692f-05d3-4a38-862f-7d5e31d791d9",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:222222222222:layer:ASRLambdaLayerDAD507E4:1",
+        "CodeSize": 26556336
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/SO0111-ASR-checkSSMDocumentState"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "SO0111-SHARR-schedulingLambdaTrigger",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:SO0111-SHARR-schedulingLambdaTrigger",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::222222222222:role/automated-security-respon-SchedulingLambdaRoleAB00F-jJZAk85H1xY8",
+    "Handler": "schedule_remediation.lambda_handler",
+    "CodeSize": 1871,
+    "Description": "SO0111 ASR function that schedules remediations in member accounts",
+    "Timeout": 10,
+    "MemorySize": 128,
+    "LastModified": "2025-02-19T15:34:56.013+0000",
+    "CodeSha256": "XV46XRLESPtvcN9CfQ/YyrspMyUE1Le3fXN6t+Q9OzE=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "SchedulingTableName": "automated-security-response-administrator-stack-SchedulingTable1EC09B43-1C9XIEBLCJED3",
+        "RemediationWaitTime": "3"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "Active"
+    },
+    "RevisionId": "d751c82d-24d3-4b13-bc99-b8f25c85da06",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:222222222222:layer:ASRLambdaLayerDAD507E4:1",
+        "CodeSize": 26556336
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/SO0111-SHARR-schedulingLambdaTrigger"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "SO0111-SHARR-execAutomation",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:SO0111-SHARR-execAutomation",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Admin",
+    "Handler": "exec_ssm_doc.lambda_handler",
+    "CodeSize": 2113,
+    "Description": "Executes an SSM Automation Document in a target account",
+    "Timeout": 600,
+    "MemorySize": 256,
+    "LastModified": "2025-02-19T15:34:05.298+0000",
+    "CodeSha256": "FzxZakLtIlxryUMoIL9ETe51H/1NzoigUZEk55W6lSo=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "SOLUTION_ID": "SO0111",
+        "AWS_PARTITION": "aws",
+        "log_level": "info",
+        "SOLUTION_TMN": "automated-security-response-on-aws",
+        "SOLUTION_VERSION": "v2.2.1"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "Active"
+    },
+    "RevisionId": "873a9cf4-5a7b-4f0b-8372-1742529462d3",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:222222222222:layer:ASRLambdaLayerDAD507E4:1",
+        "CodeSize": 26556336
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/SO0111-SHARR-execAutomation"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "automated-security-respon-ASRDeploymentCustomResou-y8uf7ZYrGmpH",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:automated-security-respon-ASRDeploymentCustomResou-y8uf7ZYrGmpH",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::222222222222:role/automated-security-respon-SolutionDeployStackRole68-JvsRNoO5B76k",
+    "Handler": "deployment_metrics_custom_resource.lambda_handler",
+    "CodeSize": 1773,
+    "Description": "ASR - Handles deployment related custom actions",
+    "Timeout": 5,
+    "MemorySize": 256,
+    "LastModified": "2025-02-19T15:33:44.934+0000",
+    "CodeSha256": "a4XbkzN4bWWNlz+X941OwAT6fdB2p9DNuOpCRhdZjD8=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "SOLUTION_ID": "SO0111",
+        "AWS_PARTITION": "aws",
+        "LOG_LEVEL": "INFO",
+        "SOLUTION_VERSION": "v2.2.1"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "78462902-20b1-422d-a56e-57a0d598f9fa",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:222222222222:layer:ASRLambdaLayerDAD507E4:1",
+        "CodeSize": 26556336
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/automated-security-respon-ASRDeploymentCustomResou-y8uf7ZYrGmpH"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "delete-name-tags-eu-west-2-9cee-dmdd7",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:222222222222:function:delete-name-tags-eu-west-2-9cee-dmdd7",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::222222222222:role/AWS-QuickSetup-PatchPolicy-RoleForLambda-NT-eu-west-2-dmdd7",
+    "Handler": "index.handler",
+    "CodeSize": 3110,
+    "Description": "Lambda for handling CF 'Delete' events to remove the name tags from resources.",
+    "Timeout": 900,
+    "MemorySize": 128,
+    "LastModified": "2025-06-23T15:11:32.195+0000",
+    "CodeSha256": "5IBru0XgGTMxHmJ/9QeOJRhP/Ekkz7PQAOXHle96h3Y=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "REGION": "eu-west-2"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "e0a60fc8-36cf-42a2-b132-78d3cef48b7b",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/delete-name-tags-eu-west-2-9cee-dmdd7"
+    },
+    "Policy": null
+  }
+]

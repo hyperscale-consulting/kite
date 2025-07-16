@@ -1,0 +1,2393 @@
+{
+  "account_id": "222222222222",
+  "identities": [
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "AWSControlTowerExecution",
+      "arn": "arn:aws:iam::222222222222:role/AWSControlTowerExecution",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111111111111:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_AWSAdministratorAccess_60a1ea7527866c58",
+      "arn": "arn:aws:iam::222222222222:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSAdministratorAccess_60a1ea7527866c58",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::222222222222:saml-provider/AWSSSO_10031a7d2cf009aa_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_AWSOrganizationsFullAccess_5a45afc4cec60c7a",
+      "arn": "arn:aws:iam::222222222222:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSOrganizationsFullAccess_5a45afc4cec60c7a",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::222222222222:saml-provider/AWSSSO_10031a7d2cf009aa_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_AWSPowerUserAccess_8b1166c9815efcb3",
+      "arn": "arn:aws:iam::222222222222:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSPowerUserAccess_8b1166c9815efcb3",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::222222222222:saml-provider/AWSSSO_10031a7d2cf009aa_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_AWSReadOnlyAccess_91ce2b5b9a3f7a3e",
+      "arn": "arn:aws:iam::222222222222:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSReadOnlyAccess_91ce2b5b9a3f7a3e",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::222222222222:saml-provider/AWSSSO_10031a7d2cf009aa_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_SecurityAudit_da196e18ab2a9585",
+      "arn": "arn:aws:iam::222222222222:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_SecurityAudit_da196e18ab2a9585",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::222222222222:saml-provider/AWSSSO_10031a7d2cf009aa_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-AttachServiceVPCEndpoint-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-AttachServiceVPCEndpoint-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-AttachSSMPermissionsToEC2-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-AttachSSMPermissionsToEC2-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-BlockSSMDocumentPublicAccess-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-BlockSSMDocumentPublicAccess-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-ConfigureAutoScalingLaunchConfigNoPublicIP-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-ConfigureAutoScalingLaunchConfigNoPublicIP-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-ConfigureAutoScalingLaunchConfigToRequireIMDSv2-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-ConfigureAutoScalingLaunchConfigToRequireIMDSv2-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-ConfigureS3BucketLogging-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-ConfigureS3BucketLogging-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-ConfigureS3BucketPublicAccessBlock-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-ConfigureS3BucketPublicAccessBlock-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-ConfigureS3PublicAccessBlock-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-ConfigureS3PublicAccessBlock-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-ConfigureSNSTopicForStack-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-ConfigureSNSTopicForStack-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-CreateAccessLoggingBucket-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-CreateAccessLoggingBucket-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-CreateCloudTrailMultiRegionTrail-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-CreateCloudTrailMultiRegionTrail-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-CreateIAMSupportRole-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-CreateIAMSupportRole-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-CreateLogMetricFilterAndAlarm-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-CreateLogMetricFilterAndAlarm-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-DisablePublicAccessForSecurityGroup-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-DisablePublicAccessForSecurityGroup-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-DisablePublicAccessToRDSInstance-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-DisablePublicAccessToRDSInstance-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-DisablePublicAccessToRedshiftCluster-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-DisablePublicAccessToRedshiftCluster-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-DisablePublicIPAutoAssign-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-DisablePublicIPAutoAssign-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-DisableTGWAutoAcceptSharedAttachments-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-DisableTGWAutoAcceptSharedAttachments-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-DisableUnrestrictedAccessToHighRiskPorts-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-DisableUnrestrictedAccessToHighRiskPorts-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableAPIGatewayCacheDataEncryption-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableAPIGatewayCacheDataEncryption-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableAPIGatewayExecutionLogs-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableAPIGatewayExecutionLogs-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableAthenaWorkGroupLogging-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableAthenaWorkGroupLogging-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableAutomaticSnapshotsOnRedshiftCluster-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableAutomaticSnapshotsOnRedshiftCluster-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableAutomaticVersionUpgradeOnRedshiftCluster-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableAutomaticVersionUpgradeOnRedshiftCluster-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableAutoScalingGroupELBHealthCheck-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableAutoScalingGroupELBHealthCheck-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableAutoSecretRotation-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableAutoSecretRotation-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableAWSConfig-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableAWSConfig-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableBucketEventNotifications-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableBucketEventNotifications-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableCloudFrontDefaultRootObject-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableCloudFrontDefaultRootObject-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableCloudTrailEncryption-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableCloudTrailEncryption-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableCloudTrailLogFileValidation-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableCloudTrailLogFileValidation-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableCloudTrailToCloudWatchLogging-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableCloudTrailToCloudWatchLogging-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableCopyTagsToSnapshotOnRDSCluster-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableCopyTagsToSnapshotOnRDSCluster-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableDefaultEncryptionS3-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableDefaultEncryptionS3-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableDeliveryStatusLoggingForSNSTopic-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableDeliveryStatusLoggingForSNSTopic-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableEbsEncryptionByDefault-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableEbsEncryptionByDefault-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableEncryptionForSNSTopic-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableEncryptionForSNSTopic-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableEncryptionForSQSQueue-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableEncryptionForSQSQueue-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableEnhancedMonitoringOnRDSInstance-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableEnhancedMonitoringOnRDSInstance-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableGuardDuty-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableGuardDuty-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableIMDSV2OnInstance-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableIMDSV2OnInstance-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableKeyRotation-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableKeyRotation-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableMacie-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableMacie-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableMinorVersionUpgradeOnRDSDBInstance-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableMinorVersionUpgradeOnRDSDBInstance-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableMultiAZOnRDSInstance-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableMultiAZOnRDSInstance-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnablePrivateRepositoryScanning-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnablePrivateRepositoryScanning-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableRDSClusterDeletionProtection-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableRDSClusterDeletionProtection-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableRDSInstanceDeletionProtection-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableRDSInstanceDeletionProtection-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableRedshiftClusterAuditLogging-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableRedshiftClusterAuditLogging-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EnableVPCFlowLogs-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EnableVPCFlowLogs-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-EncryptRDSSnapshot-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-EncryptRDSSnapshot-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-MakeEBSSnapshotsPrivate-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-MakeEBSSnapshotsPrivate-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-MakeRDSSnapshotPrivate-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-MakeRDSSnapshotPrivate-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-RemoveCodeBuildPrivilegedMode-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-RemoveCodeBuildPrivilegedMode-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-RemoveLambdaPublicAccess-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-RemoveLambdaPublicAccess-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-RemoveUnusedSecret-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-RemoveUnusedSecret-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-RemoveVPCDefaultSecurityGroupRules-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-RemoveVPCDefaultSecurityGroupRules-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-ReplaceCodeBuildClearTextCredentials-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-ReplaceCodeBuildClearTextCredentials-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-RevokeUnauthorizedInboundRules-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-RevokeUnauthorizedInboundRules-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-RevokeUnrotatedKeys-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-RevokeUnrotatedKeys-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-RevokeUnusedIAMUserCredentials-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-RevokeUnusedIAMUserCredentials-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-S3BlockDenylist-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-S3BlockDenylist-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-SetCloudFrontOriginDomain-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-SetCloudFrontOriginDomain-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-SetIAMPasswordPolicy-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-SetIAMPasswordPolicy-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-SetLogGroupRetentionDays-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-SetLogGroupRetentionDays-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-SetS3LifecyclePolicy-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-SetS3LifecyclePolicy-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-SetSSLBucketPolicy-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-SetSSLBucketPolicy-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-TagGuardDutyResource-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-TagGuardDutyResource-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-TerminateEC2Instance-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-TerminateEC2Instance-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "identity_type": "role",
+      "name": "SO0111-UpdateSecretRotationPeriod-so0111r",
+      "arn": "arn:aws:iam::222222222222:role/SO0111-UpdateSecretRotationPeriod-so0111r",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:role/SO0111-SHARR-Orchestrator-Member"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ssm.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::222222222222:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    }
+  ]
+}

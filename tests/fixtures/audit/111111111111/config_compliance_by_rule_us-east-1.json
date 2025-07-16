@@ -1,0 +1,1924 @@
+[
+  {
+    "ConfigRuleName": "securityhub-acm-certificate-expiration-check-b9a1ea3e",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-acm-certificate-rsa-check-ec6dc909",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-acm-pca-root-ca-disabled-878bb0a3",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-alb-desync-mode-check-645518e1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-alb-http-drop-invalid-header-enabled-dc354357",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-alb-http-to-https-redirection-check-43eb6f1c",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-api-gw-associated-with-waf-a18d1b1d",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-api-gw-cache-encrypted-10dbd2ba",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-api-gw-execution-logging-enabled-3546747a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-api-gw-ssl-enabled-fe9d9fbd",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-api-gw-xray-enabled-d74f2cff",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-api-gwv2-access-logs-enabled-5c73a98e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-api-gwv2-authorization-type-configured-b1df1efd",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-appsync-authorization-check-2b412d55",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-appsync-cache-ct-encryption-at-rest-35991150",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-appsync-cache-ct-encryption-in-transit-6af472c8",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-appsync-logging-enabled-d1cc5201",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-athena-workgroup-logging-enabled-da0ac0c7",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-aurora-mysql-backtracking-enabled-111800a1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-autoscaling-group-elb-healthcheck-required-219cde9f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-autoscaling-launch-config-public-ip-disabled-71a58c57",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-autoscaling-launch-template-62a56034",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-autoscaling-launchconfig-requires-imdsv2-a86c94b6",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-autoscaling-multiple-az-105bb3c6",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-autoscaling-multiple-instance-types-dfdca7c0",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-backup-recovery-point-encrypted-6e3911a9",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-beanstalk-enhanced-health-reporting-enabled-098befc9",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-clb-desync-mode-check-360a1738",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-clb-multiple-az-bdecf1eb",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloud-trail-cloud-watch-logs-enabled-1a49dbb9",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloud-trail-encryption-enabled-0f4d5f45",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloud-trail-log-file-validation-enabled-e21bfdd5",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-accesslogs-enabled-c75a1ae1",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-associated-with-waf-2334e452",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-custom-ssl-certificate-a2b8c00b",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-default-root-object-configured-795ee984",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-no-deprecated-ssl-protocols-a907cfad",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-origin-failover-enabled-f2aa7614",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-s3-origin-access-control-enabled-ac43bcc5",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-s3-origin-non-existent-bucket-51a6e757",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-sni-enabled-be800356",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-traffic-to-origin-encrypted-05377cff",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudfront-viewer-policy-https-ac19c12f",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudtrail-all-read-s3-data-event-check-c8e94cbc",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cloudtrail-all-write-s3-data-event-check-bfe77f82",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cmk-backing-key-rotation-enabled-c02ec4d8",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-codebuild-project-envvar-awscred-check-d6b3c191",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-codebuild-project-logging-enabled-3dcd052c",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-codebuild-project-s3-logs-encrypted-91dd55f1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-codebuild-project-source-repo-url-check-2593021d",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-codebuild-report-group-encrypted-at-rest-e90a5063",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-cognito-user-pool-advanced-security-enabled-14012f87",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-connect-instance-logging-enabled-df19d28a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-custom-eventbus-policy-attached-9960c10f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-datasync-task-logging-enabled-6c4e0802",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dax-encryption-enabled-e1881b8e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dax-tls-endpoint-encryption-e6227ebf",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-db-instance-backup-enabled-c0c1e881",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dms-auto-minor-version-upgrade-check-a5c1bc38",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dms-endpoint-ssl-configured-b1d677f5",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dms-mongo-db-authentication-enabled-814b7f4f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dms-neptune-iam-authorization-enabled-ff3f5032",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dms-redis-tls-enabled-1c8c60ff",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dms-replication-not-public-8e48071a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dms-replication-task-sourcedb-logging-70f67487",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dms-replication-task-targetdb-logging-e529f2bc",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-docdb-cluster-audit-logging-enabled-8be5885f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-docdb-cluster-backup-retention-check-a9dfddfc",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-docdb-cluster-deletion-protection-enabled-7e6dc6fe",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-docdb-cluster-encrypted-b931ba10",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-docdb-cluster-encrypted-in-transit-f59bcf70",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-docdb-cluster-snapshot-public-prohibited-51c53c20",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dynamodb-autoscaling-enabled-bceb97fb",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dynamodb-pitr-enabled-d086d95f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-dynamodb-table-deletion-protection-enabled-be22886e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ebs-snapshot-public-restorable-check-d0038cf1",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-client-vpn-connection-log-enabled-df3b5db4",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-ebs-encryption-by-default-e9911b54",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-imdsv2-check-ef55e41e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-instance-managed-by-ssm-8c80994f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-instance-multiple-eni-check-cadf659d",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-instance-no-public-ip-c98f9111",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-launch-template-imdsv2-check-63661fd5",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-launch-template-public-ip-disabled-d4a42205",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-managedinstance-association-compliance-status-check-dbeffcc8",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-managedinstance-patch-compliance-c74f9524",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-paravirtual-instance-check-7c97797f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-spot-fleet-request-ct-encryption-at-rest-8541abf4",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-stopped-instance-d50a6563",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-transit-gateway-auto-vpc-attach-disabled-641a23e0",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-vpc-bpa-internet-gateway-blocked-e854fd36",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ec2-vpn-connection-logging-enabled-e79e73db",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecr-private-image-scanning-enabled-cdf40102",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecr-private-lifecycle-policy-configured-baf7e545",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecr-private-tag-immutability-enabled-b6c3830b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecs-container-insights-enabled-929dc4b9",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecs-containers-nonprivileged-be43a6e2",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecs-containers-readonly-access-4b6a626d",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecs-fargate-latest-platform-version-6e85a28f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecs-no-environment-secrets-9bb3cdbb",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecs-service-assign-public-ip-disabled-b912b483",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecs-task-definition-log-configuration-880c7692",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecs-task-definition-pid-mode-check-88883714",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecs-task-definition-user-for-host-mode-check-ad19878f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ecs-taskset-assign-public-ip-disabled-8eeb4552",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-efs-access-point-enforce-root-directory-db5858d0",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-efs-access-point-enforce-user-identity-1c51472e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-efs-automatic-backups-enabled-a22c5932",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-efs-encrypted-check-fec67dd3",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-efs-filesystem-ct-encrypted-50858727",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-efs-in-backup-plan-589ecfa3",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-efs-mount-target-public-accessible-13033980",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-eks-cluster-log-enabled-12d15e9f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-eks-cluster-secrets-encrypted-80505ba6",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-eks-cluster-supported-version-11fd66ef",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-eks-endpoint-no-public-access-7e50e65a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elastic-beanstalk-logs-to-cloudwatch-8310b640",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elastic-beanstalk-managed-updates-enabled-14769230",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticache-auto-minor-version-upgrade-check-427ccf38",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticache-redis-cluster-automatic-backup-check-f27f289e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticache-repl-grp-auto-failover-enabled-6a627faa",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticsearch-audit-logging-enabled-c8a9b472",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticsearch-data-node-fault-tolerance-8ee9c24e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticsearch-encrypted-at-rest-bfd3dbf3",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticsearch-https-required-bb37e722",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticsearch-in-vpc-only-185202ff",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticsearch-logs-to-cloudwatch-edcd3825",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticsearch-node-to-node-encryption-check-47a02259",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elasticsearch-primary-node-fault-tolerance-5aaa77dc",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elb-acm-certificate-required-8be5c9b7",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elb-connection-draining-enabled-0d8c2355",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elb-cross-zone-load-balancing-enabled-fbc5ac09",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elb-deletion-protection-enabled-685297f7",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elb-logging-enabled-d23fe6fe",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elb-predefined-security-policy-ssl-check-1e61a82c",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elb-tls-https-listeners-only-48847bc5",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elbv2-multiple-az-2e603e5d",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-elbv2-predefined-security-policy-ssl-check-d0f2d8e6",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-emr-block-public-access-6172bbf0",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-emr-master-no-public-ip-0d6c4c8a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-emr-security-configuration-encryption-rest-acab52a6",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-emr-security-configuration-encryption-transit-5d1c3402",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-encrypted-volumes-70a94200",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-fsx-lustre-copy-tags-to-backups-8e97a961",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-fsx-ontap-deployment-type-check-6e366d94",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-fsx-openzfs-copy-tags-enabled-14d243aa",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-fsx-openzfs-deployment-type-check-d3008694",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-fsx-windows-deployment-type-check-49c283f6",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-glue-ml-transform-encrypted-at-rest-e91ac12d",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-glue-spark-job-supported-version-9897fb7b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-guardduty-ec2-protection-runtime-enabled-04c82567",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-guardduty-ecs-protection-runtime-enabled-7abff579",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-guardduty-eks-protection-audit-enabled-a3290c49",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-guardduty-eks-protection-runtime-enabled-0a92eb16",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-guardduty-enabled-centralized-26848226",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-guardduty-lambda-protection-enabled-96a6b7ee",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-guardduty-malware-protection-enabled-de2bd36d",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-guardduty-rds-protection-enabled-b733b75b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-guardduty-runtime-monitoring-enabled-2557ef2e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-guardduty-s3-protection-enabled-cefa7b0f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-iam-external-access-analyzer-enabled-f3117527",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-iam-server-certificate-expiration-check-7a68ae0a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-inspector-ec2-scan-enabled-ea608bd6",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-inspector-ecr-scan-enabled-4e311985",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-inspector-lambda-code-scan-enabled-67ae70cd",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-inspector-lambda-standard-scan-enabled-58c71f57",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-kinesis-firehose-delivery-stream-encrypted-89bfb36a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-kinesis-stream-backup-retention-check-04a908c0",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-kinesis-stream-encrypted-27cd6722",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-kms-cmk-not-scheduled-for-deletion-2-17ceabc0",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-kms-key-policy-no-public-access-55a3afa1",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-lambda-function-public-access-prohibited-f1525438",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-lambda-function-settings-check-7c72a9bc",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-lambda-vpc-multi-az-check-fb4132e3",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-macie-auto-sensitive-data-discovery-check-6111c818",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-macie-status-check-d18e100c",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-mariadb-publish-logs-to-cloudwatch-logs-bec28a30",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-mq-auto-minor-version-upgrade-enabled-ed3a370f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-mq-cloudwatch-audit-log-enabled-8e41ab24",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-msk-connect-connector-encrypted-041b6d63",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-msk-in-cluster-node-require-tls-ac8bc3a6",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-multi-region-cloud-trail-enabled-459f4f4f",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-nacl-no-unrestricted-ssh-rdp-7b9427a2",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-neptune-cluster-backup-retention-check-7d391e2b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-neptune-cluster-cloudwatch-log-export-enabled-1bc8c20b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-neptune-cluster-copy-tags-to-snapshot-enabled-28311047",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-neptune-cluster-deletion-protection-enabled-632037a6",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-neptune-cluster-encrypted-787e2da8",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-neptune-cluster-iam-database-authentication-0bcb964a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-neptune-cluster-snapshot-encrypted-7217c531",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-neptune-cluster-snapshot-public-prohibited-f600e8c1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-netfw-deletion-protection-enabled-052e26fb",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-netfw-logging-enabled-0e90b6d3",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-netfw-policy-default-action-fragment-packets-0fb5ae67",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-netfw-policy-default-action-full-packets-fbae19ae",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-netfw-policy-rule-group-associated-d48a9b7e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-netfw-stateless-rule-group-not-empty-eab6e7f8",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-netfw-subnet-change-protection-enabled-c545b2e5",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-opensearch-access-control-enabled-c45c5404",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-opensearch-audit-logging-enabled-770a6af8",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-opensearch-data-node-fault-tolerance-d4edda5a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-opensearch-encrypted-at-rest-23a2512c",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-opensearch-https-required-056e7822",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-opensearch-in-vpc-only-b58eb2ea",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-opensearch-logs-to-cloudwatch-157c644f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-opensearch-node-to-node-encryption-check-a0e8c748",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-opensearch-update-check-8efdd3c4",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-aurora-mysql-audit-logging-enabled-daa5e445",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-aurora-postgresql-logs-to-cloudwatch-7335fccb",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-automatic-minor-version-upgrade-enabled-72e8b1b8",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-cluster-auto-minor-version-upgrade-enable-b4e90c1c",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-cluster-copy-tags-to-snapshots-enabled-4f89bc42",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-cluster-default-admin-check-2389d10c",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-cluster-deletion-protection-enabled-8b391dd2",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-cluster-encrypted-at-rest-2d930031",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-cluster-event-notifications-configured-7ff1eaaa",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-cluster-iam-authentication-enabled-ee60b667",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-cluster-multi-az-enabled-d4a5e1b3",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-enhanced-monitoring-enabled-b3a835cb",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-instance-copy-tags-to-snapshots-enabled-dd445d6a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-instance-default-admin-check-bd6e79cd",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-instance-deletion-protection-enabled-6a532016",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-instance-event-notifications-configured-db9e352d",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-instance-iam-authentication-enabled-75e9309a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-instance-public-access-check-164462e7",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-logging-enabled-d18c1cb3",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-mariadb-instance-encrypted-in-transit-d4352cde",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-multi-az-support-07a26836",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-mysql-instance-encrypted-in-transit-f135c948",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-no-default-ports-a1c6ddb7",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-pg-event-notifications-configured-c59b4fa1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-postgres-instance-encrypted-in-transit-2c4820e7",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-postgresql-logs-to-cloudwatch-dd3e544a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-sg-event-notifications-configured-f6f8a306",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-snapshot-encrypted-b136e420",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-snapshots-public-prohibited-f2ed9a6b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-sql-server-logs-to-cloudwatch-42df9f32",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-sqlserver-encrypted-in-transit-599cd256",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-rds-storage-encrypted-8cf5d04e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-backup-enabled-23704eb5",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-cluster-audit-logging-enabled-330aa8f3",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-cluster-kms-enabled-2007c022",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-cluster-maintenancesettings-check-ebce1f95",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-cluster-public-access-check-1b4388e3",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-default-admin-check-aa54280d",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-default-db-name-check-073d28b1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-enhanced-vpc-routing-enabled-cd0ddef1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-require-tls-ssl-c7bd8772",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-serverless-default-admin-check-64a92c9e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-serverless-default-db-name-check-f7df0e2d",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-serverless-publish-logs-to-cloudwatch-eb9de8bc",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-serverless-workgroup-encrypted-in-transit-2da87d0f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-serverless-workgroup-no-public-access-06317f31",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-serverless-workgroup-routes-within-vpc-ee936fb4",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-redshift-unrestricted-port-access-959e7ee1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-route53-query-logging-enabled-15dd52b4",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 2,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-access-point-public-access-blocks-809d845e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-account-level-public-access-blocks-periodic-2c0c4343",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-bucket-acl-prohibited-e4d3db9a",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-bucket-blacklisted-actions-prohibited-c52fda6c",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-bucket-level-public-access-prohibited-b262043e",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-bucket-logging-enabled-6d2ed4a9",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-bucket-mfa-delete-enabled-406a3062",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-bucket-public-read-prohibited-c705a8a6",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-bucket-public-write-prohibited-05c7e0f9",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-bucket-ssl-requests-only-ccbec299",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-s3-lifecycle-policy-check-38cdfc76",
+    "Compliance": {
+      "ComplianceType": "NON_COMPLIANT",
+      "ComplianceContributorCount": {
+        "CappedCount": 1,
+        "CapExceeded": false
+      }
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-sagemaker-endpoint-config-prod-instance-count-44bab4e1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-sagemaker-model-isolation-enabled-44c410a6",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-sagemaker-notebook-instance-inside-vpc-a07cc645",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-sagemaker-notebook-instance-platform-version-1ab33eb4",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-sagemaker-notebook-instance-root-access-check-2128487c",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-sagemaker-notebook-no-direct-internet-access-8ed6e546",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-secretsmanager-rotation-enabled-check-d1bd9fd2",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-secretsmanager-scheduled-rotation-success-check-48343e8f",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-secretsmanager-secret-periodic-rotation-3b42c5ce",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-secretsmanager-secret-unused-56769556",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-service-catalog-shared-within-organization-824baa92",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-service-vpc-endpoint-enabled-cc41aa3b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-sns-topic-no-public-access-45dce3da",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-sqs-queue-encrypted-bce2e78b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-sqs-queue-no-public-access-0d9aba41",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-ssm-document-not-public-d66b4f9d",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-step-functions-state-machine-logging-enabled-752decc8",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-subnet-auto-assign-public-ip-disabled-73ec2a1b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-transfer-connector-logging-enabled-5e4a26ba",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-transfer-family-server-no-ftp-a71b95fb",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-default-security-group-closed-08a3c520",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-endpoint-enabled-ecr-api-b0858350",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-endpoint-enabled-ecr-dkr-b964210b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-endpoint-enabled-ssm-8317a8d1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-endpoint-enabled-ssm-contacts-90a6e06b",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-endpoint-enabled-ssm-incidents-6a8531b2",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-flow-logs-enabled-5f388798",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-network-acl-unused-check-19ee92cd",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-sg-open-only-to-authorized-ports-5ea0dc4e",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-sg-port-restriction-check-09998d90",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-sg-port-restriction-check-d03407d0",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-sg-restricted-common-ports-0dbf77df",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-vpc-vpn-2-tunnels-up-c3e7e626",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-waf-classic-logging-enabled-6d43e275",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-waf-global-rule-not-empty-10dbf027",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-waf-global-rulegroup-not-empty-3b6001fe",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-waf-global-webacl-not-empty-2c02a8a1",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-waf-regional-rule-not-empty-83b4ce05",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-waf-regional-rulegroup-not-empty-f6ce67d4",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-waf-regional-webacl-not-empty-562efba8",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-wafv2-rulegroup-logging-enabled-3d5a0e35",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-wafv2-webacl-not-empty-787cc388",
+    "Compliance": {
+      "ComplianceType": "COMPLIANT"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-workspaces-root-volume-encryption-enabled-c508a12a",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  },
+  {
+    "ConfigRuleName": "securityhub-workspaces-user-volume-encryption-enabled-16e522f0",
+    "Compliance": {
+      "ComplianceType": "INSUFFICIENT_DATA"
+    }
+  }
+]

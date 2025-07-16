@@ -1,0 +1,902 @@
+[
+  {
+    "FunctionName": "serverlessrepo-example--StaticAssetsDeployer-y7lp5RNafk7y",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example--StaticAssetsDeployer-y7lp5RNafk7y",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/serverlessrepo-foobar-StaticAssetsDeployerRole-isCQL9P5YB6L",
+    "Handler": "app.handler",
+    "CodeSize": 16207,
+    "Description": "",
+    "Timeout": 60,
+    "MemorySize": 128,
+    "LastModified": "2025-02-17T19:28:50.594+0000",
+    "CodeSha256": "aRo/NMMU7qGzk24Pq2J/ZmkYsaGtEUi0XbUHb3beC8Y=",
+    "Version": "$LATEST",
+    "VpcConfig": {
+      "SubnetIds": [],
+      "SecurityGroupIds": [],
+      "VpcId": "",
+      "Ipv6AllowedForDualStack": false
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "c3e4b770-2aa7-4e77-a396-c332e0508adb",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:444444444444:layer:site-assets:10",
+        "CodeSize": 26723819
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/serverlessrepo-example--StaticAssetsDeployer-y7lp5RNafk7y"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "foo-appQueueProcessor-qeucMx1bd2kL",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:foo-appQueueProcessor-qeucMx1bd2kL",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/bar-app-QueueProcessorRole-rpggfcaHR7Ec",
+    "Handler": "app.handler",
+    "CodeSize": 7262689,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2025-02-17T19:07:11.000+0000",
+    "CodeSha256": "2ziyuatWlUQEi4kzipk4JO6Xh1DAFg4iYVFfI1tv+Hg=",
+    "Version": "$LATEST",
+    "VpcConfig": {
+      "SubnetIds": [],
+      "SecurityGroupIds": [],
+      "VpcId": "",
+      "Ipv6AllowedForDualStack": false
+    },
+    "Environment": {
+      "Variables": {
+        "INVOICE_BUCKET": "foo-appinvoicesbucket-7dlx7rz0fxuv"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "83e0e252-a919-4207-9e1d-d66fe3722176",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:444444444444:layer:InvoiceConfigLayer:15",
+        "CodeSize": 27566
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/foo-appQueueProcessor-qeucMx1bd2kL"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "delete-name-tags-eu-west-2-a51b-dmdd7",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:delete-name-tags-eu-west-2-a51b-dmdd7",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::444444444444:role/AWS-QuickSetup-PatchPolicy-RoleForLambda-NT-eu-west-2-dmdd7",
+    "Handler": "index.handler",
+    "CodeSize": 3110,
+    "Description": "Lambda for handling CF 'Delete' events to remove the name tags from resources.",
+    "Timeout": 900,
+    "MemorySize": 128,
+    "LastModified": "2025-06-23T15:11:31.766+0000",
+    "CodeSha256": "vvklyleP1TJsCIiXgDOWolhNVWuLMuHOTeubx5CnIGg=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "REGION": "eu-west-2"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "43d8757a-662a-4316-8cad-333141699dec",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/delete-name-tags-eu-west-2-a51b-dmdd7"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "serverlessrepo-example-Bookingd-OIDC-iwFxCSgWHmxU",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bookingd-OIDC-iwFxCSgWHmxU",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/serverlessrepo-example-Booki-OIDCRole-954sz39O8fuY",
+    "Handler": "app.handler",
+    "CodeSize": 5131099,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2025-02-17T19:06:30.288+0000",
+    "CodeSha256": "NMTAP2pyK/xij7nyEF/mUvf4gZ9T0AJ57NX3ZJsMp9A=",
+    "Version": "$LATEST",
+    "VpcConfig": {
+      "SubnetIds": [],
+      "SecurityGroupIds": [],
+      "VpcId": "",
+      "Ipv6AllowedForDualStack": false
+    },
+    "Environment": {
+      "Variables": {
+        "SESSION_INACTIVITY_TIMEOUT_MINS": "60",
+        "CF_DOMAIN": "admin.example.co.uk",
+        "CLIENT_ID": "7opjppcp79pao5vimnpq3st99p",
+        "AUTH_DOMAIN": "admin-auth.example.co.uk",
+        "SESSION_TIMEOUT_MINS": "480",
+        "OIDC_CALLBACK_PATH": "/auth/oidc",
+        "USER_POOL_ID": "eu-west-2_ArlCESdJD",
+        "REGION": "eu-west-2",
+        "SESSIONS_TABLE_NAME": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31-SessionsTable-1FMI2SAHXZGFC"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "83869f13-52c0-4ba9-a993-19623101e6d3",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:444444444444:layer:auth-lib:3",
+        "CodeSize": 3742
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "JSON",
+      "ApplicationLogLevel": "INFO",
+      "SystemLogLevel": "INFO",
+      "LogGroup": "/bookingdesk"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy--OIDCOIDCPermission-h0NMC9STyRLG",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "apigateway.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bookingd-OIDC-iwFxCSgWHmxU",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:execute-api:eu-west-2:444444444444:owdvnesb2i/*/GET/auth/oidc"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "aws-controltower-NotificationForwarder",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:aws-controltower-NotificationForwarder",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::444444444444:role/aws-controltower-ForwardSnsNotificationRole",
+    "Handler": "index.lambda_handler",
+    "CodeSize": 473,
+    "Description": "SNS message forwarding function for aggregating account notifications.",
+    "Timeout": 60,
+    "MemorySize": 128,
+    "LastModified": "2024-03-23T13:58:42.135+0000",
+    "CodeSha256": "OT4aRpr7KiBGcVMYT59OObD5CDnCyEa8LMTTLaavuQw=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "sns_arn": "arn:aws:sns:eu-west-2:222222222222:aws-controltower-AggregateSecurityNotifications"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "59b07654-f27e-4bce-81b7-e26c0512aa09",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/aws-controltower-NotificationForwarder"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-1ecdb729-8d5c--SNSInvokeLambdaPermission-PTGOQ1Ali7J2",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "sns.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:eu-west-2:444444444444:function:aws-controltower-NotificationForwarder",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:sns:eu-west-2:444444444444:aws-controltower-SecurityNotifications"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "baz-app-SessionAbacAuthorizer-EAPMa0FKRK8Z",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:baz-app-SessionAbacAuthorizer-EAPMa0FKRK8Z",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/asdf-SessionAbacAuthorizerRole-autgPVgc61BP",
+    "Handler": "app.handler",
+    "CodeSize": 1040,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2025-02-17T19:06:30.623+0000",
+    "CodeSha256": "uVy9Mvhhp+Dj+ukpaPjO7DRBmfvavZUqmnD0MruEn9I=",
+    "Version": "$LATEST",
+    "VpcConfig": {
+      "SubnetIds": [],
+      "SecurityGroupIds": [],
+      "VpcId": "",
+      "Ipv6AllowedForDualStack": false
+    },
+    "Environment": {
+      "Variables": {
+        "SESSION_INACTIVITY_TIMEOUT_MINS": "60",
+        "SESSION_TIMEOUT_MINS": "480",
+        "CUSTOM_ORIGIN_KEY": "abBf5KcAlaWIZbLECAj7mriBK5otfGyAJVYBwbRsSr6BC53rPmpkTxpCNMq0Rsm3",
+        "SESSIONS_TABLE_NAME": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31-SessionsTable-1FMI2SAHXZGFC"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "c97de08c-9475-46f3-9c28-04b9e8bb328b",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:444444444444:layer:auth-lib:3",
+        "CodeSize": 3742
+      },
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:444444444444:layer:PDPLayer:13",
+        "CodeSize": 468
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "JSON",
+      "ApplicationLogLevel": "INFO",
+      "SystemLogLevel": "INFO",
+      "LogGroup": "/bookingdesk"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "serverlessrepo-example-Booking-Login-1NtMfzNtEyta",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Booking-Login-1NtMfzNtEyta",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/serverlessrepo-example-Book-LoginRole-fXOgX9LrSqTl",
+    "Handler": "app.handler",
+    "CodeSize": 571504,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2025-02-17T19:06:13.277+0000",
+    "CodeSha256": "Hlr4E5nIl+QhOfhGfq/vnBgqSx+uLXRk3F8mOsCrWSg=",
+    "Version": "$LATEST",
+    "VpcConfig": {
+      "SubnetIds": [],
+      "SecurityGroupIds": [],
+      "VpcId": "",
+      "Ipv6AllowedForDualStack": false
+    },
+    "Environment": {
+      "Variables": {
+        "CF_DOMAIN": "admin.example.co.uk",
+        "CLIENT_ID": "7opjppcp79pao5vimnpq3st99p",
+        "AUTH_DOMAIN": "admin-auth.example.co.uk",
+        "OIDC_CALLBACK_PATH": "/auth/oidc"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "0cdac23f-081f-4721-ba8f-3cb8b35b7e27",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:444444444444:layer:auth-lib:3",
+        "CodeSize": 3742
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "JSON",
+      "ApplicationLogLevel": "INFO",
+      "SystemLogLevel": "INFO",
+      "LogGroup": "/bookingdesk"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Auth-LoginLoginPermission-iFiAHJJsqtGQ",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "apigateway.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Booking-Login-1NtMfzNtEyta",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:execute-api:eu-west-2:444444444444:owdvnesb2i/*/GET/auth/login"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "serverlessrepo-example-LWPApp-HE08mNqoTqJf",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-LWPApp-HE08mNqoTqJf",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/serverlessrepo-example-LWPAppRole-Ux1WBCPCWqUm",
+    "Handler": "app.handler",
+    "CodeSize": 627908,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2025-02-17T19:28:17.184+0000",
+    "CodeSha256": "AWVblxOEJJHf6IZTK3I09YUyUYKhXkqDUeiZj2AySYQ=",
+    "Version": "$LATEST",
+    "VpcConfig": {
+      "SubnetIds": [],
+      "SecurityGroupIds": [],
+      "VpcId": "",
+      "Ipv6AllowedForDualStack": false
+    },
+    "Environment": {
+      "Variables": {
+        "CONTACT_EMAIL": "bobb@example.co.uk",
+        "FROM_ADDRESS": "letwith@example.co.uk"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "7d5f633f-d1f5-4e75-9303-9dfbfa359f0d",
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "JSON",
+      "ApplicationLogLevel": "INFO",
+      "SystemLogLevel": "INFO",
+      "LogGroup": "/aws/lambda/serverlessrepo-example-LWPApp-HE08mNqoTqJf"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "serverlessrepo-example-LWPAppWebPermission-QMooSphHgozR",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "apigateway.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-LWPApp-HE08mNqoTqJf",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:execute-api:eu-west-2:444444444444:ii8y8ntk9d/*/*/*"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "bizz-web-secret-key-rotation-RotationFunction-JG6weipSUoqJ",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-web-secret-key-rotation-RotationFunction-JG6weipSUoqJ",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/bizz-web-secret-key-rotation-RotationFunctionRole-cL0eJgPmr7pW",
+    "Handler": "app.handler",
+    "CodeSize": 1866,
+    "Description": "",
+    "Timeout": 5,
+    "MemorySize": 512,
+    "LastModified": "2025-04-03T08:16:15.256+0000",
+    "CodeSha256": "w3YPOpupEm90V/Wp+cGADEuTh+iM+puOGJREejEK1Kk=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "86131759-bd2c-405b-ac1a-a75a2b457153",
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "JSON",
+      "ApplicationLogLevel": "INFO",
+      "SystemLogLevel": "WARN",
+      "LogGroup": "/apps/bizz-web-secret-key-rotation"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "bizz-web-secret-key-rotation-LambdaPermission-hGaNNOwbMn2v",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "secretsmanager.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-web-secret-key-rotation-RotationFunction-JG6weipSUoqJ",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceAccount": "444444444444"
+            },
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:secretsmanager:eu-west-2:444444444444:secret:bizz-stack/web/secret-key-GJ6EgC"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "bizz-stack-Scraper-gKa8rUaBWfcb",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-Scraper-gKa8rUaBWfcb",
+    "Role": "arn:aws:iam::444444444444:role/bizz-stack-ScraperRole-16N3fngYNq9U",
+    "CodeSize": 0,
+    "Description": "",
+    "Timeout": 300,
+    "MemorySize": 2048,
+    "LastModified": "2025-04-08T18:53:55.000+0000",
+    "CodeSha256": "3d880f66735091220d85e8d1318e2c411e3e1227c1bdf5186120e0d72ff882bc",
+    "Version": "$LATEST",
+    "VpcConfig": {
+      "SubnetIds": [],
+      "SecurityGroupIds": [],
+      "VpcId": "",
+      "Ipv6AllowedForDualStack": false
+    },
+    "Environment": {
+      "Variables": {
+        "TABLE_NAME": "bizz-stack-Table-1LIMQS57VP93U"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "deb0fb33-63dd-45e0-9c7c-d48e0e7de4a6",
+    "PackageType": "Image",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 5120
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "JSON",
+      "ApplicationLogLevel": "INFO",
+      "SystemLogLevel": "WARN",
+      "LogGroup": "/apps/bizz-stack"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "bizz-stack-ScraperSchedulePermission-8FQJL4KvKSpx",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-Scraper-gKa8rUaBWfcb",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:events:eu-west-2:444444444444:rule/bizz-stack-ScraperSchedule-RZFHCa2uW6Ln"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "bizz-stack-Web-dNK6GuEyl3JN",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-Web-dNK6GuEyl3JN",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/bizz-stack-WebRole-MuA5NPdnVYaF",
+    "Handler": "app.handler",
+    "CodeSize": 9010051,
+    "Description": "",
+    "Timeout": 15,
+    "MemorySize": 1024,
+    "LastModified": "2025-04-08T18:53:56.000+0000",
+    "CodeSha256": "Rp/GgPtKq3ddp8G8UK24JjMqSstc59dpEkF1TAr+pdk=",
+    "Version": "$LATEST",
+    "VpcConfig": {
+      "SubnetIds": [],
+      "SecurityGroupIds": [],
+      "VpcId": "",
+      "Ipv6AllowedForDualStack": false
+    },
+    "Environment": {
+      "Variables": {
+        "BIZZ_TABLE_NAME": "bizz-stack-Table-1LIMQS57VP93U",
+        "BIZZ_OIDC_CLIENT_ID": "rqunl2ejdv80fj6rqduslt2i2",
+        "BIZZ_OIDC_CLIENT_SECRET": "b2rjcapm0da18j536moidmg7lpsdq8js8k2muptkve6o07d8he2",
+        "BIZZ_SECRET_KEY_NAME": "arn:aws:secretsmanager:eu-west-2:444444444444:secret:bizz-stack/web/secret-key-GJ6EgC",
+        "BIZZ_SERVER_NAME": "bizz.example.co.uk",
+        "BIZZ_OIDC_AUTHORITY": "https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_d8A7Yr7zT",
+        "BIZZ_OIDC_CLIENT_SCOPE": "aws.cognito.signin.user.admin email openid phone profile",
+        "BIZZ_OIDC_SERVER_METADATA_URL": "https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_d8A7Yr7zT/.well-known/openid-configuration"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "6a57ecf2-77a0-4903-9e98-a1f4e844a515",
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "JSON",
+      "ApplicationLogLevel": "INFO",
+      "SystemLogLevel": "WARN",
+      "LogGroup": "/apps/bizz-stack"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "bizz-stack-LambdaInvokePermissionForCloudFront-vq8hpw8pNymn",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "cloudfront.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunctionUrl",
+          "Resource": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-Web-dNK6GuEyl3JN",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceAccount": "444444444444"
+            },
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:cloudfront::444444444444:distribution/E1N2B67JJ2WE5A"
+            }
+          }
+        },
+        {
+          "Sid": "bizz-stack-WebUrlPublicPermissions-D7X69A9gn7eM",
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": "lambda:InvokeFunctionUrl",
+          "Resource": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-Web-dNK6GuEyl3JN",
+          "Condition": {
+            "StringEquals": {
+              "lambda:FunctionUrlAuthType": "NONE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "baz-app-OriginKeyAuthorizer-Zsu2Any5NRGN",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:baz-app-OriginKeyAuthorizer-Zsu2Any5NRGN",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/bazzy-OriginKeyAuthorizerRole-EUrLSNcg6t5R",
+    "Handler": "app.handler",
+    "CodeSize": 545,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2025-02-17T19:06:10.440+0000",
+    "CodeSha256": "16TQ+5c0aJ7ytpha1E/g6YDMiHas//TJPQQBo5UkmMo=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "CUSTOM_ORIGIN_KEY": "abBf5KcAlaWIZbLECAj7mriBK5otfGyAJVYBwbRsSr6BC53rPmpkTxpCNMq0Rsm3"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "eda70f19-fa0f-478e-9f2a-5fe002a8c423",
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/baz-app-OriginKeyAuthorizer-Zsu2Any5NRGN"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "bizz-stack-IntegrationQueueProcessor-j9s2CwbKYLt6",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-IntegrationQueueProcessor-j9s2CwbKYLt6",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/bizz-stack-IntegrationQueueProcessorRole-NT0krKo8fnl7",
+    "Handler": "app.handler",
+    "CodeSize": 317356,
+    "Description": "",
+    "Timeout": 5,
+    "MemorySize": 512,
+    "LastModified": "2025-04-08T18:53:55.000+0000",
+    "CodeSha256": "Suig/LF6uoKMFR2IoWOiK4DW/DkoPeZHoV7YwieDkEk=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "BIZZ_TABLE_NAME": "bizz-stack-Table-1LIMQS57VP93U"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "983cea70-9cd3-4991-9658-716e7150ddb7",
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "JSON",
+      "ApplicationLogLevel": "INFO",
+      "SystemLogLevel": "WARN",
+      "LogGroup": "/apps/bizz-stack"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/serverlessrepo-example-GetInvoiceRole-kXRLz6fP6CvE",
+    "Handler": "app.handler",
+    "CodeSize": 917,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2024-06-29T08:55:35.974+0000",
+    "CodeSha256": "rzx9EVXsEl79WjudHJVjWGXs6K4V1SyyU9pdjud0Af0=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "INVOICE_BUCKET": "foo-appinvoicesbucket-7dlx7rz0fxuv"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "9c382c4f-3031-4bc0-afbe-e7be1929b1b7",
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-I-GetInvoiceWebPermission-UwJcYXkwW53m",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "apigateway.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:execute-api:eu-west-2:444444444444:m7ycykh696/*/GET/invoices/*"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "serverlessrepo-example-Bookin-Logout-tMTyEk7nqrSK",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bookin-Logout-tMTyEk7nqrSK",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::444444444444:role/serverlessrepo-example-Boo-LogoutRole-UNJk05ezQo3g",
+    "Handler": "app.handler",
+    "CodeSize": 892,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2025-02-17T19:06:28.713+0000",
+    "CodeSha256": "nlpbCIDVtWF17wB4ycicTMAdlM2+cF/nr5sDq1MxrWE=",
+    "Version": "$LATEST",
+    "VpcConfig": {
+      "SubnetIds": [],
+      "SecurityGroupIds": [],
+      "VpcId": "",
+      "Ipv6AllowedForDualStack": false
+    },
+    "Environment": {
+      "Variables": {
+        "CF_DOMAIN": "admin.example.co.uk",
+        "CLIENT_ID": "7opjppcp79pao5vimnpq3st99p",
+        "LOGOUT_PATH": "/auth/login",
+        "AUTH_DOMAIN": "admin-auth.example.co.uk",
+        "SESSIONS_TABLE_NAME": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31-SessionsTable-1FMI2SAHXZGFC"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "eb99f360-9a96-4cd2-ae79-36e560e911dc",
+    "Layers": [
+      {
+        "Arn": "arn:aws:lambda:eu-west-2:444444444444:layer:auth-lib:3",
+        "CodeSize": 3742
+      }
+    ],
+    "PackageType": "Zip",
+    "Architectures": [
+      "arm64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "JSON",
+      "ApplicationLogLevel": "INFO",
+      "SystemLogLevel": "INFO",
+      "LogGroup": "/bookingdesk"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Au-LogoutLogoutPermission-JH1bOOPu5Hii",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "apigateway.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bookin-Logout-tMTyEk7nqrSK",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:execute-api:eu-west-2:444444444444:owdvnesb2i/*/GET/auth/logout"
+            }
+          }
+        }
+      ]
+    }
+  }
+]

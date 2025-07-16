@@ -1,0 +1,30 @@
+[
+  {
+    "Id": "rslvr-fdl-15f4860b1ad54ead",
+    "Arn": "arn:aws:route53resolver:us-east-1:088515088082:firewall-domain-list/rslvr-fdl-15f4860b1ad54ead",
+    "Name": "AWSManagedDomainsAggregateThreatList",
+    "CreatorRequestId": "AWSManagedDomainsAggregateThreatList",
+    "ManagedOwnerName": "Route 53 Resolver DNS Firewall"
+  },
+  {
+    "Id": "rslvr-fdl-2c46f2ecbfec4dcc",
+    "Arn": "arn:aws:route53resolver:us-east-1:088515088082:firewall-domain-list/rslvr-fdl-2c46f2ecbfec4dcc",
+    "Name": "AWSManagedDomainsMalwareDomainList",
+    "CreatorRequestId": "AWSManagedDomainsMalwareDomainList",
+    "ManagedOwnerName": "Route 53 Resolver DNS Firewall"
+  },
+  {
+    "Id": "rslvr-fdl-984dae9d8bac4e2b",
+    "Arn": "arn:aws:route53resolver:us-east-1:088515088082:firewall-domain-list/rslvr-fdl-984dae9d8bac4e2b",
+    "Name": "AWSManagedDomainsAmazonGuardDutyThreatList",
+    "CreatorRequestId": "AWSManagedDomainsAmazonGuardDutyThreatList",
+    "ManagedOwnerName": "Route 53 Resolver DNS Firewall"
+  },
+  {
+    "Id": "rslvr-fdl-aa970e9eb1ca4777",
+    "Arn": "arn:aws:route53resolver:us-east-1:088515088082:firewall-domain-list/rslvr-fdl-aa970e9eb1ca4777",
+    "Name": "AWSManagedDomainsBotnetCommandandControl",
+    "CreatorRequestId": "AWSManagedDomainsBotnetCommandandControl",
+    "ManagedOwnerName": "Route 53 Resolver DNS Firewall"
+  }
+]

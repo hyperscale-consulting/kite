@@ -1,0 +1,138 @@
+[
+  {
+    "FunctionName": "delete-name-tags-us-west-2-a5d9-dmdd7",
+    "FunctionArn": "arn:aws:lambda:us-west-2:444444444444:function:delete-name-tags-us-west-2-a5d9-dmdd7",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::444444444444:role/AWS-QuickSetup-PatchPolicy-RoleForLambda-NT-us-west-2-dmdd7",
+    "Handler": "index.handler",
+    "CodeSize": 3110,
+    "Description": "Lambda for handling CF 'Delete' events to remove the name tags from resources.",
+    "Timeout": 900,
+    "MemorySize": 128,
+    "LastModified": "2025-06-23T15:11:29.884+0000",
+    "CodeSha256": "+3jCzVif3VETs0by/yKN6bsnUKdc3jVWHEJXsaJz8TI=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "REGION": "us-west-2"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "261fd828-8bfe-4d5b-b31b-3f41e2a0d413",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/delete-name-tags-us-west-2-a5d9-dmdd7"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "StackSet-automated-securi-WaitProviderFunction3D90-N1ZUrUZFUIbX",
+    "FunctionArn": "arn:aws:lambda:us-west-2:444444444444:function:StackSet-automated-securi-WaitProviderFunction3D90-N1ZUrUZFUIbX",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::444444444444:role/StackSet-automated-securit-WaitProviderRole83B0295F-9pyBjdPKa9vi",
+    "Handler": "wait_provider.lambda_handler",
+    "CodeSize": 1798,
+    "Description": "",
+    "Timeout": 900,
+    "MemorySize": 128,
+    "LastModified": "2025-02-19T19:32:23.588+0000",
+    "CodeSha256": "1CMAVjBsLIsKg6COlvVv33bYPw4yZVxspA6nnJ7pKE0=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "LOG_LEVEL": "INFO"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "a1a992cf-edf5-4e30-b4ca-a99ee65a3cc7",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-N1ZUrUZFUIbX"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "aws-controltower-NotificationForwarder",
+    "FunctionArn": "arn:aws:lambda:us-west-2:444444444444:function:aws-controltower-NotificationForwarder",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::444444444444:role/aws-controltower-ForwardSnsNotificationRole",
+    "Handler": "index.lambda_handler",
+    "CodeSize": 473,
+    "Description": "SNS message forwarding function for aggregating account notifications.",
+    "Timeout": 60,
+    "MemorySize": 128,
+    "LastModified": "2024-03-23T13:58:42.968+0000",
+    "CodeSha256": "OT4aRpr7KiBGcVMYT59OObD5CDnCyEa8LMTTLaavuQw=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "sns_arn": "arn:aws:sns:us-west-2:222222222222:aws-controltower-AggregateSecurityNotifications"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "6435c416-d57f-414b-807f-8d9abe899bed",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/aws-controltower-NotificationForwarder"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-e07dbda3-d421--SNSInvokeLambdaPermission-vqCsr9UnQ9qP",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "sns.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:us-west-2:444444444444:function:aws-controltower-NotificationForwarder",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:sns:us-west-2:444444444444:aws-controltower-SecurityNotifications"
+            }
+          }
+        }
+      ]
+    }
+  }
+]

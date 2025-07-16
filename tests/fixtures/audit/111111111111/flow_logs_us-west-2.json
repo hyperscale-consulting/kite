@@ -1,0 +1,40 @@
+[
+  {
+    "CreationTime": "2022-03-25 12:45:39.642000+00:00",
+    "DeliverLogsPermissionArn": "arn:aws:iam::111111111111:role/vpc-flow-log-role",
+    "DeliverLogsStatus": "SUCCESS",
+    "FlowLogId": "fl-06a61b923cb91cf01",
+    "FlowLogStatus": "ACTIVE",
+    "LogGroupName": "vpc-flow-rejects",
+    "ResourceId": "vpc-57696132",
+    "TrafficType": "REJECT",
+    "LogDestinationType": "cloud-watch-logs",
+    "LogFormat": "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-vpc-flow-rejects"
+      }
+    ],
+    "MaxAggregationInterval": 600
+  },
+  {
+    "CreationTime": "2022-03-25 12:48:06.940000+00:00",
+    "DeliverLogsPermissionArn": "arn:aws:iam::111111111111:role/vpc-flow-log-role",
+    "DeliverLogsStatus": "SUCCESS",
+    "FlowLogId": "fl-0e6eb778e751fc520",
+    "FlowLogStatus": "ACTIVE",
+    "LogGroupName": "vpc-flow-rejects",
+    "ResourceId": "vpc-03bdd09d013b2b609",
+    "TrafficType": "REJECT",
+    "LogDestinationType": "cloud-watch-logs",
+    "LogFormat": "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "default-vpc-flow-rejects"
+      }
+    ],
+    "MaxAggregationInterval": 600
+  }
+]

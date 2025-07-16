@@ -20,6 +20,7 @@ from kite import sagemaker
 from kite import sns
 from kite import sqs
 from kite import sts
+from kite.cli import Assessment
 from kite.cli import main
 from kite.config import Config
 from kite.models import DelegatedAdmin
@@ -268,9 +269,19 @@ def test_run_collect(runner, config_path):
     assert result.exit_code == 0
 
 
-@pytest.mark.skip(reason="Test checks individually")
-def test_run_assess_after_collect(runner, config_path):
-    runner.invoke(main, ["collect", "--config", str(config_path)])
+def test_run_assess(runner, tmp_path):
+    base_path = Path(__file__).parent
+    config = Config.create(
+        management_account_id="111111111111",
+        account_ids=[],
+        active_regions=["us-west-2", "us-east-1", "eu-west-2"],
+        role_name="Kite",
+        prowler_output_dir=str(base_path / "fixtures/prowler"),
+        data_dir=str(base_path / "fixtures/audit"),
+        external_id="123456",
+    )
+    config_path = str(tmp_path / "kite.yaml")
+    config.save(config_path)
 
     def responses():
         answer = True
@@ -315,7 +326,12 @@ def test_run_assess_after_collect(runner, config_path):
             return False
 
     result = runner.invoke(
-        main, ["assess", "--config", str(config_path)], input=TestInput(responses())
+        main,
+        ["assess", "--config", config_path, "--no-auto-save"],
+        input=TestInput(responses()),
     )
-    print(result.output)
     assert result.exit_code == 0
+    assessment = Assessment.load()
+    assert assessment.get_finding("root-account-monitoring")["status"] == "PASS"
+    assert assessment.get_finding("root-actions-disallowed")["status"] == "FAIL"
+    assert assessment.get_finding("no-permissive-role-assumption")["status"] == "PASS"

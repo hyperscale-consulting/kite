@@ -1,0 +1,114 @@
+[
+  {
+    "TopicArn": "arn:aws:sns:us-east-1:222222222222:aws-controltower-AggregateSecurityNotifications",
+    "Policy": {
+      "Version": "2008-10-17",
+      "Statement": [
+        {
+          "Sid": "__default_statement_ID",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "SNS:GetTopicAttributes",
+            "SNS:SetTopicAttributes",
+            "SNS:AddPermission",
+            "SNS:RemovePermission",
+            "SNS:DeleteTopic",
+            "SNS:Subscribe",
+            "SNS:ListSubscriptionsByTopic",
+            "SNS:Publish",
+            "SNS:Receive"
+          ],
+          "Resource": "arn:aws:sns:us-east-1:222222222222:aws-controltower-AggregateSecurityNotifications",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceOwner": "222222222222"
+            }
+          }
+        },
+        {
+          "Sid": "AWSSNSPolicy",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": "sns:Publish",
+          "Resource": "arn:aws:sns:us-east-1:222222222222:aws-controltower-AggregateSecurityNotifications",
+          "Condition": {
+            "StringEquals": {
+              "aws:PrincipalOrgID": "o-adf95fr1li"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "TopicArn": "arn:aws:sns:us-east-1:222222222222:aws-controltower-AllConfigNotifications",
+    "Policy": {
+      "Version": "2008-10-17",
+      "Statement": [
+        {
+          "Sid": "AWSSNSPolicy",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": [
+              "config.amazonaws.com",
+              "cloudtrail.amazonaws.com"
+            ]
+          },
+          "Action": "sns:Publish",
+          "Resource": "arn:aws:sns:us-east-1:222222222222:aws-controltower-AllConfigNotifications",
+          "Condition": {
+            "StringEquals": {
+              "aws:SourceOrgID": "o-adf95fr1li"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "TopicArn": "arn:aws:sns:us-east-1:222222222222:aws-controltower-SecurityNotifications",
+    "Policy": {
+      "Version": "2008-10-17",
+      "Statement": [
+        {
+          "Sid": "__default_statement_ID",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "SNS:GetTopicAttributes",
+            "SNS:SetTopicAttributes",
+            "SNS:AddPermission",
+            "SNS:RemovePermission",
+            "SNS:DeleteTopic",
+            "SNS:Subscribe",
+            "SNS:ListSubscriptionsByTopic",
+            "SNS:Publish",
+            "SNS:Receive"
+          ],
+          "Resource": "arn:aws:sns:us-east-1:222222222222:aws-controltower-SecurityNotifications",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceOwner": "222222222222"
+            }
+          }
+        },
+        {
+          "Sid": "TrustCWEToPublishEventsToMyTopic",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "sns:Publish",
+          "Resource": "arn:aws:sns:us-east-1:222222222222:aws-controltower-SecurityNotifications"
+        }
+      ]
+    }
+  }
+]

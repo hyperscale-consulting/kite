@@ -1,0 +1,161 @@
+[
+  {
+    "Architecture": "x86_64",
+    "BlockDeviceMappings": [
+      {
+        "DeviceName": "/dev/xvda",
+        "Ebs": {
+          "AttachTime": "2025-06-23 10:50:09+00:00",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-018543f6c4ada8d68"
+        }
+      }
+    ],
+    "ClientToken": "1119d0b7-2785-4bd5-b310-b285d0cc092a",
+    "EbsOptimized": false,
+    "EnaSupport": true,
+    "Hypervisor": "xen",
+    "IamInstanceProfile": {
+      "Arn": "arn:aws:iam::111111111111:instance-profile/test-scan-instance-role-delete-me",
+      "Id": "AIPA6AUBOEJMJZNJTKPMC"
+    },
+    "NetworkInterfaces": [
+      {
+        "Association": {
+          "IpOwnerId": "amazon",
+          "PublicDnsName": "ec2-54-187-223-40.us-west-2.compute.amazonaws.com",
+          "PublicIp": "54.187.223.40"
+        },
+        "Attachment": {
+          "AttachTime": "2025-06-23 10:50:09+00:00",
+          "AttachmentId": "eni-attach-0255f88239172b9e3",
+          "DeleteOnTermination": true,
+          "DeviceIndex": 0,
+          "Status": "attached",
+          "NetworkCardIndex": 0
+        },
+        "Description": "",
+        "Groups": [
+          {
+            "GroupId": "sg-0406fecce50c6a41b",
+            "GroupName": "launch-wizard-1-delete-me"
+          }
+        ],
+        "Ipv6Addresses": [],
+        "MacAddress": "06:04:b6:7e:8b:2d",
+        "NetworkInterfaceId": "eni-02e836c9e73e6a889",
+        "OwnerId": "111111111111",
+        "PrivateDnsName": "ip-10-0-2-182.us-west-2.compute.internal",
+        "PrivateIpAddress": "10.0.2.182",
+        "PrivateIpAddresses": [
+          {
+            "Association": {
+              "IpOwnerId": "amazon",
+              "PublicDnsName": "ec2-54-187-223-40.us-west-2.compute.amazonaws.com",
+              "PublicIp": "54.187.223.40"
+            },
+            "Primary": true,
+            "PrivateDnsName": "ip-10-0-2-182.us-west-2.compute.internal",
+            "PrivateIpAddress": "10.0.2.182"
+          }
+        ],
+        "SourceDestCheck": true,
+        "Status": "in-use",
+        "SubnetId": "subnet-040cc7948b59fdc81",
+        "VpcId": "vpc-57696132",
+        "InterfaceType": "interface",
+        "Operator": {
+          "Managed": false
+        }
+      }
+    ],
+    "RootDeviceName": "/dev/xvda",
+    "RootDeviceType": "ebs",
+    "SecurityGroups": [
+      {
+        "GroupId": "sg-0406fecce50c6a41b",
+        "GroupName": "launch-wizard-1-delete-me"
+      }
+    ],
+    "SourceDestCheck": true,
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "test-scan-3"
+      },
+      {
+        "Key": "Scan",
+        "Value": "True"
+      }
+    ],
+    "VirtualizationType": "hvm",
+    "CpuOptions": {
+      "CoreCount": 1,
+      "ThreadsPerCore": 1
+    },
+    "CapacityReservationSpecification": {
+      "CapacityReservationPreference": "open"
+    },
+    "HibernationOptions": {
+      "Configured": false
+    },
+    "MetadataOptions": {
+      "State": "applied",
+      "HttpTokens": "required",
+      "HttpPutResponseHopLimit": 2,
+      "HttpEndpoint": "enabled",
+      "HttpProtocolIpv6": "disabled",
+      "InstanceMetadataTags": "disabled"
+    },
+    "EnclaveOptions": {
+      "Enabled": false
+    },
+    "BootMode": "uefi-preferred",
+    "PlatformDetails": "Linux/UNIX",
+    "UsageOperation": "RunInstances",
+    "UsageOperationUpdateTime": "2025-06-23 10:50:09+00:00",
+    "PrivateDnsNameOptions": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "MaintenanceOptions": {
+      "AutoRecovery": "default",
+      "RebootMigration": "default"
+    },
+    "CurrentInstanceBootMode": "legacy-bios",
+    "NetworkPerformanceOptions": {
+      "BandwidthWeighting": "default"
+    },
+    "Operator": {
+      "Managed": false
+    },
+    "InstanceId": "i-0eece0cf75cd15f65",
+    "ImageId": "ami-05f9478b4deb8d173",
+    "State": {
+      "Code": 16,
+      "Name": "running"
+    },
+    "PrivateDnsName": "ip-10-0-2-182.us-west-2.compute.internal",
+    "PublicDnsName": "ec2-54-187-223-40.us-west-2.compute.amazonaws.com",
+    "StateTransitionReason": "",
+    "KeyName": "Macbook air",
+    "AmiLaunchIndex": 0,
+    "ProductCodes": [],
+    "InstanceType": "t2.nano",
+    "LaunchTime": "2025-06-25 08:18:08+00:00",
+    "Placement": {
+      "GroupName": "",
+      "Tenancy": "default",
+      "AvailabilityZone": "us-west-2a"
+    },
+    "Monitoring": {
+      "State": "disabled"
+    },
+    "SubnetId": "subnet-040cc7948b59fdc81",
+    "VpcId": "vpc-57696132",
+    "PrivateIpAddress": "10.0.2.182",
+    "PublicIpAddress": "54.187.223.40"
+  }
+]

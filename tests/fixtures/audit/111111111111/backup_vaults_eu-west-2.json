@@ -1,0 +1,12 @@
+[
+  {
+    "BackupVaultName": "Default",
+    "BackupVaultArn": "arn:aws:backup:eu-west-2:111111111111:backup-vault:Default",
+    "VaultType": "BACKUP_VAULT",
+    "CreationDate": "2025-03-12 17:12:24.730000+00:00",
+    "EncryptionKeyArn": "arn:aws:kms:eu-west-2:111111111111:key/577b3e61-f00f-4c6d-a375-f86cd6baab33",
+    "CreatorRequestId": "Default",
+    "NumberOfRecoveryPoints": 70,
+    "Locked": false
+  }
+]

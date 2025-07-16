@@ -1,0 +1,20 @@
+[
+  {
+    "logGroupName": "/aws/lambda/test-starter-dev-hello",
+    "creationTime": 1647611338718,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-east-1:111111111111:log-group:/aws/lambda/test-starter-dev-hello:*",
+    "storedBytes": 2973,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-east-1:111111111111:log-group:/aws/lambda/test-starter-dev-hello"
+  },
+  {
+    "logGroupName": "aws-cloudtrail-logs-111111111111-8451f421",
+    "creationTime": 1648460642359,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-east-1:111111111111:log-group:aws-cloudtrail-logs-111111111111-8451f421:*",
+    "storedBytes": 42878,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-east-1:111111111111:log-group:aws-cloudtrail-logs-111111111111-8451f421"
+  }
+]

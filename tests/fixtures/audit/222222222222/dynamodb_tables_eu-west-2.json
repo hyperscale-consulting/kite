@@ -1,0 +1,10 @@
+[
+  {
+    "TableName": "automated-security-response-administrator-stack-SchedulingTable1EC09B43-1C9XIEBLCJED3",
+    "Region": "eu-west-2",
+    "TimeToLiveDescription": {
+      "TimeToLiveStatus": "ENABLED",
+      "AttributeName": "TTL"
+    }
+  }
+]

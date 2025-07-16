@@ -1,0 +1,80 @@
+[
+  {
+    "AvailabilityZoneId": "euw2-az3",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "111111111111",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "SubnetArn": "arn:aws:ec2:eu-west-2:111111111111:subnet/subnet-feb575b2",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-feb575b2",
+    "State": "available",
+    "VpcId": "vpc-97f19dff",
+    "CidrBlock": "172.31.32.0/20",
+    "AvailableIpAddressCount": 4091,
+    "AvailabilityZone": "eu-west-2b",
+    "DefaultForAz": true,
+    "MapPublicIpOnLaunch": true
+  },
+  {
+    "AvailabilityZoneId": "euw2-az2",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "111111111111",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "SubnetArn": "arn:aws:ec2:eu-west-2:111111111111:subnet/subnet-c647f5bc",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-c647f5bc",
+    "State": "available",
+    "VpcId": "vpc-97f19dff",
+    "CidrBlock": "172.31.16.0/20",
+    "AvailableIpAddressCount": 4091,
+    "AvailabilityZone": "eu-west-2a",
+    "DefaultForAz": true,
+    "MapPublicIpOnLaunch": true
+  },
+  {
+    "AvailabilityZoneId": "euw2-az1",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "111111111111",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "SubnetArn": "arn:aws:ec2:eu-west-2:111111111111:subnet/subnet-22d7a14b",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-22d7a14b",
+    "State": "available",
+    "VpcId": "vpc-97f19dff",
+    "CidrBlock": "172.31.0.0/20",
+    "AvailableIpAddressCount": 4091,
+    "AvailabilityZone": "eu-west-2c",
+    "DefaultForAz": true,
+    "MapPublicIpOnLaunch": true
+  }
+]

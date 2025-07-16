@@ -1,0 +1,34 @@
+[
+  {
+    "QueueUrl": "https://sqs.eu-west-2.amazonaws.com/111111111111/CustomControlTowerLEFIFODLQueue.fifo",
+    "QueueArn": "arn:aws:sqs:eu-west-2:111111111111:CustomControlTowerLEFIFODLQueue.fifo",
+    "Policy": null,
+    "Region": "eu-west-2"
+  },
+  {
+    "QueueUrl": "https://sqs.eu-west-2.amazonaws.com/111111111111/CustomControlTowerLEFIFOQueue.fifo",
+    "QueueArn": "arn:aws:sqs:eu-west-2:111111111111:CustomControlTowerLEFIFOQueue.fifo",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "sqs:SendMessage",
+          "Resource": "arn:aws:sqs:eu-west-2:111111111111:CustomControlTowerLEFIFOQueue.fifo",
+          "Condition": {
+            "ArnEquals": {
+              "aws:SourceArn": [
+                "arn:aws:events:eu-west-2:111111111111:rule/CfCT-CustomControlTowerCreateManagedAccountCWEventR-UBwLu8QdCtK5",
+                "arn:aws:events:eu-west-2:111111111111:rule/CfCT-CustomControlTowerUpdateManagedAccountCWEventR-NI5AdQbboBu8"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "Region": "eu-west-2"
+  }
+]

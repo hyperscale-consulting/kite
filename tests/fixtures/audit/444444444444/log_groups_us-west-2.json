@@ -1,0 +1,40 @@
+[
+  {
+    "logGroupName": "/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-N1ZUrUZFUIbX",
+    "creationTime": 1739993561069,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:444444444444:log-group:/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-N1ZUrUZFUIbX:*",
+    "storedBytes": 35224,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:444444444444:log-group:/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-N1ZUrUZFUIbX"
+  },
+  {
+    "logGroupName": "/aws/lambda/aws-controltower-NotificationForwarder",
+    "creationTime": 1711202324310,
+    "retentionInDays": 14,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:444444444444:log-group:/aws/lambda/aws-controltower-NotificationForwarder:*",
+    "storedBytes": 0,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:444444444444:log-group:/aws/lambda/aws-controltower-NotificationForwarder"
+  },
+  {
+    "logGroupName": "/aws/lambda/delete-name-tags-us-west-2-a5d9-dmdd7",
+    "creationTime": 1750691538731,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:444444444444:log-group:/aws/lambda/delete-name-tags-us-west-2-a5d9-dmdd7:*",
+    "storedBytes": 1925,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:444444444444:log-group:/aws/lambda/delete-name-tags-us-west-2-a5d9-dmdd7"
+  },
+  {
+    "logGroupName": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-1839f327-4051-47c0-8d5a-84155fbb50a1-VPCFlowLogsLogGroup-g1nDQu9YMeau",
+    "creationTime": 1711202743299,
+    "retentionInDays": 90,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:444444444444:log-group:StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-1839f327-4051-47c0-8d5a-84155fbb50a1-VPCFlowLogsLogGroup-g1nDQu9YMeau:*",
+    "storedBytes": 0,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:444444444444:log-group:StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-1839f327-4051-47c0-8d5a-84155fbb50a1-VPCFlowLogsLogGroup-g1nDQu9YMeau"
+  }
+]

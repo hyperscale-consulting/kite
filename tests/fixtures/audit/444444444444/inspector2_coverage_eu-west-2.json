@@ -1,0 +1,780 @@
+[
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-04-08 19:54:25.030000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-IntegrationQueueProcessor-j9s2CwbKYLt6:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "bizz-stack-IntegrationQueueProcessor-j9s2CwbKYLt6",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "IntegrationQueueProcessor",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/bizz-stack/a94b5eb0-0a91-11f0-8c42-0a54b9b8356d",
+          "aws:cloudformation:stack-name": "bizz-stack",
+          "lambda:createdBy": "SAM"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-04-08 19:54:09.795000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-IntegrationQueueProcessor-j9s2CwbKYLt6:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "bizz-stack-IntegrationQueueProcessor-j9s2CwbKYLt6",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "IntegrationQueueProcessor",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/bizz-stack/a94b5eb0-0a91-11f0-8c42-0a54b9b8356d",
+          "aws:cloudformation:stack-name": "bizz-stack",
+          "lambda:createdBy": "SAM"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-Scraper-gKa8rUaBWfcb:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "bizz-stack-Scraper-gKa8rUaBWfcb",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "Scraper",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/bizz-stack/a94b5eb0-0a91-11f0-8c42-0a54b9b8356d",
+          "aws:cloudformation:stack-name": "bizz-stack",
+          "lambda:createdBy": "SAM"
+        },
+        "layers": [],
+        "runtime": "UNSUPPORTED"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "UNSUPPORTED_RUNTIME",
+      "statusCode": "INACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-Scraper-gKa8rUaBWfcb:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "bizz-stack-Scraper-gKa8rUaBWfcb",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "Scraper",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/bizz-stack/a94b5eb0-0a91-11f0-8c42-0a54b9b8356d",
+          "aws:cloudformation:stack-name": "bizz-stack",
+          "lambda:createdBy": "SAM"
+        },
+        "layers": [],
+        "runtime": "UNSUPPORTED"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "UNSUPPORTED_RUNTIME",
+      "statusCode": "INACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-04-08 19:54:51.167000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-Web-dNK6GuEyl3JN:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "bizz-stack-Web-dNK6GuEyl3JN",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "Web",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/bizz-stack/a94b5eb0-0a91-11f0-8c42-0a54b9b8356d",
+          "aws:cloudformation:stack-name": "bizz-stack",
+          "lambda:createdBy": "SAM"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-19 23:27:17.099000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-stack-Web-dNK6GuEyl3JN:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "bizz-stack-Web-dNK6GuEyl3JN",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "Web",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/bizz-stack/a94b5eb0-0a91-11f0-8c42-0a54b9b8356d",
+          "aws:cloudformation:stack-name": "bizz-stack",
+          "lambda:createdBy": "SAM"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-04-03 09:16:37.130000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-web-secret-key-rotation-RotationFunction-JG6weipSUoqJ:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "bizz-web-secret-key-rotation-RotationFunction-JG6weipSUoqJ",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "RotationFunction",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/bizz-web-secret-key-rotation/dafa0330-1063-11f0-b6bc-0a1fb828b52b",
+          "aws:cloudformation:stack-name": "bizz-web-secret-key-rotation",
+          "lambda:createdBy": "SAM"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-04-03 09:16:25.347000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:bizz-web-secret-key-rotation-RotationFunction-JG6weipSUoqJ:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "bizz-web-secret-key-rotation-RotationFunction-JG6weipSUoqJ",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "RotationFunction",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/bizz-web-secret-key-rotation/dafa0330-1063-11f0-b6bc-0a1fb828b52b",
+          "aws:cloudformation:stack-name": "bizz-web-secret-key-rotation",
+          "lambda:createdBy": "SAM"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-17 11:24:19.385000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:aws-controltower-NotificationForwarder:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "aws-controltower-NotificationForwarder",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "ForwardSnsNotification",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-1ecdb729-8d5c-4c6b-b405-23aba444aead/6dc49ff0-e91d-11ee-9ab4-0ab88cf709af",
+          "aws:cloudformation:stack-name": "StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-1ecdb729-8d5c-4c6b-b405-23aba444aead"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_9"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-11 06:46:40.420000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:aws-controltower-NotificationForwarder:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "aws-controltower-NotificationForwarder",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "ForwardSnsNotification",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-1ecdb729-8d5c-4c6b-b405-23aba444aead/6dc49ff0-e91d-11ee-9ab4-0ab88cf709af",
+          "aws:cloudformation:stack-name": "StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-1ecdb729-8d5c-4c6b-b405-23aba444aead"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_9"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-23 16:12:14.043000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:delete-name-tags-eu-west-2-a51b-dmdd7:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "delete-name-tags-eu-west-2-a51b-dmdd7",
+        "functionTags": {
+          "QuickSetupDefinitionID": "dmdd7",
+          "QuickSetupDocument": "AWSQuickSetupType-PatchPolicy",
+          "QuickSetupDocumentVersionName": "2.1",
+          "QuickSetupManagerAccount": "111111111111",
+          "QuickSetupManagerArn": "arn:aws:ssm-quicksetup:us-west-2:111111111111:configuration-manager/261436fc-19f4-435d-8876-4d0ce76f6412",
+          "QuickSetupManagerID": "261436fc-19f4-435d-8876-4d0ce76f6412",
+          "QuickSetupManagerRegion": "us-west-2",
+          "aws:cloudformation:logical-id": "NameTagDeleteLambda",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/StackSet-AWS-QuickSetup-PatchPolicy-TA-dmdd7-dcb061c8-6757-4b13-9e1d-ddd8ddb73613/48068370-5044-11f0-a51b-0aab9502631d",
+          "aws:cloudformation:stack-name": "StackSet-AWS-QuickSetup-PatchPolicy-TA-dmdd7-dcb061c8-6757-4b13-9e1d-ddd8ddb73613"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-23 16:11:57.776000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:delete-name-tags-eu-west-2-a51b-dmdd7:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "delete-name-tags-eu-west-2-a51b-dmdd7",
+        "functionTags": {
+          "QuickSetupDefinitionID": "dmdd7",
+          "QuickSetupDocument": "AWSQuickSetupType-PatchPolicy",
+          "QuickSetupDocumentVersionName": "2.1",
+          "QuickSetupManagerAccount": "111111111111",
+          "QuickSetupManagerArn": "arn:aws:ssm-quicksetup:us-west-2:111111111111:configuration-manager/261436fc-19f4-435d-8876-4d0ce76f6412",
+          "QuickSetupManagerID": "261436fc-19f4-435d-8876-4d0ce76f6412",
+          "QuickSetupManagerRegion": "us-west-2",
+          "aws:cloudformation:logical-id": "NameTagDeleteLambda",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/StackSet-AWS-QuickSetup-PatchPolicy-TA-dmdd7-dcb061c8-6757-4b13-9e1d-ddd8ddb73613/48068370-5044-11f0-a51b-0aab9502631d",
+          "aws:cloudformation:stack-name": "StackSet-AWS-QuickSetup-PatchPolicy-TA-dmdd7-dcb061c8-6757-4b13-9e1d-ddd8ddb73613"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-17 19:29:22.708000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example--StaticAssetsDeployer-y7lp5RNafk7y:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example--StaticAssetsDeployer-y7lp5RNafk7y",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "StaticAssetsDeployer",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-StaticAssetsDeployment-1AZRB9SLWQBQ3/19e14fd0-6ee4-11ef-9119-069ba6b6834f",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-StaticAssetsDeployment-1AZRB9SLWQBQ3",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/static-assets-deployment",
+          "serverlessrepo:semanticVersion": "0.4.1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SCAN_ELIGIBILITY_EXPIRED",
+      "statusCode": "INACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-03-18 21:55:18.095000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example--StaticAssetsDeployer-y7lp5RNafk7y:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example--StaticAssetsDeployer-y7lp5RNafk7y",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "StaticAssetsDeployer",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-StaticAssetsDeployment-1AZRB9SLWQBQ3/19e14fd0-6ee4-11ef-9119-069ba6b6834f",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-StaticAssetsDeployment-1AZRB9SLWQBQ3",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/static-assets-deployment",
+          "serverlessrepo:semanticVersion": "0.4.1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SCAN_ELIGIBILITY_EXPIRED",
+      "statusCode": "INACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-17 19:07:20.465000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-LWPApp-HE08mNqoTqJf:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example-LWPApp-HE08mNqoTqJf",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "LWPApp",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example/099715b0-6ee4-11ef-be4b-068367825f21",
+          "aws:cloudformation:stack-name": "serverlessrepo-example",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:381492274506:applications/example",
+          "serverlessrepo:semanticVersion": "1.4.2"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-05-14 21:25:48.131000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-LWPApp-HE08mNqoTqJf:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example-LWPApp-HE08mNqoTqJf",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "LWPApp",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example/099715b0-6ee4-11ef-be4b-068367825f21",
+          "aws:cloudformation:stack-name": "serverlessrepo-example",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:381492274506:applications/example",
+          "serverlessrepo:semanticVersion": "1.4.2"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-17 19:06:57.284000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:baz-app-SessionAbacAuthorizer-EAPMa0FKRK8Z:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "baz-app-SessionAbacAuthorizer-EAPMa0FKRK8Z",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "SessionAbacAuthorizer",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31/2e7b12e0-2633-11ef-888c-0ae9449618bb",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/authy",
+          "serverlessrepo:semanticVersion": "0.3.1"
+        },
+        "layers": [
+          "arn:aws:lambda:eu-west-2:444444444444:layer:auth-lib:2",
+          "arn:aws:lambda:eu-west-2:444444444444:layer:PDPLayer:11"
+        ],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-11 06:46:40.410000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:baz-app-SessionAbacAuthorizer-EAPMa0FKRK8Z:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "baz-app-SessionAbacAuthorizer-EAPMa0FKRK8Z",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "SessionAbacAuthorizer",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31/2e7b12e0-2633-11ef-888c-0ae9449618bb",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/authy",
+          "serverlessrepo:semanticVersion": "0.3.1"
+        },
+        "layers": [
+          "arn:aws:lambda:eu-west-2:444444444444:layer:auth-lib:2",
+          "arn:aws:lambda:eu-west-2:444444444444:layer:PDPLayer:11"
+        ],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-17 19:06:35.274000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:baz-app-OriginKeyAuthorizer-Zsu2Any5NRGN:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "baz-app-OriginKeyAuthorizer-Zsu2Any5NRGN",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "OriginKeyAuthorizer",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Auth-OriginKeyAuthorizer-1JDYOH3NQAJJ/333abdd0-2633-11ef-902c-02a60bc34a53",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Auth-OriginKeyAuthorizer-1JDYOH3NQAJJ",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/origin-key-authorizer",
+          "serverlessrepo:semanticVersion": "0.1.1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-11 06:46:44.409000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:baz-app-OriginKeyAuthorizer-Zsu2Any5NRGN:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "baz-app-OriginKeyAuthorizer-Zsu2Any5NRGN",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "OriginKeyAuthorizer",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Auth-OriginKeyAuthorizer-1JDYOH3NQAJJ/333abdd0-2633-11ef-902c-02a60bc34a53",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Auth-OriginKeyAuthorizer-1JDYOH3NQAJJ",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/origin-key-authorizer",
+          "serverlessrepo:semanticVersion": "0.1.1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-17 19:08:02.368000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:foo-appQueueProcessor-qeucMx1bd2kL:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "foo-appQueueProcessor-qeucMx1bd2kL",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "QueueProcessor",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Invoices-10CGHESR62VIL/66f90c80-2633-11ef-b9ca-069c5fa50ce1",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Invoices-10CGHESR62VIL",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/serverless-invoices",
+          "serverlessrepo:semanticVersion": "0.4.1"
+        },
+        "layers": [
+          "arn:aws:lambda:eu-west-2:444444444444:layer:InvoiceConfigLayer:13"
+        ],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-07-08 21:26:11.682000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:foo-appQueueProcessor-qeucMx1bd2kL:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "foo-appQueueProcessor-qeucMx1bd2kL",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "QueueProcessor",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Invoices-10CGHESR62VIL/66f90c80-2633-11ef-b9ca-069c5fa50ce1",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Invoices-10CGHESR62VIL",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/serverless-invoices",
+          "serverlessrepo:semanticVersion": "0.4.1"
+        },
+        "layers": [
+          "arn:aws:lambda:eu-west-2:444444444444:layer:InvoiceConfigLayer:13"
+        ],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-17 11:24:23.191000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "GetInvoice",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Invoices-10CGHESR62VIL/66f90c80-2633-11ef-b9ca-069c5fa50ce1",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Invoices-10CGHESR62VIL",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/serverless-invoices",
+          "serverlessrepo:semanticVersion": "0.4.1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-11 06:46:44.358000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "GetInvoice",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Invoices-10CGHESR62VIL/66f90c80-2633-11ef-b9ca-069c5fa50ce1",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Invoices-10CGHESR62VIL",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/serverless-invoices",
+          "serverlessrepo:semanticVersion": "0.4.1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-17 19:06:54.766000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bookin-Logout-tMTyEk7nqrSK:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example-Bookin-Logout-tMTyEk7nqrSK",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "Logout",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31/2e7b12e0-2633-11ef-888c-0ae9449618bb",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/authy",
+          "serverlessrepo:semanticVersion": "0.3.1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SCAN_ELIGIBILITY_EXPIRED",
+      "statusCode": "INACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-03-18 21:55:16.008000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bookin-Logout-tMTyEk7nqrSK:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example-Bookin-Logout-tMTyEk7nqrSK",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "Logout",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31/2e7b12e0-2633-11ef-888c-0ae9449618bb",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/authy",
+          "serverlessrepo:semanticVersion": "0.3.1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SCAN_ELIGIBILITY_EXPIRED",
+      "statusCode": "INACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-17 19:06:45.651000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Booking-Login-1NtMfzNtEyta:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example-Booking-Login-1NtMfzNtEyta",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "Login",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31/2e7b12e0-2633-11ef-888c-0ae9449618bb",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/authy",
+          "serverlessrepo:semanticVersion": "0.3.1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-19 22:46:05.999000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Booking-Login-1NtMfzNtEyta:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example-Booking-Login-1NtMfzNtEyta",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "Login",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31/2e7b12e0-2633-11ef-888c-0ae9449618bb",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/authy",
+          "serverlessrepo:semanticVersion": "0.3.1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-17 19:07:06.419000+00:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bookingd-OIDC-iwFxCSgWHmxU:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example-Bookingd-OIDC-iwFxCSgWHmxU",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "OIDC",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31/2e7b12e0-2633-11ef-888c-0ae9449618bb",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/authy",
+          "serverlessrepo:semanticVersion": "0.3.1"
+        },
+        "layers": [
+          "arn:aws:lambda:eu-west-2:444444444444:layer:auth-lib:2"
+        ],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-19 22:48:12.755000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:444444444444:function:serverlessrepo-example-Bookingd-OIDC-iwFxCSgWHmxU:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "serverlessrepo-example-Bookingd-OIDC-iwFxCSgWHmxU",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "OIDC",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:444444444444:stack/serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31/2e7b12e0-2633-11ef-888c-0ae9449618bb",
+          "aws:cloudformation:stack-name": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31",
+          "lambda:createdBy": "SAM",
+          "serverlessrepo:applicationId": "arn:aws:serverlessrepo:eu-west-2:211125310871:applications/authy",
+          "serverlessrepo:semanticVersion": "0.3.1"
+        },
+        "layers": [
+          "arn:aws:lambda:eu-west-2:444444444444:layer:auth-lib:2"
+        ],
+        "runtime": "PYTHON_3_12"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  }
+]

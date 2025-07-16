@@ -1,0 +1,514 @@
+[
+  {
+    "FunctionName": "foo-pull-reservations",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:foo-pull-reservations",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::111111111111:role/foo-web-task-runner",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 595,
+    "Description": "",
+    "Timeout": 180,
+    "MemorySize": 128,
+    "LastModified": "2025-01-08T13:48:51.000+0000",
+    "CodeSha256": "oCEa2ynMSHAWnJODgKeZaXwaYXeT5VKkijwHuaEk5KQ=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "7bead548-96cf-41ba-955b-20957f13abae",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/foo-pull-reservations"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "AWSEvents_foo-pullreservations_Id700d7a4e-f723-4382-b719-c346a91c62c2",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:us-west-2:111111111111:function:foo-pull-reservations",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:events:us-west-2:111111111111:rule/foo-pullreservations"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "foo-send-mail",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:foo-send-mail",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::111111111111:role/service-role/foo-send-mail-role-45gj37p3",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 1514,
+    "Description": "",
+    "Timeout": 900,
+    "MemorySize": 128,
+    "LastModified": "2022-05-02T13:41:35.000+0000",
+    "CodeSha256": "tQIAhgD93T2pHJ4ZoTe2+SMMtALPg+F6kGcnS2tD9t4=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "a88b8fb3-9807-4b80-8af4-d8e2e51aea9a",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/foo-send-mail"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "foo-event-handler",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:foo-event-handler",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::111111111111:role/service-role/foo-event-handler-role-b1zcwvak",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 1305,
+    "Description": "",
+    "Timeout": 30,
+    "MemorySize": 128,
+    "LastModified": "2022-05-01T19:44:36.000+0000",
+    "CodeSha256": "R0LKbjtW9ogy3V8vSpRWZD783arHFw+XVhHC1+QyMeU=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "2389bee4-c325-4f69-a6cd-95eb474c2cf7",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/foo-event-handler"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "foo-email-forward-booking-reports",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:foo-email-forward-booking-reports",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::111111111111:role/foo-web-task-runner",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 602,
+    "Description": "",
+    "Timeout": 900,
+    "MemorySize": 128,
+    "LastModified": "2025-05-31T16:37:34.000+0000",
+    "CodeSha256": "yKdkVSWr+p+4jHLc5j6hr4zu4wdGwSdNfpWchkyIkxI=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "1a0effd4-bd8e-4596-9e9e-eccaecd7cb08",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/foo-email-forward-booking-reports"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "AWSEvents_foo-email-forward-booking-reports_Id367ff923-5a62-4fd1-b6f9-5544d9e0eadf",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:us-west-2:111111111111:function:foo-email-forward-booking-reports",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:events:us-west-2:111111111111:rule/foo-email-forward-booking-reports"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "foo-send-balance-due-reminders",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:foo-send-balance-due-reminders",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::111111111111:role/foo-web-task-runner",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 594,
+    "Description": "",
+    "Timeout": 600,
+    "MemorySize": 128,
+    "LastModified": "2022-07-09T13:00:25.000+0000",
+    "CodeSha256": "PHXLD5VQx5E3udeknyqW7J4a1CqgcjykQmMgFQfJpGw=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "56233bcb-12ae-4856-bca9-e7b8ddb48177",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/foo-send-balance-due-reminders"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "AWSEvents_foo-send-balance-due-reminders_Id8a9aefa9-1877-4a68-97da-f5c9cf6f87fa",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:us-west-2:111111111111:function:foo-send-balance-due-reminders",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:events:us-west-2:111111111111:rule/foo-send-balance-due-reminders"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "check-prices",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:check-prices",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::111111111111:role/foo-web-task-runner",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 583,
+    "Description": "",
+    "Timeout": 180,
+    "MemorySize": 128,
+    "LastModified": "2022-07-09T12:55:37.000+0000",
+    "CodeSha256": "ulQPEBHdWiExJW4Iv9+4joy7vxHrK+XkgFC9BG9coWI=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "f3f13878-c13c-452a-9b4d-10f634fd0637",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/check-prices"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "AWSEvents_foo-check-prices_Id611b2f13-9bff-4773-87ec-9a25a77bbb28",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:us-west-2:111111111111:function:check-prices",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:events:us-west-2:111111111111:rule/foo-check-prices"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "foo-generate-owner-invoices",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:foo-generate-owner-invoices",
+    "Runtime": "python3.13",
+    "Role": "arn:aws:iam::111111111111:role/foo-web-task-runner",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 585,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2024-12-01T11:27:15.000+0000",
+    "CodeSha256": "6LQaj4ndy1TrvxvrP+SnxUsWoUCrktc8GJ5yHalISrs=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "5cb25140-91bb-4996-b888-744ed7a03939",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/foo-generate-owner-invoices"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "AWSEvents_foo-generate-owner-invoices_Id5ab7fa9e-d8c1-42a7-b23d-1ac0ebf170c0",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:us-west-2:111111111111:function:foo-generate-owner-invoices",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:events:us-west-2:111111111111:rule/foo-generate-owner-invoices"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "foo-email-newsletter",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:foo-email-newsletter",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::111111111111:role/foo-web-task-runner",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 585,
+    "Description": "",
+    "Timeout": 900,
+    "MemorySize": 128,
+    "LastModified": "2022-07-09T13:01:17.000+0000",
+    "CodeSha256": "H5PhC5TUmGnslJKZuMFUVxjP7lmTzni6XZASrupAa5k=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "983bda60-f630-42cf-92f3-22752da05704",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/foo-email-newsletter"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "AWSEvents_foo-send-newsletter_Idbf2f1911-855d-49d1-9eb4-138aa4ab9a49",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:us-west-2:111111111111:function:foo-email-newsletter",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:events:us-west-2:111111111111:rule/foo-send-newsletter"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "foo-update-rentals-united-cache",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:foo-update-rentals-united-cache",
+    "Runtime": "python3.9",
+    "Role": "arn:aws:iam::111111111111:role/foo-web-task-runner",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 588,
+    "Description": "",
+    "Timeout": 900,
+    "MemorySize": 128,
+    "LastModified": "2022-07-09T13:08:06.000+0000",
+    "CodeSha256": "c8NZqH+LwutVMDKRYAfhefLe69eeK/rG2JS4DHcRSe8=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "52f54d6a-6216-428c-9f3e-28f050c0316c",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/foo-update-rentals-united-cache"
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "default",
+      "Statement": [
+        {
+          "Sid": "AWSEvents_foo-update-ru-cache_Idf2bc70a9-7c83-4986-9195-b6c06a9d12a2",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "lambda:InvokeFunction",
+          "Resource": "arn:aws:lambda:us-west-2:111111111111:function:foo-update-rentals-united-cache",
+          "Condition": {
+            "ArnLike": {
+              "AWS:SourceArn": "arn:aws:events:us-west-2:111111111111:rule/foo-update-ru-cache"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "FunctionName": "baseline-overrides-ad92-dmdd7",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:baseline-overrides-ad92-dmdd7",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::111111111111:role/AWS-QuickSetup-BaselineOverrides-LambdaRole-dmdd7",
+    "Handler": "index.lambda_handler",
+    "CodeSize": 4085,
+    "Description": "Lambda function that responds to Delete and Create events from CloudFormation or performs baseline remediation when triggered by the State Manager Association executing the Automation Document",
+    "Timeout": 300,
+    "MemorySize": 128,
+    "LastModified": "2025-06-23T15:09:12.056+0000",
+    "CodeSha256": "Hu88Vk8+mY7KdPK/eHJA5wj5n1ogxRKyzgai/kR9U+Y=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "REGION": "us-west-2"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "84b97bd5-8c34-4bfd-895f-9bb7b597e2a8",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/baseline-overrides-ad92-dmdd7"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "foo-email-caretaker-forward-booking-reports",
+    "FunctionArn": "arn:aws:lambda:us-west-2:111111111111:function:foo-email-caretaker-forward-booking-reports",
+    "Runtime": "python3.13",
+    "Role": "arn:aws:iam::111111111111:role/foo-web-task-runner",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 607,
+    "Description": "",
+    "Timeout": 900,
+    "MemorySize": 128,
+    "LastModified": "2025-05-31T16:35:38.000+0000",
+    "CodeSha256": "96d9KpdfKffRnIruBTXzY6RjfNLO3YVUUNUjJVfcklE=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+      "Mode": "PassThrough"
+    },
+    "RevisionId": "9dd1995b-d6f5-475d-b929-aea8f86ab3af",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/foo-email-caretaker-forward-booking-reports"
+    },
+    "Policy": null
+  }
+]

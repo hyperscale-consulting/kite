@@ -1,0 +1,387 @@
+[
+  {
+    "VpcEndpointId": "vpce-07d0c2f2041006909",
+    "VpcEndpointType": "Interface",
+    "VpcId": "vpc-57696132",
+    "ServiceName": "com.amazonaws.us-west-2.secretsmanager",
+    "State": "available",
+    "PolicyDocument": "{\n  \"Statement\": [\n    {\n      \"Action\": \"*\", \n      \"Effect\": \"Allow\", \n      \"Principal\": \"*\", \n      \"Resource\": \"*\"\n    }\n  ]\n}",
+    "RouteTableIds": [],
+    "SubnetIds": [
+      "subnet-0ae3f1866d2ab80e5",
+      "subnet-0bac249b81289124a"
+    ],
+    "Groups": [
+      {
+        "GroupId": "sg-0817dbd6b32cd2a25",
+        "GroupName": "aws-https-interface-sg"
+      }
+    ],
+    "IpAddressType": "ipv4",
+    "DnsOptions": {
+      "DnsRecordIpType": "ipv4"
+    },
+    "PrivateDnsEnabled": true,
+    "RequesterManaged": false,
+    "NetworkInterfaceIds": [
+      "eni-0cd902e15eecc5489",
+      "eni-0c57c5e69ced055f4"
+    ],
+    "DnsEntries": [
+      {
+        "DnsName": "vpce-07d0c2f2041006909-t4ceubdh.secretsmanager.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-07d0c2f2041006909-t4ceubdh-us-west-2a.secretsmanager.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-07d0c2f2041006909-t4ceubdh-us-west-2b.secretsmanager.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "secretsmanager.us-west-2.amazonaws.com",
+        "HostedZoneId": "Z08033263Q9TE8365WLQC"
+      }
+    ],
+    "CreationTimestamp": "2022-04-22 15:37:05.536000+00:00",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-secrets-endpoint"
+      }
+    ],
+    "OwnerId": "111111111111",
+    "ServiceRegion": "us-west-2"
+  },
+  {
+    "VpcEndpointId": "vpce-0a7ac78b00f92d97c",
+    "VpcEndpointType": "Interface",
+    "VpcId": "vpc-57696132",
+    "ServiceName": "com.amazonaws.us-west-2.codedeploy",
+    "State": "available",
+    "PolicyDocument": "{\n  \"Statement\": [\n    {\n      \"Action\": \"*\", \n      \"Effect\": \"Allow\", \n      \"Principal\": \"*\", \n      \"Resource\": \"*\"\n    }\n  ]\n}",
+    "RouteTableIds": [],
+    "SubnetIds": [
+      "subnet-0ae3f1866d2ab80e5",
+      "subnet-0bac249b81289124a"
+    ],
+    "Groups": [
+      {
+        "GroupId": "sg-0817dbd6b32cd2a25",
+        "GroupName": "aws-https-interface-sg"
+      }
+    ],
+    "IpAddressType": "ipv4",
+    "DnsOptions": {
+      "DnsRecordIpType": "ipv4"
+    },
+    "PrivateDnsEnabled": true,
+    "RequesterManaged": false,
+    "NetworkInterfaceIds": [
+      "eni-084e3a84a13dbacf5",
+      "eni-0b4edda20a3596c28"
+    ],
+    "DnsEntries": [
+      {
+        "DnsName": "vpce-0a7ac78b00f92d97c-63b09nfq.codedeploy.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-0a7ac78b00f92d97c-63b09nfq-us-west-2b.codedeploy.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-0a7ac78b00f92d97c-63b09nfq-us-west-2a.codedeploy.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "codedeploy.us-west-2.amazonaws.com",
+        "HostedZoneId": "Z03747891ZFK2051M3446"
+      },
+      {
+        "DnsName": "codedeploy.us-west-2.api.aws",
+        "HostedZoneId": "Z03499502UY2CDI5DA0LA"
+      }
+    ],
+    "CreationTimestamp": "2022-04-23 15:09:52.719000+00:00",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-codedeploy-endpoint"
+      }
+    ],
+    "OwnerId": "111111111111",
+    "ServiceRegion": "us-west-2"
+  },
+  {
+    "VpcEndpointId": "vpce-00e336e6e4750b14a",
+    "VpcEndpointType": "Interface",
+    "VpcId": "vpc-57696132",
+    "ServiceName": "com.amazonaws.us-west-2.ecr.dkr",
+    "State": "available",
+    "PolicyDocument": "{\n  \"Statement\": [\n    {\n      \"Action\": \"*\", \n      \"Effect\": \"Allow\", \n      \"Principal\": \"*\", \n      \"Resource\": \"*\"\n    }\n  ]\n}",
+    "RouteTableIds": [],
+    "SubnetIds": [
+      "subnet-0ae3f1866d2ab80e5",
+      "subnet-0bac249b81289124a"
+    ],
+    "Groups": [
+      {
+        "GroupId": "sg-0817dbd6b32cd2a25",
+        "GroupName": "aws-https-interface-sg"
+      }
+    ],
+    "IpAddressType": "ipv4",
+    "DnsOptions": {
+      "DnsRecordIpType": "ipv4"
+    },
+    "PrivateDnsEnabled": true,
+    "RequesterManaged": false,
+    "NetworkInterfaceIds": [
+      "eni-043dc63c38a5b557f",
+      "eni-0e956c5fce1dcbc5e"
+    ],
+    "DnsEntries": [
+      {
+        "DnsName": "vpce-00e336e6e4750b14a-dbsoqelt.dkr.ecr.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-00e336e6e4750b14a-dbsoqelt-us-west-2a.dkr.ecr.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-00e336e6e4750b14a-dbsoqelt-us-west-2b.dkr.ecr.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "dkr.ecr.us-west-2.amazonaws.com",
+        "HostedZoneId": "Z03949541E2N9I4UKW24C"
+      },
+      {
+        "DnsName": "*.dkr.ecr.us-west-2.amazonaws.com",
+        "HostedZoneId": "Z03949541E2N9I4UKW24C"
+      },
+      {
+        "DnsName": "dkr-ecr.us-west-2.on.aws",
+        "HostedZoneId": "Z0886860SOWNY6Z63RES"
+      },
+      {
+        "DnsName": "*.dkr-ecr.us-west-2.on.aws",
+        "HostedZoneId": "Z0886860SOWNY6Z63RES"
+      }
+    ],
+    "CreationTimestamp": "2022-05-07 21:25:51.998000+00:00",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-ecr-dkr-endpoint"
+      }
+    ],
+    "OwnerId": "111111111111",
+    "ServiceRegion": "us-west-2"
+  },
+  {
+    "VpcEndpointId": "vpce-017718c186a09c3cc",
+    "VpcEndpointType": "Gateway",
+    "VpcId": "vpc-57696132",
+    "ServiceName": "com.amazonaws.us-west-2.s3",
+    "State": "available",
+    "PolicyDocument": "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":\"*\",\"Action\":\"*\",\"Resource\":\"*\"}]}",
+    "RouteTableIds": [
+      "rtb-04d733849afac6744",
+      "rtb-0087edd807513036c"
+    ],
+    "SubnetIds": [],
+    "Groups": [],
+    "PrivateDnsEnabled": false,
+    "RequesterManaged": false,
+    "NetworkInterfaceIds": [],
+    "DnsEntries": [],
+    "CreationTimestamp": "2022-10-09 13:23:11+00:00",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-s3-endpoint"
+      }
+    ],
+    "OwnerId": "111111111111",
+    "ServiceRegion": "us-west-2"
+  },
+  {
+    "VpcEndpointId": "vpce-07dce27a9a262dba2",
+    "VpcEndpointType": "Interface",
+    "VpcId": "vpc-57696132",
+    "ServiceName": "com.amazonaws.us-west-2.logs",
+    "State": "available",
+    "PolicyDocument": "{\n  \"Statement\": [\n    {\n      \"Action\": \"*\", \n      \"Effect\": \"Allow\", \n      \"Principal\": \"*\", \n      \"Resource\": \"*\"\n    }\n  ]\n}",
+    "RouteTableIds": [],
+    "SubnetIds": [
+      "subnet-0ae3f1866d2ab80e5",
+      "subnet-0bac249b81289124a"
+    ],
+    "Groups": [
+      {
+        "GroupId": "sg-0817dbd6b32cd2a25",
+        "GroupName": "aws-https-interface-sg"
+      }
+    ],
+    "IpAddressType": "ipv4",
+    "DnsOptions": {
+      "DnsRecordIpType": "ipv4"
+    },
+    "PrivateDnsEnabled": true,
+    "RequesterManaged": false,
+    "NetworkInterfaceIds": [
+      "eni-0eaf9bbeb9435240d",
+      "eni-033e5e75dc79767f9"
+    ],
+    "DnsEntries": [
+      {
+        "DnsName": "vpce-07dce27a9a262dba2-m5alsaqm.logs.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-07dce27a9a262dba2-m5alsaqm-us-west-2a.logs.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-07dce27a9a262dba2-m5alsaqm-us-west-2b.logs.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "logs.us-west-2.amazonaws.com",
+        "HostedZoneId": "Z028418962FJ2FC7WRAG"
+      },
+      {
+        "DnsName": "streaming-logs.us-west-2.api.aws",
+        "HostedZoneId": "Z10376563GTHOM19NT3P2"
+      },
+      {
+        "DnsName": "logs.us-west-2.api.aws",
+        "HostedZoneId": "Z00612033U9NU81UMTXHG"
+      },
+      {
+        "DnsName": "streaming-logs.us-west-2.amazonaws.com",
+        "HostedZoneId": "Z10125802SQ3SEWU7JQ7Z"
+      }
+    ],
+    "CreationTimestamp": "2022-10-20 08:25:58.078000+00:00",
+    "Tags": [],
+    "OwnerId": "111111111111",
+    "ServiceRegion": "us-west-2"
+  },
+  {
+    "VpcEndpointId": "vpce-0ef570bda3eccac14",
+    "VpcEndpointType": "Interface",
+    "VpcId": "vpc-57696132",
+    "ServiceName": "com.amazonaws.us-west-2.ecr.api",
+    "State": "available",
+    "PolicyDocument": "{\n  \"Statement\": [\n    {\n      \"Action\": \"*\", \n      \"Effect\": \"Allow\", \n      \"Principal\": \"*\", \n      \"Resource\": \"*\"\n    }\n  ]\n}",
+    "RouteTableIds": [],
+    "SubnetIds": [
+      "subnet-0ae3f1866d2ab80e5",
+      "subnet-0bac249b81289124a"
+    ],
+    "Groups": [
+      {
+        "GroupId": "sg-0817dbd6b32cd2a25",
+        "GroupName": "aws-https-interface-sg"
+      }
+    ],
+    "IpAddressType": "ipv4",
+    "DnsOptions": {
+      "DnsRecordIpType": "ipv4"
+    },
+    "PrivateDnsEnabled": true,
+    "RequesterManaged": false,
+    "NetworkInterfaceIds": [
+      "eni-09ae33a00e341e955",
+      "eni-048e5a07b42d18120"
+    ],
+    "DnsEntries": [
+      {
+        "DnsName": "vpce-0ef570bda3eccac14-m685s5y3.api.ecr.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-0ef570bda3eccac14-m685s5y3-us-west-2b.api.ecr.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-0ef570bda3eccac14-m685s5y3-us-west-2a.api.ecr.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "api.ecr.us-west-2.amazonaws.com",
+        "HostedZoneId": "Z03391333FBCRCN5UYI8S"
+      },
+      {
+        "DnsName": "ecr.us-west-2.api.aws",
+        "HostedZoneId": "Z01638133H8Z4GSFHZ1K7"
+      }
+    ],
+    "CreationTimestamp": "2022-10-20 08:25:58.877000+00:00",
+    "Tags": [],
+    "OwnerId": "111111111111",
+    "ServiceRegion": "us-west-2"
+  },
+  {
+    "VpcEndpointId": "vpce-0356a8db46d63e217",
+    "VpcEndpointType": "Interface",
+    "VpcId": "vpc-57696132",
+    "ServiceName": "com.amazonaws.us-west-2.guardduty-data",
+    "State": "available",
+    "PolicyDocument": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"*\",\"Resource\":\"*\",\"Effect\":\"Allow\",\"Principal\":\"*\"},{\"Condition\":{\"StringNotEquals\":{\"aws:PrincipalAccount\":\"111111111111\"}},\"Action\":\"*\",\"Resource\":\"*\",\"Effect\":\"Deny\",\"Principal\":\"*\"}]}",
+    "RouteTableIds": [],
+    "SubnetIds": [
+      "subnet-0ae3f1866d2ab80e5",
+      "subnet-0bac249b81289124a"
+    ],
+    "Groups": [
+      {
+        "GroupId": "sg-031b924151843ffa7",
+        "GroupName": "GuardDutyManagedSecurityGroup-vpc-57696132"
+      }
+    ],
+    "IpAddressType": "ipv4",
+    "DnsOptions": {
+      "DnsRecordIpType": "ipv4"
+    },
+    "PrivateDnsEnabled": true,
+    "RequesterManaged": false,
+    "NetworkInterfaceIds": [
+      "eni-0536f6c58744e7035",
+      "eni-060c43dec353c2db6"
+    ],
+    "DnsEntries": [
+      {
+        "DnsName": "vpce-0356a8db46d63e217-73aueyl9.guardduty-data.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-0356a8db46d63e217-73aueyl9-us-west-2b.guardduty-data.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "vpce-0356a8db46d63e217-73aueyl9-us-west-2a.guardduty-data.us-west-2.vpce.amazonaws.com",
+        "HostedZoneId": "Z1YSA3EXCYUU9Z"
+      },
+      {
+        "DnsName": "guardduty-data.us-west-2.amazonaws.com",
+        "HostedZoneId": "Z096524927LAJSGCFG1XG"
+      }
+    ],
+    "CreationTimestamp": "2025-02-13 20:33:40.839000+00:00",
+    "Tags": [
+      {
+        "Key": "GuardDutyManaged",
+        "Value": "true"
+      }
+    ],
+    "OwnerId": "111111111111",
+    "ServiceRegion": "us-west-2"
+  }
+]

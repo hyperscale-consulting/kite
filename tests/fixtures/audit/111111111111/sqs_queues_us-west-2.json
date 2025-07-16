@@ -1,0 +1,26 @@
+[
+  {
+    "QueueUrl": "https://sqs.us-west-2.amazonaws.com/111111111111/foo-events",
+    "QueueArn": "arn:aws:sqs:us-west-2:111111111111:foo-events",
+    "Policy": null,
+    "Region": "us-west-2"
+  },
+  {
+    "QueueUrl": "https://sqs.us-west-2.amazonaws.com/111111111111/foo-events-dlq",
+    "QueueArn": "arn:aws:sqs:us-west-2:111111111111:foo-events-dlq",
+    "Policy": null,
+    "Region": "us-west-2"
+  },
+  {
+    "QueueUrl": "https://sqs.us-west-2.amazonaws.com/111111111111/foo-mail-dlq.fifo",
+    "QueueArn": "arn:aws:sqs:us-west-2:111111111111:foo-mail-dlq.fifo",
+    "Policy": null,
+    "Region": "us-west-2"
+  },
+  {
+    "QueueUrl": "https://sqs.us-west-2.amazonaws.com/111111111111/foo-mail-queue.fifo",
+    "QueueArn": "arn:aws:sqs:us-west-2:111111111111:foo-mail-queue.fifo",
+    "Policy": null,
+    "Region": "us-west-2"
+  }
+]

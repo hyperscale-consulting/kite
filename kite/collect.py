@@ -1,8 +1,8 @@
 import concurrent.futures
-from typing import Callable
+from collections.abc import Callable
 
-from botocore.exceptions import ClientError
 from boto3 import Session
+from botocore.exceptions import ClientError
 from rich.console import Console
 
 from kite.config import Config
@@ -17,6 +17,8 @@ from kite.data import save_backup_vaults
 from kite.data import save_bucket_metadata
 from kite.data import save_cloudfront_distributions
 from kite.data import save_cloudfront_origin_access_identities
+from kite.data import save_cloudfront_waf_logging_configurations
+from kite.data import save_cloudfront_web_acls
 from kite.data import save_cloudtrail_trails
 from kite.data import save_cognito_user_pools
 from kite.data import save_config_compliance_by_rule
@@ -54,6 +56,9 @@ from kite.data import save_organization
 from kite.data import save_organization_features
 from kite.data import save_password_policy
 from kite.data import save_rds_instances
+from kite.data import save_redshift_clusters
+from kite.data import save_regional_waf_logging_configurations
+from kite.data import save_regional_web_acls
 from kite.data import save_roles
 from kite.data import save_route53resolver_firewall_domain_lists
 from kite.data import save_route53resolver_firewall_rule_group_associations
@@ -61,6 +66,7 @@ from kite.data import save_route53resolver_firewall_rule_groups
 from kite.data import save_route53resolver_query_log_config_associations
 from kite.data import save_route53resolver_query_log_configs
 from kite.data import save_rtbs
+from kite.data import save_sagemaker_notebook_instances
 from kite.data import save_saml_providers
 from kite.data import save_secrets
 from kite.data import save_security_groups
@@ -73,12 +79,6 @@ from kite.data import save_virtual_mfa_devices
 from kite.data import save_vpc_endpoints
 from kite.data import save_vpc_peering_connections
 from kite.data import save_vpcs
-from kite.data import save_regional_web_acls
-from kite.data import save_regional_waf_logging_configurations
-from kite.data import save_cloudfront_web_acls
-from kite.data import save_cloudfront_waf_logging_configurations
-from kite.data import save_redshift_clusters
-from kite.data import save_sagemaker_notebook_instances
 from kite.helpers import assume_role
 from kite.helpers import get_account_ids_in_scope
 

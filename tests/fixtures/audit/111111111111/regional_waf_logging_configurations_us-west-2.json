@@ -1,0 +1,13 @@
+[
+  {
+    "ResourceArn": "arn:aws:wafv2:us-west-2:111111111111:regional/webacl/foo-waf/18f65a19-a933-4703-814b-f7ad05f67973",
+    "LogDestinationConfigs": [
+      "arn:aws:logs:us-west-2:111111111111:log-group:aws-waf-logs-foo"
+    ],
+    "ManagedByFirewallManager": false,
+    "LogType": "WAF_LOGS",
+    "LogScope": "CUSTOMER",
+    "Region": "us-west-2",
+    "Scope": "REGIONAL"
+  }
+]

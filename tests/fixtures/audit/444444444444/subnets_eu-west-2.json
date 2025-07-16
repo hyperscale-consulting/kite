@@ -1,0 +1,146 @@
+[
+  {
+    "AvailabilityZoneId": "euw2-az2",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "444444444444",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "Tags": [
+      {
+        "Key": "aws:cloudformation:stack-name",
+        "Value": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e"
+      },
+      {
+        "Key": "Name",
+        "Value": "aws-controltower-PrivateSubnet1A"
+      },
+      {
+        "Key": "Network",
+        "Value": "Private"
+      },
+      {
+        "Key": "aws:cloudformation:stack-id",
+        "Value": "arn:aws:cloudformation:eu-west-2:444444444444:stack/StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e/3e62b110-e91e-11ee-b09a-02d0c641c793"
+      },
+      {
+        "Key": "aws:cloudformation:logical-id",
+        "Value": "PrivateSubnet1A"
+      }
+    ],
+    "SubnetArn": "arn:aws:ec2:eu-west-2:444444444444:subnet/subnet-01e46c660a43abf20",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-01e46c660a43abf20",
+    "State": "available",
+    "VpcId": "vpc-0484c7295f194303c",
+    "CidrBlock": "172.31.64.0/20",
+    "AvailableIpAddressCount": 4091,
+    "AvailabilityZone": "eu-west-2a",
+    "DefaultForAz": false,
+    "MapPublicIpOnLaunch": false
+  },
+  {
+    "AvailabilityZoneId": "euw2-az1",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "444444444444",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "Tags": [
+      {
+        "Key": "Network",
+        "Value": "Private"
+      },
+      {
+        "Key": "aws:cloudformation:stack-id",
+        "Value": "arn:aws:cloudformation:eu-west-2:444444444444:stack/StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e/3e62b110-e91e-11ee-b09a-02d0c641c793"
+      },
+      {
+        "Key": "Name",
+        "Value": "aws-controltower-PrivateSubnet3A"
+      },
+      {
+        "Key": "aws:cloudformation:logical-id",
+        "Value": "PrivateSubnet3A"
+      },
+      {
+        "Key": "aws:cloudformation:stack-name",
+        "Value": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e"
+      }
+    ],
+    "SubnetArn": "arn:aws:ec2:eu-west-2:444444444444:subnet/subnet-06ebc33e00df7a462",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-06ebc33e00df7a462",
+    "State": "available",
+    "VpcId": "vpc-0484c7295f194303c",
+    "CidrBlock": "172.31.80.0/20",
+    "AvailableIpAddressCount": 4091,
+    "AvailabilityZone": "eu-west-2c",
+    "DefaultForAz": false,
+    "MapPublicIpOnLaunch": false
+  },
+  {
+    "AvailabilityZoneId": "euw2-az3",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "444444444444",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "Tags": [
+      {
+        "Key": "Network",
+        "Value": "Private"
+      },
+      {
+        "Key": "aws:cloudformation:stack-id",
+        "Value": "arn:aws:cloudformation:eu-west-2:444444444444:stack/StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e/3e62b110-e91e-11ee-b09a-02d0c641c793"
+      },
+      {
+        "Key": "aws:cloudformation:logical-id",
+        "Value": "PrivateSubnet2A"
+      },
+      {
+        "Key": "aws:cloudformation:stack-name",
+        "Value": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e"
+      },
+      {
+        "Key": "Name",
+        "Value": "aws-controltower-PrivateSubnet2A"
+      }
+    ],
+    "SubnetArn": "arn:aws:ec2:eu-west-2:444444444444:subnet/subnet-0c1c051f51df59d13",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-0c1c051f51df59d13",
+    "State": "available",
+    "VpcId": "vpc-0484c7295f194303c",
+    "CidrBlock": "172.31.32.0/20",
+    "AvailableIpAddressCount": 4091,
+    "AvailabilityZone": "eu-west-2b",
+    "DefaultForAz": false,
+    "MapPublicIpOnLaunch": false
+  }
+]

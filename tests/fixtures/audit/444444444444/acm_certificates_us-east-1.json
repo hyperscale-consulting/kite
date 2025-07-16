@@ -1,0 +1,433 @@
+[
+  {
+    "CertificateArn": "arn:aws:acm:us-east-1:444444444444:certificate/b80db9b3-ed51-49b1-88cf-a650c0947497",
+    "DomainName": "www2.example.co.uk",
+    "SubjectAlternativeNames": [
+      "www2.example.co.uk"
+    ],
+    "DomainValidationOptions": [
+      {
+        "DomainName": "www2.example.co.uk",
+        "ValidationDomain": "www2.example.co.uk",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_008d3ad2c230d983d62d207131ec2b7d.www2.example.co.uk.",
+          "Type": "CNAME",
+          "Value": "_d5ad2d5b0b09fca145a25ececb3d4946.sdgjtdhdhz.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      }
+    ],
+    "Serial": "0a:7a:bc:c9:18:88:85:1b:16:fb:68:dd:a3:e7:f5:df",
+    "Subject": "CN=www2.example.co.uk",
+    "Issuer": "Amazon",
+    "CreatedAt": "2024-06-07 10:37:34.799000+01:00",
+    "IssuedAt": "2024-06-07 10:38:20.536000+01:00",
+    "Status": "EXPIRED",
+    "NotBefore": "2024-06-07 01:00:00+01:00",
+    "NotAfter": "2025-07-07 00:59:59+01:00",
+    "KeyAlgorithm": "RSA-2048",
+    "SignatureAlgorithm": "SHA256WITHRSA",
+    "InUseBy": [],
+    "Type": "AMAZON_ISSUED",
+    "KeyUsages": [
+      {
+        "Name": "DIGITAL_SIGNATURE"
+      },
+      {
+        "Name": "KEY_ENCIPHERMENT"
+      }
+    ],
+    "ExtendedKeyUsages": [
+      {
+        "Name": "TLS_WEB_SERVER_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.1"
+      },
+      {
+        "Name": "TLS_WEB_CLIENT_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.2"
+      }
+    ],
+    "RenewalEligibility": "INELIGIBLE",
+    "Options": {
+      "CertificateTransparencyLoggingPreference": "ENABLED",
+      "Export": "DISABLED"
+    }
+  },
+  {
+    "CertificateArn": "arn:aws:acm:us-east-1:444444444444:certificate/6fbfeb66-0569-4b90-8394-f5755f4619db",
+    "DomainName": "example.co.uk",
+    "SubjectAlternativeNames": [
+      "example.co.uk"
+    ],
+    "DomainValidationOptions": [
+      {
+        "DomainName": "example.co.uk",
+        "ValidationDomain": "example.co.uk",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_cd7a91bb1dad4f3aa1f317cce56a2ba9.example.co.uk.",
+          "Type": "CNAME",
+          "Value": "_a1e2710005fd953a3b2100a2585d8a49.djqtsrsxkq.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      }
+    ],
+    "Serial": "01:5f:fb:98:10:9e:e4:3e:cf:26:0f:f1:eb:26:e4:08",
+    "Subject": "CN=example.co.uk",
+    "Issuer": "Amazon",
+    "CreatedAt": "2024-09-09 20:37:33.971000+01:00",
+    "IssuedAt": "2024-09-09 20:37:46.386000+01:00",
+    "Status": "ISSUED",
+    "NotBefore": "2024-09-09 01:00:00+01:00",
+    "NotAfter": "2025-10-09 00:59:59+01:00",
+    "KeyAlgorithm": "RSA-2048",
+    "SignatureAlgorithm": "SHA256WITHRSA",
+    "InUseBy": [
+      "arn:aws:cloudfront::444444444444:distribution/E37F46WFABMWOA"
+    ],
+    "Type": "AMAZON_ISSUED",
+    "KeyUsages": [
+      {
+        "Name": "DIGITAL_SIGNATURE"
+      },
+      {
+        "Name": "KEY_ENCIPHERMENT"
+      }
+    ],
+    "ExtendedKeyUsages": [
+      {
+        "Name": "TLS_WEB_SERVER_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.1"
+      },
+      {
+        "Name": "TLS_WEB_CLIENT_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.2"
+      }
+    ],
+    "RenewalEligibility": "ELIGIBLE",
+    "Options": {
+      "CertificateTransparencyLoggingPreference": "ENABLED",
+      "Export": "DISABLED"
+    }
+  },
+  {
+    "CertificateArn": "arn:aws:acm:us-east-1:444444444444:certificate/07d11e15-5371-4f49-bc0c-1feb3e3dfeb0",
+    "DomainName": "www.example.co.uk",
+    "SubjectAlternativeNames": [
+      "www.example.co.uk"
+    ],
+    "DomainValidationOptions": [
+      {
+        "DomainName": "www.example.co.uk",
+        "ValidationDomain": "www.example.co.uk",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_c58625fae4d4182c6b6914e91f7bf9e7.www.example.co.uk.",
+          "Type": "CNAME",
+          "Value": "_88055dc910ed579d22ca4cea9bc5a49b.djqtsrsxkq.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      }
+    ],
+    "Serial": "0b:90:68:a5:df:b8:c8:94:d6:7c:c0:c2:f0:27:ba:75",
+    "Subject": "CN=www.example.co.uk",
+    "Issuer": "Amazon",
+    "CreatedAt": "2024-09-12 10:43:09.031000+01:00",
+    "IssuedAt": "2024-09-12 10:43:54.096000+01:00",
+    "Status": "ISSUED",
+    "NotBefore": "2024-09-12 01:00:00+01:00",
+    "NotAfter": "2025-10-12 00:59:59+01:00",
+    "KeyAlgorithm": "RSA-2048",
+    "SignatureAlgorithm": "SHA256WITHRSA",
+    "InUseBy": [
+      "arn:aws:cloudfront::444444444444:distribution/E1KI7DR1TDB7MM"
+    ],
+    "Type": "AMAZON_ISSUED",
+    "KeyUsages": [
+      {
+        "Name": "DIGITAL_SIGNATURE"
+      },
+      {
+        "Name": "KEY_ENCIPHERMENT"
+      }
+    ],
+    "ExtendedKeyUsages": [
+      {
+        "Name": "TLS_WEB_SERVER_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.1"
+      },
+      {
+        "Name": "TLS_WEB_CLIENT_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.2"
+      }
+    ],
+    "RenewalEligibility": "ELIGIBLE",
+    "Options": {
+      "CertificateTransparencyLoggingPreference": "ENABLED",
+      "Export": "DISABLED"
+    }
+  },
+  {
+    "CertificateArn": "arn:aws:acm:us-east-1:444444444444:certificate/c429a2f1-257b-43c0-8b59-33a55699d3af",
+    "DomainName": "intra-id.example.co.uk",
+    "SubjectAlternativeNames": [
+      "intra-id.example.co.uk"
+    ],
+    "DomainValidationOptions": [
+      {
+        "DomainName": "intra-id.example.co.uk",
+        "ValidationDomain": "intra-id.example.co.uk",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_eeb96ba49501aba1ba543a846e8b15bc.intra-id.example.co.uk.",
+          "Type": "CNAME",
+          "Value": "_8e28ca009b4920d2a50e5b9516cb71fe.xlfgrmvvlj.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      }
+    ],
+    "Serial": "01:0d:51:29:bb:1d:6f:44:b9:cb:85:4a:d0:53:4b:65",
+    "Subject": "CN=intra-id.example.co.uk",
+    "Issuer": "Amazon",
+    "CreatedAt": "2025-04-01 15:35:15.527000+01:00",
+    "IssuedAt": "2025-04-01 15:35:57.994000+01:00",
+    "Status": "ISSUED",
+    "NotBefore": "2025-04-01 01:00:00+01:00",
+    "NotAfter": "2026-05-01 00:59:59+01:00",
+    "KeyAlgorithm": "RSA-2048",
+    "SignatureAlgorithm": "SHA256WITHRSA",
+    "InUseBy": [
+      "arn:aws:cloudfront::500792760757:distribution/E1470KBY9OGIV3"
+    ],
+    "Type": "AMAZON_ISSUED",
+    "KeyUsages": [
+      {
+        "Name": "DIGITAL_SIGNATURE"
+      },
+      {
+        "Name": "KEY_ENCIPHERMENT"
+      }
+    ],
+    "ExtendedKeyUsages": [
+      {
+        "Name": "TLS_WEB_SERVER_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.1"
+      },
+      {
+        "Name": "TLS_WEB_CLIENT_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.2"
+      }
+    ],
+    "RenewalEligibility": "ELIGIBLE",
+    "Options": {
+      "CertificateTransparencyLoggingPreference": "ENABLED",
+      "Export": "DISABLED"
+    }
+  },
+  {
+    "CertificateArn": "arn:aws:acm:us-east-1:444444444444:certificate/16f10c82-0bec-4b67-8937-58d05d3a8a0a",
+    "DomainName": "bizz.example.co.uk",
+    "SubjectAlternativeNames": [
+      "bizz.example.co.uk"
+    ],
+    "DomainValidationOptions": [
+      {
+        "DomainName": "bizz.example.co.uk",
+        "ValidationDomain": "bizz.example.co.uk",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_7eb16f9a6af2cfda4d59ff07bd2f50a6.bizz.example.co.uk.",
+          "Type": "CNAME",
+          "Value": "_5669bf06eb0f55ce0c8d18687f663f7d.xlfgrmvvlj.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      }
+    ],
+    "Serial": "03:66:5d:49:5b:9f:73:5b:61:f1:e3:6d:49:5e:42:d2",
+    "Subject": "CN=bizz.example.co.uk",
+    "Issuer": "Amazon",
+    "CreatedAt": "2025-04-02 13:42:49.258000+01:00",
+    "IssuedAt": "2025-04-02 13:43:34.067000+01:00",
+    "Status": "ISSUED",
+    "NotBefore": "2025-04-02 01:00:00+01:00",
+    "NotAfter": "2026-05-02 00:59:59+01:00",
+    "KeyAlgorithm": "RSA-2048",
+    "SignatureAlgorithm": "SHA256WITHRSA",
+    "InUseBy": [
+      "arn:aws:cloudfront::444444444444:distribution/E1N2B67JJ2WE5A"
+    ],
+    "Type": "AMAZON_ISSUED",
+    "KeyUsages": [
+      {
+        "Name": "DIGITAL_SIGNATURE"
+      },
+      {
+        "Name": "KEY_ENCIPHERMENT"
+      }
+    ],
+    "ExtendedKeyUsages": [
+      {
+        "Name": "TLS_WEB_SERVER_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.1"
+      },
+      {
+        "Name": "TLS_WEB_CLIENT_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.2"
+      }
+    ],
+    "RenewalEligibility": "ELIGIBLE",
+    "Options": {
+      "CertificateTransparencyLoggingPreference": "ENABLED",
+      "Export": "DISABLED"
+    }
+  },
+  {
+    "CertificateArn": "arn:aws:acm:us-east-1:444444444444:certificate/da527658-ac46-4cf6-b967-08444087bcb3",
+    "DomainName": "admin-auth.example.co.uk",
+    "SubjectAlternativeNames": [
+      "admin-auth.example.co.uk"
+    ],
+    "DomainValidationOptions": [
+      {
+        "DomainName": "admin-auth.example.co.uk",
+        "ValidationDomain": "admin-auth.example.co.uk",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_61801d0eeb3aa1519e51a96c9c600fbd.admin-auth.example.co.uk.",
+          "Type": "CNAME",
+          "Value": "_f18071f25529405faf51a26fb84b4141.sdgjtdhdhz.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      }
+    ],
+    "Serial": "07:16:fd:4b:90:20:07:78:af:9f:d4:52:f0:e3:82:1a",
+    "Subject": "CN=admin-auth.example.co.uk",
+    "Issuer": "Amazon",
+    "CreatedAt": "2024-06-07 10:49:10.799000+01:00",
+    "IssuedAt": "2025-05-08 02:43:46.190000+01:00",
+    "Status": "ISSUED",
+    "NotBefore": "2025-05-08 01:00:00+01:00",
+    "NotAfter": "2026-06-08 00:59:59+01:00",
+    "KeyAlgorithm": "RSA-2048",
+    "SignatureAlgorithm": "SHA256WITHRSA",
+    "InUseBy": [
+      "arn:aws:cloudfront::500792760757:distribution/E3SS9O8VFJQ3DA"
+    ],
+    "Type": "AMAZON_ISSUED",
+    "RenewalSummary": {
+      "RenewalStatus": "SUCCESS",
+      "DomainValidationOptions": [
+        {
+          "DomainName": "admin-auth.example.co.uk",
+          "ValidationDomain": "admin-auth.example.co.uk",
+          "ValidationStatus": "SUCCESS",
+          "ResourceRecord": {
+            "Name": "_61801d0eeb3aa1519e51a96c9c600fbd.admin-auth.example.co.uk.",
+            "Type": "CNAME",
+            "Value": "_f18071f25529405faf51a26fb84b4141.sdgjtdhdhz.acm-validations.aws."
+          },
+          "ValidationMethod": "DNS"
+        }
+      ],
+      "UpdatedAt": "2025-05-08 02:43:46.528000+01:00"
+    },
+    "KeyUsages": [
+      {
+        "Name": "DIGITAL_SIGNATURE"
+      },
+      {
+        "Name": "KEY_ENCIPHERMENT"
+      }
+    ],
+    "ExtendedKeyUsages": [
+      {
+        "Name": "TLS_WEB_SERVER_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.1"
+      },
+      {
+        "Name": "TLS_WEB_CLIENT_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.2"
+      }
+    ],
+    "RenewalEligibility": "ELIGIBLE",
+    "Options": {
+      "CertificateTransparencyLoggingPreference": "ENABLED",
+      "Export": "DISABLED"
+    }
+  },
+  {
+    "CertificateArn": "arn:aws:acm:us-east-1:444444444444:certificate/efc5fcb3-adf6-45ef-bb06-ad3a958ea06a",
+    "DomainName": "admin.example.co.uk",
+    "SubjectAlternativeNames": [
+      "admin.example.co.uk"
+    ],
+    "DomainValidationOptions": [
+      {
+        "DomainName": "admin.example.co.uk",
+        "ValidationDomain": "admin.example.co.uk",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_aaa590398bd666515a31a2aa295b20bc.admin.example.co.uk.",
+          "Type": "CNAME",
+          "Value": "_e91d5cdd1d4c91f571ad3a4828cb3aac.sdgjtdhdhz.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      }
+    ],
+    "Serial": "04:8b:46:9c:01:14:60:8c:c6:65:34:8f:03:33:13:64",
+    "Subject": "CN=admin.example.co.uk",
+    "Issuer": "Amazon",
+    "CreatedAt": "2024-06-07 10:36:12.570000+01:00",
+    "IssuedAt": "2025-05-08 03:28:57.189000+01:00",
+    "Status": "ISSUED",
+    "NotBefore": "2025-05-08 01:00:00+01:00",
+    "NotAfter": "2026-06-08 00:59:59+01:00",
+    "KeyAlgorithm": "RSA-2048",
+    "SignatureAlgorithm": "SHA256WITHRSA",
+    "InUseBy": [
+      "arn:aws:cloudfront::444444444444:distribution/EYJX71LRCVGOG"
+    ],
+    "Type": "AMAZON_ISSUED",
+    "RenewalSummary": {
+      "RenewalStatus": "SUCCESS",
+      "DomainValidationOptions": [
+        {
+          "DomainName": "admin.example.co.uk",
+          "ValidationDomain": "admin.example.co.uk",
+          "ValidationStatus": "SUCCESS",
+          "ResourceRecord": {
+            "Name": "_aaa590398bd666515a31a2aa295b20bc.admin.example.co.uk.",
+            "Type": "CNAME",
+            "Value": "_e91d5cdd1d4c91f571ad3a4828cb3aac.sdgjtdhdhz.acm-validations.aws."
+          },
+          "ValidationMethod": "DNS"
+        }
+      ],
+      "UpdatedAt": "2025-05-08 03:28:57.535000+01:00"
+    },
+    "KeyUsages": [
+      {
+        "Name": "DIGITAL_SIGNATURE"
+      },
+      {
+        "Name": "KEY_ENCIPHERMENT"
+      }
+    ],
+    "ExtendedKeyUsages": [
+      {
+        "Name": "TLS_WEB_SERVER_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.1"
+      },
+      {
+        "Name": "TLS_WEB_CLIENT_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.2"
+      }
+    ],
+    "RenewalEligibility": "ELIGIBLE",
+    "Options": {
+      "CertificateTransparencyLoggingPreference": "ENABLED",
+      "Export": "DISABLED"
+    }
+  }
+]

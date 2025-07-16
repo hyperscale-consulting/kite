@@ -1,0 +1,14 @@
+[
+  {
+    "Id": "rqlc-6d2c6d43de624efe",
+    "OwnerId": "111111111111",
+    "Status": "CREATED",
+    "ShareStatus": "NOT_SHARED",
+    "AssociationCount": 1,
+    "Arn": "arn:aws:route53resolver:us-west-2:111111111111:resolver-query-log-config/rqlc-6d2c6d43de624efe",
+    "Name": "foo-vpc-dns-query-logging",
+    "DestinationArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/route53/foo-vpc-resolver-query-logs",
+    "CreatorRequestId": "17436891785591",
+    "CreationTime": "2025-04-03T14:06:18.757713065Z"
+  }
+]

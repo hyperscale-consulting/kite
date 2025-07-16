@@ -1,0 +1,7 @@
+[
+  {
+    "ActionTargetArn": "arn:aws:securityhub:eu-west-2:222222222222:action/custom/ASRRemediation",
+    "Name": "Remediate with ASR",
+    "Description": "Submit the finding to Automated Response and Remediation (ASR) for remediation."
+  }
+]

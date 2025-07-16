@@ -1,0 +1,203 @@
+[
+  {
+    "AWSAccountId": "222222222222",
+    "KeyId": "1bb8dc9f-5e77-4977-80dd-d0be8fed89e3",
+    "Arn": "arn:aws:kms:us-west-2:222222222222:key/1bb8dc9f-5e77-4977-80dd-d0be8fed89e3",
+    "CreationDate": "2024-03-23 12:01:06.552000+00:00",
+    "Enabled": true,
+    "Description": "Default key that protects my Lambda functions when no other key is defined",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "AWS",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": false,
+    "CurrentKeyMaterialId": "e9188fbd903b6c61d9cfe09cdaf13075d99588dae9bcc353203c37ae7f81eebc",
+    "RotationStatus": {
+      "RotationEnabled": true,
+      "RotationPeriodInDays": 365
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "auto-awslambda",
+      "Statement": [
+        {
+          "Sid": "Allow access through AWS Lambda for all principals in the account that are authorized to use AWS Lambda",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "kms:Encrypt",
+            "kms:Decrypt",
+            "kms:ReEncrypt*",
+            "kms:GenerateDataKey*",
+            "kms:CreateGrant",
+            "kms:DescribeKey"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "kms:CallerAccount": "222222222222",
+              "kms:ViaService": "lambda.us-west-2.amazonaws.com"
+            }
+          }
+        },
+        {
+          "Sid": "Allow direct access to key metadata to the account",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::222222222222:root"
+          },
+          "Action": [
+            "kms:Describe*",
+            "kms:Get*",
+            "kms:List*",
+            "kms:RevokeGrant"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "AWSAccountId": "222222222222",
+    "KeyId": "7135508e-809b-40d4-9a10-b551db65acda",
+    "Arn": "arn:aws:kms:us-west-2:222222222222:key/7135508e-809b-40d4-9a10-b551db65acda",
+    "CreationDate": "2025-02-19 18:48:55.344000+00:00",
+    "Enabled": true,
+    "Description": "",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "CUSTOMER",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": false,
+    "CurrentKeyMaterialId": "20f4cf0506ec7079021497fff97586413d3e0d5c803967de9147ec527b77f2c3",
+    "RotationStatus": {
+      "RotationEnabled": true,
+      "RotationPeriodInDays": 365
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": [
+              "s3.amazonaws.com",
+              "sns.amazonaws.com",
+              "logs.amazonaws.com",
+              "cloudwatch.amazonaws.com",
+              "logs.us-west-2.amazonaws.com",
+              "cloudtrail.amazonaws.com"
+            ]
+          },
+          "Action": [
+            "kms:GenerateDataKey",
+            "kms:GenerateDataKeyPair",
+            "kms:GenerateDataKeyPairWithoutPlaintext",
+            "kms:GenerateDataKeyWithoutPlaintext",
+            "kms:Decrypt",
+            "kms:Encrypt",
+            "kms:ReEncryptFrom",
+            "kms:ReEncryptTo",
+            "kms:DescribeKey",
+            "kms:DescribeCustomKeyStores"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::222222222222:root"
+          },
+          "Action": "kms:*",
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "AWSAccountId": "222222222222",
+    "KeyId": "mrk-537c124fcb6644f0aced9def252ccacb",
+    "Arn": "arn:aws:kms:us-west-2:222222222222:key/mrk-537c124fcb6644f0aced9def252ccacb",
+    "CreationDate": "2025-03-16 09:09:24.408000+00:00",
+    "Enabled": true,
+    "Description": "Multi-region key for Macie discovery results",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "CUSTOMER",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": true,
+    "MultiRegionConfiguration": {
+      "MultiRegionKeyType": "REPLICA",
+      "PrimaryKey": {
+        "Arn": "arn:aws:kms:eu-west-2:222222222222:key/mrk-537c124fcb6644f0aced9def252ccacb",
+        "Region": "eu-west-2"
+      },
+      "ReplicaKeys": [
+        {
+          "Arn": "arn:aws:kms:us-west-2:222222222222:key/mrk-537c124fcb6644f0aced9def252ccacb",
+          "Region": "us-west-2"
+        }
+      ]
+    },
+    "CurrentKeyMaterialId": "eac8843482c5d53f490b4c0146a2132ed6fc2efc9f12ada5207a8ccc210335a6",
+    "RotationStatus": {
+      "RotationEnabled": false,
+      "RotationPeriodInDays": null
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "macie-key-policy",
+      "Statement": [
+        {
+          "Sid": "Enable IAM User Permissions",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::222222222222:root"
+          },
+          "Action": "kms:*",
+          "Resource": "*"
+        },
+        {
+          "Sid": "Allow Macie to use the key",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "macie.amazonaws.com"
+          },
+          "Action": [
+            "kms:GenerateDataKey",
+            "kms:Encrypt"
+          ],
+          "Resource": "arn:aws:kms:us-west-2:222222222222:key/mrk-537c124fcb6644f0aced9def252ccacb",
+          "Condition": {
+            "StringEquals": {
+              "aws:SourceAccount": "222222222222"
+            },
+            "ArnLike": {
+              "aws:SourceArn": [
+                "arn:aws:macie2:us-west-2:222222222222:export-configuration:*",
+                "arn:aws:macie2:us-west-2:222222222222:classification-job/*"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+]

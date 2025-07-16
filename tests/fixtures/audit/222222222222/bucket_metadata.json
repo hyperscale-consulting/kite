@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "cf-templates-28hg0luj98af-eu-west-2",
+    "CreationDate": "2025-02-19 14:49:54+00:00",
+    "Policy": null,
+    "LifecycleRules": null,
+    "Versioning": null,
+    "Logging": null,
+    "ObjectLockConfiguration": null
+  },
+  {
+    "Name": "macie-discovery-results-fce70f4dac7b89bf",
+    "CreationDate": "2025-03-12 14:30:53+00:00",
+    "Policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"Deny non-HTTPS access\",\"Effect\":\"Deny\",\"Principal\":\"*\",\"Action\":\"s3:*\",\"Resource\":\"arn:aws:s3:::macie-discovery-results-fce70f4dac7b89bf/*\",\"Condition\":{\"Bool\":{\"aws:SecureTransport\":\"false\"}}},{\"Sid\":\"Deny incorrect encryption header. This is optional\",\"Effect\":\"Deny\",\"Principal\":{\"Service\":\"macie.amazonaws.com\"},\"Action\":\"s3:PutObject\",\"Resource\":\"arn:aws:s3:::macie-discovery-results-fce70f4dac7b89bf/*\",\"Condition\":{\"StringNotEquals\":{\"s3:x-amz-server-side-encryption-aws-kms-key-id\":\"arn:aws:kms:eu-west-2:222222222222:key/mrk-537c124fcb6644f0aced9def252ccacb\"}}},{\"Sid\":\"Deny unencrypted object uploads. This is optional\",\"Effect\":\"Deny\",\"Principal\":{\"Service\":\"macie.amazonaws.com\"},\"Action\":\"s3:PutObject\",\"Resource\":\"arn:aws:s3:::macie-discovery-results-fce70f4dac7b89bf/*\",\"Condition\":{\"StringNotEquals\":{\"s3:x-amz-server-side-encryption\":\"aws:kms\"}}},{\"Sid\":\"Allow Macie to upload objects to the bucket\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"macie.amazonaws.com\"},\"Action\":\"s3:PutObject\",\"Resource\":\"arn:aws:s3:::macie-discovery-results-fce70f4dac7b89bf/*\",\"Condition\":{\"StringEquals\":{\"aws:SourceAccount\":\"222222222222\"},\"ArnLike\":{\"aws:SourceArn\":[\"arn:aws:macie2:eu-west-2:222222222222:export-configuration:*\",\"arn:aws:macie2:eu-west-2:222222222222:classification-job/*\",\"arn:aws:macie2:us-west-2:222222222222:export-configuration:*\",\"arn:aws:macie2:us-west-2:222222222222:classification-job/*\"]}}},{\"Sid\":\"Allow Macie to use the getBucketLocation operation\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"macie.amazonaws.com\"},\"Action\":\"s3:GetBucketLocation\",\"Resource\":\"arn:aws:s3:::macie-discovery-results-fce70f4dac7b89bf\",\"Condition\":{\"StringEquals\":{\"aws:SourceAccount\":\"222222222222\"},\"ArnLike\":{\"aws:SourceArn\":[\"arn:aws:macie2:eu-west-2:222222222222:export-configuration:*\",\"arn:aws:macie2:eu-west-2:222222222222:classification-job/*\",\"arn:aws:macie2:us-west-2:222222222222:export-configuration:*\",\"arn:aws:macie2:us-west-2:222222222222:classification-job/*\"]}}}]}",
+    "LifecycleRules": null,
+    "Versioning": null,
+    "Logging": null,
+    "ObjectLockConfiguration": null
+  }
+]

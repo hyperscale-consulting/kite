@@ -1,0 +1,67 @@
+[
+  {
+    "WindowId": "mw-0c4d766a7f0631aaf",
+    "Name": "regular-patch-window",
+    "Enabled": true,
+    "Duration": 2,
+    "Cutoff": 1,
+    "Schedule": "cron(0 0 11 ? * * *)",
+    "ScheduleTimezone": "UTC",
+    "NextExecutionTime": "2025-07-16T11:00Z",
+    "Targets": [
+      {
+        "WindowId": "mw-0c4d766a7f0631aaf",
+        "WindowTargetId": "47133578-0faf-483f-9abc-21f9955d99c1",
+        "ResourceType": "INSTANCE",
+        "Targets": [
+          {
+            "Key": "tag:Name",
+            "Values": [
+              "foo-web-server"
+            ]
+          }
+        ],
+        "Name": "PatchingTarget",
+        "Description": "Created via Patch Manager Configure Patching Wizard"
+      },
+      {
+        "WindowId": "mw-0c4d766a7f0631aaf",
+        "WindowTargetId": "90cad90d-565f-4227-bd20-34dd0c01db44",
+        "ResourceType": "INSTANCE",
+        "Targets": [
+          {
+            "Key": "tag:Name",
+            "Values": [
+              "foo-web-server"
+            ]
+          }
+        ],
+        "Name": "PatchingTarget",
+        "Description": "Created via Patch Manager Configure Patching Wizard"
+      }
+    ],
+    "Tasks": [
+      {
+        "WindowId": "mw-0c4d766a7f0631aaf",
+        "WindowTaskId": "12ce78d3-9640-4fb4-b110-470492ac2e73",
+        "TaskArn": "AWS-RunPatchBaseline",
+        "Type": "RUN_COMMAND",
+        "Targets": [
+          {
+            "Key": "WindowTargetIds",
+            "Values": [
+              "90cad90d-565f-4227-bd20-34dd0c01db44"
+            ]
+          }
+        ],
+        "TaskParameters": {},
+        "Priority": 1,
+        "ServiceRoleArn": "arn:aws:iam::111111111111:role/aws-service-role/ssm.amazonaws.com/AWSServiceRoleForAmazonSSM",
+        "MaxConcurrency": "50",
+        "MaxErrors": "0",
+        "Name": "PatchingTask",
+        "Description": "Created via Patch Manager Configure Patching Wizard"
+      }
+    ]
+  }
+]

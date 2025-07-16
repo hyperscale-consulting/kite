@@ -5,21 +5,19 @@ from typing import Any
 from rich.console import Console
 
 from kite.config import Config
-from kite.data import (
-    get_ec2_instances,
-    get_ecs_clusters,
-    get_eks_clusters,
-    get_lambda_functions,
-    get_rds_instances,
-    get_dynamodb_tables,
-    get_redshift_clusters,
-    get_sagemaker_notebook_instances,
-    get_sns_topics,
-    get_sqs_queues,
-    get_kms_keys,
-    get_bucket_metadata,
-    get_cloudfront_distributions,
-)
+from kite.data import get_bucket_metadata
+from kite.data import get_cloudfront_distributions
+from kite.data import get_dynamodb_tables
+from kite.data import get_ec2_instances
+from kite.data import get_ecs_clusters
+from kite.data import get_eks_clusters
+from kite.data import get_kms_keys
+from kite.data import get_lambda_functions
+from kite.data import get_rds_instances
+from kite.data import get_redshift_clusters
+from kite.data import get_sagemaker_notebook_instances
+from kite.data import get_sns_topics
+from kite.data import get_sqs_queues
 from kite.helpers import prompt_user_with_panel
 
 console = Console()

@@ -1,0 +1,215 @@
+[
+  {
+    "CertificateArn": "arn:aws:acm:us-west-2:111111111111:certificate/3bb838ec-f73b-4ced-86af-bf70047a271e",
+    "DomainName": "lb.example.co.uk",
+    "SubjectAlternativeNames": [
+      "lb.example.co.uk"
+    ],
+    "DomainValidationOptions": [
+      {
+        "DomainName": "lb.example.co.uk",
+        "ValidationDomain": "lb.example.co.uk",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_6227fd06310827bd9700654af2d17fe7.lb.example.co.uk.",
+          "Type": "CNAME",
+          "Value": "_64592084e5a78111fd19e2b6297437eb.fpgkgnzppq.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      }
+    ],
+    "Serial": "0a:95:cd:65:45:dc:4c:bb:60:ee:de:ba:ab:c2:d7:45",
+    "Subject": "CN=lb.example.co.uk",
+    "Issuer": "Amazon",
+    "CreatedAt": "2023-05-04 14:08:56.415000+01:00",
+    "IssuedAt": "2025-03-05 01:40:13.726000+00:00",
+    "Status": "ISSUED",
+    "NotBefore": "2025-03-05 00:00:00+00:00",
+    "NotAfter": "2026-04-05 00:59:59+01:00",
+    "KeyAlgorithm": "RSA-2048",
+    "SignatureAlgorithm": "SHA256WITHRSA",
+    "InUseBy": [
+      "arn:aws:elasticloadbalancing:us-west-2:111111111111:loadbalancer/app/foo-web-server-lb/8558f00b0006e6da"
+    ],
+    "Type": "AMAZON_ISSUED",
+    "RenewalSummary": {
+      "RenewalStatus": "SUCCESS",
+      "DomainValidationOptions": [
+        {
+          "DomainName": "lb.example.co.uk",
+          "ValidationDomain": "lb.example.co.uk",
+          "ValidationStatus": "SUCCESS",
+          "ResourceRecord": {
+            "Name": "_6227fd06310827bd9700654af2d17fe7.lb.example.co.uk.",
+            "Type": "CNAME",
+            "Value": "_64592084e5a78111fd19e2b6297437eb.fpgkgnzppq.acm-validations.aws."
+          },
+          "ValidationMethod": "DNS"
+        }
+      ],
+      "UpdatedAt": "2025-03-05 01:40:14.168000+00:00"
+    },
+    "KeyUsages": [
+      {
+        "Name": "DIGITAL_SIGNATURE"
+      },
+      {
+        "Name": "KEY_ENCIPHERMENT"
+      }
+    ],
+    "ExtendedKeyUsages": [
+      {
+        "Name": "TLS_WEB_SERVER_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.1"
+      },
+      {
+        "Name": "TLS_WEB_CLIENT_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.2"
+      }
+    ],
+    "RenewalEligibility": "ELIGIBLE",
+    "Options": {
+      "CertificateTransparencyLoggingPreference": "ENABLED",
+      "Export": "DISABLED"
+    }
+  },
+  {
+    "CertificateArn": "arn:aws:acm:us-west-2:111111111111:certificate/89f59504-ba92-4281-b235-6b449410a6a3",
+    "DomainName": "example.co.uk",
+    "SubjectAlternativeNames": [
+      "example.co.uk",
+      "www.example.com",
+      "example.com",
+      "www.example.co.uk"
+    ],
+    "DomainValidationOptions": [
+      {
+        "DomainName": "example.co.uk",
+        "ValidationDomain": "example.co.uk",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_a23892382607a0e69f9566459ceb0bbf.example.co.uk.",
+          "Type": "CNAME",
+          "Value": "_4423967a555a3006b360985a5416642f.bwfqbhlrkg.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      },
+      {
+        "DomainName": "www.example.com",
+        "ValidationDomain": "www.example.com",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_3c66199b37ff001274e788966bb74990.www.example.com.",
+          "Type": "CNAME",
+          "Value": "_a70c55c0bedfce35319badb3b1bd02ed.bwfqbhlrkg.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      },
+      {
+        "DomainName": "example.com",
+        "ValidationDomain": "example.com",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_00be542470aa86c827b3634a0bee7682.example.com.",
+          "Type": "CNAME",
+          "Value": "_b0f78d9ca551ab723cee29dd72ca6f1b.bwfqbhlrkg.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      },
+      {
+        "DomainName": "www.example.co.uk",
+        "ValidationDomain": "www.example.co.uk",
+        "ValidationStatus": "SUCCESS",
+        "ResourceRecord": {
+          "Name": "_76749f9fcb29f54260258ce65a348ca9.www.example.co.uk.",
+          "Type": "CNAME",
+          "Value": "_b07b245f991f66c09c77946fa26e1dcd.bwfqbhlrkg.acm-validations.aws."
+        },
+        "ValidationMethod": "DNS"
+      }
+    ],
+    "Serial": "07:c3:f1:37:55:6b:32:0d:35:9f:96:b6:15:3f:f5:5b",
+    "Subject": "CN=example.co.uk",
+    "Issuer": "Amazon",
+    "CreatedAt": "2022-07-17 13:56:46.914000+01:00",
+    "IssuedAt": "2025-06-14 02:10:28.077000+01:00",
+    "Status": "ISSUED",
+    "NotBefore": "2025-06-14 01:00:00+01:00",
+    "NotAfter": "2026-07-14 00:59:59+01:00",
+    "KeyAlgorithm": "RSA-2048",
+    "SignatureAlgorithm": "SHA256WITHRSA",
+    "InUseBy": [
+      "arn:aws:elasticloadbalancing:us-west-2:111111111111:loadbalancer/app/foo-web-server-lb/8558f00b0006e6da"
+    ],
+    "Type": "AMAZON_ISSUED",
+    "RenewalSummary": {
+      "RenewalStatus": "SUCCESS",
+      "DomainValidationOptions": [
+        {
+          "DomainName": "example.co.uk",
+          "ValidationDomain": "example.co.uk",
+          "ValidationStatus": "SUCCESS",
+          "ResourceRecord": {
+            "Name": "_a23892382607a0e69f9566459ceb0bbf.example.co.uk.",
+            "Type": "CNAME",
+            "Value": "_4423967a555a3006b360985a5416642f.bwfqbhlrkg.acm-validations.aws."
+          },
+          "ValidationMethod": "DNS"
+        },
+        {
+          "DomainName": "www.example.com",
+          "ValidationDomain": "www.example.com",
+          "ValidationStatus": "SUCCESS",
+          "ResourceRecord": {
+            "Name": "_3c66199b37ff001274e788966bb74990.www.example.com.",
+            "Type": "CNAME",
+            "Value": "_a70c55c0bedfce35319badb3b1bd02ed.bwfqbhlrkg.acm-validations.aws."
+          },
+          "ValidationMethod": "DNS"
+        },
+        {
+          "DomainName": "example.com",
+          "ValidationDomain": "example.com",
+          "ValidationStatus": "SUCCESS",
+          "ResourceRecord": {
+            "Name": "_00be542470aa86c827b3634a0bee7682.example.com.",
+            "Type": "CNAME",
+            "Value": "_b0f78d9ca551ab723cee29dd72ca6f1b.bwfqbhlrkg.acm-validations.aws."
+          },
+          "ValidationMethod": "DNS"
+        },
+        {
+          "DomainName": "www.example.co.uk",
+          "ValidationDomain": "www.example.co.uk",
+          "ValidationStatus": "SUCCESS",
+          "ResourceRecord": {
+            "Name": "_76749f9fcb29f54260258ce65a348ca9.www.example.co.uk.",
+            "Type": "CNAME",
+            "Value": "_b07b245f991f66c09c77946fa26e1dcd.bwfqbhlrkg.acm-validations.aws."
+          },
+          "ValidationMethod": "DNS"
+        }
+      ],
+      "UpdatedAt": "2025-06-14 02:10:28.568000+01:00"
+    },
+    "KeyUsages": [
+      {
+        "Name": "DIGITAL_SIGNATURE"
+      },
+      {
+        "Name": "KEY_ENCIPHERMENT"
+      }
+    ],
+    "ExtendedKeyUsages": [
+      {
+        "Name": "TLS_WEB_SERVER_AUTHENTICATION",
+        "OID": "1.3.6.1.5.5.7.3.1"
+      }
+    ],
+    "RenewalEligibility": "ELIGIBLE",
+    "Options": {
+      "CertificateTransparencyLoggingPreference": "ENABLED",
+      "Export": "DISABLED"
+    }
+  }
+]

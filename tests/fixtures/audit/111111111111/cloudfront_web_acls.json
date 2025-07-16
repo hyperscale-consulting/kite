@@ -1,0 +1,84 @@
+[
+  {
+    "Name": "foo-cloudfront-waf",
+    "Id": "4d7a6245-6c6d-4b18-981e-a3a32621d4be",
+    "ARN": "arn:aws:wafv2:us-east-1:111111111111:global/webacl/foo-cloudfront-waf/4d7a6245-6c6d-4b18-981e-a3a32621d4be",
+    "DefaultAction": {
+      "Allow": {}
+    },
+    "Description": "",
+    "Rules": [
+      {
+        "Name": "block-ip-deny-list",
+        "Priority": 0,
+        "Statement": {
+          "IPSetReferenceStatement": {
+            "ARN": "arn:aws:wafv2:us-east-1:111111111111:global/ipset/deny-list/4300bfde-7ab8-486c-bab9-ebd315d23ba4"
+          }
+        },
+        "Action": {
+          "Block": {}
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "block-ip-deny-list"
+        }
+      },
+      {
+        "Name": "AWS-AWSManagedRulesAmazonIpReputationList",
+        "Priority": 1,
+        "Statement": {
+          "ManagedRuleGroupStatement": {
+            "VendorName": "AWS",
+            "Name": "AWSManagedRulesAmazonIpReputationList"
+          }
+        },
+        "OverrideAction": {
+          "None": {}
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "AWS-AWSManagedRulesAmazonIpReputationList"
+        }
+      },
+      {
+        "Name": "base-rate-limit-rule",
+        "Priority": 2,
+        "Statement": {
+          "RateBasedStatement": {
+            "Limit": 6000,
+            "EvaluationWindowSec": 300,
+            "AggregateKeyType": "IP"
+          }
+        },
+        "Action": {
+          "Block": {}
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "base-rate-limit-rule"
+        }
+      }
+    ],
+    "VisibilityConfig": {
+      "SampledRequestsEnabled": true,
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "foo-cloudfront-waf"
+    },
+    "Capacity": 28,
+    "ManagedByFirewallManager": false,
+    "LabelNamespace": "awswaf:111111111111:webacl:foo-cloudfront-waf:",
+    "RetrofittedByFirewallManager": false,
+    "OnSourceDDoSProtectionConfig": {
+      "ALBLowReputationMode": "ACTIVE_UNDER_DDOS"
+    },
+    "Region": "us-east-1",
+    "Scope": "CLOUDFRONT",
+    "Resources": [
+      "arn:aws:cloudfront::111111111111:distribution/E307LG7VKH7K5F"
+    ]
+  }
+]

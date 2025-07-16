@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from kite.config import Config
 from kite.data import get_customer_managed_policies
 from kite.data import get_roles
 from kite.data import get_saml_providers
@@ -106,7 +107,8 @@ def check_admin_privileges_are_restricted() -> dict[str, Any]:
     admin_roles: list[dict[str, Any]] = []
 
     # Get SAML providers
-    providers = get_saml_providers()
+    config = Config.get()
+    providers = get_saml_providers(config.management_account_id)
     if providers:
         for provider in providers:
             saml_providers.append(

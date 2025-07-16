@@ -1,0 +1,12 @@
+[
+  {
+    "BackupVaultName": "aws-controltower-local-backupvault-1749674080516",
+    "BackupVaultArn": "arn:aws:backup:us-east-1:333333333333:backup-vault:aws-controltower-local-backupvault-1749674080516",
+    "VaultType": "BACKUP_VAULT",
+    "CreationDate": "2025-06-11 21:35:32.856000+01:00",
+    "EncryptionKeyArn": "arn:aws:kms:us-east-1:111111111111:key/mrk-da2d1648668040fdae0ab2044afd5877",
+    "CreatorRequestId": "dbdb5ccb-ecbf-1064-e363-e9ad96f00ab4",
+    "NumberOfRecoveryPoints": 0,
+    "Locked": false
+  }
+]

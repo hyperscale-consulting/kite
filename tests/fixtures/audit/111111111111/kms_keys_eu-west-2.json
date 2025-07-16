@@ -1,0 +1,617 @@
+[
+  {
+    "AWSAccountId": "111111111111",
+    "KeyId": "3334b127-b930-46e0-ae3c-b728b140ed67",
+    "Arn": "arn:aws:kms:eu-west-2:111111111111:key/3334b127-b930-46e0-ae3c-b728b140ed67",
+    "CreationDate": "2025-06-26 14:44:36.848000+01:00",
+    "Enabled": true,
+    "Description": "CMK created for Custom Control Tower Resources",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "CUSTOMER",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": false,
+    "CurrentKeyMaterialId": "717099453d4223f8bdbbf79ece09faf87cdfd7b394a4f1fb834c2710518f8803",
+    "RotationStatus": {
+      "RotationEnabled": true,
+      "RotationPeriodInDays": 365
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "key-CustomControlTower-1",
+      "Statement": [
+        {
+          "Sid": "Allow administration of the key",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:root"
+          },
+          "Action": [
+            "kms:Create*",
+            "kms:Describe*",
+            "kms:Enable*",
+            "kms:List*",
+            "kms:Put*",
+            "kms:Update*",
+            "kms:Revoke*",
+            "kms:Disable*",
+            "kms:Get*",
+            "kms:Delete*",
+            "kms:ScheduleKeyDeletion",
+            "kms:CancelKeyDeletion"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Sid": "Allow use of the key",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com",
+            "AWS": [
+              "arn:aws:iam::111111111111:role/CfCT-RCPCodeBuildRole-BsrD1XYE5DnK",
+              "arn:aws:iam::111111111111:role/CfCT-CustomControlTowerCodeBuildRole-eIkykuaro20X",
+              "arn:aws:iam::111111111111:role/CustomControlTowerDeploymentLambdaRole",
+              "arn:aws:iam::111111111111:role/CfCT-SCPCodeBuildRole-HqBZkkAlSW3l",
+              "arn:aws:iam::111111111111:role/CfCT-StackSetCodeBuildRole-TvBFSZHbeq7n",
+              "arn:aws:iam::111111111111:role/CustomControlTowerStateMachineLambdaRole",
+              "arn:aws:iam::111111111111:role/CustomControlTowerLELambdaRole",
+              "arn:aws:iam::111111111111:role/CustomControlTowerCodePipelineRole"
+            ]
+          },
+          "Action": [
+            "kms:Encrypt",
+            "kms:Decrypt",
+            "kms:ReEncrypt*",
+            "kms:GenerateDataKey*",
+            "kms:DescribeKey"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "AWSAccountId": "111111111111",
+    "KeyId": "53a60aea-d982-4df9-8703-d35c6447d040",
+    "Arn": "arn:aws:kms:eu-west-2:111111111111:key/53a60aea-d982-4df9-8703-d35c6447d040",
+    "CreationDate": "2022-03-19 16:25:22.277000+00:00",
+    "Enabled": true,
+    "Description": "Default key that protects my Lightsail signing keys when no other key is defined",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "AWS",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": false,
+    "CurrentKeyMaterialId": "972ab176b700074a08941a1c2bb85e98d2634971f98fcb30ec6767a308a635fe",
+    "RotationStatus": {
+      "RotationEnabled": true,
+      "RotationPeriodInDays": 365
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "auto-lightsail-1",
+      "Statement": [
+        {
+          "Sid": "Allow access through Lightsail for all principals in the account that are authorized to use Lightsail",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "kms:Encrypt",
+            "kms:Decrypt",
+            "kms:ReEncrypt*",
+            "kms:GenerateDataKey*",
+            "kms:DescribeKey"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "kms:ViaService": "lightsail.eu-west-2.amazonaws.com",
+              "kms:CallerAccount": "111111111111"
+            }
+          }
+        },
+        {
+          "Sid": "Allow direct access to key metadata to the account",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:root"
+          },
+          "Action": [
+            "kms:Describe*",
+            "kms:Get*",
+            "kms:List*"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Sid": "Allow Lightsail with service principal name lightsail.amazonaws.com to describe the key directly",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "lightsail.amazonaws.com"
+          },
+          "Action": [
+            "kms:Describe*",
+            "kms:Get*",
+            "kms:List*"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "AWSAccountId": "111111111111",
+    "KeyId": "577b3e61-f00f-4c6d-a375-f86cd6baab33",
+    "Arn": "arn:aws:kms:eu-west-2:111111111111:key/577b3e61-f00f-4c6d-a375-f86cd6baab33",
+    "CreationDate": "2025-03-12 17:12:24.483000+00:00",
+    "Enabled": true,
+    "Description": "Default key that protects my Backup data when no other key is defined",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "AWS",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": false,
+    "CurrentKeyMaterialId": "d9e368645e3478a8bf293646f8b0e23ec5685b96a77d2969ff592f7cb755ec02",
+    "RotationStatus": {
+      "RotationEnabled": true,
+      "RotationPeriodInDays": 365
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "auto-backup-1",
+      "Statement": [
+        {
+          "Sid": "Allow access through Backup for all principals in the account that are authorized to use Backup Storage",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "kms:CreateGrant",
+            "kms:Decrypt",
+            "kms:GenerateDataKey*"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "kms:ViaService": "backup.eu-west-2.amazonaws.com",
+              "kms:CallerAccount": "111111111111"
+            }
+          }
+        },
+        {
+          "Sid": "Allow direct access to key metadata to the account",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:root"
+          },
+          "Action": [
+            "kms:Describe*",
+            "kms:Get*",
+            "kms:List*",
+            "kms:RevokeGrant"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "AWSAccountId": "111111111111",
+    "KeyId": "662fb5d5-ba80-41f4-9aae-68bd1eb04981",
+    "Arn": "arn:aws:kms:eu-west-2:111111111111:key/662fb5d5-ba80-41f4-9aae-68bd1eb04981",
+    "CreationDate": "2025-04-01 08:12:34.327000+01:00",
+    "Enabled": true,
+    "Description": "This key can be deleted - just a test",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "CUSTOMER",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": false,
+    "CurrentKeyMaterialId": "f97957617d0b071a96d10158a5006c6e90574639ba860e8072c2b15b0722fe97",
+    "RotationStatus": {
+      "RotationEnabled": false,
+      "RotationPeriodInDays": null
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "key-consolepolicy-3",
+      "Statement": [
+        {
+          "Sid": "Enable IAM User Permissions",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:root"
+          },
+          "Action": "kms:*",
+          "Resource": "*"
+        },
+        {
+          "Sid": "Enable Decrypt",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::444444444444:user/test-user"
+          },
+          "Action": "kms:Decrypt",
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "AWSAccountId": "111111111111",
+    "KeyId": "9adbacbe-fe06-4806-a16f-57eb763899a1",
+    "Arn": "arn:aws:kms:eu-west-2:111111111111:key/9adbacbe-fe06-4806-a16f-57eb763899a1",
+    "CreationDate": "2025-06-27 10:38:55.903000+01:00",
+    "Enabled": true,
+    "Description": "Default key that protects my SNS data when no other key is defined",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "AWS",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": false,
+    "CurrentKeyMaterialId": "11f3a2a065e9c00a03a87e9ff9c6c3c41f5f652553f4632b37907a70414bb86e",
+    "RotationStatus": {
+      "RotationEnabled": true,
+      "RotationPeriodInDays": 365
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "auto-sns-2",
+      "Statement": [
+        {
+          "Sid": "Allow access through SNS for all principals in the account that are authorized to use SNS",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "kms:Decrypt",
+            "kms:GenerateDataKey*",
+            "kms:CreateGrant",
+            "kms:ListGrants",
+            "kms:DescribeKey"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "kms:ViaService": "sns.eu-west-2.amazonaws.com",
+              "kms:CallerAccount": "111111111111"
+            }
+          }
+        },
+        {
+          "Sid": "Allow direct access to key metadata to the account",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:root"
+          },
+          "Action": [
+            "kms:Describe*",
+            "kms:Get*",
+            "kms:List*",
+            "kms:RevokeGrant"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Sid": "Allow SNS to decrypt archived messages",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "sns.amazonaws.com"
+          },
+          "Action": "kms:Decrypt",
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "aws:SourceAccount": "111111111111"
+            },
+            "ArnLike": {
+              "aws:SourceArn": "arn:*:sns:eu-west-2:111111111111:*"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "AWSAccountId": "111111111111",
+    "KeyId": "cd8c4f85-8a0c-4d90-b67a-3043a10dbcd8",
+    "Arn": "arn:aws:kms:eu-west-2:111111111111:key/cd8c4f85-8a0c-4d90-b67a-3043a10dbcd8",
+    "CreationDate": "2025-06-27 09:58:56.560000+01:00",
+    "Enabled": true,
+    "Description": "Default key that protects my S3 objects when no other key is defined",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "AWS",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": false,
+    "CurrentKeyMaterialId": "bf5cad61a6e12aacfc24806564165b7f48b219c9e34e4853c0748f1bfa8fbe48",
+    "RotationStatus": {
+      "RotationEnabled": true,
+      "RotationPeriodInDays": 365
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "auto-s3-2",
+      "Statement": [
+        {
+          "Sid": "Allow access through S3 for all principals in the account that are authorized to use S3",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "kms:Encrypt",
+            "kms:Decrypt",
+            "kms:ReEncrypt*",
+            "kms:GenerateDataKey*",
+            "kms:DescribeKey"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "kms:ViaService": "s3.eu-west-2.amazonaws.com",
+              "kms:CallerAccount": "111111111111"
+            }
+          }
+        },
+        {
+          "Sid": "Allow direct access to key metadata to the account",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:root"
+          },
+          "Action": [
+            "kms:Describe*",
+            "kms:Get*",
+            "kms:List*"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "AWSAccountId": "111111111111",
+    "KeyId": "cf50528d-4780-4b3b-aaae-9d44a4941ae8",
+    "Arn": "arn:aws:kms:eu-west-2:111111111111:key/cf50528d-4780-4b3b-aaae-9d44a4941ae8",
+    "CreationDate": "2025-03-14 08:18:24.451000+00:00",
+    "Enabled": true,
+    "Description": "Default key that protects my RDS database volumes when no other key is defined",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "AWS",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": false,
+    "CurrentKeyMaterialId": "fe3c00e5dfb8dabbcf25d92c3917994707a4f3a211e3f979fa8c8fa29a542beb",
+    "RotationStatus": {
+      "RotationEnabled": true,
+      "RotationPeriodInDays": 365
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "auto-rds-2",
+      "Statement": [
+        {
+          "Sid": "Allow access through RDS for all principals in the account that are authorized to use RDS",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "kms:Encrypt",
+            "kms:Decrypt",
+            "kms:ReEncrypt*",
+            "kms:GenerateDataKey*",
+            "kms:CreateGrant",
+            "kms:ListGrants",
+            "kms:DescribeKey"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "kms:ViaService": "rds.eu-west-2.amazonaws.com",
+              "kms:CallerAccount": "111111111111"
+            }
+          }
+        },
+        {
+          "Sid": "Allow direct access to key metadata to the account",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:root"
+          },
+          "Action": [
+            "kms:Describe*",
+            "kms:Get*",
+            "kms:List*",
+            "kms:RevokeGrant"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "AWSAccountId": "111111111111",
+    "KeyId": "fbf0b75e-ffc4-46a7-8578-060ba158e2c1",
+    "Arn": "arn:aws:kms:eu-west-2:111111111111:key/fbf0b75e-ffc4-46a7-8578-060ba158e2c1",
+    "CreationDate": "2023-06-10 14:03:41.044000+01:00",
+    "Enabled": true,
+    "Description": "Default key that protects my Lambda functions when no other key is defined",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "AWS",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": false,
+    "CurrentKeyMaterialId": "66792c6ee024e0784417220e463c5a6e2961d48251f78eb8f4f42debc0496889",
+    "RotationStatus": {
+      "RotationEnabled": true,
+      "RotationPeriodInDays": 365
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "auto-awslambda",
+      "Statement": [
+        {
+          "Sid": "Allow access through AWS Lambda for all principals in the account that are authorized to use AWS Lambda",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "kms:Encrypt",
+            "kms:Decrypt",
+            "kms:ReEncrypt*",
+            "kms:GenerateDataKey*",
+            "kms:CreateGrant",
+            "kms:DescribeKey"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "kms:ViaService": "lambda.eu-west-2.amazonaws.com",
+              "kms:CallerAccount": "111111111111"
+            }
+          }
+        },
+        {
+          "Sid": "Allow direct access to key metadata to the account",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:root"
+          },
+          "Action": [
+            "kms:Describe*",
+            "kms:Get*",
+            "kms:List*",
+            "kms:RevokeGrant"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  },
+  {
+    "AWSAccountId": "111111111111",
+    "KeyId": "mrk-da2d1648668040fdae0ab2044afd5877",
+    "Arn": "arn:aws:kms:eu-west-2:111111111111:key/mrk-da2d1648668040fdae0ab2044afd5877",
+    "CreationDate": "2025-06-11 15:20:59.436000+01:00",
+    "Enabled": true,
+    "Description": "Key used for central backups",
+    "KeyUsage": "ENCRYPT_DECRYPT",
+    "KeyState": "Enabled",
+    "Origin": "AWS_KMS",
+    "KeyManager": "CUSTOMER",
+    "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "KeySpec": "SYMMETRIC_DEFAULT",
+    "EncryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "MultiRegion": true,
+    "MultiRegionConfiguration": {
+      "MultiRegionKeyType": "PRIMARY",
+      "PrimaryKey": {
+        "Arn": "arn:aws:kms:eu-west-2:111111111111:key/mrk-da2d1648668040fdae0ab2044afd5877",
+        "Region": "eu-west-2"
+      },
+      "ReplicaKeys": [
+        {
+          "Arn": "arn:aws:kms:us-east-1:111111111111:key/mrk-da2d1648668040fdae0ab2044afd5877",
+          "Region": "us-east-1"
+        },
+        {
+          "Arn": "arn:aws:kms:us-west-2:111111111111:key/mrk-da2d1648668040fdae0ab2044afd5877",
+          "Region": "us-west-2"
+        }
+      ]
+    },
+    "CurrentKeyMaterialId": "a7852089048c11aad0d20e120ea168905f933ba1817a83f1831463410f364d43",
+    "RotationStatus": {
+      "RotationEnabled": false,
+      "RotationPeriodInDays": null
+    },
+    "Policy": {
+      "Version": "2012-10-17",
+      "Id": "key-consolepolicy-3",
+      "Statement": [
+        {
+          "Sid": "Enable IAM User Permissions",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:root"
+          },
+          "Action": "kms:*",
+          "Resource": "*"
+        },
+        {
+          "Sid": "Allow use of the KMS key for organization",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "kms:Decrypt",
+            "kms:DescribeKey",
+            "kms:GenerateDataKey*",
+            "kms:Encrypt",
+            "kms:ReEncrypt*",
+            "kms:GetKeyPolicy",
+            "kms:CreateGrant",
+            "kms:ListGrants",
+            "kms:RevokeGrant"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "aws:PrincipalOrgID": "o-adf95fr1li"
+            }
+          }
+        }
+      ]
+    }
+  }
+]

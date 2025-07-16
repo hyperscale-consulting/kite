@@ -1,0 +1,2298 @@
+[
+  {
+    "PolicyName": "access-foo-secrets",
+    "PolicyId": "ANPA6AUBOEJMA4ZQY7WOI",
+    "Arn": "arn:aws:iam::111111111111:policy/access-foo-secrets",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2023-05-11 17:14:52+00:00",
+    "UpdateDate": "2023-05-11 17:14:52+00:00",
+    "PolicyDocument": {
+      "PolicyName": "access-foo-secrets",
+      "PolicyId": "ANPA6AUBOEJMA4ZQY7WOI",
+      "Arn": "arn:aws:iam::111111111111:policy/access-foo-secrets",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2023-05-11 17:14:52+00:00",
+      "UpdateDate": "2023-05-11 17:14:52+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": "secretsmanager:GetSecretValue",
+            "Effect": "Allow",
+            "Resource": "arn:aws:secretsmanager:*:111111111111:secret:*",
+            "Sid": "VisualEditor0"
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "start-pipeline-execution-us-west-2-aws-docker-pipeline-test",
+    "PolicyId": "ANPA6AUBOEJMAGZFE53QQ",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/start-pipeline-execution-us-west-2-aws-docker-pipeline-test",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v2",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-07 15:27:07+00:00",
+    "UpdateDate": "2022-05-07 15:27:07+00:00",
+    "PolicyDocument": {
+      "PolicyName": "start-pipeline-execution-us-west-2-aws-docker-pipeline-test",
+      "PolicyId": "ANPA6AUBOEJMAGZFE53QQ",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/start-pipeline-execution-us-west-2-aws-docker-pipeline-test",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v2",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Allows Amazon CloudWatch Events to automatically start a new execution in the aws-docker-pipeline-test pipeline when a change occurs",
+      "CreateDate": "2022-05-07 15:27:07+00:00",
+      "UpdateDate": "2022-05-07 15:27:07+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "codepipeline:StartPipelineExecution"
+            ],
+            "Resource": [
+              "arn:aws:codepipeline:us-west-2:111111111111:aws-docker-pipeline-test"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-create-logs",
+    "PolicyId": "ANPA6AUBOEJMAQEGY4NLS",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-create-logs",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2023-05-12 09:04:56+00:00",
+    "UpdateDate": "2023-05-12 09:04:56+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-create-logs",
+      "PolicyId": "ANPA6AUBOEJMAQEGY4NLS",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-create-logs",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Can create logs.",
+      "CreateDate": "2023-05-12 09:04:56+00:00",
+      "UpdateDate": "2023-05-12 09:04:56+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": "logs:CreateLogGroup",
+            "Effect": "Allow",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:*"
+            ]
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "EnableExplorerPolicy",
+    "PolicyId": "ANPA6AUBOEJMAYD32A7WD",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/EnableExplorerPolicy",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2025-06-23 15:07:45+00:00",
+    "UpdateDate": "2025-06-23 15:07:45+00:00",
+    "PolicyDocument": {
+      "PolicyName": "EnableExplorerPolicy",
+      "PolicyId": "ANPA6AUBOEJMAYD32A7WD",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/EnableExplorerPolicy",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2025-06-23 15:07:45+00:00",
+      "UpdateDate": "2025-06-23 15:07:45+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "ExplorerReadOnlyPermissions",
+            "Action": [
+              "iam:ListRoles",
+              "config:DescribeConfigurationRecorders",
+              "compute-optimizer:GetEnrollmentStatus",
+              "support:DescribeTrustedAdvisorChecks"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+          },
+          {
+            "Sid": "ExplorerServiceSettingsUpdatePermissions",
+            "Action": [
+              "ssm:UpdateServiceSetting",
+              "ssm:GetServiceSetting"
+            ],
+            "Resource": [
+              "arn:aws:ssm:*:111111111111:servicesetting/ssm/opsitem/ssm-patchmanager",
+              "arn:aws:ssm:*:111111111111:servicesetting/ssm/opsitem/EC2",
+              "arn:aws:ssm:*:111111111111:servicesetting/ssm/opsdata/ExplorerOnboarded",
+              "arn:aws:ssm:*:111111111111:servicesetting/ssm/opsdata/Association",
+              "arn:aws:ssm:*:111111111111:servicesetting/ssm/opsdata/ComputeOptimizer",
+              "arn:aws:ssm:*:111111111111:servicesetting/ssm/opsdata/ConfigCompliance",
+              "arn:aws:ssm:*:111111111111:servicesetting/ssm/opsdata/OpsData-TrustedAdvisor",
+              "arn:aws:ssm:*:111111111111:servicesetting/ssm/opsdata/SupportCenterCase"
+            ],
+            "Effect": "Allow"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSLambdaBasicExecutionRole-8472224f-a5e2-45b7-99f8-aa811a2a3bcf",
+    "PolicyId": "ANPA6AUBOEJMCFJIB3JOO",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-8472224f-a5e2-45b7-99f8-aa811a2a3bcf",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-01 18:12:20+00:00",
+    "UpdateDate": "2022-05-01 18:12:20+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSLambdaBasicExecutionRole-8472224f-a5e2-45b7-99f8-aa811a2a3bcf",
+      "PolicyId": "ANPA6AUBOEJMCFJIB3JOO",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-8472224f-a5e2-45b7-99f8-aa811a2a3bcf",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-01 18:12:20+00:00",
+      "UpdateDate": "2022-05-01 18:12:20+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-email-forward-booking-reports:*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "CodeBuildBasePolicy-foo-web-server-us-west-2",
+    "PolicyId": "ANPA6AUBOEJMCN4PPTB3N",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/CodeBuildBasePolicy-foo-web-server-us-west-2",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-08 18:28:24+00:00",
+    "UpdateDate": "2022-05-08 18:28:24+00:00",
+    "PolicyDocument": {
+      "PolicyName": "CodeBuildBasePolicy-foo-web-server-us-west-2",
+      "PolicyId": "ANPA6AUBOEJMCN4PPTB3N",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/CodeBuildBasePolicy-foo-web-server-us-west-2",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Policy used in trust relationship with CodeBuild",
+      "CreateDate": "2022-05-08 18:28:24+00:00",
+      "UpdateDate": "2022-05-08 18:28:24+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/codebuild/foo-web-server",
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/codebuild/foo-web-server:*"
+            ],
+            "Action": [
+              "logs:CreateLogGroup",
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ]
+          },
+          {
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:s3:::codepipeline-us-west-2-*"
+            ],
+            "Action": [
+              "s3:PutObject",
+              "s3:GetObject",
+              "s3:GetObjectVersion",
+              "s3:GetBucketAcl",
+              "s3:GetBucketLocation"
+            ]
+          },
+          {
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:codecommit:us-west-2:111111111111:foo"
+            ],
+            "Action": [
+              "codecommit:GitPull"
+            ]
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "codebuild:CreateReportGroup",
+              "codebuild:CreateReport",
+              "codebuild:UpdateReport",
+              "codebuild:BatchPutTestCases",
+              "codebuild:BatchPutCodeCoverages"
+            ],
+            "Resource": [
+              "arn:aws:codebuild:us-west-2:111111111111:report-group/foo-web-server-*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "OpsItem-CWE-RolePolicy",
+    "PolicyId": "ANPA6AUBOEJMDF5Q7OZOM",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/OpsItem-CWE-RolePolicy",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-04-22 16:24:27+00:00",
+    "UpdateDate": "2022-04-22 16:24:27+00:00",
+    "PolicyDocument": {
+      "PolicyName": "OpsItem-CWE-RolePolicy",
+      "PolicyId": "ANPA6AUBOEJMDF5Q7OZOM",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/OpsItem-CWE-RolePolicy",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-04-22 16:24:27+00:00",
+      "UpdateDate": "2022-04-22 16:24:27+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "ssm:CreateOpsItem",
+            "Resource": "*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": "ssm:AddTagsToResource",
+            "Resource": "arn:aws:ssm:*:*:opsitem/*"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-admin-db-migrate-role",
+    "PolicyId": "ANPA6AUBOEJMDGQE4BXIN",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-admin-db-migrate-role",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2023-05-12 09:37:07+00:00",
+    "UpdateDate": "2023-05-12 09:37:07+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-admin-db-migrate-role",
+      "PolicyId": "ANPA6AUBOEJMDGQE4BXIN",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-admin-db-migrate-role",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Admin the DB migrate role",
+      "CreateDate": "2023-05-12 09:37:07+00:00",
+      "UpdateDate": "2023-05-12 09:37:07+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "iam:CreateRole",
+              "iam:GetRole",
+              "iam:ListRolePolicies",
+              "iam:ListAttachedRolePolicies",
+              "iam:ListInstanceProfiles",
+              "iam:ListRoles"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:iam::111111111111:role/ecr-task-foo-db-migrate"
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSLambdaBasicExecutionRole-a899a172-2b96-40bc-a1fe-9a20054e7866",
+    "PolicyId": "ANPA6AUBOEJMDLEIVFZJX",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-a899a172-2b96-40bc-a1fe-9a20054e7866",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-01 16:19:49+00:00",
+    "UpdateDate": "2022-05-01 16:19:49+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSLambdaBasicExecutionRole-a899a172-2b96-40bc-a1fe-9a20054e7866",
+      "PolicyId": "ANPA6AUBOEJMDLEIVFZJX",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-a899a172-2b96-40bc-a1fe-9a20054e7866",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-01 16:19:49+00:00",
+      "UpdateDate": "2022-05-01 16:19:49+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-pull-reservations:*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-read-email-secret",
+    "PolicyId": "ANPA6AUBOEJMDNJJTMN7O",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-read-email-secret",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-02 12:03:40+00:00",
+    "UpdateDate": "2022-05-02 12:03:40+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-read-email-secret",
+      "PolicyId": "ANPA6AUBOEJMDNJJTMN7O",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-read-email-secret",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-02 12:03:40+00:00",
+      "UpdateDate": "2022-05-02 12:03:40+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "secretsmanager:GetSecretValue",
+            "Resource": "arn:aws:secretsmanager:us-west-2:111111111111:secret:prod/foo-webserver/email-9jb53N"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-admin-ecs-cluster",
+    "PolicyId": "ANPA6AUBOEJMDYJKYLTAC",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-admin-ecs-cluster",
+    "Path": "/",
+    "DefaultVersionId": "v7",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2023-05-12 13:24:37+00:00",
+    "UpdateDate": "2025-03-12 09:04:35+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-admin-ecs-cluster",
+      "PolicyId": "ANPA6AUBOEJMDYJKYLTAC",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-admin-ecs-cluster",
+      "Path": "/",
+      "DefaultVersionId": "v7",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Can admin FOO ECS cluster.",
+      "CreateDate": "2023-05-12 13:24:37+00:00",
+      "UpdateDate": "2025-03-12 09:04:35+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "elasticloadbalancing:DescribeTargetGroups",
+              "ec2:DescribeAvailabilityZones",
+              "ec2:DescribeSecurityGroups",
+              "ec2:DescribeSubnets",
+              "elasticloadbalancing:DescribeTargetGroupAttributes",
+              "elasticloadbalancing:DescribeTags"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+          },
+          {
+            "Action": [
+              "application-autoscaling:DescribeScalableTargets",
+              "application-autoscaling:RegisterScalableTarget"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:application-autoscaling:us-west-2:111111111111:scalable-target/*"
+          },
+          {
+            "Action": [
+              "application-autoscaling:DescribeScalingPolicies"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:application-autoscaling:us-west-2:111111111111:scalable-target/*"
+          },
+          {
+            "Action": [
+              "iam:PassRole"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:iam::111111111111:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
+          },
+          {
+            "Action": [
+              "ecs:UpdateService"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:ecs:us-west-2:111111111111:service/*"
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSLambdaBasicExecutionRole-e062a7ce-30dc-48bf-8d37-119dd15bc535",
+    "PolicyId": "ANPA6AUBOEJME3R44XPB2",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-e062a7ce-30dc-48bf-8d37-119dd15bc535",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2025-05-31 16:33:55+00:00",
+    "UpdateDate": "2025-05-31 16:33:55+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSLambdaBasicExecutionRole-e062a7ce-30dc-48bf-8d37-119dd15bc535",
+      "PolicyId": "ANPA6AUBOEJME3R44XPB2",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-e062a7ce-30dc-48bf-8d37-119dd15bc535",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2025-05-31 16:33:55+00:00",
+      "UpdateDate": "2025-05-31 16:33:55+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-email-caretaker-forward-booking-reports:*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "cloudwatch-write-logs",
+    "PolicyId": "ANPA6AUBOEJMEDEYR4LCB",
+    "Arn": "arn:aws:iam::111111111111:policy/cloudwatch-write-logs",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-03-25 12:40:46+00:00",
+    "UpdateDate": "2022-03-25 12:40:46+00:00",
+    "PolicyDocument": {
+      "PolicyName": "cloudwatch-write-logs",
+      "PolicyId": "ANPA6AUBOEJMEDEYR4LCB",
+      "Arn": "arn:aws:iam::111111111111:policy/cloudwatch-write-logs",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-03-25 12:40:46+00:00",
+      "UpdateDate": "2022-03-25 12:40:46+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogGroup",
+              "logs:CreateLogStream",
+              "logs:PutLogEvents",
+              "logs:DescribeLogGroups",
+              "logs:DescribeLogStreams"
+            ],
+            "Resource": "*"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSControlTowerAdminPolicy",
+    "PolicyId": "ANPA6AUBOEJMEESWEN43G",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSControlTowerAdminPolicy",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2024-03-23 11:52:31+00:00",
+    "UpdateDate": "2024-03-23 11:52:31+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSControlTowerAdminPolicy",
+      "PolicyId": "ANPA6AUBOEJMEESWEN43G",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSControlTowerAdminPolicy",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "AWS Control Tower policy to manage AWS resources",
+      "CreateDate": "2024-03-23 11:52:31+00:00",
+      "UpdateDate": "2024-03-23 11:52:31+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "ec2:DescribeAvailabilityZones",
+            "Resource": "*"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "CodeBuildVpcPolicy-foo-web-server-us-west-2",
+    "PolicyId": "ANPA6AUBOEJMEQHC3CCYG",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/CodeBuildVpcPolicy-foo-web-server-us-west-2",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-08 18:28:25+00:00",
+    "UpdateDate": "2022-05-08 18:28:25+00:00",
+    "PolicyDocument": {
+      "PolicyName": "CodeBuildVpcPolicy-foo-web-server-us-west-2",
+      "PolicyId": "ANPA6AUBOEJMEQHC3CCYG",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/CodeBuildVpcPolicy-foo-web-server-us-west-2",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Policy used in trust relationship with CodeBuild",
+      "CreateDate": "2022-05-08 18:28:25+00:00",
+      "UpdateDate": "2022-05-08 18:28:25+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "ec2:CreateNetworkInterface",
+              "ec2:DescribeDhcpOptions",
+              "ec2:DescribeNetworkInterfaces",
+              "ec2:DeleteNetworkInterface",
+              "ec2:DescribeSubnets",
+              "ec2:DescribeSecurityGroups",
+              "ec2:DescribeVpcs"
+            ],
+            "Resource": "*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "ec2:CreateNetworkInterfacePermission"
+            ],
+            "Resource": "arn:aws:ec2:us-west-2:111111111111:network-interface/*",
+            "Condition": {
+              "StringEquals": {
+                "ec2:Subnet": [
+                  "arn:aws:ec2:us-west-2:111111111111:subnet/subnet-04b82afe6428d3840"
+                ],
+                "ec2:AuthorizedService": "codebuild.amazonaws.com"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSLambdaBasicExecutionRole-ddf11df7-bd50-47c8-b396-33a2a315ce51",
+    "PolicyId": "ANPA6AUBOEJMFA6J3DNZA",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-ddf11df7-bd50-47c8-b396-33a2a315ce51",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-06-12 16:05:17+00:00",
+    "UpdateDate": "2022-06-12 16:05:17+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSLambdaBasicExecutionRole-ddf11df7-bd50-47c8-b396-33a2a315ce51",
+      "PolicyId": "ANPA6AUBOEJMFA6J3DNZA",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-ddf11df7-bd50-47c8-b396-33a2a315ce51",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-06-12 16:05:17+00:00",
+      "UpdateDate": "2022-06-12 16:05:17+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/testymctest:*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSLambdaBasicExecutionRole-86afa844-23fa-4caa-b07d-72a4dc1d0be4",
+    "PolicyId": "ANPA6AUBOEJMFEWX2UXGE",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-86afa844-23fa-4caa-b07d-72a4dc1d0be4",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-02 10:47:11+00:00",
+    "UpdateDate": "2022-05-02 10:47:11+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSLambdaBasicExecutionRole-86afa844-23fa-4caa-b07d-72a4dc1d0be4",
+      "PolicyId": "ANPA6AUBOEJMFEWX2UXGE",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-86afa844-23fa-4caa-b07d-72a4dc1d0be4",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-02 10:47:11+00:00",
+      "UpdateDate": "2022-05-02 10:47:11+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-send-mail:*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "CloudTrailPolicyForCloudWatchLogs_779b4b85-02df-4fcd-8486-a1676ded815e",
+    "PolicyId": "ANPA6AUBOEJMFIM46POEY",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/CloudTrailPolicyForCloudWatchLogs_779b4b85-02df-4fcd-8486-a1676ded815e",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-03-28 09:50:55+00:00",
+    "UpdateDate": "2022-03-28 09:50:55+00:00",
+    "PolicyDocument": {
+      "PolicyName": "CloudTrailPolicyForCloudWatchLogs_779b4b85-02df-4fcd-8486-a1676ded815e",
+      "PolicyId": "ANPA6AUBOEJMFIM46POEY",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/CloudTrailPolicyForCloudWatchLogs_779b4b85-02df-4fcd-8486-a1676ded815e",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "CloudTrail role to send logs to CloudWatch Logs",
+      "CreateDate": "2022-03-28 09:50:55+00:00",
+      "UpdateDate": "2022-03-28 09:50:55+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "AWSCloudTrailCreateLogStream2014110",
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:aws-cloudtrail-logs-111111111111-f3858819:log-stream:111111111111_CloudTrail_us-west-2*"
+            ]
+          },
+          {
+            "Sid": "AWSCloudTrailPutLogEvents20141101",
+            "Effect": "Allow",
+            "Action": [
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:aws-cloudtrail-logs-111111111111-f3858819:log-stream:111111111111_CloudTrail_us-west-2*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "CloudTrailPolicyForCloudWatchLogs_524f97a6-0975-45fe-add1-dbba74d793ca",
+    "PolicyId": "ANPA6AUBOEJMFSXRAZKF7",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/CloudTrailPolicyForCloudWatchLogs_524f97a6-0975-45fe-add1-dbba74d793ca",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-03-28 09:44:02+00:00",
+    "UpdateDate": "2022-03-28 09:44:02+00:00",
+    "PolicyDocument": {
+      "PolicyName": "CloudTrailPolicyForCloudWatchLogs_524f97a6-0975-45fe-add1-dbba74d793ca",
+      "PolicyId": "ANPA6AUBOEJMFSXRAZKF7",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/CloudTrailPolicyForCloudWatchLogs_524f97a6-0975-45fe-add1-dbba74d793ca",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "CloudTrail role to send logs to CloudWatch Logs",
+      "CreateDate": "2022-03-28 09:44:02+00:00",
+      "UpdateDate": "2022-03-28 09:44:02+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "AWSCloudTrailCreateLogStream2014110",
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-east-1:111111111111:log-group:aws-cloudtrail-logs-111111111111-8451f421:log-stream:111111111111_CloudTrail_us-east-1*"
+            ]
+          },
+          {
+            "Sid": "AWSCloudTrailPutLogEvents20141101",
+            "Effect": "Allow",
+            "Action": [
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-east-1:111111111111:log-group:aws-cloudtrail-logs-111111111111-8451f421:log-stream:111111111111_CloudTrail_us-east-1*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSLambdaBasicExecutionRole-fb0e47f0-601b-464b-87e5-25426b5e7cfd",
+    "PolicyId": "ANPA6AUBOEJMFVZNPBVCY",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-fb0e47f0-601b-464b-87e5-25426b5e7cfd",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-01 17:45:21+00:00",
+    "UpdateDate": "2022-05-01 17:45:21+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSLambdaBasicExecutionRole-fb0e47f0-601b-464b-87e5-25426b5e7cfd",
+      "PolicyId": "ANPA6AUBOEJMFVZNPBVCY",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-fb0e47f0-601b-464b-87e5-25426b5e7cfd",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-01 17:45:21+00:00",
+      "UpdateDate": "2022-05-01 17:45:21+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-send-balance-due-reminders:*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "AWS-Systems-Manager-Incident-Manager-Automation-Policy-61e00f32-f41e-4507-8ac7-0cec7744c804",
+    "PolicyId": "ANPA6AUBOEJMGKCATHNLB",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWS-Systems-Manager-Incident-Manager-Automation-Policy-61e00f32-f41e-4507-8ac7-0cec7744c804",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2025-06-25 10:39:20+00:00",
+    "UpdateDate": "2025-06-25 10:39:20+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWS-Systems-Manager-Incident-Manager-Automation-Policy-61e00f32-f41e-4507-8ac7-0cec7744c804",
+      "PolicyId": "ANPA6AUBOEJMGKCATHNLB",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWS-Systems-Manager-Incident-Manager-Automation-Policy-61e00f32-f41e-4507-8ac7-0cec7744c804",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Allows AWS Systems Manager Incident Manager to execute one of your automation documents when an incident starts",
+      "CreateDate": "2025-06-25 10:39:20+00:00",
+      "UpdateDate": "2025-06-25 10:39:20+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "ssm:StartAutomationExecution",
+            "Resource": [
+              "arn:aws:ssm:*:111111111111:automation-definition/test-response-plan-runbook:*",
+              "arn:aws:ssm:*:111111111111:document/test-response-plan-runbook:*",
+              "arn:aws:ssm:*::automation-definition/test-response-plan-runbook:*"
+            ]
+          },
+          {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRole",
+            "Resource": "arn:aws:iam::*:role/AWS-SystemsManager-AutomationExecutionRole",
+            "Condition": {
+              "StringEquals": {
+                "aws:CalledViaLast": "ssm.amazonaws.com"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "secretmanager-read-secrets",
+    "PolicyId": "ANPA6AUBOEJMGLTDVLMMY",
+    "Arn": "arn:aws:iam::111111111111:policy/secretmanager-read-secrets",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-08 14:27:07+00:00",
+    "UpdateDate": "2022-05-08 14:27:07+00:00",
+    "PolicyDocument": {
+      "PolicyName": "secretmanager-read-secrets",
+      "PolicyId": "ANPA6AUBOEJMGLTDVLMMY",
+      "Arn": "arn:aws:iam::111111111111:policy/secretmanager-read-secrets",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-08 14:27:07+00:00",
+      "UpdateDate": "2022-05-08 14:27:07+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "secretsmanager:GetSecretValue",
+            "Resource": "arn:aws:secretsmanager:*:111111111111:secret:*"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "CodeBuildBasePolicy-aws-docker-pipeline-test-us-west-2",
+    "PolicyId": "ANPA6AUBOEJMGW7NKM4ZN",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/CodeBuildBasePolicy-aws-docker-pipeline-test-us-west-2",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-07 15:24:17+00:00",
+    "UpdateDate": "2022-05-07 15:24:17+00:00",
+    "PolicyDocument": {
+      "PolicyName": "CodeBuildBasePolicy-aws-docker-pipeline-test-us-west-2",
+      "PolicyId": "ANPA6AUBOEJMGW7NKM4ZN",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/CodeBuildBasePolicy-aws-docker-pipeline-test-us-west-2",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Policy used in trust relationship with CodeBuild",
+      "CreateDate": "2022-05-07 15:24:17+00:00",
+      "UpdateDate": "2022-05-07 15:24:17+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/codebuild/aws-docker-pipeline-test",
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/codebuild/aws-docker-pipeline-test:*"
+            ],
+            "Action": [
+              "logs:CreateLogGroup",
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ]
+          },
+          {
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:s3:::codepipeline-us-west-2-*"
+            ],
+            "Action": [
+              "s3:PutObject",
+              "s3:GetObject",
+              "s3:GetObjectVersion",
+              "s3:GetBucketAcl",
+              "s3:GetBucketLocation"
+            ]
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "codebuild:CreateReportGroup",
+              "codebuild:CreateReport",
+              "codebuild:UpdateReport",
+              "codebuild:BatchPutTestCases",
+              "codebuild:BatchPutCodeCoverages"
+            ],
+            "Resource": [
+              "arn:aws:codebuild:us-west-2:111111111111:report-group/aws-docker-pipeline-test-*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "CloudWatchSyntheticsPolicy-foo-basic-canary-286-8d37e41fd9e5",
+    "PolicyId": "ANPA6AUBOEJMHHETBART2",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/CloudWatchSyntheticsPolicy-foo-basic-canary-286-8d37e41fd9e5",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-04-23 14:28:43+00:00",
+    "UpdateDate": "2022-04-23 14:28:43+00:00",
+    "PolicyDocument": {
+      "PolicyName": "CloudWatchSyntheticsPolicy-foo-basic-canary-286-8d37e41fd9e5",
+      "PolicyId": "ANPA6AUBOEJMHHETBART2",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/CloudWatchSyntheticsPolicy-foo-basic-canary-286-8d37e41fd9e5",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-04-23 14:28:43+00:00",
+      "UpdateDate": "2022-04-23 14:28:43+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "s3:PutObject",
+              "s3:GetObject"
+            ],
+            "Resource": [
+              "arn:aws:s3:::cw-syn-results-111111111111-us-west-2/canary/us-west-2/foo-basic-canary-286-8d37e41fd9e5/*"
+            ]
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "s3:GetBucketLocation"
+            ],
+            "Resource": [
+              "arn:aws:s3:::cw-syn-results-111111111111-us-west-2"
+            ]
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents",
+              "logs:CreateLogGroup"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/cwsyn-foo-basic-canary-*"
+            ]
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "s3:ListAllMyBuckets",
+              "xray:PutTraceSegments"
+            ],
+            "Resource": [
+              "*"
+            ]
+          },
+          {
+            "Effect": "Allow",
+            "Resource": "*",
+            "Action": "cloudwatch:PutMetricData",
+            "Condition": {
+              "StringEquals": {
+                "cloudwatch:namespace": "CloudWatchSynthetics"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "invoice_generation_requestor",
+    "PolicyId": "ANPA6AUBOEJMHVGUBSFND",
+    "Arn": "arn:aws:iam::111111111111:policy/invoice_generation_requestor",
+    "Path": "/",
+    "DefaultVersionId": "v2",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2024-06-08 10:04:52+00:00",
+    "UpdateDate": "2024-06-09 08:03:38+00:00",
+    "PolicyDocument": {
+      "PolicyName": "invoice_generation_requestor",
+      "PolicyId": "ANPA6AUBOEJMHVGUBSFND",
+      "Arn": "arn:aws:iam::111111111111:policy/invoice_generation_requestor",
+      "Path": "/",
+      "DefaultVersionId": "v2",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2024-06-08 10:04:52+00:00",
+      "UpdateDate": "2024-06-09 08:03:38+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": "sqs:SendMessage",
+            "Effect": "Allow",
+            "Resource": "arn:aws:sqs:eu-west-2:444444444444:serverlessrepo-example-Bookingdes-InvoiceRequestQueue-PMxjGXmXGCuC",
+            "Sid": "AllowSendInvoiceGenerationRequests"
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "ReadFOOMgmtAPIKey",
+    "PolicyId": "ANPA6AUBOEJMJD6BMRBJY",
+    "Arn": "arn:aws:iam::111111111111:policy/ReadFOOMgmtAPIKey",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-01 17:27:00+00:00",
+    "UpdateDate": "2022-05-01 17:27:00+00:00",
+    "PolicyDocument": {
+      "PolicyName": "ReadFOOMgmtAPIKey",
+      "PolicyId": "ANPA6AUBOEJMJD6BMRBJY",
+      "Arn": "arn:aws:iam::111111111111:policy/ReadFOOMgmtAPIKey",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-01 17:27:00+00:00",
+      "UpdateDate": "2022-05-01 17:27:00+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "secretsmanager:GetSecretValue",
+            "Resource": "arn:aws:secretsmanager:us-west-2:111111111111:secret:prod/foo-webserver/mgmt-api-key-7p7eeH"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "ecs-exec",
+    "PolicyId": "ANPA6AUBOEJMJH6ZVGDKO",
+    "Arn": "arn:aws:iam::111111111111:policy/ecs-exec",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-11-13 13:43:37+00:00",
+    "UpdateDate": "2022-11-13 13:43:37+00:00",
+    "PolicyDocument": {
+      "PolicyName": "ecs-exec",
+      "PolicyId": "ANPA6AUBOEJMJH6ZVGDKO",
+      "Arn": "arn:aws:iam::111111111111:policy/ecs-exec",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-11-13 13:43:37+00:00",
+      "UpdateDate": "2022-11-13 13:43:37+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "ssmmessages:CreateControlChannel",
+              "ssmmessages:CreateDataChannel",
+              "ssmmessages:OpenControlChannel",
+              "ssmmessages:OpenDataChannel"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "nightly-build-1652360275808",
+    "PolicyId": "ANPA6AUBOEJMKA7AC7ALO",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/nightly-build-1652360275808",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-12 12:57:56+00:00",
+    "UpdateDate": "2022-05-12 12:57:56+00:00",
+    "PolicyDocument": {
+      "PolicyName": "nightly-build-1652360275808",
+      "PolicyId": "ANPA6AUBOEJMKA7AC7ALO",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/nightly-build-1652360275808",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Policy used in trust relationship with CloudWatchEvents to trigger CodeBuild target",
+      "CreateDate": "2022-05-12 12:57:56+00:00",
+      "UpdateDate": "2022-05-12 12:57:56+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "codebuild:StartBuild"
+            ],
+            "Resource": [
+              "arn:aws:codebuild:us-west-2:111111111111:project/foo-web-server"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-admin-foo-task-def",
+    "PolicyId": "ANPA6AUBOEJMKCL6TJHVX",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-admin-foo-task-def",
+    "Path": "/",
+    "DefaultVersionId": "v5",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2023-05-12 13:18:20+00:00",
+    "UpdateDate": "2025-03-01 13:55:16+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-admin-foo-task-def",
+      "PolicyId": "ANPA6AUBOEJMKCL6TJHVX",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-admin-foo-task-def",
+      "Path": "/",
+      "DefaultVersionId": "v5",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Admin FOO task def",
+      "CreateDate": "2023-05-12 13:18:20+00:00",
+      "UpdateDate": "2025-03-01 13:55:16+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "secretsmanager:DescribeSecret",
+              "secretsmanager:GetResourcePolicy"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:secretsmanager:us-west-2:111111111111:secret:prod/foo-webserver/django-secret-key-SrjVth",
+              "arn:aws:secretsmanager:us-west-2:111111111111:secret:prod/foo-webserver/mgmt-api-key-7p7eeH",
+              "arn:aws:secretsmanager:us-west-2:111111111111:secret:prod/foo-webserver/email-9jb53N",
+              "arn:aws:secretsmanager:us-west-2:111111111111:secret:prod/foo-webserver/rentalsunitedapi-mdhIVZ",
+              "arn:aws:secretsmanager:us-west-2:111111111111:secret:prod/foo-webserver/sagepay-Xinwwl",
+              "arn:aws:secretsmanager:us-west-2:111111111111:secret:prod/foo-webserver/paypal-gRgKAs",
+              "arn:aws:secretsmanager:us-west-2:111111111111:secret:prod/foo-webserver/db-Ja7Bjp"
+            ]
+          },
+          {
+            "Action": "logs:DescribeLogGroups",
+            "Effect": "Allow",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:log-group::log-stream:"
+          },
+          {
+            "Action": "logs:ListTagsLogGroup",
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/ecs/foo-db-migrate:log-stream:",
+              "arn:aws:logs:us-west-2:111111111111:log-group:/ecs/foo-web-server:log-stream:"
+            ]
+          },
+          {
+            "Action": "iam:GetRole",
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:iam::111111111111:role/ecsTaskExecutionRole",
+              "arn:aws:iam::111111111111:role/ecr-task-foo-web-server"
+            ]
+          },
+          {
+            "Action": [
+              "sqs:ListQueues",
+              "sqs:ListQueueTags",
+              "sqs:GetQueueUrl",
+              "sqs:GetQueueAttributes"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:sqs:us-west-2:111111111111:foo-mail-queue.fifo",
+              "arn:aws:sqs:us-west-2:111111111111:foo-events"
+            ]
+          },
+          {
+            "Action": [
+              "ecs:DeregisterTaskDefinition",
+              "ecs:RegisterTaskDefinition"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSControlTowerStackSetRolePolicy",
+    "PolicyId": "ANPA6AUBOEJMKTDG3OSNU",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSControlTowerStackSetRolePolicy",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2024-03-23 11:52:32+00:00",
+    "UpdateDate": "2024-03-23 11:52:32+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSControlTowerStackSetRolePolicy",
+      "PolicyId": "ANPA6AUBOEJMKTDG3OSNU",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSControlTowerStackSetRolePolicy",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "AWS CloudFormation assumes this role to deploy stacksets in the shared AWS Control Tower accounts",
+      "CreateDate": "2024-03-23 11:52:32+00:00",
+      "UpdateDate": "2024-03-23 11:52:32+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": [
+              "sts:AssumeRole"
+            ],
+            "Resource": [
+              "arn:aws:iam::*:role/AWSControlTowerExecution"
+            ],
+            "Effect": "Allow"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-push-image",
+    "PolicyId": "ANPA6AUBOEJML3LIDA544",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-push-image",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2023-05-12 09:18:01+00:00",
+    "UpdateDate": "2023-05-12 09:18:01+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-push-image",
+      "PolicyId": "ANPA6AUBOEJML3LIDA544",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-push-image",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Allows pushing and tagging an image in the foo-web-server ECR registry",
+      "CreateDate": "2023-05-12 09:18:01+00:00",
+      "UpdateDate": "2023-05-12 09:18:01+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "ecr:UntagResource",
+              "ecr:GetDownloadUrlForLayer",
+              "ecr:BatchGetImage",
+              "ecr:CompleteLayerUpload",
+              "ecr:DescribeImages",
+              "ecr:TagResource",
+              "ecr:DescribeRepositories",
+              "ecr:ListTagsForResource",
+              "ecr:UploadLayerPart",
+              "ecr:InitiateLayerUpload",
+              "ecr:BatchCheckLayerAvailability",
+              "ecr:PutImage"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:ecr:us-west-2:111111111111:repository/foo-web-server",
+            "Sid": "AllowECRPublish"
+          },
+          {
+            "Action": "ecr:GetAuthorizationToken",
+            "Effect": "Allow",
+            "Resource": "*",
+            "Sid": "AllowGetAuthToken"
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "start-pipeline-execution-us-west-2-foo-web-server",
+    "PolicyId": "ANPA6AUBOEJMLBX7VA22X",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/start-pipeline-execution-us-west-2-foo-web-server",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v2",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-08 18:31:57+00:00",
+    "UpdateDate": "2022-05-08 18:31:58+00:00",
+    "PolicyDocument": {
+      "PolicyName": "start-pipeline-execution-us-west-2-foo-web-server",
+      "PolicyId": "ANPA6AUBOEJMLBX7VA22X",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/start-pipeline-execution-us-west-2-foo-web-server",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v2",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Allows Amazon CloudWatch Events to automatically start a new execution in the foo-web-server pipeline when a change occurs",
+      "CreateDate": "2022-05-08 18:31:57+00:00",
+      "UpdateDate": "2022-05-08 18:31:58+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "codepipeline:StartPipelineExecution"
+            ],
+            "Resource": [
+              "arn:aws:codepipeline:us-west-2:111111111111:foo-web-server"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-run_foo_web_server_task",
+    "PolicyId": "ANPA6AUBOEJMLECUD5ZYR",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-run_foo_web_server_task",
+    "Path": "/",
+    "DefaultVersionId": "v4",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2025-04-08 12:17:40+00:00",
+    "UpdateDate": "2025-04-08 12:50:28+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-run_foo_web_server_task",
+      "PolicyId": "ANPA6AUBOEJMLECUD5ZYR",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-run_foo_web_server_task",
+      "Path": "/",
+      "DefaultVersionId": "v4",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2025-04-08 12:17:40+00:00",
+      "UpdateDate": "2025-04-08 12:50:28+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "ecs:RunTask"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:ecs:us-west-2:111111111111:task-definition/foo-web-server:*"
+          },
+          {
+            "Action": [
+              "iam:PassRole"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:iam::111111111111:role/ecsTaskExecutionRole",
+              "arn:aws:iam::111111111111:role/ecr-task-foo-web-server"
+            ]
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-events-sqs-user",
+    "PolicyId": "ANPA6AUBOEJMM7FF2NNPO",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-events-sqs-user",
+    "Path": "/",
+    "DefaultVersionId": "v3",
+    "AttachmentCount": 2,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-03-23 10:39:59+00:00",
+    "UpdateDate": "2022-05-01 19:14:58+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-events-sqs-user",
+      "PolicyId": "ANPA6AUBOEJMM7FF2NNPO",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-events-sqs-user",
+      "Path": "/",
+      "DefaultVersionId": "v3",
+      "AttachmentCount": 2,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "EC2 role for sending and consuming to and from the foo-events SQS queue.",
+      "CreateDate": "2022-03-23 10:39:59+00:00",
+      "UpdateDate": "2022-05-01 19:14:58+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+              "sqs:DeleteMessage",
+              "sqs:ChangeMessageVisibility",
+              "sqs:ReceiveMessage",
+              "sqs:SendMessage",
+              "sqs:GetQueueAttributes"
+            ],
+            "Resource": "arn:aws:sqs:us-west-2:111111111111:foo-events"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSLambdaBasicExecutionRole-d28445a7-db8f-452b-bc6d-3848887d5f9c",
+    "PolicyId": "ANPA6AUBOEJMMCN2LZ2CR",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-d28445a7-db8f-452b-bc6d-3848887d5f9c",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-01 18:55:38+00:00",
+    "UpdateDate": "2022-05-01 18:55:38+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSLambdaBasicExecutionRole-d28445a7-db8f-452b-bc6d-3848887d5f9c",
+      "PolicyId": "ANPA6AUBOEJMMCN2LZ2CR",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-d28445a7-db8f-452b-bc6d-3848887d5f9c",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-01 18:55:38+00:00",
+      "UpdateDate": "2022-05-01 18:55:38+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-event-handler:*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSLambdaBasicExecutionRole-5adebdb1-555a-4b68-9261-56f724317bd7",
+    "PolicyId": "ANPA6AUBOEJMMGUI67GG6",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-5adebdb1-555a-4b68-9261-56f724317bd7",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-01 17:56:01+00:00",
+    "UpdateDate": "2022-05-01 17:56:01+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSLambdaBasicExecutionRole-5adebdb1-555a-4b68-9261-56f724317bd7",
+      "PolicyId": "ANPA6AUBOEJMMGUI67GG6",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-5adebdb1-555a-4b68-9261-56f724317bd7",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-01 17:56:01+00:00",
+      "UpdateDate": "2022-05-01 17:56:01+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-update-rentals-united-cache:*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "CodeBuildVpcPolicy-aws-docker-pipeline-test-us-west-2",
+    "PolicyId": "ANPA6AUBOEJMMJGQ7ZEQ5",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/CodeBuildVpcPolicy-aws-docker-pipeline-test-us-west-2",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-07 15:24:19+00:00",
+    "UpdateDate": "2022-05-07 15:24:19+00:00",
+    "PolicyDocument": {
+      "PolicyName": "CodeBuildVpcPolicy-aws-docker-pipeline-test-us-west-2",
+      "PolicyId": "ANPA6AUBOEJMMJGQ7ZEQ5",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/CodeBuildVpcPolicy-aws-docker-pipeline-test-us-west-2",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Policy used in trust relationship with CodeBuild",
+      "CreateDate": "2022-05-07 15:24:19+00:00",
+      "UpdateDate": "2022-05-07 15:24:19+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "ec2:CreateNetworkInterface",
+              "ec2:DescribeDhcpOptions",
+              "ec2:DescribeNetworkInterfaces",
+              "ec2:DeleteNetworkInterface",
+              "ec2:DescribeSubnets",
+              "ec2:DescribeSecurityGroups",
+              "ec2:DescribeVpcs"
+            ],
+            "Resource": "*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "ec2:CreateNetworkInterfacePermission"
+            ],
+            "Resource": "arn:aws:ec2:us-west-2:111111111111:network-interface/*",
+            "Condition": {
+              "StringEquals": {
+                "ec2:Subnet": [
+                  "arn:aws:ec2:us-west-2:111111111111:subnet/subnet-04b82afe6428d3840"
+                ],
+                "ec2:AuthorizedService": "codebuild.amazonaws.com"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-sqs-mail-sender",
+    "PolicyId": "ANPA6AUBOEJMMMZUCUM5L",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-sqs-mail-sender",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-02 13:54:04+00:00",
+    "UpdateDate": "2022-05-02 13:54:04+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-sqs-mail-sender",
+      "PolicyId": "ANPA6AUBOEJMMMZUCUM5L",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-sqs-mail-sender",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-02 13:54:04+00:00",
+      "UpdateDate": "2022-05-02 13:54:04+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "sqs:SendMessage",
+            "Resource": "arn:aws:sqs:us-west-2:111111111111:foo-mail-queue.fifo"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-run-foo-web-task",
+    "PolicyId": "ANPA6AUBOEJMN4QVBLBVP",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-run-foo-web-task",
+    "Path": "/",
+    "DefaultVersionId": "v5",
+    "AttachmentCount": 2,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2023-05-12 09:08:57+00:00",
+    "UpdateDate": "2024-03-23 11:25:21+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-run-foo-web-task",
+      "PolicyId": "ANPA6AUBOEJMN4QVBLBVP",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-run-foo-web-task",
+      "Path": "/",
+      "DefaultVersionId": "v5",
+      "AttachmentCount": 2,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Can run foo-web-server ECS tasks.",
+      "CreateDate": "2023-05-12 09:08:57+00:00",
+      "UpdateDate": "2024-03-23 11:25:21+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "ecs:DescribeCapacityProviders",
+              "ecs:ListTagsForResource",
+              "ecs:RunTask",
+              "ecs:ListAttributes",
+              "ecs:ListTasks",
+              "ecs:StartTask",
+              "ecs:DescribeServices",
+              "ecs:DescribeTaskSets",
+              "ecs:ListContainerInstances",
+              "ecs:DescribeContainerInstances",
+              "ecs:TagResource",
+              "ecs:DescribeClusters"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:ecs:us-west-2:111111111111:cluster/foo-web-cluster",
+              "arn:aws:ecs:us-west-2:111111111111:task-definition/foo-web-server:*",
+              "arn:aws:ecs:us-west-2:111111111111:task-definition/foo-web-server",
+              "arn:aws:ecs:us-west-2:111111111111:service/foo-web-cluster/foo-web-3",
+              "arn:aws:ecs:us-west-2:111111111111:capacity-provider/*",
+              "arn:aws:ecs:us-west-2:111111111111:task-set/foo-web-cluster/foo-web-3/*",
+              "arn:aws:ecs:us-west-2:111111111111:container-instance/foo-web-cluster/*",
+              "arn:aws:ecs:us-west-2:111111111111:task-definition/foo-db-migrate",
+              "arn:aws:ecs:us-west-2:111111111111:task-definition/foo-db-migrate:*"
+            ],
+            "Sid": "VisualEditor0"
+          },
+          {
+            "Action": [
+              "ecs:ListServices",
+              "ecs:ListAccountSettings",
+              "ecs:ListTaskDefinitionFamilies",
+              "ecs:ListTaskDefinitions",
+              "ecs:DescribeTaskDefinition",
+              "ecs:DescribeTasks",
+              "ecs:ListClusters"
+            ],
+            "Effect": "Allow",
+            "Resource": "*",
+            "Sid": "VisualEditor1"
+          },
+          {
+            "Action": "iam:PassRole",
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:iam::111111111111:role/ecsTaskExecutionRole",
+              "arn:aws:iam::111111111111:role/ecr-task-foo-web-server",
+              "arn:aws:iam::111111111111:role/ecr-task-foo-db-migrate"
+            ]
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSLambdaBasicExecutionRole-b6271421-24c3-44c8-ab1b-2170f63aab7c",
+    "PolicyId": "ANPA6AUBOEJMNDAYJMB6Q",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-b6271421-24c3-44c8-ab1b-2170f63aab7c",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-10-15 13:17:57+00:00",
+    "UpdateDate": "2022-10-15 13:17:57+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSLambdaBasicExecutionRole-b6271421-24c3-44c8-ab1b-2170f63aab7c",
+      "PolicyId": "ANPA6AUBOEJMNDAYJMB6Q",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-b6271421-24c3-44c8-ab1b-2170f63aab7c",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-10-15 13:17:57+00:00",
+      "UpdateDate": "2022-10-15 13:17:57+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/check-identifiers:*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSControlTowerCloudTrailRolePolicy",
+    "PolicyId": "ANPA6AUBOEJMNHGQ2DV2P",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSControlTowerCloudTrailRolePolicy",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2024-03-23 11:52:32+00:00",
+    "UpdateDate": "2024-03-23 11:52:32+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSControlTowerCloudTrailRolePolicy",
+      "PolicyId": "ANPA6AUBOEJMNHGQ2DV2P",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSControlTowerCloudTrailRolePolicy",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "AWS CloudTrail assumes this role to create and publish CloudTrail logs",
+      "CreateDate": "2024-03-23 11:52:32+00:00",
+      "UpdateDate": "2024-03-23 11:52:32+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": "logs:CreateLogStream",
+            "Resource": "arn:aws:logs:*:*:log-group:aws-controltower/CloudTrailLogs:*",
+            "Effect": "Allow"
+          },
+          {
+            "Action": "logs:PutLogEvents",
+            "Resource": "arn:aws:logs:*:*:log-group:aws-controltower/CloudTrailLogs:*",
+            "Effect": "Allow"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-sqs-mail-queue-consumer",
+    "PolicyId": "ANPA6AUBOEJMNPOKGT5TV",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-sqs-mail-queue-consumer",
+    "Path": "/",
+    "DefaultVersionId": "v2",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-02 13:50:46+00:00",
+    "UpdateDate": "2022-05-02 13:52:05+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-sqs-mail-queue-consumer",
+      "PolicyId": "ANPA6AUBOEJMNPOKGT5TV",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-sqs-mail-queue-consumer",
+      "Path": "/",
+      "DefaultVersionId": "v2",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-02 13:50:46+00:00",
+      "UpdateDate": "2022-05-02 13:52:05+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+              "sqs:DeleteMessage",
+              "sqs:ChangeMessageVisibility",
+              "sqs:ReceiveMessage",
+              "sqs:GetQueueAttributes"
+            ],
+            "Resource": "arn:aws:sqs:us-west-2:111111111111:foo-mail-queue.fifo"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "nightly-build-1652360331173",
+    "PolicyId": "ANPA6AUBOEJMNV2AACRZK",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/nightly-build-1652360331173",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-12 12:58:51+00:00",
+    "UpdateDate": "2022-05-12 12:58:51+00:00",
+    "PolicyDocument": {
+      "PolicyName": "nightly-build-1652360331173",
+      "PolicyId": "ANPA6AUBOEJMNV2AACRZK",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/nightly-build-1652360331173",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Policy used in trust relationship with CloudWatchEvents to trigger CodeBuild target",
+      "CreateDate": "2022-05-12 12:58:51+00:00",
+      "UpdateDate": "2022-05-12 12:58:51+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "codebuild:StartBuild"
+            ],
+            "Resource": [
+              "arn:aws:codebuild:us-west-2:111111111111:project/foo-web-server"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "incident-manager-policy",
+    "PolicyId": "ANPA6AUBOEJMO2EUSJN6S",
+    "Arn": "arn:aws:iam::111111111111:policy/incident-manager-policy",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-04-22 17:16:32+00:00",
+    "UpdateDate": "2022-04-22 17:16:32+00:00",
+    "PolicyDocument": {
+      "PolicyName": "incident-manager-policy",
+      "PolicyId": "ANPA6AUBOEJMO2EUSJN6S",
+      "Arn": "arn:aws:iam::111111111111:policy/incident-manager-policy",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-04-22 17:16:32+00:00",
+      "UpdateDate": "2022-04-22 17:16:32+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Resource": "arn:aws:ssm:*:111111111111:automation-definition/restart-foo-web-app:*",
+            "Action": "ssm:StartAutomationExecution"
+          },
+          {
+            "Effect": "Allow",
+            "Resource": "arn:aws:iam::*:role/AWS-SystemsManager-AutomationExecutionRole",
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "foo-bizz-integration-queue-send-messages",
+    "PolicyId": "ANPA6AUBOEJMOTEMIVMRH",
+    "Arn": "arn:aws:iam::111111111111:policy/foo-bizz-integration-queue-send-messages",
+    "Path": "/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2025-04-08 15:18:34+00:00",
+    "UpdateDate": "2025-04-08 15:18:34+00:00",
+    "PolicyDocument": {
+      "PolicyName": "foo-bizz-integration-queue-send-messages",
+      "PolicyId": "ANPA6AUBOEJMOTEMIVMRH",
+      "Arn": "arn:aws:iam::111111111111:policy/foo-bizz-integration-queue-send-messages",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2025-04-08 15:18:34+00:00",
+      "UpdateDate": "2025-04-08 15:18:34+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "sqs:SendMessage"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:sqs:eu-west-2:444444444444:bizz-stack-integration-queue"
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+    }
+  },
+  {
+    "PolicyName": "nightly-build-1652947819340",
+    "PolicyId": "ANPA6AUBOEJMOWPJAJQGT",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/nightly-build-1652947819340",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-19 08:10:19+00:00",
+    "UpdateDate": "2022-05-19 08:10:19+00:00",
+    "PolicyDocument": {
+      "PolicyName": "nightly-build-1652947819340",
+      "PolicyId": "ANPA6AUBOEJMOWPJAJQGT",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/nightly-build-1652947819340",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Policy used in trust relationship with CloudWatchEvents to trigger CodeBuild target",
+      "CreateDate": "2022-05-19 08:10:19+00:00",
+      "UpdateDate": "2022-05-19 08:10:19+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "codebuild:StartBuild"
+            ],
+            "Resource": [
+              "arn:aws:codebuild:us-west-2:111111111111:project/foo-web-server"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "Amazon_EventBridge_Invoke_Lambda_2055942889",
+    "PolicyId": "ANPA6AUBOEJMPUFH7TI66",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/Amazon_EventBridge_Invoke_Lambda_2055942889",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2025-05-31 16:41:38+00:00",
+    "UpdateDate": "2025-05-31 16:41:38+00:00",
+    "PolicyDocument": {
+      "PolicyName": "Amazon_EventBridge_Invoke_Lambda_2055942889",
+      "PolicyId": "ANPA6AUBOEJMPUFH7TI66",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/Amazon_EventBridge_Invoke_Lambda_2055942889",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2025-05-31 16:41:38+00:00",
+      "UpdateDate": "2025-05-31 16:41:38+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "lambda:InvokeFunction"
+            ],
+            "Resource": [
+              "arn:aws:lambda:us-west-2:111111111111:function:foo-email-caretaker-forward-booking-reports"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "AWSLambdaBasicExecutionRole-95e10ca0-fcc9-431c-805b-52e1ab9bbb86",
+    "PolicyId": "ANPA6AUBOEJMPY5DQWJLT",
+    "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-95e10ca0-fcc9-431c-805b-52e1ab9bbb86",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 0,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2022-05-01 18:07:08+00:00",
+    "UpdateDate": "2022-05-01 18:07:08+00:00",
+    "PolicyDocument": {
+      "PolicyName": "AWSLambdaBasicExecutionRole-95e10ca0-fcc9-431c-805b-52e1ab9bbb86",
+      "PolicyId": "ANPA6AUBOEJMPY5DQWJLT",
+      "Arn": "arn:aws:iam::111111111111:policy/service-role/AWSLambdaBasicExecutionRole-95e10ca0-fcc9-431c-805b-52e1ab9bbb86",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2022-05-01 18:07:08+00:00",
+      "UpdateDate": "2022-05-01 18:07:08+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-west-2:111111111111:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-email-newsletter:*"
+            ]
+          }
+        ]
+      }
+    }
+  }
+]

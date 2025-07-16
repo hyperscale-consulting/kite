@@ -1,0 +1,186 @@
+[
+  {
+    "Associations": [
+      {
+        "Main": false,
+        "RouteTableAssociationId": "rtbassoc-02a1576fe49441519",
+        "RouteTableId": "rtb-0a4a72996fe384a42",
+        "SubnetId": "subnet-0c1c051f51df59d13",
+        "AssociationState": {
+          "State": "associated"
+        }
+      }
+    ],
+    "PropagatingVgws": [],
+    "RouteTableId": "rtb-0a4a72996fe384a42",
+    "Routes": [
+      {
+        "DestinationCidrBlock": "172.31.0.0/16",
+        "GatewayId": "local",
+        "Origin": "CreateRouteTable",
+        "State": "active"
+      },
+      {
+        "DestinationPrefixListId": "pl-7ca54015",
+        "GatewayId": "vpce-0d00975d7820124c2",
+        "Origin": "CreateRoute",
+        "State": "active"
+      }
+    ],
+    "Tags": [
+      {
+        "Key": "aws:cloudformation:stack-id",
+        "Value": "arn:aws:cloudformation:eu-west-2:444444444444:stack/StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e/3e62b110-e91e-11ee-b09a-02d0c641c793"
+      },
+      {
+        "Key": "aws:cloudformation:logical-id",
+        "Value": "PrivateSubnet2ARouteTable"
+      },
+      {
+        "Key": "Network",
+        "Value": "Private"
+      },
+      {
+        "Key": "Name",
+        "Value": "aws-controltower-PrivateSubnet2ARouteTable"
+      },
+      {
+        "Key": "aws:cloudformation:stack-name",
+        "Value": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e"
+      }
+    ],
+    "VpcId": "vpc-0484c7295f194303c",
+    "OwnerId": "444444444444"
+  },
+  {
+    "Associations": [
+      {
+        "Main": true,
+        "RouteTableAssociationId": "rtbassoc-0cb59f3a620dc555b",
+        "RouteTableId": "rtb-011807809d1ae5a79",
+        "AssociationState": {
+          "State": "associated"
+        }
+      }
+    ],
+    "PropagatingVgws": [],
+    "RouteTableId": "rtb-011807809d1ae5a79",
+    "Routes": [
+      {
+        "DestinationCidrBlock": "172.31.0.0/16",
+        "GatewayId": "local",
+        "Origin": "CreateRouteTable",
+        "State": "active"
+      }
+    ],
+    "Tags": [],
+    "VpcId": "vpc-0484c7295f194303c",
+    "OwnerId": "444444444444"
+  },
+  {
+    "Associations": [
+      {
+        "Main": false,
+        "RouteTableAssociationId": "rtbassoc-0393876d1e1f2ce7c",
+        "RouteTableId": "rtb-0cde558687530a733",
+        "SubnetId": "subnet-01e46c660a43abf20",
+        "AssociationState": {
+          "State": "associated"
+        }
+      }
+    ],
+    "PropagatingVgws": [],
+    "RouteTableId": "rtb-0cde558687530a733",
+    "Routes": [
+      {
+        "DestinationCidrBlock": "172.31.0.0/16",
+        "GatewayId": "local",
+        "Origin": "CreateRouteTable",
+        "State": "active"
+      },
+      {
+        "DestinationPrefixListId": "pl-7ca54015",
+        "GatewayId": "vpce-0d00975d7820124c2",
+        "Origin": "CreateRoute",
+        "State": "active"
+      }
+    ],
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "aws-controltower-PrivateSubnet1ARouteTable"
+      },
+      {
+        "Key": "aws:cloudformation:stack-name",
+        "Value": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e"
+      },
+      {
+        "Key": "aws:cloudformation:logical-id",
+        "Value": "PrivateSubnet1ARouteTable"
+      },
+      {
+        "Key": "Network",
+        "Value": "Private"
+      },
+      {
+        "Key": "aws:cloudformation:stack-id",
+        "Value": "arn:aws:cloudformation:eu-west-2:444444444444:stack/StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e/3e62b110-e91e-11ee-b09a-02d0c641c793"
+      }
+    ],
+    "VpcId": "vpc-0484c7295f194303c",
+    "OwnerId": "444444444444"
+  },
+  {
+    "Associations": [
+      {
+        "Main": false,
+        "RouteTableAssociationId": "rtbassoc-0552af716c80630f1",
+        "RouteTableId": "rtb-051f587f5d697c0c4",
+        "SubnetId": "subnet-06ebc33e00df7a462",
+        "AssociationState": {
+          "State": "associated"
+        }
+      }
+    ],
+    "PropagatingVgws": [],
+    "RouteTableId": "rtb-051f587f5d697c0c4",
+    "Routes": [
+      {
+        "DestinationCidrBlock": "172.31.0.0/16",
+        "GatewayId": "local",
+        "Origin": "CreateRouteTable",
+        "State": "active"
+      },
+      {
+        "DestinationPrefixListId": "pl-7ca54015",
+        "GatewayId": "vpce-0d00975d7820124c2",
+        "Origin": "CreateRoute",
+        "State": "active"
+      }
+    ],
+    "Tags": [
+      {
+        "Key": "Network",
+        "Value": "Private"
+      },
+      {
+        "Key": "Name",
+        "Value": "aws-controltower-PrivateSubnet3ARouteTable"
+      },
+      {
+        "Key": "aws:cloudformation:stack-id",
+        "Value": "arn:aws:cloudformation:eu-west-2:444444444444:stack/StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e/3e62b110-e91e-11ee-b09a-02d0c641c793"
+      },
+      {
+        "Key": "aws:cloudformation:stack-name",
+        "Value": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e"
+      },
+      {
+        "Key": "aws:cloudformation:logical-id",
+        "Value": "PrivateSubnet3ARouteTable"
+      }
+    ],
+    "VpcId": "vpc-0484c7295f194303c",
+    "OwnerId": "444444444444"
+  }
+]

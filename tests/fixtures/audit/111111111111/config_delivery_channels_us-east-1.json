@@ -1,0 +1,6 @@
+[
+  {
+    "name": "default",
+    "s3BucketName": "config-bucket-111111111111"
+  }
+]

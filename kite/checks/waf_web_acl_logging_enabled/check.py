@@ -3,10 +3,10 @@
 from typing import Any
 
 from kite.config import Config
-from kite.data import get_regional_waf_logging_configurations
-from kite.data import get_regional_web_acls
 from kite.data import get_cloudfront_waf_logging_configurations
 from kite.data import get_cloudfront_web_acls
+from kite.data import get_regional_waf_logging_configurations
+from kite.data import get_regional_web_acls
 from kite.helpers import get_account_ids_in_scope
 
 CHECK_ID = "waf-web-acl-logging-enabled"

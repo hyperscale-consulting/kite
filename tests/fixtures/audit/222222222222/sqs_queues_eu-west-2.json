@@ -1,0 +1,48 @@
+[
+  {
+    "QueueUrl": "https://sqs.eu-west-2.amazonaws.com/222222222222/automated-security-response-admin-deadLetterSchedulingQueue9BCE9EA8-r3FWNxgyiemG",
+    "QueueArn": "arn:aws:sqs:eu-west-2:222222222222:automated-security-response-admin-deadLetterSchedulingQueue9BCE9EA8-r3FWNxgyiemG",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Deny",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": "sqs:*",
+          "Resource": "arn:aws:sqs:eu-west-2:222222222222:automated-security-response-admin-deadLetterSchedulingQueue9BCE9EA8-r3FWNxgyiemG",
+          "Condition": {
+            "Bool": {
+              "aws:SecureTransport": "false"
+            }
+          }
+        }
+      ]
+    },
+    "Region": "eu-west-2"
+  },
+  {
+    "QueueUrl": "https://sqs.eu-west-2.amazonaws.com/222222222222/automated-security-response-administrator-s-SchedulingQueueB533E3CD-A6M5mmczAhmM",
+    "QueueArn": "arn:aws:sqs:eu-west-2:222222222222:automated-security-response-administrator-s-SchedulingQueueB533E3CD-A6M5mmczAhmM",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Deny",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": "sqs:*",
+          "Resource": "arn:aws:sqs:eu-west-2:222222222222:automated-security-response-administrator-s-SchedulingQueueB533E3CD-A6M5mmczAhmM",
+          "Condition": {
+            "Bool": {
+              "aws:SecureTransport": "false"
+            }
+          }
+        }
+      ]
+    },
+    "Region": "eu-west-2"
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "GroupId": "sg-0ebcf1f6ac87718fd",
+    "IpPermissionsEgress": [],
+    "VpcId": "vpc-0484c7295f194303c",
+    "SecurityGroupArn": "arn:aws:ec2:eu-west-2:444444444444:security-group/sg-0ebcf1f6ac87718fd",
+    "OwnerId": "444444444444",
+    "GroupName": "default",
+    "Description": "default VPC security group",
+    "IpPermissions": []
+  }
+]

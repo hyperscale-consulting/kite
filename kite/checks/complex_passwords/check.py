@@ -1,8 +1,9 @@
 from typing import Any
 
+from kite.config import Config
+from kite.data import get_cognito_user_pools
 from kite.data import get_oidc_providers
 from kite.data import get_saml_providers
-from kite.data import get_cognito_user_pools
 from kite.helpers import get_account_ids_in_scope
 from kite.helpers import get_password_policy
 from kite.helpers import get_user_pool_password_policy
@@ -11,7 +12,6 @@ from kite.helpers import is_complex
 from kite.helpers import is_identity_center_enabled
 from kite.helpers import is_identity_center_identity_store_used
 from kite.helpers import manual_check
-from kite.config import Config
 
 CHECK_ID = "complex-passwords"
 CHECK_NAME = "Complex Passwords"
@@ -30,9 +30,10 @@ def check_complex_passwords() -> dict[str, Any]:
     Returns:
         Dict containing the check results.
     """
+    config = Config.get()
     # Get all providers and Identity Center status
-    oidc_providers = get_oidc_providers()
-    saml_providers = get_saml_providers()
+    oidc_providers = get_oidc_providers(config.management_account_id)
+    saml_providers = get_saml_providers(config.management_account_id)
     identity_center_enabled = is_identity_center_enabled()
     identity_center_identity_store_used = is_identity_center_identity_store_used()
 

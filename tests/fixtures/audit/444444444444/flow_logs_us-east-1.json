@@ -1,0 +1,16 @@
+[
+  {
+    "CreationTime": "2024-03-23 14:05:12.207000+00:00",
+    "DeliverLogsPermissionArn": "arn:aws:iam::444444444444:role/AWSControlTower_VPCFlowLogsRole",
+    "DeliverLogsStatus": "SUCCESS",
+    "FlowLogId": "fl-03eb74ac6ae344ade",
+    "FlowLogStatus": "ACTIVE",
+    "LogGroupName": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-36b02ba4-30da-44a8-ba15-971082db3df8-VPCFlowLogsLogGroup-YAfdfV7sRrmg",
+    "ResourceId": "vpc-0c97e458617dc21e6",
+    "TrafficType": "ALL",
+    "LogDestinationType": "cloud-watch-logs",
+    "LogFormat": "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}",
+    "Tags": [],
+    "MaxAggregationInterval": 600
+  }
+]

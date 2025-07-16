@@ -1,0 +1,223 @@
+[
+  {
+    "logGroupName": "/apps/bizz-stack",
+    "creationTime": 1743028124247,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/apps/bizz-stack:*",
+    "storedBytes": 607582,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/apps/bizz-stack"
+  },
+  {
+    "logGroupName": "/apps/bizz-web-secret-key-rotation",
+    "creationTime": 1743668157566,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/apps/bizz-web-secret-key-rotation:*",
+    "storedBytes": 1586,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/apps/bizz-web-secret-key-rotation"
+  },
+  {
+    "logGroupName": "/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-PijxNWFu5T9y",
+    "creationTime": 1739982518368,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-PijxNWFu5T9y:*",
+    "storedBytes": 107324,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-PijxNWFu5T9y"
+  },
+  {
+    "logGroupName": "/aws/lambda/aws-controltower-NotificationForwarder",
+    "creationTime": 1711202323959,
+    "retentionInDays": 14,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/aws-controltower-NotificationForwarder:*",
+    "storedBytes": 984245,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/aws-controltower-NotificationForwarder"
+  },
+  {
+    "logGroupName": "/aws/lambda/delete-name-tags-eu-west-2-a51b-dmdd7",
+    "creationTime": 1750691535575,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/delete-name-tags-eu-west-2-a51b-dmdd7:*",
+    "storedBytes": 1916,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/delete-name-tags-eu-west-2-a51b-dmdd7"
+  },
+  {
+    "logGroupName": "/aws/lambda/serverlessrepo-example--StaticAssetsDeployer-ADJsxDElFFY9",
+    "creationTime": 1725901586078,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example--StaticAssetsDeployer-ADJsxDElFFY9:*",
+    "storedBytes": 9579,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example--StaticAssetsDeployer-ADJsxDElFFY9"
+  },
+  {
+    "logGroupName": "/aws/lambda/serverlessrepo-example--StaticAssetsDeployer-tChX8Q29Wy93",
+    "creationTime": 1725901906987,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example--StaticAssetsDeployer-tChX8Q29Wy93:*",
+    "storedBytes": 9510,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example--StaticAssetsDeployer-tChX8Q29Wy93"
+  },
+  {
+    "logGroupName": "/aws/lambda/serverlessrepo-example--StaticAssetsDeployer-y7lp5RNafk7y",
+    "creationTime": 1725911181453,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example--StaticAssetsDeployer-y7lp5RNafk7y:*",
+    "storedBytes": 76544,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example--StaticAssetsDeployer-y7lp5RNafk7y"
+  },
+  {
+    "logGroupName": "/aws/lambda/serverlessrepo-example-LWPApp-HE08mNqoTqJf",
+    "creationTime": 1725911755315,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-LWPApp-HE08mNqoTqJf:*",
+    "storedBytes": 29476009,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-LWPApp-HE08mNqoTqJf"
+  },
+  {
+    "logGroupName": "/aws/lambda/baz-app-CognitoAbacAuthorizer-bvV4AABYDDn0",
+    "creationTime": 1717919464233,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/baz-app-CognitoAbacAuthorizer-bvV4AABYDDn0:*",
+    "storedBytes": 32545,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/baz-app-CognitoAbacAuthorizer-bvV4AABYDDn0"
+  },
+  {
+    "logGroupName": "/aws/lambda/baz-app-CognitoAbacAuthorizer-tbSolSNlGsM6",
+    "creationTime": 1717870439960,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/baz-app-CognitoAbacAuthorizer-tbSolSNlGsM6:*",
+    "storedBytes": 1077,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/baz-app-CognitoAbacAuthorizer-tbSolSNlGsM6"
+  },
+  {
+    "logGroupName": "/aws/lambda/baz-app-SessionAbacAuthorizer-EAPMa0FKRK8Z",
+    "creationTime": 1719170488619,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/baz-app-SessionAbacAuthorizer-EAPMa0FKRK8Z:*",
+    "storedBytes": 111911,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/baz-app-SessionAbacAuthorizer-EAPMa0FKRK8Z"
+  },
+  {
+    "logGroupName": "/aws/lambda/baz-app-OriginKeyAuthorizer-Zsu2Any5NRGN",
+    "creationTime": 1717919466255,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/baz-app-OriginKeyAuthorizer-Zsu2Any5NRGN:*",
+    "storedBytes": 171107,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/baz-app-OriginKeyAuthorizer-Zsu2Any5NRGN"
+  },
+  {
+    "logGroupName": "/aws/lambda/baz-app-OriginKeyAuthorizer-pY6dIhGl2Eaj",
+    "creationTime": 1717870438950,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/baz-app-OriginKeyAuthorizer-pY6dIhGl2Eaj:*",
+    "storedBytes": 1698,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/baz-app-OriginKeyAuthorizer-pY6dIhGl2Eaj"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-appQueueProcessor-o5EJDsnoSg6t",
+    "creationTime": 1717851840756,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/foo-appQueueProcessor-o5EJDsnoSg6t:*",
+    "storedBytes": 602940,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/foo-appQueueProcessor-o5EJDsnoSg6t"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-appQueueProcessor-qeucMx1bd2kL",
+    "creationTime": 1717925072198,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/foo-appQueueProcessor-qeucMx1bd2kL:*",
+    "storedBytes": 78360245,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/foo-appQueueProcessor-qeucMx1bd2kL"
+  },
+  {
+    "logGroupName": "/aws/lambda/serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b",
+    "creationTime": 1717919909516,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b:*",
+    "storedBytes": 675334,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-Bo-GetInvoice-kgQyBOtRkR8b"
+  },
+  {
+    "logGroupName": "/aws/lambda/serverlessrepo-example-Bookin-Logout-tMTyEk7nqrSK",
+    "creationTime": 1718052909342,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-Bookin-Logout-tMTyEk7nqrSK:*",
+    "storedBytes": 3377,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-Bookin-Logout-tMTyEk7nqrSK"
+  },
+  {
+    "logGroupName": "/aws/lambda/serverlessrepo-example-Booking-Login-1NtMfzNtEyta",
+    "creationTime": 1717919464408,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-Booking-Login-1NtMfzNtEyta:*",
+    "storedBytes": 70934,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-Booking-Login-1NtMfzNtEyta"
+  },
+  {
+    "logGroupName": "/aws/lambda/serverlessrepo-example-Booking-Login-DPbPNrRHodLL",
+    "creationTime": 1717870439326,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-Booking-Login-DPbPNrRHodLL:*",
+    "storedBytes": 1830,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-Booking-Login-DPbPNrRHodLL"
+  },
+  {
+    "logGroupName": "/aws/lambda/serverlessrepo-example-Bookingd-OIDC-iwFxCSgWHmxU",
+    "creationTime": 1717919908754,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-Bookingd-OIDC-iwFxCSgWHmxU:*",
+    "storedBytes": 54803,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/serverlessrepo-example-Bookingd-OIDC-iwFxCSgWHmxU"
+  },
+  {
+    "logGroupName": "/aws/lambda/us-east-1.serverlessrepo-authn-redirect-RedirectToLoginOn401-zmar8Gp6BDgt",
+    "creationTime": 1717870443680,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/us-east-1.serverlessrepo-authn-redirect-RedirectToLoginOn401-zmar8Gp6BDgt:*",
+    "storedBytes": 106378,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/aws/lambda/us-east-1.serverlessrepo-authn-redirect-RedirectToLoginOn401-zmar8Gp6BDgt"
+  },
+  {
+    "logGroupName": "/bookingdesk",
+    "creationTime": 1739819123552,
+    "retentionInDays": 60,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:/bookingdesk:*",
+    "storedBytes": 78326,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:/bookingdesk"
+  },
+  {
+    "logGroupName": "StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e-VPCFlowLogsLogGroup-P9oUsLbBsoJW",
+    "creationTime": 1711202665184,
+    "retentionInDays": 90,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:444444444444:log-group:StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e-VPCFlowLogsLogGroup-P9oUsLbBsoJW:*",
+    "storedBytes": 0,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:444444444444:log-group:StackSet-AWSControlTowerBP-VPC-ACCOUNT-FACTORY-V1-5ec17488-2edb-4652-88e8-5ffd1e11262e-VPCFlowLogsLogGroup-P9oUsLbBsoJW"
+  }
+]

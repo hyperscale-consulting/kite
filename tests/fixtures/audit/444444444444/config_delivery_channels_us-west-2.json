@@ -1,0 +1,11 @@
+[
+  {
+    "name": "aws-controltower-BaselineConfigDeliveryChannel",
+    "s3BucketName": "aws-controltower-logs-333333333333-eu-west-2",
+    "s3KeyPrefix": "o-adf95fr1li",
+    "snsTopicARN": "arn:aws:sns:us-west-2:222222222222:aws-controltower-AllConfigNotifications",
+    "configSnapshotDeliveryProperties": {
+      "deliveryFrequency": "TwentyFour_Hours"
+    }
+  }
+]

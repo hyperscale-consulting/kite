@@ -1,0 +1,194 @@
+[
+  {
+    "AvailabilityZoneId": "usw2-az2",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "111111111111",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-subnet-private1-us-west-2a"
+      }
+    ],
+    "SubnetArn": "arn:aws:ec2:us-west-2:111111111111:subnet/subnet-0ae3f1866d2ab80e5",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-0ae3f1866d2ab80e5",
+    "State": "available",
+    "VpcId": "vpc-57696132",
+    "CidrBlock": "10.0.1.0/24",
+    "AvailableIpAddressCount": 239,
+    "AvailabilityZone": "us-west-2a",
+    "DefaultForAz": false,
+    "MapPublicIpOnLaunch": false
+  },
+  {
+    "AvailabilityZoneId": "usw2-az1",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "111111111111",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-subnet-private2-us-west-2b"
+      }
+    ],
+    "SubnetArn": "arn:aws:ec2:us-west-2:111111111111:subnet/subnet-0bac249b81289124a",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-0bac249b81289124a",
+    "State": "available",
+    "VpcId": "vpc-57696132",
+    "CidrBlock": "10.0.3.0/24",
+    "AvailableIpAddressCount": 239,
+    "AvailabilityZone": "us-west-2b",
+    "DefaultForAz": false,
+    "MapPublicIpOnLaunch": false
+  },
+  {
+    "AvailabilityZoneId": "usw2-az2",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "111111111111",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-subnet-public1-us-west-2a"
+      }
+    ],
+    "SubnetArn": "arn:aws:ec2:us-west-2:111111111111:subnet/subnet-040cc7948b59fdc81",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-040cc7948b59fdc81",
+    "State": "available",
+    "VpcId": "vpc-57696132",
+    "CidrBlock": "10.0.2.0/24",
+    "AvailableIpAddressCount": 247,
+    "AvailabilityZone": "us-west-2a",
+    "DefaultForAz": false,
+    "MapPublicIpOnLaunch": false
+  },
+  {
+    "AvailabilityZoneId": "usw2-az1",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "111111111111",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "default-subnet-private-us-west-2b"
+      }
+    ],
+    "SubnetArn": "arn:aws:ec2:us-west-2:111111111111:subnet/subnet-04b82afe6428d3840",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-04b82afe6428d3840",
+    "State": "available",
+    "VpcId": "vpc-03bdd09d013b2b609",
+    "CidrBlock": "172.31.0.0/20",
+    "AvailableIpAddressCount": 4091,
+    "AvailabilityZone": "us-west-2b",
+    "DefaultForAz": false,
+    "MapPublicIpOnLaunch": false
+  },
+  {
+    "AvailabilityZoneId": "usw2-az1",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "111111111111",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "default-subnet-public-us-west-2b"
+      }
+    ],
+    "SubnetArn": "arn:aws:ec2:us-west-2:111111111111:subnet/subnet-083e03c59dd6e260c",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-083e03c59dd6e260c",
+    "State": "available",
+    "VpcId": "vpc-03bdd09d013b2b609",
+    "CidrBlock": "172.31.16.0/20",
+    "AvailableIpAddressCount": 4091,
+    "AvailabilityZone": "us-west-2b",
+    "DefaultForAz": true,
+    "MapPublicIpOnLaunch": false
+  },
+  {
+    "AvailabilityZoneId": "usw2-az1",
+    "MapCustomerOwnedIpOnLaunch": false,
+    "OwnerId": "111111111111",
+    "AssignIpv6AddressOnCreation": false,
+    "Ipv6CidrBlockAssociationSet": [],
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-subnet-public2-us-west-2b"
+      }
+    ],
+    "SubnetArn": "arn:aws:ec2:us-west-2:111111111111:subnet/subnet-1d332c78",
+    "EnableDns64": false,
+    "Ipv6Native": false,
+    "PrivateDnsNameOptionsOnLaunch": {
+      "HostnameType": "ip-name",
+      "EnableResourceNameDnsARecord": false,
+      "EnableResourceNameDnsAAAARecord": false
+    },
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "SubnetId": "subnet-1d332c78",
+    "State": "available",
+    "VpcId": "vpc-57696132",
+    "CidrBlock": "10.0.0.0/24",
+    "AvailableIpAddressCount": 248,
+    "AvailabilityZone": "us-west-2b",
+    "DefaultForAz": false,
+    "MapPublicIpOnLaunch": false
+  }
+]

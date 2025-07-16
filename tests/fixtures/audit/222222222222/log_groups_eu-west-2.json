@@ -1,0 +1,141 @@
+[
+  {
+    "logGroupName": "/aws/lambda/SO0111-ASR-CloudTrailEvents",
+    "creationTime": 1739979207010,
+    "retentionInDays": 365,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-ASR-CloudTrailEvents:*",
+    "storedBytes": 0,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-ASR-CloudTrailEvents"
+  },
+  {
+    "logGroupName": "/aws/lambda/SO0111-ASR-checkSSMDocumentState",
+    "creationTime": 1739995500083,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-ASR-checkSSMDocumentState:*",
+    "storedBytes": 102232,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-ASR-checkSSMDocumentState"
+  },
+  {
+    "logGroupName": "/aws/lambda/SO0111-SHARR-CustomAction",
+    "creationTime": 1739979249420,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-CustomAction:*",
+    "storedBytes": 1450,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-CustomAction"
+  },
+  {
+    "logGroupName": "/aws/lambda/SO0111-SHARR-execAutomation",
+    "creationTime": 1740000481108,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-execAutomation:*",
+    "storedBytes": 74026,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-execAutomation"
+  },
+  {
+    "logGroupName": "/aws/lambda/SO0111-SHARR-getApprovalRequirement",
+    "creationTime": 1739995491982,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-getApprovalRequirement:*",
+    "storedBytes": 103423,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-getApprovalRequirement"
+  },
+  {
+    "logGroupName": "/aws/lambda/SO0111-SHARR-monitorSSMExecState",
+    "creationTime": 1740000486641,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-monitorSSMExecState:*",
+    "storedBytes": 65542,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-monitorSSMExecState"
+  },
+  {
+    "logGroupName": "/aws/lambda/SO0111-SHARR-schedulingLambdaTrigger",
+    "creationTime": 1740000479682,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-schedulingLambdaTrigger:*",
+    "storedBytes": 10057,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-schedulingLambdaTrigger"
+  },
+  {
+    "logGroupName": "/aws/lambda/SO0111-SHARR-sendNotifications",
+    "creationTime": 1739995495226,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-sendNotifications:*",
+    "storedBytes": 87816,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/SO0111-SHARR-sendNotifications"
+  },
+  {
+    "logGroupName": "/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-nUo1dS61uvYs",
+    "creationTime": 1739982044763,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-nUo1dS61uvYs:*",
+    "storedBytes": 106575,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-nUo1dS61uvYs"
+  },
+  {
+    "logGroupName": "/aws/lambda/automated-security-respon-ASRDeploymentCustomResou-y8uf7ZYrGmpH",
+    "creationTime": 1739979239836,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/automated-security-respon-ASRDeploymentCustomResou-y8uf7ZYrGmpH:*",
+    "storedBytes": 1461,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/automated-security-respon-ASRDeploymentCustomResou-y8uf7ZYrGmpH"
+  },
+  {
+    "logGroupName": "/aws/lambda/automated-security-respon-ActionLogOrgIdLookupOrgI-jAMe56sP3mIh",
+    "creationTime": 1739979256082,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/automated-security-respon-ActionLogOrgIdLookupOrgI-jAMe56sP3mIh:*",
+    "storedBytes": 1360,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/automated-security-respon-ActionLogOrgIdLookupOrgI-jAMe56sP3mIh"
+  },
+  {
+    "logGroupName": "/aws/lambda/aws-controltower-NotificationForwarder",
+    "creationTime": 1711195274889,
+    "retentionInDays": 14,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/aws-controltower-NotificationForwarder:*",
+    "storedBytes": 0,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/aws-controltower-NotificationForwarder"
+  },
+  {
+    "logGroupName": "/aws/lambda/delete-name-tags-eu-west-2-9cee-dmdd7",
+    "creationTime": 1750691532120,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/delete-name-tags-eu-west-2-9cee-dmdd7:*",
+    "storedBytes": 1901,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:/aws/lambda/delete-name-tags-eu-west-2-9cee-dmdd7"
+  },
+  {
+    "logGroupName": "SO0111-SHARR",
+    "creationTime": 1739995500071,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:SO0111-SHARR:*",
+    "storedBytes": 18079,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:SO0111-SHARR"
+  },
+  {
+    "logGroupName": "SO0111-SHARR-Orchestrator",
+    "creationTime": 1739979227908,
+    "retentionInDays": 3653,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:222222222222:log-group:SO0111-SHARR-Orchestrator:*",
+    "storedBytes": 1491306,
+    "kmsKeyId": "arn:aws:kms:eu-west-2:222222222222:key/e63b81a0-de67-48da-90cb-5abf2e552f17",
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:222222222222:log-group:SO0111-SHARR-Orchestrator"
+  }
+]

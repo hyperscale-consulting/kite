@@ -127,7 +127,7 @@ class Assessment:
     themes: dict = field(default_factory=lambda: defaultdict(list))
 
     @classmethod
-    def load(cls):
+    def load(cls) -> "Assessment":
         try:
             with open("kite-results.yaml") as f:
                 data = yaml.safe_load(f)
@@ -147,12 +147,21 @@ class Assessment:
             )  # Convert defaultdict to dict for YAML serialization
             yaml.dump(data, f, default_flow_style=False)
 
-    def has_finding(self, check_id: str):
+    def has_finding(self, check_id: str) -> bool:
+        return self._get_finding(check_id) is not None
+
+    def _get_finding(self, check_id: str) -> dict | None:
         for _, findings in self.themes.items():
             for f in findings:
                 if f["check_id"] == check_id:
-                    return True
-        return False
+                    return f
+        return None
+
+    def get_finding(self, check_id: str) -> dict:
+        finding = self._get_finding(check_id)
+        if finding is None:
+            raise ValueError(f"No finding found for check ID: {check_id}")
+        return finding
 
 
 @main.command()
@@ -163,7 +172,10 @@ class Assessment:
     help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
-def assess(config: str):
+@click.option(
+    "--auto-save/--no-auto-save", default=True, help="Enable or disable auto-saving"
+)
+def assess(config: str, auto_save: bool = True):
     """Start a security assessment using the specified config file."""
     config_data = Config.load(config)
 
@@ -207,8 +219,6 @@ def assess(config: str):
                 )
             )
 
-            # theme_findings = []
-            # results["themes"][theme_name] = theme_findings
             for check in theme_data["checks"]:
                 if not hasattr(check, "_CHECK_ID") or not hasattr(check, "_CHECK_NAME"):
                     raise Exception(
@@ -221,10 +231,10 @@ def assess(config: str):
                     continue
                 finding = check()
                 assessment.record(theme_name, finding)
-                # theme_findings.append(finding)
                 display_finding(finding)
-                assessment.save()
-                # save_assessment(results)
+
+                if auto_save:
+                    assessment.save()
 
             display_theme_results(theme_name, assessment.themes[theme_name])
 

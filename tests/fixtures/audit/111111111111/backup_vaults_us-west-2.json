@@ -1,0 +1,22 @@
+[
+  {
+    "BackupVaultName": "Default",
+    "BackupVaultArn": "arn:aws:backup:us-west-2:111111111111:backup-vault:Default",
+    "VaultType": "BACKUP_VAULT",
+    "CreationDate": "2025-03-13 16:58:16.147000+00:00",
+    "EncryptionKeyArn": "arn:aws:kms:us-west-2:111111111111:key/6a524bb2-f5e4-4381-9284-354ffd1e72b2",
+    "CreatorRequestId": "3fbfb25d-77e8-4dd0-9078-1bc72e529d56",
+    "NumberOfRecoveryPoints": 70,
+    "Locked": false
+  },
+  {
+    "BackupVaultName": "aws/efs/automatic-backup-vault",
+    "BackupVaultArn": "arn:aws:backup:us-west-2:111111111111:backup-vault:aws/efs/automatic-backup-vault",
+    "VaultType": "BACKUP_VAULT",
+    "CreationDate": "2021-03-16 17:26:39.161000+00:00",
+    "EncryptionKeyArn": "arn:aws:kms:us-west-2:111111111111:key/6a524bb2-f5e4-4381-9284-354ffd1e72b2",
+    "CreatorRequestId": "aws/efs/automatic-backup-111111111111-us-west-2",
+    "NumberOfRecoveryPoints": 35,
+    "Locked": false
+  }
+]

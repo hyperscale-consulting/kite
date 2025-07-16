@@ -12,6 +12,7 @@ from rich.tree import Tree
 
 from kite.config import Config
 from kite.data import get_cloudtrail_trails
+from kite.data import get_cognito_user_pool
 from kite.data import (
     get_customer_managed_policies as get_saved_customer_managed_policies,
 )
@@ -22,7 +23,6 @@ from kite.data import get_password_policy as get_saved_password_policy
 from kite.data import get_roles as get_saved_roles
 from kite.data import get_secrets as get_saved_secrets
 from kite.data import get_virtual_mfa_devices
-from kite.data import get_cognito_user_pool
 
 from . import sts
 from . import ui

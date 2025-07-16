@@ -1,0 +1,133 @@
+[
+  {
+    "FunctionName": "CustomControlTowerDeploymentLambda",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:111111111111:function:CustomControlTowerDeploymentLambda",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::111111111111:role/CustomControlTowerDeploymentLambdaRole",
+    "Handler": "config_deployer.lambda_handler",
+    "CodeSize": 15641859,
+    "Description": "Custom Control Tower Deployment Lambda",
+    "Timeout": 300,
+    "MemorySize": 512,
+    "LastModified": "2025-06-26T13:43:00.310+0000",
+    "CodeSha256": "7XX+DL09Ulm+CyvvpHJWRLeqpw+3ykjWsyC7GCvCzLE=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "SOLUTION_ID": "SO0089",
+        "LOG_LEVEL": "info",
+        "SOLUTION_VERSION": "v2.8.1"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "Active"
+    },
+    "RevisionId": "1b7db163-72c2-4105-a259-63886968f4ee",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/CustomControlTowerDeploymentLambda"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "CustomControlTowerStateMachineLambda",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:111111111111:function:CustomControlTowerStateMachineLambda",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::111111111111:role/CustomControlTowerStateMachineLambdaRole",
+    "Handler": "state_machine_router.lambda_handler",
+    "CodeSize": 15641859,
+    "Description": "Custom Control Tower State Machine Handler",
+    "Timeout": 300,
+    "MemorySize": 1024,
+    "LastModified": "2025-06-26T13:42:29.679+0000",
+    "CodeSha256": "7XX+DL09Ulm+CyvvpHJWRLeqpw+3ykjWsyC7GCvCzLE=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "ADMINISTRATION_ROLE_ARN": "arn:aws:iam::111111111111:role/service-role/AWSControlTowerStackSetRole",
+        "METRICS_URL": "https://metrics.awssolutionsbuilder.com/generic",
+        "SOLUTION_ID": "SO0089",
+        "KMS_KEY_ALIAS_NAME": "CustomControlTowerKMSKey",
+        "REGION_CONCURRENCY_TYPE": "PARALLEL",
+        "EXECUTION_ROLE_NAME": "AWSControlTowerExecution",
+        "MAX_CONCURRENT_PERCENT": "100",
+        "LOG_LEVEL": "info",
+        "SOLUTION_VERSION": "v2.8.1",
+        "FAILED_TOLERANCE_PERCENT": "10"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "Active"
+    },
+    "RevisionId": "02e69288-932c-47d6-a280-c1c65f4f68e1",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/CustomControlTowerStateMachineLambda"
+    },
+    "Policy": null
+  },
+  {
+    "FunctionName": "CfCT-CustomControlTowerLELambda-oso80bY7bvth",
+    "FunctionArn": "arn:aws:lambda:eu-west-2:111111111111:function:CfCT-CustomControlTowerLELambda-oso80bY7bvth",
+    "Runtime": "python3.11",
+    "Role": "arn:aws:iam::111111111111:role/CustomControlTowerLELambdaRole",
+    "Handler": "lifecycle_event_handler.lambda_handler",
+    "CodeSize": 15641859,
+    "Description": "Custom Control Tower Lifecyle event Lambda to handle lifecycle events",
+    "Timeout": 30,
+    "MemorySize": 512,
+    "LastModified": "2025-06-26T13:44:36.014+0000",
+    "CodeSha256": "7XX+DL09Ulm+CyvvpHJWRLeqpw+3ykjWsyC7GCvCzLE=",
+    "Version": "$LATEST",
+    "Environment": {
+      "Variables": {
+        "SOLUTION_ID": "SO0089",
+        "CODE_PIPELINE_NAME": "Custom-Control-Tower-CodePipeline",
+        "LOG_LEVEL": "info",
+        "SOLUTION_VERSION": "v2.8.1"
+      }
+    },
+    "TracingConfig": {
+      "Mode": "Active"
+    },
+    "RevisionId": "026a70f7-754a-4e78-bc49-ca1122741674",
+    "PackageType": "Zip",
+    "Architectures": [
+      "x86_64"
+    ],
+    "EphemeralStorage": {
+      "Size": 512
+    },
+    "SnapStart": {
+      "ApplyOn": "None",
+      "OptimizationStatus": "Off"
+    },
+    "LoggingConfig": {
+      "LogFormat": "Text",
+      "LogGroup": "/aws/lambda/CfCT-CustomControlTowerLELambda-oso80bY7bvth"
+    },
+    "Policy": null
+  }
+]

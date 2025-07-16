@@ -4,6 +4,7 @@ from typing import Any
 
 from botocore.exceptions import ClientError
 
+from kite.config import Config
 from kite.data import get_oidc_providers
 from kite.data import get_saml_providers
 from kite.helpers import is_identity_center_enabled
@@ -28,16 +29,17 @@ def check_use_centralized_idp() -> dict[str, Any]:
     """
     # Track if we encountered any errors
     error_message = None
+    config = Config.get()
 
     # Gather information about sign-in mechanisms
     try:
-        saml_providers = get_saml_providers()
+        saml_providers = get_saml_providers(config.management_account_id)
     except ClientError as e:
         saml_providers = []
         error_message = f"Error checking SAML providers: {str(e)}"
 
     try:
-        oidc_providers = get_oidc_providers()
+        oidc_providers = get_oidc_providers(config.management_account_id)
     except ClientError as e:
         oidc_providers = []
         if error_message:

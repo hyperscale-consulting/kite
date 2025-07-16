@@ -1,0 +1,121 @@
+[
+  {
+    "InstanceArn": "arn:aws:sso:::instance/ssoins-753506bba25a734e",
+    "IdentityStoreId": "d-9c677eba27",
+    "OwnerAccountId": "111111111111",
+    "CreatedDate": "2024-03-23 11:53:32.715000+00:00",
+    "Status": "ACTIVE",
+    "IdentityStoreUsers": [
+      {
+        "UserName": "bob@example.com",
+        "UserId": "561262d4-0061-7069-6913-714cdb5393fb",
+        "Name": {
+          "FamilyName": "Smith",
+          "GivenName": "Bob"
+        },
+        "DisplayName": "Bob Smith",
+        "Emails": [
+          {
+            "Value": "bob@example.com",
+            "Primary": true
+          }
+        ],
+        "PhoneNumbers": [
+          {
+            "Value": "07777777777",
+            "Type": "work",
+            "Primary": true
+          }
+        ],
+        "Timezone": "Europe/London",
+        "IdentityStoreId": "d-9c677eba27",
+        "Groups": [
+          {
+            "IdentityStoreId": "d-9c677eba27",
+            "MembershipId": "2632b2a4-5081-708f-211d-7aad2227ced2",
+            "GroupId": "36922234-90a1-708e-45c5-269e6b681a6b",
+            "MemberId": {
+              "UserId": "561262d4-0061-7069-6913-714cdb5393fb"
+            }
+          },
+          {
+            "IdentityStoreId": "d-9c677eba27",
+            "MembershipId": "16420204-c051-706d-e429-9becf8fc2021",
+            "GroupId": "f672f2d4-1001-7000-e380-91ccf8308803",
+            "MemberId": {
+              "UserId": "561262d4-0061-7069-6913-714cdb5393fb"
+            }
+          },
+          {
+            "IdentityStoreId": "d-9c677eba27",
+            "MembershipId": "66023214-c071-70b0-65fd-87ac11a5e702",
+            "GroupId": "766262a4-50b1-70f8-ba63-00860778521f",
+            "MemberId": {
+              "UserId": "561262d4-0061-7069-6913-714cdb5393fb"
+            }
+          }
+        ]
+      }
+    ],
+    "IdentityStoreGroups": [
+      {
+        "GroupId": "06924284-f0f1-703f-87e2-9ae84b12204e",
+        "DisplayName": "AWSLogArchiveAdmins",
+        "Description": "Admin rights to log archive account",
+        "IdentityStoreId": "d-9c677eba27"
+      },
+      {
+        "GroupId": "16f282b4-b021-70f6-2b68-af23e393e502",
+        "DisplayName": "AWSServiceCatalogAdmins",
+        "Description": "Admin rights to account factory in AWS Service Catalog",
+        "IdentityStoreId": "d-9c677eba27"
+      },
+      {
+        "GroupId": "36922234-90a1-708e-45c5-269e6b681a6b",
+        "DisplayName": "AWSAccountFactory",
+        "Description": "Read-only access to account factory in AWS Service Catalog for end users",
+        "IdentityStoreId": "d-9c677eba27"
+      },
+      {
+        "GroupId": "4632b2f4-a081-70ea-6ded-9d0793eb69c1",
+        "DisplayName": "AWSSecurityAuditPowerUsers",
+        "Description": "Power user access to all accounts for security audits",
+        "IdentityStoreId": "d-9c677eba27"
+      },
+      {
+        "GroupId": "6642f294-0011-70a2-ee89-6fdeeb374ef0",
+        "DisplayName": "Developers",
+        "IdentityStoreId": "d-9c677eba27"
+      },
+      {
+        "GroupId": "66d29284-10a1-7077-a281-ac51a5b97caf",
+        "DisplayName": "AWSLogArchiveViewers",
+        "Description": "Read-only access to log archive account",
+        "IdentityStoreId": "d-9c677eba27"
+      },
+      {
+        "GroupId": "763212d4-5031-709d-7c9a-f66ee8cda959",
+        "DisplayName": "AWSSecurityAuditors",
+        "Description": "Read-only access to all accounts for security audits",
+        "IdentityStoreId": "d-9c677eba27"
+      },
+      {
+        "GroupId": "766262a4-50b1-70f8-ba63-00860778521f",
+        "DisplayName": "Admin",
+        "IdentityStoreId": "d-9c677eba27"
+      },
+      {
+        "GroupId": "76f252a4-90c1-7035-e0a6-d1c51ad331e6",
+        "DisplayName": "AWSAuditAccountAdmins",
+        "Description": "Admin rights to cross-account audit account",
+        "IdentityStoreId": "d-9c677eba27"
+      },
+      {
+        "GroupId": "f672f2d4-1001-7000-e380-91ccf8308803",
+        "DisplayName": "AWSControlTowerAdmins",
+        "Description": "Admin rights to AWS Control Tower core and provisioned accounts",
+        "IdentityStoreId": "d-9c677eba27"
+      }
+    ]
+  }
+]

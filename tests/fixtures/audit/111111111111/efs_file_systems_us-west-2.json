@@ -1,0 +1,68 @@
+[
+  {
+    "OwnerId": "111111111111",
+    "CreationToken": "console-8d4b3429-1d7f-4174-9bba-c068bafa47ef",
+    "FileSystemId": "fs-0d440cee4fa333863",
+    "FileSystemArn": "arn:aws:elasticfilesystem:us-west-2:111111111111:file-system/fs-0d440cee4fa333863",
+    "CreationTime": "2022-04-22 08:43:24+01:00",
+    "LifeCycleState": "available",
+    "Name": "foo-dmedia-2",
+    "NumberOfMountTargets": 2,
+    "SizeInBytes": {
+      "Value": 21646264320,
+      "Timestamp": "2025-07-15 14:43:30+01:00",
+      "ValueInIA": 6430986240,
+      "ValueInStandard": 15215278080,
+      "ValueInArchive": 0
+    },
+    "PerformanceMode": "generalPurpose",
+    "Encrypted": true,
+    "KmsKeyId": "arn:aws:kms:us-west-2:111111111111:key/2b37a19a-1bcb-4a40-9e17-88e65e790a4d",
+    "ThroughputMode": "bursting",
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-dmedia-2"
+      },
+      {
+        "Key": "aws:elasticfilesystem:default-backup",
+        "Value": "enabled"
+      }
+    ],
+    "FileSystemProtection": {
+      "ReplicationOverwriteProtection": "ENABLED"
+    },
+    "MountTargets": [
+      {
+        "OwnerId": "111111111111",
+        "MountTargetId": "fsmt-0296fa63f21d9e438",
+        "FileSystemId": "fs-0d440cee4fa333863",
+        "SubnetId": "subnet-0bac249b81289124a",
+        "LifeCycleState": "available",
+        "IpAddress": "10.0.3.27",
+        "NetworkInterfaceId": "eni-0e370122b206a407c",
+        "AvailabilityZoneId": "usw2-az1",
+        "AvailabilityZoneName": "us-west-2b",
+        "VpcId": "vpc-57696132",
+        "SecurityGroups": [
+          "sg-0b6c173bc07e193dd"
+        ]
+      },
+      {
+        "OwnerId": "111111111111",
+        "MountTargetId": "fsmt-02c21ca29c162340b",
+        "FileSystemId": "fs-0d440cee4fa333863",
+        "SubnetId": "subnet-0ae3f1866d2ab80e5",
+        "LifeCycleState": "available",
+        "IpAddress": "10.0.1.39",
+        "NetworkInterfaceId": "eni-068dc436bc2fb78fb",
+        "AvailabilityZoneId": "usw2-az2",
+        "AvailabilityZoneName": "us-west-2a",
+        "VpcId": "vpc-57696132",
+        "SecurityGroups": [
+          "sg-0b6c173bc07e193dd"
+        ]
+      }
+    ]
+  }
+]

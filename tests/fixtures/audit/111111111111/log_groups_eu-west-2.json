@@ -1,0 +1,75 @@
+[
+  {
+    "logGroupName": "/aws/codebuild/Custom-Control-Tower-CodeBuild",
+    "creationTime": 1751014739568,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/codebuild/Custom-Control-Tower-CodeBuild:*",
+    "storedBytes": 46806,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/codebuild/Custom-Control-Tower-CodeBuild"
+  },
+  {
+    "logGroupName": "/aws/codebuild/Custom-Control-Tower-RCP-CodeBuild",
+    "creationTime": 1751018266423,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/codebuild/Custom-Control-Tower-RCP-CodeBuild:*",
+    "storedBytes": 20396,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/codebuild/Custom-Control-Tower-RCP-CodeBuild"
+  },
+  {
+    "logGroupName": "/aws/codebuild/Custom-Control-Tower-SCP-CodeBuild",
+    "creationTime": 1751018140935,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/codebuild/Custom-Control-Tower-SCP-CodeBuild:*",
+    "storedBytes": 20171,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/codebuild/Custom-Control-Tower-SCP-CodeBuild"
+  },
+  {
+    "logGroupName": "/aws/codebuild/Custom-Control-Tower-StackSet-CodeBuild",
+    "creationTime": 1751018392168,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/codebuild/Custom-Control-Tower-StackSet-CodeBuild:*",
+    "storedBytes": 50962,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/codebuild/Custom-Control-Tower-StackSet-CodeBuild"
+  },
+  {
+    "logGroupName": "/aws/lambda/CfCT-CustomControlTowerLELambda-oso80bY7bvth",
+    "creationTime": 1751014734362,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/lambda/CfCT-CustomControlTowerLELambda-oso80bY7bvth:*",
+    "storedBytes": 2373,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/lambda/CfCT-CustomControlTowerLELambda-oso80bY7bvth"
+  },
+  {
+    "logGroupName": "/aws/lambda/CustomControlTowerDeploymentLambda",
+    "creationTime": 1750945481119,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/lambda/CustomControlTowerDeploymentLambda:*",
+    "storedBytes": 3779,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/lambda/CustomControlTowerDeploymentLambda"
+  },
+  {
+    "logGroupName": "/aws/lambda/CustomControlTowerStateMachineLambda",
+    "creationTime": 1751018521576,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/lambda/CustomControlTowerStateMachineLambda:*",
+    "storedBytes": 21547,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:111111111111:log-group:/aws/lambda/CustomControlTowerStateMachineLambda"
+  },
+  {
+    "logGroupName": "aws-controltower/CloudTrailLogs",
+    "creationTime": 1711195259696,
+    "retentionInDays": 14,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:eu-west-2:111111111111:log-group:aws-controltower/CloudTrailLogs:*",
+    "storedBytes": 972574359,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:eu-west-2:111111111111:log-group:aws-controltower/CloudTrailLogs"
+  }
+]

@@ -1,0 +1,41 @@
+[
+  {
+    "Arn": "arn:aws:detective:eu-west-2:222222222222:graph:4c3bc03f9f2341ffb7ddb3edc5d6b72c",
+    "CreatedTime": "2025-02-19 11:51:57.290000+00:00",
+    "Members": [
+      {
+        "AccountId": "222222222222",
+        "GraphArn": "arn:aws:detective:eu-west-2:222222222222:graph:4c3bc03f9f2341ffb7ddb3edc5d6b72c",
+        "MasterId": "222222222222",
+        "AdministratorId": "222222222222",
+        "Status": "ENABLED",
+        "InvitedTime": "2025-02-19 11:51:57.290000+00:00",
+        "UpdatedTime": "2025-02-19 11:52:22.902000+00:00",
+        "VolumeUsageInBytes": 22953974,
+        "VolumeUsageUpdatedTime": "2025-07-15 13:20:11.754000+00:00",
+        "PercentOfGraphUtilization": 2.2953974e-06,
+        "PercentOfGraphUtilizationUpdatedTime": "2025-07-15 13:20:11.754000+00:00",
+        "InvitationType": "ORGANIZATION",
+        "VolumeUsageByDatasourcePackage": {
+          "ASFF_SECURITYHUB_FINDING": {
+            "VolumeUsageInBytes": 74774,
+            "VolumeUsageUpdateTime": "2025-07-15 13:20:11.754000+00:00"
+          },
+          "DETECTIVE_CORE": {
+            "VolumeUsageInBytes": 22879200,
+            "VolumeUsageUpdateTime": "2025-07-15 13:20:11.754000+00:00"
+          },
+          "EKS_AUDIT": {
+            "VolumeUsageInBytes": 0,
+            "VolumeUsageUpdateTime": "2025-07-15 13:20:11.754000+00:00"
+          }
+        },
+        "DatasourcePackageIngestStates": {
+          "ASFF_SECURITYHUB_FINDING": "STARTED",
+          "DETECTIVE_CORE": "STARTED",
+          "EKS_AUDIT": "STARTED"
+        }
+      }
+    ]
+  }
+]

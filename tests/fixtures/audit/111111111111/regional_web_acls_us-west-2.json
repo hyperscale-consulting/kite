@@ -1,0 +1,512 @@
+[
+  {
+    "Name": "foo-waf",
+    "Id": "18f65a19-a933-4703-814b-f7ad05f67973",
+    "ARN": "arn:aws:wafv2:us-west-2:111111111111:regional/webacl/foo-waf/18f65a19-a933-4703-814b-f7ad05f67973",
+    "DefaultAction": {
+      "Allow": {}
+    },
+    "Description": "",
+    "Rules": [
+      {
+        "Name": "base-rate-limit-rule",
+        "Priority": 3,
+        "Statement": {
+          "RateBasedStatement": {
+            "Limit": 1000,
+            "EvaluationWindowSec": 300,
+            "AggregateKeyType": "FORWARDED_IP",
+            "ForwardedIPConfig": {
+              "HeaderName": "X-Forwarded-For",
+              "FallbackBehavior": "MATCH"
+            }
+          }
+        },
+        "Action": {
+          "Block": {
+            "CustomResponse": {
+              "ResponseCode": 429,
+              "ResponseHeaders": [
+                {
+                  "Name": "Retry-After",
+                  "Value": "900"
+                }
+              ]
+            }
+          }
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "base-rate-limit-rule"
+        }
+      },
+      {
+        "Name": "AWS-AWSManagedRulesCommonRuleSet",
+        "Priority": 4,
+        "Statement": {
+          "ManagedRuleGroupStatement": {
+            "VendorName": "AWS",
+            "Name": "AWSManagedRulesCommonRuleSet",
+            "RuleActionOverrides": [
+              {
+                "Name": "NoUserAgent_HEADER",
+                "ActionToUse": {
+                  "Block": {}
+                }
+              },
+              {
+                "Name": "UserAgent_BadBots_HEADER",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "SizeRestrictions_QUERYSTRING",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "SizeRestrictions_Cookie_HEADER",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "SizeRestrictions_BODY",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "SizeRestrictions_URIPATH",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "EC2MetaDataSSRF_BODY",
+                "ActionToUse": {
+                  "Block": {}
+                }
+              },
+              {
+                "Name": "EC2MetaDataSSRF_COOKIE",
+                "ActionToUse": {
+                  "Block": {}
+                }
+              },
+              {
+                "Name": "EC2MetaDataSSRF_URIPATH",
+                "ActionToUse": {
+                  "Block": {}
+                }
+              },
+              {
+                "Name": "EC2MetaDataSSRF_QUERYARGUMENTS",
+                "ActionToUse": {
+                  "Block": {}
+                }
+              },
+              {
+                "Name": "GenericLFI_QUERYARGUMENTS",
+                "ActionToUse": {
+                  "Block": {}
+                }
+              },
+              {
+                "Name": "GenericLFI_URIPATH",
+                "ActionToUse": {
+                  "Block": {}
+                }
+              },
+              {
+                "Name": "GenericLFI_BODY",
+                "ActionToUse": {
+                  "Block": {}
+                }
+              },
+              {
+                "Name": "RestrictedExtensions_URIPATH",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "RestrictedExtensions_QUERYARGUMENTS",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "GenericRFI_QUERYARGUMENTS",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "GenericRFI_BODY",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "GenericRFI_URIPATH",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CrossSiteScripting_COOKIE",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CrossSiteScripting_QUERYARGUMENTS",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CrossSiteScripting_BODY",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CrossSiteScripting_URIPATH",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              }
+            ]
+          }
+        },
+        "OverrideAction": {
+          "None": {}
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "AWS-AWSManagedRulesCommonRuleSet"
+        }
+      },
+      {
+        "Name": "AWS-AWSManagedRulesLinuxRuleSet",
+        "Priority": 5,
+        "Statement": {
+          "ManagedRuleGroupStatement": {
+            "VendorName": "AWS",
+            "Name": "AWSManagedRulesLinuxRuleSet"
+          }
+        },
+        "OverrideAction": {
+          "None": {}
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "AWS-AWSManagedRulesLinuxRuleSet"
+        }
+      },
+      {
+        "Name": "AWS-AWSManagedRulesAmazonIpReputationList",
+        "Priority": 7,
+        "Statement": {
+          "ManagedRuleGroupStatement": {
+            "VendorName": "AWS",
+            "Name": "AWSManagedRulesAmazonIpReputationList"
+          }
+        },
+        "OverrideAction": {
+          "None": {}
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "AWS-AWSManagedRulesAmazonIpReputationList"
+        }
+      },
+      {
+        "Name": "late-deals-rate-limit",
+        "Priority": 8,
+        "Statement": {
+          "RateBasedStatement": {
+            "Limit": 10,
+            "EvaluationWindowSec": 300,
+            "AggregateKeyType": "FORWARDED_IP",
+            "ScopeDownStatement": {
+              "ByteMatchStatement": {
+                "SearchString": "b'/late-deals/'",
+                "FieldToMatch": {
+                  "UriPath": {}
+                },
+                "TextTransformations": [
+                  {
+                    "Priority": 0,
+                    "Type": "NONE"
+                  }
+                ],
+                "PositionalConstraint": "EXACTLY"
+              }
+            },
+            "ForwardedIPConfig": {
+              "HeaderName": "X-Forwarded-For",
+              "FallbackBehavior": "MATCH"
+            }
+          }
+        },
+        "Action": {
+          "Block": {
+            "CustomResponse": {
+              "ResponseCode": 429,
+              "ResponseHeaders": [
+                {
+                  "Name": "Retry-After",
+                  "Value": "900"
+                }
+              ]
+            }
+          }
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "late-deals-rate-limit"
+        }
+      },
+      {
+        "Name": "search-rate-limit",
+        "Priority": 9,
+        "Statement": {
+          "RateBasedStatement": {
+            "Limit": 300,
+            "EvaluationWindowSec": 300,
+            "AggregateKeyType": "FORWARDED_IP",
+            "ScopeDownStatement": {
+              "ByteMatchStatement": {
+                "SearchString": "b'/cottages/search/'",
+                "FieldToMatch": {
+                  "UriPath": {}
+                },
+                "TextTransformations": [
+                  {
+                    "Priority": 0,
+                    "Type": "NONE"
+                  }
+                ],
+                "PositionalConstraint": "EXACTLY"
+              }
+            },
+            "ForwardedIPConfig": {
+              "HeaderName": "X-Forwarded-For",
+              "FallbackBehavior": "MATCH"
+            }
+          }
+        },
+        "Action": {
+          "Block": {
+            "CustomResponse": {
+              "ResponseCode": 429,
+              "ResponseHeaders": [
+                {
+                  "Name": "Retry-After",
+                  "Value": "900"
+                }
+              ]
+            }
+          }
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "search-rate-limit"
+        }
+      },
+      {
+        "Name": "AWS-AWSManagedRulesSQLiRuleSet",
+        "Priority": 11,
+        "Statement": {
+          "ManagedRuleGroupStatement": {
+            "VendorName": "AWS",
+            "Name": "AWSManagedRulesSQLiRuleSet"
+          }
+        },
+        "OverrideAction": {
+          "None": {}
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "AWS-AWSManagedRulesSQLiRuleSet"
+        }
+      },
+      {
+        "Name": "AWS-AWSManagedRulesBotControlRuleSet",
+        "Priority": 12,
+        "Statement": {
+          "ManagedRuleGroupStatement": {
+            "VendorName": "AWS",
+            "Name": "AWSManagedRulesBotControlRuleSet",
+            "ScopeDownStatement": {
+              "NotStatement": {
+                "Statement": {
+                  "RegexPatternSetReferenceStatement": {
+                    "ARN": "arn:aws:wafv2:us-west-2:111111111111:regional/regexpatternset/static-content/7b7b4e2f-03bb-4344-8049-ab79af2aba02",
+                    "FieldToMatch": {
+                      "UriPath": {}
+                    },
+                    "TextTransformations": [
+                      {
+                        "Priority": 0,
+                        "Type": "NONE"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "ManagedRuleGroupConfigs": [
+              {
+                "AWSManagedRulesBotControlRuleSet": {
+                  "InspectionLevel": "COMMON"
+                }
+              }
+            ],
+            "RuleActionOverrides": [
+              {
+                "Name": "CategoryAdvertising",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategoryArchiver",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategoryContentFetcher",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategoryEmailClient",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategoryHttpLibrary",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategoryLinkChecker",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategoryMiscellaneous",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategoryMonitoring",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategoryScrapingFramework",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategorySearchEngine",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategorySecurity",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategorySeo",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategorySocialMedia",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "CategoryAI",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "SignalAutomatedBrowser",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "SignalKnownBotDataCenter",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              },
+              {
+                "Name": "SignalNonBrowserUserAgent",
+                "ActionToUse": {
+                  "Count": {}
+                }
+              }
+            ]
+          }
+        },
+        "OverrideAction": {
+          "Count": {}
+        },
+        "VisibilityConfig": {
+          "SampledRequestsEnabled": true,
+          "CloudWatchMetricsEnabled": true,
+          "MetricName": "AWS-AWSManagedRulesBotControlRuleSet"
+        }
+      }
+    ],
+    "VisibilityConfig": {
+      "SampledRequestsEnabled": true,
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "foo-waf"
+    },
+    "Capacity": 1210,
+    "ManagedByFirewallManager": false,
+    "LabelNamespace": "awswaf:111111111111:webacl:foo-waf:",
+    "RetrofittedByFirewallManager": false,
+    "OnSourceDDoSProtectionConfig": {
+      "ALBLowReputationMode": "ACTIVE_UNDER_DDOS"
+    },
+    "Region": "us-west-2",
+    "Scope": "REGIONAL",
+    "Resources": [
+      "arn:aws:elasticloadbalancing:us-west-2:111111111111:loadbalancer/app/foo-web-server-lb/8558f00b0006e6da"
+    ]
+  }
+]

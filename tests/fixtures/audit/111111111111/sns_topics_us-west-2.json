@@ -1,0 +1,221 @@
+[
+  {
+    "TopicArn": "arn:aws:sns:us-west-2:111111111111:AWS_Config_Topic",
+    "Policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "__default_statement_ID",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "sns:GetTopicAttributes",
+            "sns:SetTopicAttributes",
+            "sns:AddPermission",
+            "sns:RemovePermission",
+            "sns:DeleteTopic",
+            "sns:Subscribe",
+            "sns:ListSubscriptionsByTopic",
+            "sns:Publish"
+          ],
+          "Resource": "arn:aws:sns:us-west-2:111111111111:AWS_Config_Topic",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceOwner": "111111111111"
+            }
+          }
+        },
+        {
+          "Sid": "AWSConfigSNSPolicy20180529",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig"
+          },
+          "Action": "sns:Publish",
+          "Resource": "arn:aws:sns:us-west-2:111111111111:AWS_Config_Topic"
+        }
+      ]
+    }
+  },
+  {
+    "TopicArn": "arn:aws:sns:us-west-2:111111111111:CIS_Alarms_Topic",
+    "Policy": {
+      "Version": "2008-10-17",
+      "Id": "__default_policy_ID",
+      "Statement": [
+        {
+          "Sid": "__default_statement_ID",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "SNS:GetTopicAttributes",
+            "SNS:SetTopicAttributes",
+            "SNS:AddPermission",
+            "SNS:RemovePermission",
+            "SNS:DeleteTopic",
+            "SNS:Subscribe",
+            "SNS:ListSubscriptionsByTopic",
+            "SNS:Publish"
+          ],
+          "Resource": "arn:aws:sns:us-west-2:111111111111:CIS_Alarms_Topic",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceOwner": "111111111111"
+            }
+          }
+        },
+        {
+          "Sid": "AWSEvents_new-vulnerability_Id9d2990ac-86bf-4fa6-90fb-2d0917955ffd",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "sns:Publish",
+          "Resource": "arn:aws:sns:us-west-2:111111111111:CIS_Alarms_Topic"
+        },
+        {
+          "Sid": "AWSEvents_new-vulns-ecr_Id7222118e-ee37-4250-94ba-cf45c4adf08b",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "sns:Publish",
+          "Resource": "arn:aws:sns:us-west-2:111111111111:CIS_Alarms_Topic"
+        }
+      ]
+    }
+  },
+  {
+    "TopicArn": "arn:aws:sns:us-west-2:111111111111:CloudWatch_Alarms_Topic",
+    "Policy": {
+      "Version": "2008-10-17",
+      "Id": "__default_policy_ID",
+      "Statement": [
+        {
+          "Sid": "__default_statement_ID",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "SNS:GetTopicAttributes",
+            "SNS:SetTopicAttributes",
+            "SNS:AddPermission",
+            "SNS:RemovePermission",
+            "SNS:DeleteTopic",
+            "SNS:Subscribe",
+            "SNS:ListSubscriptionsByTopic",
+            "SNS:Publish",
+            "SNS:Receive"
+          ],
+          "Resource": "arn:aws:sns:us-west-2:111111111111:CloudWatch_Alarms_Topic",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceOwner": "111111111111"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "TopicArn": "arn:aws:sns:us-west-2:111111111111:Increased_FOO_Log_Activity",
+    "Policy": {
+      "Version": "2008-10-17",
+      "Id": "__default_policy_ID",
+      "Statement": [
+        {
+          "Sid": "__default_statement_ID",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "SNS:GetTopicAttributes",
+            "SNS:SetTopicAttributes",
+            "SNS:AddPermission",
+            "SNS:RemovePermission",
+            "SNS:DeleteTopic",
+            "SNS:Subscribe",
+            "SNS:ListSubscriptionsByTopic",
+            "SNS:Publish"
+          ],
+          "Resource": "arn:aws:sns:us-west-2:111111111111:Increased_FOO_Log_Activity",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceOwner": "111111111111"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "TopicArn": "arn:aws:sns:us-west-2:111111111111:FOO_Web_App_ERROR_Alarms_Topic",
+    "Policy": {
+      "Version": "2008-10-17",
+      "Id": "__default_policy_ID",
+      "Statement": [
+        {
+          "Sid": "__default_statement_ID",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "SNS:GetTopicAttributes",
+            "SNS:SetTopicAttributes",
+            "SNS:AddPermission",
+            "SNS:RemovePermission",
+            "SNS:DeleteTopic",
+            "SNS:Subscribe",
+            "SNS:ListSubscriptionsByTopic",
+            "SNS:Publish"
+          ],
+          "Resource": "arn:aws:sns:us-west-2:111111111111:FOO_Web_App_ERROR_Alarms_Topic",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceOwner": "111111111111"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "TopicArn": "arn:aws:sns:us-west-2:111111111111:SagePay_Trx_Reg_Failures",
+    "Policy": {
+      "Version": "2008-10-17",
+      "Id": "__default_policy_ID",
+      "Statement": [
+        {
+          "Sid": "__default_statement_ID",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "SNS:GetTopicAttributes",
+            "SNS:SetTopicAttributes",
+            "SNS:AddPermission",
+            "SNS:RemovePermission",
+            "SNS:DeleteTopic",
+            "SNS:Subscribe",
+            "SNS:ListSubscriptionsByTopic",
+            "SNS:Publish"
+          ],
+          "Resource": "arn:aws:sns:us-west-2:111111111111:SagePay_Trx_Reg_Failures",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceOwner": "111111111111"
+            }
+          }
+        }
+      ]
+    }
+  }
+]

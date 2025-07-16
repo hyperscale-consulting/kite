@@ -1,0 +1,56 @@
+[
+  {
+    "Associations": [
+      {
+        "NetworkAclAssociationId": "aclassoc-490c7023",
+        "NetworkAclId": "acl-043a746c",
+        "SubnetId": "subnet-c647f5bc"
+      },
+      {
+        "NetworkAclAssociationId": "aclassoc-480c7022",
+        "NetworkAclId": "acl-043a746c",
+        "SubnetId": "subnet-22d7a14b"
+      },
+      {
+        "NetworkAclAssociationId": "aclassoc-4e0c7024",
+        "NetworkAclId": "acl-043a746c",
+        "SubnetId": "subnet-feb575b2"
+      }
+    ],
+    "Entries": [
+      {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "-1",
+        "RuleAction": "allow",
+        "RuleNumber": 100
+      },
+      {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "-1",
+        "RuleAction": "deny",
+        "RuleNumber": 32767
+      },
+      {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": false,
+        "Protocol": "-1",
+        "RuleAction": "allow",
+        "RuleNumber": 100
+      },
+      {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": false,
+        "Protocol": "-1",
+        "RuleAction": "deny",
+        "RuleNumber": 32767
+      }
+    ],
+    "IsDefault": true,
+    "NetworkAclId": "acl-043a746c",
+    "Tags": [],
+    "VpcId": "vpc-97f19dff",
+    "OwnerId": "111111111111"
+  }
+]

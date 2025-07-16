@@ -1,0 +1,11 @@
+[
+  {
+    "Id": "rqlca-528af63505b74a35",
+    "ResolverQueryLogConfigId": "rqlc-6d2c6d43de624efe",
+    "ResourceId": "vpc-57696132",
+    "Status": "ACTIVE",
+    "Error": "NONE",
+    "ErrorMessage": "",
+    "CreationTime": "2025-04-03T14:06:19.775098451Z"
+  }
+]

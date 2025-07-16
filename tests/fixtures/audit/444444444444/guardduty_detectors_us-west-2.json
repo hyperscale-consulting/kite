@@ -1,0 +1,111 @@
+[
+  {
+    "Status": "ENABLED",
+    "CreatedAt": "2025-02-13T15:59:29.422Z",
+    "UpdatedAt": "2025-02-13T18:40:45.536Z",
+    "FindingPublishingFrequency": "SIX_HOURS",
+    "DataSources": {
+      "CloudTrail": {
+        "Status": "ENABLED"
+      },
+      "DNSLogs": {
+        "Status": "ENABLED"
+      },
+      "FlowLogs": {
+        "Status": "ENABLED"
+      },
+      "S3Logs": {
+        "Status": "ENABLED"
+      },
+      "Kubernetes": {
+        "AuditLogs": {
+          "Status": "ENABLED"
+        }
+      },
+      "MalwareProtection": {
+        "ScanEc2InstanceWithFindings": {
+          "EbsVolumes": {
+            "Status": "ENABLED"
+          }
+        },
+        "ServiceRole": "arn:aws:iam::444444444444:role/aws-service-role/malware-protection.guardduty.amazonaws.com/AWSServiceRoleForAmazonGuardDutyMalwareProtection"
+      }
+    },
+    "Features": [
+      {
+        "Name": "CLOUD_TRAIL",
+        "Status": "ENABLED",
+        "UpdatedAt": "2025-07-15 15:05:29+01:00"
+      },
+      {
+        "Name": "DNS_LOGS",
+        "Status": "ENABLED",
+        "UpdatedAt": "2025-07-15 15:05:29+01:00"
+      },
+      {
+        "Name": "FLOW_LOGS",
+        "Status": "ENABLED",
+        "UpdatedAt": "2025-07-15 15:05:29+01:00"
+      },
+      {
+        "Name": "S3_DATA_EVENTS",
+        "Status": "ENABLED",
+        "UpdatedAt": "2025-02-13 18:40:45+00:00"
+      },
+      {
+        "Name": "EKS_AUDIT_LOGS",
+        "Status": "ENABLED",
+        "UpdatedAt": "2025-02-13 18:40:45+00:00"
+      },
+      {
+        "Name": "EBS_MALWARE_PROTECTION",
+        "Status": "ENABLED",
+        "UpdatedAt": "2025-02-13 18:40:45+00:00"
+      },
+      {
+        "Name": "RDS_LOGIN_EVENTS",
+        "Status": "ENABLED",
+        "UpdatedAt": "2025-02-13 18:40:45+00:00"
+      },
+      {
+        "Name": "EKS_RUNTIME_MONITORING",
+        "Status": "DISABLED",
+        "UpdatedAt": "2025-02-13 15:59:29+00:00",
+        "AdditionalConfiguration": [
+          {
+            "Name": "EKS_ADDON_MANAGEMENT",
+            "Status": "ENABLED",
+            "UpdatedAt": "2025-02-13 20:20:25+00:00"
+          }
+        ]
+      },
+      {
+        "Name": "LAMBDA_NETWORK_LOGS",
+        "Status": "ENABLED",
+        "UpdatedAt": "2025-02-13 18:40:45+00:00"
+      },
+      {
+        "Name": "RUNTIME_MONITORING",
+        "Status": "ENABLED",
+        "UpdatedAt": "2025-02-13 18:40:45+00:00",
+        "AdditionalConfiguration": [
+          {
+            "Name": "EKS_ADDON_MANAGEMENT",
+            "Status": "ENABLED",
+            "UpdatedAt": "2025-02-13 20:20:25+00:00"
+          },
+          {
+            "Name": "ECS_FARGATE_AGENT_MANAGEMENT",
+            "Status": "ENABLED",
+            "UpdatedAt": "2025-02-13 20:20:25+00:00"
+          },
+          {
+            "Name": "EC2_AGENT_MANAGEMENT",
+            "Status": "ENABLED",
+            "UpdatedAt": "2025-02-13 20:20:25+00:00"
+          }
+        ]
+      }
+    ]
+  }
+]

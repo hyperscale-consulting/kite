@@ -1,0 +1,18 @@
+[
+  {
+    "ResourceArn": "arn:aws:elasticfilesystem:us-west-2:111111111111:file-system/fs-0d440cee4fa333863",
+    "ResourceType": "EFS",
+    "LastBackupTime": "2025-07-15 06:00:00+01:00",
+    "ResourceName": "foo-dmedia-2",
+    "LastBackupVaultArn": "arn:aws:backup:us-west-2:111111111111:backup-vault:aws/efs/automatic-backup-vault",
+    "LastRecoveryPointArn": "arn:aws:backup:us-west-2:111111111111:recovery-point:f3c0c8bb-d288-4dc7-a72d-9b708e354e74"
+  },
+  {
+    "ResourceArn": "arn:aws:rds:us-west-2:111111111111:db:foo-db-3",
+    "ResourceType": "RDS",
+    "LastBackupTime": "2025-07-15 05:00:00+01:00",
+    "ResourceName": "foo-db-3",
+    "LastBackupVaultArn": "arn:aws:backup:us-west-2:111111111111:backup-vault:Default",
+    "LastRecoveryPointArn": "arn:aws:rds:us-west-2:111111111111:snapshot:awsbackup:job-0f453aa3-ab86-3ed6-93c1-929a5b8349e8"
+  }
+]

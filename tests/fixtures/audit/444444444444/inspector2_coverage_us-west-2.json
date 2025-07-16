@@ -1,0 +1,154 @@
+[
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-19 19:32:53.534000+00:00",
+    "resourceId": "arn:aws:lambda:us-west-2:444444444444:function:StackSet-automated-securi-WaitProviderFunction3D90-N1ZUrUZFUIbX:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "StackSet-automated-securi-WaitProviderFunction3D90-N1ZUrUZFUIbX",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "WaitProviderFunction3D90ED36",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:us-west-2:444444444444:stack/StackSet-automated-security-response-member-account-stack-a1310ce8-66c3-4ca0-b92f-0050665ecf2a/307a0d60-eef8-11ef-ac48-06f3182e2863",
+          "aws:cloudformation:stack-name": "StackSet-automated-security-response-member-account-stack-a1310ce8-66c3-4ca0-b92f-0050665ecf2a"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SCAN_ELIGIBILITY_EXPIRED",
+      "statusCode": "INACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-03-14 08:31:39.406000+00:00",
+    "resourceId": "arn:aws:lambda:us-west-2:444444444444:function:StackSet-automated-securi-WaitProviderFunction3D90-N1ZUrUZFUIbX:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "StackSet-automated-securi-WaitProviderFunction3D90-N1ZUrUZFUIbX",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "WaitProviderFunction3D90ED36",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:us-west-2:444444444444:stack/StackSet-automated-security-response-member-account-stack-a1310ce8-66c3-4ca0-b92f-0050665ecf2a/307a0d60-eef8-11ef-ac48-06f3182e2863",
+          "aws:cloudformation:stack-name": "StackSet-automated-security-response-member-account-stack-a1310ce8-66c3-4ca0-b92f-0050665ecf2a"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SCAN_ELIGIBILITY_EXPIRED",
+      "statusCode": "INACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-02-19 13:07:24.933000+00:00",
+    "resourceId": "arn:aws:lambda:us-west-2:444444444444:function:aws-controltower-NotificationForwarder:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "aws-controltower-NotificationForwarder",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "ForwardSnsNotification",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:us-west-2:444444444444:stack/StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-e07dbda3-d421-4b31-9f19-5adc108465b1/6e67e4d0-e91d-11ee-a22c-024df87f0bab",
+          "aws:cloudformation:stack-name": "StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-e07dbda3-d421-4b31-9f19-5adc108465b1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_9"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-11 02:42:56.032000+01:00",
+    "resourceId": "arn:aws:lambda:us-west-2:444444444444:function:aws-controltower-NotificationForwarder:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "aws-controltower-NotificationForwarder",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "ForwardSnsNotification",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:us-west-2:444444444444:stack/StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-e07dbda3-d421-4b31-9f19-5adc108465b1/6e67e4d0-e91d-11ee-a22c-024df87f0bab",
+          "aws:cloudformation:stack-name": "StackSet-AWSControlTowerBP-BASELINE-CLOUDWATCH-e07dbda3-d421-4b31-9f19-5adc108465b1"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_9"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-23 16:12:17.540000+01:00",
+    "resourceId": "arn:aws:lambda:us-west-2:444444444444:function:delete-name-tags-us-west-2-a5d9-dmdd7:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "delete-name-tags-us-west-2-a5d9-dmdd7",
+        "functionTags": {
+          "QuickSetupDefinitionID": "dmdd7",
+          "QuickSetupDocument": "AWSQuickSetupType-PatchPolicy",
+          "QuickSetupDocumentVersionName": "2.1",
+          "QuickSetupManagerAccount": "111111111111",
+          "QuickSetupManagerArn": "arn:aws:ssm-quicksetup:us-west-2:111111111111:configuration-manager/261436fc-19f4-435d-8876-4d0ce76f6412",
+          "QuickSetupManagerID": "261436fc-19f4-435d-8876-4d0ce76f6412",
+          "QuickSetupManagerRegion": "us-west-2",
+          "aws:cloudformation:logical-id": "NameTagDeleteLambda",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:us-west-2:444444444444:stack/StackSet-AWS-QuickSetup-PatchPolicy-TA-dmdd7-41456637-a795-436a-87bf-c5ad5ef6ad44/46df1a70-5044-11f0-a5d9-0667cbdc2be9",
+          "aws:cloudformation:stack-name": "StackSet-AWS-QuickSetup-PatchPolicy-TA-dmdd7-41456637-a795-436a-87bf-c5ad5ef6ad44"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "444444444444",
+    "lastScannedAt": "2025-06-23 16:12:05.571000+01:00",
+    "resourceId": "arn:aws:lambda:us-west-2:444444444444:function:delete-name-tags-us-west-2-a5d9-dmdd7:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "delete-name-tags-us-west-2-a5d9-dmdd7",
+        "functionTags": {
+          "QuickSetupDefinitionID": "dmdd7",
+          "QuickSetupDocument": "AWSQuickSetupType-PatchPolicy",
+          "QuickSetupDocumentVersionName": "2.1",
+          "QuickSetupManagerAccount": "111111111111",
+          "QuickSetupManagerArn": "arn:aws:ssm-quicksetup:us-west-2:111111111111:configuration-manager/261436fc-19f4-435d-8876-4d0ce76f6412",
+          "QuickSetupManagerID": "261436fc-19f4-435d-8876-4d0ce76f6412",
+          "QuickSetupManagerRegion": "us-west-2",
+          "aws:cloudformation:logical-id": "NameTagDeleteLambda",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:us-west-2:444444444444:stack/StackSet-AWS-QuickSetup-PatchPolicy-TA-dmdd7-41456637-a795-436a-87bf-c5ad5ef6ad44/46df1a70-5044-11f0-a5d9-0667cbdc2be9",
+          "aws:cloudformation:stack-name": "StackSet-AWS-QuickSetup-PatchPolicy-TA-dmdd7-41456637-a795-436a-87bf-c5ad5ef6ad44"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  }
+]

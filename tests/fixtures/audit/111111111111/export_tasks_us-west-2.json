@@ -1,0 +1,19 @@
+[
+  {
+    "taskId": "1cd0aa8c-4e4c-40a0-ac7e-4daeb1bf78cc",
+    "taskName": "/ecs/foo-web-server-1748443604628",
+    "logGroupName": "/ecs/foo-web-server",
+    "from": 1748357175640,
+    "to": 1748443575640,
+    "destination": "test-logs-export-bucket-jdjshdueqp",
+    "destinationPrefix": "exportedlogs",
+    "status": {
+      "code": "COMPLETED",
+      "message": "Completed successfully"
+    },
+    "executionInfo": {
+      "creationTime": 1748443605468,
+      "completionTime": 1748443619730
+    }
+  }
+]

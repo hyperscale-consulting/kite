@@ -1,0 +1,43 @@
+[
+  {
+    "TopicArn": "arn:aws:sns:us-west-2:444444444444:aws-controltower-SecurityNotifications",
+    "Policy": {
+      "Version": "2008-10-17",
+      "Statement": [
+        {
+          "Sid": "__default_statement_ID",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "*"
+          },
+          "Action": [
+            "SNS:GetTopicAttributes",
+            "SNS:SetTopicAttributes",
+            "SNS:AddPermission",
+            "SNS:RemovePermission",
+            "SNS:DeleteTopic",
+            "SNS:Subscribe",
+            "SNS:ListSubscriptionsByTopic",
+            "SNS:Publish",
+            "SNS:Receive"
+          ],
+          "Resource": "arn:aws:sns:us-west-2:444444444444:aws-controltower-SecurityNotifications",
+          "Condition": {
+            "StringEquals": {
+              "AWS:SourceOwner": "444444444444"
+            }
+          }
+        },
+        {
+          "Sid": "TrustCWEToPublishEventsToMyTopic",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "events.amazonaws.com"
+          },
+          "Action": "sns:Publish",
+          "Resource": "arn:aws:sns:us-west-2:444444444444:aws-controltower-SecurityNotifications"
+        }
+      ]
+    }
+  }
+]

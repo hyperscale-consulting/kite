@@ -6,9 +6,9 @@ from kite.config import Config
 from kite.data import get_apigateway_rest_apis
 from kite.data import get_appsync_graphql_apis
 from kite.data import get_cloudfront_distributions
+from kite.data import get_cloudfront_web_acls
 from kite.data import get_elbv2_load_balancers
 from kite.data import get_regional_web_acls
-from kite.data import get_cloudfront_web_acls
 from kite.helpers import get_account_ids_in_scope
 from kite.helpers import manual_check
 

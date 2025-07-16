@@ -1,0 +1,35 @@
+[
+  {
+    "Id": "rslvr-frg-f542b8e995bc474f",
+    "Arn": "arn:aws:route53resolver:us-west-2:111111111111:firewall-rule-group/rslvr-frg-f542b8e995bc474f",
+    "Name": "foo-vpc-rules",
+    "OwnerId": "111111111111",
+    "CreatorRequestId": "AWSConsole.5.1743689990235",
+    "ShareStatus": "NOT_SHARED",
+    "FirewallRules": [
+      {
+        "FirewallRuleGroupId": "rslvr-frg-f542b8e995bc474f",
+        "FirewallDomainListId": "rslvr-fdl-15c5dd06e1704582",
+        "Name": "allow-domains",
+        "Priority": 1,
+        "Action": "ALLOW",
+        "CreatorRequestId": "AWSConsole.86.1743690407429",
+        "CreationTime": "2025-04-03T14:26:47.544157305Z",
+        "ModificationTime": "2025-05-09T12:04:54.718779748Z",
+        "FirewallDomainRedirectionAction": "TRUST_REDIRECTION_DOMAIN"
+      },
+      {
+        "FirewallRuleGroupId": "rslvr-frg-f542b8e995bc474f",
+        "FirewallDomainListId": "rslvr-fdl-bfe03ead004d42c6",
+        "Name": "block-all",
+        "Priority": 2,
+        "Action": "BLOCK",
+        "BlockResponse": "NODATA",
+        "CreatorRequestId": "AWSConsole.31.1743693415231",
+        "CreationTime": "2025-04-03T15:16:55.382101052Z",
+        "ModificationTime": "2025-04-03T15:23:03.135949495Z",
+        "FirewallDomainRedirectionAction": "INSPECT_REDIRECTION_DOMAIN"
+      }
+    ]
+  }
+]

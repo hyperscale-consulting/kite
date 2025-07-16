@@ -1,0 +1,213 @@
+{
+  "account_id": "111111111111",
+  "identities": [
+    {
+      "account_id": "111111111111",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_AWSAdministratorAccess_1ddc1c58f6eec6d2",
+      "arn": "arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSAdministratorAccess_1ddc1c58f6eec6d2",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::111111111111:saml-provider/AWSSSO_6d828760424eaa30_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "111111111111",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_AWSOrganizationsFullAccess_8437cc66bc688649",
+      "arn": "arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSOrganizationsFullAccess_8437cc66bc688649",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::111111111111:saml-provider/AWSSSO_6d828760424eaa30_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "111111111111",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_AWSPowerUserAccess_d567fafe3b39aeed",
+      "arn": "arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSPowerUserAccess_d567fafe3b39aeed",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::111111111111:saml-provider/AWSSSO_6d828760424eaa30_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "111111111111",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_AWSReadOnlyAccess_a6084e38958305a6",
+      "arn": "arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSReadOnlyAccess_a6084e38958305a6",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::111111111111:saml-provider/AWSSSO_6d828760424eaa30_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "111111111111",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_AWSServiceCatalogAdminFullAccess_77db32fa3af9849d",
+      "arn": "arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSServiceCatalogAdminFullAccess_77db32fa3af9849d",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::111111111111:saml-provider/AWSSSO_6d828760424eaa30_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "111111111111",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_AWSServiceCatalogEndUserAccess_c896e8ce483ff47a",
+      "arn": "arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSServiceCatalogEndUserAccess_c896e8ce483ff47a",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::111111111111:saml-provider/AWSSSO_6d828760424eaa30_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "111111111111",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_NetworkAdministrator_1517efd28c2a7945",
+      "arn": "arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_NetworkAdministrator_1517efd28c2a7945",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::111111111111:saml-provider/AWSSSO_6d828760424eaa30_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "account_id": "111111111111",
+      "identity_type": "role",
+      "name": "AWSReservedSSO_SecurityAudit_a8cc46fa49e19ff1",
+      "arn": "arn:aws:iam::111111111111:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_SecurityAudit_a8cc46fa49e19ff1",
+      "trust_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::111111111111:saml-provider/AWSSSO_6d828760424eaa30_DO_NOT_DELETE"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

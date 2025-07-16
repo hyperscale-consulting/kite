@@ -1,0 +1,19 @@
+[
+  {
+    "Name": "aws-controltower-BaselineCloudTrail",
+    "S3BucketName": "aws-controltower-logs-333333333333-eu-west-2",
+    "S3KeyPrefix": "o-adf95fr1li",
+    "SnsTopicName": "arn:aws:sns:eu-west-2:222222222222:aws-controltower-AllConfigNotifications",
+    "SnsTopicARN": "arn:aws:sns:eu-west-2:222222222222:aws-controltower-AllConfigNotifications",
+    "IncludeGlobalServiceEvents": true,
+    "IsMultiRegionTrail": true,
+    "HomeRegion": "eu-west-2",
+    "TrailARN": "arn:aws:cloudtrail:eu-west-2:111111111111:trail/aws-controltower-BaselineCloudTrail",
+    "LogFileValidationEnabled": true,
+    "CloudWatchLogsLogGroupArn": "arn:aws:logs:eu-west-2:111111111111:log-group:aws-controltower/CloudTrailLogs:*",
+    "CloudWatchLogsRoleArn": "arn:aws:iam::111111111111:role/service-role/AWSControlTowerCloudTrailRole",
+    "HasCustomEventSelectors": false,
+    "HasInsightSelectors": false,
+    "IsOrganizationTrail": true
+  }
+]

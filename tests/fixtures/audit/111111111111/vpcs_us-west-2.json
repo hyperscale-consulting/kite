@@ -1,0 +1,50 @@
+[
+  {
+    "OwnerId": "111111111111",
+    "InstanceTenancy": "default",
+    "CidrBlockAssociationSet": [
+      {
+        "AssociationId": "vpc-cidr-assoc-ad1373c4",
+        "CidrBlock": "10.0.0.0/16",
+        "CidrBlockState": {
+          "State": "associated"
+        }
+      }
+    ],
+    "IsDefault": false,
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo"
+      }
+    ],
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "VpcId": "vpc-57696132",
+    "State": "available",
+    "CidrBlock": "10.0.0.0/16",
+    "DhcpOptionsId": "dopt-dfe01cba"
+  },
+  {
+    "OwnerId": "111111111111",
+    "InstanceTenancy": "default",
+    "CidrBlockAssociationSet": [
+      {
+        "AssociationId": "vpc-cidr-assoc-00dc782ce6630e4db",
+        "CidrBlock": "172.31.0.0/16",
+        "CidrBlockState": {
+          "State": "associated"
+        }
+      }
+    ],
+    "IsDefault": true,
+    "BlockPublicAccessStates": {
+      "InternetGatewayBlockMode": "off"
+    },
+    "VpcId": "vpc-03bdd09d013b2b609",
+    "State": "available",
+    "CidrBlock": "172.31.0.0/16",
+    "DhcpOptionsId": "dopt-dfe01cba"
+  }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "Name": "athena-results-dkjcsk",
+    "CreationDate": "2025-04-01 08:07:24+00:00",
+    "Policy": null,
+    "LifecycleRules": null,
+    "Versioning": null,
+    "Logging": null,
+    "ObjectLockConfiguration": null
+  },
+  {
+    "Name": "cfn-templates-d1c425c9",
+    "CreationDate": "2025-03-26 16:55:57+00:00",
+    "Policy": null,
+    "LifecycleRules": null,
+    "Versioning": "Enabled",
+    "Logging": null,
+    "ObjectLockConfiguration": {
+      "ObjectLockEnabled": "Enabled",
+      "Rule": {
+        "DefaultRetention": {
+          "Mode": "GOVERNANCE",
+          "Years": 100
+        }
+      }
+    }
+  },
+  {
+    "Name": "serverlessrepo-foobari-sitestaticassetsbucket-3rfsyflsf9jv",
+    "CreationDate": "2024-11-13 19:06:07+00:00",
+    "Policy": "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Sid\":\"AllowReadOAC\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E2CA77043Z9K8K\"},\"Action\":\"s3:GetObject\",\"Resource\":\"arn:aws:s3:::serverlessrepo-foobari-sitestaticassetsbucket-3rfsyflsf9jv/*\"}]}",
+    "LifecycleRules": null,
+    "Versioning": null,
+    "Logging": null,
+    "ObjectLockConfiguration": null
+  },
+  {
+    "Name": "serverlessrepo-example-accesslogbucket-1v9hljv81ckm",
+    "CreationDate": "2024-11-10 08:11:41+00:00",
+    "Policy": null,
+    "LifecycleRules": [
+      {
+        "Expiration": {
+          "Days": 30
+        },
+        "ID": "RetentionRule",
+        "Status": "Enabled",
+        "NoncurrentVersionExpiration": {
+          "NoncurrentDays": 30
+        },
+        "AbortIncompleteMultipartUpload": {
+          "DaysAfterInitiation": 1
+        }
+      }
+    ],
+    "Versioning": "Enabled",
+    "Logging": null,
+    "ObjectLockConfiguration": null
+  },
+  {
+    "Name": "foo-appinvoicesbucket-7dlx7rz0fxuv",
+    "CreationDate": "2024-11-13 19:06:11+00:00",
+    "Policy": null,
+    "LifecycleRules": null,
+    "Versioning": null,
+    "Logging": null,
+    "ObjectLockConfiguration": null
+  },
+  {
+    "Name": "serverlessrepo-redirect-domain-bucket-jpttnlqyurlm",
+    "CreationDate": "2024-09-12 09:43:12+00:00",
+    "Policy": null,
+    "LifecycleRules": null,
+    "Versioning": null,
+    "Logging": null,
+    "ObjectLockConfiguration": null
+  },
+  {
+    "Name": "test-data-bucket-djshj",
+    "CreationDate": "2025-04-01 08:01:31+00:00",
+    "Policy": null,
+    "LifecycleRules": null,
+    "Versioning": null,
+    "Logging": null,
+    "ObjectLockConfiguration": null
+  }
+]

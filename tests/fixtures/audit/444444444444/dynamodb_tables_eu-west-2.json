@@ -1,0 +1,18 @@
+[
+  {
+    "TableName": "bizz-stack-Table-1LIMQS57VP93U",
+    "Region": "eu-west-2",
+    "TimeToLiveDescription": {
+      "TimeToLiveStatus": "ENABLED",
+      "AttributeName": "ttl"
+    }
+  },
+  {
+    "TableName": "serverlessrepo-example-Bookingdesk-A7TA8SR5QD95-Authy-Z50TSB3TTE31-SessionsTable-1FMI2SAHXZGFC",
+    "Region": "eu-west-2",
+    "TimeToLiveDescription": {
+      "TimeToLiveStatus": "ENABLED",
+      "AttributeName": "expires_at"
+    }
+  }
+]

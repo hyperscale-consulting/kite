@@ -1,0 +1,13 @@
+[
+  {
+    "Arn": "arn:aws:iam::111111111111:oidc-provider/gitlab.com",
+    "CreateDate": null,
+    "Url": "gitlab.com",
+    "ClientIDList": [
+      "https://gitlab.com"
+    ],
+    "ThumbprintList": [
+      "b3dd7606d2b5a8b4a13771dbecc9ee1cecafa38a"
+    ]
+  }
+]

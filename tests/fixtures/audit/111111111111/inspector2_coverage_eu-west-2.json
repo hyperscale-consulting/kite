@@ -1,0 +1,140 @@
+[
+  {
+    "accountId": "111111111111",
+    "lastScannedAt": "2025-06-26 14:45:19.022000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:111111111111:function:CfCT-CustomControlTowerLELambda-oso80bY7bvth:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "CfCT-CustomControlTowerLELambda-oso80bY7bvth",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "CustomControlTowerLELambda",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:111111111111:stack/CfCT/539ccae0-5293-11f0-82ee-068f7e7940c3",
+          "aws:cloudformation:stack-name": "CfCT"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "111111111111",
+    "lastScannedAt": "2025-07-01 22:19:55.664000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:111111111111:function:CfCT-CustomControlTowerLELambda-oso80bY7bvth:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "CfCT-CustomControlTowerLELambda-oso80bY7bvth",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "CustomControlTowerLELambda",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:111111111111:stack/CfCT/539ccae0-5293-11f0-82ee-068f7e7940c3",
+          "aws:cloudformation:stack-name": "CfCT"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "111111111111",
+    "lastScannedAt": "2025-06-26 14:43:57.290000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:111111111111:function:CustomControlTowerDeploymentLambda:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "CustomControlTowerDeploymentLambda",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "CustomControlTowerDeploymentLambda",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:111111111111:stack/CfCT/539ccae0-5293-11f0-82ee-068f7e7940c3",
+          "aws:cloudformation:stack-name": "CfCT"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "111111111111",
+    "lastScannedAt": "2025-07-01 22:19:44.526000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:111111111111:function:CustomControlTowerDeploymentLambda:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "CustomControlTowerDeploymentLambda",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "CustomControlTowerDeploymentLambda",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:111111111111:stack/CfCT/539ccae0-5293-11f0-82ee-068f7e7940c3",
+          "aws:cloudformation:stack-name": "CfCT"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  },
+  {
+    "accountId": "111111111111",
+    "lastScannedAt": "2025-06-26 14:43:42.646000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:111111111111:function:CustomControlTowerStateMachineLambda:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "CustomControlTowerStateMachineLambda",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "StateMachineLambda",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:111111111111:stack/CfCT/539ccae0-5293-11f0-82ee-068f7e7940c3",
+          "aws:cloudformation:stack-name": "CfCT"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "CODE"
+  },
+  {
+    "accountId": "111111111111",
+    "lastScannedAt": "2025-07-01 22:20:19.352000+01:00",
+    "resourceId": "arn:aws:lambda:eu-west-2:111111111111:function:CustomControlTowerStateMachineLambda:$LATEST",
+    "resourceMetadata": {
+      "lambdaFunction": {
+        "functionName": "CustomControlTowerStateMachineLambda",
+        "functionTags": {
+          "aws:cloudformation:logical-id": "StateMachineLambda",
+          "aws:cloudformation:stack-id": "arn:aws:cloudformation:eu-west-2:111111111111:stack/CfCT/539ccae0-5293-11f0-82ee-068f7e7940c3",
+          "aws:cloudformation:stack-name": "CfCT"
+        },
+        "layers": [],
+        "runtime": "PYTHON_3_11"
+      }
+    },
+    "resourceType": "AWS_LAMBDA_FUNCTION",
+    "scanStatus": {
+      "reason": "SUCCESSFUL",
+      "statusCode": "ACTIVE"
+    },
+    "scanType": "PACKAGE"
+  }
+]

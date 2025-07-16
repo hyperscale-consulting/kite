@@ -1,0 +1,30 @@
+[
+  {
+    "logGroupName": "/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-ofuAZhmZTb7D",
+    "creationTime": 1739990210648,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-east-1:333333333333:log-group:/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-ofuAZhmZTb7D:*",
+    "storedBytes": 105337,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-east-1:333333333333:log-group:/aws/lambda/StackSet-automated-securi-WaitProviderFunction3D90-ofuAZhmZTb7D"
+  },
+  {
+    "logGroupName": "/aws/lambda/aws-controltower-NotificationForwarder",
+    "creationTime": 1711195275427,
+    "retentionInDays": 14,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-east-1:333333333333:log-group:/aws/lambda/aws-controltower-NotificationForwarder:*",
+    "storedBytes": 0,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-east-1:333333333333:log-group:/aws/lambda/aws-controltower-NotificationForwarder"
+  },
+  {
+    "logGroupName": "/aws/lambda/delete-name-tags-us-east-1-b935-dmdd7",
+    "creationTime": 1750691539182,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-east-1:333333333333:log-group:/aws/lambda/delete-name-tags-us-east-1-b935-dmdd7:*",
+    "storedBytes": 1915,
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-east-1:333333333333:log-group:/aws/lambda/delete-name-tags-us-east-1-b935-dmdd7"
+  }
+]

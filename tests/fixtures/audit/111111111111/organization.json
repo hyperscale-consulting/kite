@@ -1,0 +1,266 @@
+{
+  "id": "o-adf95fr1li",
+  "master_account_id": "111111111111",
+  "arn": "arn:aws:organizations::111111111111:organization/o-adf95fr1li",
+  "feature_set": "ALL",
+  "root": {
+    "id": "r-fas3",
+    "arn": "arn:aws:organizations::111111111111:root/o-adf95fr1li/r-fas3",
+    "name": "Root",
+    "accounts": [
+      {
+        "id": "111111111111",
+        "arn": "arn:aws:organizations::111111111111:account/o-adf95fr1li/111111111111",
+        "name": "Management Account",
+        "email": "bob@example.com",
+        "status": "ACTIVE",
+        "joined_method": "INVITED",
+        "joined_timestamp": "2024-03-23T11:53:03.429000+00:00",
+        "scps": [
+          {
+            "id": "p-FullAWSAccess",
+            "arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+            "name": "FullAWSAccess",
+            "description": "Allows access to every operation",
+            "content": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+            "type": "SERVICE_CONTROL_POLICY"
+          }
+        ],
+        "rcps": [],
+        "tag_policies": []
+      }
+    ],
+    "child_ous": [
+      {
+        "id": "ou-fas3-7z7qq6u7",
+        "arn": "arn:aws:organizations::111111111111:ou/o-adf95fr1li/ou-fas3-7z7qq6u7",
+        "name": "Security",
+        "accounts": [
+          {
+            "id": "222222222222",
+            "arn": "arn:aws:organizations::111111111111:account/o-adf95fr1li/222222222222",
+            "name": "Audit",
+            "email": "bob+audit@example.co.uk",
+            "status": "ACTIVE",
+            "joined_method": "CREATED",
+            "joined_timestamp": "2024-03-23T11:53:35.582000+00:00",
+            "scps": [
+              {
+                "id": "p-FullAWSAccess",
+                "arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+                "name": "FullAWSAccess",
+                "description": "Allows access to every operation",
+                "content": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+                "type": "SERVICE_CONTROL_POLICY"
+              }
+            ],
+            "rcps": [],
+            "tag_policies": []
+          },
+          {
+            "id": "333333333333",
+            "arn": "arn:aws:organizations::111111111111:account/o-adf95fr1li/333333333333",
+            "name": "Log Archive",
+            "email": "bob+log-archive@example.co.uk",
+            "status": "ACTIVE",
+            "joined_method": "CREATED",
+            "joined_timestamp": "2024-03-23T11:53:43.204000+00:00",
+            "scps": [
+              {
+                "id": "p-FullAWSAccess",
+                "arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+                "name": "FullAWSAccess",
+                "description": "Allows access to every operation",
+                "content": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+                "type": "SERVICE_CONTROL_POLICY"
+              }
+            ],
+            "rcps": [],
+            "tag_policies": []
+          }
+        ],
+        "child_ous": [],
+        "scps": [
+          {
+            "id": "p-700f6f2p",
+            "arn": "arn:aws:organizations::111111111111:policy/o-adf95fr1li/service_control_policy/p-700f6f2p",
+            "name": "aws-guardrails-lDdiEx",
+            "description": "Guardrails applied to an organization",
+            "content": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"sns:Subscribe\",\"sns:Unsubscribe\"],\"Resource\":[\"arn:aws:sns:*:*:aws-controltower-SecurityNotifications\"],\"Effect\":\"Deny\",\"Sid\":\"GRSNSSUBSCRIPTIONPOLICY\"},{\"Condition\":{\"StringNotEquals\":{\"aws:RequestedRegion\":[\"eu-west-2\",\"us-east-1\",\"us-west-2\"]},\"ArnNotLike\":{\"aws:PrincipalARN\":[\"arn:aws:iam::*:role/AWSControlTowerExecution\"]}},\"Resource\":\"*\",\"Effect\":\"Deny\",\"NotAction\":[\"a4b:*\",\"access-analyzer:*\",\"account:*\",\"acm:*\",\"activate:*\",\"artifact:*\",\"aws-marketplace-management:*\",\"aws-marketplace:*\",\"aws-portal:*\",\"billing:*\",\"billingconductor:*\",\"budgets:*\",\"ce:*\",\"chatbot:*\",\"chime:*\",\"cloudfront:*\",\"cloudtrail:LookupEvents\",\"compute-optimizer:*\",\"config:*\",\"consoleapp:*\",\"consolidatedbilling:*\",\"cur:*\",\"datapipeline:GetAccountLimits\",\"devicefarm:*\",\"directconnect:*\",\"ec2:DescribeRegions\",\"ec2:DescribeTransitGateways\",\"ec2:DescribeVpnGateways\",\"ecr-public:*\",\"fms:*\",\"freetier:*\",\"globalaccelerator:*\",\"health:*\",\"iam:*\",\"importexport:*\",\"invoicing:*\",\"iq:*\",\"kms:*\",\"license-manager:ListReceivedLicenses\",\"lightsail:Get*\",\"mobileanalytics:*\",\"networkmanager:*\",\"notifications-contacts:*\",\"notifications:*\",\"organizations:*\",\"payments:*\",\"pricing:*\",\"quicksight:DescribeAccountSubscription\",\"resource-explorer-2:*\",\"route53-recovery-cluster:*\",\"route53-recovery-control-config:*\",\"route53-recovery-readiness:*\",\"route53:*\",\"route53domains:*\",\"s3:CreateMultiRegionAccessPoint\",\"s3:DeleteMultiRegionAccessPoint\",\"s3:DescribeMultiRegionAccessPointOperation\",\"s3:GetAccountPublicAccessBlock\",\"s3:GetBucketLocation\",\"s3:GetBucketPolicyStatus\",\"s3:GetBucketPublicAccessBlock\",\"s3:GetMultiRegionAccessPoint\",\"s3:GetMultiRegionAccessPointPolicy\",\"s3:GetMultiRegionAccessPointPolicyStatus\",\"s3:GetStorageLensConfiguration\",\"s3:GetStorageLensDashboard\",\"s3:ListAllMyBuckets\",\"s3:ListMultiRegionAccessPoints\",\"s3:ListStorageLensConfigurations\",\"s3:PutAccountPublicAccessBlock\",\"s3:PutMultiRegionAccessPointPolicy\",\"savingsplans:*\",\"shield:*\",\"sso:*\",\"sts:*\",\"support:*\",\"supportapp:*\",\"supportplans:*\",\"sustainability:*\",\"tag:GetResources\",\"tax:*\",\"trustedadvisor:*\",\"vendor-insights:ListEntitledSecurityProfiles\",\"waf-regional:*\",\"waf:*\",\"wafv2:*\"],\"Sid\":\"GRREGIONDENY\"},{\"Condition\":{\"ArnLike\":{\"aws:PrincipalArn\":[\"arn:*:iam::*:root\"]}},\"Action\":\"iam:CreateAccessKey\",\"Resource\":\"*\",\"Effect\":\"Deny\",\"Sid\":\"GRRESTRICTROOTUSERACCESSKEYS\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":[\"arn:*:iam::*:role/AWSControlTowerExecution\"]}},\"Action\":[\"backup:CreateReportPlan\",\"backup:DeleteReportPlan\",\"backup:UpdateReportPlan\"],\"Resource\":\"arn:*:backup:*:*:report-plan:aws_controltower_*\",\"Effect\":\"Deny\",\"Sid\":\"CTBACKUPPV2\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":[\"arn:*:iam::*:role/AWSControlTowerExecution\"]}},\"Action\":[\"s3:CreateBucket\",\"s3:DeleteBucket\",\"s3:DeleteBucketPolicy\",\"s3:DeleteBucketWebsite\",\"s3:PutAccelerateConfiguration\",\"s3:PutBucketAcl\",\"s3:PutBucketCORS\",\"s3:PutBucketLogging\",\"s3:PutBucketObjectLockConfiguration\",\"s3:PutBucketOwnershipControls\",\"s3:PutBucketPolicy\",\"s3:PutBucketPublicAccessBlock\",\"s3:PutBucketVersioning\",\"s3:PutBucketWebsite\",\"s3:PutEncryptionConfiguration\",\"s3:PutLifecycleConfiguration\",\"s3:PutReplicationConfiguration\"],\"Resource\":\"arn:*:s3:::aws-controltower-backup-reports-*\",\"Effect\":\"Deny\",\"Sid\":\"CTS3PV1\"},{\"Condition\":{\"ForAnyValue:StringEquals\":{\"aws:TagKeys\":\"aws-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:*:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"backup:TagResource\",\"backup:UntagResource\"],\"Resource\":\"*\",\"Effect\":\"Deny\",\"Sid\":\"CTBACKUPPV1\"},{\"Condition\":{\"Null\":{\"aws:ResourceTag/aws-control-tower\":false},\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:*:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"backup:CreateBackupPlan\",\"backup:CreateBackupSelection\",\"backup:CreateBackupVault\",\"backup:CreateLogicallyAirGappedBackupVault\",\"backup:DeleteBackupPlan\",\"backup:DeleteBackupSelection\",\"backup:DeleteBackupVault\",\"backup:DeleteBackupVaultAccessPolicy\",\"backup:DeleteBackupVaultLockConfiguration\",\"backup:DeleteBackupVaultSharingPolicy\",\"backup:PutBackupVaultAccessPolicy\",\"backup:PutBackupVaultLockConfiguration\",\"backup:PutBackupVaultSharingPolicy\",\"backup:UpdateBackupPlan\"],\"Resource\":[\"arn:*:backup:*:*:backup-plan:*\",\"arn:*:backup:*:*:backup-vault:*\"],\"Effect\":\"Deny\",\"Sid\":\"CTBACKUPPV3\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:*:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"iam:AttachRolePolicy\",\"iam:CreateRole\",\"iam:DeleteRole\",\"iam:DeleteRolePermissionsBoundary\",\"iam:DeleteRolePolicy\",\"iam:DetachRolePolicy\",\"iam:PutRolePermissionsBoundary\",\"iam:PutRolePolicy\",\"iam:UpdateAssumeRolePolicy\",\"iam:UpdateRole\"],\"Resource\":\"arn:*:iam::*:role/aws-controltower-BackupRole\",\"Effect\":\"Deny\",\"Sid\":\"CTIAMPV1\"}]}",
+            "type": "SERVICE_CONTROL_POLICY"
+          },
+          {
+            "id": "p-FullAWSAccess",
+            "arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+            "name": "FullAWSAccess",
+            "description": "Allows access to every operation",
+            "content": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+            "type": "SERVICE_CONTROL_POLICY"
+          },
+          {
+            "id": "p-zby3344t",
+            "arn": "arn:aws:organizations::111111111111:policy/o-adf95fr1li/service_control_policy/p-zby3344t",
+            "name": "aws-guardrails-lBInlF",
+            "description": "Guardrails applied to an organization",
+            "content": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"s3:PutBucketPolicy\",\"s3:DeleteBucketPolicy\"],\"Resource\":[\"arn:aws:s3:::aws-controltower*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCTAUDITBUCKETPOLICYCHANGESPROHIBITED\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalArn\":[\"arn:aws:iam::*:role/AWSControlTowerExecution\",\"arn:aws:iam::*:role/stacksets-exec-*\"]}},\"Action\":[\"iam:AttachRolePolicy\",\"iam:CreateRole\",\"iam:DeleteRole\",\"iam:DeleteRolePermissionsBoundary\",\"iam:DeleteRolePolicy\",\"iam:DetachRolePolicy\",\"iam:PutRolePermissionsBoundary\",\"iam:PutRolePolicy\",\"iam:UpdateAssumeRolePolicy\",\"iam:UpdateRole\",\"iam:UpdateRoleDescription\"],\"Resource\":[\"arn:aws:iam::*:role/aws-controltower-*\",\"arn:aws:iam::*:role/*AWSControlTower*\",\"arn:aws:iam::*:role/stacksets-exec-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRIAMROLEPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"s3:PutEncryptionConfiguration\"],\"Resource\":[\"arn:aws:s3:::aws-controltower*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCTAUDITBUCKETENCRYPTIONCHANGESPROHIBITED\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"cloudtrail:DeleteTrail\",\"cloudtrail:PutEventSelectors\",\"cloudtrail:StopLogging\",\"cloudtrail:UpdateTrail\"],\"Resource\":[\"arn:aws:cloudtrail:*:*:trail/aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCLOUDTRAILENABLED\"},{\"Condition\":{\"StringEquals\":{\"aws:ResourceTag/aws-control-tower\":\"managed-by-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:PutConfigRule\",\"config:DeleteConfigRule\",\"config:DeleteEvaluationResults\",\"config:DeleteConfigurationAggregator\",\"config:PutConfigurationAggregator\"],\"Resource\":[\"*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGRULEPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:DeleteConfigurationRecorder\",\"config:DeleteDeliveryChannel\",\"config:DeleteRetentionConfiguration\",\"config:PutConfigurationRecorder\",\"config:PutDeliveryChannel\",\"config:PutRetentionConfiguration\",\"config:StopConfigurationRecorder\"],\"Resource\":[\"*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGENABLED\"},{\"Condition\":{\"StringLike\":{\"aws:ResourceTag/aws-control-tower\":\"managed-by-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalArn\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:DeleteAggregationAuthorization\"],\"Resource\":[\"arn:aws:config:*:*:aggregation-authorization*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGAGGREGATIONAUTHORIZATIONPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"events:PutRule\",\"events:PutTargets\",\"events:RemoveTargets\",\"events:DisableRule\",\"events:DeleteRule\"],\"Resource\":[\"arn:aws:events:*:*:rule/aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCLOUDWATCHEVENTPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"s3:DeleteBucket\"],\"Resource\":[\"arn:aws:s3:::aws-controltower*\"],\"Effect\":\"Deny\",\"Sid\":\"GRAUDITBUCKETDELETIONPROHIBITED\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"lambda:AddPermission\",\"lambda:CreateEventSourceMapping\",\"lambda:CreateFunction\",\"lambda:DeleteEventSourceMapping\",\"lambda:DeleteFunction\",\"lambda:DeleteFunctionConcurrency\",\"lambda:PutFunctionConcurrency\",\"lambda:RemovePermission\",\"lambda:UpdateEventSourceMapping\",\"lambda:UpdateFunctionCode\",\"lambda:UpdateFunctionConfiguration\"],\"Resource\":[\"arn:aws:lambda:*:*:function:aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRLAMBDAFUNCTIONPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"sns:AddPermission\",\"sns:CreateTopic\",\"sns:DeleteTopic\",\"sns:RemovePermission\",\"sns:SetTopicAttributes\"],\"Resource\":[\"arn:aws:sns:*:*:aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRSNSTOPICPOLICY\"},{\"Condition\":{\"ForAnyValue:StringEquals\":{\"aws:TagKeys\":\"aws-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:TagResource\",\"config:UntagResource\"],\"Resource\":\"*\",\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGRULETAGSPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"s3:PutBucketLogging\"],\"Resource\":[\"arn:aws:s3:::aws-controltower*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCTAUDITBUCKETLOGGINGCONFIGURATIONCHANGESPROHIBITED\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"s3:PutLifecycleConfiguration\"],\"Resource\":[\"arn:aws:s3:::aws-controltower*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCTAUDITBUCKETLIFECYCLECONFIGURATIONCHANGESPROHIBITED\"},{\"Condition\":{\"StringNotLike\":{\"aws:PrincipalArn\":[\"arn:aws:iam::*:role/AWSControlTowerExecution\"]}},\"Action\":[\"logs:DeleteLogGroup\",\"logs:PutRetentionPolicy\"],\"Resource\":[\"arn:aws:logs:*:*:log-group:*aws-controltower*\"],\"Effect\":\"Deny\",\"Sid\":\"GRLOGGROUPPOLICY\"}]}",
+            "type": "SERVICE_CONTROL_POLICY"
+          }
+        ],
+        "rcps": [],
+        "tag_policies": []
+      },
+      {
+        "id": "ou-fas3-ano3qxbe",
+        "arn": "arn:aws:organizations::111111111111:ou/o-adf95fr1li/ou-fas3-ano3qxbe",
+        "name": "Sandbox",
+        "accounts": [],
+        "child_ous": [],
+        "scps": [
+          {
+            "id": "p-05touwao",
+            "arn": "arn:aws:organizations::111111111111:policy/o-adf95fr1li/service_control_policy/p-05touwao",
+            "name": "aws-guardrails-iyQUAR",
+            "description": "Guardrails applied to an organization",
+            "content": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalArn\":[\"arn:aws:iam::*:role/AWSControlTowerExecution\",\"arn:aws:iam::*:role/stacksets-exec-*\"]}},\"Action\":[\"iam:AttachRolePolicy\",\"iam:CreateRole\",\"iam:DeleteRole\",\"iam:DeleteRolePermissionsBoundary\",\"iam:DeleteRolePolicy\",\"iam:DetachRolePolicy\",\"iam:PutRolePermissionsBoundary\",\"iam:PutRolePolicy\",\"iam:UpdateAssumeRolePolicy\",\"iam:UpdateRole\",\"iam:UpdateRoleDescription\"],\"Resource\":[\"arn:aws:iam::*:role/aws-controltower-*\",\"arn:aws:iam::*:role/*AWSControlTower*\",\"arn:aws:iam::*:role/stacksets-exec-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRIAMROLEPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"cloudtrail:DeleteTrail\",\"cloudtrail:PutEventSelectors\",\"cloudtrail:StopLogging\",\"cloudtrail:UpdateTrail\"],\"Resource\":[\"arn:aws:cloudtrail:*:*:trail/aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCLOUDTRAILENABLED\"},{\"Condition\":{\"StringEquals\":{\"aws:ResourceTag/aws-control-tower\":\"managed-by-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:PutConfigRule\",\"config:DeleteConfigRule\",\"config:DeleteEvaluationResults\",\"config:DeleteConfigurationAggregator\",\"config:PutConfigurationAggregator\"],\"Resource\":[\"*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGRULEPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"sns:Subscribe\",\"sns:Unsubscribe\"],\"Resource\":[\"arn:aws:sns:*:*:aws-controltower-SecurityNotifications\"],\"Effect\":\"Deny\",\"Sid\":\"GRSNSSUBSCRIPTIONPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:DeleteConfigurationRecorder\",\"config:DeleteDeliveryChannel\",\"config:DeleteRetentionConfiguration\",\"config:PutConfigurationRecorder\",\"config:PutDeliveryChannel\",\"config:PutRetentionConfiguration\",\"config:StopConfigurationRecorder\"],\"Resource\":[\"*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGENABLED\"},{\"Condition\":{\"StringLike\":{\"aws:ResourceTag/aws-control-tower\":\"managed-by-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalArn\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:DeleteAggregationAuthorization\"],\"Resource\":[\"arn:aws:config:*:*:aggregation-authorization*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGAGGREGATIONAUTHORIZATIONPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"events:PutRule\",\"events:PutTargets\",\"events:RemoveTargets\",\"events:DisableRule\",\"events:DeleteRule\"],\"Resource\":[\"arn:aws:events:*:*:rule/aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCLOUDWATCHEVENTPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"lambda:AddPermission\",\"lambda:CreateEventSourceMapping\",\"lambda:CreateFunction\",\"lambda:DeleteEventSourceMapping\",\"lambda:DeleteFunction\",\"lambda:DeleteFunctionConcurrency\",\"lambda:PutFunctionConcurrency\",\"lambda:RemovePermission\",\"lambda:UpdateEventSourceMapping\",\"lambda:UpdateFunctionCode\",\"lambda:UpdateFunctionConfiguration\"],\"Resource\":[\"arn:aws:lambda:*:*:function:aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRLAMBDAFUNCTIONPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"sns:AddPermission\",\"sns:CreateTopic\",\"sns:DeleteTopic\",\"sns:RemovePermission\",\"sns:SetTopicAttributes\"],\"Resource\":[\"arn:aws:sns:*:*:aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRSNSTOPICPOLICY\"},{\"Condition\":{\"ForAnyValue:StringEquals\":{\"aws:TagKeys\":\"aws-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:TagResource\",\"config:UntagResource\"],\"Resource\":\"*\",\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGRULETAGSPOLICY\"},{\"Condition\":{\"StringNotLike\":{\"aws:PrincipalArn\":[\"arn:aws:iam::*:role/AWSControlTowerExecution\"]}},\"Action\":[\"logs:DeleteLogGroup\",\"logs:PutRetentionPolicy\"],\"Resource\":[\"arn:aws:logs:*:*:log-group:*aws-controltower*\"],\"Effect\":\"Deny\",\"Sid\":\"GRLOGGROUPPOLICY\"}]}",
+            "type": "SERVICE_CONTROL_POLICY"
+          },
+          {
+            "id": "p-FullAWSAccess",
+            "arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+            "name": "FullAWSAccess",
+            "description": "Allows access to every operation",
+            "content": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+            "type": "SERVICE_CONTROL_POLICY"
+          },
+          {
+            "id": "p-bx9ptjyp",
+            "arn": "arn:aws:organizations::111111111111:policy/o-adf95fr1li/service_control_policy/p-bx9ptjyp",
+            "name": "aws-guardrails-EkLXqz",
+            "description": "This policy and the contents implement controls, managed by AWS Control Tower. Do not modify, delete, or detach this policy from any target, or attach it to any target, with the AWS Organizations console or APIs. To modify these controls, you must utilize AWS Control Tower.",
+            "content": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Condition\":{\"StringNotEquals\":{\"aws:RequestedRegion\":[\"eu-west-2\",\"us-east-1\",\"us-west-2\"]},\"ArnNotLike\":{\"aws:PrincipalARN\":[\"arn:aws:iam::*:role/AWSControlTowerExecution\"]}},\"Resource\":\"*\",\"Effect\":\"Deny\",\"NotAction\":[\"a4b:*\",\"access-analyzer:*\",\"account:*\",\"acm:*\",\"activate:*\",\"artifact:*\",\"aws-marketplace-management:*\",\"aws-marketplace:*\",\"aws-portal:*\",\"billing:*\",\"billingconductor:*\",\"budgets:*\",\"ce:*\",\"chatbot:*\",\"chime:*\",\"cloudfront:*\",\"cloudtrail:LookupEvents\",\"compute-optimizer:*\",\"config:*\",\"consoleapp:*\",\"consolidatedbilling:*\",\"cur:*\",\"datapipeline:GetAccountLimits\",\"devicefarm:*\",\"directconnect:*\",\"ec2:DescribeRegions\",\"ec2:DescribeTransitGateways\",\"ec2:DescribeVpnGateways\",\"ecr-public:*\",\"fms:*\",\"freetier:*\",\"globalaccelerator:*\",\"health:*\",\"iam:*\",\"importexport:*\",\"invoicing:*\",\"iq:*\",\"kms:*\",\"license-manager:ListReceivedLicenses\",\"lightsail:Get*\",\"mobileanalytics:*\",\"networkmanager:*\",\"notifications-contacts:*\",\"notifications:*\",\"organizations:*\",\"payments:*\",\"pricing:*\",\"quicksight:DescribeAccountSubscription\",\"resource-explorer-2:*\",\"route53-recovery-cluster:*\",\"route53-recovery-control-config:*\",\"route53-recovery-readiness:*\",\"route53:*\",\"route53domains:*\",\"s3:CreateMultiRegionAccessPoint\",\"s3:DeleteMultiRegionAccessPoint\",\"s3:DescribeMultiRegionAccessPointOperation\",\"s3:GetAccountPublicAccessBlock\",\"s3:GetBucketLocation\",\"s3:GetBucketPolicyStatus\",\"s3:GetBucketPublicAccessBlock\",\"s3:GetMultiRegionAccessPoint\",\"s3:GetMultiRegionAccessPointPolicy\",\"s3:GetMultiRegionAccessPointPolicyStatus\",\"s3:GetStorageLensConfiguration\",\"s3:GetStorageLensDashboard\",\"s3:ListAllMyBuckets\",\"s3:ListMultiRegionAccessPoints\",\"s3:ListStorageLensConfigurations\",\"s3:PutAccountPublicAccessBlock\",\"s3:PutMultiRegionAccessPointPolicy\",\"savingsplans:*\",\"shield:*\",\"sso:*\",\"sts:*\",\"support:*\",\"supportapp:*\",\"supportplans:*\",\"sustainability:*\",\"tag:GetResources\",\"tax:*\",\"trustedadvisor:*\",\"vendor-insights:ListEntitledSecurityProfiles\",\"waf-regional:*\",\"waf:*\",\"wafv2:*\"],\"Sid\":\"GRREGIONDENY\"},{\"Condition\":{\"ArnLike\":{\"aws:PrincipalArn\":[\"arn:*:iam::*:root\"]}},\"Action\":\"iam:CreateAccessKey\",\"Resource\":\"*\",\"Effect\":\"Deny\",\"Sid\":\"GRRESTRICTROOTUSERACCESSKEYS\"}]}",
+            "type": "SERVICE_CONTROL_POLICY"
+          }
+        ],
+        "rcps": [],
+        "tag_policies": []
+      },
+      {
+        "id": "ou-fas3-wf6mfmkp",
+        "arn": "arn:aws:organizations::111111111111:ou/o-adf95fr1li/ou-fas3-wf6mfmkp",
+        "name": "Workloads",
+        "accounts": [],
+        "child_ous": [
+          {
+            "id": "ou-fas3-h422pdsv",
+            "arn": "arn:aws:organizations::111111111111:ou/o-adf95fr1li/ou-fas3-h422pdsv",
+            "name": "Prod",
+            "accounts": [
+              {
+                "id": "444444444444",
+                "arn": "arn:aws:organizations::111111111111:account/o-adf95fr1li/444444444444",
+                "name": "foo-prod",
+                "email": "bob+foo-prod@example.co.uk",
+                "status": "ACTIVE",
+                "joined_method": "CREATED",
+                "joined_timestamp": "2024-03-23T13:54:53.534000+00:00",
+                "scps": [
+                  {
+                    "id": "p-FullAWSAccess",
+                    "arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+                    "name": "FullAWSAccess",
+                    "description": "Allows access to every operation",
+                    "content": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+                    "type": "SERVICE_CONTROL_POLICY"
+                  }
+                ],
+                "rcps": [],
+                "tag_policies": []
+              }
+            ],
+            "child_ous": [],
+            "scps": [
+              {
+                "id": "p-FullAWSAccess",
+                "arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+                "name": "FullAWSAccess",
+                "description": "Allows access to every operation",
+                "content": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+                "type": "SERVICE_CONTROL_POLICY"
+              }
+            ],
+            "rcps": [],
+            "tag_policies": []
+          },
+          {
+            "id": "ou-fas3-qh3np6fi",
+            "arn": "arn:aws:organizations::111111111111:ou/o-adf95fr1li/ou-fas3-qh3np6fi",
+            "name": "Test",
+            "accounts": [],
+            "child_ous": [],
+            "scps": [
+              {
+                "id": "p-FullAWSAccess",
+                "arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+                "name": "FullAWSAccess",
+                "description": "Allows access to every operation",
+                "content": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+                "type": "SERVICE_CONTROL_POLICY"
+              }
+            ],
+            "rcps": [],
+            "tag_policies": []
+          }
+        ],
+        "scps": [
+          {
+            "id": "p-FullAWSAccess",
+            "arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+            "name": "FullAWSAccess",
+            "description": "Allows access to every operation",
+            "content": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+            "type": "SERVICE_CONTROL_POLICY"
+          },
+          {
+            "id": "p-ajjgzaht",
+            "arn": "arn:aws:organizations::111111111111:policy/o-adf95fr1li/service_control_policy/p-ajjgzaht",
+            "name": "aws-guardrails-nOISIi",
+            "description": "Guardrails applied to an organization",
+            "content": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalArn\":[\"arn:aws:iam::*:role/AWSControlTowerExecution\",\"arn:aws:iam::*:role/stacksets-exec-*\"]}},\"Action\":[\"iam:AttachRolePolicy\",\"iam:CreateRole\",\"iam:DeleteRole\",\"iam:DeleteRolePermissionsBoundary\",\"iam:DeleteRolePolicy\",\"iam:DetachRolePolicy\",\"iam:PutRolePermissionsBoundary\",\"iam:PutRolePolicy\",\"iam:UpdateAssumeRolePolicy\",\"iam:UpdateRole\",\"iam:UpdateRoleDescription\"],\"Resource\":[\"arn:aws:iam::*:role/aws-controltower-*\",\"arn:aws:iam::*:role/*AWSControlTower*\",\"arn:aws:iam::*:role/stacksets-exec-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRIAMROLEPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"cloudtrail:DeleteTrail\",\"cloudtrail:PutEventSelectors\",\"cloudtrail:StopLogging\",\"cloudtrail:UpdateTrail\"],\"Resource\":[\"arn:aws:cloudtrail:*:*:trail/aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCLOUDTRAILENABLED\"},{\"Condition\":{\"StringEquals\":{\"aws:ResourceTag/aws-control-tower\":\"managed-by-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:PutConfigRule\",\"config:DeleteConfigRule\",\"config:DeleteEvaluationResults\",\"config:DeleteConfigurationAggregator\",\"config:PutConfigurationAggregator\"],\"Resource\":[\"*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGRULEPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"sns:Subscribe\",\"sns:Unsubscribe\"],\"Resource\":[\"arn:aws:sns:*:*:aws-controltower-SecurityNotifications\"],\"Effect\":\"Deny\",\"Sid\":\"GRSNSSUBSCRIPTIONPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:DeleteConfigurationRecorder\",\"config:DeleteDeliveryChannel\",\"config:DeleteRetentionConfiguration\",\"config:PutConfigurationRecorder\",\"config:PutDeliveryChannel\",\"config:PutRetentionConfiguration\",\"config:StopConfigurationRecorder\"],\"Resource\":[\"*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGENABLED\"},{\"Condition\":{\"StringLike\":{\"aws:ResourceTag/aws-control-tower\":\"managed-by-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalArn\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:DeleteAggregationAuthorization\"],\"Resource\":[\"arn:aws:config:*:*:aggregation-authorization*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGAGGREGATIONAUTHORIZATIONPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"events:PutRule\",\"events:PutTargets\",\"events:RemoveTargets\",\"events:DisableRule\",\"events:DeleteRule\"],\"Resource\":[\"arn:aws:events:*:*:rule/aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRCLOUDWATCHEVENTPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"lambda:AddPermission\",\"lambda:CreateEventSourceMapping\",\"lambda:CreateFunction\",\"lambda:DeleteEventSourceMapping\",\"lambda:DeleteFunction\",\"lambda:DeleteFunctionConcurrency\",\"lambda:PutFunctionConcurrency\",\"lambda:RemovePermission\",\"lambda:UpdateEventSourceMapping\",\"lambda:UpdateFunctionCode\",\"lambda:UpdateFunctionConfiguration\"],\"Resource\":[\"arn:aws:lambda:*:*:function:aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRLAMBDAFUNCTIONPOLICY\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"sns:AddPermission\",\"sns:CreateTopic\",\"sns:DeleteTopic\",\"sns:RemovePermission\",\"sns:SetTopicAttributes\"],\"Resource\":[\"arn:aws:sns:*:*:aws-controltower-*\"],\"Effect\":\"Deny\",\"Sid\":\"GRSNSTOPICPOLICY\"},{\"Condition\":{\"ForAnyValue:StringEquals\":{\"aws:TagKeys\":\"aws-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:aws:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"config:TagResource\",\"config:UntagResource\"],\"Resource\":\"*\",\"Effect\":\"Deny\",\"Sid\":\"GRCONFIGRULETAGSPOLICY\"},{\"Condition\":{\"StringNotLike\":{\"aws:PrincipalArn\":[\"arn:aws:iam::*:role/AWSControlTowerExecution\"]}},\"Action\":[\"logs:DeleteLogGroup\",\"logs:PutRetentionPolicy\"],\"Resource\":[\"arn:aws:logs:*:*:log-group:*aws-controltower*\"],\"Effect\":\"Deny\",\"Sid\":\"GRLOGGROUPPOLICY\"},{\"Condition\":{\"ArnLike\":{\"aws:PrincipalArn\":[\"arn:*:iam::*:root\"]}},\"Action\":\"iam:CreateAccessKey\",\"Resource\":\"*\",\"Effect\":\"Deny\",\"Sid\":\"GRRESTRICTROOTUSERACCESSKEYS\"},{\"Condition\":{\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:*:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"iam:AttachRolePolicy\",\"iam:CreateRole\",\"iam:DeleteRole\",\"iam:DeleteRolePermissionsBoundary\",\"iam:DeleteRolePolicy\",\"iam:DetachRolePolicy\",\"iam:PutRolePermissionsBoundary\",\"iam:PutRolePolicy\",\"iam:UpdateAssumeRolePolicy\",\"iam:UpdateRole\"],\"Resource\":\"arn:*:iam::*:role/aws-controltower-BackupRole\",\"Effect\":\"Deny\",\"Sid\":\"CTIAMPV1\"},{\"Condition\":{\"ForAnyValue:StringEquals\":{\"aws:TagKeys\":\"aws-control-tower\"},\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:*:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"backup:TagResource\",\"backup:UntagResource\"],\"Resource\":\"*\",\"Effect\":\"Deny\",\"Sid\":\"CTBACKUPPV1\"}]}",
+            "type": "SERVICE_CONTROL_POLICY"
+          },
+          {
+            "id": "p-ji28ystk",
+            "arn": "arn:aws:organizations::111111111111:policy/o-adf95fr1li/service_control_policy/p-ji28ystk",
+            "name": "aws-guardrails-tfkxSL",
+            "description": "This policy and the contents implement controls, managed by AWS Control Tower. Do not modify, delete, or detach this policy from any target, or attach it to any target, with the AWS Organizations console or APIs. To modify these controls, you must utilize AWS Control Tower.",
+            "content": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Condition\":{\"StringNotEquals\":{\"aws:RequestedRegion\":[\"eu-west-2\",\"us-east-1\",\"us-west-2\"]},\"ArnNotLike\":{\"aws:PrincipalARN\":[\"arn:aws:iam::*:role/AWSControlTowerExecution\"]}},\"Resource\":\"*\",\"Effect\":\"Deny\",\"NotAction\":[\"a4b:*\",\"access-analyzer:*\",\"account:*\",\"acm:*\",\"activate:*\",\"artifact:*\",\"aws-marketplace-management:*\",\"aws-marketplace:*\",\"aws-portal:*\",\"billing:*\",\"billingconductor:*\",\"budgets:*\",\"ce:*\",\"chatbot:*\",\"chime:*\",\"cloudfront:*\",\"cloudtrail:LookupEvents\",\"compute-optimizer:*\",\"config:*\",\"consoleapp:*\",\"consolidatedbilling:*\",\"cur:*\",\"datapipeline:GetAccountLimits\",\"devicefarm:*\",\"directconnect:*\",\"ec2:DescribeRegions\",\"ec2:DescribeTransitGateways\",\"ec2:DescribeVpnGateways\",\"ecr-public:*\",\"fms:*\",\"freetier:*\",\"globalaccelerator:*\",\"health:*\",\"iam:*\",\"importexport:*\",\"invoicing:*\",\"iq:*\",\"kms:*\",\"license-manager:ListReceivedLicenses\",\"lightsail:Get*\",\"mobileanalytics:*\",\"networkmanager:*\",\"notifications-contacts:*\",\"notifications:*\",\"organizations:*\",\"payments:*\",\"pricing:*\",\"quicksight:DescribeAccountSubscription\",\"resource-explorer-2:*\",\"route53-recovery-cluster:*\",\"route53-recovery-control-config:*\",\"route53-recovery-readiness:*\",\"route53:*\",\"route53domains:*\",\"s3:CreateMultiRegionAccessPoint\",\"s3:DeleteMultiRegionAccessPoint\",\"s3:DescribeMultiRegionAccessPointOperation\",\"s3:GetAccountPublicAccessBlock\",\"s3:GetBucketLocation\",\"s3:GetBucketPolicyStatus\",\"s3:GetBucketPublicAccessBlock\",\"s3:GetMultiRegionAccessPoint\",\"s3:GetMultiRegionAccessPointPolicy\",\"s3:GetMultiRegionAccessPointPolicyStatus\",\"s3:GetStorageLensConfiguration\",\"s3:GetStorageLensDashboard\",\"s3:ListAllMyBuckets\",\"s3:ListMultiRegionAccessPoints\",\"s3:ListStorageLensConfigurations\",\"s3:PutAccountPublicAccessBlock\",\"s3:PutMultiRegionAccessPointPolicy\",\"savingsplans:*\",\"shield:*\",\"sso:*\",\"sts:*\",\"support:*\",\"supportapp:*\",\"supportplans:*\",\"sustainability:*\",\"tag:GetResources\",\"tax:*\",\"trustedadvisor:*\",\"vendor-insights:ListEntitledSecurityProfiles\",\"waf-regional:*\",\"waf:*\",\"wafv2:*\"],\"Sid\":\"GRREGIONDENY\"},{\"Condition\":{\"Null\":{\"aws:ResourceTag/aws-control-tower\":false},\"ArnNotLike\":{\"aws:PrincipalARN\":\"arn:*:iam::*:role/AWSControlTowerExecution\"}},\"Action\":[\"backup:CreateBackupPlan\",\"backup:CreateBackupSelection\",\"backup:CreateBackupVault\",\"backup:CreateLogicallyAirGappedBackupVault\",\"backup:DeleteBackupPlan\",\"backup:DeleteBackupSelection\",\"backup:DeleteBackupVault\",\"backup:DeleteBackupVaultAccessPolicy\",\"backup:DeleteBackupVaultLockConfiguration\",\"backup:DeleteBackupVaultSharingPolicy\",\"backup:PutBackupVaultAccessPolicy\",\"backup:PutBackupVaultLockConfiguration\",\"backup:PutBackupVaultSharingPolicy\",\"backup:UpdateBackupPlan\"],\"Resource\":[\"arn:*:backup:*:*:backup-plan:*\",\"arn:*:backup:*:*:backup-vault:*\"],\"Effect\":\"Deny\",\"Sid\":\"CTBACKUPPV3\"}]}",
+            "type": "SERVICE_CONTROL_POLICY"
+          }
+        ],
+        "rcps": [],
+        "tag_policies": []
+      }
+    ],
+    "scps": [
+      {
+        "id": "p-FullAWSAccess",
+        "arn": "arn:aws:organizations::aws:policy/service_control_policy/p-FullAWSAccess",
+        "name": "FullAWSAccess",
+        "description": "Allows access to every operation",
+        "content": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    }\n  ]\n}",
+        "type": "SERVICE_CONTROL_POLICY"
+      }
+    ],
+    "rcps": [],
+    "tag_policies": [
+      {
+        "id": "p-95g60nffi7",
+        "arn": "arn:aws:organizations::111111111111:policy/o-adf95fr1li/tag_policy/p-95g60nffi7",
+        "name": "data-classification",
+        "description": "",
+        "content": "{\"tags\":{\"DataClassification\":{\"tag_key\":{\"@@assign\":\"DataClassification\"},\"tag_value\":{\"@@assign\":[\"Sensitive\",\"Confidential\",\"Private\",\"Proprietary\",\"Public\"]}}}}",
+        "type": "TAG_POLICY"
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+[
+  {
+    "VpcEndpointId": "vpce-012144647b3531aa2",
+    "VpcEndpointType": "Gateway",
+    "VpcId": "vpc-0fa2f5bcfc87ac07c",
+    "ServiceName": "com.amazonaws.us-west-2.s3",
+    "State": "available",
+    "PolicyDocument": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":\"*\",\"Action\":\"*\",\"Resource\":\"*\"}]}",
+    "RouteTableIds": [
+      "rtb-01c32fe204d682532",
+      "rtb-0d76a121060e26a65",
+      "rtb-09f1700f4273a63fd"
+    ],
+    "SubnetIds": [],
+    "Groups": [],
+    "PrivateDnsEnabled": false,
+    "RequesterManaged": false,
+    "NetworkInterfaceIds": [],
+    "DnsEntries": [],
+    "CreationTimestamp": "2024-03-23 14:05:58+00:00",
+    "Tags": [],
+    "OwnerId": "444444444444",
+    "ServiceRegion": "us-west-2"
+  }
+]

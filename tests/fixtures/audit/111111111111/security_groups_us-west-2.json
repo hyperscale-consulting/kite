@@ -1,0 +1,408 @@
+[
+  {
+    "GroupId": "sg-c6c52fa1",
+    "IpPermissionsEgress": [],
+    "VpcId": "vpc-57696132",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-c6c52fa1",
+    "OwnerId": "111111111111",
+    "GroupName": "default",
+    "Description": "default VPC security group",
+    "IpPermissions": []
+  },
+  {
+    "GroupId": "sg-0b4cc6ccfc0b78242",
+    "IpPermissionsEgress": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 2049,
+        "ToPort": 2049,
+        "UserIdGroupPairs": [
+          {
+            "Description": "NFS access to the EFS images mount",
+            "UserId": "111111111111",
+            "GroupId": "sg-0b6c173bc07e193dd"
+          }
+        ],
+        "IpRanges": [],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ],
+    "VpcId": "vpc-57696132",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-0b4cc6ccfc0b78242",
+    "OwnerId": "111111111111",
+    "GroupName": "foo-webserver-to-efs-outbound",
+    "Description": "Allows NFS access from foo-webserver instances to the EFS mount containing images",
+    "IpPermissions": []
+  },
+  {
+    "GroupId": "sg-a5d933c2",
+    "IpPermissionsEgress": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 3306,
+        "ToPort": 3306,
+        "UserIdGroupPairs": [
+          {
+            "Description": "Access to RDS",
+            "UserId": "111111111111",
+            "GroupId": "sg-0d1ae66c6913f1595"
+          }
+        ],
+        "IpRanges": [],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      },
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 587,
+        "ToPort": 587,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "Description": "Email via TLS and smtp.example.com",
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      },
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 443,
+        "ToPort": 443,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "Description": "Access to RU and AWS SQS",
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ],
+    "Tags": [
+      {
+        "Key": "Name",
+        "Value": "foo-web-server"
+      }
+    ],
+    "VpcId": "vpc-57696132",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-a5d933c2",
+    "OwnerId": "111111111111",
+    "GroupName": "foo-web-server",
+    "Description": "FOO web server",
+    "IpPermissions": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 8000,
+        "ToPort": 8000,
+        "UserIdGroupPairs": [
+          {
+            "Description": "Web",
+            "UserId": "111111111111",
+            "GroupId": "sg-0f21532e20c4053ee"
+          }
+        ],
+        "IpRanges": [],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ]
+  },
+  {
+    "GroupId": "sg-0b6c173bc07e193dd",
+    "IpPermissionsEgress": [],
+    "VpcId": "vpc-57696132",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-0b6c173bc07e193dd",
+    "OwnerId": "111111111111",
+    "GroupName": "foo-webserver-to-efs-inbound",
+    "Description": "Allows inbound access to EFS images mount from foo-webserver instances",
+    "IpPermissions": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 2049,
+        "ToPort": 2049,
+        "UserIdGroupPairs": [
+          {
+            "Description": "Allows inbound NFS access from foo-webserver",
+            "UserId": "111111111111",
+            "GroupId": "sg-0b4cc6ccfc0b78242"
+          }
+        ],
+        "IpRanges": [],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ]
+  },
+  {
+    "GroupId": "sg-00d35b0324f52f686",
+    "IpPermissionsEgress": [],
+    "VpcId": "vpc-03bdd09d013b2b609",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-00d35b0324f52f686",
+    "OwnerId": "111111111111",
+    "GroupName": "default",
+    "Description": "default VPC security group",
+    "IpPermissions": []
+  },
+  {
+    "GroupId": "sg-029948f24ff966a81",
+    "IpPermissionsEgress": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 80,
+        "ToPort": 80,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "Description": "Package updates",
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      },
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 443,
+        "ToPort": 443,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ],
+    "VpcId": "vpc-03bdd09d013b2b609",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-029948f24ff966a81",
+    "OwnerId": "111111111111",
+    "GroupName": "image-builder",
+    "Description": "Image building instances - outbound https for updates SSM endpoint",
+    "IpPermissions": []
+  },
+  {
+    "GroupId": "sg-031b924151843ffa7",
+    "IpPermissionsEgress": [],
+    "Tags": [
+      {
+        "Key": "GuardDutyManaged",
+        "Value": "true"
+      }
+    ],
+    "VpcId": "vpc-57696132",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-031b924151843ffa7",
+    "OwnerId": "111111111111",
+    "GroupName": "GuardDutyManagedSecurityGroup-vpc-57696132",
+    "Description": "Associated with VPC-vpc-57696132 and tagged as GuardDutyManaged",
+    "IpPermissions": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 443,
+        "ToPort": 443,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "Description": "GuardDuty managed security group inbound rule associated with VPC vpc-57696132",
+            "CidrIp": "10.0.0.0/16"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ]
+  },
+  {
+    "GroupId": "sg-0d1ae66c6913f1595",
+    "IpPermissionsEgress": [],
+    "VpcId": "vpc-57696132",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-0d1ae66c6913f1595",
+    "OwnerId": "111111111111",
+    "GroupName": "foo-db-security-group",
+    "Description": "Allows DB traffic",
+    "IpPermissions": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 3306,
+        "ToPort": 3306,
+        "UserIdGroupPairs": [
+          {
+            "Description": "Allow MySQL traffic from foo-web-server",
+            "UserId": "111111111111",
+            "GroupId": "sg-a5d933c2"
+          }
+        ],
+        "IpRanges": [],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ]
+  },
+  {
+    "GroupId": "sg-0406fecce50c6a41b",
+    "IpPermissionsEgress": [
+      {
+        "IpProtocol": "-1",
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ],
+    "VpcId": "vpc-57696132",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-0406fecce50c6a41b",
+    "OwnerId": "111111111111",
+    "GroupName": "launch-wizard-1-delete-me",
+    "Description": "launch-wizard-1 created 2025-06-23T10:27:51.430Z",
+    "IpPermissions": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 80,
+        "ToPort": 80,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      },
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 22,
+        "ToPort": 22,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      },
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 443,
+        "ToPort": 443,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ]
+  },
+  {
+    "GroupId": "sg-0817dbd6b32cd2a25",
+    "IpPermissionsEgress": [],
+    "VpcId": "vpc-57696132",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-0817dbd6b32cd2a25",
+    "OwnerId": "111111111111",
+    "GroupName": "aws-https-interface-sg",
+    "Description": "Allows HTTPS access from VPC",
+    "IpPermissions": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 443,
+        "ToPort": 443,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "CidrIp": "10.0.0.0/16"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ]
+  },
+  {
+    "GroupId": "sg-07a5c27c53996b39b",
+    "IpPermissionsEgress": [],
+    "VpcId": "vpc-03bdd09d013b2b609",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-07a5c27c53996b39b",
+    "OwnerId": "111111111111",
+    "GroupName": "aws-ssm-endpoint",
+    "Description": "Allows access in to AWS SSM endpoint from VPC",
+    "IpPermissions": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 443,
+        "ToPort": 443,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "CidrIp": "172.31.0.0/16"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ]
+  },
+  {
+    "GroupId": "sg-0f21532e20c4053ee",
+    "IpPermissionsEgress": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 8000,
+        "ToPort": 8000,
+        "UserIdGroupPairs": [
+          {
+            "Description": "Web",
+            "UserId": "111111111111",
+            "GroupId": "sg-a5d933c2"
+          }
+        ],
+        "IpRanges": [],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ],
+    "VpcId": "vpc-57696132",
+    "SecurityGroupArn": "arn:aws:ec2:us-west-2:111111111111:security-group/sg-0f21532e20c4053ee",
+    "OwnerId": "111111111111",
+    "GroupName": "foo-web-server-lb-sg",
+    "Description": "Public HTTP(S) access",
+    "IpPermissions": [
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 80,
+        "ToPort": 80,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      },
+      {
+        "IpProtocol": "tcp",
+        "FromPort": 443,
+        "ToPort": 443,
+        "UserIdGroupPairs": [],
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+      }
+    ]
+  }
+]

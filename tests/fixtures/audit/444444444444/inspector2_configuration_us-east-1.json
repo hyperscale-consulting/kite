@@ -1,0 +1,17 @@
+{
+  "ec2Configuration": {
+    "scanModeState": {
+      "scanMode": "EC2_SSM_AGENT_BASED",
+      "scanModeStatus": "SUCCESS"
+    }
+  },
+  "ecrConfiguration": {
+    "rescanDurationState": {
+      "pullDateRescanDuration": "DAYS_90",
+      "pullDateRescanMode": "LAST_PULL_DATE",
+      "rescanDuration": "DAYS_30",
+      "status": "SUCCESS",
+      "updatedAt": "2025-04-03 20:54:29.174000+01:00"
+    }
+  }
+}

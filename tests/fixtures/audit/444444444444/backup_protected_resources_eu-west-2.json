@@ -1,0 +1,18 @@
+[
+  {
+    "ResourceArn": "arn:aws:dynamodb:eu-west-2:444444444444:table/bizz-stack-Table-1LIMQS57VP93U",
+    "ResourceType": "DynamoDB",
+    "LastBackupTime": "2025-07-15 13:00:00+01:00",
+    "ResourceName": "bizz-stack-Table-1LIMQS57VP93U",
+    "LastBackupVaultArn": "arn:aws:backup:eu-west-2:444444444444:backup-vault:aws-controltower-local-backupvault-1749719357919",
+    "LastRecoveryPointArn": "arn:aws:backup:eu-west-2:444444444444:recovery-point:b5f06353-c05f-465b-a6f1-081882829cbe"
+  },
+  {
+    "ResourceArn": "arn:aws:s3:::foo-appinvoicesbucket-7dlx7rz0fxuv",
+    "ResourceType": "S3",
+    "LastBackupTime": "2025-07-15 11:00:00+01:00",
+    "ResourceName": "foo-appinvoicesbucket-7dlx7rz0fxuv",
+    "LastBackupVaultArn": "arn:aws:backup:eu-west-2:444444444444:backup-vault:aws-controltower-local-backupvault-1749719357919",
+    "LastRecoveryPointArn": "arn:aws:backup:eu-west-2:444444444444:recovery-point:continuous:foo-appinvoices-6122b724"
+  }
+]

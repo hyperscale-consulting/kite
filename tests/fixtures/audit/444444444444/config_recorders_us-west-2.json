@@ -1,0 +1,23 @@
+[
+  {
+    "arn": "arn:aws:config:us-west-2:444444444444:configuration-recorder/aws-controltower-BaselineConfigRecorder/jlog9j1j2y5t0f9x",
+    "name": "aws-controltower-BaselineConfigRecorder",
+    "roleARN": "arn:aws:iam::444444444444:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig",
+    "recordingGroup": {
+      "allSupported": true,
+      "includeGlobalResourceTypes": false,
+      "resourceTypes": [],
+      "exclusionByResourceTypes": {
+        "resourceTypes": []
+      },
+      "recordingStrategy": {
+        "useOnly": "ALL_SUPPORTED_RESOURCE_TYPES"
+      }
+    },
+    "recordingMode": {
+      "recordingFrequency": "CONTINUOUS",
+      "recordingModeOverrides": []
+    },
+    "recordingScope": "PAID"
+  }
+]

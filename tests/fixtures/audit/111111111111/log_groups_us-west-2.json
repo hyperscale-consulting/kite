@@ -1,0 +1,397 @@
+[
+  {
+    "logGroupName": "/aws/ecs/containerinsights/foo-web-cluster/performance",
+    "creationTime": 1652021383167,
+    "retentionInDays": 1,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/ecs/containerinsights/foo-web-cluster/performance:*",
+    "storedBytes": 7637988,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/ecs/containerinsights/foo-web-cluster/performance"
+  },
+  {
+    "logGroupName": "/aws/ecs/containerinsights/foo-web-cluster/performance",
+    "creationTime": 1652036827866,
+    "retentionInDays": 1,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/ecs/containerinsights/foo-web-cluster/performance:*",
+    "storedBytes": 0,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/ecs/containerinsights/foo-web-cluster/performance"
+  },
+  {
+    "logGroupName": "/aws/lambda/check-identifiers",
+    "creationTime": 1665839964141,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/check-identifiers:*",
+    "storedBytes": 0,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/check-identifiers"
+  },
+  {
+    "logGroupName": "/aws/lambda/check-prices",
+    "creationTime": 1655049127633,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/check-prices:*",
+    "storedBytes": 450,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/check-prices"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-email-caretaker-forward-booking-reports",
+    "creationTime": 1748750441875,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-email-caretaker-forward-booking-reports:*",
+    "storedBytes": 3467,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-email-caretaker-forward-booking-reports"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-email-forward-booking-reports",
+    "creationTime": 1654059614837,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-email-forward-booking-reports:*",
+    "storedBytes": 0,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-email-forward-booking-reports"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-email-newsletter",
+    "creationTime": 1657371305958,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-email-newsletter:*",
+    "storedBytes": 0,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-email-newsletter"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-event-handler",
+    "creationTime": 1651432550645,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-event-handler:*",
+    "storedBytes": 362632,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-event-handler"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-generate-owner-invoices",
+    "creationTime": 1733052870407,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-generate-owner-invoices:*",
+    "storedBytes": 0,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-generate-owner-invoices"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-pull-reservations",
+    "creationTime": 1651426217608,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-pull-reservations:*",
+    "storedBytes": 693881,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-pull-reservations"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-replay-dlq",
+    "creationTime": 1647623212985,
+    "retentionInDays": 90,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-replay-dlq:*",
+    "storedBytes": 0,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-replay-dlq"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-send-balance-due-reminders",
+    "creationTime": 1651427484391,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-send-balance-due-reminders:*",
+    "storedBytes": 1352,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-send-balance-due-reminders"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-send-mail",
+    "creationTime": 1651488581087,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-send-mail:*",
+    "storedBytes": 140290,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-send-mail"
+  },
+  {
+    "logGroupName": "/aws/lambda/foo-update-rentals-united-cache",
+    "creationTime": 1651427833559,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-update-rentals-united-cache:*",
+    "storedBytes": 0,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/lambda/foo-update-rentals-united-cache"
+  },
+  {
+    "logGroupName": "/aws/rds/cluster/foo-db-cluster/error",
+    "creationTime": 1653149142206,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/cluster/foo-db-cluster/error:*",
+    "storedBytes": 6314,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/cluster/foo-db-cluster/error"
+  },
+  {
+    "logGroupName": "/aws/rds/instance/foo-db-1/error",
+    "creationTime": 1616251325154,
+    "retentionInDays": 30,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/foo-db-1/error:*",
+    "storedBytes": 0,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/foo-db-1/error"
+  },
+  {
+    "logGroupName": "/aws/rds/instance/foo-db-2/error",
+    "creationTime": 1616249345366,
+    "retentionInDays": 30,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/foo-db-2/error:*",
+    "storedBytes": 0,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/foo-db-2/error"
+  },
+  {
+    "logGroupName": "/aws/rds/instance/foo-db-3/error",
+    "creationTime": 1653149592042,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/foo-db-3/error:*",
+    "storedBytes": 1107154499,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/foo-db-3/error"
+  },
+  {
+    "logGroupName": "/aws/rds/instance/terraform-20221007082515232200000001/error",
+    "creationTime": 1665131380481,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/terraform-20221007082515232200000001/error:*",
+    "storedBytes": 1573,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/terraform-20221007082515232200000001/error"
+  },
+  {
+    "logGroupName": "/aws/rds/instance/terraform-2022100812044779770000000a/error",
+    "creationTime": 1665231041794,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/terraform-2022100812044779770000000a/error:*",
+    "storedBytes": 1559,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/terraform-2022100812044779770000000a/error"
+  },
+  {
+    "logGroupName": "/aws/rds/instance/terraform-2022101210311096840000000d/error",
+    "creationTime": 1665570981122,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/terraform-2022101210311096840000000d/error:*",
+    "storedBytes": 1562,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/terraform-2022101210311096840000000d/error"
+  },
+  {
+    "logGroupName": "/aws/rds/instance/terraform-20221014121004556300000014/error",
+    "creationTime": 1665749676002,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/terraform-20221014121004556300000014/error:*",
+    "storedBytes": 1563,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/rds/instance/terraform-20221014121004556300000014/error"
+  },
+  {
+    "logGroupName": "/aws/route53/foo-vpc-resolver-query-logs",
+    "creationTime": 1743689178272,
+    "retentionInDays": 5,
+    "metricFilterCount": 1,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/route53/foo-vpc-resolver-query-logs:*",
+    "storedBytes": 55929190,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/aws/route53/foo-vpc-resolver-query-logs"
+  },
+  {
+    "logGroupName": "/ecs/foo-db-migrate",
+    "creationTime": 1673704951277,
+    "retentionInDays": 30,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/ecs/foo-db-migrate:*",
+    "storedBytes": 45653,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/ecs/foo-db-migrate"
+  },
+  {
+    "logGroupName": "/ecs/foo-web-server",
+    "creationTime": 1652018996859,
+    "retentionInDays": 365,
+    "metricFilterCount": 6,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/ecs/foo-web-server:*",
+    "storedBytes": 7874975006,
+    "dataProtectionStatus": "DELETED",
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/ecs/foo-web-server"
+  },
+  {
+    "logGroupName": "/ssm/session-logs",
+    "creationTime": 1750794727953,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:/ssm/session-logs:*",
+    "storedBytes": 0,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:/ssm/session-logs"
+  },
+  {
+    "logGroupName": "aws-cloudtrail-logs-111111111111-f3858819",
+    "creationTime": 1648461054481,
+    "metricFilterCount": 1,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:aws-cloudtrail-logs-111111111111-f3858819:*",
+    "storedBytes": 10712676591,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:aws-cloudtrail-logs-111111111111-f3858819"
+  },
+  {
+    "logGroupName": "aws-systems-manager-execution-output",
+    "creationTime": 1648454941013,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:aws-systems-manager-execution-output:*",
+    "storedBytes": 1308,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:aws-systems-manager-execution-output"
+  },
+  {
+    "logGroupName": "aws-waf-logs-foo",
+    "creationTime": 1650454416825,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:aws-waf-logs-foo:*",
+    "storedBytes": 165717377,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:aws-waf-logs-foo"
+  },
+  {
+    "logGroupName": "logging-dataprotection-audit",
+    "creationTime": 1749202824032,
+    "retentionInDays": 3,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:logging-dataprotection-audit:*",
+    "storedBytes": 12673,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:logging-dataprotection-audit"
+  },
+  {
+    "logGroupName": "vpc-flow-rejects",
+    "creationTime": 1648211524121,
+    "retentionInDays": 90,
+    "metricFilterCount": 0,
+    "arn": "arn:aws:logs:us-west-2:111111111111:log-group:vpc-flow-rejects:*",
+    "storedBytes": 2481036295,
+    "inheritedProperties": [
+      "ACCOUNT_DATA_PROTECTION"
+    ],
+    "logGroupClass": "STANDARD",
+    "logGroupArn": "arn:aws:logs:us-west-2:111111111111:log-group:vpc-flow-rejects"
+  }
+]

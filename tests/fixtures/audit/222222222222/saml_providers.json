@@ -1,0 +1,7 @@
+[
+  {
+    "Arn": "arn:aws:iam::222222222222:saml-provider/AWSSSO_10031a7d2cf009aa_DO_NOT_DELETE",
+    "ValidUntil": "2124-03-23 11:54:30+00:00",
+    "CreateDate": "2024-03-23 11:54:30+00:00"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "PolicyName": "Cognito-unauthenticated-1750160655324",
+    "PolicyId": "ANPATCKAQYCTAERIU5SVF",
+    "Arn": "arn:aws:iam::444444444444:policy/service-role/Cognito-unauthenticated-1750160655324",
+    "Path": "/service-role/",
+    "DefaultVersionId": "v1",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2025-06-17 11:44:15+00:00",
+    "UpdateDate": "2025-06-17 11:44:15+00:00",
+    "PolicyDocument": {
+      "PolicyName": "Cognito-unauthenticated-1750160655324",
+      "PolicyId": "ANPATCKAQYCTAERIU5SVF",
+      "Arn": "arn:aws:iam::444444444444:policy/service-role/Cognito-unauthenticated-1750160655324",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2025-06-17 11:44:15+00:00",
+      "UpdateDate": "2025-06-17 11:44:15+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "cognito-identity:GetCredentialsForIdentity"
+            ],
+            "Resource": [
+              "*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "PolicyName": "test-policy",
+    "PolicyId": "ANPATCKAQYCTIMRYM4JXL",
+    "Arn": "arn:aws:iam::444444444444:policy/test-policy",
+    "Path": "/",
+    "DefaultVersionId": "v4",
+    "AttachmentCount": 1,
+    "PermissionsBoundaryUsageCount": 0,
+    "IsAttachable": true,
+    "CreateDate": "2025-04-01 07:44:51+00:00",
+    "UpdateDate": "2025-04-01 08:26:32+00:00",
+    "PolicyDocument": {
+      "PolicyName": "test-policy",
+      "PolicyId": "ANPATCKAQYCTIMRYM4JXL",
+      "Arn": "arn:aws:iam::444444444444:policy/test-policy",
+      "Path": "/",
+      "DefaultVersionId": "v4",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "CreateDate": "2025-04-01 07:44:51+00:00",
+      "UpdateDate": "2025-04-01 08:26:32+00:00",
+      "Tags": [],
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+              "s3:GetObject",
+              "s3:ListBucket"
+            ],
+            "Resource": "*"
+          },
+          {
+            "Sid": "Statement1",
+            "Effect": "Allow",
+            "Action": [
+              "kms:Decrypt"
+            ],
+            "Resource": [
+              "arn:aws:kms:eu-west-2:111111111111:key/662fb5d5-ba80-41f4-9aae-68bd1eb04981"
+            ]
+          }
+        ]
+      }
+    }
+  }
+]

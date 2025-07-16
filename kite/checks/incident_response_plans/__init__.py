@@ -1,5 +1,3 @@
-"""Incident response plans check module."""
+from kite.checks.incident_response_plans.check import IncidentResponsePlansCheck
 
-from .check import check_incident_response_plans
-
-__all__ = ["check_incident_response_plans"]
+__all__ = ["IncidentResponsePlansCheck"]

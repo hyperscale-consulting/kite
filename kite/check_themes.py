@@ -60,30 +60,19 @@ from kite.checks import check_enforce_https
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_forensics_ou
 from kite.checks import check_hr_system_integration
-from kite.checks import check_immutable_builds
-from kite.checks import check_implement_auth_across_services
-from kite.checks import check_implement_retention_policies
 from kite.checks import check_implement_versioning_and_object_locking
-from kite.checks import check_incident_response_plans
 from kite.checks import check_inspect_http_traffic_with_waf
 from kite.checks import check_inspect_traffic_with_network_firewall
 from kite.checks import check_isolation_boundaries
 from kite.checks import check_key_access_control
 from kite.checks import check_kms_confused_deputy_protection
 from kite.checks import check_lambda_confused_deputy_protection
-from kite.checks import check_lessons_learned_framework
 from kite.checks import check_limit_access_to_production_environments
 from kite.checks import check_log_alerting
-from kite.checks import check_log_querying
 from kite.checks import check_log_retention
-from kite.checks import check_macie_scans_for_sensitive_data
-from kite.checks import check_maintain_inventory_of_shared_resources
 from kite.checks import check_management_account_workloads
 from kite.checks import check_migrate_from_oai
 from kite.checks import check_monitor_and_response_to_s3_public_access
-from kite.checks import check_monitor_key_usage
-from kite.checks import check_monitor_network_traffic_for_unauthorized_access
-from kite.checks import check_monitor_secrets
 from kite.checks import check_network_firewall_logging_enabled
 from kite.checks import check_no_access_keys
 from kite.checks import check_no_full_access_to_sensitive_services
@@ -99,17 +88,9 @@ from kite.checks import check_no_root_access_keys
 from kite.checks import check_no_secrets_in_aws_resources
 from kite.checks import check_organizational_cloudtrail
 from kite.checks import check_ou_structure
-from kite.checks import check_perform_dast
-from kite.checks import check_perform_regular_pen_testing
-from kite.checks import check_perform_sast
-from kite.checks import check_pipelines_use_least_privilege
-from kite.checks import check_pre_deploy_tools
-from kite.checks import check_prevent_and_detect_secrets
 from kite.checks import check_protect_root_ca
 from kite.checks import check_rds_logging_enabled
 from kite.checks import check_region_deny_scp
-from kite.checks import check_regularly_review_permissions
-from kite.checks import check_remediate_vulnerabilities
 from kite.checks import check_repeatable_auditable_setup_for_3rd_party_access
 from kite.checks import check_require_mfa
 from kite.checks import check_restore_testing
@@ -189,6 +170,25 @@ from kite.checks import IacGuardrailsCheck
 from kite.checks import IacTemplatesCheck
 from kite.checks import IacVersionControlCheck
 from kite.checks import IdentityAuditCheck
+from kite.checks import ImmutableBuildsCheck
+from kite.checks import ImplementAuthAcrossServicesCheck
+from kite.checks import ImplementQueryingForLogsCheck
+from kite.checks import ImplementRetentionPoliciesCheck
+from kite.checks import IncidentResponsePlansCheck
+from kite.checks import LessonsLearnedFrameworkCheck
+from kite.checks import MacieScansForSensitiveDataCheck
+from kite.checks import MaintainInventoryOfSharedResourcesCheck
+from kite.checks import MonitorKeyUsageCheck
+from kite.checks import MonitorNetworkTrafficForUnauthorizedAccessCheck
+from kite.checks import MonitorSecretsCheck
+from kite.checks import PenetrationTestingCheck
+from kite.checks import PerformDASTCheck
+from kite.checks import PerformSASTCheck
+from kite.checks import PipelinesUseLeastPrivilegeCheck
+from kite.checks import PreDeployToolsCheck
+from kite.checks import PreventAndDetectSecretsCheck
+from kite.checks import RegularlyReviewPermissionsCheck
+from kite.checks import RemediateVulnerabilitiesCheck
 from kite.checks import ResolverQueryLogsEnabledCheck
 from kite.checks import RootActionsDisallowedCheck
 from kite.checks import vulnerability_scanning_in_cicd_pipelines
@@ -299,9 +299,9 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": "Checks related to secure storage and use of secrets",
         "checks": [
             check_no_secrets_in_aws_resources,
-            check_prevent_and_detect_secrets,
+            PreventAndDetectSecretsCheck(),
             check_secure_secrets_storage,
-            check_monitor_secrets,
+            MonitorSecretsCheck(),
             check_restricted_role_for_secrets_access,
         ],
     },
@@ -372,7 +372,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": "Checks related to reducing permissions continuously",
         "checks": [
             check_active_unused_access_analyzer,
-            check_regularly_review_permissions,
+            RegularlyReviewPermissionsCheck(),
         ],
     },
     "Define permission guardrails for your organization": {
@@ -405,7 +405,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "checks": [
             check_active_external_access_analyzer,
             check_monitor_and_response_to_s3_public_access,
-            check_maintain_inventory_of_shared_resources,
+            MaintainInventoryOfSharedResourcesCheck(),
             ApprovalProcessForResourceSharingCheck(),
         ],
     },
@@ -451,7 +451,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_cloudfront_logging_enabled,
             check_api_gateway_logging_enabled,
             check_config_recording_enabled,
-            check_log_querying,
+            ImplementQueryingForLogsCheck(),
             check_log_alerting,
         ],
     },
@@ -526,7 +526,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         ),
         "checks": [
             check_scan_workloads_for_vulnerabilities,
-            check_remediate_vulnerabilities,
+            RemediateVulnerabilitiesCheck(),
             check_automate_patch_management,
             vulnerability_scanning_in_cicd_pipelines,
             automate_malware_and_threat_detection,
@@ -579,7 +579,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_cw_data_protection_policies,
             check_sns_data_protection_policies,
             check_detect_sensitive_data_transform,
-            check_macie_scans_for_sensitive_data,
+            MacieScansForSensitiveDataCheck(),
             check_scan_for_sensitive_data_in_dev,
         ],
     },
@@ -588,7 +588,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "checks": [
             check_automate_s3_data_retention,
             check_automate_ddb_data_retention,
-            check_implement_retention_policies,
+            ImplementRetentionPoliciesCheck(),
             check_detect_missing_automated_lifecycle_management,
         ],
     },
@@ -602,7 +602,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_use_a_kms,
             check_no_human_access_to_unencrypted_key_material,
             check_rotate_encryption_keys,
-            check_monitor_key_usage,
+            MonitorKeyUsageCheck(),
             check_key_access_control,
         ],
     },
@@ -658,8 +658,8 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": ("Checks related to authenticating network communications"),
         "checks": [
             DefineAndDocumentWorkloadNetworkFlowsCheck(),
-            check_implement_auth_across_services,
-            check_monitor_network_traffic_for_unauthorized_access,
+            ImplementAuthAcrossServicesCheck(),
+            MonitorNetworkTrafficForUnauthorizedAccessCheck(),
         ],
     },
     "Identify key personnel and external resources": {
@@ -673,7 +673,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Develop incident management plans": {
         "description": "Checks related to developing incident management plans",
         "checks": [
-            check_incident_response_plans,
+            IncidentResponsePlansCheck(),
         ],
     },
     "Prepare forensic capabilities": {
@@ -705,7 +705,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "incident response and security operations"
         ),
         "checks": [
-            check_pre_deploy_tools,
+            PreDeployToolsCheck(),
         ],
     },
     "Run simulations": {
@@ -723,7 +723,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "learning from incidents and applying lessons learned"
         ),
         "checks": [
-            check_lessons_learned_framework,
+            LessonsLearnedFrameworkCheck(),
         ],
     },
     "Train for application security": {
@@ -738,15 +738,15 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "throughout the development and release lifecycle"
         ),
         "checks": [
-            check_perform_sast,
-            check_perform_dast,
+            PerformSASTCheck(),
+            PerformDASTCheck(),
             AutomatedSecurityTestsCheck(),
         ],
     },
     "Perform regular penetration testing": {
         "description": "Checks related to performing regular penetration testing",
         "checks": [
-            check_perform_regular_pen_testing,
+            PenetrationTestingCheck(),
         ],
     },
     "Conduct code reviews": {
@@ -770,7 +770,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": "Checks related to deploying software programmatically",
         "checks": [
             AutomateDeploymentsCheck(),
-            check_immutable_builds,
+            ImmutableBuildsCheck(),
         ],
     },
     "Regularly assess security properties of the pipelines": {
@@ -779,7 +779,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             " same recommended practices as any other workload in your environment"
         ),
         "checks": [
-            check_pipelines_use_least_privilege,
+            PipelinesUseLeastPrivilegeCheck(),
             check_review_pipeline_permissions_regularly,
             check_threat_model_pipelines,
         ],

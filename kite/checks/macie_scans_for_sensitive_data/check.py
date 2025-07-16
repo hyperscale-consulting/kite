@@ -1,43 +1,29 @@
-"""Check for Macie scanning of sensitive data."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "macie-scans-for-sensitive-data"
-CHECK_NAME = "Macie Scans for Sensitive Data"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_macie_scans_for_sensitive_data() -> dict[str, Any]:
-    # TODO: Add permissions so we can do some automated support with this check.
-    """
-    Check if Macie is used to scan for sensitive data across workloads.
+class MacieScansForSensitiveDataCheck:
+    def __init__(self):
+        self.check_id = "macie-scans-for-sensitive-data"
+        self.check_name = "Macie Scans for Sensitive Data"
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS" or "FAIL")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=(
-            "This check verifies that Macie is used to scan for sensitive data "
-            "across workloads.\n\n"
-            "Note: Data can be exported from data sources such as RDS and DynamoDB "
+    @property
+    def question(self) -> str:
+        return "Is Macie used to scan for sensitive data across workloads?"
+
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that Macie is used to scan for sensitive data across "
+            "workloads."
+        )
+
+    def run(self) -> CheckResult:
+        message = (
+            "Note that data can be exported from data sources such as RDS and DynamoDB "
             "into an S3 bucket for scanning by Macie."
-        ),
-        prompt=("Is Macie used to scan for sensitive data across workloads?"),
-        pass_message=("Macie is used to scan for sensitive data across workloads."),
-        fail_message=(
-            "Macie should be used to scan for sensitive data across workloads."
-        ),
-        default=True,
-    )
-
-
-check_macie_scans_for_sensitive_data._CHECK_ID = CHECK_ID
-check_macie_scans_for_sensitive_data._CHECK_NAME = CHECK_NAME
+        )
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

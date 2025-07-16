@@ -1,5 +1,3 @@
-"""Check for lessons learned framework."""
+from kite.checks.lessons_learned_framework.check import LessonsLearnedFrameworkCheck
 
-from .check import check_lessons_learned_framework
-
-__all__ = ["check_lessons_learned_framework"]
+__all__ = ["LessonsLearnedFrameworkCheck"]

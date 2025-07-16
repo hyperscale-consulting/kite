@@ -119,18 +119,14 @@ from kite.checks.iac_guardrails import IacGuardrailsCheck
 from kite.checks.iac_templates import IacTemplatesCheck
 from kite.checks.iac_version_control import IacVersionControlCheck
 from kite.checks.identity_audit import IdentityAuditCheck
-from kite.checks.immutable_builds.check import check_immutable_builds
-from kite.checks.implement_auth_across_services.check import (
-    check_implement_auth_across_services,
-)
-from kite.checks.implement_querying_for_logs.check import check_log_querying
-from kite.checks.implement_retention_policies.check import (
-    check_implement_retention_policies,
-)
+from kite.checks.immutable_builds import ImmutableBuildsCheck
+from kite.checks.implement_auth_across_services import ImplementAuthAcrossServicesCheck
+from kite.checks.implement_querying_for_logs import ImplementQueryingForLogsCheck
+from kite.checks.implement_retention_policies import ImplementRetentionPoliciesCheck
 from kite.checks.implement_versioning_and_object_locking.check import (
     check_implement_versioning_and_object_locking,
 )
-from kite.checks.incident_response_plans.check import check_incident_response_plans
+from kite.checks.incident_response_plans import IncidentResponsePlansCheck
 from kite.checks.isolation_boundaries.check import check_isolation_boundaries
 from kite.checks.key_access_control.check import check_key_access_control
 from kite.checks.kms_confused_deputy_protection.check import (
@@ -139,15 +135,14 @@ from kite.checks.kms_confused_deputy_protection.check import (
 from kite.checks.lambda_confused_deputy_protection.check import (
     check_lambda_confused_deputy_protection,
 )
+from kite.checks.lessons_learned_framework import LessonsLearnedFrameworkCheck
 from kite.checks.limit_access_to_production_environments.check import (
     check_limit_access_to_production_environments,
 )
 from kite.checks.log_retention import check_log_retention
-from kite.checks.macie_scans_for_sensitive_data.check import (
-    check_macie_scans_for_sensitive_data,
-)
-from kite.checks.maintain_inventory_of_shared_resources.check import (
-    check_maintain_inventory_of_shared_resources,
+from kite.checks.macie_scans_for_sensitive_data import MacieScansForSensitiveDataCheck
+from kite.checks.maintain_inventory_of_shared_resources import (
+    MaintainInventoryOfSharedResourcesCheck,
 )
 from kite.checks.management_account_workloads.check import (
     check_management_account_workloads,
@@ -156,11 +151,11 @@ from kite.checks.migrate_from_oai.check import check_migrate_from_oai
 from kite.checks.monitor_and_response_to_s3_public_access.check import (
     check_monitor_and_response_to_s3_public_access,
 )
-from kite.checks.monitor_key_usage.check import check_monitor_key_usage
-from kite.checks.monitor_network_traffic_for_unauthorized_access.check import (
-    check_monitor_network_traffic_for_unauthorized_access,
+from kite.checks.monitor_key_usage import MonitorKeyUsageCheck
+from kite.checks.monitor_network_traffic_for_unauthorized_access import (
+    MonitorNetworkTrafficForUnauthorizedAccessCheck,
 )
-from kite.checks.monitor_secrets.check import check_monitor_secrets
+from kite.checks.monitor_secrets import MonitorSecretsCheck
 from kite.checks.network_firewall_logging_enabled import (
     check_network_firewall_logging_enabled,
 )
@@ -190,22 +185,17 @@ from kite.checks.no_secrets_in_aws_resources.check import (
 )
 from kite.checks.organizational_cloudtrail.check import check_organizational_cloudtrail
 from kite.checks.ou_structure.check import check_ou_structure
-from kite.checks.penetration_testing.check import check_perform_regular_pen_testing
-from kite.checks.perform_dast.check import check_perform_dast
-from kite.checks.perform_sast.check import check_perform_sast
-from kite.checks.pipelines_use_least_privilege.check import (
-    check_pipelines_use_least_privilege,
-)
-from kite.checks.prevent_and_detect_secrets.check import (
-    check_prevent_and_detect_secrets,
-)
+from kite.checks.penetration_testing import PenetrationTestingCheck
+from kite.checks.perform_dast import PerformDASTCheck
+from kite.checks.perform_sast import PerformSASTCheck
+from kite.checks.pipelines_use_least_privilege import PipelinesUseLeastPrivilegeCheck
+from kite.checks.pre_deploy_tools import PreDeployToolsCheck
+from kite.checks.prevent_and_detect_secrets import PreventAndDetectSecretsCheck
 from kite.checks.protect_root_ca.check import check_protect_root_ca
 from kite.checks.rds_logging_enabled import check_rds_logging_enabled
 from kite.checks.region_deny_scp.check import check_region_deny_scp
-from kite.checks.regularly_review_permissions.check import (
-    check_regularly_review_permissions,
-)
-from kite.checks.remediate_vulnerabilities.check import check_remediate_vulnerabilities
+from kite.checks.regularly_review_permissions import RegularlyReviewPermissionsCheck
+from kite.checks.remediate_vulnerabilities import RemediateVulnerabilitiesCheck
 from kite.checks.repeatable_auditable_setup_for_3rd_party_access.check import (
     check_repeatable_auditable_setup_for_3rd_party_access,
 )
@@ -374,8 +364,6 @@ from .inspect_http_traffic_with_waf.check import check_inspect_http_traffic_with
 from .inspect_traffic_with_network_firewall.check import (
     check_inspect_traffic_with_network_firewall,
 )
-from .lessons_learned_framework import check_lessons_learned_framework
-from .pre_deploy_tools import check_pre_deploy_tools
 from .run_simulations import check_run_simulations
 from .use_identity_broker import check_use_identity_broker
 from .use_private_link_for_vpc_routing.check import (
@@ -421,9 +409,7 @@ __all__ = [
     "check_complex_passwords",
     "check_no_access_keys",
     "check_no_iam_user_access",
-    "check_prevent_and_detect_secrets",
     "check_secure_secrets_storage",
-    "check_monitor_secrets",
     "check_restricted_role_for_secrets_access",
     "check_use_centralized_idp",
     "check_hr_system_integration",
@@ -445,7 +431,6 @@ __all__ = [
     "check_kms_confused_deputy_protection",
     "EstablishedEmergencyAccessProceduresCheck",
     "check_active_unused_access_analyzer",
-    "check_regularly_review_permissions",
     "check_scp_prevents_leaving_org",
     "check_scp_prevents_common_admin_role_changes",
     "check_scp_prevents_cloudwatch_changes",
@@ -461,7 +446,6 @@ __all__ = [
     "check_scim_protocol_used",
     "check_active_external_access_analyzer",
     "check_monitor_and_response_to_s3_public_access",
-    "check_maintain_inventory_of_shared_resources",
     "check_s3_bucket_acl_disabled",
     "check_migrate_from_oai",
     "check_establish_data_perimeter_trusted_identities",
@@ -483,7 +467,6 @@ __all__ = [
     "check_cloudfront_logging_enabled",
     "check_api_gateway_logging_enabled",
     "check_config_recording_enabled",
-    "check_log_querying",
     "check_log_alerting",
     "check_security_data_published_to_log_archive_account",
     "check_deploy_log_analysis_tools_in_audit_account",
@@ -497,16 +480,13 @@ __all__ = [
     "check_cw_data_protection_policies",
     "check_sns_data_protection_policies",
     "check_detect_sensitive_data_transform",
-    "check_macie_scans_for_sensitive_data",
     "check_scan_for_sensitive_data_in_dev",
     "check_automate_s3_data_retention",
     "check_automate_ddb_data_retention",
-    "check_implement_retention_policies",
     "check_detect_missing_automated_lifecycle_management",
     "check_use_a_kms",
     "check_no_human_access_to_unencrypted_key_material",
     "check_rotate_encryption_keys",
-    "check_monitor_key_usage",
     "check_key_access_control",
     "check_use_service_encryption_at_rest",
     "check_use_customer_managed_keys",
@@ -521,19 +501,30 @@ __all__ = [
     "check_protect_root_ca",
     "check_enforce_https",
     "check_avoid_insecure_ssl_ciphers",
-    "check_implement_auth_across_services",
-    "check_monitor_network_traffic_for_unauthorized_access",
     "check_train_for_application_security",
-    "check_perform_sast",
-    "check_perform_dast",
-    "check_perform_regular_pen_testing",
-    "check_immutable_builds",
-    "check_pipelines_use_least_privilege",
+    "ImmutableBuildsCheck",
+    "ImplementAuthAcrossServicesCheck",
+    "ImplementQueryingForLogsCheck",
+    "ImplementRetentionPoliciesCheck",
+    "IncidentResponsePlansCheck",
+    "LessonsLearnedFrameworkCheck",
+    "MacieScansForSensitiveDataCheck",
+    "MaintainInventoryOfSharedResourcesCheck",
+    "MonitorKeyUsageCheck",
+    "MonitorNetworkTrafficForUnauthorizedAccessCheck",
+    "MonitorSecretsCheck",
+    "PenetrationTestingCheck",
+    "PerformDASTCheck",
+    "PerformSASTCheck",
+    "PipelinesUseLeastPrivilegeCheck",
+    "PreDeployToolsCheck",
+    "PreventAndDetectSecretsCheck",
+    "RegularlyReviewPermissionsCheck",
+    "RemediateVulnerabilitiesCheck",
     "check_review_pipeline_permissions_regularly",
     "check_threat_model_pipelines",
     "check_security_guardians_program",
     "check_scan_workloads_for_vulnerabilities",
-    "check_remediate_vulnerabilities",
     "check_automate_patch_management",
     "vulnerability_scanning_in_cicd_pipelines",
     "automate_malware_and_threat_detection",
@@ -542,13 +533,10 @@ __all__ = [
     "check_avoid_interactive_access",
     "check_audit_interactive_access_with_ssm",
     "check_validate_software_integrity",
-    "check_incident_response_plans",
     "check_forensics_ou",
     "check_security_ir_playbooks",
     "check_use_identity_broker",
-    "check_pre_deploy_tools",
     "check_run_simulations",
-    "check_lessons_learned_framework",
     "check_create_network_layers",
     "check_control_network_flow_with_nacls",
     "check_control_network_flows_with_sgs",

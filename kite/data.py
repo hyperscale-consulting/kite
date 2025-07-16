@@ -940,7 +940,8 @@ def save_route53resolver_query_log_config_associations(
     Args:
         account_id: The AWS account ID.
         region: The AWS region.
-        resolver_query_log_config_associations: The list of Route 53 resolver query log config associations to save.
+        resolver_query_log_config_associations: The list of Route 53 resolver query
+        log config associations to save.
     """
     _save_data(
         resolver_query_log_config_associations,
@@ -1574,7 +1575,8 @@ def save_route53resolver_firewall_rule_groups(
     Args:
         account_id: The AWS account ID.
         region: The AWS region.
-        firewall_rule_groups: The list of Route 53 Resolver firewall rule groups to save.
+        firewall_rule_groups: The list of Route 53 Resolver firewall rule groups to
+        save.
     """
     _save_data(
         firewall_rule_groups,
@@ -1600,12 +1602,14 @@ def get_route53resolver_firewall_rule_groups(
 def save_route53resolver_firewall_rule_group_associations(
     account_id: str, region: str, firewall_rule_group_associations: list[dict[str, Any]]
 ) -> None:
-    """Save Route 53 Resolver firewall rule group associations for an account and region.
+    """Save Route 53 Resolver firewall rule group associations for an account and
+    region.
 
     Args:
         account_id: The AWS account ID.
         region: The AWS region.
-        firewall_rule_group_associations: The list of Route 53 Resolver firewall rule group associations to save.
+        firewall_rule_group_associations: The list of Route 53 Resolver firewall rule
+        group associations to save.
     """
     _save_data(
         firewall_rule_group_associations,
@@ -1639,7 +1643,8 @@ def save_route53resolver_firewall_domain_lists(
     Args:
         account_id: The AWS account ID.
         region: The AWS region.
-        firewall_domain_lists: The list of Route 53 Resolver firewall domain lists to save.
+        firewall_domain_lists: The list of Route 53 Resolver firewall domain lists to
+        save.
     """
     _save_data(
         firewall_domain_lists,
@@ -1831,7 +1836,8 @@ def save_cloudfront_waf_logging_configurations(
 
     Args:
         account_id: The AWS account ID.
-        logging_configurations: The list of CloudFront WAF logging configurations to save.
+        logging_configurations: The list of CloudFront WAF logging configurations to
+        save.
     """
     _save_data(
         logging_configurations, "cloudfront_waf_logging_configurations", account_id

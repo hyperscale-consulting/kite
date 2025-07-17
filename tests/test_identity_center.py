@@ -122,14 +122,6 @@ class IdentityStoreClient:
         )
 
 
-class StubSession:
-    def __init__(self, clients):
-        self.clients = clients
-
-    def client(self, service_name, region_name=None):
-        return self.clients[region_name][service_name]
-
-
 @pytest.fixture
 def sso_admin_client():
     return SsoAdminClient()
@@ -141,15 +133,10 @@ def identity_store_client():
 
 
 @pytest.fixture
-def session(sso_admin_client, identity_store_client):
-    return StubSession(
-        {
-            None: {
-                "sso-admin": sso_admin_client,
-                "identitystore": identity_store_client,
-            }
-        }
-    )
+def session(stub_aws_session, sso_admin_client, identity_store_client):
+    stub_aws_session.register_client(sso_admin_client, "sso-admin")
+    stub_aws_session.register_client(identity_store_client, "identitystore")
+    yield stub_aws_session
 
 
 def test_list_identity_center_instances_success(

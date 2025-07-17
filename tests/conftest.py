@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+from collections import defaultdict
 from pathlib import Path
 
 import pytest
@@ -11,6 +12,22 @@ from kite.models import Account
 from kite.models import ControlPolicy
 from kite.models import Organization
 from kite.models import OrganizationalUnit
+
+
+class StubSession:
+    def __init__(self):
+        self.clients = defaultdict(dict)
+
+    def client(self, service_name, region_name=None):
+        return self.clients[region_name][service_name]
+
+    def register_client(self, client, service_name, region_name=None):
+        self.clients[region_name][service_name] = client
+
+
+@pytest.fixture
+def stub_aws_session():
+    yield StubSession()
 
 
 @pytest.fixture

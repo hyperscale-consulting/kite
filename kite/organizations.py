@@ -1,4 +1,4 @@
-"""Module for interacting with AWS Organizations."""
+from botocore.exceptions import ClientError
 
 from kite.models import Account
 from kite.models import ControlPolicy
@@ -7,7 +7,7 @@ from kite.models import Organization
 from kite.models import OrganizationalUnit
 
 
-def fetch_policies_for_target(
+def _fetch_policies_for_target(
     orgs_client, target_id: str
 ) -> dict[str, list[ControlPolicy]]:
     """
@@ -27,30 +27,24 @@ def fetch_policies_for_target(
     }
 
     for policy_type in policies.keys():
-        try:
-            paginator = orgs_client.get_paginator("list_policies_for_target")
-            for page in paginator.paginate(TargetId=target_id, Filter=policy_type):
-                for policy in page["Policies"]:
-                    # Get the policy details
-                    policy_response = orgs_client.describe_policy(PolicyId=policy["Id"])
-                    policy_details = policy_response["Policy"]
-                    policy_summary = policy_details["PolicySummary"]
+        paginator = orgs_client.get_paginator("list_policies_for_target")
+        for page in paginator.paginate(TargetId=target_id, Filter=policy_type):
+            for policy in page["Policies"]:
+                # Get the policy details
+                policy_response = orgs_client.describe_policy(PolicyId=policy["Id"])
+                policy_details = policy_response["Policy"]
+                policy_summary = policy_details["PolicySummary"]
 
-                    pol = ControlPolicy(
-                        id=policy_summary["Id"],
-                        arn=policy_summary["Arn"],
-                        name=policy_summary["Name"],
-                        description=policy_summary.get("Description", ""),
-                        content=policy_details["Content"],
-                        type=policy_summary["Type"],
-                    )
+                pol = ControlPolicy(
+                    id=policy_summary["Id"],
+                    arn=policy_summary["Arn"],
+                    name=policy_summary["Name"],
+                    description=policy_summary.get("Description", ""),
+                    content=policy_details["Content"],
+                    type=policy_summary["Type"],
+                )
 
-                    policies[policy_summary["Type"]].append(pol)
-        except Exception as e:
-            # Log the error but continue processing
-            print(
-                f"Error fetching {policy_type} policies for target {target_id}: {str(e)}"
-            )
+                policies[policy_summary["Type"]].append(pol)
 
     return policies
 
@@ -81,7 +75,7 @@ def fetch_organization(session) -> Organization | None:
         root_name = root.get("Name", "Root")
 
         # Get policies for the root
-        root_policies = fetch_policies_for_target(orgs_client, root_id)
+        root_policies = _fetch_policies_for_target(orgs_client, root_id)
 
         # Get accounts in the root
         accounts = []
@@ -89,7 +83,9 @@ def fetch_organization(session) -> Organization | None:
         for page in paginator.paginate(ParentId=root_id):
             for account in page["Accounts"]:
                 # Get policies for this account
-                account_policies = fetch_policies_for_target(orgs_client, account["Id"])
+                account_policies = _fetch_policies_for_target(
+                    orgs_client, account["Id"]
+                )
 
                 accounts.append(
                     Account(
@@ -134,13 +130,8 @@ def fetch_organization(session) -> Organization | None:
             feature_set=org["FeatureSet"],
             root=root_ou,
         )
-    except Exception as e:
-        # Check if Organizations is not in use
-        if (
-            hasattr(e, "response")
-            and e.response.get("Error", {}).get("Code")
-            == "AWSOrganizationsNotInUseException"
-        ):
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "AWSOrganizationsNotInUseException":
             return None
         # Re-raise other exceptions
         raise
@@ -153,7 +144,7 @@ def build_ou_structure(orgs_client, ou_id):
     ou = ou_response["OrganizationalUnit"]
 
     # Get policies for this OU
-    ou_policies = fetch_policies_for_target(orgs_client, ou_id)
+    ou_policies = _fetch_policies_for_target(orgs_client, ou_id)
 
     # Get accounts in this OU
     accounts = []
@@ -161,7 +152,7 @@ def build_ou_structure(orgs_client, ou_id):
     for page in paginator.paginate(ParentId=ou_id):
         for account in page["Accounts"]:
             # Get policies for this account
-            account_policies = fetch_policies_for_target(orgs_client, account["Id"])
+            account_policies = _fetch_policies_for_target(orgs_client, account["Id"])
 
             accounts.append(
                 Account(
@@ -197,7 +188,7 @@ def build_ou_structure(orgs_client, ou_id):
     )
 
 
-def fetch_delegated_admins(session) -> dict[str, list[DelegatedAdmin]]:
+def fetch_delegated_admins(session) -> list[DelegatedAdmin]:
     """
     Fetch all delegated administrators for the organization.
 
@@ -208,12 +199,8 @@ def fetch_delegated_admins(session) -> dict[str, list[DelegatedAdmin]]:
         session: A boto3 session to use for AWS API calls
 
     Returns:
-        A dictionary mapping service principals to lists of DelegatedAdmin objects.
-        Each DelegatedAdmin object contains details about an account that has been
-        delegated administrative privileges for that service.
+        A list of DelegatedAdmin objects.
 
-    Raises:
-        Exception: If there's an error retrieving the delegated administrators.
     """
     orgs_client = session.client("organizations")
     delegated_admins = []
@@ -254,14 +241,10 @@ def fetch_delegated_admins(session) -> dict[str, list[DelegatedAdmin]]:
                         )
 
         return delegated_admins
-    except Exception as e:
-        # Check if Organizations is not in use
-        if (
-            hasattr(e, "response")
-            and e.response.get("Error", {}).get("Code")
-            == "AWSOrganizationsNotInUseException"
-        ):
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "AWSOrganizationsNotInUseException":
             return []
+
         # Re-raise other exceptions
         raise
 
@@ -275,7 +258,8 @@ def get_account_details(session, account_id: str) -> Account | None:
         account_id: The ID of the account to fetch details for
 
     Returns:
-        An Account object containing the account details, or None if the account is not found
+        An Account object containing the account details, or None if the account is not
+        found
     """
     orgs_client = session.client("organizations")
 
@@ -285,7 +269,7 @@ def get_account_details(session, account_id: str) -> Account | None:
         account = account_response["Account"]
 
         # Get policies for this account
-        account_policies = fetch_policies_for_target(orgs_client, account_id)
+        account_policies = _fetch_policies_for_target(orgs_client, account_id)
 
         return Account(
             id=account["Id"],
@@ -299,12 +283,10 @@ def get_account_details(session, account_id: str) -> Account | None:
             rcps=account_policies["RESOURCE_CONTROL_POLICY"],
             tag_policies=account_policies["TAG_POLICY"],
         )
-    except Exception as e:
-        if (
-            hasattr(e, "response")
-            and e.response.get("Error", {}).get("Code") == "AccountNotFoundException"
-        ):
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "AccountNotFoundException":
             return None
+        # Re-raise other exceptions
         raise
 
 

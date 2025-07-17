@@ -9,7 +9,8 @@ def fetch_secrets(session, region: str | None = None) -> list[dict[str, Any]]:
 
     Args:
         session: The boto3 session to use.
-        region: Optional AWS region name. If not specified, uses the session's default region.
+        region: Optional AWS region name. If not specified, uses the session's default
+        region.
 
     Returns:
         List of SecretDetails objects containing secret details and resource policies.

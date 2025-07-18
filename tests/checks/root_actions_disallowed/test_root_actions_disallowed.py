@@ -4,6 +4,7 @@ from kite.checks import CheckStatus
 from kite.checks import RootActionsDisallowedCheck
 from tests.factories import build_ou
 from tests.factories import build_scp
+from tests.factories import config
 from tests.factories import create_organization
 
 
@@ -122,6 +123,7 @@ def test_check_no_org():
         scp_with_deny_star_arnlike_root_and_multiple_statements(),
     ],
 )
+@config()
 def test_check_root_has_scp(scp_content):
     create_organization(root_ou=build_ou(scps=[build_scp(content=scp_content)]))
 
@@ -131,6 +133,7 @@ def test_check_root_has_scp(scp_content):
     assert result.reason == "Disallow root actions SCP is attached to the root OU."
 
 
+@config()
 def test_check_all_top_level_have_scp():
     create_organization(
         root_ou=build_ou(
@@ -163,6 +166,7 @@ def test_check_all_top_level_have_scp():
     )
 
 
+@config()
 def test_check_some_top_level_have_scp():
     create_organization(
         root_ou=build_ou(
@@ -192,6 +196,7 @@ def test_check_some_top_level_have_scp():
         scp_with_deny_star_arnlike_non_root(),
     ],
 )
+@config()
 def test_check_root_does_not_have_scp(scp_content):
     create_organization(root_ou=build_ou(scps=[build_scp(content=scp_content)]))
 

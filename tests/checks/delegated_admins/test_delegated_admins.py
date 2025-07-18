@@ -7,8 +7,8 @@ from kite.models import DelegatedAdmin
 from tests.factories import build_account
 from tests.factories import build_delegated_admin
 from tests.factories import build_ou
-from tests.factories import create_organization
 from tests.factories import config
+from tests.factories import create_organization
 
 mgmt_account_id = "1111111111111"
 audit_account_id = "333333333333"

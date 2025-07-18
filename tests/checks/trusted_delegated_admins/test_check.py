@@ -2,14 +2,12 @@ import pytest
 
 from kite.checks import CheckStatus
 from kite.checks import TrustedDelegatedAdminsCheck
-from tests.factories import (
-    create_organization,
-    build_ou,
-    build_account,
-    build_delegated_admin,
-    config,
-)
 from kite.data import save_delegated_admins
+from tests.factories import build_account
+from tests.factories import build_delegated_admin
+from tests.factories import build_ou
+from tests.factories import config
+from tests.factories import create_organization
 
 audit_account_id = "333333333333"
 backup_account_id = "444444444444"

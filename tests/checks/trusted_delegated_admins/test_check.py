@@ -1,95 +1,93 @@
-"""Tests for the Trusted Delegated Admins check."""
-
 import pytest
 
-from kite.checks.trusted_delegated_admins.check import check_trusted_delegated_admins
+from kite.checks import CheckStatus
+from kite.checks import TrustedDelegatedAdminsCheck
+from tests.factories import (
+    create_organization,
+    build_ou,
+    build_account,
+    build_delegated_admin,
+    config,
+)
 from kite.data import save_delegated_admins
-from kite.organizations import DelegatedAdmin
+
+audit_account_id = "333333333333"
+backup_account_id = "444444444444"
+mgmt_account_id = "1111111111111"
 
 
 @pytest.fixture
-def mock_prompt_user_with_panel(mocker):
-    """Mock the prompt_user_with_panel function."""
-    return mocker.patch(
-        "kite.checks.trusted_delegated_admins.check.prompt_user_with_panel"
+def check():
+    return TrustedDelegatedAdminsCheck()
+
+
+@config(mgmt_account_id=mgmt_account_id)
+def test_organizations_not_used(check):
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+
+
+@config(mgmt_account_id=mgmt_account_id)
+def test_no_delegated_admins(check):
+    create_organization()
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+
+
+@config(mgmt_account_id=mgmt_account_id)
+def test_lists_all_admins_for_manual_check(check):
+    create_organization(
+        mgmt_account_id=mgmt_account_id,
+        root_ou=build_ou(
+            child_ous=[
+                build_ou(accounts=[build_account()]),
+            ]
+        ),
     )
-
-
-def delegated_admin(account, service_principal):
-    return DelegatedAdmin(
-        id=account.id,
-        arn=account.arn,
-        name=account.name,
-        email=account.email,
-        status=account.status,
-        joined_method=account.joined_method,
-        joined_timestamp=account.joined_timestamp,
-        delegation_enabled_date="2021-01-01T00:00:00Z",
-        service_principal=service_principal,
+    save_delegated_admins(
+        account_id=mgmt_account_id,
+        admins=[
+            build_delegated_admin(
+                account_id=audit_account_id,
+                service_principal="securityhub.amazonaws.com",
+                account_email="audit@example.com",
+                account_name="Audit Account",
+            ),
+            build_delegated_admin(
+                account_id=backup_account_id,
+                service_principal="backup.amazonaws.com",
+                account_email="backup@example.com",
+                account_name="Backup Account",
+            ),
+            build_delegated_admin(
+                account_id=audit_account_id,
+                service_principal="detective.amazonaws.com",
+                account_email="audit@example.com",
+                account_name="Audit Account",
+            ),
+            build_delegated_admin(
+                account_id=audit_account_id,
+                service_principal="guardduty.amazonaws.com",
+                account_email="audit@example.com",
+                account_name="Audit Account",
+            ),
+        ],
     )
-
-
-@pytest.fixture
-def delegated_admins(audit_account, workload_account, mgmt_account_id):
-    admins = [
-        delegated_admin(audit_account, "securityhub.amazonaws.com"),
-        delegated_admin(audit_account, "inspector2.amazonaws.com"),
-        delegated_admin(audit_account, "macie.amazonaws.com"),
-        delegated_admin(workload_account, "detective.amazonaws.com"),
-        delegated_admin(workload_account, "guardduty.amazonaws.com"),
-    ]
-    save_delegated_admins(mgmt_account_id, admins)
-    return admins
-
-
-@pytest.fixture
-def no_delegated_admins(mgmt_account_id):
-    admins = []
-    save_delegated_admins(mgmt_account_id, admins)
-    return admins
-
-
-def test_check_trusted_delegated_admins_no_admins(no_delegated_admins):
-    """Test the check when no delegated admins are found."""
-    result = check_trusted_delegated_admins()
-
-    # Verify the result
-    assert result["check_id"] == "trusted-delegated-admins"
-    assert result["check_name"] == "Trusted Delegated Admins"
-    assert result["status"] == "PASS"
-    assert result["message"] == "No delegated admins found."
-    assert result["details"] == {}
-
-
-def test_check_trusted_delegated_admins_pass(
-    delegated_admins, mock_prompt_user_with_panel
-):
-    """Test the check when all delegated admins are trusted."""
-
-    mock_prompt_user_with_panel.return_value = (True, None)
-    result = check_trusted_delegated_admins()
-
-    # Verify the result
-    assert result["check_id"] == "trusted-delegated-admins"
-    assert result["check_name"] == "Trusted Delegated Admins"
-    assert result["status"] == "PASS"
-    assert result["message"] == "All delegated admins are trusted accounts."
-    assert "delegated_admins" in result["details"]
-    assert len(result["details"]["delegated_admins"]) == 2
-
-
-def test_check_trusted_delegated_admins_fail(
-    delegated_admins, mock_prompt_user_with_panel
-):
-    """Test the check when some delegated admins are not trusted."""
-
-    mock_prompt_user_with_panel.return_value = (False, None)
-    result = check_trusted_delegated_admins()
-
-    # Verify the result
-    assert result["check_id"] == "trusted-delegated-admins"
-    assert result["check_name"] == "Trusted Delegated Admins"
-    assert result["status"] == "FAIL"
-    assert result["message"] == "Some delegated admins may not be trusted accounts."
-    assert "delegated_admins" in result["details"]
-    assert len(result["details"]["delegated_admins"]) == 2
+    result = check.run()
+    assert result.status == CheckStatus.MANUAL
+    assert result.context == (
+        "Delegated Administrators:\n\n"
+        f"Account: Audit Account ({audit_account_id})"
+        "\n"
+        "Email: audit@example.com\n"
+        "Services:\n"
+        "  - securityhub.amazonaws.com\n"
+        "  - detective.amazonaws.com\n"
+        "  - guardduty.amazonaws.com\n"
+        "\n"
+        f"Account: Backup Account ({backup_account_id})"
+        "\n"
+        "Email: backup@example.com\n"
+        "Services:\n"
+        "  - backup.amazonaws.com\n\n"
+    )

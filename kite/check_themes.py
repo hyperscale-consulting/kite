@@ -115,7 +115,6 @@ from kite.checks import check_sns_confused_deputy_protection
 from kite.checks import check_sns_data_protection_policies
 from kite.checks import check_sqs_confused_deputy_protection
 from kite.checks import check_tag_data_with_sensitivity_level
-from kite.checks import check_trusted_delegated_admins
 from kite.checks import check_use_a_kms
 from kite.checks import check_use_centralized_idp
 from kite.checks import check_use_customer_managed_keys
@@ -184,6 +183,7 @@ from kite.checks import ThreatModelingCheck
 from kite.checks import ThreatModelPipelinesCheck
 from kite.checks import TokenizationAndAnonymizationCheck
 from kite.checks import TrainForApplicationSecurityCheck
+from kite.checks import TrustedDelegatedAdminsCheck
 from kite.checks import UseHardenedImagesCheck
 from kite.checks import UseIdentityBrokerCheck
 from kite.checks import ValidateSoftwareIntegrityCheck
@@ -203,7 +203,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_ou_structure,
             check_management_account_workloads,
             DelegatedAdminForSecurityServices(),
-            check_trusted_delegated_admins,
+            TrustedDelegatedAdminsCheck(),
         ],
     },
     "Root User Security": {

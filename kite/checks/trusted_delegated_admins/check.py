@@ -1,112 +1,73 @@
-"""Check that all delegated admins are trusted accounts."""
-
-from typing import Any
-
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.data import get_delegated_admins
-from kite.helpers import prompt_user_with_panel
+from kite.data import get_organization
 from kite.organizations import DelegatedAdmin
 
-CHECK_ID = "trusted-delegated-admins"
-CHECK_NAME = "Trusted Delegated Admins"
 
+class TrustedDelegatedAdminsCheck:
+    def __init__(self):
+        self.check_id = "trusted-delegated-admins"
+        self.check_name = "Trusted Delegated Admins"
 
-def check_trusted_delegated_admins() -> dict[str, Any]:
-    """
-    Check that all delegated admins are trusted accounts.
+    @property
+    def question(self) -> str:
+        return "Are all delegated administrators trusted accounts?"
 
-    This check lists all delegated admins for the organization and asks the user
-    to confirm that all delegated admins are trusted accounts.
-
-    Returns:
-        Dict[str, Any]: A dictionary containing the check result with the following
-            keys:
-            - status: The status of the check ("PASS", "FAIL", or "ERROR")
-            - message: A message describing the result
-            - details: Additional details about the result
-    """
-    # Get all delegated admins
-    delegated_admins = get_delegated_admins()
-    if delegated_admins is None:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "ERROR",
-            "message": "No delegated administrators data found. Please run 'kite collect' first.",
-            "details": {},
-        }
-
-    # If there are no delegated admins, the check passes
-    if not delegated_admins:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "PASS",
-            "message": "No delegated admins found.",
-            "details": {},
-        }
-
-    services_by_admin: dict[str, list[DelegatedAdmin]] = {}
-    for admin in delegated_admins:
-        if admin.id not in services_by_admin:
-            services_by_admin[admin.id] = []
-        services_by_admin[admin.id].append(admin.service_principal)
-
-    # Collect all unique delegated admin accounts
-    all_admins: dict[str, DelegatedAdmin] = {}
-    for admin in delegated_admins:
-        if admin.id not in all_admins:
-            all_admins[admin.id] = admin
-
-    # Prepare the list of delegated admins for user confirmation
-    admin_list = []
-    message = "Delegated Administrators:\n\n"
-    for admin_id, admin in all_admins.items():
-        services = services_by_admin[admin_id]
-        admin_list.append(
-            {
-                "id": admin_id,
-                "name": admin.name,
-                "email": admin.email,
-                "services": services,
-            }
+    @property
+    def description(self) -> str:
+        return (
+            "Accounts that are delegated administrators for a service have permission "
+            "to perform actions on behalf of the organization, so should be locked "
+            "down accordingly. This check lists all delegated admins for the "
+            "organization and asks the user to confirm that all delegated admins are "
+            "trusted and restricted-access accounts."
         )
-        message += f"Account: {admin.name} ({admin.id})\n"
-        message += f"Email: {admin.email}\n"
-        message += "Services:\n"
-        for service in services:
-            message += f"  - {service}\n"
-        message += "\n"
 
-    # Ask the user to confirm that all delegated admins are trusted
-    is_trusted, _ = prompt_user_with_panel(
-        check_name=CHECK_NAME,
-        message=message,
-        prompt="Are all of these delegated administrators trusted accounts?",
-        default=True,
-    )
+    def run(self) -> CheckResult:
+        if not get_organization():
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason="AWS Organization is not enabled.",
+            )
 
-    if is_trusted:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "PASS",
-            "message": "All delegated admins are trusted accounts.",
-            "details": {
-                "delegated_admins": admin_list,
-            },
-        }
-    else:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "FAIL",
-            "message": "Some delegated admins may not be trusted accounts.",
-            "details": {
-                "delegated_admins": admin_list,
-            },
-        }
+        delegated_admins = get_delegated_admins()
+        if not delegated_admins:
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason="No delegated admins found.",
+            )
 
+        services_by_admin: dict[str, list[str]] = {}
+        for admin in delegated_admins:
+            if admin.id not in services_by_admin:
+                services_by_admin[admin.id] = []
+            services_by_admin[admin.id].append(admin.service_principal)
 
-# Attach the check ID and name to the function
-check_trusted_delegated_admins._CHECK_ID = CHECK_ID
-check_trusted_delegated_admins._CHECK_NAME = CHECK_NAME
+        all_admins: dict[str, DelegatedAdmin] = {}
+        for admin in delegated_admins:
+            if admin.id not in all_admins:
+                all_admins[admin.id] = admin
+
+        admin_list = []
+        message = "Delegated Administrators:\n\n"
+        for admin_id, admin in all_admins.items():
+            services = services_by_admin[admin_id]
+            admin_list.append(
+                {
+                    "id": admin_id,
+                    "name": admin.name,
+                    "email": admin.email,
+                    "services": services,
+                }
+            )
+            message += f"Account: {admin.name} ({admin.id})\n"
+            message += f"Email: {admin.email}\n"
+            message += "Services:\n"
+            for service in services:
+                message += f"  - {service}\n"
+            message += "\n"
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

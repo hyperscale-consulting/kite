@@ -7,9 +7,11 @@ from pathlib import Path
 import pytest
 
 from kite.config import Config
+from kite.data import save_delegated_admins
 from kite.data import save_organization
 from kite.models import Account
 from kite.models import ControlPolicy
+from kite.models import DelegatedAdmin
 from kite.models import Organization
 from kite.models import OrganizationalUnit
 
@@ -42,7 +44,7 @@ def active_regions():
 
 @pytest.fixture
 def role_name():
-    return "HyperscaleAssessor"
+    return "KiteAssessor"
 
 
 @pytest.fixture
@@ -341,5 +343,36 @@ def scp_factory():
             content=json.dumps(content),
             type="SERVICE_CONTROL_POLICY",
         )
+
+    return _create
+
+
+@pytest.fixture
+def delegated_admin_factory():
+    def _create(
+        account_id,
+        service_principal,
+        account_name="Test account",
+        account_email="test@example.com",
+    ):
+        return DelegatedAdmin(
+            id=account_id,
+            arn=f"arn:aws:organizations:::111111111111:account/{account_id}",
+            name=account_name,
+            email=account_email,
+            status="ACTIVE",
+            joined_method="CREATED",
+            joined_timestamp="2021-01-01T00:00:00Z",
+            delegation_enabled_date="2021-01-01T00:00:00Z",
+            service_principal=service_principal,
+        )
+
+    return _create
+
+
+@pytest.fixture
+def delegated_admins_factory():
+    def _create(mgmt_account_id, delegated_admins):
+        save_delegated_admins(mgmt_account_id, delegated_admins)
 
     return _create

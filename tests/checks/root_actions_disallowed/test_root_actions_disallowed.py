@@ -2,6 +2,9 @@ import pytest
 
 from kite.checks import CheckStatus
 from kite.checks import RootActionsDisallowedCheck
+from tests.factories import build_ou
+from tests.factories import build_scp
+from tests.factories import create_organization
 
 
 def scp_with_deny_star_arnlike_root():
@@ -119,8 +122,8 @@ def test_check_no_org():
         scp_with_deny_star_arnlike_root_and_multiple_statements(),
     ],
 )
-def test_check_root_has_scp(organization_factory, ou_factory, scp_factory, scp_content):
-    organization_factory(root_ou=ou_factory(scps=[scp_factory(content=scp_content)]))
+def test_check_root_has_scp(scp_content):
+    create_organization(root_ou=build_ou(scps=[build_scp(content=scp_content)]))
 
     check = RootActionsDisallowedCheck()
     result = check.run()
@@ -128,26 +131,22 @@ def test_check_root_has_scp(organization_factory, ou_factory, scp_factory, scp_c
     assert result.reason == "Disallow root actions SCP is attached to the root OU."
 
 
-def test_check_all_top_level_have_scp(organization_factory, ou_factory, scp_factory):
-    organization_factory(
-        root_ou=ou_factory(
+def test_check_all_top_level_have_scp():
+    create_organization(
+        root_ou=build_ou(
             child_ous=[
-                ou_factory(
-                    scps=[scp_factory(content=scp_with_deny_star_arnlike_root())]
-                ),
-                ou_factory(
-                    scps=[scp_factory(content=scp_with_deny_star_arnlike_root())]
-                ),
-                ou_factory(
+                build_ou(scps=[build_scp(content=scp_with_deny_star_arnlike_root())]),
+                build_ou(scps=[build_scp(content=scp_with_deny_star_arnlike_root())]),
+                build_ou(
                     scps=[
-                        scp_factory(
+                        build_scp(
                             content=scp_with_deny_star_arnlike_root_and_multiple_statements()
                         )
                     ]
                 ),
-                ou_factory(
+                build_ou(
                     scps=[
-                        scp_factory(
+                        build_scp(
                             content=scp_with_deny_star_arnlike_root_and_multiple_actions()
                         )
                     ]
@@ -164,18 +163,14 @@ def test_check_all_top_level_have_scp(organization_factory, ou_factory, scp_fact
     )
 
 
-def test_check_some_top_level_have_scp(organization_factory, ou_factory, scp_factory):
-    organization_factory(
-        root_ou=ou_factory(
+def test_check_some_top_level_have_scp():
+    create_organization(
+        root_ou=build_ou(
             child_ous=[
-                ou_factory(
-                    scps=[scp_factory(content=scp_with_deny_star_arnlike_root())]
-                ),
-                ou_factory(
-                    scps=[scp_factory(content=scp_with_deny_star_arnlike_root())]
-                ),
-                ou_factory(
-                    scps=[scp_factory(content=scp_with_deny_star_arnlike_non_root())]
+                build_ou(scps=[build_scp(content=scp_with_deny_star_arnlike_root())]),
+                build_ou(scps=[build_scp(content=scp_with_deny_star_arnlike_root())]),
+                build_ou(
+                    scps=[build_scp(content=scp_with_deny_star_arnlike_non_root())]
                 ),
             ]
         )
@@ -197,10 +192,8 @@ def test_check_some_top_level_have_scp(organization_factory, ou_factory, scp_fac
         scp_with_deny_star_arnlike_non_root(),
     ],
 )
-def test_check_root_does_not_have_scp(
-    organization_factory, ou_factory, scp_factory, scp_content
-):
-    organization_factory(root_ou=ou_factory(scps=[scp_factory(content=scp_content)]))
+def test_check_root_does_not_have_scp(scp_content):
+    create_organization(root_ou=build_ou(scps=[build_scp(content=scp_content)]))
 
     check = RootActionsDisallowedCheck()
     result = check.run()

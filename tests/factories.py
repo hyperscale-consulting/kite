@@ -1,7 +1,7 @@
 import json
+from functools import wraps
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from functools import wraps
 
 from kite.config import Config
 from kite.data import save_organization

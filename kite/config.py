@@ -30,7 +30,7 @@ class Config:
     @classmethod
     def create(
         cls,
-        management_account_id: str,
+        management_account_id: str | None,
         account_ids: list[str],
         active_regions: list[str],
         role_name: str,

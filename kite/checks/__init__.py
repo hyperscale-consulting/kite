@@ -4,8 +4,8 @@ from kite.checks.access_management_lifecycle_implemented import (
 )
 from kite.checks.account_separation.check import check_account_separation
 from kite.checks.account_standards import AccountStandardsCheck
-from kite.checks.accurate_account_contact_details.check import (
-    check_accurate_account_contact_details,
+from kite.checks.accurate_account_contact_details import (
+    AccurateAccountContactDetailsCheck,
 )
 from kite.checks.active_external_access_analyzer.check import (
     check_active_external_access_analyzer,
@@ -379,7 +379,7 @@ __all__ = [
     "check_root_user_usage",
     "check_root_credentials_management_enabled",
     "check_no_root_access_keys",
-    "check_accurate_account_contact_details",
+    "AccurateAccountContactDetailsCheck",
     "RootAccountMonitoringCheck",
     "RootCredentialsSecurityCheck",
     "RootAccessTestingCheck",

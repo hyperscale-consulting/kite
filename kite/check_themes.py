@@ -3,6 +3,7 @@ from collections.abc import Callable
 from kite.checks import AccessManagementLifecycleCheck
 from kite.checks import AccessManagementLifecycleImplementedCheck
 from kite.checks import AccountStandardsCheck
+from kite.checks import AccurateAccountContactDetailsCheck
 from kite.checks import ApprovalProcessForResourceSharingCheck
 from kite.checks import automate_malware_and_threat_detection
 from kite.checks import AutomateDeploymentsCheck
@@ -15,7 +16,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import Check
 from kite.checks import check_account_separation
-from kite.checks import check_accurate_account_contact_details
 from kite.checks import check_active_external_access_analyzer
 from kite.checks import check_active_unused_access_analyzer
 from kite.checks import check_admin_privileges_are_restricted
@@ -213,7 +213,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_root_credentials_management_enabled,
             check_no_root_access_keys,
             check_root_mfa_enabled,
-            check_accurate_account_contact_details,
+            AccurateAccountContactDetailsCheck(),
             check_root_access_keys_disallowed,
             RootActionsDisallowedCheck(),
             RootAccountMonitoringCheck(),

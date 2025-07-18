@@ -118,7 +118,7 @@ def get_organization_features() -> list[str]:
     config = Config.get()
     if not config.management_account_id:
         return []
-    return _load_data("organization_features", config.management_account_id)
+    return _load_data("organization_features", config.management_account_id) or []
 
 
 def save_credentials_report(account_id: str, report: dict[str, Any]) -> None:

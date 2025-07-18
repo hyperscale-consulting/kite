@@ -5,6 +5,7 @@ from tempfile import TemporaryDirectory
 
 from kite.config import Config
 from kite.data import save_organization
+from kite.data import save_organization_features
 from kite.models import Account
 from kite.models import ControlPolicy
 from kite.models import DelegatedAdmin
@@ -123,9 +124,9 @@ def build_delegated_admin(
 def create_config(
     prowler_output_dir,
     data_dir,
-    mgmt_account_id="111111111111",
-    account_ids=None,
-    active_regions=None,
+    mgmt_account_id: str | None = "111111111111",
+    account_ids: list[str] | None = None,
+    active_regions: list[str] | None = None,
     role_name="KiteAssessor",
     external_id="12345",
 ):
@@ -166,3 +167,64 @@ def config(
         return wrapper
 
     return decorator
+
+
+def config_for_org(
+    mgmt_account_id="111111111111",
+    account_ids=None,
+    active_regions=None,
+    role_name="KiteAssessor",
+    external_id="12345",
+):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            with TemporaryDirectory() as d:
+                create_config(
+                    mgmt_account_id=mgmt_account_id,
+                    account_ids=account_ids,
+                    active_regions=active_regions,
+                    role_name=role_name,
+                    external_id=external_id,
+                    prowler_output_dir=Path(d) / "prowler",
+                    data_dir=Path(d) / "data",
+                )
+                return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def config_for_standalone_account(
+    account_ids=None,
+    active_regions=None,
+    role_name="KiteAssessor",
+    external_id="12345",
+):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            with TemporaryDirectory() as d:
+                create_config(
+                    mgmt_account_id=None,
+                    account_ids=account_ids or ["111111111111"],
+                    active_regions=active_regions,
+                    role_name=role_name,
+                    external_id=external_id,
+                    prowler_output_dir=Path(d) / "prowler",
+                    data_dir=Path(d) / "data",
+                )
+                return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def create_organization_features(management_account_id, features=None):
+    features = features if features is not None else ["RootCredentialsManagement"]
+    save_organization_features(
+        account_id=management_account_id,
+        features=features,
+    )

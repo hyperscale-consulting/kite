@@ -75,7 +75,7 @@ def save_organization(account_id: str, org: Organization) -> None:
     _save_data(asdict(org), "organization", account_id)
 
 
-def get_delegated_admins() -> list[DelegatedAdmin] | None:
+def get_delegated_admins() -> list[DelegatedAdmin]:
     """Get the delegated administrators data.
 
     Returns:
@@ -83,10 +83,8 @@ def get_delegated_admins() -> list[DelegatedAdmin] | None:
     """
     config = Config.get()
     if not config.management_account_id:
-        return None
-    data = _load_data("delegated_admins", config.management_account_id)
-    if data is None:
-        return None
+        return []
+    data = _load_data("delegated_admins", config.management_account_id) or []
 
     # Convert the JSON data back into DelegatedAdmin objects
     return [DelegatedAdmin.from_dict(admin) for admin in data]

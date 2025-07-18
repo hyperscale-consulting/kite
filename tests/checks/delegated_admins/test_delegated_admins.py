@@ -1,140 +1,102 @@
-"""Tests for the delegated admins for security services check."""
-
 import pytest
 
-from kite.checks.delegated_admins.check import check_delegated_admins_security_services
+from kite.checks import CheckStatus
+from kite.checks import DelegatedAdminForSecurityServices
 from kite.data import save_delegated_admins
 from kite.models import DelegatedAdmin
 
 
 @pytest.fixture
-def mock_prompt_user_with_panel(mocker):
-    """Mock the prompt_user_with_panel function."""
-    return mocker.patch("kite.checks.delegated_admins.check.prompt_user_with_panel")
+def check():
+    return DelegatedAdminForSecurityServices()
 
 
-def delegated_admin(account, service_principal):
+def test_organizations_not_used(check):
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+
+
+def test_no_delegated_admins(check, organization_factory):
+    organization_factory()
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+
+
+def test_delegated_admins_for_all_services(
+    check, organization_factory, ou_factory, account_factory, config
+):
+    audit_account_id = "333333333333"
+    mgmt_account_id = "1111111111111"
+    organization_factory(
+        mgmt_account_id=mgmt_account_id,
+        root_ou=ou_factory(
+            child_ous=[
+                ou_factory(accounts=[account_factory()]),
+            ]
+        ),
+    )
+    save_delegated_admins(
+        mgmt_account_id,
+        [
+            delegated_admin(audit_account_id, "securityhub.amazonaws.com"),
+            delegated_admin(audit_account_id, "inspector2.amazonaws.com"),
+            delegated_admin(audit_account_id, "macie.amazonaws.com"),
+            delegated_admin(audit_account_id, "detective.amazonaws.com"),
+            delegated_admin(audit_account_id, "guardduty.amazonaws.com"),
+        ],
+    )
+    config.management_account_id = mgmt_account_id
+    result = check.run()
+    assert result.status == CheckStatus.MANUAL
+    assert result.context == (
+        "Delegated Administrators for Security Services:"
+        "\n\n"
+        f"securityhub.amazonaws.com: Test Account ({333333333333}) - audit@example.com"
+        "\n\n"
+        f"inspector2.amazonaws.com: Test Account ({333333333333}) - audit@example.com"
+        "\n\n"
+        f"macie.amazonaws.com: Test Account ({333333333333}) - audit@example.com"
+        "\n\n"
+        f"detective.amazonaws.com: Test Account ({333333333333}) - audit@example.com"
+        "\n\n"
+        f"guardduty.amazonaws.com: Test Account ({333333333333}) - audit@example.com"
+        "\n"
+    )
+
+
+def test_delegated_admin_for_one_services(
+    check, organization_factory, ou_factory, account_factory, config
+):
+    audit_account_id = "333333333333"
+    mgmt_account_id = "1111111111111"
+    organization_factory(
+        mgmt_account_id=mgmt_account_id,
+        root_ou=ou_factory(
+            child_ous=[
+                ou_factory(accounts=[account_factory()]),
+            ]
+        ),
+    )
+    save_delegated_admins(
+        mgmt_account_id,
+        [
+            delegated_admin(audit_account_id, "guardduty.amazonaws.com"),
+        ],
+    )
+    config.management_account_id = mgmt_account_id
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+
+
+def delegated_admin(account_id, service_principal):
     return DelegatedAdmin(
-        id=account.id,
-        arn=account.arn,
-        name=account.name,
-        email=account.email,
-        status=account.status,
-        joined_method=account.joined_method,
-        joined_timestamp=account.joined_timestamp,
+        id=account_id,
+        arn=f"arn:aws:organizations:::111111111111:account/{account_id}",
+        name="Test Account",
+        email="audit@example.com",
+        status="Active",
+        joined_method="CREATED",
+        joined_timestamp="2021-01-01T00:00:00Z",
         delegation_enabled_date="2021-01-01T00:00:00Z",
         service_principal=service_principal,
-    )
-
-
-@pytest.fixture
-def delegated_admins_all_services(audit_account, mgmt_account_id):
-    admins = [
-        delegated_admin(audit_account, "securityhub.amazonaws.com"),
-        delegated_admin(audit_account, "inspector2.amazonaws.com"),
-        delegated_admin(audit_account, "macie.amazonaws.com"),
-        delegated_admin(audit_account, "detective.amazonaws.com"),
-        delegated_admin(audit_account, "guardduty.amazonaws.com"),
-    ]
-    save_delegated_admins(mgmt_account_id, admins)
-    return admins
-
-
-@pytest.fixture
-def no_delegated_admins(mgmt_account_id):
-    admins = []
-    save_delegated_admins(mgmt_account_id, admins)
-    return admins
-
-
-@pytest.fixture
-def only_guardduty_delegated_admin(audit_account, mgmt_account_id):
-    admins = [
-        delegated_admin(audit_account, "guardduty.amazonaws.com"),
-    ]
-    save_delegated_admins(mgmt_account_id, admins)
-    return admins
-
-
-def test_check_delegated_admins_security_services_all_services(
-    delegated_admins_all_services, mock_prompt_user_with_panel
-):
-    """Test when all security services have delegated admins."""
-
-    # Mock the user response
-    mock_prompt_user_with_panel.return_value = (True, None)
-
-    # Run the check
-    result = check_delegated_admins_security_services()
-
-    # Verify the result
-    assert result["check_id"] == "delegated-admin-for-security-services"
-    assert result["check_name"] == "Delegated admin for security services"
-    assert result["status"] == "PASS"
-    assert (
-        "Delegated administrators for security services are set to the "
-        "security tooling account."
-    ) in result["details"]["message"]
-    assert "delegated_admins" in result["details"]
-
-
-def test_check_delegated_admins_user_says_no(
-    delegated_admins_all_services, mock_prompt_user_with_panel
-):
-    """Test when all security services have delegated admins."""
-
-    # Mock the user response
-    mock_prompt_user_with_panel.return_value = (False, None)
-
-    # Run the check
-    result = check_delegated_admins_security_services()
-
-    # Verify the result
-    assert result["check_id"] == "delegated-admin-for-security-services"
-    assert result["check_name"] == "Delegated admin for security services"
-    assert result["status"] == "FAIL"
-    assert (
-        "Delegated administrators for security services are not set to the "
-        "security tooling account."
-    ) in result["details"]["message"]
-    assert "delegated_admins" in result["details"]
-
-
-def test_check_delegated_admins_security_services_no_delegated_admins(
-    no_delegated_admins, mock_prompt_user_with_panel
-):
-    """Test when no delegated admins are found."""
-
-    # Run the check
-    result = check_delegated_admins_security_services()
-
-    # Verify the result
-    assert result["check_id"] == "delegated-admin-for-security-services"
-    assert result["check_name"] == "Delegated admin for security services"
-    assert result["status"] == "FAIL"
-    assert (
-        "No delegated administrators found for any services."
-        in result["details"]["message"]
-    )
-
-
-def test_check_delegated_admins_security_services_only_guardduty_delegated_admin(
-    only_guardduty_delegated_admin, mock_prompt_user_with_panel
-):
-    """Test when only GuardDuty has a delegated admin."""
-
-    # Mock the user response
-    mock_prompt_user_with_panel.return_value = (True, None)
-
-    # Run the check
-    result = check_delegated_admins_security_services()
-
-    # Verify the result
-    assert result["check_id"] == "delegated-admin-for-security-services"
-    assert result["check_name"] == "Delegated admin for security services"
-    assert result["status"] == "FAIL"
-    assert (
-        "The following security services do not have delegated administrators: "
-        "securityhub.amazonaws.com, inspector2.amazonaws.com, macie.amazonaws.com, "
-        "detective.amazonaws.com" in result["details"]["message"]
     )

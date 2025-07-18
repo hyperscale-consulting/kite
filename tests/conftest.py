@@ -273,6 +273,23 @@ def organization_factory(ou_factory):
 
 
 @pytest.fixture
+def account_factory(id="999999999999", name="Test account", scps=None):
+    def _create():
+        return Account(
+            id=id,
+            name=name,
+            arn=f"arn:aws:organizations:::111111111111:account/{id}",
+            email="test@example.com",
+            status="ACTIVE",
+            joined_method="CREATED",
+            joined_timestamp="2021-01-01T00:00:00Z",
+            scps=scps or [],
+        )
+
+    return _create
+
+
+@pytest.fixture
 def ou_factory(full_access_scp):
     def _create(
         mgmt_account_id="111111111111",

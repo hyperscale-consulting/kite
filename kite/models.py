@@ -5,7 +5,8 @@ from typing import Any
 
 @dataclass
 class ControlPolicy:
-    """Represents a Service Control Policy (SCP) or Resource Control Policy (RCP) in the organization."""
+    """Represents a Service Control Policy (SCP) or Resource Control Policy (RCP) in the
+    organization."""
 
     id: str
     arn: str
@@ -116,7 +117,8 @@ class OrganizationalUnit:
         )
 
     def get_accounts(self) -> list[Account]:
-        """Get all accounts in the organizational unit and its child organizational units."""
+        """Get all accounts in the organizational unit and its child organizational
+        units."""
         accounts = self.accounts
         for child_ou in self.child_ous:
             accounts.extend(child_ou.get_accounts())

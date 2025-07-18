@@ -108,7 +108,7 @@ from kite.checks.define_and_document_workload_network_flows import (
 from kite.checks.delegate_iam_with_permission_boundaries.check import (
     check_delegate_iam_with_permission_boundaries,
 )
-from kite.checks.delegated_admins.check import check_delegated_admins_security_services
+from kite.checks.delegated_admins import DelegatedAdminForSecurityServices
 from kite.checks.deploy_log_analysis_tools_in_audit_account.check import (
     check_deploy_log_analysis_tools_in_audit_account,
 )
@@ -363,7 +363,7 @@ __all__ = [
     "check_account_separation",
     "check_ou_structure",
     "check_management_account_workloads",
-    "check_delegated_admins_security_services",
+    "DelegatedAdminForSecurityServices",
     "check_trusted_delegated_admins",
     "check_region_deny_scp",
     "check_root_mfa_enabled",

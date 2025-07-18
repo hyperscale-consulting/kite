@@ -45,7 +45,6 @@ from kite.checks import check_data_perimeter_confused_deputy_protection
 from kite.checks import check_data_perimeter_trusted_networks
 from kite.checks import check_data_perimeter_trusted_resources
 from kite.checks import check_delegate_iam_with_permission_boundaries
-from kite.checks import check_delegated_admins_security_services
 from kite.checks import check_deploy_log_analysis_tools_in_audit_account
 from kite.checks import check_detect_encryption_at_rest_misconfig
 from kite.checks import check_detect_missing_automated_lifecycle_management
@@ -133,6 +132,7 @@ from kite.checks import ControlTowerCheck
 from kite.checks import DataCatalogCheck
 from kite.checks import DefineAccessRequirementsCheck
 from kite.checks import DefineAndDocumentWorkloadNetworkFlowsCheck
+from kite.checks import DelegatedAdminForSecurityServices
 from kite.checks import DfdsCheck
 from kite.checks import DocumentedDataClassificationSchemeCheck
 from kite.checks import EmployUserGroupsAndAttributesCheck
@@ -202,7 +202,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_account_separation,
             check_ou_structure,
             check_management_account_workloads,
-            check_delegated_admins_security_services,
+            DelegatedAdminForSecurityServices(),
             check_trusted_delegated_admins,
         ],
     },

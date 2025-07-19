@@ -2,6 +2,7 @@ import json
 
 from kite.checks.core import CheckResult
 from kite.checks.core import CheckStatus
+from kite.conditions import has_any_account_root_principal_condition
 from kite.models import ControlPolicy
 from kite.models import Organization
 
@@ -36,32 +37,8 @@ def _is_root_actions_disallow_scp(scp: ControlPolicy, action: str) -> bool:
                     continue
 
                 condition = statement["Condition"]
-
-                # Check for ArnLike condition
-                if (
-                    "ArnLike" in condition
-                    and "aws:PrincipalArn" in condition["ArnLike"]
-                ):
-                    principal_arns = condition["ArnLike"]["aws:PrincipalArn"]
-                    if not isinstance(principal_arns, list):
-                        principal_arns = [principal_arns]
-
-                    # Check if any of the ARNs match the root user pattern
-                    if any(arn == "arn:*:iam::*:root" for arn in principal_arns):
-                        return True
-
-                # Check for StringLike condition
-                if (
-                    "StringLike" in condition
-                    and "aws:PrincipalArn" in condition["StringLike"]
-                ):
-                    principal_arns = condition["StringLike"]["aws:PrincipalArn"]
-                    if not isinstance(principal_arns, list):
-                        principal_arns = [principal_arns]
-
-                    # Check if any of the ARNs match the root user pattern
-                    if any(arn == "arn:*:iam::*:root" for arn in principal_arns):
-                        return True
+                if has_any_account_root_principal_condition(condition):
+                    return True
 
     return False
 

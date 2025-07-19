@@ -19,7 +19,7 @@ def scp_with_deny_star_arnlike_root():
                 "Effect": "Deny",
                 "Action": "*",
                 "Resource": "*",
-                "Condition": {"ArnLike": {"aws:PrincipalArn": "arn:*:iam::*:root"}},
+                "Condition": {"ArnLike": {"aws:principalarn": "arn:*:iam::*:root"}},
             }
         ],
     }

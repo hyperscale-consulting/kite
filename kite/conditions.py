@@ -38,6 +38,16 @@ def get_case_insensitive_value(
     return None
 
 
+def has_any_account_root_principal_condition(conditions: dict[str, Any]) -> bool:
+    for condition_type in ["ArnLike", "StringLike"]:
+        value = get_case_insensitive_value(
+            conditions, condition_type, "aws:PrincipalArn"
+        )
+        if value and value == "arn:*:iam::*:root":
+            return True
+    return False
+
+
 def has_not_source_org_id_condition(
     conditions: dict[str, Any],
     org_id: str,

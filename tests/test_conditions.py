@@ -1,3 +1,4 @@
+from kite.conditions import has_any_account_root_principal_condition
 from kite.conditions import has_no_source_account_condition
 from kite.conditions import has_not_source_org_id_condition
 
@@ -30,4 +31,19 @@ def test_has_no_source_account_condition():
     )
     assert not has_no_source_account_condition(
         {"Null": {"aws:SourceAccount": "true"}},
+    )
+
+
+def test_has_any_account_root_principal_condition():
+    assert has_any_account_root_principal_condition(
+        {"ArnLike": {"AWS:PrincipalArn": "arn:*:iam::*:root"}},
+    )
+    assert has_any_account_root_principal_condition(
+        {"StringLike": {"aws:PrincipalArn": "arn:*:iam::*:root"}},
+    )
+    assert not has_any_account_root_principal_condition(
+        {"StringLike": {"aws:PrincipalArn": "arn:aws:iam::*:root"}},
+    )
+    assert not has_any_account_root_principal_condition(
+        {"StringLike": {"aws:PrincipalArn": "arn:aws:iam::111111111111:root"}},
     )

@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 from botocore.exceptions import ClientError
 
-from kite.checks.require_mfa.check import check_require_mfa
+from kite.checks.require_mfa import check_require_mfa
 
 
 @pytest.fixture
@@ -16,32 +16,32 @@ def mock_session():
 
 @pytest.fixture
 def mock_get_credentials_report(mocker):
-    return mocker.patch("kite.checks.require_mfa.check.get_credentials_report")
+    return mocker.patch("kite.checks.require_mfa.get_credentials_report")
 
 
 @pytest.fixture
 def mock_get_account_ids_in_scope(mocker):
-    return mocker.patch("kite.checks.require_mfa.check.get_account_ids_in_scope")
+    return mocker.patch("kite.checks.require_mfa.get_account_ids_in_scope")
 
 
 @pytest.fixture
 def mock_get_saml_providers(mocker):
-    return mocker.patch("kite.checks.require_mfa.check.get_saml_providers")
+    return mocker.patch("kite.checks.require_mfa.get_saml_providers")
 
 
 @pytest.fixture
 def mock_get_oidc_providers(mocker):
-    return mocker.patch("kite.checks.require_mfa.check.get_oidc_providers")
+    return mocker.patch("kite.checks.require_mfa.get_oidc_providers")
 
 
 @pytest.fixture
 def mock_is_identity_center_enabled(mocker):
-    return mocker.patch("kite.checks.require_mfa.check.is_identity_center_enabled")
+    return mocker.patch("kite.checks.require_mfa.is_identity_center_enabled")
 
 
 @pytest.fixture
 def mock_manual_check(mocker):
-    return mocker.patch("kite.checks.require_mfa.check.manual_check")
+    return mocker.patch("kite.checks.require_mfa.manual_check")
 
 
 @pytest.fixture

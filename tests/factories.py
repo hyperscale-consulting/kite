@@ -31,6 +31,23 @@ def create_organization(
     return result
 
 
+def create_organization_with_workload_account(
+    mgmt_account_id="111111111111", workload_account_id="999999999999"
+):
+    create_organization(
+        mgmt_account_id=mgmt_account_id,
+        root_ou=build_ou(
+            child_ous=[
+                build_ou(
+                    accounts=[
+                        build_account(id=workload_account_id),
+                    ]
+                )
+            ]
+        ),
+    )
+
+
 def build_account(
     id="999999999999", mgmt_account_id="111111111111", name="Test account", scps=None
 ) -> Account:
@@ -228,3 +245,63 @@ def create_organization_features(management_account_id, features=None):
         account_id=management_account_id,
         features=features,
     )
+
+
+def build_dns_firewall_rule(domain_list_id):
+    return {
+        "FirewallDomainListId": domain_list_id,
+        "Name": "allow-domains",
+        "Priority": 1,
+        "Action": "ALLOW",
+        "CreatorRequestId": "AWSConsole.86.1743690407429",
+        "CreationTime": "2025-04-03T14:26:47.544157305Z",
+        "ModificationTime": "2025-05-09T12:04:54.718779748Z",
+        "FirewallDomainRedirectionAction": "TRUST_REDIRECTION_DOMAIN",
+    }
+
+
+def build_dns_firewall_rule_group_association(
+    vpc_id, rule_group_id, id="1234567890rga"
+):
+    return {
+        "Id": id,
+        "Arn": (
+            f"arn:aws:route53resolver:us-west-2:111111111111:firewall-rule-group-association/{id}",
+        ),
+        "FirewallRuleGroupId": rule_group_id,
+        "VpcId": vpc_id,
+        "Name": "rgassoc-vpc-57696132-rslvr-frg-f542b8e995bc47",
+        "Priority": 101,
+        "MutationProtection": "DISABLED",
+        "Status": "COMPLETE",
+        "StatusMessage": "Finished rule group association update",
+        "CreatorRequestId": "AWSConsole.0.1743693525195",
+        "CreationTime": "2025-04-03T15:18:45.590591275Z",
+        "ModificationTime": "2025-04-03T15:19:37.858904437Z",
+    }
+
+
+def build_dns_firewall_domain_list(id: str, name="foo_domain_list"):
+    return {
+        "Id": id,
+        "Arn": (
+            f"arn:aws:route53resolver:us-west-2:111111111111:firewall-domain-list/{id}"
+        ),
+        "Name": name,
+        "CreatorRequestId": "AWSConsole.31.1743690406950",
+        "Domains": [],
+    }
+
+
+def build_dns_firewall_rule_group(id: str, name="foo-vpc-rules", rules=None):
+    return {
+        "Id": id,
+        "Arn": (
+            f"arn:aws:route53resolver:us-west-2:111111111111:firewall-rule-group/{id}"
+        ),
+        "Name": name,
+        "OwnerId": "111111111111",
+        "CreatorRequestId": "AWSConsole.5.1743689990235",
+        "ShareStatus": "NOT_SHARED",
+        "FirewallRules": rules or [],
+    }

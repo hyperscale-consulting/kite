@@ -118,7 +118,6 @@ from kite.checks import check_use_a_kms
 from kite.checks import check_use_centralized_idp
 from kite.checks import check_use_customer_managed_keys
 from kite.checks import check_use_private_link_for_vpc_routing
-from kite.checks import check_use_route53resolver_dns_firewall
 from kite.checks import check_use_service_encryption_at_rest
 from kite.checks import check_vpc_endpoints_enforce_data_perimeter
 from kite.checks import check_vpc_flow_logs_enabled
@@ -186,6 +185,7 @@ from kite.checks import TrustedDelegatedAdminsCheck
 from kite.checks import UseHardenedImagesCheck
 from kite.checks import UseIdentityBrokerCheck
 from kite.checks import UseOfHigherLevelServicesCheck
+from kite.checks import UseRoute53ResolverDnsFirewallCheck
 from kite.checks import ValidateSoftwareIntegrityCheck
 from kite.checks import VulnerabilityScanningInCICDPipelinesCheck
 from kite.checks import WellDefinedControlObjectivesCheck
@@ -501,7 +501,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_control_network_flows_with_sgs,
             check_control_network_flows_with_route_tables,
             check_use_private_link_for_vpc_routing,
-            check_use_route53resolver_dns_firewall,
+            UseRoute53ResolverDnsFirewallCheck(),
         ],
     },
     "Implement inspection-based protection": {

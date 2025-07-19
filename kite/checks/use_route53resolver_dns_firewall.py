@@ -1,7 +1,7 @@
-"""Check if Route 53 Resolver DNS firewall is used to control DNS egress from VPCs."""
-
 from typing import Any
 
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.config import Config
 from kite.data import get_ec2_instances
 from kite.data import get_ecs_clusters
@@ -14,10 +14,53 @@ from kite.data import get_route53resolver_firewall_rule_group_associations
 from kite.data import get_route53resolver_firewall_rule_groups
 from kite.data import get_vpcs
 from kite.helpers import get_account_ids_in_scope
-from kite.helpers import manual_check
 
-CHECK_ID = "use-route53resolver-dns-firewall"
-CHECK_NAME = "Use Route 53 Resolver DNS Firewall"
+
+class UseRoute53ResolverDnsFirewallCheck:
+    def __init__(self):
+        self.check_id = "use-route53resolver-dns-firewall"
+        self.check_name = "Use Route 53 Resolver DNS Firewall"
+
+    @property
+    def question(self) -> str:
+        return (
+            "Do you use Route 53 Resolver DNS firewall to control DNS egress from VPCs?"
+        )
+
+    @property
+    def description(self) -> str:
+        return (
+            "This check helps you confirm whether Route 53 Resolver DNS firewall is "
+            "used to control DNS egress from VPCs."
+        )
+
+    def run(self) -> CheckResult:
+        analysis = _analyze_dns_firewall_usage()
+
+        # If no VPCs with resources found, automatically pass
+        if "No VPCs with resources found" in analysis:
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason=(
+                    "No VPCs with resources found. This check passes automatically "
+                    "as there are no VPCs to evaluate."
+                ),
+            )
+
+        # For VPCs with resources, require manual review
+        message = (
+            "Route 53 Resolver DNS firewall allows you to control which domains your "
+            "resources can query, helping to prevent data exfiltration and malware "
+            "communication through DNS.\n\n"
+            "Below is a summary of VPCs with resources and their DNS firewall "
+            "configurations:\n"
+        )
+        message += f"{analysis}"
+
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )
 
 
 def _get_vpcs_with_resources() -> dict[str, list[str]]:
@@ -247,63 +290,3 @@ def _analyze_dns_firewall_usage() -> str:
         analysis += f"  VPCs without DNS firewall: {total_vpcs - vpcs_with_firewall}\n"
 
     return analysis
-
-
-def _pre_check() -> tuple[bool, dict[str, Any]]:
-    """Pre-check function that automatically passes if no VPCs with resources exist."""
-    analysis = _analyze_dns_firewall_usage()
-
-    if "No VPCs with resources found" in analysis:
-        msg_parts = [
-            "No VPCs with resources found.",
-            "This check passes automatically as there are no VPCs to evaluate.",
-        ]
-        msg = " ".join(msg_parts)
-        result = {}
-        result["check_id"] = CHECK_ID
-        result["check_name"] = CHECK_NAME
-        result["status"] = "PASS"
-        details = {}
-        details["message"] = msg
-        result["details"] = details
-        return False, result
-
-    return True, {}
-
-
-def check_use_route53resolver_dns_firewall() -> dict[str, Any]:
-    """Check if Route 53 Resolver DNS firewall is used to control DNS egress from VPCs."""
-    analysis = _analyze_dns_firewall_usage()
-
-    message = (
-        "This check helps you confirm whether Route 53 Resolver DNS firewall is used "
-        "to control DNS egress from VPCs.\n\n"
-        "Route 53 Resolver DNS firewall allows you to control which domains your "
-        "resources can query, helping to prevent data exfiltration and malware "
-        "communication through DNS.\n\n"
-        "Below is a summary of VPCs with resources and their DNS firewall "
-        "configurations:\n"
-    )
-    message += f"{analysis}"
-
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=(
-            "Do you use Route 53 Resolver DNS firewall to control DNS egress from VPCs?"
-        ),
-        pass_message=(
-            "Route 53 Resolver DNS firewall is used to control DNS egress from VPCs."
-        ),
-        fail_message=(
-            "Route 53 Resolver DNS firewall should be used to control DNS egress "
-            "from VPCs where appropriate."
-        ),
-        default=True,
-        pre_check=_pre_check,
-    )
-
-
-check_use_route53resolver_dns_firewall._CHECK_ID = CHECK_ID
-check_use_route53resolver_dns_firewall._CHECK_NAME = CHECK_NAME

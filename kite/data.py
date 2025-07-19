@@ -234,7 +234,7 @@ def get_identity_center_instances(
 
 
 def save_ec2_instances(
-    account_id: str, region: str, instances: list[dict[str, object]]
+    account_id: str, region: str, instances: list[dict[str, Any]]
 ) -> None:
     """Save EC2 instances for an account.
 

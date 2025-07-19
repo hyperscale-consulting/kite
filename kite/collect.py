@@ -361,17 +361,28 @@ _mgmt_account_collector_config = [
 ]
 
 
+class RoleAssumptionException(Exception):
+    pass
+
+
 def collect_data() -> None:
-    """
-    Collect all AWS data in parallel.
-    """
-    console.print("\n[bold blue]Gathering AWS data...[/]")
+    console.print("[bold blue]Gathering AWS data...[/]")
 
     collectors = []
 
     config = Config.get()
     if config.management_account_id:
-        session = assume_role(config.management_account_id)
+        try:
+            session = assume_role(config.management_account_id)
+        except ClientError as e:
+            if e.response["Error"]["Code"] == "AccessDenied":
+                raise RoleAssumptionException(
+                    f"Unable to assume role {config.role_name} in management account "
+                    f"({config.management_account_id}). Please review IAM policies and "
+                    "check that permission is granted to assume the role, "
+                    "that the external ID matches, and that the assessment end date is "
+                    "not in the past."
+                ) from None
         org_collector = Collector(
             session,
             config.management_account_id,

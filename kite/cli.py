@@ -9,6 +9,7 @@ from datetime import datetime
 
 import click
 import yaml
+from botocore.exceptions import TokenRetrievalError
 from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Confirm
@@ -22,6 +23,7 @@ from kite.checks import CheckStatus
 from kite.checks import make_finding
 from kite.cloudfront import get_distributions_by_web_acl
 from kite.collect import collect_data
+from kite.collect import RoleAssumptionException
 from kite.config import Config
 from kite.data import save_collection_metadata
 from kite.data import verify_collection_status
@@ -654,11 +656,16 @@ def collect(config: str):
         shutil.rmtree(Config.get().data_dir)
     os.makedirs(Config.get().data_dir, exist_ok=True)
 
-    collect_data()
-
-    # Save collection metadata
-    save_collection_metadata()
-    console.print("[green]✓ Saved collection metadata[/green]")
+    try:
+        collect_data()
+        save_collection_metadata()
+        console.print("[green]✓ Saved collection metadata[/green]")
+    except TokenRetrievalError:
+        raise click.ClickException(
+            "Unable to retrieve token from sso - try running `aws sso login`"
+        ) from None
+    except RoleAssumptionException as e:
+        raise click.ClickException(str(e)) from e
 
 
 @main.command()

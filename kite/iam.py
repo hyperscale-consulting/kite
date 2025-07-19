@@ -45,15 +45,9 @@ def fetch_credentials_report(session) -> dict[str, Any]:
                     # Wait 5 seconds before trying again
                     time.sleep(5)
                 else:
-                    raise ClientError(
-                        {
-                            "Error": {
-                                "Code": "Timeout",
-                                "Message": "Report generation timed out",
-                            }
-                        },
-                        "get_credential_report",
-                    )
+                    raise TimeoutError(
+                        "Credential report generation timed out"
+                    ) from None
             else:
                 raise
 

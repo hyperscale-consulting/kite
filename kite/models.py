@@ -98,7 +98,6 @@ class OrganizationalUnit:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "OrganizationalUnit":
-        """Create an OrganizationalUnit from a dictionary."""
         accounts = [Account.from_dict(acc) for acc in data.pop("accounts", [])]
         child_ous = [cls.from_dict(ou) for ou in data.pop("child_ous", [])]
         scps = [ControlPolicy.from_dict(scp) for scp in data.pop("scps", [])]
@@ -117,8 +116,6 @@ class OrganizationalUnit:
         )
 
     def get_accounts(self) -> list[Account]:
-        """Get all accounts in the organizational unit and its child organizational
-        units."""
         accounts = self.accounts
         for child_ou in self.child_ous:
             accounts.extend(child_ou.get_accounts())
@@ -129,7 +126,7 @@ class OrganizationalUnit:
 class Organization:
     """Represents an AWS organization with its structure."""
 
-    id: str  # The organization ID (e.g., o-1234567890)
+    id: str
     master_account_id: str
     arn: str
     feature_set: str
@@ -137,10 +134,8 @@ class Organization:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "Organization":
-        """Create an Organization from a dictionary."""
         root = OrganizationalUnit.from_dict(data.pop("root"))
         return cls(**data, root=root)
 
     def get_accounts(self) -> list[Account]:
-        """Get all accounts in the organization."""
         return self.root.get_accounts()

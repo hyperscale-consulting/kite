@@ -118,7 +118,6 @@ from kite.checks import check_tag_data_with_sensitivity_level
 from kite.checks import check_use_a_kms
 from kite.checks import check_use_centralized_idp
 from kite.checks import check_use_customer_managed_keys
-from kite.checks import check_use_of_higher_level_services
 from kite.checks import check_use_private_link_for_vpc_routing
 from kite.checks import check_use_route53resolver_dns_firewall
 from kite.checks import check_use_service_encryption_at_rest
@@ -186,6 +185,7 @@ from kite.checks import TrainForApplicationSecurityCheck
 from kite.checks import TrustedDelegatedAdminsCheck
 from kite.checks import UseHardenedImagesCheck
 from kite.checks import UseIdentityBrokerCheck
+from kite.checks import UseOfHigherLevelServicesCheck
 from kite.checks import ValidateSoftwareIntegrityCheck
 from kite.checks import VulnerabilityScanningInCICDPipelinesCheck
 from kite.checks import WellDefinedControlObjectivesCheck
@@ -242,7 +242,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Reducing Security Management Scope": {
         "description": "Checks related to reducing the scope of security management",
         "checks": [
-            check_use_of_higher_level_services,
+            UseOfHigherLevelServicesCheck(),
             AwsControlDocumentationCheck(),
             AwsServiceEvaluationCheck(),
         ],

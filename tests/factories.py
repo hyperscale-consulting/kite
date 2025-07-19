@@ -33,7 +33,7 @@ def create_organization(
 
 def build_account(
     id="999999999999", mgmt_account_id="111111111111", name="Test account", scps=None
-):
+) -> Account:
     return Account(
         id=id,
         name=name,
@@ -51,10 +51,10 @@ def build_ou(
     ou_id="r-fas3",
     organization_id="o-123456789012",
     name="Root",
-    accounts=None,
-    child_ous=None,
+    accounts: list[Account] | None = None,
+    child_ous: list[OrganizationalUnit] | None = None,
     scps=None,
-):
+) -> OrganizationalUnit:
     accounts = accounts or []
     child_ous = child_ous or []
     scps = scps or [build_full_access_scp()]

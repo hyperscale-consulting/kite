@@ -41,6 +41,16 @@ def test_has_any_account_root_principal_condition():
     assert has_any_account_root_principal_condition(
         {"StringLike": {"aws:PrincipalArn": "arn:*:iam::*:root"}},
     )
+    assert has_any_account_root_principal_condition(
+        {
+            "StringLike": {
+                "aws:PrincipalArn": [
+                    "arn:*:iam::*:root",
+                    "arn:aws:iam::111111111111:bob",
+                ]
+            }
+        },
+    )
     assert not has_any_account_root_principal_condition(
         {"StringLike": {"aws:PrincipalArn": "arn:aws:iam::*:root"}},
     )

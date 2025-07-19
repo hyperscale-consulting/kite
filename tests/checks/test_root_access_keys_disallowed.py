@@ -11,7 +11,7 @@ from tests.factories import create_organization
 mgmt_account_id = "123456789012"
 
 
-def scp_with_deny_star_arnlike_root():
+def scp_with_deny_create_access_key_arnlike_root():
     return {
         "Version": "2012-10-17",
         "Statement": [
@@ -25,7 +25,35 @@ def scp_with_deny_star_arnlike_root():
     }
 
 
-def scp_with_deny_star_stringlike_root():
+def scp_with_deny_star_arnlike_root():
+    return {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Deny",
+                "Action": "*",
+                "Resource": "*",
+                "Condition": {"ArnLike": {"aws:PrincipalArn": "arn:*:iam::*:root"}},
+            }
+        ],
+    }
+
+
+def scp_with_deny_multi_action_arnlike_root():
+    return {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Deny",
+                "Action": ["iam:CreateAccessKey", "iam:CreateRole"],
+                "Resource": "*",
+                "Condition": {"ArnLike": {"aws:PrincipalArn": "arn:*:iam::*:root"}},
+            }
+        ],
+    }
+
+
+def scp_with_deny_create_access_key_stringlike_root():
     return {
         "Version": "2012-10-17",
         "Statement": [
@@ -56,7 +84,9 @@ def test_check_no_org(check):
     "scp_content",
     [
         scp_with_deny_star_arnlike_root(),
-        scp_with_deny_star_stringlike_root(),
+        scp_with_deny_create_access_key_arnlike_root(),
+        scp_with_deny_multi_action_arnlike_root(),
+        scp_with_deny_create_access_key_stringlike_root(),
     ],
 )
 @config_for_org(mgmt_account_id=mgmt_account_id)

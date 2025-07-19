@@ -230,7 +230,7 @@ from kite.checks.restricted_role_for_secrets_access import (
 from kite.checks.review_pipeline_permissions_regularly import (
     ReviewPipelinePermissionsRegularlyCheck,
 )
-from kite.checks.root_access_keys_disallowed import check_root_access_keys_disallowed
+from kite.checks.root_access_keys_disallowed import RootAccessKeysDisallowedCheck
 from kite.checks.root_access_testing import RootAccessTestingCheck
 from kite.checks.root_account_monitoring import RootAccountMonitoringCheck
 from kite.checks.root_actions_disallowed import RootActionsDisallowedCheck
@@ -339,7 +339,7 @@ __all__ = [
     "TrustedDelegatedAdminsCheck",
     "check_region_deny_scp",
     "check_root_mfa_enabled",
-    "check_root_access_keys_disallowed",
+    "RootAccessKeysDisallowedCheck",
     "RootActionsDisallowedCheck",
     "UseOfHigherLevelServicesCheck",
     "IacTemplatesCheck",

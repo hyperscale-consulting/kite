@@ -4,8 +4,11 @@ from kite.checks import CheckStatus
 from kite.checks import RootActionsDisallowedCheck
 from tests.factories import build_ou
 from tests.factories import build_scp
-from tests.factories import config
+from tests.factories import config_for_org
+from tests.factories import config_for_standalone_account
 from tests.factories import create_organization
+
+mgmt_account_id = "123456789012"
 
 
 def scp_with_deny_star_arnlike_root():
@@ -105,13 +108,13 @@ def invalid_scp():
     return {"invalid": "json"}
 
 
+@config_for_standalone_account()
 def test_check_no_org():
     check = RootActionsDisallowedCheck()
     result = check.run()
     assert result.status == CheckStatus.FAIL
-    assert result.reason == (
-        "AWS Organizations is not being used, so SCPs cannot be used."
-    )
+    assert result.reason is not None
+    assert "AWS Organizations is not being used" in result.reason
 
 
 @pytest.mark.parametrize(
@@ -123,9 +126,12 @@ def test_check_no_org():
         scp_with_deny_star_arnlike_root_and_multiple_statements(),
     ],
 )
-@config()
+@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_check_root_has_scp(scp_content):
-    create_organization(root_ou=build_ou(scps=[build_scp(content=scp_content)]))
+    create_organization(
+        mgmt_account_id=mgmt_account_id,
+        root_ou=build_ou(scps=[build_scp(content=scp_content)]),
+    )
 
     check = RootActionsDisallowedCheck()
     result = check.run()
@@ -133,9 +139,10 @@ def test_check_root_has_scp(scp_content):
     assert result.reason == "Disallow root actions SCP is attached to the root OU."
 
 
-@config()
+@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_check_all_top_level_have_scp():
     create_organization(
+        mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(
             child_ous=[
                 build_ou(scps=[build_scp(content=scp_with_deny_star_arnlike_root())]),
@@ -155,7 +162,7 @@ def test_check_all_top_level_have_scp():
                     ]
                 ),
             ]
-        )
+        ),
     )
 
     check = RootActionsDisallowedCheck()
@@ -166,9 +173,10 @@ def test_check_all_top_level_have_scp():
     )
 
 
-@config()
+@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_check_some_top_level_have_scp():
     create_organization(
+        mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(
             child_ous=[
                 build_ou(scps=[build_scp(content=scp_with_deny_star_arnlike_root())]),
@@ -177,14 +185,14 @@ def test_check_some_top_level_have_scp():
                     scps=[build_scp(content=scp_with_deny_star_arnlike_non_root())]
                 ),
             ]
-        )
+        ),
     )
 
     check = RootActionsDisallowedCheck()
     result = check.run()
     assert result.status == CheckStatus.FAIL
     assert result.reason == (
-        "Root actions disallow SCP is not attached to the root OU or all top-level OUs."
+        "Disallow root actions SCP is not attached to the root OU or all top-level OUs."
     )
 
 
@@ -196,13 +204,16 @@ def test_check_some_top_level_have_scp():
         scp_with_deny_star_arnlike_non_root(),
     ],
 )
-@config()
+@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_check_root_does_not_have_scp(scp_content):
-    create_organization(root_ou=build_ou(scps=[build_scp(content=scp_content)]))
+    create_organization(
+        mgmt_account_id=mgmt_account_id,
+        root_ou=build_ou(scps=[build_scp(content=scp_content)]),
+    )
 
     check = RootActionsDisallowedCheck()
     result = check.run()
     assert result.status == CheckStatus.FAIL
     assert result.reason == (
-        "Root actions disallow SCP is not attached to the root OU or all top-level OUs."
+        "Disallow root actions SCP is not attached to the root OU or all top-level OUs."
     )

@@ -2,11 +2,11 @@
 
 import json
 
+from kite.conditions import has_no_source_account_condition
+from kite.conditions import has_not_source_org_id_condition
+from kite.conditions import has_principal_is_aws_service_condition
 from kite.data import get_organization
 from kite.models import ControlPolicy
-from kite.utils.aws_context_keys import has_no_source_account_condition
-from kite.utils.aws_context_keys import has_not_source_org_id_condition
-from kite.utils.aws_context_keys import has_principal_is_aws_service_condition
 
 CHECK_ID = "data-perimeter-confused-deputy-protection"
 CHECK_NAME = "Data Perimeter Confused Deputy Protection"

@@ -3,10 +3,10 @@
 import json
 from typing import Any
 
+from kite.conditions import has_not_principal_arn_condition
+from kite.conditions import has_not_source_ip_condition
+from kite.conditions import has_not_source_vpc_condition
 from kite.data import get_organization
-from kite.utils.aws_context_keys import has_not_principal_arn_condition
-from kite.utils.aws_context_keys import has_not_source_ip_condition
-from kite.utils.aws_context_keys import has_not_source_vpc_condition
 
 CHECK_ID = "data-perimeter-trusted-networks"
 CHECK_NAME = "Data Perimeter Enforces Trusted Networks"

@@ -3,9 +3,9 @@
 import json
 from typing import Any
 
+from kite.conditions import has_confused_deputy_protection
 from kite.data import get_bucket_metadata
 from kite.helpers import get_account_ids_in_scope
-from kite.utils.aws_context_keys import has_confused_deputy_protection
 
 # Define check ID and name
 CHECK_ID = "s3-confused-deputy-protection"

@@ -2,10 +2,10 @@
 
 import json
 
+from kite.conditions import has_not_principal_org_id_condition
+from kite.conditions import has_principal_is_not_aws_service_condition
 from kite.data import get_organization
 from kite.models import ControlPolicy
-from kite.utils.aws_context_keys import has_not_principal_org_id_condition
-from kite.utils.aws_context_keys import has_principal_is_not_aws_service_condition
 
 CHECK_ID = "data-perimeter-trusted-identities"
 CHECK_NAME = "Data Perimeter Enforces Trusted Identities"

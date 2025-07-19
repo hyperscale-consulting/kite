@@ -2,10 +2,10 @@
 
 from typing import Any
 
+from kite.conditions import has_confused_deputy_protection
 from kite.config import Config
 from kite.data import get_kms_keys
 from kite.helpers import get_account_ids_in_scope
-from kite.utils.aws_context_keys import has_confused_deputy_protection
 
 # Define check ID and name
 CHECK_ID = "kms-confused-deputy-protection"

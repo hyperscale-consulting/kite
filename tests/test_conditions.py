@@ -1,5 +1,5 @@
-from kite.utils.aws_context_keys import has_no_source_account_condition
-from kite.utils.aws_context_keys import has_not_source_org_id_condition
+from kite.conditions import has_no_source_account_condition
+from kite.conditions import has_not_source_org_id_condition
 
 
 def test_has_not_source_org_id_condition():

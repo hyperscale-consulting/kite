@@ -3,12 +3,12 @@
 import json
 from typing import Any
 
+from kite.conditions import has_principal_org_id_condition
+from kite.conditions import has_resource_org_id_condition
 from kite.config import Config
 from kite.data import get_organization
 from kite.data import get_vpc_endpoints
 from kite.helpers import get_account_ids_in_scope
-from kite.utils.aws_context_keys import has_principal_org_id_condition
-from kite.utils.aws_context_keys import has_resource_org_id_condition
 
 CHECK_ID = "vpc-endpoints-enforce-data-perimeter"
 CHECK_NAME = "VPC Endpoints Enforce Data Perimeter Controls"

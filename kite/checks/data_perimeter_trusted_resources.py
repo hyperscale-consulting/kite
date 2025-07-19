@@ -3,9 +3,9 @@
 import json
 from typing import Any
 
+from kite.conditions import has_not_resource_org_id_condition
 from kite.data import get_organization
 from kite.models import ControlPolicy
-from kite.utils.aws_context_keys import has_not_resource_org_id_condition
 
 CHECK_ID = "data-perimeter-trusted-resources"
 CHECK_NAME = "Data Perimeter Enforces Trusted Resources"

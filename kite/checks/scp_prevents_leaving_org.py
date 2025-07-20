@@ -12,7 +12,7 @@ class ScpPreventsLeavingOrgCheck:
 
     @property
     def question(self) -> str:
-        return "Is there an effective SCP that prevents leaving the organization?"
+        return ""  # fully automatic check
 
     @property
     def description(self) -> str:

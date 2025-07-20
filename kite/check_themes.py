@@ -89,7 +89,6 @@ from kite.checks import check_rds_logging_enabled
 from kite.checks import check_region_deny_scp
 from kite.checks import check_repeatable_auditable_setup_for_3rd_party_access
 from kite.checks import check_require_mfa
-from kite.checks import check_restricted_role_for_secrets_access
 from kite.checks import check_root_credentials_management_enabled
 from kite.checks import check_root_mfa_enabled
 from kite.checks import check_root_user_usage
@@ -160,6 +159,7 @@ from kite.checks import RegularlyReviewPermissionsCheck
 from kite.checks import RemediateVulnerabilitiesCheck
 from kite.checks import ResolverQueryLogsEnabledCheck
 from kite.checks import RestoreTestingCheck
+from kite.checks import RestrictedRoleForSecretsAccessCheck
 from kite.checks import ReviewPipelinePermissionsRegularlyCheck
 from kite.checks import RootAccessKeysDisallowedCheck
 from kite.checks import RootAccessTestingCheck
@@ -300,7 +300,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             PreventAndDetectSecretsCheck(),
             SecureSecretsStorageCheck(),
             MonitorSecretsCheck(),
-            check_restricted_role_for_secrets_access,
+            RestrictedRoleForSecretsAccessCheck(),
         ],
     },
     "Rely on a centralized identity provider": {

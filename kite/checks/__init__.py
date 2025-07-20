@@ -225,7 +225,7 @@ from kite.checks.require_mfa import check_require_mfa
 from kite.checks.resolver_query_logs_enabled import ResolverQueryLogsEnabledCheck
 from kite.checks.restore_testing import RestoreTestingCheck
 from kite.checks.restricted_role_for_secrets_access import (
-    check_restricted_role_for_secrets_access,
+    RestrictedRoleForSecretsAccessCheck,
 )
 from kite.checks.review_pipeline_permissions_regularly import (
     ReviewPipelinePermissionsRegularlyCheck,
@@ -367,7 +367,7 @@ __all__ = [
     "check_no_access_keys",
     "check_no_iam_user_access",
     "SecureSecretsStorageCheck",
-    "check_restricted_role_for_secrets_access",
+    "RestrictedRoleForSecretsAccessCheck",
     "check_use_centralized_idp",
     "check_hr_system_integration",
     "check_credential_rotation",

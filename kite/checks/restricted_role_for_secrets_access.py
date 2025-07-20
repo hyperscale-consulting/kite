@@ -1,128 +1,130 @@
-"""Check for restricted role access to secrets."""
-
-from typing import Any
-
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.config import Config
 from kite.data import get_role_by_arn
 from kite.data import get_secrets
 from kite.helpers import get_account_ids_in_scope
-from kite.helpers import manual_check
-
-CHECK_ID = "restricted-role-for-secrets-access"
-CHECK_NAME = "Restricted Role for Secrets Access"
 
 
-def get_trust_policy(role_arn):
-    role = get_role_by_arn(role_arn)
-    if role:
-        return role["AssumeRolePolicyDocument"]
-    return None
+class RestrictedRoleForSecretsAccessCheck:
+    def __init__(self):
+        self.check_id = "restricted-role-for-secrets-access"
+        self.check_name = "Restricted Role for Secrets Access"
 
+    @property
+    def question(self) -> str:
+        return (
+            "Is human exposure to secrets restricted to a dedicated role that can "
+            "only be assumed by a small set of operational users?"
+        )
 
-def check_restricted_role_for_secrets_access() -> dict[str, Any]:
-    """
-    Check if secrets access is restricted to specific roles with limited access.
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that secrets access is restricted to a dedicated "
+            "role that can only be assumed by a small set of operational users."
+        )
 
-    This check:
-    1. Lists secrets without resource policies or deny statements
-    2. Lists principals from deny conditions in resource policies
+    def run(self) -> CheckResult:
+        account_ids = get_account_ids_in_scope()
+        config = Config.get()
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-                - secrets_without_policy: List of secrets without resource policies
-                - secrets_without_deny: List of secrets without role-based deny statements
-                - principals_found: List of principals from deny conditions
-    """
-    account_ids = get_account_ids_in_scope()
-    config = Config.get()
+        secrets_without_policy = []
+        secrets_without_deny = []
+        principals_found = {}
 
-    secrets_without_policy = []
-    secrets_without_deny = []
-    principals_found = {}
+        for account_id in account_ids:
+            for region in config.active_regions:
+                secrets = get_secrets(account_id, region)
 
-    for account_id in account_ids:
-        for region in config.active_regions:
-            secrets = get_secrets(account_id, region)
+                for secret in secrets:
+                    if not secret.get("ResourcePolicy", {}):
+                        secrets_without_policy.append(
+                            {
+                                "account_id": account_id,
+                                "region": region,
+                                "secret_name": secret["Name"],
+                                "arn": secret["ARN"],
+                            }
+                        )
+                        continue
 
-            for secret in secrets:
-                if not secret.get("ResourcePolicy", {}):
-                    secrets_without_policy.append(
-                        {
-                            "account_id": account_id,
-                            "region": region,
-                            "secret_name": secret["Name"],
-                            "arn": secret["ARN"],
-                        }
-                    )
-                    continue
+                    # Parse the resource policy
+                    policy = secret.get("ResourcePolicy", {})
 
-                # Parse the resource policy
-                policy = secret.get("ResourcePolicy", {})
+                    # Check for deny statements with principal conditions
+                    has_principal_deny = False
+                    for statement in policy.get("Statement", []):
+                        if (
+                            statement.get("Effect") == "Deny"
+                            and statement.get("Principal") == "*"
+                        ):
+                            condition = statement.get("Condition", {})
+                            for key in [
+                                "StringNotEquals",
+                                "ArnNotEquals",
+                                "StringNotLike",
+                                "ArnNotLike",
+                            ]:
+                                if key in condition:
+                                    for value in condition[key].values():
+                                        if isinstance(value, list):
+                                            for v in value:
+                                                principals_found[v] = get_trust_policy(
+                                                    v
+                                                )
+                                        elif isinstance(value, str):
+                                            principals_found[value] = get_trust_policy(
+                                                value
+                                            )
+                                    has_principal_deny = True
 
-                # Check for deny statements with principal conditions
-                has_principal_deny = False
-                for statement in policy.get("Statement", []):
-                    if (
-                        statement.get("Effect") == "Deny"
-                        and statement.get("Principal") == "*"
-                    ):
-                        condition = statement.get("Condition", {})
-                        for key in [
-                            "StringNotEquals",
-                            "ArnNotEquals",
-                            "StringNotLike",
-                            "ArnNotLike",
-                        ]:
-                            if key in condition:
-                                for value in condition[key].values():
-                                    if isinstance(value, list):
-                                        for v in value:
-                                            principals_found[v] = get_trust_policy(v)
-                                    elif isinstance(value, str):
-                                        principals_found[value] = get_trust_policy(
-                                            value
-                                        )
-                                has_principal_deny = True
+                    if not has_principal_deny:
+                        secrets_without_deny.append(
+                            {
+                                "account_id": account_id,
+                                "region": region,
+                                "secret_name": secret["Name"],
+                                "arn": secret["ARN"],
+                            }
+                        )
 
-                if not has_principal_deny:
-                    secrets_without_deny.append(
-                        {
-                            "account_id": account_id,
-                            "region": region,
-                            "secret_name": secret["Name"],
-                            "arn": secret["ARN"],
-                        }
-                    )
+        # If no secrets found, automatically pass
+        if (
+            not secrets_without_policy
+            and not secrets_without_deny
+            and not principals_found
+        ):
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason="No secrets found in in-scope accounts.",
+            )
 
-    message = (
-        "This check assesses whether secrets access is restricted to a dedicated "
-        "role that can only be assumed by a small set of operational users.\n\n"
-        "To do this, secrets should have resource policies that look something like this:\n\n"
-        "{\n"
-        '  "Statement": [\n'
-        "    {\n"
-        '      "Effect": "Allow",\n'
-        '      "Principal": {"AWS": "arn:aws:iam::123456789012:role/SecretAdmin"}\n'
-        "    },\n"
-        "    {\n"
-        '      "Effect": "Deny",\n'
-        '      "Principal": "*",\n'
-        '      "Action": "*",\n'
-        '      "Condition": {\n'
-        '        "StringNotEquals": {\n'
-        '        "  aws:PrincipalArn": "arn:aws:iam::123456789012:role/SecretAdmin"\n'
-        "        }\n"
-        "    }\n"
-        "  ]\n"
-        "}\n\n"
-    )
+        # Build message for manual review
+        message = (
+            "Please confirm whether secrets access is restricted to a dedicated "
+            "role that can only be assumed by a small set of operational users.\n\n"
+            "Secrets should have resource policies that look something like this:\n\n"
+            "{\n"
+            '  "Statement": [\n'
+            "    {\n"
+            '      "Effect": "Allow",\n'
+            '      "Principal": {"AWS": "arn:aws:iam::123456789012:role/SecretAdmin"}\n'
+            "    },\n"
+            "    {\n"
+            '      "Effect": "Deny",\n'
+            '      "Principal": "*",\n'
+            '      "Action": "*",\n'
+            '      "Condition": {\n'
+            '        "StringNotEquals": {\n'
+            '        "  aws:PrincipalArn": "arn:aws:iam::123456789012:role/SecretAdmin"'
+            "\n"
+            "        }\n"
+            "    }\n"
+            "  ]\n"
+            "}\n\n"
+        )
 
-    if secrets_without_policy or secrets_without_deny:
         if secrets_without_policy:
             message += "Secrets without resource policies:\n"
             for secret in secrets_without_policy:
@@ -141,56 +143,31 @@ def check_restricted_role_for_secrets_access() -> dict[str, Any]:
                 )
             message += "\n"
 
-    if principals_found:
-        message += "Principals found in deny exception conditions:\n\n"
-        for principal, trust_policy in principals_found.items():
-            message += f"- {principal}\n"
-            if trust_policy:
-                message += "  Principals allowed to assume this role:\n"
-                message += "\n".join(
-                    [
-                        f"  - {s['Principal']}"
-                        for s in trust_policy.get("Statement", [])
-                        if s.get("Effect") == "Allow"
-                    ]
-                )
-            else:
-                message += "  No trust policy found.\n"
-            message += "\n"
+        if principals_found:
+            message += "Principals found in deny exception conditions:\n\n"
+            for principal, trust_policy in principals_found.items():
+                message += f"- {principal}\n"
+                if trust_policy:
+                    message += "  Principals allowed to assume this role:\n"
+                    message += "\n".join(
+                        [
+                            f"  - {s['Principal']}"
+                            for s in trust_policy.get("Statement", [])
+                            if s.get("Effect") == "Allow"
+                        ]
+                    )
+                else:
+                    message += "  No trust policy found.\n"
+                message += "\n"
 
-    if not secrets_without_policy and not secrets_without_deny and not principals_found:
-        return dict(
-            check_id=CHECK_ID,
-            check_name=CHECK_NAME,
-            status="PASS",
-            details=dict(message="No secrets found in in-scope accounts."),
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
         )
 
-    result = manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=(
-            "Is human exposure to secrets restricted to a dedicated role that can "
-            "only be assumed by a small set of operational users?"
-        ),
-        pass_message=(
-            "Secret access restrictions are appropriate for this environment."
-        ),
-        fail_message=(
-            "Secret access should be restricted to specific roles with limited access."
-        ),
-        default=False,
-    )
 
-    # Add the details to the result
-    if "details" in result:
-        result["details"]["secrets_without_policy"] = secrets_without_policy
-        result["details"]["secrets_without_deny"] = secrets_without_deny
-        result["details"]["principals_found"] = list(principals_found)
-
-    return result
-
-
-check_restricted_role_for_secrets_access._CHECK_ID = CHECK_ID
-check_restricted_role_for_secrets_access._CHECK_NAME = CHECK_NAME
+def get_trust_policy(role_arn):
+    role = get_role_by_arn(role_arn)
+    if role:
+        return role["AssumeRolePolicyDocument"]
+    return None

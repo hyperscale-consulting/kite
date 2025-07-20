@@ -1,22 +1,19 @@
-from unittest.mock import patch
-
 import pytest
 
+from kite.checks.core import CheckStatus
 from kite.checks.restricted_role_for_secrets_access import (
-    check_restricted_role_for_secrets_access,
+    RestrictedRoleForSecretsAccessCheck,
 )
 from kite.data import save_roles
 from kite.data import save_secrets
 
 
 @pytest.fixture
-def mock_manual_check():
-    with patch("kite.checks.restricted_role_for_secrets_access.manual_check") as mock:
-        yield mock
+def check():
+    return RestrictedRoleForSecretsAccessCheck()
 
 
-def test_restricted_role(workload_account_id, organization, mock_manual_check):
-    mock_manual_check.return_value = {"status": "PASS"}
+def test_restricted_role(workload_account_id, organization, check):
     secret = {
         "ResourcePolicy": {
             "Statement": [
@@ -32,7 +29,9 @@ def test_restricted_role(workload_account_id, organization, mock_manual_check):
                     "Action": "*",
                     "Condition": {
                         "StringNotEquals": {
-                            "aws:PrincipalArn": f"arn:aws:iam::{workload_account_id}:role/SecretAdmin"
+                            "aws:PrincipalArn": (
+                                f"arn:aws:iam::{workload_account_id}:role/SecretAdmin"
+                            )
                         }
                     },
                 },
@@ -55,51 +54,48 @@ def test_restricted_role(workload_account_id, organization, mock_manual_check):
     }
     save_roles(workload_account_id, [role])
 
-    results = check_restricted_role_for_secrets_access()
-    assert results["status"] == "PASS"
-    mock_manual_check.assert_called_once()
-    _, kwargs = mock_manual_check.call_args
-    assert kwargs["check_id"] == "restricted-role-for-secrets-access"
-    assert kwargs["check_name"] == "Restricted Role for Secrets Access"
-    assert (
-        "Principals found in deny exception conditions:\n\n"
-        f"- arn:aws:iam::{workload_account_id}:role/SecretAdmin\n"
-        "  Principals allowed to assume this role:\n"
-        "  - {'AWS': 'arn:aws:iam::123456789012:user/Bob'}\n"
-    ) in kwargs.get("message", "")
+    result = check.run()
+
+    assert check.check_id == "restricted-role-for-secrets-access"
+    assert check.check_name == "Restricted Role for Secrets Access"
+    assert result.status == CheckStatus.MANUAL
+    assert result.context is not None
+    assert (f"arn:aws:iam::{workload_account_id}:role/SecretAdmin") in result.context
+    assert "arn:aws:iam::123456789012:user/Bob" in result.context
 
 
-def test_no_secrets(organization, mock_manual_check):
-    results = check_restricted_role_for_secrets_access()
-    assert results["status"] == "PASS"
-    mock_manual_check.assert_not_called()  # should pass the check automatically
+def test_no_secrets(organization, check):
+    result = check.run()
+
+    assert result.status == CheckStatus.PASS
+    assert result.reason is not None
+    assert "No secrets found" in result.reason
 
 
-def test_no_resource_policy(workload_account_id, organization, mock_manual_check):
-    mock_manual_check.return_value = {"status": "FAIL"}
+def test_no_resource_policy(workload_account_id, organization, check):
     secret = {
         "Name": "SecretWithNoResourcePolicy",
-        "ARN": f"arn:aws:secretsmanager:us-east-1:{workload_account_id}:secret:SecretWithNoResourcePolicy",
+        "ARN": (
+            f"arn:aws:secretsmanager:us-east-1:{workload_account_id}:"
+            "secret:SecretWithNoResourcePolicy"
+        ),
     }
     save_secrets(workload_account_id, "us-east-1", [secret])
 
-    results = check_restricted_role_for_secrets_access()
-    assert results["status"] == "FAIL"
-    mock_manual_check.assert_called_once()
-    _, kwargs = mock_manual_check.call_args
-    assert kwargs["check_id"] == "restricted-role-for-secrets-access"
-    assert kwargs["check_name"] == "Restricted Role for Secrets Access"
-    assert (
-        "Secrets without resource policies:\n"
-        f"- SecretWithNoResourcePolicy in account {workload_account_id} region us-east-1\n"
-    ) in kwargs.get("message", "")
+    result = check.run()
+
+    assert result.status == CheckStatus.MANUAL
+    assert result.context is not None
+    assert "SecretWithNoResourcePolicy" in result.context
 
 
-def test_no_deny_statements(workload_account_id, organization, mock_manual_check):
-    mock_manual_check.return_value = {"status": "FAIL"}
+def test_no_deny_statements(workload_account_id, organization, check):
     secret = {
         "Name": "SecretWithNoDenyStatements",
-        "ARN": f"arn:aws:secretsmanager:us-east-1:{workload_account_id}:secret:SecretWithNoDenyStatements",
+        "ARN": (
+            f"arn:aws:secretsmanager:us-east-1:{workload_account_id}:"
+            "secret:SecretWithNoDenyStatements"
+        ),
         "ResourcePolicy": {
             "Statement": [
                 {
@@ -113,13 +109,8 @@ def test_no_deny_statements(workload_account_id, organization, mock_manual_check
     }
     save_secrets(workload_account_id, "us-east-1", [secret])
 
-    results = check_restricted_role_for_secrets_access()
-    assert results["status"] == "FAIL"
-    mock_manual_check.assert_called_once()
-    _, kwargs = mock_manual_check.call_args
-    assert kwargs["check_id"] == "restricted-role-for-secrets-access"
-    assert kwargs["check_name"] == "Restricted Role for Secrets Access"
-    assert (
-        "Secrets without deny statements:\n"
-        f"- SecretWithNoDenyStatements in account {workload_account_id} region us-east-1\n"
-    ) in kwargs.get("message", "")
+    result = check.run()
+
+    assert result.status == CheckStatus.MANUAL
+    assert result.context is not None
+    assert "SecretWithNoDenyStatements" in result.context

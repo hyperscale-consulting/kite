@@ -114,10 +114,10 @@ class Config:
             )
             return cls._instance
 
-        except FileNotFoundError:
-            raise click.ClickException(f"Config file not found: {config_path}")
+        except FileNotFoundError as e:
+            raise click.ClickException(f"Config file not found: {config_path}") from e
         except yaml.YAMLError as e:
-            raise click.ClickException(f"Error parsing config file: {str(e)}")
+            raise click.ClickException(f"Error parsing config file: {str(e)}") from e
 
     def save(self, config_path: str) -> None:
         """Save the current configuration to a YAML file.
@@ -145,6 +145,5 @@ class Config:
 
             with open(config_path, "w") as f:
                 yaml.dump(config_dict, f, default_flow_style=False)
-                return f
         except Exception as e:
-            raise click.ClickException(f"Error saving config file: {str(e)}")
+            raise click.ClickException(f"Error saving config file: {str(e)}") from e

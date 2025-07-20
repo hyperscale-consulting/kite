@@ -1,4 +1,3 @@
-import logging
 import os
 import shutil
 from collections import defaultdict
@@ -36,7 +35,6 @@ from kite.organizations import get_account_details
 from kite.s3 import get_buckets
 from kite.wafv2 import get_web_acls
 
-logger = logging.getLogger(__name__)
 console = Console()
 
 
@@ -291,8 +289,7 @@ def assess(config: str, auto_save: bool = True):
         )
 
     except Exception as e:
-        logger.error("Error during assessment: %s", e, exc_info=True)
-        raise click.ClickException(f"Error during assessment: {str(e)}")
+        raise click.ClickException(f"Error during assessment: {str(e)}") from e
 
 
 def save_assessment(assessment):

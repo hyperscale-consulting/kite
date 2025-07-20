@@ -102,7 +102,6 @@ from kite.checks import check_scp_prevents_common_admin_role_changes
 from kite.checks import check_scp_prevents_config_changes
 from kite.checks import check_scp_prevents_deleting_logs
 from kite.checks import check_scp_prevents_guardduty_changes
-from kite.checks import check_scp_prevents_leaving_org
 from kite.checks import check_scp_prevents_ram_external_sharing
 from kite.checks import check_scp_prevents_ram_invitations
 from kite.checks import check_scp_prevents_unencrypted_s3_uploads
@@ -163,6 +162,7 @@ from kite.checks import RootCredentialsSecurityCheck
 from kite.checks import RunSimulationsCheck
 from kite.checks import S3ConfusedDeputyProtectionCheck
 from kite.checks import ScanForSensitiveDataInDevCheck
+from kite.checks import ScpPreventsLeavingOrgCheck
 from kite.checks import SecureSecretsStorageCheck
 from kite.checks import SecurityDataPublishedToLogArchiveAccountCheck
 from kite.checks import SecurityEventCorrelationCheck
@@ -379,7 +379,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         ),
         "checks": [
             check_region_deny_scp,
-            check_scp_prevents_leaving_org,
+            ScpPreventsLeavingOrgCheck(),
             check_scp_prevents_common_admin_role_changes,
             check_scp_prevents_cloudwatch_changes,
             check_scp_prevents_config_changes,

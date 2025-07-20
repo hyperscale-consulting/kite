@@ -262,7 +262,7 @@ from kite.checks.scp_prevents_deleting_logs import check_scp_prevents_deleting_l
 from kite.checks.scp_prevents_guardduty_changes import (
     check_scp_prevents_guardduty_changes,
 )
-from kite.checks.scp_prevents_leaving_org import check_scp_prevents_leaving_org
+from kite.checks.scp_prevents_leaving_org import ScpPreventsLeavingOrgCheck
 from kite.checks.scp_prevents_ram_external_sharing import (
     check_scp_prevents_ram_external_sharing,
 )
@@ -382,7 +382,7 @@ __all__ = [
     "check_kms_confused_deputy_protection",
     "EstablishedEmergencyAccessProceduresCheck",
     "check_active_unused_access_analyzer",
-    "check_scp_prevents_leaving_org",
+    "ScpPreventsLeavingOrgCheck",
     "check_scp_prevents_common_admin_role_changes",
     "check_scp_prevents_cloudwatch_changes",
     "check_scp_prevents_config_changes",

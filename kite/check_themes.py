@@ -94,7 +94,6 @@ from kite.checks import check_root_mfa_enabled
 from kite.checks import check_root_user_usage
 from kite.checks import check_rotate_encryption_keys
 from kite.checks import check_s3_bucket_acl_disabled
-from kite.checks import check_s3_confused_deputy_protection
 from kite.checks import check_scan_workloads_for_vulnerabilities
 from kite.checks import check_scim_protocol_used
 from kite.checks import check_scp_prevents_adding_internet_access_to_vpc
@@ -163,6 +162,7 @@ from kite.checks import RootAccountMonitoringCheck
 from kite.checks import RootActionsDisallowedCheck
 from kite.checks import RootCredentialsSecurityCheck
 from kite.checks import RunSimulationsCheck
+from kite.checks import S3ConfusedDeputyProtectionCheck
 from kite.checks import ScanForSensitiveDataInDevCheck
 from kite.checks import SecureSecretsStorageCheck
 from kite.checks import SecurityEventCorrelationCheck
@@ -350,7 +350,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_no_readonly_third_party_access,
             check_admin_privileges_are_restricted,
             check_limit_access_to_production_environments,
-            check_s3_confused_deputy_protection,
+            S3ConfusedDeputyProtectionCheck(),
             SnsConfusedDeputyProtectionCheck(),
             SqsConfusedDeputyProtectionCheck(),
             check_lambda_confused_deputy_protection,

@@ -2,10 +2,14 @@ import json
 
 import pytest
 
-from kite.checks.s3_confused_deputy_protection import (
-    check_s3_confused_deputy_protection,
-)
+from kite.checks.core import CheckStatus
+from kite.checks.s3_confused_deputy_protection import S3ConfusedDeputyProtectionCheck
 from kite.data import save_bucket_metadata
+
+
+@pytest.fixture
+def check():
+    return S3ConfusedDeputyProtectionCheck()
 
 
 @pytest.fixture
@@ -135,32 +139,54 @@ def no_org_config(workload_account_id, config):
     return config
 
 
-def test_s3_confused_deputy_protection(bucket_with_confused_deputy_protection):
-    result = check_s3_confused_deputy_protection()
-    assert result["status"] == "PASS"
+def test_is_service_principal(check):
+    """Test the _is_service_principal method."""
+    assert check._is_service_principal("lambda.amazonaws.com") is True
+    assert check._is_service_principal("s3.amazonaws.com") is True
+    assert check._is_service_principal("arn:aws:iam::123456789012:user/test") is False
+    assert check._is_service_principal("*") is False
+    assert (
+        check._is_service_principal(["lambda.amazonaws.com", "s3.amazonaws.com"])
+        is True
+    )
+    assert (
+        check._is_service_principal(
+            ["lambda.amazonaws.com", "arn:aws:iam::123456789012:user/test"]
+        )
+        is True
+    )
+    assert (
+        check._is_service_principal(["arn:aws:iam::123456789012:user/test", "*"])
+        is False
+    )
+
+
+def test_s3_confused_deputy_protection(check, bucket_with_confused_deputy_protection):
+    result = check.run()
+    assert result.status == CheckStatus.PASS
 
 
 def test_s3_no_confused_deputy_protection(
-    bucket_with_no_confused_deputy_protection, no_org_config
+    check, bucket_with_no_confused_deputy_protection, no_org_config
 ):
-    result = check_s3_confused_deputy_protection()
-    assert result["status"] == "FAIL"
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
 
 
-def test_s3_user_principal(bucket_with_user_principal, no_org_config):
-    result = check_s3_confused_deputy_protection()
-    assert result["status"] == "PASS"
+def test_s3_user_principal(check, bucket_with_user_principal, no_org_config):
+    result = check.run()
+    assert result.status == CheckStatus.PASS
 
 
 def test_s3_confused_deputy_protection_upper_case(
-    bucket_with_confused_deputy_protection_upper_case, no_org_config
+    check, bucket_with_confused_deputy_protection_upper_case, no_org_config
 ):
-    result = check_s3_confused_deputy_protection()
-    assert result["status"] == "PASS"
+    result = check.run()
+    assert result.status == CheckStatus.PASS
 
 
 def test_s3_confused_deputy_protection_upper_case_arn_like(
-    bucket_with_confused_deputy_protection_upper_case_arn_like, no_org_config
+    check, bucket_with_confused_deputy_protection_upper_case_arn_like, no_org_config
 ):
-    result = check_s3_confused_deputy_protection()
-    assert result["status"] == "PASS"
+    result = check.run()
+    assert result.status == CheckStatus.PASS

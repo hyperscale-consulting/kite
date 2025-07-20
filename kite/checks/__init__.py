@@ -242,9 +242,7 @@ from kite.checks.root_mfa_enabled import check_root_mfa_enabled
 from kite.checks.rotate_encryption_keys import check_rotate_encryption_keys
 from kite.checks.run_simulations import RunSimulationsCheck
 from kite.checks.s3_bucket_acl_disabled import check_s3_bucket_acl_disabled
-from kite.checks.s3_confused_deputy_protection import (
-    check_s3_confused_deputy_protection,
-)
+from kite.checks.s3_confused_deputy_protection import S3ConfusedDeputyProtectionCheck
 from kite.checks.scan_for_sensitive_data_in_dev import ScanForSensitiveDataInDevCheck
 from kite.checks.scan_workloads_for_vulnerabilities import (
     check_scan_workloads_for_vulnerabilities,
@@ -377,7 +375,7 @@ __all__ = [
     "check_cross_account_confused_deputy_prevention",
     "check_admin_privileges_are_restricted",
     "check_limit_access_to_production_environments",
-    "check_s3_confused_deputy_protection",
+    "S3ConfusedDeputyProtectionCheck",
     "SnsConfusedDeputyProtectionCheck",
     "SqsConfusedDeputyProtectionCheck",
     "check_lambda_confused_deputy_protection",

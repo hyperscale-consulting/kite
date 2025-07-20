@@ -191,7 +191,7 @@ from kite.checks.no_full_admin_policies import NoFullAdminPoliciesCheck
 from kite.checks.no_human_access_to_unencrypted_key_material import (
     check_no_human_access_to_unencrypted_key_material,
 )
-from kite.checks.no_iam_user_access import check_no_iam_user_access
+from kite.checks.no_iam_user_access import NoIamUserAccessCheck
 from kite.checks.no_key_pairs import check_no_key_pairs
 from kite.checks.no_permissive_role_assumption import (
     check_no_permissive_role_assumption,
@@ -359,7 +359,7 @@ __all__ = [
     "check_require_mfa",
     "check_complex_passwords",
     "check_no_access_keys",
-    "check_no_iam_user_access",
+    "NoIamUserAccessCheck",
     "SecureSecretsStorageCheck",
     "RestrictedRoleForSecretsAccessCheck",
     "check_use_centralized_idp",

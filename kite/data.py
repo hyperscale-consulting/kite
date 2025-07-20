@@ -131,7 +131,7 @@ def save_credentials_report(account_id: str, report: dict[str, Any]) -> None:
     _save_data(report, "credentials_report", account_id)
 
 
-def get_credentials_report(account_id: str) -> dict[str, Any] | None:
+def get_credentials_report(account_id: str) -> dict[str, Any]:
     """Get credentials report for an account.
 
     Args:

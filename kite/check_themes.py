@@ -111,7 +111,6 @@ from kite.checks import check_security_data_published_to_log_archive_account
 from kite.checks import check_security_services_evaluation
 from kite.checks import check_sns_confused_deputy_protection
 from kite.checks import check_sns_data_protection_policies
-from kite.checks import check_sqs_confused_deputy_protection
 from kite.checks import check_tag_data_with_sensitivity_level
 from kite.checks import check_use_a_kms
 from kite.checks import check_use_centralized_idp
@@ -174,6 +173,7 @@ from kite.checks import SecurityIrPlaybooksCheck
 from kite.checks import SecurityRisksCheck
 from kite.checks import SensitivityControlsCheck
 from kite.checks import ServiceCatalogCheck
+from kite.checks import SqsConfusedDeputyProtectionCheck
 from kite.checks import TechInventoriesScannedCheck
 from kite.checks import ThreatIntelligenceMonitoringCheck
 from kite.checks import ThreatModelingCheck
@@ -352,7 +352,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_limit_access_to_production_environments,
             check_s3_confused_deputy_protection,
             check_sns_confused_deputy_protection,
-            check_sqs_confused_deputy_protection,
+            SqsConfusedDeputyProtectionCheck(),
             check_lambda_confused_deputy_protection,
             check_kms_confused_deputy_protection,
         ],

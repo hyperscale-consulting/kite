@@ -287,9 +287,7 @@ from kite.checks.sns_confused_deputy_protection import (
     check_sns_confused_deputy_protection,
 )
 from kite.checks.sns_data_protection_policies import check_sns_data_protection_policies
-from kite.checks.sqs_confused_deputy_protection import (
-    check_sqs_confused_deputy_protection,
-)
+from kite.checks.sqs_confused_deputy_protection import SqsConfusedDeputyProtectionCheck
 from kite.checks.tag_data_with_sensitivity_level import (
     check_tag_data_with_sensitivity_level,
 )
@@ -383,7 +381,7 @@ __all__ = [
     "check_limit_access_to_production_environments",
     "check_s3_confused_deputy_protection",
     "check_sns_confused_deputy_protection",
-    "check_sqs_confused_deputy_protection",
+    "SqsConfusedDeputyProtectionCheck",
     "check_lambda_confused_deputy_protection",
     "check_kms_confused_deputy_protection",
     "EstablishedEmergencyAccessProceduresCheck",

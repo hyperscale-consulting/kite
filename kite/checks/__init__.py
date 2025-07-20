@@ -286,7 +286,7 @@ from kite.checks.service_catalog import ServiceCatalogCheck
 from kite.checks.sns_confused_deputy_protection import (
     check_sns_confused_deputy_protection,
 )
-from kite.checks.sns_data_protection_policies import check_sns_data_protection_policies
+from kite.checks.sns_data_protection_policies import SnsDataProtectionPoliciesCheck
 from kite.checks.sqs_confused_deputy_protection import SqsConfusedDeputyProtectionCheck
 from kite.checks.tag_data_with_sensitivity_level import (
     check_tag_data_with_sensitivity_level,
@@ -433,7 +433,7 @@ __all__ = [
     "SensitivityControlsCheck",
     "TokenizationAndAnonymizationCheck",
     "check_cw_data_protection_policies",
-    "check_sns_data_protection_policies",
+    "SnsDataProtectionPoliciesCheck",
     "check_detect_sensitive_data_transform",
     "ScanForSensitiveDataInDevCheck",
     "check_automate_s3_data_retention",

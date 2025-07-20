@@ -1,56 +1,39 @@
-"""Check for SNS data protection policies."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "sns-data-protection-policies"
-CHECK_NAME = "SNS Data Protection Policies"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_sns_data_protection_policies() -> dict[str, Any]:
-    """
-    Check if SNS data protection policies are used to automatically identify
-    and mask unexpected sensitive data in SNS messages.
+class SnsDataProtectionPoliciesCheck:
+    def __init__(self):
+        self.check_id = "sns-data-protection-policies"
+        self.check_name = "SNS Data Protection Policies"
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS" or "FAIL")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    # TODO: Add permissions so we can do some automated support with this check.
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=(
+    @property
+    def question(self) -> str:
+        return (
+            "Are SNS data protection policies used to automatically identify, "
+            "mask and alert on unexpected sensitive data in SNS messages?"
+        )
+
+    @property
+    def description(self) -> str:
+        return (
             "This check verifies that SNS data protection policies are used "
             "to automatically identify and mask unexpected sensitive data in "
-            "SNS messages.\n\n"
+            "SNS messages."
+        )
+
+    def run(self) -> CheckResult:
+        # TODO: Add permissions so we can do some automated support with this check.
+        message = (
             "Consider the following factors:\n"
             "- Are data protection policies configured for SNS topics?\n"
             "- Are alarms in place to alert on unexpected sensitive data?\n"
             "- Is sensitive data denied, masked or redacted as appropriate?\n"
-            "- Do the policies align with your data classification scheme and inventory?"
-        ),
-        prompt=(
-            "Are SNS data protection policies used to automatically identify, "
-            "mask and alert on unexpected sensitive data in SNS messages?"
-        ),
-        pass_message=(
-            "SNS data protection policies are used to automatically identify, "
-            "mask and alert on unexpected sensitive data in SNS messages."
-        ),
-        fail_message=(
-            "SNS data protection policies should be used to automatically "
-            "identify, mask and alert on unexpected sensitive data in SNS "
-            "messages."
-        ),
-        default=True,
-    )
+            "- Do the policies align with your data classification scheme and "
+            "inventory?"
+        )
 
-
-check_sns_data_protection_policies._CHECK_ID = CHECK_ID
-check_sns_data_protection_policies._CHECK_NAME = CHECK_NAME
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

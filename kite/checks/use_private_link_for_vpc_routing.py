@@ -1,14 +1,56 @@
-"""Check if AWS Private Link is used for VPC routing instead of VPC peering."""
-
-from typing import Any
-
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.config import Config
 from kite.data import get_vpc_peering_connections
 from kite.helpers import get_account_ids_in_scope
-from kite.helpers import manual_check
 
-CHECK_ID = "use-private-link-for-vpc-routing"
-CHECK_NAME = "Use Private Link for VPC Routing"
+
+class UsePrivateLinkForVpcRoutingCheck:
+    def __init__(self):
+        self.check_id = "use-private-link-for-vpc-routing"
+        self.check_name = "Use Private Link for VPC Routing"
+
+    @property
+    def question(self) -> str:
+        return (
+            "Do you use AWS Private Link for simple routing between VPCs instead of "
+            "VPC peering connections?"
+        )
+
+    @property
+    def description(self) -> str:
+        return (
+            "This check helps verify that AWS Private Link is used for simple "
+            "routing between VPCs, rather than VPC peering connections."
+        )
+
+    def run(self) -> CheckResult:
+        peering_analysis = _analyze_vpc_peering_connections()
+
+        # If no VPC peering connections found, automatically pass
+        if "No VPC peering connections found" in peering_analysis:
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason=(
+                    "No VPC peering connections found. This check passes automatically "
+                    "as there are no VPC peering connections to evaluate."
+                ),
+            )
+
+        # For VPC peering connections, require manual review
+        message = (
+            "AWS Private Link provides private connectivity between VPCs. It can be a "
+            "more secure alternative to VPC peering when your workload only requires "
+            "traffic flows between specific components in different VPCs.\n\n"
+            "Below is a summary of VPC peering connections found in your accounts:"
+            "\n"
+        )
+        message += f"{peering_analysis}"
+
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )
 
 
 def _analyze_vpc_peering_connections() -> str:
@@ -75,67 +117,3 @@ def _analyze_vpc_peering_connections() -> str:
         analysis = "\nNo VPC peering connections found in any account or region.\n"
 
     return analysis
-
-
-def _pre_check() -> tuple[bool, dict[str, Any]]:
-    """Pre-check function that automatically passes if no VPC peering connections exist."""
-    peering_analysis = _analyze_vpc_peering_connections()
-
-    if "No VPC peering connections found" in peering_analysis:
-        msg_parts = [
-            "No VPC peering connections found.",
-            "This check passes automatically as there are no VPC peering",
-            "connections to evaluate.",
-        ]
-        msg = " ".join(msg_parts)
-        result = {}
-        result["check_id"] = CHECK_ID
-        result["check_name"] = CHECK_NAME
-        result["status"] = "PASS"
-        details = {}
-        details["message"] = msg
-        result["details"] = details
-        return False, result
-
-    return True, {}
-
-
-def check_use_private_link_for_vpc_routing() -> dict[str, Any]:
-    """Check if AWS Private Link is used for VPC routing instead of VPC peering."""
-    peering_analysis = _analyze_vpc_peering_connections()
-
-    message = (
-        "This check helps you confirm whether you use AWS Private Link for simple "
-        "routing between VPCs, rather than VPC peering connections.\n\n"
-        "AWS Private Link provides private connectivity between VPCs, AWS services, "
-        "and on-premises applications without exposing traffic to the internet. "
-        "It can be a more secure and manageable alternative to VPC peering for "
-        "certain use cases.\n\n"
-        "Below is a summary of VPC peering connections found in your accounts:"
-        "\n"
-    )
-    message += f"{peering_analysis}"
-
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=message,
-        prompt=(
-            "Do you use AWS Private Link for simple routing between VPCs instead of "
-            "VPC peering connections?"
-        ),
-        pass_message=(
-            "AWS Private Link is used for VPC routing instead of VPC peering "
-            "connections."
-        ),
-        fail_message=(
-            "AWS Private Link should be used for VPC routing instead of VPC peering "
-            "connections where appropriate."
-        ),
-        default=True,
-        pre_check=_pre_check,
-    )
-
-
-check_use_private_link_for_vpc_routing._CHECK_ID = CHECK_ID
-check_use_private_link_for_vpc_routing._CHECK_NAME = CHECK_NAME

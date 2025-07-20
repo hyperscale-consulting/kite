@@ -308,7 +308,7 @@ from kite.checks.use_identity_broker import UseIdentityBrokerCheck
 from kite.checks.use_logs_for_alerting import check_log_alerting
 from kite.checks.use_of_higher_level_services import UseOfHigherLevelServicesCheck
 from kite.checks.use_private_link_for_vpc_routing import (
-    check_use_private_link_for_vpc_routing,
+    UsePrivateLinkForVpcRoutingCheck,
 )
 from kite.checks.use_route53resolver_dns_firewall import (
     UseRoute53ResolverDnsFirewallCheck,
@@ -498,7 +498,7 @@ __all__ = [
     "check_control_network_flow_with_nacls",
     "check_control_network_flows_with_sgs",
     "check_control_network_flows_with_route_tables",
-    "check_use_private_link_for_vpc_routing",
+    "UsePrivateLinkForVpcRoutingCheck",
     "UseRoute53ResolverDnsFirewallCheck",
     "check_inspect_http_traffic_with_waf",
     "check_inspect_traffic_with_network_firewall",

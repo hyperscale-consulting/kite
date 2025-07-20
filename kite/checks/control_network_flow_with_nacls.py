@@ -1,7 +1,6 @@
-"""Manual check for controlling network flow with NACLs."""
-
 from typing import Any
 
+from kite.checks.utils import get_name_from_tag
 from kite.config import Config
 from kite.data import get_ec2_instances
 from kite.data import get_ecs_clusters
@@ -19,22 +18,6 @@ from kite.helpers import manual_check
 
 CHECK_ID = "control-network-flow-with-nacls"
 CHECK_NAME = "Control Network Flow with NACLs"
-
-
-def _get_vpc_name(vpc: dict[str, Any]) -> str:
-    tags = vpc.get("Tags", [])
-    for tag in tags:
-        if tag.get("Key") == "Name":
-            return tag.get("Value", "")
-    return ""
-
-
-def _get_subnet_name(subnet: dict[str, Any]) -> str:
-    tags = subnet.get("Tags", [])
-    for tag in tags:
-        if tag.get("Key") == "Name":
-            return tag.get("Value", "")
-    return ""
 
 
 def _get_resources_in_subnet(
@@ -172,7 +155,7 @@ def _analyze_nacls() -> str:
                 continue
             for vpc in vpcs:
                 vpc_id = vpc.get("VpcId", "Unknown")
-                vpc_name = _get_vpc_name(vpc)
+                vpc_name = get_name_from_tag(vpc)
                 vpc_cidr = vpc.get("CidrBlock", "Unknown")
                 vpc_analysis = f"\nVPC: {vpc_id}"
                 if vpc_name:
@@ -181,7 +164,7 @@ def _analyze_nacls() -> str:
                 vpc_subnets = [s for s in subnets if s.get("VpcId") == vpc_id]
                 for subnet in vpc_subnets:
                     subnet_id = subnet.get("SubnetId", "Unknown")
-                    subnet_name = _get_subnet_name(subnet)
+                    subnet_name = get_name_from_tag(subnet)
                     subnet_cidr = subnet.get("CidrBlock", "Unknown")
                     availability_zone = subnet.get("AvailabilityZone", "Unknown")
                     resources = _get_resources_in_subnet(

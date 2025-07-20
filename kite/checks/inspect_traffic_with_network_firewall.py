@@ -1,7 +1,6 @@
-"""Check for Network Firewall configuration and coverage."""
-
 from typing import Any
 
+from kite.checks.utils import get_name_from_tag
 from kite.config import Config
 from kite.data import get_networkfirewall_firewalls
 from kite.data import get_vpcs
@@ -35,14 +34,6 @@ def _pre_check() -> tuple[bool, dict[str, Any]]:
         return False, result
 
     return True, {}
-
-
-def _get_vpc_name(vpc: dict[str, Any]) -> str:
-    tags = vpc.get("Tags", [])
-    for tag in tags:
-        if tag.get("Key") == "Name":
-            return tag.get("Value", "Unknown")
-    return "Unknown"
 
 
 def _analyze_network_firewalls() -> str:
@@ -126,7 +117,7 @@ def _analyze_network_firewalls() -> str:
                                 "account_id": account_id,
                                 "region": region,
                                 "vpc_id": vpc_id,
-                                "vpc_name": _get_vpc_name(vpc),
+                                "vpc_name": get_name_from_tag(vpc),
                             }
                         )
 

@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from kite.checks.utils import get_name_from_tag
 from kite.config import Config
 from kite.data import get_ec2_instances
 from kite.data import get_ecs_clusters
@@ -18,24 +19,6 @@ from kite.helpers import manual_check
 
 CHECK_ID = "create-network-layers"
 CHECK_NAME = "Create Network Layers"
-
-
-def _get_vpc_name(vpc: dict[str, Any]) -> str:
-    """Extract VPC name from tags."""
-    tags = vpc.get("Tags", [])
-    for tag in tags:
-        if tag.get("Key") == "Name":
-            return tag.get("Value", "")
-    return ""
-
-
-def _get_subnet_name(subnet: dict[str, Any]) -> str:
-    """Extract subnet name from tags."""
-    tags = subnet.get("Tags", [])
-    for tag in tags:
-        if tag.get("Key") == "Name":
-            return tag.get("Value", "")
-    return ""
 
 
 def _is_subnet_private(subnet_id: str, route_tables: list[dict[str, Any]]) -> bool:
@@ -193,7 +176,7 @@ def _analyze_network_topology() -> str:
                 continue
             for vpc in vpcs:
                 vpc_id = vpc.get("VpcId", "Unknown")
-                vpc_name = _get_vpc_name(vpc)
+                vpc_name = get_name_from_tag(vpc)
                 vpc_cidr = vpc.get("CidrBlock", "Unknown")
                 vpc_has_resources = False
                 vpc_analysis = f"\nVPC: {vpc_id}"
@@ -205,7 +188,7 @@ def _analyze_network_topology() -> str:
                     continue
                 for subnet in vpc_subnets:
                     subnet_id = subnet.get("SubnetId", "Unknown")
-                    subnet_name = _get_subnet_name(subnet)
+                    subnet_name = get_name_from_tag(subnet)
                     subnet_cidr = subnet.get("CidrBlock", "Unknown")
                     availability_zone = subnet.get("AvailabilityZone", "Unknown")
                     is_private = _is_subnet_private(subnet_id, route_tables)

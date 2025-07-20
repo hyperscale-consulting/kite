@@ -127,7 +127,7 @@ def _get_vpcs_with_resources() -> dict[str, list[str]]:
                 # Check ECS clusters (if they have VPC config)
                 if not has_resources:
                     ecs_clusters = get_ecs_clusters(account_id, region)
-                    for cluster in ecs_clusters:
+                    for _ in ecs_clusters:
                         # ECS clusters don't directly have VPC ID, but services might
                         # For now, we'll assume ECS clusters have resources
                         has_resources = True

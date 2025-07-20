@@ -219,7 +219,7 @@ from kite.checks.region_deny_scp import check_region_deny_scp
 from kite.checks.regularly_review_permissions import RegularlyReviewPermissionsCheck
 from kite.checks.remediate_vulnerabilities import RemediateVulnerabilitiesCheck
 from kite.checks.repeatable_auditable_setup_for_3rd_party_access import (
-    check_repeatable_auditable_setup_for_3rd_party_access,
+    RepeatableAuditableSetupFor3rdPartyAccessCheck,
 )
 from kite.checks.require_mfa import check_require_mfa
 from kite.checks.resolver_query_logs_enabled import ResolverQueryLogsEnabledCheck
@@ -405,7 +405,7 @@ __all__ = [
     "check_vpc_endpoints_enforce_data_perimeter",
     "check_data_perimeter_trusted_networks",
     "check_scp_prevents_ram_invitations",
-    "check_repeatable_auditable_setup_for_3rd_party_access",
+    "RepeatableAuditableSetupFor3rdPartyAccessCheck",
     "check_organizational_cloudtrail",
     "check_vpc_flow_logs_enabled",
     "ResolverQueryLogsEnabledCheck",

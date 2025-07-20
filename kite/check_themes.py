@@ -72,7 +72,6 @@ from kite.checks import check_monitor_and_response_to_s3_public_access
 from kite.checks import check_network_firewall_logging_enabled
 from kite.checks import check_no_access_keys
 from kite.checks import check_no_full_access_to_sensitive_services
-from kite.checks import check_no_full_admin_policies
 from kite.checks import check_no_human_access_to_unencrypted_key_material
 from kite.checks import check_no_iam_user_access
 from kite.checks import check_no_key_pairs
@@ -141,6 +140,7 @@ from kite.checks import MaintainInventoryOfSharedResourcesCheck
 from kite.checks import MonitorKeyUsageCheck
 from kite.checks import MonitorNetworkTrafficForUnauthorizedAccessCheck
 from kite.checks import MonitorSecretsCheck
+from kite.checks import NoFullAdminPoliciesCheck
 from kite.checks import PenetrationTestingCheck
 from kite.checks import PerformDASTCheck
 from kite.checks import PerformSASTCheck
@@ -343,7 +343,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "permissions required to perform a task."
         ),
         "checks": [
-            check_no_full_admin_policies,
+            NoFullAdminPoliciesCheck(),
             check_no_policy_allows_privilege_escalation,
             check_no_permissive_role_assumption,
             check_no_full_access_to_sensitive_services,

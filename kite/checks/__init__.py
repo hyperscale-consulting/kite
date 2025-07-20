@@ -187,7 +187,7 @@ from kite.checks.no_access_keys import check_no_access_keys
 from kite.checks.no_full_access_to_sensitive_services import (
     check_no_full_access_to_sensitive_services,
 )
-from kite.checks.no_full_admin_policies import check_no_full_admin_policies
+from kite.checks.no_full_admin_policies import NoFullAdminPoliciesCheck
 from kite.checks.no_human_access_to_unencrypted_key_material import (
     check_no_human_access_to_unencrypted_key_material,
 )
@@ -367,7 +367,7 @@ __all__ = [
     "check_credential_rotation",
     "IdentityAuditCheck",
     "EmployUserGroupsAndAttributesCheck",
-    "check_no_full_admin_policies",
+    "NoFullAdminPoliciesCheck",
     "check_no_policy_allows_privilege_escalation",
     "check_no_permissive_role_assumption",
     "check_no_full_access_to_sensitive_services",

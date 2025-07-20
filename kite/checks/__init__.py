@@ -272,7 +272,7 @@ from kite.checks.scp_prevents_unencrypted_s3_uploads import (
 )
 from kite.checks.secure_secrets_storage import SecureSecretsStorageCheck
 from kite.checks.security_data_published_to_log_archive_account import (
-    check_security_data_published_to_log_archive_account,
+    SecurityDataPublishedToLogArchiveAccountCheck,
 )
 from kite.checks.security_event_correlation import SecurityEventCorrelationCheck
 from kite.checks.security_guardians_program import SecurityGuardiansProgramCheck
@@ -419,7 +419,7 @@ __all__ = [
     "check_api_gateway_logging_enabled",
     "check_config_recording_enabled",
     "check_log_alerting",
-    "check_security_data_published_to_log_archive_account",
+    "SecurityDataPublishedToLogArchiveAccountCheck",
     "check_deploy_log_analysis_tools_in_audit_account",
     "check_detective_enabled",
     "SecurityEventCorrelationCheck",

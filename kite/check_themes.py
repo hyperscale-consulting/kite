@@ -106,7 +106,6 @@ from kite.checks import check_scp_prevents_leaving_org
 from kite.checks import check_scp_prevents_ram_external_sharing
 from kite.checks import check_scp_prevents_ram_invitations
 from kite.checks import check_scp_prevents_unencrypted_s3_uploads
-from kite.checks import check_security_data_published_to_log_archive_account
 from kite.checks import check_security_services_evaluation
 from kite.checks import check_tag_data_with_sensitivity_level
 from kite.checks import check_use_a_kms
@@ -165,6 +164,7 @@ from kite.checks import RunSimulationsCheck
 from kite.checks import S3ConfusedDeputyProtectionCheck
 from kite.checks import ScanForSensitiveDataInDevCheck
 from kite.checks import SecureSecretsStorageCheck
+from kite.checks import SecurityDataPublishedToLogArchiveAccountCheck
 from kite.checks import SecurityEventCorrelationCheck
 from kite.checks import SecurityGuardiansProgramCheck
 from kite.checks import SecurityIrPlaybooksCheck
@@ -459,7 +459,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "locations"
         ),
         "checks": [
-            check_security_data_published_to_log_archive_account,
+            SecurityDataPublishedToLogArchiveAccountCheck(),
             # TODO: where should we check for log tampering prevention and
             # access control?
             check_deploy_log_analysis_tools_in_audit_account,

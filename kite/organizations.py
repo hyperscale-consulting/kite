@@ -49,7 +49,7 @@ def _fetch_policies_for_target(
     return policies
 
 
-def fetch_organization(session) -> Organization | None:
+def fetch_organization(session) -> Organization:
     """
     Describe the AWS organization structure.
 
@@ -62,79 +62,69 @@ def fetch_organization(session) -> Organization | None:
     """
     orgs_client = session.client("organizations")
 
-    try:
-        # Get organization details
-        org_response = orgs_client.describe_organization()
-        org = org_response["Organization"]
+    # Get organization details
+    org_response = orgs_client.describe_organization()
+    org = org_response["Organization"]
 
-        # Get root ID
-        roots_response = orgs_client.list_roots()
-        root = roots_response["Roots"][0]
-        root_id = root["Id"]
-        root_arn = root["Arn"]
-        root_name = root.get("Name", "Root")
+    # Get root ID
+    roots_response = orgs_client.list_roots()
+    root = roots_response["Roots"][0]
+    root_id = root["Id"]
+    root_arn = root["Arn"]
+    root_name = root.get("Name", "Root")
 
-        # Get policies for the root
-        root_policies = _fetch_policies_for_target(orgs_client, root_id)
+    # Get policies for the root
+    root_policies = _fetch_policies_for_target(orgs_client, root_id)
 
-        # Get accounts in the root
-        accounts = []
-        paginator = orgs_client.get_paginator("list_accounts_for_parent")
-        for page in paginator.paginate(ParentId=root_id):
-            for account in page["Accounts"]:
-                # Get policies for this account
-                account_policies = _fetch_policies_for_target(
-                    orgs_client, account["Id"]
+    # Get accounts in the root
+    accounts = []
+    paginator = orgs_client.get_paginator("list_accounts_for_parent")
+    for page in paginator.paginate(ParentId=root_id):
+        for account in page["Accounts"]:
+            # Get policies for this account
+            account_policies = _fetch_policies_for_target(orgs_client, account["Id"])
+
+            accounts.append(
+                Account(
+                    id=account["Id"],
+                    arn=account["Arn"],
+                    name=account["Name"],
+                    email=account["Email"],
+                    status=account["Status"],
+                    joined_method=account["JoinedMethod"],
+                    joined_timestamp=account["JoinedTimestamp"].isoformat(),
+                    scps=account_policies["SERVICE_CONTROL_POLICY"],
+                    rcps=account_policies["RESOURCE_CONTROL_POLICY"],
+                    tag_policies=account_policies["TAG_POLICY"],
                 )
+            )
 
-                accounts.append(
-                    Account(
-                        id=account["Id"],
-                        arn=account["Arn"],
-                        name=account["Name"],
-                        email=account["Email"],
-                        status=account["Status"],
-                        joined_method=account["JoinedMethod"],
-                        joined_timestamp=account["JoinedTimestamp"].isoformat(),
-                        scps=account_policies["SERVICE_CONTROL_POLICY"],
-                        rcps=account_policies["RESOURCE_CONTROL_POLICY"],
-                        tag_policies=account_policies["TAG_POLICY"],
-                    )
-                )
+    # Get child OUs
+    child_ous = []
+    paginator = orgs_client.get_paginator("list_children")
+    for page in paginator.paginate(ParentId=root_id, ChildType="ORGANIZATIONAL_UNIT"):
+        for child in page["Children"]:
+            child_ous.append(build_ou_structure(orgs_client, child["Id"]))
 
-        # Get child OUs
-        child_ous = []
-        paginator = orgs_client.get_paginator("list_children")
-        for page in paginator.paginate(
-            ParentId=root_id, ChildType="ORGANIZATIONAL_UNIT"
-        ):
-            for child in page["Children"]:
-                child_ous.append(build_ou_structure(orgs_client, child["Id"]))
+    # Create the root OU
+    root_ou = OrganizationalUnit(
+        id=root_id,
+        arn=root_arn,
+        name=root_name,
+        accounts=accounts,
+        child_ous=child_ous,
+        scps=root_policies["SERVICE_CONTROL_POLICY"],
+        rcps=root_policies["RESOURCE_CONTROL_POLICY"],
+        tag_policies=root_policies["TAG_POLICY"],
+    )
 
-        # Create the root OU
-        root_ou = OrganizationalUnit(
-            id=root_id,
-            arn=root_arn,
-            name=root_name,
-            accounts=accounts,
-            child_ous=child_ous,
-            scps=root_policies["SERVICE_CONTROL_POLICY"],
-            rcps=root_policies["RESOURCE_CONTROL_POLICY"],
-            tag_policies=root_policies["TAG_POLICY"],
-        )
-
-        return Organization(
-            id=org["Id"],
-            master_account_id=org["MasterAccountId"],
-            arn=org["Arn"],
-            feature_set=org["FeatureSet"],
-            root=root_ou,
-        )
-    except ClientError as e:
-        if e.response["Error"]["Code"] == "AWSOrganizationsNotInUseException":
-            return None
-        # Re-raise other exceptions
-        raise
+    return Organization(
+        id=org["Id"],
+        master_account_id=org["MasterAccountId"],
+        arn=org["Arn"],
+        feature_set=org["FeatureSet"],
+        root=root_ou,
+    )
 
 
 def build_ou_structure(orgs_client, ou_id):

@@ -256,8 +256,11 @@ class OrganizationsClient:
 def test_no_org(stub_aws_session):
     client = OrganizationsClient(error_code="AWSOrganizationsNotInUseException")
     stub_aws_session.register_client(client, "organizations")
-    org = fetch_organization(stub_aws_session)
-    assert org is None
+    with pytest.raises(ClientError) as excinfo:
+        fetch_organization(stub_aws_session)
+    assert (
+        excinfo.value.response["Error"]["Code"] == "AWSOrganizationsNotInUseException"
+    )
 
 
 def test_raises_access_denied(stub_aws_session):

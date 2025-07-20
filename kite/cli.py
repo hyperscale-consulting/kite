@@ -23,7 +23,7 @@ from kite.checks import CheckStatus
 from kite.checks import make_finding
 from kite.cloudfront import get_distributions_by_web_acl
 from kite.collect import collect_data
-from kite.collect import RoleAssumptionException
+from kite.collect import CollectException
 from kite.config import Config
 from kite.data import save_collection_metadata
 from kite.data import verify_collection_status
@@ -428,7 +428,7 @@ def get_organization_account_details(account_id: str, config: str):
         console.print(table)
 
     except Exception as e:
-        raise click.ClickException(f"Error fetching account details: {str(e)}")
+        raise click.ClickException(f"Error fetching account details: {str(e)}") from e
 
 
 @main.command()
@@ -450,14 +450,16 @@ def configure():
     # Ask the user for the list of account IDs to include in the assessment
     while True:
         account_ids_input = Prompt.ask(
-            "Account IDs (comma separated) - leave blank for all accounts in an AWS Organization",
+            "Account IDs (comma separated) - leave blank for all accounts in an AWS "
+            "Organization",
             default="",
             show_default=False,
         ).strip()
 
         if not management_account_id and not account_ids_input:
             console.print(
-                "[yellow]Account IDs are required when no management account is provided[/yellow]"
+                "[yellow]Account IDs are required when no management account is "
+                "provided[/yellow]"
             )
             continue
 
@@ -630,7 +632,9 @@ def get_prowler_check_status(config: str, check_id: str):
             console.print(table)
 
     except Exception as e:
-        raise click.ClickException(f"Error getting prowler check status: {str(e)}")
+        raise click.ClickException(
+            f"Error getting prowler check status: {str(e)}"
+        ) from e
 
 
 @main.command()
@@ -664,7 +668,9 @@ def collect(config: str):
         raise click.ClickException(
             "Unable to retrieve token from sso - try running `aws sso login`"
         ) from None
-    except RoleAssumptionException as e:
+    except CollectException as e:
+        raise click.ClickException(str(e)) from e
+    except Exception as e:
         raise click.ClickException(str(e)) from e
 
 

@@ -361,7 +361,7 @@ _mgmt_account_collector_config = [
 ]
 
 
-class RoleAssumptionException(Exception):
+class CollectException(Exception):
     pass
 
 
@@ -376,13 +376,40 @@ def collect_data() -> None:
             session = assume_role(config.management_account_id)
         except ClientError as e:
             if e.response["Error"]["Code"] == "AccessDenied":
-                raise RoleAssumptionException(
+                raise CollectException(
                     f"Unable to assume role {config.role_name} in management account "
                     f"({config.management_account_id}). Please review IAM policies and "
                     "check that permission is granted to assume the role, "
                     "that the external ID matches, and that the assessment end date is "
                     "not in the past."
                 ) from None
+        console.print(
+            "  [yellow]Fetching Organization data using account "
+            f"{config.management_account_id}...[/]"
+        )
+        try:
+            organization = organizations.fetch_organization(session)
+            save_organization(config.management_account_id, organization)
+        except ClientError as e:
+            error_code = e.response["Error"]["Code"]
+            if error_code in ["AWSOrganizationsNotInUseException"]:
+                raise CollectException(
+                    "You configured a management account ID, but that account does not "
+                    "belong to an AWS Organization."
+                ) from e
+            if error_code == "AccessDeniedException":
+                raise CollectException(
+                    "The account you have configured as the management account does "
+                    "not have permission to access the AWS Organizations API - please "
+                    "check that it is the organizations management account and not a "
+                    "member account."
+                ) from e
+            # Re-raise other exceptions
+            raise
+
+        console.print(
+            f"  [green]✓ Saved Organization for account {config.management_account_id}"
+        )
         org_collector = Collector(
             session,
             config.management_account_id,

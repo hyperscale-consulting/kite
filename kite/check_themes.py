@@ -39,7 +39,6 @@ from kite.checks import check_control_network_flows_with_route_tables
 from kite.checks import check_control_network_flows_with_sgs
 from kite.checks import check_create_network_layers
 from kite.checks import check_credential_rotation
-from kite.checks import check_cross_account_confused_deputy_prevention
 from kite.checks import check_data_perimeter_confused_deputy_protection
 from kite.checks import check_data_perimeter_trusted_networks
 from kite.checks import check_data_perimeter_trusted_resources
@@ -106,6 +105,7 @@ from kite.checks import check_waf_web_acl_logging_enabled
 from kite.checks import CodeReviewsCheck
 from kite.checks import ControlImplementationValidationCheck
 from kite.checks import ControlTowerCheck
+from kite.checks import CrossAccountConfusedDeputyPreventionCheck
 from kite.checks import CwDataProtectionPoliciesCheck
 from kite.checks import DataCatalogCheck
 from kite.checks import DefineAccessRequirementsCheck
@@ -428,7 +428,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "Checks related to sharing resources securely with a 3rd party"
         ),
         "checks": [
-            check_cross_account_confused_deputy_prevention,
+            CrossAccountConfusedDeputyPreventionCheck(),
             RepeatableAuditableSetupFor3rdPartyAccessCheck(),
         ],
     },

@@ -75,7 +75,7 @@ from kite.checks.core import make_finding
 from kite.checks.create_network_layers import check_create_network_layers
 from kite.checks.credential_rotation import check_credential_rotation
 from kite.checks.cross_account_confused_deputy_prevention import (
-    check_cross_account_confused_deputy_prevention,
+    CrossAccountConfusedDeputyPreventionCheck,
 )
 from kite.checks.cw_data_protection_policies import CwDataProtectionPoliciesCheck
 from kite.checks.data_catalog import DataCatalogCheck
@@ -368,7 +368,7 @@ __all__ = [
     "check_no_permissive_role_assumption",
     "check_no_full_access_to_sensitive_services",
     "NoReadonlyThirdPartyAccessCheck",
-    "check_cross_account_confused_deputy_prevention",
+    "CrossAccountConfusedDeputyPreventionCheck",
     "check_admin_privileges_are_restricted",
     "LimitAccessToProductionEnvironmentsCheck",
     "S3ConfusedDeputyProtectionCheck",

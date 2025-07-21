@@ -49,7 +49,6 @@ from kite.checks import check_deploy_log_analysis_tools_in_audit_account
 from kite.checks import check_detect_encryption_at_rest_misconfig
 from kite.checks import check_detect_missing_automated_lifecycle_management
 from kite.checks import check_detect_sensitive_data_transform
-from kite.checks import check_detective_enabled
 from kite.checks import check_elb_logging_enabled
 from kite.checks import check_enforce_https
 from kite.checks import check_establish_data_perimeter_trusted_identities
@@ -112,6 +111,7 @@ from kite.checks import DataCatalogCheck
 from kite.checks import DefineAccessRequirementsCheck
 from kite.checks import DefineAndDocumentWorkloadNetworkFlowsCheck
 from kite.checks import DelegatedAdminForSecurityServices
+from kite.checks import DetectiveEnabledCheck
 from kite.checks import DfdsCheck
 from kite.checks import DocumentedDataClassificationSchemeCheck
 from kite.checks import EksControlPlaneLoggingEnabledCheck
@@ -471,7 +471,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "alerts to accelerate incident response"
         ),
         "checks": [
-            check_detective_enabled,
+            DetectiveEnabledCheck(),
             SecurityEventCorrelationCheck(),
         ],
     },

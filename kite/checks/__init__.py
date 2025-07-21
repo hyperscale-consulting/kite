@@ -111,7 +111,7 @@ from kite.checks.detect_missing_automated_lifecycle_management import (
 from kite.checks.detect_sensitive_data_transform import (
     check_detect_sensitive_data_transform,
 )
-from kite.checks.detective_enabled import check_detective_enabled
+from kite.checks.detective_enabled import DetectiveEnabledCheck
 from kite.checks.dfds import DfdsCheck
 from kite.checks.documented_data_classification_scheme import (
     DocumentedDataClassificationSchemeCheck,
@@ -418,7 +418,6 @@ __all__ = [
     "check_log_alerting",
     "SecurityDataPublishedToLogArchiveAccountCheck",
     "check_deploy_log_analysis_tools_in_audit_account",
-    "check_detective_enabled",
     "SecurityEventCorrelationCheck",
     "check_auto_remediate_non_compliant_resources",
     "check_tag_data_with_sensitivity_level",
@@ -515,4 +514,5 @@ __all__ = [
     "DefineAndDocumentWorkloadNetworkFlowsCheck",
     "DfdsCheck",
     "DocumentedDataClassificationSchemeCheck",
+    "DetectiveEnabledCheck",
 ]

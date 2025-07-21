@@ -1,128 +1,112 @@
-"""Check for AWS Detective coverage across the organization."""
-
 from collections import defaultdict
-from typing import Any
 
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.config import Config
 from kite.data import get_delegated_admins
 from kite.data import get_detective_graphs
 from kite.data import get_organization
 from kite.helpers import get_account_ids_in_scope
 
-CHECK_ID = "detective-enabled"
-CHECK_NAME = "AWS Detective Enabled"
 
+class DetectiveEnabledCheck:
+    def __init__(self):
+        self.check_id = "detective-enabled"
+        self.check_name = "AWS Detective Enabled"
 
-def _get_detective_delegated_admin(org) -> str:
-    """
-    Get the delegated administrator account for AWS Detective.
+    @property
+    def question(self) -> str:
+        return ""  # fully automated check
 
-    Args:
-        org: The organization object
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that AWS Detective is enabled for all organization "
+            "accounts (or all in-scope accounts if not in an organization), "
+            "and that each account is a member with status 'ENABLED' in at least one "
+            "Detective graph in each active region."
+        )
 
-    Returns:
-        str: The account ID of the delegated administrator, or the management account ID
-        if not found
-    """
-    detective_principal = "detective.amazonaws.com"
-    delegated_admins = get_delegated_admins()
+    def _get_detective_delegated_admin(self, org) -> str:
+        detective_principal = "detective.amazonaws.com"
+        delegated_admins = get_delegated_admins()
+        if delegated_admins:
+            for admin in delegated_admins:
+                if admin.service_principal == detective_principal:
+                    return admin.id
+        return org.master_account_id
 
-    if delegated_admins:
-        for admin in delegated_admins:
-            if admin.service_principal == detective_principal:
-                return admin.id
+    def _check_detective_membership(
+        self, account_ids: set, region: str, admin_account: str
+    ):
+        missing_accounts = []
+        disabled_accounts = []
+        graphs = get_detective_graphs(admin_account, region)
+        if not graphs:
+            return list(account_ids), []
+        members = {}
+        for graph in graphs:
+            for member in graph.get("Members", []):
+                members[member["AccountId"]] = member["Status"]
+        for account_id in account_ids:
+            if account_id not in members:
+                missing_accounts.append(account_id)
+            elif members[account_id] != "ENABLED":
+                disabled_accounts.append(account_id)
+        return missing_accounts, disabled_accounts
 
-    # If no delegated admin found, use the management account
-    return org.master_account_id
-
-
-def _check_detective_membership(
-    account_ids: set[str], region: str, admin_account: str
-) -> tuple[dict[str, list], dict[str, list]]:
-    """
-    Check Detective membership for a set of accounts in a region.
-
-    Args:
-        account_ids: Set of account IDs to check
-        region: The region to check
-        admin_account: The account ID of the Detective administrator
-
-    Returns:
-        Tuple of (missing_accounts, disabled_accounts) dictionaries
-    """
-    missing_accounts = []
-    disabled_accounts = []
-
-    # Get Detective graphs from data module
-    graphs = get_detective_graphs(admin_account, region)
-    if not graphs:
-        # If no graphs exist, all accounts are considered missing
-        return list(account_ids), []
-
-    # Get members from all graphs
-    members = {}
-    for graph in graphs:
-        for member in graph.get("Members", []):
-            members[member["AccountId"]] = member["Status"]
-
-    # Check for missing accounts
-    for account_id in account_ids:
-        if account_id not in members:
-            missing_accounts.append(account_id)
-        elif members[account_id] != "ENABLED":
-            disabled_accounts.append(account_id)
-
-    return missing_accounts, disabled_accounts
-
-
-def check_detective_enabled() -> dict[str, Any]:
-    """
-    Check if AWS Detective is enabled for all organization accounts.
-
-    This check:
-    1. Verifies if an organization exists
-    2. If organization exists:
-       - Finds the delegated administrator for Detective
-       - Checks that all organization accounts are members
-    3. If no organization:
-       - Checks each in-scope account's Detective graphs
-       - Verifies that all in-scope accounts are members of at least one graph
-    4. Verifies that each member account has status "ENABLED"
-
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS" or "FAIL")
-            - details: Dict containing:
-                - message: str describing the result
-                - missing_accounts: Dict mapping regions to lists of missing account IDs
-                - disabled_accounts: Dict mapping regions to lists of disabled account IDs
-    """
-    # Get all in-scope accounts
-    account_ids = get_account_ids_in_scope()
-
-    # Check if organization exists
-    org = get_organization()
-    if not org:
-        # No organization - check each account's graphs
+    def run(self) -> CheckResult:
+        account_ids = set(get_account_ids_in_scope())
+        org = get_organization()
         missing_accounts = defaultdict(list)
         disabled_accounts = defaultdict(list)
-
-        for region in Config.get().active_regions:
-            # Check each account's graphs
-            for account_id in account_ids:
-                region_missing, region_disabled = _check_detective_membership(
-                    account_ids, region, account_id
+        if not org:
+            for region in Config.get().active_regions:
+                for account_id in account_ids:
+                    region_missing, region_disabled = self._check_detective_membership(
+                        account_ids, region, account_id
+                    )
+                    if region_missing:
+                        missing_accounts[region].extend(region_missing)
+                    if region_disabled:
+                        disabled_accounts[region].extend(region_disabled)
+            if missing_accounts or disabled_accounts:
+                message = "AWS Detective is not enabled for all in-scope accounts."
+                if missing_accounts:
+                    message += "\n\nMissing accounts:"
+                    for region, accounts in missing_accounts.items():
+                        message += f"\n{region}: {', '.join(accounts)}"
+                if disabled_accounts:
+                    message += "\n\nDisabled accounts:"
+                    for region, accounts in disabled_accounts.items():
+                        message += f"\n{region}: {', '.join(accounts)}"
+                return CheckResult(
+                    status=CheckStatus.FAIL,
+                    reason="AWS Detective is not enabled for all in-scope accounts.",
+                    details={
+                        "missing_accounts": dict(missing_accounts),
+                        "disabled_accounts": dict(disabled_accounts),
+                        "message": message,
+                    },
                 )
-                if region_missing:
-                    missing_accounts[region].extend(region_missing)
-                if region_disabled:
-                    disabled_accounts[region].extend(region_disabled)
-
-        # If any accounts are missing or disabled, the check fails
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason="AWS Detective is enabled for all in-scope accounts.",
+                details={
+                    "message": "AWS Detective is enabled for all in-scope accounts.",
+                },
+            )
+        delegated_admin = self._get_detective_delegated_admin(org)
+        for region in Config.get().active_regions:
+            region_missing, region_disabled = self._check_detective_membership(
+                account_ids, region, delegated_admin
+            )
+            if region_missing:
+                missing_accounts[region].extend(region_missing)
+            if region_disabled:
+                disabled_accounts[region].extend(region_disabled)
         if missing_accounts or disabled_accounts:
-            message = "AWS Detective is not enabled for all in-scope accounts."
+            message = "AWS Detective is not enabled for all organization accounts."
             if missing_accounts:
                 message += "\n\nMissing accounts:"
                 for region, accounts in missing_accounts.items():
@@ -131,73 +115,19 @@ def check_detective_enabled() -> dict[str, Any]:
                 message += "\n\nDisabled accounts:"
                 for region, accounts in disabled_accounts.items():
                     message += f"\n{region}: {', '.join(accounts)}"
-
-            return {
-                "check_id": CHECK_ID,
-                "check_name": CHECK_NAME,
-                "status": "FAIL",
-                "details": {
-                    "message": message,
+            return CheckResult(
+                status=CheckStatus.FAIL,
+                reason="AWS Detective is not enabled for all organization accounts.",
+                details={
                     "missing_accounts": dict(missing_accounts),
                     "disabled_accounts": dict(disabled_accounts),
+                    "message": message,
                 },
-            }
-
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "PASS",
-            "details": {
-                "message": "AWS Detective is enabled for all in-scope accounts.",
+            )
+        return CheckResult(
+            status=CheckStatus.PASS,
+            reason="AWS Detective is enabled for all organization accounts.",
+            details={
+                "message": "AWS Detective is enabled for all organization accounts.",
             },
-        }
-
-    # Organization exists - use delegated admin
-    delegated_admin = _get_detective_delegated_admin(org)
-    missing_accounts = defaultdict(list)
-    disabled_accounts = defaultdict(list)
-
-    for region in Config.get().active_regions:
-        region_missing, region_disabled = _check_detective_membership(
-            account_ids, region, delegated_admin
         )
-        if region_missing:
-            missing_accounts[region].extend(region_missing)
-        if region_disabled:
-            disabled_accounts[region].extend(region_disabled)
-
-    # If any accounts are missing or disabled, the check fails
-    if missing_accounts or disabled_accounts:
-        message = "AWS Detective is not enabled for all organization accounts."
-        if missing_accounts:
-            message += "\n\nMissing accounts:"
-            for region, accounts in missing_accounts.items():
-                message += f"\n{region}: {', '.join(accounts)}"
-        if disabled_accounts:
-            message += "\n\nDisabled accounts:"
-            for region, accounts in disabled_accounts.items():
-                message += f"\n{region}: {', '.join(accounts)}"
-
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "FAIL",
-            "details": {
-                "message": message,
-                "missing_accounts": dict(missing_accounts),
-                "disabled_accounts": dict(disabled_accounts),
-            },
-        }
-
-    return {
-        "check_id": CHECK_ID,
-        "check_name": CHECK_NAME,
-        "status": "PASS",
-        "details": {
-            "message": "AWS Detective is enabled for all organization accounts.",
-        },
-    }
-
-
-check_detective_enabled._CHECK_ID = CHECK_ID
-check_detective_enabled._CHECK_NAME = CHECK_NAME

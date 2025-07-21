@@ -5,10 +5,10 @@ from kite.checks import AccessManagementLifecycleImplementedCheck
 from kite.checks import AccountStandardsCheck
 from kite.checks import AccurateAccountContactDetailsCheck
 from kite.checks import ApprovalProcessForResourceSharingCheck
-from kite.checks import automate_malware_and_threat_detection
 from kite.checks import AutomateDeploymentsCheck
 from kite.checks import AutomatedSecurityTestsCheck
 from kite.checks import AutomateForensicsCheck
+from kite.checks import AutomateMalwareAndThreatDetectionCheck
 from kite.checks import AvoidRootUsageCheck
 from kite.checks import AwsControlDocumentationCheck
 from kite.checks import AwsManagedServicesThreatIntelCheck
@@ -527,7 +527,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             RemediateVulnerabilitiesCheck(),
             check_automate_patch_management,
             VulnerabilityScanningInCICDPipelinesCheck(),
-            automate_malware_and_threat_detection,
+            AutomateMalwareAndThreatDetectionCheck(),
         ],
     },
     "Provision compute from hardened images": {

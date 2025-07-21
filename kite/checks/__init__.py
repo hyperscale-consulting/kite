@@ -34,7 +34,7 @@ from kite.checks.automate_ddb_data_retention import check_automate_ddb_data_rete
 from kite.checks.automate_deployments import AutomateDeploymentsCheck
 from kite.checks.automate_forensics import AutomateForensicsCheck
 from kite.checks.automate_malware_and_threat_detection import (
-    automate_malware_and_threat_detection,
+    AutomateMalwareAndThreatDetectionCheck,
 )
 from kite.checks.automate_patch_management import check_automate_patch_management
 from kite.checks.automate_s3_data_retention import check_automate_s3_data_retention
@@ -469,7 +469,7 @@ __all__ = [
     "check_scan_workloads_for_vulnerabilities",
     "check_automate_patch_management",
     "VulnerabilityScanningInCICDPipelinesCheck",
-    "automate_malware_and_threat_detection",
+    "AutomateMalwareAndThreatDetectionCheck",
     "UseHardenedImagesCheck",
     "check_no_rdp_or_ssh_access",
     "check_avoid_interactive_access",

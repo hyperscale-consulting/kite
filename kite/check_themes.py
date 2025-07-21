@@ -76,7 +76,6 @@ from kite.checks import check_no_key_pairs
 from kite.checks import check_no_permissive_role_assumption
 from kite.checks import check_no_policy_allows_privilege_escalation
 from kite.checks import check_no_rdp_or_ssh_access
-from kite.checks import check_no_readonly_third_party_access
 from kite.checks import check_no_root_access_keys
 from kite.checks import check_no_secrets_in_aws_resources
 from kite.checks import check_organizational_cloudtrail
@@ -141,6 +140,7 @@ from kite.checks import MonitorNetworkTrafficForUnauthorizedAccessCheck
 from kite.checks import MonitorSecretsCheck
 from kite.checks import NoFullAdminPoliciesCheck
 from kite.checks import NoIamUserAccessCheck
+from kite.checks import NoReadonlyThirdPartyAccessCheck
 from kite.checks import PenetrationTestingCheck
 from kite.checks import PerformDASTCheck
 from kite.checks import PerformSASTCheck
@@ -347,7 +347,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_no_policy_allows_privilege_escalation,
             check_no_permissive_role_assumption,
             check_no_full_access_to_sensitive_services,
-            check_no_readonly_third_party_access,
+            NoReadonlyThirdPartyAccessCheck(),
             check_admin_privileges_are_restricted,
             LimitAccessToProductionEnvironmentsCheck(),
             S3ConfusedDeputyProtectionCheck(),

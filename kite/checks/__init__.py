@@ -200,9 +200,7 @@ from kite.checks.no_policy_allows_privilege_escalation import (
     check_no_policy_allows_privilege_escalation,
 )
 from kite.checks.no_rdp_or_ssh_access import check_no_rdp_or_ssh_access
-from kite.checks.no_readonly_third_party_access import (
-    check_no_readonly_third_party_access,
-)
+from kite.checks.no_readonly_third_party_access import NoReadonlyThirdPartyAccessCheck
 from kite.checks.no_root_access_keys import check_no_root_access_keys
 from kite.checks.no_secrets_in_aws_resources import check_no_secrets_in_aws_resources
 from kite.checks.organizational_cloudtrail import check_organizational_cloudtrail
@@ -371,7 +369,7 @@ __all__ = [
     "check_no_policy_allows_privilege_escalation",
     "check_no_permissive_role_assumption",
     "check_no_full_access_to_sensitive_services",
-    "check_no_readonly_third_party_access",
+    "NoReadonlyThirdPartyAccessCheck",
     "check_cross_account_confused_deputy_prevention",
     "check_admin_privileges_are_restricted",
     "LimitAccessToProductionEnvironmentsCheck",

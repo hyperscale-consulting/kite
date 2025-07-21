@@ -77,7 +77,7 @@ from kite.checks.credential_rotation import check_credential_rotation
 from kite.checks.cross_account_confused_deputy_prevention import (
     check_cross_account_confused_deputy_prevention,
 )
-from kite.checks.cw_data_protection_policies import check_cw_data_protection_policies
+from kite.checks.cw_data_protection_policies import CwDataProtectionPoliciesCheck
 from kite.checks.data_catalog import DataCatalogCheck
 from kite.checks.data_perimeter_confused_deputy_protection import (
     check_data_perimeter_confused_deputy_protection,
@@ -426,6 +426,7 @@ __all__ = [
     "TokenizationAndAnonymizationCheck",
     "check_cw_data_protection_policies",
     "SnsDataProtectionPoliciesCheck",
+    "CwDataProtectionPoliciesCheck",
     "check_detect_sensitive_data_transform",
     "ScanForSensitiveDataInDevCheck",
     "check_automate_s3_data_retention",

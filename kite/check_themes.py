@@ -40,7 +40,6 @@ from kite.checks import check_control_network_flows_with_sgs
 from kite.checks import check_create_network_layers
 from kite.checks import check_credential_rotation
 from kite.checks import check_cross_account_confused_deputy_prevention
-from kite.checks import check_cw_data_protection_policies
 from kite.checks import check_data_perimeter_confused_deputy_protection
 from kite.checks import check_data_perimeter_trusted_networks
 from kite.checks import check_data_perimeter_trusted_resources
@@ -107,6 +106,7 @@ from kite.checks import check_waf_web_acl_logging_enabled
 from kite.checks import CodeReviewsCheck
 from kite.checks import ControlImplementationValidationCheck
 from kite.checks import ControlTowerCheck
+from kite.checks import CwDataProtectionPoliciesCheck
 from kite.checks import DataCatalogCheck
 from kite.checks import DefineAccessRequirementsCheck
 from kite.checks import DefineAndDocumentWorkloadNetworkFlowsCheck
@@ -574,7 +574,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Automate identification and classification": {
         "description": "",
         "checks": [
-            check_cw_data_protection_policies,
+            CwDataProtectionPoliciesCheck(),
             SnsDataProtectionPoliciesCheck(),
             check_detect_sensitive_data_transform,
             MacieScansForSensitiveDataCheck(),

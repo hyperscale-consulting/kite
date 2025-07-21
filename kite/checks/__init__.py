@@ -41,7 +41,7 @@ from kite.checks.automate_s3_data_retention import check_automate_s3_data_retent
 from kite.checks.automated_security_tests import AutomatedSecurityTestsCheck
 from kite.checks.avoid_insecure_ssl_ciphers import check_avoid_insecure_ssl_ciphers
 from kite.checks.avoid_interactive_access import check_avoid_interactive_access
-from kite.checks.avoid_root_usage import check_root_user_usage
+from kite.checks.avoid_root_usage import AvoidRootUsageCheck
 from kite.checks.aws_control_documentation import AwsControlDocumentationCheck
 from kite.checks.aws_managed_services_threat_intel import (
     AwsManagedServicesThreatIntelCheck,
@@ -334,7 +334,7 @@ __all__ = [
     "ServiceCatalogCheck",
     "check_no_key_pairs",
     "check_no_secrets_in_aws_resources",
-    "check_root_user_usage",
+    "AvoidRootUsageCheck",
     "check_root_credentials_management_enabled",
     "check_no_root_access_keys",
     "AccurateAccountContactDetailsCheck",

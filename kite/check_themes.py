@@ -9,6 +9,7 @@ from kite.checks import automate_malware_and_threat_detection
 from kite.checks import AutomateDeploymentsCheck
 from kite.checks import AutomatedSecurityTestsCheck
 from kite.checks import AutomateForensicsCheck
+from kite.checks import AvoidRootUsageCheck
 from kite.checks import AwsControlDocumentationCheck
 from kite.checks import AwsManagedServicesThreatIntelCheck
 from kite.checks import AwsServiceEvaluationCheck
@@ -75,7 +76,6 @@ from kite.checks import check_region_deny_scp
 from kite.checks import check_require_mfa
 from kite.checks import check_root_credentials_management_enabled
 from kite.checks import check_root_mfa_enabled
-from kite.checks import check_root_user_usage
 from kite.checks import check_rotate_encryption_keys
 from kite.checks import check_s3_bucket_acl_disabled
 from kite.checks import check_scan_workloads_for_vulnerabilities
@@ -209,7 +209,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Root User Security": {
         "description": "Checks related to the security of the root user",
         "checks": [
-            check_root_user_usage,
+            AvoidRootUsageCheck(),
             check_root_credentials_management_enabled,
             check_no_root_access_keys,
             check_root_mfa_enabled,

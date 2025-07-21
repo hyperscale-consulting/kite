@@ -62,7 +62,7 @@ from kite.checks.control_network_flow_with_nacls import (
     check_control_network_flow_with_nacls,
 )
 from kite.checks.control_network_flows_with_route_tables import (
-    check_control_network_flows_with_route_tables,
+    ControlNetworkFlowsWithRouteTablesCheck,
 )
 from kite.checks.control_network_flows_with_sgs import ControlNetworkFlowsWithSGsCheck
 from kite.checks.control_tower import ControlTowerCheck
@@ -373,7 +373,6 @@ __all__ = [
     "SnsConfusedDeputyProtectionCheck",
     "SqsConfusedDeputyProtectionCheck",
     "LambdaConfusedDeputyProtectionCheck",
-    "check_kms_confused_deputy_protection",
     "EstablishedEmergencyAccessProceduresCheck",
     "check_active_unused_access_analyzer",
     "ScpPreventsLeavingOrgCheck",
@@ -422,7 +421,6 @@ __all__ = [
     "check_isolation_boundaries",
     "SensitivityControlsCheck",
     "TokenizationAndAnonymizationCheck",
-    "check_cw_data_protection_policies",
     "SnsDataProtectionPoliciesCheck",
     "CwDataProtectionPoliciesCheck",
     "check_detect_sensitive_data_transform",
@@ -485,7 +483,6 @@ __all__ = [
     "RunSimulationsCheck",
     "CreateNetworkLayersCheck",
     "check_control_network_flow_with_nacls",
-    "check_control_network_flows_with_route_tables",
     "UsePrivateLinkForVpcRoutingCheck",
     "UseRoute53ResolverDnsFirewallCheck",
     "check_inspect_http_traffic_with_waf",
@@ -514,4 +511,5 @@ __all__ = [
     "DocumentedDataClassificationSchemeCheck",
     "DetectiveEnabledCheck",
     "ControlNetworkFlowsWithSGsCheck",
+    "ControlNetworkFlowsWithRouteTablesCheck",
 ]

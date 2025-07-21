@@ -10,9 +10,7 @@ from kite.checks.accurate_account_contact_details import (
 from kite.checks.active_external_access_analyzer import (
     check_active_external_access_analyzer,
 )
-from kite.checks.active_unused_access_analyzer import (
-    check_active_unused_access_analyzer,
-)
+from kite.checks.active_unused_access_analyzer import ActiveUnusedAccessAnalyzerCheck
 from kite.checks.admin_privileges_are_restricted import (
     check_admin_privileges_are_restricted,
 )
@@ -372,7 +370,7 @@ __all__ = [
     "SqsConfusedDeputyProtectionCheck",
     "LambdaConfusedDeputyProtectionCheck",
     "EstablishedEmergencyAccessProceduresCheck",
-    "check_active_unused_access_analyzer",
+    "ActiveUnusedAccessAnalyzerCheck",
     "ScpPreventsLeavingOrgCheck",
     "check_scp_prevents_common_admin_role_changes",
     "check_scp_prevents_cloudwatch_changes",

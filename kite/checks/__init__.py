@@ -58,9 +58,7 @@ from kite.checks.config_recording_enabled import check_config_recording_enabled
 from kite.checks.control_implementation_validation import (
     ControlImplementationValidationCheck,
 )
-from kite.checks.control_network_flow_with_nacls import (
-    check_control_network_flow_with_nacls,
-)
+from kite.checks.control_network_flow_with_nacls import ControlNetworkFlowWithNaclsCheck
 from kite.checks.control_network_flows_with_route_tables import (
     ControlNetworkFlowsWithRouteTablesCheck,
 )
@@ -482,7 +480,7 @@ __all__ = [
     "UseIdentityBrokerCheck",
     "RunSimulationsCheck",
     "CreateNetworkLayersCheck",
-    "check_control_network_flow_with_nacls",
+    "ControlNetworkFlowWithNaclsCheck",
     "UsePrivateLinkForVpcRoutingCheck",
     "UseRoute53ResolverDnsFirewallCheck",
     "check_inspect_http_traffic_with_waf",

@@ -8,7 +8,7 @@ from kite.checks.accurate_account_contact_details import (
     AccurateAccountContactDetailsCheck,
 )
 from kite.checks.active_external_access_analyzer import (
-    check_active_external_access_analyzer,
+    ActiveExternalAccessAnalyzerCheck,
 )
 from kite.checks.active_unused_access_analyzer import ActiveUnusedAccessAnalyzerCheck
 from kite.checks.admin_privileges_are_restricted import (
@@ -384,7 +384,7 @@ __all__ = [
     "AccessManagementLifecycleCheck",
     "AccessManagementLifecycleImplementedCheck",
     "check_scim_protocol_used",
-    "check_active_external_access_analyzer",
+    "ActiveExternalAccessAnalyzerCheck",
     "check_monitor_and_response_to_s3_public_access",
     "check_s3_bucket_acl_disabled",
     "check_migrate_from_oai",

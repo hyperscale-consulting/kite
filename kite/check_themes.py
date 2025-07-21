@@ -4,6 +4,7 @@ from kite.checks import AccessManagementLifecycleCheck
 from kite.checks import AccessManagementLifecycleImplementedCheck
 from kite.checks import AccountStandardsCheck
 from kite.checks import AccurateAccountContactDetailsCheck
+from kite.checks import ActiveExternalAccessAnalyzerCheck
 from kite.checks import ActiveUnusedAccessAnalyzerCheck
 from kite.checks import ApprovalProcessForResourceSharingCheck
 from kite.checks import AutomateDeploymentsCheck
@@ -20,7 +21,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import Check
 from kite.checks import check_account_separation
-from kite.checks import check_active_external_access_analyzer
 from kite.checks import check_admin_privileges_are_restricted
 from kite.checks import check_air_gapped_backup_vault
 from kite.checks import check_api_gateway_logging_enabled
@@ -401,7 +401,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Analyze public and cross-account access": {
         "description": ("Checks related to analyzing public and cross-account access"),
         "checks": [
-            check_active_external_access_analyzer,
+            ActiveExternalAccessAnalyzerCheck(),
             check_monitor_and_response_to_s3_public_access,
             MaintainInventoryOfSharedResourcesCheck(),
             ApprovalProcessForResourceSharingCheck(),

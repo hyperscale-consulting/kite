@@ -668,7 +668,10 @@ def collect(config: str):
     except CollectException as e:
         raise click.ClickException(str(e)) from e
     except ClientError as e:
-        raise click.ClickException(str(e)) from e
+        msg = str(e)
+        if e.response["Error"]["Code"] == "ExpiredToken":
+            msg = "AWS credentials have expired - please re-authenticate."
+        raise click.ClickException(msg) from e
 
 
 @main.command()

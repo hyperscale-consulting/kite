@@ -9,6 +9,7 @@ from kite.checks import AutomateDeploymentsCheck
 from kite.checks import AutomatedSecurityTestsCheck
 from kite.checks import AutomateForensicsCheck
 from kite.checks import AutomateMalwareAndThreatDetectionCheck
+from kite.checks import AutomateS3DataRetentionCheck
 from kite.checks import AvoidRootUsageCheck
 from kite.checks import AwsControlDocumentationCheck
 from kite.checks import AwsManagedServicesThreatIntelCheck
@@ -27,7 +28,6 @@ from kite.checks import check_auto_remediate_non_compliant_resources
 from kite.checks import check_automate_data_at_rest_protection_with_guardduty
 from kite.checks import check_automate_ddb_data_retention
 from kite.checks import check_automate_patch_management
-from kite.checks import check_automate_s3_data_retention
 from kite.checks import check_avoid_insecure_ssl_ciphers
 from kite.checks import check_avoid_interactive_access
 from kite.checks import check_aws_organizations_usage
@@ -584,7 +584,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Define scalable data lifecycle management": {
         "description": "",
         "checks": [
-            check_automate_s3_data_retention,
+            AutomateS3DataRetentionCheck(),
             check_automate_ddb_data_retention,
             ImplementRetentionPoliciesCheck(),
             check_detect_missing_automated_lifecycle_management,

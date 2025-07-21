@@ -37,7 +37,7 @@ from kite.checks.automate_malware_and_threat_detection import (
     AutomateMalwareAndThreatDetectionCheck,
 )
 from kite.checks.automate_patch_management import check_automate_patch_management
-from kite.checks.automate_s3_data_retention import check_automate_s3_data_retention
+from kite.checks.automate_s3_data_retention import AutomateS3DataRetentionCheck
 from kite.checks.automated_security_tests import AutomatedSecurityTestsCheck
 from kite.checks.avoid_insecure_ssl_ciphers import check_avoid_insecure_ssl_ciphers
 from kite.checks.avoid_interactive_access import check_avoid_interactive_access
@@ -423,7 +423,7 @@ __all__ = [
     "CwDataProtectionPoliciesCheck",
     "check_detect_sensitive_data_transform",
     "ScanForSensitiveDataInDevCheck",
-    "check_automate_s3_data_retention",
+    "AutomateS3DataRetentionCheck",
     "check_automate_ddb_data_retention",
     "check_detect_missing_automated_lifecycle_management",
     "check_use_a_kms",

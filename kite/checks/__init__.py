@@ -117,7 +117,7 @@ from kite.checks.documented_data_classification_scheme import (
     DocumentedDataClassificationSchemeCheck,
 )
 from kite.checks.eks_control_plane_logging_enabled import (
-    check_eks_control_plane_logging_enabled,
+    EksControlPlaneLoggingEnabledCheck,
 )
 from kite.checks.elb_logging_enabled import check_elb_logging_enabled
 from kite.checks.employ_user_groups_and_attributes import (
@@ -409,7 +409,7 @@ __all__ = [
     "LogRetentionCheck",
     "check_waf_web_acl_logging_enabled",
     "check_elb_logging_enabled",
-    "check_eks_control_plane_logging_enabled",
+    "EksControlPlaneLoggingEnabledCheck",
     "check_network_firewall_logging_enabled",
     "check_rds_logging_enabled",
     "check_cloudfront_logging_enabled",

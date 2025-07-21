@@ -50,7 +50,6 @@ from kite.checks import check_detect_encryption_at_rest_misconfig
 from kite.checks import check_detect_missing_automated_lifecycle_management
 from kite.checks import check_detect_sensitive_data_transform
 from kite.checks import check_detective_enabled
-from kite.checks import check_eks_control_plane_logging_enabled
 from kite.checks import check_elb_logging_enabled
 from kite.checks import check_enforce_https
 from kite.checks import check_establish_data_perimeter_trusted_identities
@@ -115,6 +114,7 @@ from kite.checks import DefineAndDocumentWorkloadNetworkFlowsCheck
 from kite.checks import DelegatedAdminForSecurityServices
 from kite.checks import DfdsCheck
 from kite.checks import DocumentedDataClassificationSchemeCheck
+from kite.checks import EksControlPlaneLoggingEnabledCheck
 from kite.checks import EmployUserGroupsAndAttributesCheck
 from kite.checks import EnforceDataProtectionAtRestWithPolicyAsCodeCheck
 from kite.checks import EstablishedEmergencyAccessProceduresCheck
@@ -443,7 +443,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             LogRetentionCheck(),
             check_waf_web_acl_logging_enabled,
             check_elb_logging_enabled,
-            check_eks_control_plane_logging_enabled,
+            EksControlPlaneLoggingEnabledCheck(),
             check_network_firewall_logging_enabled,
             check_rds_logging_enabled,
             check_cloudfront_logging_enabled,

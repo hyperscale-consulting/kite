@@ -62,7 +62,6 @@ from kite.checks import check_inspect_traffic_with_network_firewall
 from kite.checks import check_isolation_boundaries
 from kite.checks import check_key_access_control
 from kite.checks import check_kms_confused_deputy_protection
-from kite.checks import check_lambda_confused_deputy_protection
 from kite.checks import check_log_alerting
 from kite.checks import check_management_account_workloads
 from kite.checks import check_migrate_from_oai
@@ -130,6 +129,7 @@ from kite.checks import ImplementAuthAcrossServicesCheck
 from kite.checks import ImplementQueryingForLogsCheck
 from kite.checks import ImplementRetentionPoliciesCheck
 from kite.checks import IncidentResponsePlansCheck
+from kite.checks import LambdaConfusedDeputyProtectionCheck
 from kite.checks import LessonsLearnedFrameworkCheck
 from kite.checks import LimitAccessToProductionEnvironmentsCheck
 from kite.checks import LogRetentionCheck
@@ -353,7 +353,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             S3ConfusedDeputyProtectionCheck(),
             SnsConfusedDeputyProtectionCheck(),
             SqsConfusedDeputyProtectionCheck(),
-            check_lambda_confused_deputy_protection,
+            LambdaConfusedDeputyProtectionCheck(),
             check_kms_confused_deputy_protection,
         ],
     },

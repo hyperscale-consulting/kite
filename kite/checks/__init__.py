@@ -159,7 +159,7 @@ from kite.checks.kms_confused_deputy_protection import (
     check_kms_confused_deputy_protection,
 )
 from kite.checks.lambda_confused_deputy_protection import (
-    check_lambda_confused_deputy_protection,
+    LambdaConfusedDeputyProtectionCheck,
 )
 from kite.checks.lessons_learned_framework import LessonsLearnedFrameworkCheck
 from kite.checks.limit_access_to_production_environments import (
@@ -376,7 +376,7 @@ __all__ = [
     "S3ConfusedDeputyProtectionCheck",
     "SnsConfusedDeputyProtectionCheck",
     "SqsConfusedDeputyProtectionCheck",
-    "check_lambda_confused_deputy_protection",
+    "LambdaConfusedDeputyProtectionCheck",
     "check_kms_confused_deputy_protection",
     "EstablishedEmergencyAccessProceduresCheck",
     "check_active_unused_access_analyzer",

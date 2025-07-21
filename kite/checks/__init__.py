@@ -72,7 +72,7 @@ from kite.checks.core import Check
 from kite.checks.core import CheckResult
 from kite.checks.core import CheckStatus
 from kite.checks.core import make_finding
-from kite.checks.create_network_layers import check_create_network_layers
+from kite.checks.create_network_layers import CreateNetworkLayersCheck
 from kite.checks.credential_rotation import check_credential_rotation
 from kite.checks.cross_account_confused_deputy_prevention import (
     CrossAccountConfusedDeputyPreventionCheck,
@@ -485,7 +485,7 @@ __all__ = [
     "SecurityIrPlaybooksCheck",
     "UseIdentityBrokerCheck",
     "RunSimulationsCheck",
-    "check_create_network_layers",
+    "CreateNetworkLayersCheck",
     "check_control_network_flow_with_nacls",
     "check_control_network_flows_with_sgs",
     "check_control_network_flows_with_route_tables",

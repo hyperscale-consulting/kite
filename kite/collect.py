@@ -383,6 +383,7 @@ def collect_data() -> None:
                     "that the external ID matches, and that the assessment end date is "
                     "not in the past."
                 ) from None
+            raise
         console.print(
             "  [yellow]Fetching Organization data using account "
             f"{config.management_account_id}...[/]"
@@ -404,7 +405,6 @@ def collect_data() -> None:
                     "check that it is the organizations management account and not a "
                     "member account."
                 ) from e
-            # Re-raise other exceptions
             raise
 
         console.print(

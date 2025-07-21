@@ -8,7 +8,7 @@ from datetime import datetime
 
 import click
 import yaml
-from botocore.exceptions import TokenRetrievalError
+from botocore.exceptions import ClientError, TokenRetrievalError
 from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Confirm
@@ -667,7 +667,7 @@ def collect(config: str):
         ) from None
     except CollectException as e:
         raise click.ClickException(str(e)) from e
-    except Exception as e:
+    except ClientError as e:
         raise click.ClickException(str(e)) from e
 
 

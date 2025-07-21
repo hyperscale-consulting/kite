@@ -155,9 +155,7 @@ from kite.checks.inspect_traffic_with_network_firewall import (
 )
 from kite.checks.isolation_boundaries import check_isolation_boundaries
 from kite.checks.key_access_control import check_key_access_control
-from kite.checks.kms_confused_deputy_protection import (
-    check_kms_confused_deputy_protection,
-)
+from kite.checks.kms_confused_deputy_protection import KmsConfusedDeputyProtectionCheck
 from kite.checks.lambda_confused_deputy_protection import (
     LambdaConfusedDeputyProtectionCheck,
 )
@@ -403,6 +401,7 @@ __all__ = [
     "check_vpc_endpoints_enforce_data_perimeter",
     "check_data_perimeter_trusted_networks",
     "check_scp_prevents_ram_invitations",
+    "KmsConfusedDeputyProtectionCheck",
     "RepeatableAuditableSetupFor3rdPartyAccessCheck",
     "check_organizational_cloudtrail",
     "check_vpc_flow_logs_enabled",

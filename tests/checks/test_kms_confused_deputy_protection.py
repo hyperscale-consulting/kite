@@ -1,13 +1,21 @@
 import pytest
 
-from kite.checks.kms_confused_deputy_protection import (
-    check_kms_confused_deputy_protection,
-)
+from kite.checks import CheckStatus
+from kite.checks.kms_confused_deputy_protection import KmsConfusedDeputyProtectionCheck
 from kite.data import save_kms_keys
+from tests.factories import config_for_org
+from tests.factories import create_organization_with_workload_account
+
+workload_account_id = "123456789012"
+mgmt_account_id = "111111111111"
 
 
 @pytest.fixture
-def kms_key_with_protection(workload_account_id, organization):
+def check():
+    return KmsConfusedDeputyProtectionCheck()
+
+
+def kms_key_with_protection():
     keys = [
         {
             "KeyId": "1234567890",
@@ -31,8 +39,7 @@ def kms_key_with_protection(workload_account_id, organization):
     return keys
 
 
-@pytest.fixture
-def kms_key_without_protection(workload_account_id, organization):
+def kms_key_without_protection():
     keys = [
         {
             "KeyId": "1234567890",
@@ -53,12 +60,23 @@ def kms_key_without_protection(workload_account_id, organization):
     return keys
 
 
-def test_kms_confused_deputy_protection(kms_key_with_protection):
-    result = check_kms_confused_deputy_protection()
-    assert result["details"]["vulnerable_keys"] == []
-    assert result["status"] == "PASS"
+@config_for_org(mgmt_account_id=mgmt_account_id)
+def test_kms_confused_deputy_protection(check):
+    create_organization_with_workload_account(
+        workload_account_id=workload_account_id,
+        mgmt_account_id=mgmt_account_id,
+    )
+    kms_key_with_protection()
+    result = check.run()
+    assert result.status == CheckStatus.PASS
 
 
-def test_kms_confused_deputy_protection_with_vulnerable_key(kms_key_without_protection):
-    result = check_kms_confused_deputy_protection()
-    assert result["status"] == "FAIL"
+@config_for_org(mgmt_account_id=mgmt_account_id)
+def test_kms_confused_deputy_protection_with_vulnerable_key(check):
+    create_organization_with_workload_account(
+        workload_account_id=workload_account_id,
+        mgmt_account_id=mgmt_account_id,
+    )
+    kms_key_without_protection()
+    result = check.run()
+    assert result.status == CheckStatus.FAIL

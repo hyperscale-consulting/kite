@@ -64,9 +64,7 @@ from kite.checks.control_network_flow_with_nacls import (
 from kite.checks.control_network_flows_with_route_tables import (
     check_control_network_flows_with_route_tables,
 )
-from kite.checks.control_network_flows_with_sgs import (
-    check_control_network_flows_with_sgs,
-)
+from kite.checks.control_network_flows_with_sgs import ControlNetworkFlowsWithSGsCheck
 from kite.checks.control_tower import ControlTowerCheck
 from kite.checks.core import Check
 from kite.checks.core import CheckResult
@@ -487,7 +485,6 @@ __all__ = [
     "RunSimulationsCheck",
     "CreateNetworkLayersCheck",
     "check_control_network_flow_with_nacls",
-    "check_control_network_flows_with_sgs",
     "check_control_network_flows_with_route_tables",
     "UsePrivateLinkForVpcRoutingCheck",
     "UseRoute53ResolverDnsFirewallCheck",
@@ -516,4 +513,5 @@ __all__ = [
     "DfdsCheck",
     "DocumentedDataClassificationSchemeCheck",
     "DetectiveEnabledCheck",
+    "ControlNetworkFlowsWithSGsCheck",
 ]

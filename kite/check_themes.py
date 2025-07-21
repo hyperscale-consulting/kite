@@ -36,7 +36,6 @@ from kite.checks import check_complex_passwords
 from kite.checks import check_config_recording_enabled
 from kite.checks import check_control_network_flow_with_nacls
 from kite.checks import check_control_network_flows_with_route_tables
-from kite.checks import check_control_network_flows_with_sgs
 from kite.checks import check_credential_rotation
 from kite.checks import check_data_perimeter_confused_deputy_protection
 from kite.checks import check_data_perimeter_trusted_networks
@@ -103,6 +102,7 @@ from kite.checks import check_vpc_flow_logs_enabled
 from kite.checks import check_waf_web_acl_logging_enabled
 from kite.checks import CodeReviewsCheck
 from kite.checks import ControlImplementationValidationCheck
+from kite.checks import ControlNetworkFlowsWithSGsCheck
 from kite.checks import ControlTowerCheck
 from kite.checks import CreateNetworkLayersCheck
 from kite.checks import CrossAccountConfusedDeputyPreventionCheck
@@ -498,7 +498,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         ),
         "checks": [
             check_control_network_flow_with_nacls,
-            check_control_network_flows_with_sgs,
+            ControlNetworkFlowsWithSGsCheck(),
             check_control_network_flows_with_route_tables,
             UsePrivateLinkForVpcRoutingCheck(),
             UseRoute53ResolverDnsFirewallCheck(),

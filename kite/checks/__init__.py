@@ -163,7 +163,7 @@ from kite.checks.lambda_confused_deputy_protection import (
 )
 from kite.checks.lessons_learned_framework import LessonsLearnedFrameworkCheck
 from kite.checks.limit_access_to_production_environments import (
-    check_limit_access_to_production_environments,
+    LimitAccessToProductionEnvironmentsCheck,
 )
 from kite.checks.log_retention import check_log_retention
 from kite.checks.macie_scans_for_sensitive_data import MacieScansForSensitiveDataCheck
@@ -374,7 +374,7 @@ __all__ = [
     "check_no_readonly_third_party_access",
     "check_cross_account_confused_deputy_prevention",
     "check_admin_privileges_are_restricted",
-    "check_limit_access_to_production_environments",
+    "LimitAccessToProductionEnvironmentsCheck",
     "S3ConfusedDeputyProtectionCheck",
     "SnsConfusedDeputyProtectionCheck",
     "SqsConfusedDeputyProtectionCheck",

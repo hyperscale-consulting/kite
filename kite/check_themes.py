@@ -63,7 +63,6 @@ from kite.checks import check_isolation_boundaries
 from kite.checks import check_key_access_control
 from kite.checks import check_kms_confused_deputy_protection
 from kite.checks import check_lambda_confused_deputy_protection
-from kite.checks import check_limit_access_to_production_environments
 from kite.checks import check_log_alerting
 from kite.checks import check_log_retention
 from kite.checks import check_management_account_workloads
@@ -134,6 +133,7 @@ from kite.checks import ImplementQueryingForLogsCheck
 from kite.checks import ImplementRetentionPoliciesCheck
 from kite.checks import IncidentResponsePlansCheck
 from kite.checks import LessonsLearnedFrameworkCheck
+from kite.checks import LimitAccessToProductionEnvironmentsCheck
 from kite.checks import MacieScansForSensitiveDataCheck
 from kite.checks import MaintainInventoryOfSharedResourcesCheck
 from kite.checks import MonitorKeyUsageCheck
@@ -349,7 +349,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_no_full_access_to_sensitive_services,
             check_no_readonly_third_party_access,
             check_admin_privileges_are_restricted,
-            check_limit_access_to_production_environments,
+            LimitAccessToProductionEnvironmentsCheck(),
             S3ConfusedDeputyProtectionCheck(),
             SnsConfusedDeputyProtectionCheck(),
             SqsConfusedDeputyProtectionCheck(),

@@ -64,7 +64,6 @@ from kite.checks import check_key_access_control
 from kite.checks import check_kms_confused_deputy_protection
 from kite.checks import check_lambda_confused_deputy_protection
 from kite.checks import check_log_alerting
-from kite.checks import check_log_retention
 from kite.checks import check_management_account_workloads
 from kite.checks import check_migrate_from_oai
 from kite.checks import check_monitor_and_response_to_s3_public_access
@@ -133,6 +132,7 @@ from kite.checks import ImplementRetentionPoliciesCheck
 from kite.checks import IncidentResponsePlansCheck
 from kite.checks import LessonsLearnedFrameworkCheck
 from kite.checks import LimitAccessToProductionEnvironmentsCheck
+from kite.checks import LogRetentionCheck
 from kite.checks import MacieScansForSensitiveDataCheck
 from kite.checks import MaintainInventoryOfSharedResourcesCheck
 from kite.checks import MonitorKeyUsageCheck
@@ -440,7 +440,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_organizational_cloudtrail,
             check_vpc_flow_logs_enabled,
             ResolverQueryLogsEnabledCheck(),
-            check_log_retention,
+            LogRetentionCheck(),
             check_waf_web_acl_logging_enabled,
             check_elb_logging_enabled,
             check_eks_control_plane_logging_enabled,

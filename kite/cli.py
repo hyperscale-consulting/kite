@@ -8,7 +8,8 @@ from datetime import datetime
 
 import click
 import yaml
-from botocore.exceptions import ClientError, TokenRetrievalError
+from botocore.exceptions import ClientError
+from botocore.exceptions import TokenRetrievalError
 from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Confirm

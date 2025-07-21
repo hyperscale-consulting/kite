@@ -165,7 +165,7 @@ from kite.checks.lessons_learned_framework import LessonsLearnedFrameworkCheck
 from kite.checks.limit_access_to_production_environments import (
     LimitAccessToProductionEnvironmentsCheck,
 )
-from kite.checks.log_retention import check_log_retention
+from kite.checks.log_retention import LogRetentionCheck
 from kite.checks.macie_scans_for_sensitive_data import MacieScansForSensitiveDataCheck
 from kite.checks.maintain_inventory_of_shared_resources import (
     MaintainInventoryOfSharedResourcesCheck,
@@ -407,7 +407,7 @@ __all__ = [
     "check_organizational_cloudtrail",
     "check_vpc_flow_logs_enabled",
     "ResolverQueryLogsEnabledCheck",
-    "check_log_retention",
+    "LogRetentionCheck",
     "check_waf_web_acl_logging_enabled",
     "check_elb_logging_enabled",
     "check_eks_control_plane_logging_enabled",

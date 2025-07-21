@@ -22,8 +22,6 @@ class SecurityRisksCheck:
 
     def run(self) -> CheckResult:
         context = (
-            "This check verifies that teams have done a good job at identifying and "
-            "addressing security risks.\n\n"
             "Consider the following factors:\n"
             "- Have teams identified security risks - are there any obvious STRIDE "
             "threats missing?\n"

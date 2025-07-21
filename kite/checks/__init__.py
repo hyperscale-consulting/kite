@@ -36,7 +36,7 @@ from kite.checks.automate_forensics import AutomateForensicsCheck
 from kite.checks.automate_malware_and_threat_detection import (
     AutomateMalwareAndThreatDetectionCheck,
 )
-from kite.checks.automate_patch_management import check_automate_patch_management
+from kite.checks.automate_patch_management import AutomatePatchManagementCheck
 from kite.checks.automate_s3_data_retention import AutomateS3DataRetentionCheck
 from kite.checks.automated_security_tests import AutomatedSecurityTestsCheck
 from kite.checks.avoid_insecure_ssl_ciphers import check_avoid_insecure_ssl_ciphers
@@ -467,7 +467,6 @@ __all__ = [
     "ThreatModelPipelinesCheck",
     "SecurityGuardiansProgramCheck",
     "check_scan_workloads_for_vulnerabilities",
-    "check_automate_patch_management",
     "VulnerabilityScanningInCICDPipelinesCheck",
     "AutomateMalwareAndThreatDetectionCheck",
     "UseHardenedImagesCheck",
@@ -510,4 +509,5 @@ __all__ = [
     "DetectiveEnabledCheck",
     "ControlNetworkFlowsWithSGsCheck",
     "ControlNetworkFlowsWithRouteTablesCheck",
+    "AutomatePatchManagementCheck",
 ]

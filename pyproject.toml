@@ -12,10 +12,11 @@ authors = [
 ]
 urls = { repository = "https://github.com/hyperscale-consulting/kite" }
 dependencies = [
-    "click>=8.0.0",
-    "rich>=10.0.0",
-    "boto3>=1.26.0",
-    "pyyaml>=6.0.0",
+  "click>=8.0.0",
+  "rich>=10.0.0",
+  "boto3>=1.26.0",
+  "pyyaml>=6.0.0",
+  "prompt_toolkit>=3.0.0",
 ]
 
 [project.scripts]

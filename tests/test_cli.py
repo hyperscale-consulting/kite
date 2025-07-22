@@ -3,6 +3,9 @@ from unittest.mock import Mock
 
 import pytest
 from click.testing import CliRunner
+from prompt_toolkit import PromptSession
+from prompt_toolkit.input import create_pipe_input
+from prompt_toolkit.output import DummyOutput
 
 from kite import cloudfront
 from kite import dynamodb
@@ -269,7 +272,7 @@ def test_run_collect(runner, config_path):
     assert result.exit_code == 0
 
 
-def test_run_assess(runner, tmp_path):
+def test_run_assess(runner, tmp_path, monkeypatch):
     base_path = Path(__file__).parent
     config = Config.create(
         management_account_id="111111111111",
@@ -287,51 +290,28 @@ def test_run_assess(runner, tmp_path):
         answer = True
         while True:
             if answer:
-                yield b"y\n"
+                yield "y\n"
             else:
-                yield b"Because reasons...\n"
+                yield "Because reasons...\n"
             answer = not answer
 
-    class TestInput:
-        def __init__(self, responses):
-            self.responses = responses
-            self.buffer = b""
-            self.exhausted = False
+    with create_pipe_input() as pipe_input:
+        test_session = PromptSession(input=pipe_input, output=DummyOutput())
+        monkeypatch.setattr("kite.ui.prompt_session", test_session)
+        monkeypatch.setattr("kite.ui.confirm_session", test_session)
 
-        def fill_buffer(self, size=None):
-            while not self.exhausted and (size is None or len(self.buffer) < size):
-                try:
-                    self.buffer += next(self.responses)
-                except StopIteration:
-                    self.exhaused = True
-                    break
+        for _ in range(500):
+            pipe_input.send_text(next(responses()))
 
-        def read(self, n=-1):
-            if n == -1:
-                self.fill_buffer()
-                result, self.buffer = self.buffer, b""
-                return result
-            else:
-                self.fill_buffer(n)
-                result, self.buffer = self.buffer[:n], self.buffer[n:]
-                return result
-
-        def readable(self):
-            return True
-
-        def writable(self):
-            return False
-
-        def seekable(self):
-            return False
-
-    result = runner.invoke(
-        main,
-        ["assess", "--config", config_path, "--no-auto-save"],
-        input=TestInput(responses()),
-    )
-    assert result.exit_code == 0
-    assessment = Assessment.load()
-    assert assessment.get_finding("root-account-monitoring")["status"] == "PASS"
-    assert assessment.get_finding("root-actions-disallowed")["status"] == "FAIL"
-    assert assessment.get_finding("no-permissive-role-assumption")["status"] == "PASS"
+        result = runner.invoke(
+            main,
+            ["assess", "--config", config_path, "--no-auto-save"],
+        )
+        print(result.output)
+        assert result.exit_code == 0
+        assessment = Assessment.load()
+        assert assessment.get_finding("root-account-monitoring")["status"] == "PASS"
+        assert assessment.get_finding("root-actions-disallowed")["status"] == "FAIL"
+        assert (
+            assessment.get_finding("no-permissive-role-assumption")["status"] == "PASS"
+        )

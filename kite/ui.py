@@ -8,15 +8,16 @@ prompt_session = PromptSession()
 confirm_session = PromptSession()
 
 
-def prompt(prompt):
-    return prompt_session.prompt(f"{prompt}: ")
+def prompt(prompt, default=None):
+    kwargs = default and dict(default=default) or {}
+    return prompt_session.prompt(f"{prompt}: ", **kwargs)
 
 
 def _is_yes_no(text):
     return text.lower() in ("yes", "y", "no", "n")
 
 
-def confirm(prompt, default):
+def confirm(prompt, default=None):
     answer = confirm_session.prompt(
         f"{prompt} [y/n]: ",
         validator=Validator.from_callable(

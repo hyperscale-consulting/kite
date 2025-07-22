@@ -12,8 +12,6 @@ from botocore.exceptions import ClientError
 from botocore.exceptions import TokenRetrievalError
 from rich.console import Console
 from rich.panel import Panel
-from rich.prompt import Confirm
-from rich.prompt import Prompt
 from rich.table import Table
 
 from kite.accessanalyzer import list_analyzers
@@ -34,6 +32,8 @@ from kite.helpers import prompt_user_with_panel
 from kite.organizations import fetch_account_ids
 from kite.organizations import get_account_details
 from kite.s3 import get_buckets
+from kite.ui import confirm
+from kite.ui import prompt
 from kite.wafv2 import get_web_acls
 
 console = Console()
@@ -435,23 +435,17 @@ def configure():
 
     # Check if kite.yaml exists
     if os.path.exists("kite.yaml"):
-        if not Confirm.ask("kite.yaml already exists. Overwrite?"):
+        if not confirm("kite.yaml already exists. Overwrite?"):
             return
 
     # Ask the user for the management account ID, if they have one
-    management_account_id = Prompt.ask(
-        "Management Account ID",
-        default="",
-        show_default=False,
-    ).strip()
+    management_account_id = prompt("Management Account ID").strip()
 
     # Ask the user for the list of account IDs to include in the assessment
     while True:
-        account_ids_input = Prompt.ask(
+        account_ids_input = prompt(
             "Account IDs (comma separated) - leave blank for all accounts in an AWS "
             "Organization",
-            default="",
-            show_default=False,
         ).strip()
 
         if not management_account_id and not account_ids_input:
@@ -471,10 +465,8 @@ def configure():
 
     # Ask the user for the list of regions to include in the assessment
     while True:
-        active_regions_input = Prompt.ask(
+        active_regions_input = prompt(
             "Active Regions (comma separated)",
-            default="",
-            show_default=False,
         ).strip()
 
         if not active_regions_input:
@@ -491,7 +483,7 @@ def configure():
 
     # Ask the user for the name of the role to use for the assessment
     role_name = (
-        Prompt.ask(
+        prompt(
             "Role Name",
             default="KiteAssessmentRole",
         ).strip()
@@ -500,10 +492,7 @@ def configure():
 
     # Ask for the external ID
     while True:
-        external_id = Prompt.ask(
-            "External ID",
-            show_default=False,
-        ).strip()
+        external_id = prompt("External ID").strip()
         if external_id:
             break
         else:
@@ -511,7 +500,7 @@ def configure():
 
     # Ask for the prowler output directory
     prowler_output_dir = (
-        Prompt.ask(
+        prompt(
             "Prowler Output Directory",
             default="output",
         ).strip()
@@ -520,7 +509,7 @@ def configure():
 
     # Ask for the data directory
     data_dir = (
-        Prompt.ask(
+        prompt(
             "Data Directory",
             default=".kite/audit",
         ).strip()

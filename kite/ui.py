@@ -1,13 +1,14 @@
+import readline  # noqa: F401 enable readline support
+
 from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Confirm
-from rich.prompt import Prompt
 
 console = Console(emoji=False)
 
 
 def prompt(prompt):
-    return Prompt.ask(prompt)
+    return input(f"{prompt}: ")
 
 
 def confirm(prompt, default):

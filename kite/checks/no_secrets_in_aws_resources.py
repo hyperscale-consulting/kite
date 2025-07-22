@@ -47,120 +47,106 @@ def check_no_secrets_in_aws_resources() -> dict[str, Any]:
                             - region: str
                             - extended_status: str
     """
-    try:
-        # Get prowler output
-        prowler_results = get_prowler_output()
+    # Get prowler output
+    prowler_results = get_prowler_output()
 
-        # Track failed checks
-        failed_checks: list[dict[str, Any]] = []
+    # Track failed checks
+    failed_checks: list[dict[str, Any]] = []
 
-        # Check each secrets-related prowler check
-        for check_id in SECRETS_CHECKS:
-            if check_id in prowler_results:
-                # Get accounts where this check failed
-                failed_accounts = []
-                for result in prowler_results[check_id]:
-                    if result.status == "FAIL":
-                        # Find or create account entry
-                        account_entry = next(
-                            (
-                                acc
-                                for acc in failed_accounts
-                                if acc["account_id"] == result.account_id
-                            ),
-                            None,
-                        )
-                        if not account_entry:
-                            account_entry = {
-                                "account_id": result.account_id,
-                                "resources": [],
-                            }
-                            failed_accounts.append(account_entry)
+    # Check each secrets-related prowler check
+    for check_id in SECRETS_CHECKS:
+        if check_id in prowler_results:
+            # Get accounts where this check failed
+            failed_accounts = []
+            for result in prowler_results[check_id]:
+                if result.status == "FAIL":
+                    # Find or create account entry
+                    account_entry = next(
+                        (
+                            acc
+                            for acc in failed_accounts
+                            if acc["account_id"] == result.account_id
+                        ),
+                        None,
+                    )
+                    if not account_entry:
+                        account_entry = {
+                            "account_id": result.account_id,
+                            "resources": [],
+                        }
+                        failed_accounts.append(account_entry)
 
-                        # Add resource details
-                        account_entry["resources"].append(
-                            {
-                                "resource_uid": result.resource_uid,
-                                "resource_name": result.resource_name,
-                                "resource_details": result.resource_details,
-                                "region": result.region,
-                                "extended_status": result.extended_status,
-                            }
-                        )
-
-                if failed_accounts:
-                    failed_checks.append(
-                        {"check_id": check_id, "accounts": failed_accounts}
+                    # Add resource details
+                    account_entry["resources"].append(
+                        {
+                            "resource_uid": result.resource_uid,
+                            "resource_name": result.resource_name,
+                            "resource_details": result.resource_details,
+                            "region": result.region,
+                            "extended_status": result.extended_status,
+                        }
                     )
 
-        # If no failures found, return PASS
-        if not failed_checks:
-            return {
-                "check_id": CHECK_ID,
-                "check_name": CHECK_NAME,
-                "status": "PASS",
-                "details": {
-                    "message": "No secrets found in AWS resources.",
-                },
-            }
+            if failed_accounts:
+                failed_checks.append(
+                    {"check_id": check_id, "accounts": failed_accounts}
+                )
 
-        # Format the findings for display
-        findings_message = (
-            "The following potential secrets were found in AWS resources:\n\n"
-        )
-        for check in failed_checks:
-            findings_message += f"Check: {check['check_id']}\n"
-            for account in check["accounts"]:
-                findings_message += f"  Account: {account['account_id']}\n"
-                for resource in account["resources"]:
-                    resource_name = (
-                        resource["resource_name"] or resource["resource_uid"]
-                    )
-                    findings_message += f"    Resource: {resource_name}\n"
-                    findings_message += f"    Region: {resource['region']}\n"
-                    findings_message += f"    Details: {resource['resource_details']}\n"
-                    findings_message += f"    Status: {resource['extended_status']}\n\n"
-
-        # Use manual_check to get user confirmation
-        result = manual_check(
-            check_id=CHECK_ID,
-            check_name=CHECK_NAME,
-            message=(
-                "This check verifies that no AWS resources contain secrets.\n\n"
-                f"{findings_message}\n"
-                "Please review these findings and confirm if they are valid or "
-                "false positives."
-            ),
-            prompt=(
-                "After reviewing the findings above, are you happy that there "
-                "are no actual secrets in AWS resources?"
-            ),
-            pass_message=(
-                "No actual secrets were found in AWS resources. Any findings were "
-                "confirmed as false positives."
-            ),
-            fail_message=(
-                "Potential secrets were found in AWS resources that need to be "
-                "addressed."
-            ),
-            default=True,
-        )
-
-        # Add the findings to the result details
-        if "details" in result:
-            result["details"]["findings"] = failed_checks
-
-        return result
-
-    except Exception as e:
+    # If no failures found, return PASS
+    if not failed_checks:
         return {
             "check_id": CHECK_ID,
             "check_name": CHECK_NAME,
-            "status": "ERROR",
+            "status": "PASS",
             "details": {
-                "message": f"Error checking for secrets in AWS resources: {str(e)}",
+                "message": "No secrets found in AWS resources.",
             },
         }
+
+    # Format the findings for display
+    findings_message = (
+        "The following potential secrets were found in AWS resources:\n\n"
+    )
+    for check in failed_checks:
+        findings_message += f"Check: {check['check_id']}\n"
+        for account in check["accounts"]:
+            findings_message += f"  Account: {account['account_id']}\n"
+            for resource in account["resources"]:
+                resource_name = resource["resource_name"] or resource["resource_uid"]
+                findings_message += f"    Resource: {resource_name}\n"
+                findings_message += f"    Region: {resource['region']}\n"
+                findings_message += f"    Details: {resource['resource_details']}\n"
+                findings_message += f"    Status: {resource['extended_status']}\n\n"
+
+    # Use manual_check to get user confirmation
+    result = manual_check(
+        check_id=CHECK_ID,
+        check_name=CHECK_NAME,
+        message=(
+            "This check verifies that no AWS resources contain secrets.\n\n"
+            f"{findings_message}\n"
+            "Please review these findings and confirm if they are valid or "
+            "false positives."
+        ),
+        prompt=(
+            "After reviewing the findings above, are you happy that there "
+            "are no actual secrets in AWS resources?"
+        ),
+        pass_message=(
+            "No actual secrets were found in AWS resources. Any findings were "
+            "confirmed as false positives."
+        ),
+        fail_message=(
+            "Potential secrets were found in AWS resources that need to be addressed."
+        ),
+        default=True,
+    )
+
+    # Add the findings to the result details
+    if "details" in result:
+        result["details"]["findings"] = failed_checks
+
+    return result
 
 
 # Attach the check ID and name to the function

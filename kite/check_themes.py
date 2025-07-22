@@ -7,6 +7,7 @@ from kite.checks import AccountStandardsCheck
 from kite.checks import AccurateAccountContactDetailsCheck
 from kite.checks import ActiveExternalAccessAnalyzerCheck
 from kite.checks import ActiveUnusedAccessAnalyzerCheck
+from kite.checks import AdminPrivilegesAreRestrictedCheck
 from kite.checks import ApprovalProcessForResourceSharingCheck
 from kite.checks import AutomateDeploymentsCheck
 from kite.checks import AutomatedSecurityTestsCheck
@@ -21,7 +22,6 @@ from kite.checks import AwsServiceEvaluationCheck
 from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import Check
-from kite.checks import check_admin_privileges_are_restricted
 from kite.checks import check_air_gapped_backup_vault
 from kite.checks import check_api_gateway_logging_enabled
 from kite.checks import check_audit_interactive_access_with_ssm
@@ -348,7 +348,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_no_permissive_role_assumption,
             check_no_full_access_to_sensitive_services,
             NoReadonlyThirdPartyAccessCheck(),
-            check_admin_privileges_are_restricted,
+            AdminPrivilegesAreRestrictedCheck(),
             LimitAccessToProductionEnvironmentsCheck(),
             S3ConfusedDeputyProtectionCheck(),
             SnsConfusedDeputyProtectionCheck(),

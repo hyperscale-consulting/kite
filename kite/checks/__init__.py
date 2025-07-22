@@ -12,7 +12,7 @@ from kite.checks.active_external_access_analyzer import (
 )
 from kite.checks.active_unused_access_analyzer import ActiveUnusedAccessAnalyzerCheck
 from kite.checks.admin_privileges_are_restricted import (
-    check_admin_privileges_are_restricted,
+    AdminPrivilegesAreRestrictedCheck,
 )
 from kite.checks.air_gapped_backup_vault import check_air_gapped_backup_vault
 from kite.checks.api_gateway_logging_enabled import check_api_gateway_logging_enabled
@@ -363,7 +363,7 @@ __all__ = [
     "check_no_full_access_to_sensitive_services",
     "NoReadonlyThirdPartyAccessCheck",
     "CrossAccountConfusedDeputyPreventionCheck",
-    "check_admin_privileges_are_restricted",
+    "AdminPrivilegesAreRestrictedCheck",
     "LimitAccessToProductionEnvironmentsCheck",
     "S3ConfusedDeputyProtectionCheck",
     "SnsConfusedDeputyProtectionCheck",

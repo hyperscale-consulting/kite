@@ -439,7 +439,9 @@ def configure():
             return
 
     # Ask the user for the management account ID, if they have one
-    management_account_id = prompt("Management Account ID").strip()
+    management_account_id = prompt(
+        "Management Account ID (if using AWS Organizations)"
+    ).strip()
 
     # Ask the user for the list of account IDs to include in the assessment
     while True:

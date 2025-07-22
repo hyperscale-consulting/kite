@@ -2,6 +2,7 @@ from collections.abc import Callable
 
 from kite.checks import AccessManagementLifecycleCheck
 from kite.checks import AccessManagementLifecycleImplementedCheck
+from kite.checks import AccountSeparationCheck
 from kite.checks import AccountStandardsCheck
 from kite.checks import AccurateAccountContactDetailsCheck
 from kite.checks import ActiveExternalAccessAnalyzerCheck
@@ -20,7 +21,6 @@ from kite.checks import AwsServiceEvaluationCheck
 from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import Check
-from kite.checks import check_account_separation
 from kite.checks import check_admin_privileges_are_restricted
 from kite.checks import check_air_gapped_backup_vault
 from kite.checks import check_api_gateway_logging_enabled
@@ -199,7 +199,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         ),
         "checks": [
             check_aws_organizations_usage,
-            check_account_separation,
+            AccountSeparationCheck(),
             check_ou_structure,
             check_management_account_workloads,
             DelegatedAdminForSecurityServices(),

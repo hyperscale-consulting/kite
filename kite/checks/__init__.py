@@ -2,7 +2,7 @@ from kite.checks.access_management_lifecycle import AccessManagementLifecycleChe
 from kite.checks.access_management_lifecycle_implemented import (
     AccessManagementLifecycleImplementedCheck,
 )
-from kite.checks.account_separation import check_account_separation
+from kite.checks.account_separation import AccountSeparationCheck
 from kite.checks.account_standards import AccountStandardsCheck
 from kite.checks.accurate_account_contact_details import (
     AccurateAccountContactDetailsCheck,
@@ -316,7 +316,7 @@ from kite.checks.workload_dependency_updates import WorkloadDependencyUpdatesChe
 
 __all__ = [
     "check_aws_organizations_usage",
-    "check_account_separation",
+    "AccountSeparationCheck",
     "check_ou_structure",
     "check_management_account_workloads",
     "DelegatedAdminForSecurityServices",

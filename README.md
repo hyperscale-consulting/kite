@@ -138,7 +138,7 @@ Once installed and configured, you can run the `prowler` CLI for a standalone ac
 
 ```zsh
 prowler aws \
-    -R arn:aws:iam::<ACCOUNT-ID>:role/KiteAssessmentRole
+    -R arn:aws:iam::<ACCOUNT-ID>:role/KiteAssessmentRole --external-id <EXTERNAL-ID>
 ```
 
 Or for a list of accounts in an AWS Organization:

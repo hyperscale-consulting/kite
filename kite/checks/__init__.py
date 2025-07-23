@@ -51,7 +51,7 @@ from kite.checks.centralized_artifact_repos import CentralizedArtifactReposCheck
 from kite.checks.cert_deployment_and_renewal import CertDeploymentAndRenewalCheck
 from kite.checks.cloudfront_logging_enabled import CloudfrontLoggingEnabledCheck
 from kite.checks.code_reviews import CodeReviewsCheck
-from kite.checks.complex_passwords import check_complex_passwords
+from kite.checks.complex_passwords import ComplexPasswordsCheck
 from kite.checks.config_recording_enabled import check_config_recording_enabled
 from kite.checks.control_implementation_validation import (
     ControlImplementationValidationCheck,
@@ -347,7 +347,7 @@ __all__ = [
     "SecurityRisksCheck",
     "check_security_services_evaluation",
     "check_require_mfa",
-    "check_complex_passwords",
+    "ComplexPasswordsCheck",
     "check_no_access_keys",
     "NoIamUserAccessCheck",
     "SecureSecretsStorageCheck",

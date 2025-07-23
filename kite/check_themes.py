@@ -31,7 +31,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
-from kite.checks import check_complex_passwords
 from kite.checks import check_config_recording_enabled
 from kite.checks import check_credential_rotation
 from kite.checks import check_data_perimeter_confused_deputy_protection
@@ -98,6 +97,7 @@ from kite.checks import check_vpc_flow_logs_enabled
 from kite.checks import check_waf_web_acl_logging_enabled
 from kite.checks import CloudfrontLoggingEnabledCheck
 from kite.checks import CodeReviewsCheck
+from kite.checks import ComplexPasswordsCheck
 from kite.checks import ControlImplementationValidationCheck
 from kite.checks import ControlNetworkFlowsWithRouteTablesCheck
 from kite.checks import ControlNetworkFlowsWithSGsCheck
@@ -281,7 +281,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": "Checks related to the use of strong sign-in mechanisms",
         "checks": [
             check_require_mfa,
-            check_complex_passwords,
+            ComplexPasswordsCheck(),
         ],
     },
     "Use temporary credentials": {

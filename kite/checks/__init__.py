@@ -44,7 +44,7 @@ from kite.checks.aws_control_documentation import AwsControlDocumentationCheck
 from kite.checks.aws_managed_services_threat_intel import (
     AwsManagedServicesThreatIntelCheck,
 )
-from kite.checks.aws_organizations import check_aws_organizations_usage
+from kite.checks.aws_organizations import AwsOrganizationsUsageCheck
 from kite.checks.aws_service_evaluation import AwsServiceEvaluationCheck
 from kite.checks.capture_key_contacts import CaptureKeyContactsCheck
 from kite.checks.centralized_artifact_repos import CentralizedArtifactReposCheck
@@ -315,7 +315,7 @@ from kite.checks.well_defined_control_objectives import (
 from kite.checks.workload_dependency_updates import WorkloadDependencyUpdatesCheck
 
 __all__ = [
-    "check_aws_organizations_usage",
+    "AwsOrganizationsUsageCheck",
     "AccountSeparationCheck",
     "check_ou_structure",
     "check_management_account_workloads",

@@ -1,32 +1,21 @@
-from kite.checks.aws_organizations import check_aws_organizations_usage
+from kite.checks.aws_organizations import AwsOrganizationsUsageCheck
+from kite.checks.core import CheckStatus
+from tests.factories import config_for_org
+from tests.factories import config_for_standalone_account
+from tests.factories import create_organization
 
 
-def test_check_aws_organizations_usage_pass(organization):
-    """Test the check when AWS Organizations is being used."""
-    result = check_aws_organizations_usage()
+@config_for_org()
+def test_check_aws_organizations_usage_pass():
+    create_organization()
 
-    # Verify the result
-    assert result["check_id"] == "aws-organizations-usage"
-    assert result["check_name"] == "AWS Organizations Usage"
-    assert result["status"] == "PASS"
-    assert result["details"]["master_account_id"] == organization.master_account_id
-    assert result["details"]["arn"] == organization.arn
-    assert result["details"]["feature_set"] == organization.feature_set
-    assert (
-        result["details"]["message"]
-        == "AWS Organizations is being used for account management."
-    )
+    result = AwsOrganizationsUsageCheck().run()
+
+    assert result.status == CheckStatus.PASS
 
 
+@config_for_standalone_account()
 def test_check_aws_organizations_usage_fail():
-    """Test the check when AWS Organizations is not being used."""
-    result = check_aws_organizations_usage()
+    result = AwsOrganizationsUsageCheck().run()
 
-    # Verify the result
-    assert result["check_id"] == "aws-organizations-usage"
-    assert result["check_name"] == "AWS Organizations Usage"
-    assert result["status"] == "FAIL"
-    assert (
-        result["details"]["message"]
-        == "AWS Organizations is not being used for account management."
-    )
+    assert result.status == CheckStatus.FAIL

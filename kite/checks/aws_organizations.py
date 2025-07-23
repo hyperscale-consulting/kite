@@ -1,45 +1,38 @@
-"""AWS Organizations usage check module."""
-
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.data import get_organization
 
-CHECK_ID = "aws-organizations-usage"
-CHECK_NAME = "AWS Organizations Usage"
 
+class AwsOrganizationsUsageCheck:
+    def __init__(self):
+        self.check_id = "aws-organizations-usage"
+        self.check_name = "AWS Organizations Usage"
 
-def check_aws_organizations_usage() -> dict:
-    """
-    Check if AWS Organizations is being used for account management.
+    @property
+    def question(self) -> str:
+        return ""  # fully automated check
 
-    Returns:
-        A dictionary containing the finding for the AWS Organizations Usage check.
-    """
-    org = get_organization()
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies whether AWS Organizations is being used for account "
+            "management."
+        )
 
-    if org is None:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "FAIL",
-            "details": {
-                "message": (
-                    "AWS Organizations is not being used for account management."
-                ),
-            },
-        }
-    else:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "PASS",
-            "details": {
-                "master_account_id": org.master_account_id,
-                "arn": org.arn,
-                "feature_set": org.feature_set,
-                "message": ("AWS Organizations is being used for account management."),
-            },
-        }
-
-
-# Attach the check ID and name to the function
-check_aws_organizations_usage._CHECK_ID = CHECK_ID
-check_aws_organizations_usage._CHECK_NAME = CHECK_NAME
+    def run(self) -> CheckResult:
+        org = get_organization()
+        if org is None:
+            return CheckResult(
+                status=CheckStatus.FAIL,
+                reason="AWS Organizations is not being used for account management.",
+            )
+        else:
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason="AWS Organizations is being used for account management.",
+                details={
+                    "master_account_id": org.master_account_id,
+                    "arn": org.arn,
+                    "feature_set": org.feature_set,
+                },
+            )

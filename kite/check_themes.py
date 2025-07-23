@@ -26,11 +26,11 @@ from kite.checks import AvoidInteractiveAccessCheck
 from kite.checks import AvoidRootUsageCheck
 from kite.checks import AwsControlDocumentationCheck
 from kite.checks import AwsManagedServicesThreatIntelCheck
+from kite.checks import AwsOrganizationsUsageCheck
 from kite.checks import AwsServiceEvaluationCheck
 from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import Check
-from kite.checks import check_aws_organizations_usage
 from kite.checks import check_cert_deployment_and_renewal
 from kite.checks import check_cloudfront_logging_enabled
 from kite.checks import check_complex_passwords
@@ -198,7 +198,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "Checks related to organizational structure, landing zone and guardrails"
         ),
         "checks": [
-            check_aws_organizations_usage,
+            AwsOrganizationsUsageCheck(),
             AccountSeparationCheck(),
             check_ou_structure,
             check_management_account_workloads,

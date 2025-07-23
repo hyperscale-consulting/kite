@@ -20,7 +20,7 @@ from kite.checks.approval_process_for_resource_sharing import (
     ApprovalProcessForResourceSharingCheck,
 )
 from kite.checks.audit_interactive_access_with_ssm import (
-    check_audit_interactive_access_with_ssm,
+    AuditInteractiveAccessWithSSMCheck,
 )
 from kite.checks.auto_remediate_non_compliant_resources import (
     AutoRemediateNonCompliantResourcesCheck,
@@ -469,7 +469,7 @@ __all__ = [
     "UseHardenedImagesCheck",
     "check_no_rdp_or_ssh_access",
     "check_avoid_interactive_access",
-    "check_audit_interactive_access_with_ssm",
+    "AuditInteractiveAccessWithSSMCheck",
     "ValidateSoftwareIntegrityCheck",
     "check_forensics_ou",
     "SecurityIrPlaybooksCheck",

@@ -11,6 +11,7 @@ from kite.checks import AdminPrivilegesAreRestrictedCheck
 from kite.checks import AirGappedBackupVaultCheck
 from kite.checks import ApiGatewayLoggingEnabledCheck
 from kite.checks import ApprovalProcessForResourceSharingCheck
+from kite.checks import AuditInteractiveAccessWithSSMCheck
 from kite.checks import AutomateDeploymentsCheck
 from kite.checks import AutomatedSecurityTestsCheck
 from kite.checks import AutomateForensicsCheck
@@ -25,7 +26,6 @@ from kite.checks import AwsServiceEvaluationCheck
 from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import Check
-from kite.checks import check_audit_interactive_access_with_ssm
 from kite.checks import check_automate_data_at_rest_protection_with_guardduty
 from kite.checks import check_automate_ddb_data_retention
 from kite.checks import check_avoid_insecure_ssl_ciphers
@@ -543,7 +543,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "checks": [
             check_no_rdp_or_ssh_access,
             check_avoid_interactive_access,
-            check_audit_interactive_access_with_ssm,
+            AuditInteractiveAccessWithSSMCheck(),
         ],
     },
     "Validate software integrity": {

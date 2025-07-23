@@ -15,6 +15,7 @@ from kite.checks import AutomateForensicsCheck
 from kite.checks import AutomateMalwareAndThreatDetectionCheck
 from kite.checks import AutomatePatchManagementCheck
 from kite.checks import AutomateS3DataRetentionCheck
+from kite.checks import AutoRemediateNonCompliantResourcesCheck
 from kite.checks import AvoidRootUsageCheck
 from kite.checks import AwsControlDocumentationCheck
 from kite.checks import AwsManagedServicesThreatIntelCheck
@@ -25,7 +26,6 @@ from kite.checks import Check
 from kite.checks import check_air_gapped_backup_vault
 from kite.checks import check_api_gateway_logging_enabled
 from kite.checks import check_audit_interactive_access_with_ssm
-from kite.checks import check_auto_remediate_non_compliant_resources
 from kite.checks import check_automate_data_at_rest_protection_with_guardduty
 from kite.checks import check_automate_ddb_data_retention
 from kite.checks import check_avoid_insecure_ssl_ciphers
@@ -483,7 +483,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "automatically when resources are found to be non-compliant"
         ),
         "checks": [
-            check_auto_remediate_non_compliant_resources,
+            AutoRemediateNonCompliantResourcesCheck(),
         ],
     },
     "Create network layers": {

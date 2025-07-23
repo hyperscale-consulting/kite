@@ -23,7 +23,7 @@ from kite.checks.audit_interactive_access_with_ssm import (
     check_audit_interactive_access_with_ssm,
 )
 from kite.checks.auto_remediate_non_compliant_resources import (
-    check_auto_remediate_non_compliant_resources,
+    AutoRemediateNonCompliantResourcesCheck,
 )
 from kite.checks.automate_data_at_rest_protection_with_guardduty import (
     check_automate_data_at_rest_protection_with_guardduty,
@@ -412,7 +412,7 @@ __all__ = [
     "SecurityDataPublishedToLogArchiveAccountCheck",
     "check_deploy_log_analysis_tools_in_audit_account",
     "SecurityEventCorrelationCheck",
-    "check_auto_remediate_non_compliant_resources",
+    "AutoRemediateNonCompliantResourcesCheck",
     "check_tag_data_with_sensitivity_level",
     "check_isolation_boundaries",
     "SensitivityControlsCheck",

@@ -26,7 +26,7 @@ from kite.checks.auto_remediate_non_compliant_resources import (
     AutoRemediateNonCompliantResourcesCheck,
 )
 from kite.checks.automate_data_at_rest_protection_with_guardduty import (
-    check_automate_data_at_rest_protection_with_guardduty,
+    AutomateDataAtRestProtectionWithGuardDutyCheck,
 )
 from kite.checks.automate_ddb_data_retention import check_automate_ddb_data_retention
 from kite.checks.automate_deployments import AutomateDeploymentsCheck
@@ -433,7 +433,7 @@ __all__ = [
     "check_detect_encryption_at_rest_misconfig",
     "EnforceDataProtectionAtRestWithPolicyAsCodeCheck",
     "EstablishLoggingAndAuditTrailsForPrivateCACheck",
-    "check_automate_data_at_rest_protection_with_guardduty",
+    "AutomateDataAtRestProtectionWithGuardDutyCheck",
     "RestoreTestingCheck",
     "check_implement_versioning_and_object_locking",
     "check_cert_deployment_and_renewal",

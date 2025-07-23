@@ -12,6 +12,7 @@ from kite.checks import AirGappedBackupVaultCheck
 from kite.checks import ApiGatewayLoggingEnabledCheck
 from kite.checks import ApprovalProcessForResourceSharingCheck
 from kite.checks import AuditInteractiveAccessWithSSMCheck
+from kite.checks import AutomateDataAtRestProtectionWithGuardDutyCheck
 from kite.checks import AutomateDeploymentsCheck
 from kite.checks import AutomatedSecurityTestsCheck
 from kite.checks import AutomateForensicsCheck
@@ -26,7 +27,6 @@ from kite.checks import AwsServiceEvaluationCheck
 from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import Check
-from kite.checks import check_automate_data_at_rest_protection_with_guardduty
 from kite.checks import check_automate_ddb_data_retention
 from kite.checks import check_avoid_insecure_ssl_ciphers
 from kite.checks import check_avoid_interactive_access
@@ -620,7 +620,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "checks": [
             check_detect_encryption_at_rest_misconfig,
             EnforceDataProtectionAtRestWithPolicyAsCodeCheck(),
-            check_automate_data_at_rest_protection_with_guardduty,
+            AutomateDataAtRestProtectionWithGuardDutyCheck(),
             AirGappedBackupVaultCheck(),
             RestoreTestingCheck(),
         ],

@@ -37,7 +37,7 @@ from kite.checks.automate_malware_and_threat_detection import (
 from kite.checks.automate_patch_management import AutomatePatchManagementCheck
 from kite.checks.automate_s3_data_retention import AutomateS3DataRetentionCheck
 from kite.checks.automated_security_tests import AutomatedSecurityTestsCheck
-from kite.checks.avoid_insecure_ssl_ciphers import check_avoid_insecure_ssl_ciphers
+from kite.checks.avoid_insecure_ssl_ciphers import AvoidInsecureSslCiphersCheck
 from kite.checks.avoid_interactive_access import check_avoid_interactive_access
 from kite.checks.avoid_root_usage import AvoidRootUsageCheck
 from kite.checks.aws_control_documentation import AwsControlDocumentationCheck
@@ -439,7 +439,7 @@ __all__ = [
     "check_cert_deployment_and_renewal",
     "check_protect_root_ca",
     "check_enforce_https",
-    "check_avoid_insecure_ssl_ciphers",
+    "AvoidInsecureSslCiphersCheck",
     "TrainForApplicationSecurityCheck",
     "ImmutableBuildsCheck",
     "ImplementAuthAcrossServicesCheck",

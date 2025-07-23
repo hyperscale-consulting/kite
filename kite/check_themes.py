@@ -21,6 +21,7 @@ from kite.checks import AutomateMalwareAndThreatDetectionCheck
 from kite.checks import AutomatePatchManagementCheck
 from kite.checks import AutomateS3DataRetentionCheck
 from kite.checks import AutoRemediateNonCompliantResourcesCheck
+from kite.checks import AvoidInsecureSslCiphersCheck
 from kite.checks import AvoidRootUsageCheck
 from kite.checks import AwsControlDocumentationCheck
 from kite.checks import AwsManagedServicesThreatIntelCheck
@@ -28,7 +29,6 @@ from kite.checks import AwsServiceEvaluationCheck
 from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import Check
-from kite.checks import check_avoid_insecure_ssl_ciphers
 from kite.checks import check_avoid_interactive_access
 from kite.checks import check_aws_organizations_usage
 from kite.checks import check_cert_deployment_and_renewal
@@ -649,7 +649,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": ("Checks related to enforcing encryption in transit"),
         "checks": [
             check_enforce_https,
-            check_avoid_insecure_ssl_ciphers,
+            AvoidInsecureSslCiphersCheck(),
         ],
     },
     "Authenticate network communications": {

@@ -28,7 +28,7 @@ from kite.checks.auto_remediate_non_compliant_resources import (
 from kite.checks.automate_data_at_rest_protection_with_guardduty import (
     AutomateDataAtRestProtectionWithGuardDutyCheck,
 )
-from kite.checks.automate_ddb_data_retention import check_automate_ddb_data_retention
+from kite.checks.automate_ddb_data_retention import AutomateDdbDataRetentionCheck
 from kite.checks.automate_deployments import AutomateDeploymentsCheck
 from kite.checks.automate_forensics import AutomateForensicsCheck
 from kite.checks.automate_malware_and_threat_detection import (
@@ -422,7 +422,7 @@ __all__ = [
     "check_detect_sensitive_data_transform",
     "ScanForSensitiveDataInDevCheck",
     "AutomateS3DataRetentionCheck",
-    "check_automate_ddb_data_retention",
+    "AutomateDdbDataRetentionCheck",
     "check_detect_missing_automated_lifecycle_management",
     "check_use_a_kms",
     "check_no_human_access_to_unencrypted_key_material",

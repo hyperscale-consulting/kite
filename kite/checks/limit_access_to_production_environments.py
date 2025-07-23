@@ -49,10 +49,6 @@ class LimitAccessToProductionEnvironmentsCheck:
         if ":user/" in principal:
             return True
 
-        # Check for AWS account root
-        # if principal.endswith(":root"):
-        #    return True
-
         return False
 
     def _save_identity_data(self, account_id: str, data: dict) -> str:

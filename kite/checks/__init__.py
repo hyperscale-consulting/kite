@@ -52,7 +52,7 @@ from kite.checks.cert_deployment_and_renewal import CertDeploymentAndRenewalChec
 from kite.checks.cloudfront_logging_enabled import CloudfrontLoggingEnabledCheck
 from kite.checks.code_reviews import CodeReviewsCheck
 from kite.checks.complex_passwords import ComplexPasswordsCheck
-from kite.checks.config_recording_enabled import check_config_recording_enabled
+from kite.checks.config_recording_enabled import ConfigRecordingEnabledCheck
 from kite.checks.control_implementation_validation import (
     ControlImplementationValidationCheck,
 )
@@ -407,7 +407,7 @@ __all__ = [
     "check_rds_logging_enabled",
     "CloudfrontLoggingEnabledCheck",
     "ApiGatewayLoggingEnabledCheck",
-    "check_config_recording_enabled",
+    "ConfigRecordingEnabledCheck",
     "check_log_alerting",
     "SecurityDataPublishedToLogArchiveAccountCheck",
     "check_deploy_log_analysis_tools_in_audit_account",

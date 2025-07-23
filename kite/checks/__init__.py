@@ -14,7 +14,7 @@ from kite.checks.active_unused_access_analyzer import ActiveUnusedAccessAnalyzer
 from kite.checks.admin_privileges_are_restricted import (
     AdminPrivilegesAreRestrictedCheck,
 )
-from kite.checks.air_gapped_backup_vault import check_air_gapped_backup_vault
+from kite.checks.air_gapped_backup_vault import AirGappedBackupVaultCheck
 from kite.checks.api_gateway_logging_enabled import check_api_gateway_logging_enabled
 from kite.checks.approval_process_for_resource_sharing import (
     ApprovalProcessForResourceSharingCheck,
@@ -434,7 +434,6 @@ __all__ = [
     "EnforceDataProtectionAtRestWithPolicyAsCodeCheck",
     "EstablishLoggingAndAuditTrailsForPrivateCACheck",
     "check_automate_data_at_rest_protection_with_guardduty",
-    "check_air_gapped_backup_vault",
     "RestoreTestingCheck",
     "check_implement_versioning_and_object_locking",
     "check_cert_deployment_and_renewal",
@@ -508,4 +507,5 @@ __all__ = [
     "ControlNetworkFlowsWithSGsCheck",
     "ControlNetworkFlowsWithRouteTablesCheck",
     "AutomatePatchManagementCheck",
+    "AirGappedBackupVaultCheck",
 ]

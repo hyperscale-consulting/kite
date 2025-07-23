@@ -9,7 +9,6 @@ from kite.checks import ActiveExternalAccessAnalyzerCheck
 from kite.checks import ActiveUnusedAccessAnalyzerCheck
 from kite.checks import AdminPrivilegesAreRestrictedCheck
 from kite.checks import AirGappedBackupVaultCheck
-from kite.checks import ApiGatewayLoggingEnabledCheck
 from kite.checks import ApprovalProcessForResourceSharingCheck
 from kite.checks import AuditInteractiveAccessWithSSMCheck
 from kite.checks import AutomateDataAtRestProtectionWithGuardDutyCheck
@@ -32,7 +31,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
-from kite.checks import check_cloudfront_logging_enabled
 from kite.checks import check_complex_passwords
 from kite.checks import check_config_recording_enabled
 from kite.checks import check_credential_rotation
@@ -98,6 +96,7 @@ from kite.checks import check_use_service_encryption_at_rest
 from kite.checks import check_vpc_endpoints_enforce_data_perimeter
 from kite.checks import check_vpc_flow_logs_enabled
 from kite.checks import check_waf_web_acl_logging_enabled
+from kite.checks import CloudfrontLoggingEnabledCheck
 from kite.checks import CodeReviewsCheck
 from kite.checks import ControlImplementationValidationCheck
 from kite.checks import ControlNetworkFlowsWithRouteTablesCheck
@@ -446,8 +445,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             EksControlPlaneLoggingEnabledCheck(),
             check_network_firewall_logging_enabled,
             check_rds_logging_enabled,
-            check_cloudfront_logging_enabled,
-            ApiGatewayLoggingEnabledCheck(),
+            CloudfrontLoggingEnabledCheck(),
             check_config_recording_enabled,
             ImplementQueryingForLogsCheck(),
             check_log_alerting,

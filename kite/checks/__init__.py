@@ -49,7 +49,7 @@ from kite.checks.aws_service_evaluation import AwsServiceEvaluationCheck
 from kite.checks.capture_key_contacts import CaptureKeyContactsCheck
 from kite.checks.centralized_artifact_repos import CentralizedArtifactReposCheck
 from kite.checks.cert_deployment_and_renewal import CertDeploymentAndRenewalCheck
-from kite.checks.cloudfront_logging_enabled import check_cloudfront_logging_enabled
+from kite.checks.cloudfront_logging_enabled import CloudfrontLoggingEnabledCheck
 from kite.checks.code_reviews import CodeReviewsCheck
 from kite.checks.complex_passwords import check_complex_passwords
 from kite.checks.config_recording_enabled import check_config_recording_enabled
@@ -405,7 +405,7 @@ __all__ = [
     "EksControlPlaneLoggingEnabledCheck",
     "check_network_firewall_logging_enabled",
     "check_rds_logging_enabled",
-    "check_cloudfront_logging_enabled",
+    "CloudfrontLoggingEnabledCheck",
     "ApiGatewayLoggingEnabledCheck",
     "check_config_recording_enabled",
     "check_log_alerting",

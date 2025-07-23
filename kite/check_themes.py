@@ -30,8 +30,8 @@ from kite.checks import AwsOrganizationsUsageCheck
 from kite.checks import AwsServiceEvaluationCheck
 from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
+from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
-from kite.checks import check_cert_deployment_and_renewal
 from kite.checks import check_cloudfront_logging_enabled
 from kite.checks import check_complex_passwords
 from kite.checks import check_config_recording_enabled
@@ -640,7 +640,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "private keys"
         ),
         "checks": [
-            check_cert_deployment_and_renewal,
+            CertDeploymentAndRenewalCheck(),
             check_protect_root_ca,
             EstablishLoggingAndAuditTrailsForPrivateCACheck(),
         ],

@@ -48,7 +48,7 @@ from kite.checks.aws_organizations import AwsOrganizationsUsageCheck
 from kite.checks.aws_service_evaluation import AwsServiceEvaluationCheck
 from kite.checks.capture_key_contacts import CaptureKeyContactsCheck
 from kite.checks.centralized_artifact_repos import CentralizedArtifactReposCheck
-from kite.checks.cert_deployment_and_renewal import check_cert_deployment_and_renewal
+from kite.checks.cert_deployment_and_renewal import CertDeploymentAndRenewalCheck
 from kite.checks.cloudfront_logging_enabled import check_cloudfront_logging_enabled
 from kite.checks.code_reviews import CodeReviewsCheck
 from kite.checks.complex_passwords import check_complex_passwords
@@ -508,4 +508,5 @@ __all__ = [
     "ControlNetworkFlowsWithRouteTablesCheck",
     "AutomatePatchManagementCheck",
     "AirGappedBackupVaultCheck",
+    "CertDeploymentAndRenewalCheck",
 ]

@@ -9,6 +9,7 @@ from kite.checks import ActiveExternalAccessAnalyzerCheck
 from kite.checks import ActiveUnusedAccessAnalyzerCheck
 from kite.checks import AdminPrivilegesAreRestrictedCheck
 from kite.checks import AirGappedBackupVaultCheck
+from kite.checks import ApiGatewayLoggingEnabledCheck
 from kite.checks import ApprovalProcessForResourceSharingCheck
 from kite.checks import AutomateDeploymentsCheck
 from kite.checks import AutomatedSecurityTestsCheck
@@ -24,7 +25,6 @@ from kite.checks import AwsServiceEvaluationCheck
 from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import Check
-from kite.checks import check_api_gateway_logging_enabled
 from kite.checks import check_audit_interactive_access_with_ssm
 from kite.checks import check_automate_data_at_rest_protection_with_guardduty
 from kite.checks import check_automate_ddb_data_retention
@@ -447,7 +447,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_network_firewall_logging_enabled,
             check_rds_logging_enabled,
             check_cloudfront_logging_enabled,
-            check_api_gateway_logging_enabled,
+            ApiGatewayLoggingEnabledCheck(),
             check_config_recording_enabled,
             ImplementQueryingForLogsCheck(),
             check_log_alerting,

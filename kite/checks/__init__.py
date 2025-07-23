@@ -15,7 +15,7 @@ from kite.checks.admin_privileges_are_restricted import (
     AdminPrivilegesAreRestrictedCheck,
 )
 from kite.checks.air_gapped_backup_vault import AirGappedBackupVaultCheck
-from kite.checks.api_gateway_logging_enabled import check_api_gateway_logging_enabled
+from kite.checks.api_gateway_logging_enabled import ApiGatewayLoggingEnabledCheck
 from kite.checks.approval_process_for_resource_sharing import (
     ApprovalProcessForResourceSharingCheck,
 )
@@ -406,7 +406,7 @@ __all__ = [
     "check_network_firewall_logging_enabled",
     "check_rds_logging_enabled",
     "check_cloudfront_logging_enabled",
-    "check_api_gateway_logging_enabled",
+    "ApiGatewayLoggingEnabledCheck",
     "check_config_recording_enabled",
     "check_log_alerting",
     "SecurityDataPublishedToLogArchiveAccountCheck",

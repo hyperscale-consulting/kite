@@ -38,7 +38,7 @@ from kite.checks.automate_patch_management import AutomatePatchManagementCheck
 from kite.checks.automate_s3_data_retention import AutomateS3DataRetentionCheck
 from kite.checks.automated_security_tests import AutomatedSecurityTestsCheck
 from kite.checks.avoid_insecure_ssl_ciphers import AvoidInsecureSslCiphersCheck
-from kite.checks.avoid_interactive_access import check_avoid_interactive_access
+from kite.checks.avoid_interactive_access import AvoidInteractiveAccessCheck
 from kite.checks.avoid_root_usage import AvoidRootUsageCheck
 from kite.checks.aws_control_documentation import AwsControlDocumentationCheck
 from kite.checks.aws_managed_services_threat_intel import (
@@ -468,7 +468,7 @@ __all__ = [
     "AutomateMalwareAndThreatDetectionCheck",
     "UseHardenedImagesCheck",
     "check_no_rdp_or_ssh_access",
-    "check_avoid_interactive_access",
+    "AvoidInteractiveAccessCheck",
     "AuditInteractiveAccessWithSSMCheck",
     "ValidateSoftwareIntegrityCheck",
     "check_forensics_ou",

@@ -67,7 +67,7 @@ from kite.checks.core import CheckResult
 from kite.checks.core import CheckStatus
 from kite.checks.core import make_finding
 from kite.checks.create_network_layers import CreateNetworkLayersCheck
-from kite.checks.credential_rotation import check_credential_rotation
+from kite.checks.credential_rotation import CredentialRotationCheck
 from kite.checks.cross_account_confused_deputy_prevention import (
     CrossAccountConfusedDeputyPreventionCheck,
 )
@@ -354,7 +354,7 @@ __all__ = [
     "RestrictedRoleForSecretsAccessCheck",
     "check_use_centralized_idp",
     "check_hr_system_integration",
-    "check_credential_rotation",
+    "CredentialRotationCheck",
     "IdentityAuditCheck",
     "EmployUserGroupsAndAttributesCheck",
     "NoFullAdminPoliciesCheck",

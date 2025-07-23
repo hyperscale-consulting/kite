@@ -31,7 +31,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
-from kite.checks import check_credential_rotation
 from kite.checks import check_data_perimeter_confused_deputy_protection
 from kite.checks import check_data_perimeter_trusted_networks
 from kite.checks import check_data_perimeter_trusted_resources
@@ -104,6 +103,7 @@ from kite.checks import ControlNetworkFlowsWithSGsCheck
 from kite.checks import ControlNetworkFlowWithNaclsCheck
 from kite.checks import ControlTowerCheck
 from kite.checks import CreateNetworkLayersCheck
+from kite.checks import CredentialRotationCheck
 from kite.checks import CrossAccountConfusedDeputyPreventionCheck
 from kite.checks import CwDataProtectionPoliciesCheck
 from kite.checks import DataCatalogCheck
@@ -314,7 +314,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "Regularly audit and rotate credentials to maintain security and compliance"
         ),
         "checks": [
-            check_credential_rotation,
+            CredentialRotationCheck(),
             IdentityAuditCheck(),
         ],
     },

@@ -31,7 +31,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
-from kite.checks import check_delegate_iam_with_permission_boundaries
 from kite.checks import check_deploy_log_analysis_tools_in_audit_account
 from kite.checks import check_detect_encryption_at_rest_misconfig
 from kite.checks import check_detect_missing_automated_lifecycle_management
@@ -110,6 +109,7 @@ from kite.checks import DataPerimeterTrustedResourcesCheck
 from kite.checks import DefineAccessRequirementsCheck
 from kite.checks import DefineAndDocumentWorkloadNetworkFlowsCheck
 from kite.checks import DelegatedAdminForSecurityServices
+from kite.checks import DelegateIamWithPermissionBoundariesCheck
 from kite.checks import DetectiveEnabledCheck
 from kite.checks import DfdsCheck
 from kite.checks import DocumentedDataClassificationSchemeCheck
@@ -386,7 +386,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_scp_prevents_unencrypted_s3_uploads,
             check_scp_prevents_deleting_logs,
             check_scp_prevents_adding_internet_access_to_vpc,
-            check_delegate_iam_with_permission_boundaries,
+            DelegateIamWithPermissionBoundariesCheck(),
         ],
     },
     "Manage access based on lifecycle": {

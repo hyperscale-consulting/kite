@@ -90,7 +90,7 @@ from kite.checks.define_and_document_workload_network_flows import (
     DefineAndDocumentWorkloadNetworkFlowsCheck,
 )
 from kite.checks.delegate_iam_with_permission_boundaries import (
-    check_delegate_iam_with_permission_boundaries,
+    DelegateIamWithPermissionBoundariesCheck,
 )
 from kite.checks.delegated_admins import DelegatedAdminForSecurityServices
 from kite.checks.deploy_log_analysis_tools_in_audit_account import (
@@ -380,7 +380,7 @@ __all__ = [
     "check_scp_prevents_unencrypted_s3_uploads",
     "check_scp_prevents_deleting_logs",
     "check_scp_prevents_adding_internet_access_to_vpc",
-    "check_delegate_iam_with_permission_boundaries",
+    "DelegateIamWithPermissionBoundariesCheck",
     "AccessManagementLifecycleCheck",
     "AccessManagementLifecycleImplementedCheck",
     "check_scim_protocol_used",

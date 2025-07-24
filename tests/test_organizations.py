@@ -401,7 +401,6 @@ def test_fetch_delegated_admins_access_denied(stub_aws_session):
 def test_fetch_delegated_admins(stub_aws_session):
     client = OrganizationsClient()
     stub_aws_session.register_client(client, "organizations")
-    audit_account_id = "666666666666"
 
     id = "o-exampleorgid"
     master_account_id = "123456789012"

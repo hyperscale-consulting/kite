@@ -1,123 +1,102 @@
-import json
-
 import pytest
 
+from kite.checks import CheckStatus
 from kite.checks.data_perimeter_trusted_networks import (
-    check_data_perimeter_trusted_networks,
+    DataPerimeterTrustedNetworksCheck,
 )
 from kite.data import save_organization
-from kite.models import ControlPolicy
+from tests.factories import build_ou
+from tests.factories import build_rcp
+from tests.factories import build_scp
+from tests.factories import config_for_org
+from tests.factories import create_organization
 
 
-@pytest.fixture
 def trusted_networks_rcp():
-    return ControlPolicy(
-        id="666",
-        name="Trusted Networks RCP",
-        description="Trusted Networks RCP",
-        arn="arn:aws:iam::1234567890:policy/TrustedNetworksRCP",
-        type="RESOURCE_CONTROL_POLICY",
-        content=json.dumps(
-            {
-                "Statement": [
-                    dict(
-                        Effect="Deny",
-                        Action=[
-                            "s3:*",
-                            "sqs:*",
-                            "kms:*",
-                            "secretsmanager:*",
-                            "sts:AssumeRole",
-                            "sts:DecodeAuthorizationMessage",
-                            "sts:GetAccessKeyInfo",
-                            "sts:GetFederationToken",
-                            "sts:GetServiceBearerToken",
-                            "sts:GetSessionToken",
-                            "sts:SetContext",
+    return {
+        "Statement": [
+            dict(
+                Effect="Deny",
+                Action=[
+                    "s3:*",
+                    "sqs:*",
+                    "kms:*",
+                    "secretsmanager:*",
+                    "sts:AssumeRole",
+                    "sts:DecodeAuthorizationMessage",
+                    "sts:GetAccessKeyInfo",
+                    "sts:GetFederationToken",
+                    "sts:GetServiceBearerToken",
+                    "sts:GetSessionToken",
+                    "sts:SetContext",
+                ],
+                Resource="*",
+                Principal="*",
+                Condition={
+                    "NotIpAddressIfExists": {"aws:SourceIp": ["66.0.0.0/8"]},
+                    "StringNotEqualsIfExists": {
+                        "aws:SourceVpc": ["vpc-12345678"],
+                        "aws:PrincipalTag/dp:exclude:network": "true",
+                        "aws:PrincipalAccount": [
+                            "1234567890",
+                            "1234567891",
+                            "1234567892",
+                            "1234567893",
                         ],
-                        Resource="*",
-                        Principal="*",
-                        Condition={
-                            "NotIpAddressIfExists": {"aws:SourceIp": ["66.0.0.0/8"]},
-                            "StringNotEqualsIfExists": {
-                                "aws:SourceVpc": ["vpc-12345678"],
-                                "aws:PrincipalTag/dp:exclude:network": "true",
-                                "aws:PrincipalAccount": [
-                                    "1234567890",
-                                    "1234567891",
-                                    "1234567892",
-                                    "1234567893",
-                                ],
-                                "aws:ResourceTag/dp:exclude:network": "true",
-                            },
-                            "BoolIfExists": {
-                                "aws:PrincipalIsAWSService": "false",
-                                "aws:ViaAWSService": "false",
-                            },
-                            "ArnNotLikeIfExists": {
-                                "aws:PrincipalArn": [
-                                    "arn:aws:iam::*:role/aws:ec2-infrastructure"
-                                ]
-                            },
-                            "StringEquals": {
-                                "aws:PrincipalTag/dp:include:network": "true"
-                            },
-                        },
-                    )
-                ]
-            }
-        ),
-    )
+                        "aws:ResourceTag/dp:exclude:network": "true",
+                    },
+                    "BoolIfExists": {
+                        "aws:PrincipalIsAWSService": "false",
+                        "aws:ViaAWSService": "false",
+                    },
+                    "ArnNotLikeIfExists": {
+                        "aws:PrincipalArn": [
+                            "arn:aws:iam::*:role/aws:ec2-infrastructure"
+                        ]
+                    },
+                    "StringEquals": {"aws:PrincipalTag/dp:include:network": "true"},
+                },
+            )
+        ]
+    }
 
 
-@pytest.fixture
 def trusted_networks_scp():
-    return ControlPolicy(
-        id="123",
-        name="Trusted Networks",
-        description="Trusted Networks",
-        arn="arn:aws:iam::1234567890:policy/TrustedNetworks",
-        type="SERVICE_CONTROL_POLICY",
-        content=json.dumps(
-            {
-                "Statement": [
-                    dict(
-                        Effect="Deny",
-                        NotAction=[
-                            "es:ES*",
-                            "dax:GetItem",
-                            "dax:BatchGetItem",
-                            "dax:Query",
-                            "dax:Scan",
-                            "dax:PutItem",
-                            "dax:UpdateItem",
-                            "dax:DeleteItem",
-                            "dax:BatchWriteItem",
-                            "dax:ConditionCheckItem",
-                            "neptune-db:*",
-                            "kafka-cluster:*",
-                            "elasticfilesystem:client*",
-                            "rds-db:connect",
-                        ],
-                        Resource="*",
-                        Principal="*",
-                        Condition={
-                            "BoolIfExists": {"aws:ViaAWSService": "false"},
-                            "NotIpAddressIfExists": {"aws:SourceIp": ["66.0.0.0/8"]},
-                            "StringNotEqualsIfExists": {
-                                "aws:SourceVpc": ["vpc-12345678"]
-                            },
-                            "ArnNotLikeIfExists": {
-                                "aws:PrincipalArn": [
-                                    "arn:aws:iam::12345676887:role/trusted-role"
-                                ]
-                            },
-                        },
-                    )
-                ]
-            }
-        ),
-    )
+    return {
+        "Statement": [
+            dict(
+                Effect="Deny",
+                NotAction=[
+                    "es:ES*",
+                    "dax:GetItem",
+                    "dax:BatchGetItem",
+                    "dax:Query",
+                    "dax:Scan",
+                    "dax:PutItem",
+                    "dax:UpdateItem",
+                    "dax:DeleteItem",
+                    "dax:BatchWriteItem",
+                    "dax:ConditionCheckItem",
+                    "neptune-db:*",
+                    "kafka-cluster:*",
+                    "elasticfilesystem:client*",
+                    "rds-db:connect",
+                ],
+                Resource="*",
+                Principal="*",
+                Condition={
+                    "BoolIfExists": {"aws:ViaAWSService": "false"},
+                    "NotIpAddressIfExists": {"aws:SourceIp": ["66.0.0.0/8"]},
+                    "StringNotEqualsIfExists": {"aws:SourceVpc": ["vpc-12345678"]},
+                    "ArnNotLikeIfExists": {
+                        "aws:PrincipalArn": [
+                            "arn:aws:iam::12345676887:role/trusted-role"
+                        ]
+                    },
+                },
+            )
+        ]
+    }
 
 
 @pytest.fixture
@@ -154,63 +133,97 @@ def rcp_attached_to_all_top_level_ous(
     yield organization
 
 
-def test_no_policies(organization):
-    result = check_data_perimeter_trusted_networks()
-    assert result["status"] == "FAIL"
-    assert "not enforced by both SCPs and RCPs" in result["details"]["message"]
+@pytest.fixture
+def check():
+    return DataPerimeterTrustedNetworksCheck()
 
 
-def test_scp_attached_to_root_ou(scp_attached_to_root_ou):
-    result = check_data_perimeter_trusted_networks()
-    assert result["status"] == "FAIL"
-    assert "not enforced by both SCPs and RCPs" in result["details"]["message"]
+@config_for_org()
+def test_no_policies(check):
+    create_organization()
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "not enforced by both SCPs and RCPs" in result.reason
 
 
-def test_scp_attached_to_all_top_level_ous(scp_attached_to_all_top_level_ous):
-    result = check_data_perimeter_trusted_networks()
-    assert result["status"] == "FAIL"
-    assert "not enforced by both SCPs and RCPs" in result["details"]["message"]
+@config_for_org()
+def test_scp_attached_to_root_ou(check):
+    create_organization(
+        root_ou=build_ou(scps=[build_scp(content=trusted_networks_scp())]),
+    )
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "not enforced by both SCPs and RCPs" in result.reason
 
 
-def test_rcp_attached_to_root_ou(rcp_attached_to_root_ou):
-    result = check_data_perimeter_trusted_networks()
-    assert result["status"] == "FAIL"
-    assert "not enforced by both SCPs and RCPs" in result["details"]["message"]
+@config_for_org()
+def test_scp_attached_to_all_top_level_ous(check):
+    create_organization(
+        root_ou=build_ou(
+            child_ous=[
+                build_ou(scps=[build_scp(content=trusted_networks_scp())]),
+                build_ou(scps=[build_scp(content=trusted_networks_scp())]),
+            ]
+        )
+    )
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "not enforced by both SCPs and RCPs" in result.reason
 
 
-def test_rcp_attached_to_all_top_level_ous(rcp_attached_to_all_top_level_ous):
-    result = check_data_perimeter_trusted_networks()
-    assert result["status"] == "FAIL"
-    assert "not enforced by both SCPs and RCPs" in result["details"]["message"]
+@config_for_org()
+def test_rcp_attached_to_root_ou(check):
+    create_organization(
+        root_ou=build_ou(rcps=[build_rcp(content=trusted_networks_rcp())]),
+    )
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "not enforced by both SCPs and RCPs" in result.reason
 
 
-def test_both_scp_and_rcp_attached_to_root_ou(
-    organization, trusted_networks_scp, trusted_networks_rcp, mgmt_account_id
-):
-    # Add SCP to root OU
-    organization.root.scps.append(trusted_networks_scp)
-    organization.root.rcps.append(trusted_networks_rcp)
+@config_for_org()
+def test_rcp_attached_to_all_top_level_ous(check):
+    create_organization(
+        root_ou=build_ou(
+            child_ous=[
+                build_ou(rcps=[build_rcp(content=trusted_networks_rcp())]),
+                build_ou(rcps=[build_rcp(content=trusted_networks_rcp())]),
+            ]
+        )
+    )
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "not enforced by both SCPs and RCPs" in result.reason
 
-    save_organization(mgmt_account_id, organization)
 
-    result = check_data_perimeter_trusted_networks()
-    assert result["status"] == "PASS"
-    assert "enforced by both SCPs and RCPs" in result["details"]["message"]
+@config_for_org()
+def test_both_scp_and_rcp_attached_to_root_ou(check):
+    create_organization(
+        root_ou=build_ou(
+            scps=[build_scp(content=trusted_networks_scp())],
+            rcps=[build_rcp(content=trusted_networks_rcp())],
+        ),
+    )
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+    assert "enforced by both SCPs and RCPs" in result.reason
 
 
-def test_both_scp_and_rcp_attached_to_top_level_ous(
-    organization, trusted_networks_scp, trusted_networks_rcp, mgmt_account_id
-):
-    # Add SCP to all top-level OUs
-    for ou in organization.root.child_ous:
-        ou.scps.append(trusted_networks_scp)
-
-    # Add RCP to all top-level OUs
-    for ou in organization.root.child_ous:
-        ou.rcps.append(trusted_networks_rcp)
-
-    save_organization(mgmt_account_id, organization)
-
-    result = check_data_perimeter_trusted_networks()
-    assert result["status"] == "PASS"
-    assert "enforced by both SCPs and RCPs" in result["details"]["message"]
+def test_both_scp_and_rcp_attached_to_top_level_ous(check):
+    create_organization(
+        root_ou=build_ou(
+            child_ous=[
+                build_ou(
+                    scps=[build_scp(content=trusted_networks_scp())],
+                    rcps=[build_rcp(content=trusted_networks_rcp())],
+                ),
+                build_ou(
+                    scps=[build_scp(content=trusted_networks_scp())],
+                    rcps=[build_rcp(content=trusted_networks_rcp())],
+                ),
+            ]
+        )
+    )
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+    assert "enforced by both SCPs and RCPs" in result.reason

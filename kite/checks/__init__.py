@@ -80,7 +80,7 @@ from kite.checks.data_perimeter_trusted_identities import (
     check_establish_data_perimeter_trusted_identities,
 )
 from kite.checks.data_perimeter_trusted_networks import (
-    check_data_perimeter_trusted_networks,
+    DataPerimeterTrustedNetworksCheck,
 )
 from kite.checks.data_perimeter_trusted_resources import (
     check_data_perimeter_trusted_resources,
@@ -392,7 +392,6 @@ __all__ = [
     "DataPerimeterConfusedDeputyProtectionCheck",
     "check_data_perimeter_trusted_resources",
     "check_vpc_endpoints_enforce_data_perimeter",
-    "check_data_perimeter_trusted_networks",
     "check_scp_prevents_ram_invitations",
     "KmsConfusedDeputyProtectionCheck",
     "RepeatableAuditableSetupFor3rdPartyAccessCheck",
@@ -508,4 +507,5 @@ __all__ = [
     "AutomatePatchManagementCheck",
     "AirGappedBackupVaultCheck",
     "CertDeploymentAndRenewalCheck",
+    "DataPerimeterTrustedNetworksCheck",
 ]

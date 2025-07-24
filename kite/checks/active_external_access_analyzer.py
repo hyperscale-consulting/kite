@@ -31,7 +31,6 @@ class ActiveExternalAccessAnalyzerCheck:
         org_analyzer = None
         account_analyzers = []
         accounts_with_analyzer = set()
-        accounts_without_analyzer = set()
         for analyzer in analyzers:
             if analyzer.get("type") == "ORGANIZATION":
                 org_analyzer = analyzer

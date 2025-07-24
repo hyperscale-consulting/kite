@@ -83,7 +83,7 @@ from kite.checks.data_perimeter_trusted_networks import (
     DataPerimeterTrustedNetworksCheck,
 )
 from kite.checks.data_perimeter_trusted_resources import (
-    check_data_perimeter_trusted_resources,
+    DataPerimeterTrustedResourcesCheck,
 )
 from kite.checks.define_access_requirements import DefineAccessRequirementsCheck
 from kite.checks.define_and_document_workload_network_flows import (
@@ -390,7 +390,7 @@ __all__ = [
     "check_migrate_from_oai",
     "check_establish_data_perimeter_trusted_identities",
     "DataPerimeterConfusedDeputyProtectionCheck",
-    "check_data_perimeter_trusted_resources",
+    "DataPerimeterTrustedResourcesCheck",
     "check_vpc_endpoints_enforce_data_perimeter",
     "check_scp_prevents_ram_invitations",
     "KmsConfusedDeputyProtectionCheck",

@@ -31,7 +31,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
-from kite.checks import check_data_perimeter_trusted_resources
 from kite.checks import check_delegate_iam_with_permission_boundaries
 from kite.checks import check_deploy_log_analysis_tools_in_audit_account
 from kite.checks import check_detect_encryption_at_rest_misconfig
@@ -107,6 +106,7 @@ from kite.checks import CwDataProtectionPoliciesCheck
 from kite.checks import DataCatalogCheck
 from kite.checks import DataPerimeterConfusedDeputyProtectionCheck
 from kite.checks import DataPerimeterTrustedNetworksCheck
+from kite.checks import DataPerimeterTrustedResourcesCheck
 from kite.checks import DefineAccessRequirementsCheck
 from kite.checks import DefineAndDocumentWorkloadNetworkFlowsCheck
 from kite.checks import DelegatedAdminForSecurityServices
@@ -417,7 +417,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_migrate_from_oai,
             check_establish_data_perimeter_trusted_identities,
             DataPerimeterConfusedDeputyProtectionCheck(),
-            check_data_perimeter_trusted_resources,
+            DataPerimeterTrustedResourcesCheck(),
             check_vpc_endpoints_enforce_data_perimeter,
             DataPerimeterTrustedNetworksCheck(),
         ],

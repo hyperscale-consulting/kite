@@ -1,48 +1,33 @@
-"""Check for Glue ETL jobs using detect sensitive data transform."""
-
-from typing import Any
-
-from kite.helpers import manual_check
-
-CHECK_ID = "detect-sensitive-data-transform"
-CHECK_NAME = "Detect Sensitive Data Transform"
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 
 
-def check_detect_sensitive_data_transform() -> dict[str, Any]:
-    """
-    Check if the detect sensitive data transform is used in any Glue ETL jobs to
-    detect and handle sensitive data.
+class DetectSensitiveDataTransformCheck:
+    def __init__(self):
+        self.check_id = "detect-sensitive-data-transform"
+        self.check_name = "Detect Sensitive Data Transform"
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS" or "FAIL")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=(
-            "This check verifies that the Detect Sensitive Data transform is used "
-            "in Glue ETL jobs to detect and handle sensitive data."
-        ),
-        prompt=(
+    @property
+    def question(self) -> str:
+        return (
             "Is the detect sensitive data transform used in any Glue ETL jobs to "
             "detect and handle sensitive data?"
-        ),
-        pass_message=(
-            "The detect sensitive data transform is used in Glue ETL jobs to "
-            "detect and handle sensitive data."
-        ),
-        fail_message=(
-            "The detect sensitive data transform should be used in Glue ETL jobs "
-            "to detect and handle sensitive data."
-        ),
-        default=True,
-    )
+        )
 
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that the Detect Sensitive Data transform is used "
+            "in Glue ETL jobs to detect and handle sensitive data."
+        )
 
-check_detect_sensitive_data_transform._CHECK_ID = CHECK_ID
-check_detect_sensitive_data_transform._CHECK_NAME = CHECK_NAME
+    def run(self) -> CheckResult:
+        message = (
+            "The Detect PII transform provides the ability to detect, mask, or remove "
+            "entities that you define, or are pre-defined by AWS. This enables you to "
+            "increase compliance and reduce liability."
+        )
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=message,
+        )

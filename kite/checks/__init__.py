@@ -103,7 +103,7 @@ from kite.checks.detect_missing_automated_lifecycle_management import (
     DetectMissingAutomatedLifecycleManagementCheck,
 )
 from kite.checks.detect_sensitive_data_transform import (
-    check_detect_sensitive_data_transform,
+    DetectSensitiveDataTransformCheck,
 )
 from kite.checks.detective_enabled import DetectiveEnabledCheck
 from kite.checks.dfds import DfdsCheck
@@ -418,7 +418,7 @@ __all__ = [
     "TokenizationAndAnonymizationCheck",
     "SnsDataProtectionPoliciesCheck",
     "CwDataProtectionPoliciesCheck",
-    "check_detect_sensitive_data_transform",
+    "DetectSensitiveDataTransformCheck",
     "ScanForSensitiveDataInDevCheck",
     "AutomateS3DataRetentionCheck",
     "AutomateDdbDataRetentionCheck",

@@ -97,7 +97,7 @@ from kite.checks.deploy_log_analysis_tools_in_audit_account import (
     DeployLogAnalysisToolsInAuditAccountCheck,
 )
 from kite.checks.detect_encryption_at_rest_misconfig import (
-    check_detect_encryption_at_rest_misconfig,
+    DetectEncryptionAtRestMisconfigCheck,
 )
 from kite.checks.detect_missing_automated_lifecycle_management import (
     check_detect_missing_automated_lifecycle_management,
@@ -429,7 +429,7 @@ __all__ = [
     "check_key_access_control",
     "check_use_service_encryption_at_rest",
     "check_use_customer_managed_keys",
-    "check_detect_encryption_at_rest_misconfig",
+    "DetectEncryptionAtRestMisconfigCheck",
     "EnforceDataProtectionAtRestWithPolicyAsCodeCheck",
     "EstablishLoggingAndAuditTrailsForPrivateCACheck",
     "AutomateDataAtRestProtectionWithGuardDutyCheck",

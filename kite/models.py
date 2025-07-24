@@ -101,7 +101,7 @@ class OrganizationalUnit:
         accounts = [Account.from_dict(acc) for acc in data.pop("accounts", [])]
         child_ous = [cls.from_dict(ou) for ou in data.pop("child_ous", [])]
         scps = [ControlPolicy.from_dict(scp) for scp in data.pop("scps", [])]
-        rcps = [ControlPolicy.from_dict(rscp) for rscp in data.pop("rcps", [])]
+        rcps = [ControlPolicy.from_dict(rcp) for rcp in data.pop("rcps", [])]
         tag_policies = [
             ControlPolicy.from_dict(tag_policies)
             for tag_policies in data.pop("tag_policies", [])

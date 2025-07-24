@@ -70,17 +70,20 @@ def build_ou(
     name="Root",
     accounts: list[Account] | None = None,
     child_ous: list[OrganizationalUnit] | None = None,
-    scps=None,
+    scps: list[ControlPolicy] | None = None,
+    rcps: list[ControlPolicy] | None = None,
 ) -> OrganizationalUnit:
     accounts = accounts or []
     child_ous = child_ous or []
     scps = scps or [build_full_access_scp()]
+    rcps = rcps or []
     return OrganizationalUnit(
         id=ou_id,
         name=name,
         arn=f"arn:aws:organizations:::{mgmt_account_id}:organizational-unit/{organization_id}/{ou_id}",
         accounts=accounts,
         scps=scps,
+        rcps=rcps,
         child_ous=child_ous,
     )
 
@@ -115,6 +118,22 @@ def build_scp(
         arn=f"arn:aws:organizations:::service-control-policy/p-{name}",
         content=json.dumps(content),
         type="SERVICE_CONTROL_POLICY",
+    )
+
+
+def build_rcp(
+    name="TestRCP",
+    description="Test RCP",
+    content=None,
+):
+    content = content or build_allow_all_iam_policy()
+    return ControlPolicy(
+        id=f"p-{name}",
+        name=f"{name}",
+        description=description,
+        arn=f"arn:aws:organizations:::resource-control-policy/p-{name}",
+        content=json.dumps(content),
+        type="RESOURCE_CONTROL_POLICY",
     )
 
 

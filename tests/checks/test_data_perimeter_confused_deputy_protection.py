@@ -1,73 +1,99 @@
-import json
-
 import pytest
 
+from kite.checks import CheckStatus
 from kite.checks.data_perimeter_confused_deputy_protection import (
-    check_data_perimeter_confused_deputy_protection,
+    DataPerimeterConfusedDeputyProtectionCheck,
 )
-from kite.data import save_organization
-from kite.models import ControlPolicy
+from tests.factories import build_ou
+from tests.factories import build_rcp
+from tests.factories import config_for_org
+from tests.factories import create_organization
+
+org_id = "test-org-id"
+
+
+def confused_deputy_protection_policy():
+    return {
+        "Statement": [
+            dict(
+                Effect="Deny",
+                Action=["s3:*", "sqs:*", "kms:*", "secretsmanager:*", "sts:*"],
+                Resource="*",
+                Principal="*",
+                Condition={
+                    "StringNotEqualsIfExists": {"aws:SourceOrgID": org_id},
+                    "Null": {"AWS:SourceAccount": "false"},
+                    "Bool": {"aws:PrincipalIsAWSService": "true"},
+                },
+            )
+        ]
+    }
 
 
 @pytest.fixture
-def confused_deputy_protection_policy(organization_id):
-    return ControlPolicy(
-        id="123",
-        name="Confused Deputy Protection",
-        description="Confused Deputy Protection",
-        arn="arn:aws:iam::1234567890:policy/ConfusedDeputyProtection",
-        type="RESOURCE_CONTROL_POLICY",
-        content=json.dumps(
-            {
-                "Statement": [
-                    dict(
-                        Effect="Deny",
-                        Action=["s3:*", "sqs:*", "kms:*", "secretsmanager:*", "sts:*"],
-                        Resource="*",
-                        Principal="*",
-                        Condition={
-                            "StringNotEqualsIfExists": {
-                                "aws:SourceOrgID": organization_id
-                            },
-                            "Null": {"AWS:SourceAccount": "false"},
-                            "Bool": {"aws:PrincipalIsAWSService": "true"},
-                        },
-                    )
-                ]
-            }
+def check():
+    return DataPerimeterConfusedDeputyProtectionCheck()
+
+
+@config_for_org(mgmt_account_id="1234567890")
+def test_no_rcps(check):
+    create_organization(organization_id=org_id, mgmt_account_id="1234567890")
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+
+
+@config_for_org(mgmt_account_id="1234567890")
+def test_rcp_attached_to_root_ou(check):
+    create_organization(
+        organization_id=org_id,
+        mgmt_account_id="1234567890",
+        root_ou=build_ou(rcps=[build_rcp(content=confused_deputy_protection_policy())]),
+    )
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+
+
+@config_for_org(mgmt_account_id="1234567890")
+def test_rcp_attached_to_all_top_level_ous(check):
+    create_organization(
+        organization_id=org_id,
+        mgmt_account_id="1234567890",
+        root_ou=build_ou(
+            child_ous=[
+                build_ou(
+                    name="OU1",
+                    rcps=[build_rcp(content=confused_deputy_protection_policy())],
+                ),
+                build_ou(
+                    name="OU2",
+                    rcps=[build_rcp(content=confused_deputy_protection_policy())],
+                ),
+            ]
         ),
     )
 
-
-@pytest.fixture
-def rcp_attached_to_root_ou(
-    organization, confused_deputy_protection_policy, mgmt_account_id
-):
-    organization.root.rcps.append(confused_deputy_protection_policy)
-    save_organization(mgmt_account_id, organization)
-    yield organization
+    result = check.run()
+    assert result.status == CheckStatus.PASS
 
 
-@pytest.fixture
-def rcp_attached_to_all_top_level_ous(
-    organization, confused_deputy_protection_policy, mgmt_account_id
-):
-    for ou in organization.root.child_ous:
-        ou.rcps.append(confused_deputy_protection_policy)
-    save_organization(mgmt_account_id, organization)
-    yield organization
+@config_for_org(mgmt_account_id="1234567890")
+def test_rcp_attached_to_one_top_level_ous(check):
+    create_organization(
+        organization_id=org_id,
+        mgmt_account_id="1234567890",
+        root_ou=build_ou(
+            child_ous=[
+                build_ou(
+                    name="OU1",
+                    rcps=[],
+                ),
+                build_ou(
+                    name="OU2",
+                    rcps=[build_rcp(content=confused_deputy_protection_policy())],
+                ),
+            ]
+        ),
+    )
 
-
-def test_no_rcps(organization):
-    result = check_data_perimeter_confused_deputy_protection()
-    assert result["status"] == "FAIL"
-
-
-def test_rcp_attached_to_root_ou(rcp_attached_to_root_ou):
-    result = check_data_perimeter_confused_deputy_protection()
-    assert result["status"] == "PASS"
-
-
-def test_rcp_attached_to_all_top_level_ous(rcp_attached_to_all_top_level_ous):
-    result = check_data_perimeter_confused_deputy_protection()
-    assert result["status"] == "PASS"
+    result = check.run()
+    assert result.status == CheckStatus.FAIL

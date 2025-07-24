@@ -74,7 +74,7 @@ from kite.checks.cross_account_confused_deputy_prevention import (
 from kite.checks.cw_data_protection_policies import CwDataProtectionPoliciesCheck
 from kite.checks.data_catalog import DataCatalogCheck
 from kite.checks.data_perimeter_confused_deputy_protection import (
-    check_data_perimeter_confused_deputy_protection,
+    DataPerimeterConfusedDeputyProtectionCheck,
 )
 from kite.checks.data_perimeter_trusted_identities import (
     check_establish_data_perimeter_trusted_identities,
@@ -389,7 +389,7 @@ __all__ = [
     "check_s3_bucket_acl_disabled",
     "check_migrate_from_oai",
     "check_establish_data_perimeter_trusted_identities",
-    "check_data_perimeter_confused_deputy_protection",
+    "DataPerimeterConfusedDeputyProtectionCheck",
     "check_data_perimeter_trusted_resources",
     "check_vpc_endpoints_enforce_data_perimeter",
     "check_data_perimeter_trusted_networks",

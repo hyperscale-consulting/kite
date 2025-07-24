@@ -120,7 +120,7 @@ from kite.checks.employ_user_groups_and_attributes import (
 from kite.checks.enforce_data_protection_at_rest_with_policy_as_code import (
     EnforceDataProtectionAtRestWithPolicyAsCodeCheck,
 )
-from kite.checks.enforce_https import check_enforce_https
+from kite.checks.enforce_https import EnforceHttpsCheck
 from kite.checks.establish_logging_and_audit_trails_for_private_ca import (
     EstablishLoggingAndAuditTrailsForPrivateCACheck,
 )
@@ -436,7 +436,7 @@ __all__ = [
     "RestoreTestingCheck",
     "check_implement_versioning_and_object_locking",
     "check_protect_root_ca",
-    "check_enforce_https",
+    "EnforceHttpsCheck",
     "AvoidInsecureSslCiphersCheck",
     "TrainForApplicationSecurityCheck",
     "ImmutableBuildsCheck",

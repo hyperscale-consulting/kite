@@ -31,7 +31,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
-from kite.checks import check_enforce_https
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_forensics_ou
 from kite.checks import check_hr_system_integration
@@ -116,6 +115,7 @@ from kite.checks import EksControlPlaneLoggingEnabledCheck
 from kite.checks import ElbLoggingEnabledCheck
 from kite.checks import EmployUserGroupsAndAttributesCheck
 from kite.checks import EnforceDataProtectionAtRestWithPolicyAsCodeCheck
+from kite.checks import EnforceHttpsCheck
 from kite.checks import EstablishedEmergencyAccessProceduresCheck
 from kite.checks import EstablishLoggingAndAuditTrailsForPrivateCACheck
 from kite.checks import IacGuardrailsCheck
@@ -646,7 +646,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Enforce encryption in transit": {
         "description": ("Checks related to enforcing encryption in transit"),
         "checks": [
-            check_enforce_https,
+            EnforceHttpsCheck(),
             AvoidInsecureSslCiphersCheck(),
         ],
     },

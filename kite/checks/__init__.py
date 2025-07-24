@@ -436,7 +436,6 @@ __all__ = [
     "AutomateDataAtRestProtectionWithGuardDutyCheck",
     "RestoreTestingCheck",
     "check_implement_versioning_and_object_locking",
-    "check_cert_deployment_and_renewal",
     "check_protect_root_ca",
     "check_enforce_https",
     "AvoidInsecureSslCiphersCheck",

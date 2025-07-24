@@ -13,7 +13,6 @@ from kite.helpers import get_prowler_output
 def _analyze() -> str:
     accounts = get_account_ids_in_scope()
     config = Config.get()
-    prowler_output = get_prowler_output()
     analysis = "NACL Network Flow Analysis:\n\n"
     vpcs_by_account_and_region = defaultdict(dict)
     for account_id in accounts:

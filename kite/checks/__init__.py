@@ -94,7 +94,7 @@ from kite.checks.delegate_iam_with_permission_boundaries import (
 )
 from kite.checks.delegated_admins import DelegatedAdminForSecurityServices
 from kite.checks.deploy_log_analysis_tools_in_audit_account import (
-    check_deploy_log_analysis_tools_in_audit_account,
+    DeployLogAnalysisToolsInAuditAccountCheck,
 )
 from kite.checks.detect_encryption_at_rest_misconfig import (
     check_detect_encryption_at_rest_misconfig,
@@ -409,7 +409,7 @@ __all__ = [
     "ConfigRecordingEnabledCheck",
     "check_log_alerting",
     "SecurityDataPublishedToLogArchiveAccountCheck",
-    "check_deploy_log_analysis_tools_in_audit_account",
+    "DeployLogAnalysisToolsInAuditAccountCheck",
     "SecurityEventCorrelationCheck",
     "AutoRemediateNonCompliantResourcesCheck",
     "check_tag_data_with_sensitivity_level",

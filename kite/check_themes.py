@@ -31,7 +31,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
-from kite.checks import check_deploy_log_analysis_tools_in_audit_account
 from kite.checks import check_detect_encryption_at_rest_misconfig
 from kite.checks import check_detect_missing_automated_lifecycle_management
 from kite.checks import check_detect_sensitive_data_transform
@@ -110,6 +109,7 @@ from kite.checks import DefineAccessRequirementsCheck
 from kite.checks import DefineAndDocumentWorkloadNetworkFlowsCheck
 from kite.checks import DelegatedAdminForSecurityServices
 from kite.checks import DelegateIamWithPermissionBoundariesCheck
+from kite.checks import DeployLogAnalysisToolsInAuditAccountCheck
 from kite.checks import DetectiveEnabledCheck
 from kite.checks import DfdsCheck
 from kite.checks import DocumentedDataClassificationSchemeCheck
@@ -460,7 +460,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             SecurityDataPublishedToLogArchiveAccountCheck(),
             # TODO: where should we check for log tampering prevention and
             # access control?
-            check_deploy_log_analysis_tools_in_audit_account,
+            DeployLogAnalysisToolsInAuditAccountCheck(),
         ],
     },
     "Correlate and enrich security alerts": {

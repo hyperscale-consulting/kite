@@ -420,15 +420,19 @@ def list_users(session) -> list[dict[str, Any]]:
             # Get user's policies
             attached_policies = []
             paginator = iam_client.get_paginator("list_attached_user_policies")
-            for page in paginator.paginate(UserName=user["UserName"]):
-                attached_policies.extend(page.get("AttachedPolicies", []))
+            for attached_user_policy_page in paginator.paginate(
+                UserName=user["UserName"]
+            ):
+                attached_policies.extend(
+                    attached_user_policy_page.get("AttachedPolicies", [])
+                )
             user["AttachedPolicies"] = attached_policies
 
             # Get user's inline policies
             inline_policies = []
             paginator = iam_client.get_paginator("list_user_policies")
-            for page in paginator.paginate(UserName=user["UserName"]):
-                for policy_name in page.get("PolicyNames", []):
+            for user_policy_page in paginator.paginate(UserName=user["UserName"]):
+                for policy_name in user_policy_page.get("PolicyNames", []):
                     doc = _get_user_inline_policy_document(
                         iam_client, user["UserName"], policy_name
                     )
@@ -464,19 +468,19 @@ def list_groups(session) -> list[dict[str, Any]]:
     iam_client = session.client("iam")
     groups = []
     paginator = iam_client.get_paginator("list_groups")
-    for page in paginator.paginate():
-        for group in page["Groups"]:
+    for group_page in paginator.paginate():
+        for group in group_page["Groups"]:
             # Get group's policies
             attached_policies = []
             paginator = iam_client.get_paginator("list_attached_group_policies")
-            for page in paginator.paginate(GroupName=group["GroupName"]):
-                attached_policies.extend(page.get("AttachedPolicies", []))
+            for agp_page in paginator.paginate(GroupName=group["GroupName"]):
+                attached_policies.extend(agp_page.get("AttachedPolicies", []))
 
             # Get group's inline policies
             inline_policies = []
             paginator = iam_client.get_paginator("list_group_policies")
-            for page in paginator.paginate(GroupName=group["GroupName"]):
-                for policy_name in page.get("PolicyNames", []):
+            for gp_page in paginator.paginate(GroupName=group["GroupName"]):
+                for policy_name in gp_page.get("PolicyNames", []):
                     doc = _get_group_inline_policy_document(
                         iam_client, group["GroupName"], policy_name
                     )

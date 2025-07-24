@@ -31,7 +31,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
-from kite.checks import check_detect_missing_automated_lifecycle_management
 from kite.checks import check_detect_sensitive_data_transform
 from kite.checks import check_elb_logging_enabled
 from kite.checks import check_enforce_https
@@ -111,6 +110,7 @@ from kite.checks import DelegateIamWithPermissionBoundariesCheck
 from kite.checks import DeployLogAnalysisToolsInAuditAccountCheck
 from kite.checks import DetectEncryptionAtRestMisconfigCheck
 from kite.checks import DetectiveEnabledCheck
+from kite.checks import DetectMissingAutomatedLifecycleManagementCheck
 from kite.checks import DfdsCheck
 from kite.checks import DocumentedDataClassificationSchemeCheck
 from kite.checks import EksControlPlaneLoggingEnabledCheck
@@ -585,7 +585,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             AutomateS3DataRetentionCheck(),
             AutomateDdbDataRetentionCheck(),
             ImplementRetentionPoliciesCheck(),
-            check_detect_missing_automated_lifecycle_management,
+            DetectMissingAutomatedLifecycleManagementCheck(),
         ],
     },
     "Implement secure key management": {

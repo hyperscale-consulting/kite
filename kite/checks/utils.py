@@ -1,5 +1,10 @@
+import re
+from collections import defaultdict
 from typing import Any
 
+from kite.config import Config
+from kite.data import get_config_compliance_by_rule
+from kite.data import get_config_rules
 from kite.data import get_ec2_instances
 from kite.data import get_ecs_clusters
 from kite.data import get_efs_file_systems
@@ -9,6 +14,7 @@ from kite.data import get_lambda_functions
 from kite.data import get_rds_instances
 from kite.data import get_subnets
 from kite.data import get_vpcs
+from kite.helpers import get_account_ids_in_scope
 
 
 def get_name_from_tag(resource: dict[str, Any], default="") -> str:
@@ -168,3 +174,102 @@ def get_vpcs_with_resources(account_id: str, region: str):
                 subnet["Resources"] = resources
                 vpc["Subnets"].append(subnet)
     return [vpc for vpc in vpcs if vpc["Subnets"]]
+
+
+def print_config_compliance_for_rules(rule_base_names: list[str]):
+    results_by_account = defaultdict(dict)
+    rules_found = defaultdict(set)
+
+    for account_id in get_account_ids_in_scope():
+        for region in Config.get().active_regions:
+            # Get Config rules and compliance for this account/region
+            config_rules = get_config_rules(account_id, region)
+            compliance_results = get_config_compliance_by_rule(account_id, region)
+
+            # Create a map of rule names to compliance
+            compliance_map = {
+                result["ConfigRuleName"]: result["Compliance"]
+                for result in compliance_results
+            }
+
+            # Track relevant rules for this account/region
+            relevant_rules = []
+
+            # Check each rule
+            for rule in config_rules:
+                rule_name = rule["ConfigRuleName"]
+                base_name = re.sub(r"^securityhub-", "", rule_name)
+                base_name = re.sub(r"-[a-f0-9]+$", "", base_name)
+
+                if base_name in rule_base_names:
+                    compliance = compliance_map.get(rule["ConfigRuleName"], {})
+                    rules_found[f"{account_id}-{region}"].add(base_name)
+                    relevant_rules.append(
+                        {
+                            "name": rule["ConfigRuleName"],
+                            "compliance": compliance,
+                            "auto_remediation": rule.get(
+                                "RemediationConfigurations", []
+                            ),
+                        }
+                    )
+
+            if relevant_rules:
+                results_by_account[account_id][region] = relevant_rules
+
+    message = ""
+
+    if results_by_account:
+        for account_id, regions in results_by_account.items():
+            message += f"Account: {account_id}\n"
+
+            for region, rules in regions.items():
+                message += f"  Region: {region}\n"
+
+                for rule in rules:
+                    message += f"    Rule Name: {rule['name']}\n"
+
+                    # Add compliance information
+                    if rule["compliance"]:
+                        message += "    Compliance:\n"
+                        compliance = rule["compliance"]
+                        compliance_type = compliance.get("ComplianceType", "N/A")
+                        message += f"      Type: {compliance_type}\n"
+
+                    # Add auto remediation information
+                    if rule["auto_remediation"]:
+                        message += "    Auto Remediation:\n"
+                        for remediation in rule["auto_remediation"]:
+                            target_id = remediation.get("TargetId", "N/A")
+                            message += f"      Target ID: {target_id}\n"
+                            target_type = remediation.get("TargetType", "N/A")
+                            message += f"      Target Type: {target_type}\n"
+                            params = remediation.get("Parameters", {})
+                            message += f"      Parameters: {params}\n"
+                    else:
+                        message += "    Auto Remediation: Not configured\n"
+
+                    message += "\n"
+
+        missing_rules = defaultdict(lambda: defaultdict(set))
+        for account_id in get_account_ids_in_scope():
+            for region in Config.get().active_regions:
+                for rule in rule_base_names:
+                    if rule not in rules_found[f"{account_id}-{region}"]:
+                        missing_rules[account_id][region].add(rule)
+
+        if missing_rules:
+            message += "\nAccounts / regions missing relevant AWS config rules:\n\n"
+
+        for account, regions in missing_rules.items():
+            message += f"Account: {account}\n"
+            for region, rules in regions.items():
+                message += f"\n  Region: {region}\n"
+                for rule in rules:
+                    message += f"    - {rule}\n"
+            message += "\n"
+        message += "\n"
+
+    else:
+        message += "No relevant Config rules found in any account or region\n\n"
+    return message

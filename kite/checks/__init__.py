@@ -100,7 +100,7 @@ from kite.checks.detect_encryption_at_rest_misconfig import (
     DetectEncryptionAtRestMisconfigCheck,
 )
 from kite.checks.detect_missing_automated_lifecycle_management import (
-    check_detect_missing_automated_lifecycle_management,
+    DetectMissingAutomatedLifecycleManagementCheck,
 )
 from kite.checks.detect_sensitive_data_transform import (
     check_detect_sensitive_data_transform,
@@ -422,7 +422,7 @@ __all__ = [
     "ScanForSensitiveDataInDevCheck",
     "AutomateS3DataRetentionCheck",
     "AutomateDdbDataRetentionCheck",
-    "check_detect_missing_automated_lifecycle_management",
+    "DetectMissingAutomatedLifecycleManagementCheck",
     "check_use_a_kms",
     "check_no_human_access_to_unencrypted_key_material",
     "check_rotate_encryption_keys",

@@ -34,7 +34,6 @@ from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
-from kite.checks import check_no_key_pairs
 from kite.checks import check_no_permissive_role_assumption
 from kite.checks import check_no_policy_allows_privilege_escalation
 from kite.checks import check_no_rdp_or_ssh_access
@@ -138,6 +137,7 @@ from kite.checks import NoAccessKeysCheck
 from kite.checks import NoFullAdminPoliciesCheck
 from kite.checks import NoHumanAccessToUnencryptedKeyMaterialCheck
 from kite.checks import NoIamUserAccessCheck
+from kite.checks import NoKeyPairsCheck
 from kite.checks import NoReadonlyThirdPartyAccessCheck
 from kite.checks import PenetrationTestingCheck
 from kite.checks import PerformDASTCheck
@@ -288,7 +288,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": "Checks related to the use of temporary credentials",
         "checks": [
             NoAccessKeysCheck(),
-            check_no_key_pairs,
+            NoKeyPairsCheck(),
             NoIamUserAccessCheck(),
         ],
     },

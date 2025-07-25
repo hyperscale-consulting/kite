@@ -182,7 +182,7 @@ from kite.checks.no_human_access_to_unencrypted_key_material import (
     NoHumanAccessToUnencryptedKeyMaterialCheck,
 )
 from kite.checks.no_iam_user_access import NoIamUserAccessCheck
-from kite.checks.no_key_pairs import check_no_key_pairs
+from kite.checks.no_key_pairs import NoKeyPairsCheck
 from kite.checks.no_permissive_role_assumption import (
     check_no_permissive_role_assumption,
 )
@@ -328,7 +328,7 @@ __all__ = [
     "IacVersionControlCheck",
     "IacGuardrailsCheck",
     "ServiceCatalogCheck",
-    "check_no_key_pairs",
+    "NoKeyPairsCheck",
     "check_no_secrets_in_aws_resources",
     "AvoidRootUsageCheck",
     "check_root_credentials_management_enabled",

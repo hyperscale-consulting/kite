@@ -1,44 +1,30 @@
-"""Check for absence of EC2 key pairs."""
-
-from typing import Any
-
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.helpers import get_account_ids_in_scope
 from kite.helpers import get_account_key_pairs
 
-CHECK_ID = "no-key-pairs"
-CHECK_NAME = "No EC2 Key Pairs"
 
+class NoKeyPairsCheck:
+    def __init__(self):
+        self.check_id = "no-key-pairs"
+        self.check_name = "No EC2 Key Pairs"
 
-def check_no_key_pairs() -> dict[str, Any]:
-    """
-    Check if any EC2 key pairs exist in any account.
+    @property
+    def question(self) -> str:
+        return ""  # fully automated check
 
-    This check verifies that no EC2 key pairs exist in any account in scope.
-    Using SSM Instance Connect is recommended instead of key pairs.
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that no EC2 key pairs exist in any account in scope. "
+            "Using SSM Instance Connect is recommended instead of key pairs."
+        )
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-                - accounts_with_key_pairs: List of dictionaries containing:
-                    - account_id: str
-                    - key_pairs: List of key pair names
-    """
-    try:
-        # Get all account IDs in scope
+    def run(self) -> CheckResult:
         account_ids = get_account_ids_in_scope()
-
-        # Track accounts with key pairs
-        accounts_with_key_pairs: list[dict[str, Any]] = []
-
-        # Check each account
+        accounts_with_key_pairs = []
         for account_id in account_ids:
-            # Get the key pairs
             key_pairs = get_account_key_pairs(account_id)
-
             if key_pairs:
                 accounts_with_key_pairs.append(
                     {
@@ -46,38 +32,17 @@ def check_no_key_pairs() -> dict[str, Any]:
                         "key_pairs": [kp["KeyName"] for kp in key_pairs],
                     }
                 )
-
-        # Determine if the check passed
         passed = len(accounts_with_key_pairs) == 0
-
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "PASS" if passed else "FAIL",
-            "details": {
-                "message": (
-                    "No EC2 key pairs found in any accounts."
-                    if passed
-                    else (
-                        f"EC2 key pairs found in {len(accounts_with_key_pairs)} "
-                        "accounts."
-                    )
-                ),
+        return CheckResult(
+            status=CheckStatus.PASS if passed else CheckStatus.FAIL,
+            reason=(
+                "No EC2 key pairs found in any accounts."
+                if passed
+                else (
+                    f"EC2 key pairs found in {len(accounts_with_key_pairs)} accounts."
+                )
+            ),
+            details={
                 "accounts_with_key_pairs": accounts_with_key_pairs,
             },
-        }
-
-    except Exception as e:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "ERROR",
-            "details": {
-                "message": f"Error checking for EC2 key pairs: {str(e)}",
-            },
-        }
-
-
-# Attach the check ID and name to the function
-check_no_key_pairs._CHECK_ID = CHECK_ID
-check_no_key_pairs._CHECK_NAME = CHECK_NAME
+        )

@@ -173,7 +173,7 @@ from kite.checks.monitor_secrets import MonitorSecretsCheck
 from kite.checks.network_firewall_logging_enabled import (
     NetworkFirewallLoggingEnabledCheck,
 )
-from kite.checks.no_access_keys import check_no_access_keys
+from kite.checks.no_access_keys import NoAccessKeysCheck
 from kite.checks.no_full_access_to_sensitive_services import (
     check_no_full_access_to_sensitive_services,
 )
@@ -346,7 +346,7 @@ __all__ = [
     "check_security_services_evaluation",
     "RequireMfaCheck",
     "ComplexPasswordsCheck",
-    "check_no_access_keys",
+    "NoAccessKeysCheck",
     "NoIamUserAccessCheck",
     "SecureSecretsStorageCheck",
     "RestrictedRoleForSecretsAccessCheck",

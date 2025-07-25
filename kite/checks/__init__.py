@@ -199,7 +199,7 @@ from kite.checks.perform_sast import PerformSASTCheck
 from kite.checks.pipelines_use_least_privilege import PipelinesUseLeastPrivilegeCheck
 from kite.checks.pre_deploy_tools import PreDeployToolsCheck
 from kite.checks.prevent_and_detect_secrets import PreventAndDetectSecretsCheck
-from kite.checks.protect_root_ca import check_protect_root_ca
+from kite.checks.protect_root_ca import ProtectRootCaCheck
 from kite.checks.rds_logging_enabled import check_rds_logging_enabled
 from kite.checks.region_deny_scp import check_region_deny_scp
 from kite.checks.regularly_review_permissions import RegularlyReviewPermissionsCheck
@@ -431,7 +431,7 @@ __all__ = [
     "AutomateDataAtRestProtectionWithGuardDutyCheck",
     "RestoreTestingCheck",
     "ImplementVersioningAndObjectLockingCheck",
-    "check_protect_root_ca",
+    "ProtectRootCaCheck",
     "EnforceHttpsCheck",
     "AvoidInsecureSslCiphersCheck",
     "TrainForApplicationSecurityCheck",

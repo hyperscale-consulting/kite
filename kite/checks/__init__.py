@@ -200,7 +200,7 @@ from kite.checks.pipelines_use_least_privilege import PipelinesUseLeastPrivilege
 from kite.checks.pre_deploy_tools import PreDeployToolsCheck
 from kite.checks.prevent_and_detect_secrets import PreventAndDetectSecretsCheck
 from kite.checks.protect_root_ca import ProtectRootCaCheck
-from kite.checks.rds_logging_enabled import check_rds_logging_enabled
+from kite.checks.rds_logging_enabled import RdsLoggingEnabledCheck
 from kite.checks.region_deny_scp import check_region_deny_scp
 from kite.checks.regularly_review_permissions import RegularlyReviewPermissionsCheck
 from kite.checks.remediate_vulnerabilities import RemediateVulnerabilitiesCheck
@@ -399,7 +399,7 @@ __all__ = [
     "ElbLoggingEnabledCheck",
     "EksControlPlaneLoggingEnabledCheck",
     "NetworkFirewallLoggingEnabledCheck",
-    "check_rds_logging_enabled",
+    "RdsLoggingEnabledCheck",
     "CloudfrontLoggingEnabledCheck",
     "ApiGatewayLoggingEnabledCheck",
     "ConfigRecordingEnabledCheck",

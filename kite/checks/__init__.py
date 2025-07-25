@@ -146,7 +146,7 @@ from kite.checks.inspect_traffic_with_network_firewall import (
     InspectTrafficWithNetworkFirewallCheck,
 )
 from kite.checks.isolation_boundaries import IsolationBoundariesCheck
-from kite.checks.key_access_control import check_key_access_control
+from kite.checks.key_access_control import KeyAccessControlCheck
 from kite.checks.kms_confused_deputy_protection import KmsConfusedDeputyProtectionCheck
 from kite.checks.lambda_confused_deputy_protection import (
     LambdaConfusedDeputyProtectionCheck,
@@ -424,7 +424,7 @@ __all__ = [
     "check_use_a_kms",
     "check_no_human_access_to_unencrypted_key_material",
     "check_rotate_encryption_keys",
-    "check_key_access_control",
+    "KeyAccessControlCheck",
     "check_use_service_encryption_at_rest",
     "check_use_customer_managed_keys",
     "DetectEncryptionAtRestMisconfigCheck",

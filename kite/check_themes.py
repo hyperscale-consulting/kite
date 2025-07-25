@@ -32,7 +32,6 @@ from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
-from kite.checks import check_key_access_control
 from kite.checks import check_log_alerting
 from kite.checks import check_management_account_workloads
 from kite.checks import check_migrate_from_oai
@@ -126,6 +125,7 @@ from kite.checks import IncidentResponsePlansCheck
 from kite.checks import InspectHttpTrafficWithWafCheck
 from kite.checks import InspectTrafficWithNetworkFirewallCheck
 from kite.checks import IsolationBoundariesCheck
+from kite.checks import KeyAccessControlCheck
 from kite.checks import KmsConfusedDeputyProtectionCheck
 from kite.checks import LambdaConfusedDeputyProtectionCheck
 from kite.checks import LessonsLearnedFrameworkCheck
@@ -599,7 +599,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_no_human_access_to_unencrypted_key_material,
             check_rotate_encryption_keys,
             MonitorKeyUsageCheck(),
-            check_key_access_control,
+            KeyAccessControlCheck(),
         ],
     },
     "Enforce encryption at rest": {

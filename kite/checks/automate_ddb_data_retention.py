@@ -12,7 +12,7 @@ class AutomateDdbDataRetentionCheck:
 
     @property
     def question(self) -> str:
-        return "Is DynamoDB TTL enabled on all tables for automated data retention?"
+        return ""  # fully automated check
 
     @property
     def description(self) -> str:

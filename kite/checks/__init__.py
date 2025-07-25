@@ -161,7 +161,7 @@ from kite.checks.maintain_inventory_of_shared_resources import (
     MaintainInventoryOfSharedResourcesCheck,
 )
 from kite.checks.management_account_workloads import ManagementAccountWorkloadsCheck
-from kite.checks.migrate_from_oai import check_migrate_from_oai
+from kite.checks.migrate_from_oai import MigrateFromOaiCheck
 from kite.checks.monitor_and_response_to_s3_public_access import (
     check_monitor_and_response_to_s3_public_access,
 )
@@ -385,7 +385,7 @@ __all__ = [
     "ActiveExternalAccessAnalyzerCheck",
     "check_monitor_and_response_to_s3_public_access",
     "check_s3_bucket_acl_disabled",
-    "check_migrate_from_oai",
+    "MigrateFromOaiCheck",
     "check_establish_data_perimeter_trusted_identities",
     "DataPerimeterConfusedDeputyProtectionCheck",
     "DataPerimeterTrustedResourcesCheck",

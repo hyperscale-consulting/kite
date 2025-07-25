@@ -33,7 +33,6 @@ from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
-from kite.checks import check_migrate_from_oai
 from kite.checks import check_monitor_and_response_to_s3_public_access
 from kite.checks import check_network_firewall_logging_enabled
 from kite.checks import check_no_access_keys
@@ -133,6 +132,7 @@ from kite.checks import LogRetentionCheck
 from kite.checks import MacieScansForSensitiveDataCheck
 from kite.checks import MaintainInventoryOfSharedResourcesCheck
 from kite.checks import ManagementAccountWorkloadsCheck
+from kite.checks import MigrateFromOaiCheck
 from kite.checks import MonitorKeyUsageCheck
 from kite.checks import MonitorNetworkTrafficForUnauthorizedAccessCheck
 from kite.checks import MonitorSecretsCheck
@@ -414,7 +414,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_scp_prevents_ram_external_sharing,
             check_scp_prevents_ram_invitations,
             check_s3_bucket_acl_disabled,
-            check_migrate_from_oai,
+            MigrateFromOaiCheck(),
             check_establish_data_perimeter_trusted_identities,
             DataPerimeterConfusedDeputyProtectionCheck(),
             DataPerimeterTrustedResourcesCheck(),

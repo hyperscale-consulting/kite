@@ -34,7 +34,6 @@ from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
-from kite.checks import check_no_human_access_to_unencrypted_key_material
 from kite.checks import check_no_key_pairs
 from kite.checks import check_no_permissive_role_assumption
 from kite.checks import check_no_policy_allows_privilege_escalation
@@ -137,6 +136,7 @@ from kite.checks import MonitorSecretsCheck
 from kite.checks import NetworkFirewallLoggingEnabledCheck
 from kite.checks import NoAccessKeysCheck
 from kite.checks import NoFullAdminPoliciesCheck
+from kite.checks import NoHumanAccessToUnencryptedKeyMaterialCheck
 from kite.checks import NoIamUserAccessCheck
 from kite.checks import NoReadonlyThirdPartyAccessCheck
 from kite.checks import PenetrationTestingCheck
@@ -596,7 +596,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         ),
         "checks": [
             check_use_a_kms,
-            check_no_human_access_to_unencrypted_key_material,
+            NoHumanAccessToUnencryptedKeyMaterialCheck(),
             check_rotate_encryption_keys,
             MonitorKeyUsageCheck(),
             KeyAccessControlCheck(),

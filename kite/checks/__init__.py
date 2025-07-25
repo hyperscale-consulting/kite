@@ -179,7 +179,7 @@ from kite.checks.no_full_access_to_sensitive_services import (
 )
 from kite.checks.no_full_admin_policies import NoFullAdminPoliciesCheck
 from kite.checks.no_human_access_to_unencrypted_key_material import (
-    check_no_human_access_to_unencrypted_key_material,
+    NoHumanAccessToUnencryptedKeyMaterialCheck,
 )
 from kite.checks.no_iam_user_access import NoIamUserAccessCheck
 from kite.checks.no_key_pairs import check_no_key_pairs
@@ -422,7 +422,7 @@ __all__ = [
     "AutomateDdbDataRetentionCheck",
     "DetectMissingAutomatedLifecycleManagementCheck",
     "check_use_a_kms",
-    "check_no_human_access_to_unencrypted_key_material",
+    "NoHumanAccessToUnencryptedKeyMaterialCheck",
     "check_rotate_encryption_keys",
     "KeyAccessControlCheck",
     "check_use_service_encryption_at_rest",

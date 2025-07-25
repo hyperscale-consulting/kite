@@ -5,7 +5,7 @@ from kite.data import get_config_rules
 from kite.helpers import get_account_ids_in_scope
 
 
-class MonitorAndResponseToS3PublicAccessCheck:
+class MonitorAndRespondToS3PublicAccessCheck:
     def __init__(self):
         self.check_id = "monitor-and-respond-to-s3-public-access"
         self.check_name = "Monitor and Respond to S3 Public Access"

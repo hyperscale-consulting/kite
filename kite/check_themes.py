@@ -132,7 +132,7 @@ from kite.checks import MacieScansForSensitiveDataCheck
 from kite.checks import MaintainInventoryOfSharedResourcesCheck
 from kite.checks import ManagementAccountWorkloadsCheck
 from kite.checks import MigrateFromOaiCheck
-from kite.checks import MonitorAndResponseToS3PublicAccessCheck
+from kite.checks import MonitorAndRespondToS3PublicAccessCheck
 from kite.checks import MonitorKeyUsageCheck
 from kite.checks import MonitorNetworkTrafficForUnauthorizedAccessCheck
 from kite.checks import MonitorSecretsCheck
@@ -401,7 +401,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": ("Checks related to analyzing public and cross-account access"),
         "checks": [
             ActiveExternalAccessAnalyzerCheck(),
-            MonitorAndResponseToS3PublicAccessCheck(),
+            MonitorAndRespondToS3PublicAccessCheck(),
             MaintainInventoryOfSharedResourcesCheck(),
             ApprovalProcessForResourceSharingCheck(),
         ],

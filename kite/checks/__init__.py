@@ -162,8 +162,8 @@ from kite.checks.maintain_inventory_of_shared_resources import (
 )
 from kite.checks.management_account_workloads import ManagementAccountWorkloadsCheck
 from kite.checks.migrate_from_oai import MigrateFromOaiCheck
-from kite.checks.monitor_and_response_to_s3_public_access import (
-    MonitorAndResponseToS3PublicAccessCheck,
+from kite.checks.monitor_and_respond_to_s3_public_access import (
+    MonitorAndRespondToS3PublicAccessCheck,
 )
 from kite.checks.monitor_key_usage import MonitorKeyUsageCheck
 from kite.checks.monitor_network_traffic_for_unauthorized_access import (
@@ -383,7 +383,7 @@ __all__ = [
     "AccessManagementLifecycleImplementedCheck",
     "check_scim_protocol_used",
     "ActiveExternalAccessAnalyzerCheck",
-    "MonitorAndResponseToS3PublicAccessCheck",
+    "MonitorAndRespondToS3PublicAccessCheck",
     "check_s3_bucket_acl_disabled",
     "MigrateFromOaiCheck",
     "check_establish_data_perimeter_trusted_identities",

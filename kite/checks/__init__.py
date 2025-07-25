@@ -185,7 +185,7 @@ from kite.checks.no_iam_user_access import NoIamUserAccessCheck
 from kite.checks.no_key_pairs import NoKeyPairsCheck
 from kite.checks.no_permissive_role_assumption import NoPermissiveRoleAssumptionCheck
 from kite.checks.no_policy_allows_privilege_escalation import (
-    check_no_policy_allows_privilege_escalation,
+    NoPolicyAllowsPrivilegeEscalationCheck,
 )
 from kite.checks.no_rdp_or_ssh_access import check_no_rdp_or_ssh_access
 from kite.checks.no_readonly_third_party_access import NoReadonlyThirdPartyAccessCheck
@@ -354,7 +354,7 @@ __all__ = [
     "IdentityAuditCheck",
     "EmployUserGroupsAndAttributesCheck",
     "NoFullAdminPoliciesCheck",
-    "check_no_policy_allows_privilege_escalation",
+    "NoPolicyAllowsPrivilegeEscalationCheck",
     "NoPermissiveRoleAssumptionCheck",
     "check_no_full_access_to_sensitive_services",
     "NoReadonlyThirdPartyAccessCheck",

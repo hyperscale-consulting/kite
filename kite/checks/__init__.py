@@ -138,7 +138,7 @@ from kite.checks.implement_auth_across_services import ImplementAuthAcrossServic
 from kite.checks.implement_querying_for_logs import ImplementQueryingForLogsCheck
 from kite.checks.implement_retention_policies import ImplementRetentionPoliciesCheck
 from kite.checks.implement_versioning_and_object_locking import (
-    check_implement_versioning_and_object_locking,
+    ImplementVersioningAndObjectLockingCheck,
 )
 from kite.checks.incident_response_plans import IncidentResponsePlansCheck
 from kite.checks.inspect_http_traffic_with_waf import (
@@ -434,7 +434,7 @@ __all__ = [
     "EstablishLoggingAndAuditTrailsForPrivateCACheck",
     "AutomateDataAtRestProtectionWithGuardDutyCheck",
     "RestoreTestingCheck",
-    "check_implement_versioning_and_object_locking",
+    "ImplementVersioningAndObjectLockingCheck",
     "check_protect_root_ca",
     "EnforceHttpsCheck",
     "AvoidInsecureSslCiphersCheck",

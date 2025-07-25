@@ -32,7 +32,6 @@ from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
-from kite.checks import check_implement_versioning_and_object_locking
 from kite.checks import check_inspect_http_traffic_with_waf
 from kite.checks import check_inspect_traffic_with_network_firewall
 from kite.checks import check_isolation_boundaries
@@ -125,6 +124,7 @@ from kite.checks import ImmutableBuildsCheck
 from kite.checks import ImplementAuthAcrossServicesCheck
 from kite.checks import ImplementQueryingForLogsCheck
 from kite.checks import ImplementRetentionPoliciesCheck
+from kite.checks import ImplementVersioningAndObjectLockingCheck
 from kite.checks import IncidentResponsePlansCheck
 from kite.checks import KmsConfusedDeputyProtectionCheck
 from kite.checks import LambdaConfusedDeputyProtectionCheck
@@ -629,7 +629,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "object locking"
         ),
         "checks": [
-            check_implement_versioning_and_object_locking,
+            ImplementVersioningAndObjectLockingCheck(),
         ],
     },
     "Implement secure key and certificate management": {

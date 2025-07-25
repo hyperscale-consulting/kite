@@ -183,9 +183,7 @@ from kite.checks.no_human_access_to_unencrypted_key_material import (
 )
 from kite.checks.no_iam_user_access import NoIamUserAccessCheck
 from kite.checks.no_key_pairs import NoKeyPairsCheck
-from kite.checks.no_permissive_role_assumption import (
-    check_no_permissive_role_assumption,
-)
+from kite.checks.no_permissive_role_assumption import NoPermissiveRoleAssumptionCheck
 from kite.checks.no_policy_allows_privilege_escalation import (
     check_no_policy_allows_privilege_escalation,
 )
@@ -357,7 +355,7 @@ __all__ = [
     "EmployUserGroupsAndAttributesCheck",
     "NoFullAdminPoliciesCheck",
     "check_no_policy_allows_privilege_escalation",
-    "check_no_permissive_role_assumption",
+    "NoPermissiveRoleAssumptionCheck",
     "check_no_full_access_to_sensitive_services",
     "NoReadonlyThirdPartyAccessCheck",
     "CrossAccountConfusedDeputyPreventionCheck",

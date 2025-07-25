@@ -34,7 +34,6 @@ from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
-from kite.checks import check_ou_structure
 from kite.checks import check_protect_root_ca
 from kite.checks import check_rds_logging_enabled
 from kite.checks import check_region_deny_scp
@@ -139,6 +138,7 @@ from kite.checks import NoReadonlyThirdPartyAccessCheck
 from kite.checks import NoRootAccessKeysCheck
 from kite.checks import NoSecretsInAwsResourcesCheck
 from kite.checks import OrganizationalCloudTrailCheck
+from kite.checks import OuStructureCheck
 from kite.checks import PenetrationTestingCheck
 from kite.checks import PerformDASTCheck
 from kite.checks import PerformSASTCheck
@@ -199,7 +199,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "checks": [
             AwsOrganizationsUsageCheck(),
             AccountSeparationCheck(),
-            check_ou_structure,
+            OuStructureCheck(),
             ManagementAccountWorkloadsCheck(),
             DelegatedAdminForSecurityServices(),
             TrustedDelegatedAdminsCheck(),

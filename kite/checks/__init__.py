@@ -192,7 +192,7 @@ from kite.checks.no_readonly_third_party_access import NoReadonlyThirdPartyAcces
 from kite.checks.no_root_access_keys import NoRootAccessKeysCheck
 from kite.checks.no_secrets_in_aws_resources import NoSecretsInAwsResourcesCheck
 from kite.checks.organizational_cloudtrail import OrganizationalCloudTrailCheck
-from kite.checks.ou_structure import check_ou_structure
+from kite.checks.ou_structure import OuStructureCheck
 from kite.checks.penetration_testing import PenetrationTestingCheck
 from kite.checks.perform_dast import PerformDASTCheck
 from kite.checks.perform_sast import PerformSASTCheck
@@ -313,7 +313,7 @@ from kite.checks.workload_dependency_updates import WorkloadDependencyUpdatesChe
 __all__ = [
     "AwsOrganizationsUsageCheck",
     "AccountSeparationCheck",
-    "check_ou_structure",
+    "OuStructureCheck",
     "ManagementAccountWorkloadsCheck",
     "DelegatedAdminForSecurityServices",
     "TrustedDelegatedAdminsCheck",
@@ -392,7 +392,6 @@ __all__ = [
     "KmsConfusedDeputyProtectionCheck",
     "RepeatableAuditableSetupFor3rdPartyAccessCheck",
     "OrganizationalCloudTrailCheck",
-    "check_organizational_cloudtrail",
     "check_vpc_flow_logs_enabled",
     "ResolverQueryLogsEnabledCheck",
     "LogRetentionCheck",

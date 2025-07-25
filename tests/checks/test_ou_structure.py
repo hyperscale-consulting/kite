@@ -1,86 +1,43 @@
-from unittest.mock import MagicMock
-from unittest.mock import patch
+from kite.checks import CheckStatus
+from kite.checks.ou_structure import OuStructureCheck
+from tests.factories import build_account
+from tests.factories import build_ou
+from tests.factories import config_for_org
+from tests.factories import config_for_standalone_account
+from tests.factories import create_organization
 
-from kite.checks.ou_structure import check_ou_structure
+mgmt_account_id = "123456789012"
+workload_account_id = "666666666666"
 
 
-def test_check_ou_structure_no_org():
-    """Test the check when AWS Organizations is not being used."""
-    # Mock the get_organization function to return None
-    with patch("kite.checks.ou_structure.get_organization", return_value=None):
-        result = check_ou_structure()
-
-    # Verify the result
-    assert result["check_id"] == "ou-structure"
-    assert result["check_name"] == "OU Structure"
-    assert result["status"] == "FAIL"
+@config_for_standalone_account()
+def test_no_org():
+    result = OuStructureCheck().run()
+    assert result.status == CheckStatus.FAIL
+    assert result.reason is not None
     assert (
-        "AWS Organizations is not being used, so OU structure "
-        "cannot be assessed." in result["details"]["message"]
+        result.reason
+        == "AWS Organizations is not being used, so OU structure cannot be assessed."
     )
 
 
-def test_check_ou_structure_pass():
-    """Test the check when OU structure is effective."""
-    # Create a mock organization object
-    mock_org = MagicMock()
-
-    # Mock the get_organization function to return our mock organization
-    with patch("kite.checks.ou_structure.get_organization", return_value=mock_org):
-        # Mock the get_organization_structure_str function
-        with patch(
-            "kite.checks.ou_structure.get_organization_structure_str",
-            return_value="Mock Organization Structure",
-        ):
-            # Mock the manual_check function to return a PASS result
-            with patch(
-                "kite.checks.ou_structure.manual_check",
-                return_value={
-                    "check_id": "ou-structure",
-                    "check_name": "OU Structure",
-                    "status": "PASS",
-                    "details": {
-                        "message": "Effective OU structure is in place.",
-                    },
-                },
-            ):
-                result = check_ou_structure()
-
-    # Verify the result
-    assert result["check_id"] == "ou-structure"
-    assert result["check_name"] == "OU Structure"
-    assert result["status"] == "PASS"
-    assert result["details"]["message"] == "Effective OU structure is in place."
-
-
-def test_check_ou_structure_fail():
-    """Test the check when OU structure is not effective."""
-    # Create a mock organization object
-    mock_org = MagicMock()
-
-    # Mock the get_organization function to return our mock organization
-    with patch("kite.checks.ou_structure.get_organization", return_value=mock_org):
-        # Mock the get_organization_structure_str function
-        with patch(
-            "kite.checks.ou_structure.get_organization_structure_str",
-            return_value="Mock Organization Structure",
-        ):
-            # Mock the manual_check function to return a FAIL result
-            with patch(
-                "kite.checks.ou_structure.manual_check",
-                return_value={
-                    "check_id": "ou-structure",
-                    "check_name": "OU Structure",
-                    "status": "FAIL",
-                    "details": {
-                        "message": "OU structure could be improved.",
-                    },
-                },
-            ):
-                result = check_ou_structure()
-
-    # Verify the result
-    assert result["check_id"] == "ou-structure"
-    assert result["check_name"] == "OU Structure"
-    assert result["status"] == "FAIL"
-    assert result["details"]["message"] == "OU structure could be improved."
+@config_for_org(mgmt_account_id)
+def test_org():
+    create_organization(
+        mgmt_account_id,
+        root_ou=build_ou(
+            child_ous=[
+                build_ou(
+                    name="Workloads",
+                    accounts=[
+                        build_account(id=workload_account_id, name="Test account")
+                    ],
+                )
+            ],
+        ),
+    )
+    result = OuStructureCheck().run()
+    assert result.status == CheckStatus.MANUAL
+    assert result.context is not None
+    assert "└── OU: Workloads" in result.context
+    assert "    └── Account: Test account (666666666666)" in result.context

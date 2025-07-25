@@ -189,7 +189,7 @@ from kite.checks.no_policy_allows_privilege_escalation import (
 )
 from kite.checks.no_rdp_or_ssh_access import NoRdpOrSshAccessCheck
 from kite.checks.no_readonly_third_party_access import NoReadonlyThirdPartyAccessCheck
-from kite.checks.no_root_access_keys import check_no_root_access_keys
+from kite.checks.no_root_access_keys import NoRootAccessKeysCheck
 from kite.checks.no_secrets_in_aws_resources import check_no_secrets_in_aws_resources
 from kite.checks.organizational_cloudtrail import check_organizational_cloudtrail
 from kite.checks.ou_structure import check_ou_structure
@@ -330,7 +330,7 @@ __all__ = [
     "check_no_secrets_in_aws_resources",
     "AvoidRootUsageCheck",
     "check_root_credentials_management_enabled",
-    "check_no_root_access_keys",
+    "NoRootAccessKeysCheck",
     "AccurateAccountContactDetailsCheck",
     "RootAccountMonitoringCheck",
     "RootCredentialsSecurityCheck",

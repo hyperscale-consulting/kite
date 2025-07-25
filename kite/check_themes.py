@@ -34,7 +34,6 @@ from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
-from kite.checks import check_no_root_access_keys
 from kite.checks import check_no_secrets_in_aws_resources
 from kite.checks import check_organizational_cloudtrail
 from kite.checks import check_ou_structure
@@ -139,6 +138,7 @@ from kite.checks import NoPermissiveRoleAssumptionCheck
 from kite.checks import NoPolicyAllowsPrivilegeEscalationCheck
 from kite.checks import NoRdpOrSshAccessCheck
 from kite.checks import NoReadonlyThirdPartyAccessCheck
+from kite.checks import NoRootAccessKeysCheck
 from kite.checks import PenetrationTestingCheck
 from kite.checks import PerformDASTCheck
 from kite.checks import PerformSASTCheck
@@ -210,7 +210,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "checks": [
             AvoidRootUsageCheck(),
             check_root_credentials_management_enabled,
-            check_no_root_access_keys,
+            NoRootAccessKeysCheck(),
             check_root_mfa_enabled,
             AccurateAccountContactDetailsCheck(),
             RootAccessKeysDisallowedCheck(),

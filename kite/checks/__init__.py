@@ -127,7 +127,7 @@ from kite.checks.establish_logging_and_audit_trails_for_private_ca import (
 from kite.checks.established_emergency_access_procedures import (
     EstablishedEmergencyAccessProceduresCheck,
 )
-from kite.checks.forensics_ou import check_forensics_ou
+from kite.checks.forensics_ou import ForensicsOuCheck
 from kite.checks.hr_system_integration import check_hr_system_integration
 from kite.checks.iac_guardrails import IacGuardrailsCheck
 from kite.checks.iac_templates import IacTemplatesCheck
@@ -469,7 +469,7 @@ __all__ = [
     "AvoidInteractiveAccessCheck",
     "AuditInteractiveAccessWithSSMCheck",
     "ValidateSoftwareIntegrityCheck",
-    "check_forensics_ou",
+    "ForensicsOuCheck",
     "SecurityIrPlaybooksCheck",
     "UseIdentityBrokerCheck",
     "RunSimulationsCheck",

@@ -32,7 +32,6 @@ from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
-from kite.checks import check_forensics_ou
 from kite.checks import check_hr_system_integration
 from kite.checks import check_implement_versioning_and_object_locking
 from kite.checks import check_inspect_http_traffic_with_waf
@@ -118,6 +117,7 @@ from kite.checks import EnforceDataProtectionAtRestWithPolicyAsCodeCheck
 from kite.checks import EnforceHttpsCheck
 from kite.checks import EstablishedEmergencyAccessProceduresCheck
 from kite.checks import EstablishLoggingAndAuditTrailsForPrivateCACheck
+from kite.checks import ForensicsOuCheck
 from kite.checks import IacGuardrailsCheck
 from kite.checks import IacTemplatesCheck
 from kite.checks import IacVersionControlCheck
@@ -675,7 +675,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Prepare forensic capabilities": {
         "description": "Checks related to preparing forensic capabilities",
         "checks": [
-            check_forensics_ou,
+            ForensicsOuCheck(),
             AutomateForensicsCheck(),
         ],
     },

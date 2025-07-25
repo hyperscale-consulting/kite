@@ -1,13 +1,14 @@
-from unittest.mock import patch
-
-import pytest
-
-from kite.checks.management_account_workloads import check_management_account_workloads
+from kite.checks import CheckStatus
+from kite.checks.management_account_workloads import ManagementAccountWorkloadsCheck
 from kite.data import save_ecs_clusters
+from tests.factories import config_for_org
+from tests.factories import config_for_standalone_account
+from tests.factories import create_organization
+
+mgmt_account_id = "123456789012"
 
 
-@pytest.fixture
-def workload_resources_in_mgmt_account(mgmt_account_id):
+def workload_resources_in_mgmt_account():
     save_ecs_clusters(
         mgmt_account_id,
         "us-east-1",
@@ -20,60 +21,36 @@ def workload_resources_in_mgmt_account(mgmt_account_id):
     )
 
 
-@pytest.fixture
-def mock_prompt_user_with_panel():
-    with patch(
-        "kite.checks.management_account_workloads.prompt_user_with_panel"
-    ) as mock:
-        yield mock
+@config_for_standalone_account()
+def test_check_management_account_workloads_no_management_account():
+    result = ManagementAccountWorkloadsCheck().run()
 
-
-def test_check_management_account_workloads_no_management_account(
-    workload_resources_in_mgmt_account, config
-):
-    config.management_account_id = None
-    result = check_management_account_workloads()
-
-    assert result["check_id"] == "no-management-account-workloads"
-    assert result["check_name"] == "No Management Account Workloads"
-    assert result["status"] == "PASS"
+    assert result.status == CheckStatus.PASS
+    assert result.reason is not None
     assert (
-        "No management account ID provided in config, skipping check."
-        in result["details"]["message"]
+        "No management account ID provided in config, skipping check." in result.reason
     )
 
 
+@config_for_org()
 def test_check_management_account_workloads_no_resources():
-    result = check_management_account_workloads()
+    result = ManagementAccountWorkloadsCheck().run()
 
-    # Verify the result
-    assert result["check_id"] == "no-management-account-workloads"
-    assert result["check_name"] == "No Management Account Workloads"
-    assert result["status"] == "PASS"
-    assert (
-        "No workload resources found in the management account"
-        in result["details"]["message"]
-    )
+    assert result.status == CheckStatus.PASS
+    assert result.reason is not None
+    assert "No workload resources found in the management account" in result.reason
 
 
-def test_check_management_account_workloads_with_resources(
-    workload_resources_in_mgmt_account,
-    mock_prompt_user_with_panel,
-):
-    mock_prompt_user_with_panel.return_value = ("y", "All good")
-    result = check_management_account_workloads()
+@config_for_org(mgmt_account_id=mgmt_account_id)
+def test_check_management_account_workloads_with_resources():
+    create_organization(mgmt_account_id=mgmt_account_id)
+    workload_resources_in_mgmt_account()
+    result = ManagementAccountWorkloadsCheck().run()
 
-    # Verify the result
-    assert result["check_id"] == "no-management-account-workloads"
-    assert result["check_name"] == "No Management Account Workloads"
-    assert result["status"] == "PASS"
-    assert (
-        "The management account is free of workload resources."
-        in result["details"]["message"]
-    )
-    _, kwargs = mock_prompt_user_with_panel.call_args
+    assert result.status == CheckStatus.MANUAL
+    assert result.context is not None
     assert (
         "The following workload resources were found in the management account:\n"
         "- ECS: (us-east-1) "
         "(clusterArn=arn:aws:ecs:us-east-1:123456789012:cluster/test-cluster)\n"
-    ) in kwargs.get("message", "")
+    ) in result.context

@@ -32,7 +32,6 @@ from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
-from kite.checks import check_inspect_http_traffic_with_waf
 from kite.checks import check_inspect_traffic_with_network_firewall
 from kite.checks import check_isolation_boundaries
 from kite.checks import check_key_access_control
@@ -126,6 +125,7 @@ from kite.checks import ImplementQueryingForLogsCheck
 from kite.checks import ImplementRetentionPoliciesCheck
 from kite.checks import ImplementVersioningAndObjectLockingCheck
 from kite.checks import IncidentResponsePlansCheck
+from kite.checks import InspectHttpTrafficWithWafCheck
 from kite.checks import KmsConfusedDeputyProtectionCheck
 from kite.checks import LambdaConfusedDeputyProtectionCheck
 from kite.checks import LessonsLearnedFrameworkCheck
@@ -508,7 +508,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "workloads"
         ),
         "checks": [
-            check_inspect_http_traffic_with_waf,
+            InspectHttpTrafficWithWafCheck(),
             check_inspect_traffic_with_network_firewall,
         ],
     },

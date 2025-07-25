@@ -141,9 +141,7 @@ from kite.checks.implement_versioning_and_object_locking import (
     ImplementVersioningAndObjectLockingCheck,
 )
 from kite.checks.incident_response_plans import IncidentResponsePlansCheck
-from kite.checks.inspect_http_traffic_with_waf import (
-    check_inspect_http_traffic_with_waf,
-)
+from kite.checks.inspect_http_traffic_with_waf import InspectHttpTrafficWithWafCheck
 from kite.checks.inspect_traffic_with_network_firewall import (
     check_inspect_traffic_with_network_firewall,
 )
@@ -477,7 +475,7 @@ __all__ = [
     "ControlNetworkFlowWithNaclsCheck",
     "UsePrivateLinkForVpcRoutingCheck",
     "UseRoute53ResolverDnsFirewallCheck",
-    "check_inspect_http_traffic_with_waf",
+    "InspectHttpTrafficWithWafCheck",
     "check_inspect_traffic_with_network_firewall",
     "Check",
     "CheckResult",

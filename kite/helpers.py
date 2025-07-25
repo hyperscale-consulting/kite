@@ -1,5 +1,3 @@
-"""Helper functions for Kite."""
-
 import glob
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -271,7 +269,12 @@ def get_account_ids_in_scope() -> set[str]:
     # If we have a management account but no specific account IDs,
     # get all accounts in the organization
     if config.management_account_id and not config.account_ids:
-        org_account_ids = [account.id for account in get_organization().get_accounts()]
+        org = get_organization()
+        if not org:
+            raise ValueError(
+                "Management account ID configured, but no organization found"
+            )
+        org_account_ids = [account.id for account in org.get_accounts()]
         # Normalize all account IDs to strings
         account_ids.update(str(account_id) for account_id in org_account_ids)
 
@@ -330,7 +333,7 @@ def is_identity_center_enabled() -> bool:
         return False
 
     # Get Identity Center instances
-    instances = get_identity_center_instances()
+    instances = get_identity_center_instances(org.master_account_id)
     return instances is not None and len(instances) > 0
 
 

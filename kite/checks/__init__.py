@@ -128,7 +128,7 @@ from kite.checks.established_emergency_access_procedures import (
     EstablishedEmergencyAccessProceduresCheck,
 )
 from kite.checks.forensics_ou import ForensicsOuCheck
-from kite.checks.hr_system_integration import check_hr_system_integration
+from kite.checks.hr_system_integration import HrSystemIntegrationCheck
 from kite.checks.iac_guardrails import IacGuardrailsCheck
 from kite.checks.iac_templates import IacTemplatesCheck
 from kite.checks.iac_version_control import IacVersionControlCheck
@@ -353,7 +353,7 @@ __all__ = [
     "SecureSecretsStorageCheck",
     "RestrictedRoleForSecretsAccessCheck",
     "check_use_centralized_idp",
-    "check_hr_system_integration",
+    "HrSystemIntegrationCheck",
     "CredentialRotationCheck",
     "IdentityAuditCheck",
     "EmployUserGroupsAndAttributesCheck",

@@ -180,7 +180,7 @@ def save_saml_providers(
 
 def get_saml_providers(
     account_id: str,
-) -> list[dict[str, Any]] | None:
+) -> list[dict[str, Any]]:
     """Get SAML providers.
 
     Returns:

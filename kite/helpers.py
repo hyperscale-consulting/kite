@@ -333,7 +333,7 @@ def is_identity_center_enabled() -> bool:
         return False
 
     # Get Identity Center instances
-    instances = get_identity_center_instances(org.master_account_id)
+    instances = get_identity_center_instances()
     return instances is not None and len(instances) > 0
 
 
@@ -385,8 +385,7 @@ def is_identity_center_identity_store_used() -> bool:
     Check if the Identity Center identity store is being used.
     """
     return any(
-        instance["HasIdentityStoreUsers"]
-        for instance in get_identity_center_instances()
+        instance["IdentityStoreUsers"] for instance in get_identity_center_instances()
     )
 
 

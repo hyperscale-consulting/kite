@@ -222,15 +222,17 @@ def save_identity_center_instances(
     _save_data(instances, "identity_center_instances", account_id)
 
 
-def get_identity_center_instances(
-    account_id: str = "organization",
-) -> list[dict[str, Any]] | None:
+def get_identity_center_instances() -> list[dict[str, Any]]:
     """Get Identity Center instances.
 
     Returns:
         The list of Identity Center instances, or None if not found.
     """
-    return _load_data("identity_center_instances", account_id) or []
+    mgmt_account_id = Config.get().management_account_id
+    if not mgmt_account_id:
+        # we're only interested in organizational instances
+        return []
+    return _load_data("identity_center_instances", mgmt_account_id) or []
 
 
 def save_ec2_instances(

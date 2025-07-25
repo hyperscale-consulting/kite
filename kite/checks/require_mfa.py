@@ -1,11 +1,8 @@
 from typing import Any
 
-from botocore.exceptions import ClientError
-
 from kite.config import Config
 from kite.data import get_cognito_user_pools
 from kite.data import get_credentials_report
-from kite.data import get_oidc_providers
 from kite.data import get_saml_providers
 from kite.helpers import get_account_ids_in_scope
 from kite.helpers import get_user_pool_mfa_config
@@ -29,42 +26,11 @@ def check_require_mfa() -> dict[str, Any]:
     Returns:
         Dict containing the check results.
     """
-    # Track if we encountered any errors
-    error_message = None
-    config = Config.get()
+    saml_providers = []
+    for account_id in get_account_ids_in_scope():
+        saml_providers.extend(get_saml_providers(account_id))
 
-    try:
-        saml_providers = get_saml_providers(config.management_account_id)
-    except ClientError as e:
-        saml_providers = []
-        error_message = f"Error checking SAML providers: {str(e)}"
-
-    try:
-        oidc_providers = get_oidc_providers(config.management_account_id)
-    except ClientError as e:
-        oidc_providers = []
-        if error_message:
-            error_message += f"\nError checking OIDC providers: {str(e)}"
-        else:
-            error_message = f"Error checking OIDC providers: {str(e)}"
-
-    try:
-        identity_center_enabled = is_identity_center_enabled()
-    except ClientError as e:
-        identity_center_enabled = False
-        if error_message:
-            error_message += f"\nError checking Identity Center status: {str(e)}"
-        else:
-            error_message = f"Error checking Identity Center status: {str(e)}"
-
-    # If we encountered any errors, return an ERROR status
-    if error_message:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "ERROR",
-            "details": {"message": error_message},
-        }
+    identity_center_enabled = is_identity_center_enabled()
 
     # Build the context message
     context_message = "Current IdPs:\n\n"
@@ -73,21 +39,8 @@ def check_require_mfa() -> dict[str, Any]:
         context_message += "SAML Providers:\n"
         for provider in saml_providers:
             context_message += f"- {provider['Arn']}\n"
-            if "ValidUntil" in provider:
-                context_message += f"  Valid until: {provider['ValidUntil']}\n"
     else:
         context_message += "No SAML providers configured\n"
-
-    context_message += "\n"
-
-    if oidc_providers:
-        context_message += "OIDC Providers:\n"
-        for provider in oidc_providers:
-            context_message += f"- {provider['Arn']}\n"
-            if "Url" in provider:
-                context_message += f"  URL: {provider['Url']}\n"
-    else:
-        context_message += "No OIDC providers configured\n"
 
     context_message += "\n"
     context_message += (
@@ -100,16 +53,11 @@ def check_require_mfa() -> dict[str, Any]:
     context_message += "\nIAM Users without MFA:\n"
     users_without_mfa = []
     for account_id in get_account_ids_in_scope():
-        try:
-            report = get_credentials_report(account_id)
-            for user in report["users"]:
-                iam_users_found = True
-                if user.get("mfa_active", "false").lower() != "true":
-                    users_without_mfa.append(f"{user['user']} ({account_id})")
-        except Exception as e:
-            users_without_mfa.append(
-                f"Error getting credentials report for account {account_id}: {str(e)}"
-            )
+        report = get_credentials_report(account_id)
+        for user in report["users"]:
+            iam_users_found = True
+            if user.get("mfa_active", "false").lower() != "true":
+                users_without_mfa.append(f"{user['user']} ({account_id})")
 
     if users_without_mfa:
         context_message += "\n".join(f"- {user}" for user in users_without_mfa)

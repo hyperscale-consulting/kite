@@ -191,7 +191,7 @@ from kite.checks.no_rdp_or_ssh_access import NoRdpOrSshAccessCheck
 from kite.checks.no_readonly_third_party_access import NoReadonlyThirdPartyAccessCheck
 from kite.checks.no_root_access_keys import NoRootAccessKeysCheck
 from kite.checks.no_secrets_in_aws_resources import NoSecretsInAwsResourcesCheck
-from kite.checks.organizational_cloudtrail import check_organizational_cloudtrail
+from kite.checks.organizational_cloudtrail import OrganizationalCloudTrailCheck
 from kite.checks.ou_structure import check_ou_structure
 from kite.checks.penetration_testing import PenetrationTestingCheck
 from kite.checks.perform_dast import PerformDASTCheck
@@ -391,6 +391,7 @@ __all__ = [
     "check_scp_prevents_ram_invitations",
     "KmsConfusedDeputyProtectionCheck",
     "RepeatableAuditableSetupFor3rdPartyAccessCheck",
+    "OrganizationalCloudTrailCheck",
     "check_organizational_cloudtrail",
     "check_vpc_flow_logs_enabled",
     "ResolverQueryLogsEnabledCheck",

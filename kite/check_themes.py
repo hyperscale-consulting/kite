@@ -34,7 +34,6 @@ from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
-from kite.checks import check_no_rdp_or_ssh_access
 from kite.checks import check_no_root_access_keys
 from kite.checks import check_no_secrets_in_aws_resources
 from kite.checks import check_organizational_cloudtrail
@@ -138,6 +137,7 @@ from kite.checks import NoIamUserAccessCheck
 from kite.checks import NoKeyPairsCheck
 from kite.checks import NoPermissiveRoleAssumptionCheck
 from kite.checks import NoPolicyAllowsPrivilegeEscalationCheck
+from kite.checks import NoRdpOrSshAccessCheck
 from kite.checks import NoReadonlyThirdPartyAccessCheck
 from kite.checks import PenetrationTestingCheck
 from kite.checks import PerformDASTCheck
@@ -539,7 +539,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "Checks related to reducing manual management and interactive access"
         ),
         "checks": [
-            check_no_rdp_or_ssh_access,
+            NoRdpOrSshAccessCheck(),
             AvoidInteractiveAccessCheck(),
             AuditInteractiveAccessWithSSMCheck(),
         ],

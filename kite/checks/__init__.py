@@ -187,7 +187,7 @@ from kite.checks.no_permissive_role_assumption import NoPermissiveRoleAssumption
 from kite.checks.no_policy_allows_privilege_escalation import (
     NoPolicyAllowsPrivilegeEscalationCheck,
 )
-from kite.checks.no_rdp_or_ssh_access import check_no_rdp_or_ssh_access
+from kite.checks.no_rdp_or_ssh_access import NoRdpOrSshAccessCheck
 from kite.checks.no_readonly_third_party_access import NoReadonlyThirdPartyAccessCheck
 from kite.checks.no_root_access_keys import check_no_root_access_keys
 from kite.checks.no_secrets_in_aws_resources import check_no_secrets_in_aws_resources
@@ -461,7 +461,7 @@ __all__ = [
     "VulnerabilityScanningInCICDPipelinesCheck",
     "AutomateMalwareAndThreatDetectionCheck",
     "UseHardenedImagesCheck",
-    "check_no_rdp_or_ssh_access",
+    "NoRdpOrSshAccessCheck",
     "AvoidInteractiveAccessCheck",
     "AuditInteractiveAccessWithSSMCheck",
     "ValidateSoftwareIntegrityCheck",

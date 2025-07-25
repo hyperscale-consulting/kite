@@ -171,7 +171,7 @@ from kite.checks.monitor_network_traffic_for_unauthorized_access import (
 )
 from kite.checks.monitor_secrets import MonitorSecretsCheck
 from kite.checks.network_firewall_logging_enabled import (
-    check_network_firewall_logging_enabled,
+    NetworkFirewallLoggingEnabledCheck,
 )
 from kite.checks.no_access_keys import check_no_access_keys
 from kite.checks.no_full_access_to_sensitive_services import (
@@ -400,7 +400,7 @@ __all__ = [
     "check_waf_web_acl_logging_enabled",
     "ElbLoggingEnabledCheck",
     "EksControlPlaneLoggingEnabledCheck",
-    "check_network_firewall_logging_enabled",
+    "NetworkFirewallLoggingEnabledCheck",
     "check_rds_logging_enabled",
     "CloudfrontLoggingEnabledCheck",
     "ApiGatewayLoggingEnabledCheck",

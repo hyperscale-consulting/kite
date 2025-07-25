@@ -33,7 +33,6 @@ from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
-from kite.checks import check_network_firewall_logging_enabled
 from kite.checks import check_no_access_keys
 from kite.checks import check_no_full_access_to_sensitive_services
 from kite.checks import check_no_human_access_to_unencrypted_key_material
@@ -136,6 +135,7 @@ from kite.checks import MonitorAndRespondToS3PublicAccessCheck
 from kite.checks import MonitorKeyUsageCheck
 from kite.checks import MonitorNetworkTrafficForUnauthorizedAccessCheck
 from kite.checks import MonitorSecretsCheck
+from kite.checks import NetworkFirewallLoggingEnabledCheck
 from kite.checks import NoFullAdminPoliciesCheck
 from kite.checks import NoIamUserAccessCheck
 from kite.checks import NoReadonlyThirdPartyAccessCheck
@@ -443,7 +443,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             check_waf_web_acl_logging_enabled,
             ElbLoggingEnabledCheck(),
             EksControlPlaneLoggingEnabledCheck(),
-            check_network_firewall_logging_enabled,
+            NetworkFirewallLoggingEnabledCheck(),
             check_rds_logging_enabled,
             CloudfrontLoggingEnabledCheck(),
             ConfigRecordingEnabledCheck(),

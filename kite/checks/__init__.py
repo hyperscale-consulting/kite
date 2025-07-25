@@ -211,7 +211,7 @@ from kite.checks.remediate_vulnerabilities import RemediateVulnerabilitiesCheck
 from kite.checks.repeatable_auditable_setup_for_3rd_party_access import (
     RepeatableAuditableSetupFor3rdPartyAccessCheck,
 )
-from kite.checks.require_mfa import check_require_mfa
+from kite.checks.require_mfa import RequireMfaCheck
 from kite.checks.resolver_query_logs_enabled import ResolverQueryLogsEnabledCheck
 from kite.checks.restore_testing import RestoreTestingCheck
 from kite.checks.restricted_role_for_secrets_access import (
@@ -346,7 +346,7 @@ __all__ = [
     "ThreatModelingCheck",
     "SecurityRisksCheck",
     "check_security_services_evaluation",
-    "check_require_mfa",
+    "RequireMfaCheck",
     "ComplexPasswordsCheck",
     "check_no_access_keys",
     "NoIamUserAccessCheck",

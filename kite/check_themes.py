@@ -56,7 +56,6 @@ from kite.checks import check_ou_structure
 from kite.checks import check_protect_root_ca
 from kite.checks import check_rds_logging_enabled
 from kite.checks import check_region_deny_scp
-from kite.checks import check_require_mfa
 from kite.checks import check_root_credentials_management_enabled
 from kite.checks import check_root_mfa_enabled
 from kite.checks import check_rotate_encryption_keys
@@ -149,6 +148,7 @@ from kite.checks import PreventAndDetectSecretsCheck
 from kite.checks import RegularlyReviewPermissionsCheck
 from kite.checks import RemediateVulnerabilitiesCheck
 from kite.checks import RepeatableAuditableSetupFor3rdPartyAccessCheck
+from kite.checks import RequireMfaCheck
 from kite.checks import ResolverQueryLogsEnabledCheck
 from kite.checks import RestoreTestingCheck
 from kite.checks import RestrictedRoleForSecretsAccessCheck
@@ -280,7 +280,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
     "Use strong sign-in mechanisms": {
         "description": "Checks related to the use of strong sign-in mechanisms",
         "checks": [
-            check_require_mfa,
+            RequireMfaCheck(),
             ComplexPasswordsCheck(),
         ],
     },

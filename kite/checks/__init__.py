@@ -145,7 +145,7 @@ from kite.checks.inspect_http_traffic_with_waf import InspectHttpTrafficWithWafC
 from kite.checks.inspect_traffic_with_network_firewall import (
     InspectTrafficWithNetworkFirewallCheck,
 )
-from kite.checks.isolation_boundaries import check_isolation_boundaries
+from kite.checks.isolation_boundaries import IsolationBoundariesCheck
 from kite.checks.key_access_control import check_key_access_control
 from kite.checks.kms_confused_deputy_protection import KmsConfusedDeputyProtectionCheck
 from kite.checks.lambda_confused_deputy_protection import (
@@ -411,7 +411,7 @@ __all__ = [
     "SecurityEventCorrelationCheck",
     "AutoRemediateNonCompliantResourcesCheck",
     "check_tag_data_with_sensitivity_level",
-    "check_isolation_boundaries",
+    "IsolationBoundariesCheck",
     "SensitivityControlsCheck",
     "TokenizationAndAnonymizationCheck",
     "SnsDataProtectionPoliciesCheck",

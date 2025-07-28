@@ -262,7 +262,7 @@ from kite.checks.security_event_correlation import SecurityEventCorrelationCheck
 from kite.checks.security_guardians_program import SecurityGuardiansProgramCheck
 from kite.checks.security_ir_playbooks import SecurityIrPlaybooksCheck
 from kite.checks.security_risks import SecurityRisksCheck
-from kite.checks.security_services_evaluation import check_security_services_evaluation
+from kite.checks.security_services_evaluation import SecurityServicesEvaluationCheck
 from kite.checks.sensitivity_controls import SensitivityControlsCheck
 from kite.checks.service_catalog import ServiceCatalogCheck
 from kite.checks.sns_confused_deputy_protection import SnsConfusedDeputyProtectionCheck
@@ -339,7 +339,7 @@ __all__ = [
     "WorkloadDependencyUpdatesCheck",
     "ThreatModelingCheck",
     "SecurityRisksCheck",
-    "check_security_services_evaluation",
+    "SecurityServicesEvaluationCheck",
     "RequireMfaCheck",
     "ComplexPasswordsCheck",
     "NoAccessKeysCheck",

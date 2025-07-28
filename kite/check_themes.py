@@ -35,7 +35,6 @@ from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
 from kite.checks import check_root_mfa_enabled
-from kite.checks import check_security_services_evaluation
 from kite.checks import check_tag_data_with_sensitivity_level
 from kite.checks import check_use_a_kms
 from kite.checks import check_use_centralized_idp
@@ -168,6 +167,7 @@ from kite.checks import SecurityEventCorrelationCheck
 from kite.checks import SecurityGuardiansProgramCheck
 from kite.checks import SecurityIrPlaybooksCheck
 from kite.checks import SecurityRisksCheck
+from kite.checks import SecurityServicesEvaluationCheck
 from kite.checks import SensitivityControlsCheck
 from kite.checks import ServiceCatalogCheck
 from kite.checks import SnsConfusedDeputyProtectionCheck
@@ -274,7 +274,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "Checks related to evaluating and implementing new security services"
         ),
         "checks": [
-            check_security_services_evaluation,
+            SecurityServicesEvaluationCheck(),
         ],
     },
     "Use strong sign-in mechanisms": {

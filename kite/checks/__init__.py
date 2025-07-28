@@ -227,7 +227,7 @@ from kite.checks.root_credentials_security import RootCredentialsSecurityCheck
 from kite.checks.root_mfa_enabled import check_root_mfa_enabled
 from kite.checks.rotate_encryption_keys import RotateEncryptionKeysCheck
 from kite.checks.run_simulations import RunSimulationsCheck
-from kite.checks.s3_bucket_acl_disabled import check_s3_bucket_acl_disabled
+from kite.checks.s3_bucket_acl_disabled import S3BucketAclDisabledCheck
 from kite.checks.s3_confused_deputy_protection import S3ConfusedDeputyProtectionCheck
 from kite.checks.scan_for_sensitive_data_in_dev import ScanForSensitiveDataInDevCheck
 from kite.checks.scan_workloads_for_vulnerabilities import (
@@ -382,7 +382,7 @@ __all__ = [
     "check_scim_protocol_used",
     "ActiveExternalAccessAnalyzerCheck",
     "MonitorAndRespondToS3PublicAccessCheck",
-    "check_s3_bucket_acl_disabled",
+    "S3BucketAclDisabledCheck",
     "MigrateFromOaiCheck",
     "check_establish_data_perimeter_trusted_identities",
     "DataPerimeterConfusedDeputyProtectionCheck",

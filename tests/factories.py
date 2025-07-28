@@ -32,10 +32,13 @@ def create_organization(
 
 
 def create_organization_with_workload_account(
-    mgmt_account_id="111111111111", workload_account_id="999999999999"
+    mgmt_account_id="111111111111",
+    workload_account_id="999999999999",
+    organization_id="o-123456789012",
 ):
     create_organization(
         mgmt_account_id=mgmt_account_id,
+        organization_id=organization_id,
         root_ou=build_ou(
             child_ous=[
                 build_ou(

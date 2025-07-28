@@ -292,7 +292,7 @@ from kite.checks.use_route53resolver_dns_firewall import (
 from kite.checks.use_service_encryption_at_rest import UseServiceEncryptionAtRestCheck
 from kite.checks.validate_software_integrity import ValidateSoftwareIntegrityCheck
 from kite.checks.vpc_endpoints_enforce_data_perimeter import (
-    check_vpc_endpoints_enforce_data_perimeter,
+    VpcEndpointsEnforceDataPerimeterCheck,
 )
 from kite.checks.vpc_flow_logs_enabled import check_vpc_flow_logs_enabled
 from kite.checks.vulnerability_scanning_in_cicd_pipelines import (
@@ -382,7 +382,7 @@ __all__ = [
     "check_establish_data_perimeter_trusted_identities",
     "DataPerimeterConfusedDeputyProtectionCheck",
     "DataPerimeterTrustedResourcesCheck",
-    "check_vpc_endpoints_enforce_data_perimeter",
+    "VpcEndpointsEnforceDataPerimeterCheck",
     "KmsConfusedDeputyProtectionCheck",
     "RepeatableAuditableSetupFor3rdPartyAccessCheck",
     "OrganizationalCloudTrailCheck",

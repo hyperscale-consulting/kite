@@ -2,19 +2,24 @@ import json
 
 import pytest
 
+from kite.checks.core import CheckStatus
 from kite.checks.vpc_endpoints_enforce_data_perimeter import (
-    check_vpc_endpoints_enforce_data_perimeter,
+    VpcEndpointsEnforceDataPerimeterCheck,
 )
 from kite.data import save_vpc_endpoints
+from tests.factories import config_for_org
+from tests.factories import config_for_standalone_account
+from tests.factories import create_organization_with_workload_account
+
+workload_account_id = "123456789012"
+org_id = "test-org"
 
 
-@pytest.fixture
 def allow_all_policy():
     return dict(Statement=[dict(Effect="Allow", Action="*", Resource="*")])
 
 
-@pytest.fixture
-def enforce_data_perimeter_policy(organization):
+def enforce_data_perimeter_policy():
     return dict(
         Statement=[
             dict(
@@ -23,8 +28,8 @@ def enforce_data_perimeter_policy(organization):
                 Resource="*",
                 Condition={
                     "StringEquals": {
-                        "AWS:PrincipalOrgID": organization.id,
-                        "aws:ResourceOrgID": organization.id,
+                        "AWS:PrincipalOrgID": org_id,
+                        "aws:ResourceOrgID": org_id,
                     }
                 },
             ),
@@ -39,52 +44,60 @@ def enforce_data_perimeter_policy(organization):
 
 
 @pytest.fixture
-def vpc_endpoint_no_policy(workload_account_id, organization):
+def check():
+    return VpcEndpointsEnforceDataPerimeterCheck()
+
+
+@config_for_org()
+def test_no_policies(check):
+    create_organization_with_workload_account(
+        workload_account_id=workload_account_id, organization_id=org_id
+    )
     endpoint = dict(
         VpcEndpointId="vpce-01234567890abcdef0",
         VpcEndpointType="Interface",
         VpcId="vpc-01234567890abcdef0",
     )
     save_vpc_endpoints(workload_account_id, "eu-west-2", [endpoint])
-    yield endpoint
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "Some VPC endpoints are missing required endpoint policies" in result.reason
 
 
-@pytest.fixture
-def vpc_endpoint_allow_all_policy(allow_all_policy, workload_account_id, organization):
+@config_for_org()
+def test_allow_all_policy(check):
+    create_organization_with_workload_account(
+        workload_account_id=workload_account_id, organization_id=org_id
+    )
     endpoint = dict(
         VpcEndpointId="vpce-01234567890abcdef0",
         VpcEndpointType="Interface",
         VpcId="vpc-01234567890abcdef0",
-        PolicyDocument=json.dumps(allow_all_policy),
+        PolicyDocument=json.dumps(allow_all_policy()),
     )
     save_vpc_endpoints(workload_account_id, "eu-west-2", [endpoint])
-    yield endpoint
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "Some VPC endpoints are missing required endpoint policies" in result.reason
 
 
-@pytest.fixture
-def vpc_endpoint_enforce_data_perimeter_policy(
-    enforce_data_perimeter_policy, workload_account_id, organization
-):
+@config_for_org()
+def test_enforce_data_perimeter_policy(check):
+    create_organization_with_workload_account(
+        workload_account_id=workload_account_id, organization_id=org_id
+    )
     endpoint = dict(
         VpcEndpointId="vpce-01234567890abcdef0",
         VpcEndpointType="Interface",
         VpcId="vpc-01234567890abcdef0",
-        PolicyDocument=json.dumps(enforce_data_perimeter_policy),
+        PolicyDocument=json.dumps(enforce_data_perimeter_policy()),
     )
     save_vpc_endpoints(workload_account_id, "eu-west-2", [endpoint])
-    yield endpoint
+
+    result = check.run()
+    assert result.status == CheckStatus.PASS
 
 
-def test_no_policies(vpc_endpoint_no_policy):
-    result = check_vpc_endpoints_enforce_data_perimeter()
-    assert result["status"] == "FAIL"
-
-
-def test_allow_all_policy(vpc_endpoint_allow_all_policy):
-    result = check_vpc_endpoints_enforce_data_perimeter()
-    assert result["status"] == "FAIL"
-
-
-def test_enforce_data_perimeter_policy(vpc_endpoint_enforce_data_perimeter_policy):
-    result = check_vpc_endpoints_enforce_data_perimeter()
-    assert result["status"] == "PASS"
+@config_for_standalone_account()
+def test_no_org(check):
+    assert check.run().status == CheckStatus.FAIL

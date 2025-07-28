@@ -34,7 +34,6 @@ from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
-from kite.checks import check_root_credentials_management_enabled
 from kite.checks import check_root_mfa_enabled
 from kite.checks import check_rotate_encryption_keys
 from kite.checks import check_s3_bucket_acl_disabled
@@ -157,6 +156,7 @@ from kite.checks import RootAccessKeysDisallowedCheck
 from kite.checks import RootAccessTestingCheck
 from kite.checks import RootAccountMonitoringCheck
 from kite.checks import RootActionsDisallowedCheck
+from kite.checks import RootCredentialsManagementEnabledCheck
 from kite.checks import RootCredentialsSecurityCheck
 from kite.checks import RunSimulationsCheck
 from kite.checks import S3ConfusedDeputyProtectionCheck
@@ -209,7 +209,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "description": "Checks related to the security of the root user",
         "checks": [
             AvoidRootUsageCheck(),
-            check_root_credentials_management_enabled,
+            RootCredentialsManagementEnabledCheck(),
             NoRootAccessKeysCheck(),
             check_root_mfa_enabled,
             AccurateAccountContactDetailsCheck(),

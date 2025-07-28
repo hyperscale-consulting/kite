@@ -221,7 +221,7 @@ from kite.checks.root_access_testing import RootAccessTestingCheck
 from kite.checks.root_account_monitoring import RootAccountMonitoringCheck
 from kite.checks.root_actions_disallowed import RootActionsDisallowedCheck
 from kite.checks.root_credentials_management_enabled import (
-    check_root_credentials_management_enabled,
+    RootCredentialsManagementEnabledCheck,
 )
 from kite.checks.root_credentials_security import RootCredentialsSecurityCheck
 from kite.checks.root_mfa_enabled import check_root_mfa_enabled
@@ -329,7 +329,7 @@ __all__ = [
     "NoKeyPairsCheck",
     "NoSecretsInAwsResourcesCheck",
     "AvoidRootUsageCheck",
-    "check_root_credentials_management_enabled",
+    "RootCredentialsManagementEnabledCheck",
     "NoRootAccessKeysCheck",
     "AccurateAccountContactDetailsCheck",
     "RootAccountMonitoringCheck",

@@ -225,7 +225,7 @@ from kite.checks.root_credentials_management_enabled import (
 )
 from kite.checks.root_credentials_security import RootCredentialsSecurityCheck
 from kite.checks.root_mfa_enabled import check_root_mfa_enabled
-from kite.checks.rotate_encryption_keys import check_rotate_encryption_keys
+from kite.checks.rotate_encryption_keys import RotateEncryptionKeysCheck
 from kite.checks.run_simulations import RunSimulationsCheck
 from kite.checks.s3_bucket_acl_disabled import check_s3_bucket_acl_disabled
 from kite.checks.s3_confused_deputy_protection import S3ConfusedDeputyProtectionCheck
@@ -421,7 +421,7 @@ __all__ = [
     "DetectMissingAutomatedLifecycleManagementCheck",
     "check_use_a_kms",
     "NoHumanAccessToUnencryptedKeyMaterialCheck",
-    "check_rotate_encryption_keys",
+    "RotateEncryptionKeysCheck",
     "KeyAccessControlCheck",
     "check_use_service_encryption_at_rest",
     "check_use_customer_managed_keys",

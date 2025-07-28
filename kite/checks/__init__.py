@@ -289,9 +289,7 @@ from kite.checks.use_private_link_for_vpc_routing import (
 from kite.checks.use_route53resolver_dns_firewall import (
     UseRoute53ResolverDnsFirewallCheck,
 )
-from kite.checks.use_service_encryption_at_rest import (
-    check_use_service_encryption_at_rest,
-)
+from kite.checks.use_service_encryption_at_rest import UseServiceEncryptionAtRestCheck
 from kite.checks.validate_software_integrity import ValidateSoftwareIntegrityCheck
 from kite.checks.vpc_endpoints_enforce_data_perimeter import (
     check_vpc_endpoints_enforce_data_perimeter,
@@ -419,7 +417,7 @@ __all__ = [
     "NoHumanAccessToUnencryptedKeyMaterialCheck",
     "RotateEncryptionKeysCheck",
     "KeyAccessControlCheck",
-    "check_use_service_encryption_at_rest",
+    "UseServiceEncryptionAtRestCheck",
     "UseCustomerManagedKeysCheck",
     "DetectEncryptionAtRestMisconfigCheck",
     "EnforceDataProtectionAtRestWithPolicyAsCodeCheck",

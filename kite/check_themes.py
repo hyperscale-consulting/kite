@@ -35,7 +35,6 @@ from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
 from kite.checks import check_root_mfa_enabled
-from kite.checks import check_use_service_encryption_at_rest
 from kite.checks import check_vpc_endpoints_enforce_data_perimeter
 from kite.checks import check_vpc_flow_logs_enabled
 from kite.checks import check_waf_web_acl_logging_enabled
@@ -185,6 +184,7 @@ from kite.checks import UseIdentityBrokerCheck
 from kite.checks import UseOfHigherLevelServicesCheck
 from kite.checks import UsePrivateLinkForVpcRoutingCheck
 from kite.checks import UseRoute53ResolverDnsFirewallCheck
+from kite.checks import UseServiceEncryptionAtRestCheck
 from kite.checks import ValidateSoftwareIntegrityCheck
 from kite.checks import VulnerabilityScanningInCICDPipelinesCheck
 from kite.checks import WellDefinedControlObjectivesCheck
@@ -609,7 +609,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "or exfiltration"
         ),
         "checks": [
-            check_use_service_encryption_at_rest,
+            UseServiceEncryptionAtRestCheck(),
             UseCustomerManagedKeysCheck(),
         ],
     },

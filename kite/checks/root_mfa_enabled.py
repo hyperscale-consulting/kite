@@ -1,39 +1,29 @@
-"""Check for root user MFA enabled."""
-
-from typing import Any
-
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.config import Config
 from kite.data import get_account_summary
 from kite.data import get_organization_features
 from kite.helpers import get_account_ids_in_scope
 from kite.helpers import get_root_virtual_mfa_device
 
-CHECK_ID = "root-mfa-enabled"
-CHECK_NAME = "Root MFA Enabled"
 
+class RootMfaEnabledCheck:
+    def __init__(self):
+        self.check_id = "root-mfa-enabled"
+        self.check_name = "Root MFA Enabled"
 
-def check_root_mfa_enabled() -> dict[str, Any]:
-    """
-    Check if root user MFA is enabled in all accounts.
+    @property
+    def question(self) -> str:
+        return ""  # fully automated check
 
-    This check verifies that:
-    1. Root user MFA is enabled in all accounts (AccountMFAEnabled = 1)
-    2. If MFA is enabled, it should be a hardware MFA device, not a virtual one
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that root user MFA is enabled in all accounts "
+            "with hardware MFA devices."
+        )
 
-    If root credentials are managed at the organizational level, the check is only
-    performed on the management account. Otherwise, it is performed on all accounts.
-
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-                - accounts_without_mfa: List of accounts that don't have MFA enabled
-                - accounts_with_virtual_mfa: List of accounts that have virtual MFA
-    """
-    try:
+    def run(self) -> CheckResult:
         # Check if root credentials are managed at the organizational level
         features = get_organization_features()
         root_credentials_managed = "RootCredentialsManagement" in features
@@ -43,20 +33,7 @@ def check_root_mfa_enabled() -> dict[str, Any]:
         management_account_id = config.management_account_id
 
         # Determine which accounts to check
-        if root_credentials_managed:
-            if not management_account_id:
-                return {
-                    "check_id": CHECK_ID,
-                    "check_name": CHECK_NAME,
-                    "status": "ERROR",
-                    "details": {
-                        "message": (
-                            "Root credentials management is enabled, but management "
-                            "account ID could not be determined."
-                        )
-                    },
-                }
-
+        if root_credentials_managed and management_account_id:
             # Only check the management account
             account_ids = [management_account_id]
         else:
@@ -71,6 +48,9 @@ def check_root_mfa_enabled() -> dict[str, Any]:
         for account_id in account_ids:
             # Get the account summary
             summary = get_account_summary(account_id)
+            if summary is None:
+                accounts_without_mfa.append(account_id)
+                continue
 
             # Check if MFA is enabled
             if summary["AccountMFAEnabled"] != 1:
@@ -85,52 +65,36 @@ def check_root_mfa_enabled() -> dict[str, Any]:
         # Determine if the check passed
         passed = len(accounts_without_mfa) == 0 and len(accounts_with_virtual_mfa) == 0
 
-        # Build the message
         if passed:
             if root_credentials_managed:
-                message = (
+                reason = (
                     "Root MFA is enabled with hardware MFA device in the "
                     "management account."
                 )
             else:
-                message = (
+                reason = (
                     "Root MFA is enabled with hardware MFA devices in all accounts."
                 )
-        else:
-            message_parts = []
-            if accounts_without_mfa:
-                message_parts.append(
-                    f"Root MFA is not enabled in {len(accounts_without_mfa)} accounts."
-                )
-            if accounts_with_virtual_mfa:
-                message_parts.append(
-                    f"Root MFA is enabled with virtual MFA devices in "
-                    f"{len(accounts_with_virtual_mfa)} accounts."
-                )
-            message = " ".join(message_parts)
+            return CheckResult(status=CheckStatus.PASS, reason=reason)
 
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "PASS" if passed else "FAIL",
-            "details": {
-                "message": message,
+        # Build failure message
+        message_parts = []
+        if accounts_without_mfa:
+            message_parts.append(
+                f"Root MFA is not enabled in {len(accounts_without_mfa)} accounts."
+            )
+        if accounts_with_virtual_mfa:
+            message_parts.append(
+                f"Root MFA is enabled with virtual MFA devices in "
+                f"{len(accounts_with_virtual_mfa)} accounts."
+            )
+        reason = " ".join(message_parts)
+
+        return CheckResult(
+            status=CheckStatus.FAIL,
+            reason=reason,
+            details={
                 "accounts_without_mfa": accounts_without_mfa,
                 "accounts_with_virtual_mfa": accounts_with_virtual_mfa,
             },
-        }
-
-    except Exception as e:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "ERROR",
-            "details": {
-                "message": f"Error checking for root MFA: {str(e)}",
-            },
-        }
-
-
-# Attach the check ID and name to the function
-check_root_mfa_enabled._CHECK_ID = CHECK_ID
-check_root_mfa_enabled._CHECK_NAME = CHECK_NAME
+        )

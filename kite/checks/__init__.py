@@ -224,7 +224,7 @@ from kite.checks.root_credentials_management_enabled import (
     RootCredentialsManagementEnabledCheck,
 )
 from kite.checks.root_credentials_security import RootCredentialsSecurityCheck
-from kite.checks.root_mfa_enabled import check_root_mfa_enabled
+from kite.checks.root_mfa_enabled import RootMfaEnabledCheck
 from kite.checks.rotate_encryption_keys import RotateEncryptionKeysCheck
 from kite.checks.run_simulations import RunSimulationsCheck
 from kite.checks.s3_bucket_acl_disabled import S3BucketAclDisabledCheck
@@ -312,7 +312,7 @@ __all__ = [
     "DelegatedAdminForSecurityServices",
     "TrustedDelegatedAdminsCheck",
     "RegionDenyScpCheck",
-    "check_root_mfa_enabled",
+    "RootMfaEnabledCheck",
     "RootAccessKeysDisallowedCheck",
     "RootActionsDisallowedCheck",
     "UseOfHigherLevelServicesCheck",

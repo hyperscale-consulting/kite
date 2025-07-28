@@ -34,7 +34,6 @@ from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
-from kite.checks import check_root_mfa_enabled
 from kite.checks import CloudfrontLoggingEnabledCheck
 from kite.checks import CodeReviewsCheck
 from kite.checks import ComplexPasswordsCheck
@@ -136,6 +135,7 @@ from kite.checks import RootAccountMonitoringCheck
 from kite.checks import RootActionsDisallowedCheck
 from kite.checks import RootCredentialsManagementEnabledCheck
 from kite.checks import RootCredentialsSecurityCheck
+from kite.checks import RootMfaEnabledCheck
 from kite.checks import RotateEncryptionKeysCheck
 from kite.checks import RunSimulationsCheck
 from kite.checks import S3BucketAclDisabledCheck
@@ -211,7 +211,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             AvoidRootUsageCheck(),
             RootCredentialsManagementEnabledCheck(),
             NoRootAccessKeysCheck(),
-            check_root_mfa_enabled,
+            RootMfaEnabledCheck(),
             AccurateAccountContactDetailsCheck(),
             RootAccessKeysDisallowedCheck(),
             RootActionsDisallowedCheck(),

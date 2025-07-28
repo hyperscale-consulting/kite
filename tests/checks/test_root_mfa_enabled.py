@@ -1,9 +1,22 @@
-from unittest.mock import MagicMock
 from unittest.mock import patch
 
 import pytest
 
-from kite.checks.root_mfa_enabled import check_root_mfa_enabled
+from kite.checks.core import CheckStatus
+from kite.checks.root_mfa_enabled import RootMfaEnabledCheck
+from kite.data import save_account_summary
+from kite.data import save_organization_features
+from kite.data import save_virtual_mfa_devices
+from tests.factories import config_for_org
+from tests.factories import config_for_standalone_account
+from tests.factories import create_organization
+
+mgmt_account_id = "123456789012"
+
+
+@pytest.fixture
+def check():
+    return RootMfaEnabledCheck()
 
 
 @pytest.fixture
@@ -42,221 +55,101 @@ def mock_get_root_virtual_mfa_device():
         yield mock
 
 
-def test_root_mfa_org_managed_pass(
-    mock_get_organization_features,
-    mock_config,
-    mock_get_account_summary,
-    mock_get_root_virtual_mfa_device,
-):
-    """Test when root credentials are managed at org level.
-
-    Verifies behavior when MFA is enabled with hardware device.
-    """
-    # Set up mocks
-    mock_get_organization_features.return_value = ["RootCredentialsManagement"]
-    mock_config.return_value = MagicMock(management_account_id="123456789012")
-    mock_get_account_summary.return_value = {"AccountMFAEnabled": 1}
-    # No virtual MFA = hardware MFA
-    mock_get_root_virtual_mfa_device.return_value = None
-
-    result = check_root_mfa_enabled()
-
-    # Verify the result
-    assert result["check_id"] == "root-mfa-enabled"
-    assert result["check_name"] == "Root MFA Enabled"
-    assert result["status"] == "PASS"
-    message = "Root MFA is enabled with hardware MFA device in the management account"
-    assert message in result["details"]["message"]
-    assert result["details"]["accounts_without_mfa"] == []
-    assert result["details"]["accounts_with_virtual_mfa"] == []
-
-
-def test_root_mfa_org_managed_virtual_mfa(
-    mock_get_organization_features,
-    mock_config,
-    mock_get_account_summary,
-    mock_get_root_virtual_mfa_device,
-):
-    """Test when root credentials are managed at org level.
-
-    Verifies behavior when MFA is enabled with virtual device.
-    """
-    # Set up mocks
-    mock_get_organization_features.return_value = ["RootCredentialsManagement"]
-    mock_config.return_value = MagicMock(management_account_id="123456789012")
-    mock_get_account_summary.return_value = {"AccountMFAEnabled": 1}
-    arn = "arn:aws:iam::123456789012:mfa/root"
-    mock_get_root_virtual_mfa_device.return_value = arn
-
-    result = check_root_mfa_enabled()
-
-    # Verify the result
-    assert result["check_id"] == "root-mfa-enabled"
-    assert result["check_name"] == "Root MFA Enabled"
-    assert result["status"] == "FAIL"
-    message = "Root MFA is enabled with virtual MFA devices in 1 accounts"
-    assert message in result["details"]["message"]
-    assert result["details"]["accounts_without_mfa"] == []
-    assert result["details"]["accounts_with_virtual_mfa"] == ["123456789012"]
-
-
-def test_root_mfa_org_managed_no_mfa(
-    mock_get_organization_features,
-    mock_config,
-    mock_get_account_summary,
-):
-    """Test when root credentials are managed at org level.
-
-    Verifies behavior when MFA is not enabled.
-    """
-    # Set up mocks
-    mock_get_organization_features.return_value = ["RootCredentialsManagement"]
-    mock_config.return_value = MagicMock(management_account_id="123456789012")
-    mock_get_account_summary.return_value = {"AccountMFAEnabled": 0}
-
-    result = check_root_mfa_enabled()
-
-    # Verify the result
-    assert result["check_id"] == "root-mfa-enabled"
-    assert result["check_name"] == "Root MFA Enabled"
-    assert result["status"] == "FAIL"
-    message = "Root MFA is not enabled in 1 accounts"
-    assert message in result["details"]["message"]
-    assert result["details"]["accounts_without_mfa"] == ["123456789012"]
-    assert result["details"]["accounts_with_virtual_mfa"] == []
-
-
-def test_root_mfa_org_managed_no_mgmt_account(
-    mock_get_organization_features,
-    mock_config,
-):
-    """Test when root credentials are managed at org level.
-
-    Verifies behavior when management account cannot be determined.
-    """
-    # Set up mocks
-    mock_get_organization_features.return_value = ["RootCredentialsManagement"]
-    mock_config.return_value = MagicMock(management_account_id=None)
-
-    result = check_root_mfa_enabled()
-
-    # Verify the result
-    assert result["check_id"] == "root-mfa-enabled"
-    assert result["check_name"] == "Root MFA Enabled"
-    assert result["status"] == "ERROR"
-    message = (
-        "Root credentials management is enabled, but management account ID "
-        "could not be determined"
+@config_for_org(mgmt_account_id=mgmt_account_id)
+def test_root_mfa_enabled_managed_credentials(check):
+    create_organization(mgmt_account_id=mgmt_account_id)
+    save_organization_features(
+        account_id=mgmt_account_id, features=["RootCredentialsManagement"]
     )
-    assert message in result["details"]["message"]
+    save_account_summary(mgmt_account_id, {"AccountMFAEnabled": 1})
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+    assert (
+        "Root MFA is enabled with hardware MFA device in the management account"
+        in result.reason
+    )
 
 
-def test_root_mfa_not_org_managed_pass(
-    mock_get_organization_features,
-    mock_config,
-    mock_get_account_ids,
-    mock_get_account_summary,
-    mock_get_root_virtual_mfa_device,
-):
-    """Test when root credentials are not managed at org level.
-
-    Verifies behavior when MFA is enabled with hardware devices.
-    """
-    # Set up mocks
-    mock_get_organization_features.return_value = []
-    mock_config.return_value = MagicMock(management_account_id="123456789012")
-    mock_get_account_summary.return_value = {"AccountMFAEnabled": 1}
-    # No virtual MFA = hardware MFA
-    mock_get_root_virtual_mfa_device.return_value = None
-
-    result = check_root_mfa_enabled()
-
-    # Verify the result
-    assert result["check_id"] == "root-mfa-enabled"
-    assert result["check_name"] == "Root MFA Enabled"
-    assert result["status"] == "PASS"
-    message = "Root MFA is enabled with hardware MFA devices in all accounts"
-    assert message in result["details"]["message"]
-    assert result["details"]["accounts_without_mfa"] == []
-    assert result["details"]["accounts_with_virtual_mfa"] == []
+@config_for_org(mgmt_account_id=mgmt_account_id)
+def test_root_virtual_mfa_enabled_managed_credentials(check):
+    create_organization(mgmt_account_id=mgmt_account_id)
+    save_organization_features(
+        account_id=mgmt_account_id, features=["RootCredentialsManagement"]
+    )
+    save_account_summary(mgmt_account_id, {"AccountMFAEnabled": 1})
+    save_virtual_mfa_devices(
+        mgmt_account_id,
+        [
+            {
+                "User": {"Arn": f"arn:aws:iam::${mgmt_account_id}:mfa/root"},
+                "SerialNumber": "foo-mfa",
+            }
+        ],
+    )
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "Root MFA is enabled with virtual MFA devices in 1 account" in result.reason
 
 
-def test_root_mfa_not_org_managed_virtual_mfa(
-    mock_get_organization_features,
-    mock_config,
-    mock_get_account_ids,
-    mock_get_account_summary,
-    mock_get_root_virtual_mfa_device,
-):
-    """Test when root credentials are not managed at org level.
-
-    Verifies behavior when MFA is enabled with virtual devices.
-    """
-    # Set up mocks
-    mock_get_organization_features.return_value = []
-    mock_config.return_value = MagicMock(management_account_id="123456789012")
-    mock_get_account_summary.return_value = {"AccountMFAEnabled": 1}
-    arn = "arn:aws:iam::123456789012:mfa/root"
-    mock_get_root_virtual_mfa_device.return_value = arn
-
-    result = check_root_mfa_enabled()
-
-    # Verify the result
-    assert result["check_id"] == "root-mfa-enabled"
-    assert result["check_name"] == "Root MFA Enabled"
-    assert result["status"] == "FAIL"
-    message = "Root MFA is enabled with virtual MFA devices in 2 accounts"
-    assert message in result["details"]["message"]
-    assert result["details"]["accounts_without_mfa"] == []
-    assert result["details"]["accounts_with_virtual_mfa"] == [
-        "123456789012",
-        "098765432109",
-    ]
+@config_for_org(mgmt_account_id=mgmt_account_id)
+def test_no_root_mfa_managed_credentials(check):
+    create_organization(mgmt_account_id=mgmt_account_id)
+    save_organization_features(
+        account_id=mgmt_account_id, features=["RootCredentialsManagement"]
+    )
+    save_account_summary(mgmt_account_id, {"AccountMFAEnabled": 0})
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "Root MFA is not enabled in 1 account" in result.reason
 
 
-def test_root_mfa_not_org_managed_no_mfa(
-    mock_get_organization_features,
-    mock_config,
-    mock_get_account_ids,
-    mock_get_account_summary,
-    mock_get_root_virtual_mfa_device,
-):
-    """Test when root credentials are not managed at org level.
-
-    Verifies behavior when MFA is not enabled.
-    """
-    # Set up mocks
-    mock_get_organization_features.return_value = []
-    mock_config.return_value = MagicMock(management_account_id="123456789012")
-    mock_get_account_summary.return_value = {"AccountMFAEnabled": 0}
-
-    result = check_root_mfa_enabled()
-
-    # Verify the result
-    assert result["check_id"] == "root-mfa-enabled"
-    assert result["check_name"] == "Root MFA Enabled"
-    assert result["status"] == "FAIL"
-    message = "Root MFA is not enabled in 2 accounts"
-    assert message in result["details"]["message"]
-    assert result["details"]["accounts_without_mfa"] == [
-        "123456789012",
-        "098765432109",
-    ]
-    assert result["details"]["accounts_with_virtual_mfa"] == []
+@config_for_standalone_account(account_ids=[mgmt_account_id])
+def test_no_mgmt_account_id_configured_managed_credentials(check):
+    create_organization(mgmt_account_id=mgmt_account_id)
+    save_organization_features(
+        account_id=mgmt_account_id, features=["RootCredentialsManagement"]
+    )
+    save_account_summary(mgmt_account_id, {"AccountMFAEnabled": 1})
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+    assert (
+        "Root MFA is enabled with hardware MFA devices in all accounts" in result.reason
+    )
 
 
-def test_root_mfa_error(
-    mock_get_organization_features,
-):
-    """Test when an error occurs during the check."""
-    # Set up mock to raise an exception
-    mock_get_organization_features.side_effect = Exception("Test error")
+@config_for_org(mgmt_account_id=mgmt_account_id)
+def test_root_mfa_not_managed_credentials(check):
+    create_organization(mgmt_account_id=mgmt_account_id)
+    save_account_summary(mgmt_account_id, {"AccountMFAEnabled": 1})
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+    assert (
+        "Root MFA is enabled with hardware MFA devices in all accounts" in result.reason
+    )
 
-    result = check_root_mfa_enabled()
 
-    # Verify the result
-    assert result["check_id"] == "root-mfa-enabled"
-    assert result["check_name"] == "Root MFA Enabled"
-    assert result["status"] == "ERROR"
-    message = "Error checking for root MFA: Test error"
-    assert message in result["details"]["message"]
+@config_for_org(mgmt_account_id=mgmt_account_id)
+def test_root_virtual_mfa_not_managed_credentials(check):
+    create_organization(mgmt_account_id=mgmt_account_id)
+    save_account_summary(mgmt_account_id, {"AccountMFAEnabled": 1})
+    save_virtual_mfa_devices(
+        mgmt_account_id,
+        [
+            {
+                "User": {"Arn": f"arn:aws:iam::${mgmt_account_id}:mfa/root"},
+                "SerialNumber": "foo-mfa",
+            }
+        ],
+    )
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "Root MFA is enabled with virtual MFA devices" in result.reason
+
+
+@config_for_org(mgmt_account_id=mgmt_account_id)
+def test_no_root_mfa_not_managed_credentials(check):
+    create_organization(mgmt_account_id=mgmt_account_id)
+    save_account_summary(mgmt_account_id, {"AccountMFAEnabled": 0})
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "Root MFA is not enabled" in result.reason

@@ -298,7 +298,7 @@ from kite.checks.vpc_flow_logs_enabled import VpcFlowLogsEnabledCheck
 from kite.checks.vulnerability_scanning_in_cicd_pipelines import (
     VulnerabilityScanningInCICDPipelinesCheck,
 )
-from kite.checks.waf_web_acl_logging_enabled import check_waf_web_acl_logging_enabled
+from kite.checks.waf_web_acl_logging_enabled import WafWebAclLoggingEnabledCheck
 from kite.checks.well_defined_control_objectives import (
     WellDefinedControlObjectivesCheck,
 )
@@ -389,7 +389,7 @@ __all__ = [
     "VpcFlowLogsEnabledCheck",
     "ResolverQueryLogsEnabledCheck",
     "LogRetentionCheck",
-    "check_waf_web_acl_logging_enabled",
+    "WafWebAclLoggingEnabledCheck",
     "ElbLoggingEnabledCheck",
     "EksControlPlaneLoggingEnabledCheck",
     "NetworkFirewallLoggingEnabledCheck",

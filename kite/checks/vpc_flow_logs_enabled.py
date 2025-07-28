@@ -1,88 +1,74 @@
-"""Check for VPC flow logs being enabled."""
-
-from typing import Any
-
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.config import Config
 from kite.data import get_flow_logs
 from kite.data import get_vpcs
 from kite.helpers import get_account_ids_in_scope
 
-CHECK_ID = "vpc-flow-logs-enabled"
-CHECK_NAME = "VPC Flow Logs Enabled"
 
+class VpcFlowLogsEnabledCheck:
+    def __init__(self):
+        self.check_id = "vpc-flow-logs-enabled"
+        self.check_name = "VPC Flow Logs Enabled"
 
-def check_vpc_flow_logs_enabled() -> dict[str, Any]:
-    """
-    Check if all VPCs have flow logs enabled.
+    @property
+    def question(self) -> str:
+        return ""  # fully automated check
 
-    This check verifies that:
-    1. Each VPC in each account and region has at least one flow log enabled
-    2. Flow logs are properly configured to capture traffic
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that all VPCs have flow logs enabled and properly "
+            "configured to capture traffic."
+        )
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS" or "FAIL")
-            - details: Dict containing:
-                - message: str describing the result
-                - failing_resources: List of VPCs that don't have flow logs enabled
-    """
-    config = Config.get()
-    failing_vpcs: list[dict[str, str]] = []
+    def run(self) -> CheckResult:
+        config = Config.get()
+        failing_vpcs: list[dict[str, str]] = []
 
-    # Get all in-scope accounts
-    accounts = get_account_ids_in_scope()
+        # Get all in-scope accounts
+        accounts = get_account_ids_in_scope()
 
-    # Check each account in each active region
-    for account in accounts:
-        for region in config.active_regions:
-            # Get VPCs and flow logs for this account and region
-            vpcs = get_vpcs(account, region)
-            flow_logs = get_flow_logs(account, region)
+        # Check each account in each active region
+        for account in accounts:
+            for region in config.active_regions:
+                # Get VPCs and flow logs for this account and region
+                vpcs = get_vpcs(account, region)
+                flow_logs = get_flow_logs(account, region)
 
-            # Create a set of VPC IDs that have flow logs enabled
-            vpcs_with_flow_logs = {
-                log["ResourceId"]
-                for log in flow_logs
-                if log.get("ResourceId") and log.get("FlowLogStatus") == "ACTIVE"
-            }
+                # Create a set of VPC IDs that have flow logs enabled
+                vpcs_with_flow_logs = {
+                    log["ResourceId"]
+                    for log in flow_logs
+                    if log.get("ResourceId") and log.get("FlowLogStatus") == "ACTIVE"
+                }
 
-            # Check each VPC
-            for vpc in vpcs:
-                vpc_id = vpc.get("VpcId")
-                if not vpc_id:
-                    continue
+                # Check each VPC
+                for vpc in vpcs:
+                    vpc_id = vpc.get("VpcId")
+                    if not vpc_id:
+                        continue
 
-                if vpc_id not in vpcs_with_flow_logs:
-                    failing_vpcs.append(
-                        {
-                            "id": vpc_id,
-                            "account": account,
-                            "region": region,
-                            "reason": "No active flow logs found",
-                        }
-                    )
+                    if vpc_id not in vpcs_with_flow_logs:
+                        failing_vpcs.append(
+                            {
+                                "id": vpc_id,
+                                "account": account,
+                                "region": region,
+                                "reason": "No active flow logs found",
+                            }
+                        )
 
-    if not failing_vpcs:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "PASS",
-            "details": {"message": "All VPCs have flow logs enabled"},
-        }
+        if not failing_vpcs:
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason="All VPCs have flow logs enabled",
+            )
 
-    return {
-        "check_id": CHECK_ID,
-        "check_name": CHECK_NAME,
-        "status": "FAIL",
-        "details": {
-            "message": (f"Found {len(failing_vpcs)} VPC(s) without flow logs enabled"),
-            "failing_resources": failing_vpcs,
-        },
-    }
-
-
-# Attach the check ID and name to the function
-check_vpc_flow_logs_enabled._CHECK_ID = CHECK_ID
-check_vpc_flow_logs_enabled._CHECK_NAME = CHECK_NAME
+        return CheckResult(
+            status=CheckStatus.FAIL,
+            reason=f"Found {len(failing_vpcs)} VPC(s) without flow logs enabled",
+            details={
+                "failing_resources": failing_vpcs,
+            },
+        )

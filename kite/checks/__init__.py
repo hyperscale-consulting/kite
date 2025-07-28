@@ -294,7 +294,7 @@ from kite.checks.validate_software_integrity import ValidateSoftwareIntegrityChe
 from kite.checks.vpc_endpoints_enforce_data_perimeter import (
     VpcEndpointsEnforceDataPerimeterCheck,
 )
-from kite.checks.vpc_flow_logs_enabled import check_vpc_flow_logs_enabled
+from kite.checks.vpc_flow_logs_enabled import VpcFlowLogsEnabledCheck
 from kite.checks.vulnerability_scanning_in_cicd_pipelines import (
     VulnerabilityScanningInCICDPipelinesCheck,
 )
@@ -386,7 +386,7 @@ __all__ = [
     "KmsConfusedDeputyProtectionCheck",
     "RepeatableAuditableSetupFor3rdPartyAccessCheck",
     "OrganizationalCloudTrailCheck",
-    "check_vpc_flow_logs_enabled",
+    "VpcFlowLogsEnabledCheck",
     "ResolverQueryLogsEnabledCheck",
     "LogRetentionCheck",
     "check_waf_web_acl_logging_enabled",

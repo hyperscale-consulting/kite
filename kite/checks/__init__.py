@@ -250,7 +250,7 @@ from kite.checks.scp_prevents_leaving_org import ScpPreventsLeavingOrgCheck
 from kite.checks.scp_prevents_ram_external_sharing import (
     ScpPreventsRamExternalSharingCheck,
 )
-from kite.checks.scp_prevents_ram_invitations import check_scp_prevents_ram_invitations
+from kite.checks.scp_prevents_ram_invitations import ScpPreventsRamInvitationsCheck
 from kite.checks.scp_prevents_unencrypted_s3_uploads import (
     check_scp_prevents_unencrypted_s3_uploads,
 )
@@ -371,6 +371,7 @@ __all__ = [
     "ScpPreventsConfigChangesCheck",
     "ScpPreventsGuarddutyChangesCheck",
     "ScpPreventsRamExternalSharingCheck",
+    "ScpPreventsRamInvitationsCheck",
     "check_scp_prevents_unencrypted_s3_uploads",
     "ScpPreventsDeletingLogsCheck",
     "ScpPreventsAddingInternetAccessToVpcCheck",
@@ -386,7 +387,6 @@ __all__ = [
     "DataPerimeterConfusedDeputyProtectionCheck",
     "DataPerimeterTrustedResourcesCheck",
     "check_vpc_endpoints_enforce_data_perimeter",
-    "check_scp_prevents_ram_invitations",
     "KmsConfusedDeputyProtectionCheck",
     "RepeatableAuditableSetupFor3rdPartyAccessCheck",
     "OrganizationalCloudTrailCheck",

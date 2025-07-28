@@ -35,7 +35,6 @@ from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
 from kite.checks import check_root_mfa_enabled
-from kite.checks import check_scp_prevents_ram_invitations
 from kite.checks import check_scp_prevents_unencrypted_s3_uploads
 from kite.checks import check_security_services_evaluation
 from kite.checks import check_tag_data_with_sensitivity_level
@@ -162,6 +161,7 @@ from kite.checks import ScpPreventsDeletingLogsCheck
 from kite.checks import ScpPreventsGuarddutyChangesCheck
 from kite.checks import ScpPreventsLeavingOrgCheck
 from kite.checks import ScpPreventsRamExternalSharingCheck
+from kite.checks import ScpPreventsRamInvitationsCheck
 from kite.checks import SecureSecretsStorageCheck
 from kite.checks import SecurityDataPublishedToLogArchiveAccountCheck
 from kite.checks import SecurityEventCorrelationCheck
@@ -412,7 +412,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         ),
         "checks": [
             ScpPreventsRamExternalSharingCheck(),
-            check_scp_prevents_ram_invitations,
+            ScpPreventsRamInvitationsCheck(),
             S3BucketAclDisabledCheck(),
             MigrateFromOaiCheck(),
             check_establish_data_perimeter_trusted_identities,

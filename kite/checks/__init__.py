@@ -241,7 +241,7 @@ from kite.checks.scp_prevents_cloudwatch_changes import (
     ScpPreventsCloudwatchChangesCheck,
 )
 from kite.checks.scp_prevents_common_admin_role_changes import (
-    check_scp_prevents_common_admin_role_changes,
+    ScpPreventsCommonAdminRoleChangesCheck,
 )
 from kite.checks.scp_prevents_config_changes import check_scp_prevents_config_changes
 from kite.checks.scp_prevents_deleting_logs import check_scp_prevents_deleting_logs
@@ -368,7 +368,7 @@ __all__ = [
     "EstablishedEmergencyAccessProceduresCheck",
     "ActiveUnusedAccessAnalyzerCheck",
     "ScpPreventsLeavingOrgCheck",
-    "check_scp_prevents_common_admin_role_changes",
+    "ScpPreventsCommonAdminRoleChangesCheck",
     "ScpPreventsCloudwatchChangesCheck",
     "check_scp_prevents_config_changes",
     "check_scp_prevents_guardduty_changes",

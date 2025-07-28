@@ -248,7 +248,7 @@ from kite.checks.scp_prevents_deleting_logs import ScpPreventsDeletingLogsCheck
 from kite.checks.scp_prevents_guardduty_changes import ScpPreventsGuarddutyChangesCheck
 from kite.checks.scp_prevents_leaving_org import ScpPreventsLeavingOrgCheck
 from kite.checks.scp_prevents_ram_external_sharing import (
-    check_scp_prevents_ram_external_sharing,
+    ScpPreventsRamExternalSharingCheck,
 )
 from kite.checks.scp_prevents_ram_invitations import check_scp_prevents_ram_invitations
 from kite.checks.scp_prevents_unencrypted_s3_uploads import (
@@ -370,7 +370,7 @@ __all__ = [
     "ScpPreventsCloudwatchChangesCheck",
     "ScpPreventsConfigChangesCheck",
     "ScpPreventsGuarddutyChangesCheck",
-    "check_scp_prevents_ram_external_sharing",
+    "ScpPreventsRamExternalSharingCheck",
     "check_scp_prevents_unencrypted_s3_uploads",
     "ScpPreventsDeletingLogsCheck",
     "ScpPreventsAddingInternetAccessToVpcCheck",

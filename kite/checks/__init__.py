@@ -278,7 +278,7 @@ from kite.checks.train_for_application_security import TrainForApplicationSecuri
 from kite.checks.trusted_delegated_admins import TrustedDelegatedAdminsCheck
 from kite.checks.use_a_kms import UseAKmsCheck
 from kite.checks.use_centralized_idp import UseCentralizedIdpCheck
-from kite.checks.use_customer_managed_keys import check_use_customer_managed_keys
+from kite.checks.use_customer_managed_keys import UseCustomerManagedKeysCheck
 from kite.checks.use_hardened_images import UseHardenedImagesCheck
 from kite.checks.use_identity_broker import UseIdentityBrokerCheck
 from kite.checks.use_logs_for_alerting import check_log_alerting
@@ -420,7 +420,7 @@ __all__ = [
     "RotateEncryptionKeysCheck",
     "KeyAccessControlCheck",
     "check_use_service_encryption_at_rest",
-    "check_use_customer_managed_keys",
+    "UseCustomerManagedKeysCheck",
     "DetectEncryptionAtRestMisconfigCheck",
     "EnforceDataProtectionAtRestWithPolicyAsCodeCheck",
     "EstablishLoggingAndAuditTrailsForPrivateCACheck",

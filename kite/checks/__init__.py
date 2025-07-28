@@ -244,7 +244,7 @@ from kite.checks.scp_prevents_common_admin_role_changes import (
     ScpPreventsCommonAdminRoleChangesCheck,
 )
 from kite.checks.scp_prevents_config_changes import ScpPreventsConfigChangesCheck
-from kite.checks.scp_prevents_deleting_logs import check_scp_prevents_deleting_logs
+from kite.checks.scp_prevents_deleting_logs import ScpPreventsDeletingLogsCheck
 from kite.checks.scp_prevents_guardduty_changes import (
     check_scp_prevents_guardduty_changes,
 )
@@ -374,7 +374,7 @@ __all__ = [
     "check_scp_prevents_guardduty_changes",
     "check_scp_prevents_ram_external_sharing",
     "check_scp_prevents_unencrypted_s3_uploads",
-    "check_scp_prevents_deleting_logs",
+    "ScpPreventsDeletingLogsCheck",
     "ScpPreventsAddingInternetAccessToVpcCheck",
     "DelegateIamWithPermissionBoundariesCheck",
     "AccessManagementLifecycleCheck",

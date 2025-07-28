@@ -268,9 +268,7 @@ from kite.checks.service_catalog import ServiceCatalogCheck
 from kite.checks.sns_confused_deputy_protection import SnsConfusedDeputyProtectionCheck
 from kite.checks.sns_data_protection_policies import SnsDataProtectionPoliciesCheck
 from kite.checks.sqs_confused_deputy_protection import SqsConfusedDeputyProtectionCheck
-from kite.checks.tag_data_with_sensitivity_level import (
-    check_tag_data_with_sensitivity_level,
-)
+from kite.checks.tag_data_with_sensitivity_level import TagDataWithSensitivityLevelCheck
 from kite.checks.tech_inventories_scanned import TechInventoriesScannedCheck
 from kite.checks.threat_intelligence_monitoring import ThreatIntelligenceMonitoringCheck
 from kite.checks.threat_model_pipelines import ThreatModelPipelinesCheck
@@ -406,7 +404,7 @@ __all__ = [
     "DeployLogAnalysisToolsInAuditAccountCheck",
     "SecurityEventCorrelationCheck",
     "AutoRemediateNonCompliantResourcesCheck",
-    "check_tag_data_with_sensitivity_level",
+    "TagDataWithSensitivityLevelCheck",
     "IsolationBoundariesCheck",
     "SensitivityControlsCheck",
     "TokenizationAndAnonymizationCheck",

@@ -231,7 +231,7 @@ from kite.checks.s3_bucket_acl_disabled import S3BucketAclDisabledCheck
 from kite.checks.s3_confused_deputy_protection import S3ConfusedDeputyProtectionCheck
 from kite.checks.scan_for_sensitive_data_in_dev import ScanForSensitiveDataInDevCheck
 from kite.checks.scan_workloads_for_vulnerabilities import (
-    check_scan_workloads_for_vulnerabilities,
+    ScanWorkloadsForVulnerabilitiesCheck,
 )
 from kite.checks.scim_protocol_used import check_scim_protocol_used
 from kite.checks.scp_prevents_adding_internet_access_to_vpc import (
@@ -457,7 +457,7 @@ __all__ = [
     "ReviewPipelinePermissionsRegularlyCheck",
     "ThreatModelPipelinesCheck",
     "SecurityGuardiansProgramCheck",
-    "check_scan_workloads_for_vulnerabilities",
+    "ScanWorkloadsForVulnerabilitiesCheck",
     "VulnerabilityScanningInCICDPipelinesCheck",
     "AutomateMalwareAndThreatDetectionCheck",
     "UseHardenedImagesCheck",

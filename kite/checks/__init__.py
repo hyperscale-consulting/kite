@@ -252,7 +252,7 @@ from kite.checks.scp_prevents_ram_external_sharing import (
 )
 from kite.checks.scp_prevents_ram_invitations import ScpPreventsRamInvitationsCheck
 from kite.checks.scp_prevents_unencrypted_s3_uploads import (
-    check_scp_prevents_unencrypted_s3_uploads,
+    ScpPreventsUnencryptedS3UploadsCheck,
 )
 from kite.checks.secure_secrets_storage import SecureSecretsStorageCheck
 from kite.checks.security_data_published_to_log_archive_account import (
@@ -372,7 +372,7 @@ __all__ = [
     "ScpPreventsGuarddutyChangesCheck",
     "ScpPreventsRamExternalSharingCheck",
     "ScpPreventsRamInvitationsCheck",
-    "check_scp_prevents_unencrypted_s3_uploads",
+    "ScpPreventsUnencryptedS3UploadsCheck",
     "ScpPreventsDeletingLogsCheck",
     "ScpPreventsAddingInternetAccessToVpcCheck",
     "DelegateIamWithPermissionBoundariesCheck",

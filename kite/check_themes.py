@@ -35,7 +35,6 @@ from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
 from kite.checks import check_root_mfa_enabled
-from kite.checks import check_scp_prevents_guardduty_changes
 from kite.checks import check_scp_prevents_ram_external_sharing
 from kite.checks import check_scp_prevents_ram_invitations
 from kite.checks import check_scp_prevents_unencrypted_s3_uploads
@@ -161,6 +160,7 @@ from kite.checks import ScpPreventsCloudwatchChangesCheck
 from kite.checks import ScpPreventsCommonAdminRoleChangesCheck
 from kite.checks import ScpPreventsConfigChangesCheck
 from kite.checks import ScpPreventsDeletingLogsCheck
+from kite.checks import ScpPreventsGuarddutyChangesCheck
 from kite.checks import ScpPreventsLeavingOrgCheck
 from kite.checks import SecureSecretsStorageCheck
 from kite.checks import SecurityDataPublishedToLogArchiveAccountCheck
@@ -383,7 +383,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             ScpPreventsCloudwatchChangesCheck(),
             ScpPreventsConfigChangesCheck(),
             ScpPreventsDeletingLogsCheck(),
-            check_scp_prevents_guardduty_changes,
+            ScpPreventsGuarddutyChangesCheck(),
             check_scp_prevents_unencrypted_s3_uploads,
             ScpPreventsAddingInternetAccessToVpcCheck(),
             DelegateIamWithPermissionBoundariesCheck(),

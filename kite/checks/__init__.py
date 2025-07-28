@@ -235,7 +235,7 @@ from kite.checks.scan_workloads_for_vulnerabilities import (
 )
 from kite.checks.scim_protocol_used import ScimProtocolUsedCheck
 from kite.checks.scp_prevents_adding_internet_access_to_vpc import (
-    check_scp_prevents_adding_internet_access_to_vpc,
+    ScpPreventsAddingInternetAccessToVpcCheck,
 )
 from kite.checks.scp_prevents_cloudwatch_changes import (
     check_scp_prevents_cloudwatch_changes,
@@ -375,7 +375,7 @@ __all__ = [
     "check_scp_prevents_ram_external_sharing",
     "check_scp_prevents_unencrypted_s3_uploads",
     "check_scp_prevents_deleting_logs",
-    "check_scp_prevents_adding_internet_access_to_vpc",
+    "ScpPreventsAddingInternetAccessToVpcCheck",
     "DelegateIamWithPermissionBoundariesCheck",
     "AccessManagementLifecycleCheck",
     "AccessManagementLifecycleImplementedCheck",

@@ -38,6 +38,15 @@ def get_case_insensitive_value(
     return None
 
 
+def has_not_requested_region_condition(conditions: dict, regions: list) -> bool:
+    requested_regions = get_case_insensitive_value(
+        conditions, "StringNotEquals", "aws:RequestedRegion"
+    )
+    if not isinstance(requested_regions, list):
+        return False
+    return set(regions) == set(requested_regions)
+
+
 def has_any_account_root_principal_condition(conditions: dict[str, Any]) -> bool:
     root_principal = "arn:*:iam::*:root"
     for condition_type in ["ArnLike", "StringLike"]:

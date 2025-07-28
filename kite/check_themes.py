@@ -34,7 +34,6 @@ from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
-from kite.checks import check_region_deny_scp
 from kite.checks import check_root_credentials_management_enabled
 from kite.checks import check_root_mfa_enabled
 from kite.checks import check_rotate_encryption_keys
@@ -145,6 +144,7 @@ from kite.checks import PreDeployToolsCheck
 from kite.checks import PreventAndDetectSecretsCheck
 from kite.checks import ProtectRootCaCheck
 from kite.checks import RdsLoggingEnabledCheck
+from kite.checks import RegionDenyScpCheck
 from kite.checks import RegularlyReviewPermissionsCheck
 from kite.checks import RemediateVulnerabilitiesCheck
 from kite.checks import RepeatableAuditableSetupFor3rdPartyAccessCheck
@@ -377,7 +377,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "Checks related to defining permission guardrails for your organization"
         ),
         "checks": [
-            check_region_deny_scp,
+            RegionDenyScpCheck(),
             ScpPreventsLeavingOrgCheck(),
             check_scp_prevents_common_admin_role_changes,
             check_scp_prevents_cloudwatch_changes,

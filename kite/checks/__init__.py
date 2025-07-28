@@ -201,7 +201,7 @@ from kite.checks.pre_deploy_tools import PreDeployToolsCheck
 from kite.checks.prevent_and_detect_secrets import PreventAndDetectSecretsCheck
 from kite.checks.protect_root_ca import ProtectRootCaCheck
 from kite.checks.rds_logging_enabled import RdsLoggingEnabledCheck
-from kite.checks.region_deny_scp import check_region_deny_scp
+from kite.checks.region_deny_scp import RegionDenyScpCheck
 from kite.checks.regularly_review_permissions import RegularlyReviewPermissionsCheck
 from kite.checks.remediate_vulnerabilities import RemediateVulnerabilitiesCheck
 from kite.checks.repeatable_auditable_setup_for_3rd_party_access import (
@@ -317,7 +317,7 @@ __all__ = [
     "ManagementAccountWorkloadsCheck",
     "DelegatedAdminForSecurityServices",
     "TrustedDelegatedAdminsCheck",
-    "check_region_deny_scp",
+    "RegionDenyScpCheck",
     "check_root_mfa_enabled",
     "RootAccessKeysDisallowedCheck",
     "RootActionsDisallowedCheck",

@@ -1,5 +1,6 @@
 from kite.conditions import has_any_account_root_principal_condition
 from kite.conditions import has_no_source_account_condition
+from kite.conditions import has_not_requested_region_condition
 from kite.conditions import has_not_source_org_id_condition
 
 
@@ -56,4 +57,23 @@ def test_has_any_account_root_principal_condition():
     )
     assert not has_any_account_root_principal_condition(
         {"StringLike": {"aws:PrincipalArn": "arn:aws:iam::111111111111:root"}},
+    )
+
+
+def test_has_not_requested_region_condition():
+    assert has_not_requested_region_condition(
+        {"StringNotEquals": {"aws:RequestedRegion": ["us-east-1", "us-west-2"]}},
+        ["us-east-1", "us-west-2"],
+    )
+    assert not has_not_requested_region_condition(
+        {"StringNotEquals": {"aws:RequestedRegion": ["us-east-1", "us-west-2"]}},
+        ["us-west-2"],
+    )
+    assert not has_not_requested_region_condition(
+        {"StringNotEquals": {"aws:RequestedRegion": ["us-west-2"]}},
+        ["us-east-1", "us-west-2"],
+    )
+    assert not has_not_requested_region_condition(
+        {"StringEquals": {"aws:RequestedRegion": ["us-east-1", "us-west-2"]}},
+        ["us-east-1", "us-west-2"],
     )

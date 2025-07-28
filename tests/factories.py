@@ -166,10 +166,13 @@ def create_config(
     role_name="KiteAssessor",
     external_id="12345",
 ):
+    if active_regions is None:
+        active_regions = ["us-east-1", "eu-west-2"]
+
     Config.create(
         management_account_id=mgmt_account_id,
         account_ids=account_ids or [],
-        active_regions=active_regions or ["us-east-1", "eu-west-2"],
+        active_regions=active_regions,
         role_name=role_name,
         prowler_output_dir=prowler_output_dir,
         data_dir=data_dir,

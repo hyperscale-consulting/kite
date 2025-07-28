@@ -1,92 +1,118 @@
 import json
+from collections.abc import Callable
 
 from kite.checks.core import CheckResult
 from kite.checks.core import CheckStatus
 from kite.conditions import has_any_account_root_principal_condition
+from kite.conditions import has_not_requested_region_condition
 from kite.models import ControlPolicy
 from kite.models import Organization
 
 
-def _is_root_actions_disallow_scp(scp: ControlPolicy, actions: list[str]) -> bool:
+def _has_matching_stmt(
+    scp: ControlPolicy, stmt_matcher: Callable[[str, list, dict], bool]
+) -> bool:
     try:
         content = json.loads(scp.content)
     except json.JSONDecodeError:
         return False
 
-    if not isinstance(content, dict) or "Statement" not in content:
-        return False
-
-    statements = content["Statement"]
+    statements = content.get("Statement", [])
     if not isinstance(statements, list):
         statements = [statements]
 
     for statement in statements:
-        if not isinstance(statement, dict):
-            continue
+        effect = statement.get("Effect")
+        actions = statement.get("Action", [])
+        if not isinstance(actions, list):
+            actions = [actions]
+        conditions = statement.get("Condition", {})
 
-        # Check for a deny statement with "*" action
-        if statement.get("Effect") == "Deny" and "Action" in statement:
-            stmt_actions = statement["Action"]
-            if not isinstance(stmt_actions, list):
-                stmt_actions = [stmt_actions]
-
-            # Check if the statement denies any of the provided actions
-            for action in actions:
-                if action in stmt_actions:
-                    # Must have a condition for root user
-                    if "Condition" not in statement:
-                        continue
-
-                    condition = statement["Condition"]
-                    if has_any_account_root_principal_condition(condition):
-                        return True
-
-    return False
-
-
-def _root_scp_disallows_root_action(org: Organization, actions: list[str]) -> bool:
-    return _contains_root_action_disallow_scp(org.root.scps, actions)
-
-
-def _contains_root_action_disallow_scp(
-    scps: list[ControlPolicy], actions: list[str]
-) -> bool:
-    for scp in scps:
-        if _is_root_actions_disallow_scp(scp, actions):
+        if stmt_matcher(effect, actions, conditions):
             return True
     return False
 
 
-def _all_top_level_ous_have_root_action_disallow_scp(
-    org: Organization, actions: list[str]
-) -> bool:
-    if not org.root.child_ous:
-        return False
-
-    for ou in org.root.child_ous:
-        if not _contains_root_action_disallow_scp(ou.scps, actions):
+def _make_region_deny_stmt_matcher(
+    active_regions: list,
+) -> Callable[[str, list, dict], bool]:
+    def _inner(effect: str, actions: list, conditions: dict) -> bool:
+        if effect != "Deny":
             return False
-    return True
+
+        if "*" not in actions:
+            return False
+
+        return has_not_requested_region_condition(conditions, active_regions)
+
+    return _inner
+
+
+def _make_root_actions_disallowed_stmt_matcher(
+    disallowed_actions: list,
+) -> Callable[[str, list, dict], bool]:
+    def _inner(effect: str, actions: list, conditions: dict) -> bool:
+        if effect != "Deny":
+            return False
+
+        if not any(action in disallowed_actions for action in actions):
+            return False
+
+        return has_any_account_root_principal_condition(conditions)
+
+    return _inner
+
+
+def check_for_org_wide_region_deny_scp(
+    organization: Organization | None, active_regions: list[str]
+):
+    return _check_for_org_wide_scp(
+        organization, _make_region_deny_stmt_matcher(active_regions), "Region deny"
+    )
 
 
 def check_for_org_wide_disallow_root_actions_scp(organization: Organization | None):
-    return _check_for_org_wide_disallow_root_action_scp(
-        organization, ["*"], "Disallow root actions"
+    return _check_for_org_wide_scp(
+        organization,
+        _make_root_actions_disallowed_stmt_matcher(["*"]),
+        "Disallow root actions",
     )
 
 
 def check_for_org_wide_disallow_root_create_access_key_scp(
     organization: Organization | None,
 ):
-    return _check_for_org_wide_disallow_root_action_scp(
+    return _check_for_org_wide_scp(
         organization,
-        ["iam:CreateAccessKey", "*", "iam:Create*", "iam:*"],
+        _make_root_actions_disallowed_stmt_matcher(
+            ["iam:CreateAccessKey", "*", "iam:Create*", "iam:*"]
+        ),
         "Disallow root access keys creation",
     )
 
 
-def _check_for_org_wide_disallow_root_action_scp(
-    organization: Organization | None, actions: list[str], scp_name: str
+def _root_has_matching_scp(
+    organization: Organization, matcher: Callable[[str, list, dict], bool]
+) -> bool:
+    return any(_has_matching_stmt(scp, matcher) for scp in organization.root.scps)
+
+
+def _all_top_level_ous_have_matching_scp(
+    org: Organization, matcher: Callable[[str, list, dict], bool]
+) -> bool:
+    if not org.root.child_ous:
+        return False
+
+    for ou in org.root.child_ous:
+        if not any(_has_matching_stmt(scp, matcher) for scp in ou.scps):
+            return False
+    return True
+
+
+def _check_for_org_wide_scp(
+    organization: Organization | None,
+    matcher: Callable[[str, list, dict], bool],
+    scp_name,
 ) -> CheckResult:
     if organization is None:
         return CheckResult(
@@ -95,13 +121,13 @@ def _check_for_org_wide_disallow_root_action_scp(
             "not configured.",
         )
 
-    if _root_scp_disallows_root_action(organization, actions):
+    if _root_has_matching_scp(organization, matcher):
         return CheckResult(
             status=CheckStatus.PASS,
             reason=f"{scp_name} SCP is attached to the root OU.",
         )
 
-    if _all_top_level_ous_have_root_action_disallow_scp(organization, actions):
+    if _all_top_level_ous_have_matching_scp(organization, matcher):
         return CheckResult(
             status=CheckStatus.PASS,
             reason=f"{scp_name} SCP is attached to all top-level OUs.",

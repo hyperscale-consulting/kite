@@ -35,7 +35,6 @@ from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
 from kite.checks import check_root_mfa_enabled
-from kite.checks import check_use_a_kms
 from kite.checks import check_use_centralized_idp
 from kite.checks import check_use_customer_managed_keys
 from kite.checks import check_use_service_encryption_at_rest
@@ -180,6 +179,7 @@ from kite.checks import ThreatModelPipelinesCheck
 from kite.checks import TokenizationAndAnonymizationCheck
 from kite.checks import TrainForApplicationSecurityCheck
 from kite.checks import TrustedDelegatedAdminsCheck
+from kite.checks import UseAKmsCheck
 from kite.checks import UseHardenedImagesCheck
 from kite.checks import UseIdentityBrokerCheck
 from kite.checks import UseOfHigherLevelServicesCheck
@@ -595,7 +595,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             "workloads."
         ),
         "checks": [
-            check_use_a_kms,
+            UseAKmsCheck(),
             NoHumanAccessToUnencryptedKeyMaterialCheck(),
             RotateEncryptionKeysCheck(),
             MonitorKeyUsageCheck(),

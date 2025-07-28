@@ -276,7 +276,7 @@ from kite.checks.threat_modeling import ThreatModelingCheck
 from kite.checks.tokenization_and_anonymization import TokenizationAndAnonymizationCheck
 from kite.checks.train_for_application_security import TrainForApplicationSecurityCheck
 from kite.checks.trusted_delegated_admins import TrustedDelegatedAdminsCheck
-from kite.checks.use_a_kms import check_use_a_kms
+from kite.checks.use_a_kms import UseAKmsCheck
 from kite.checks.use_centralized_idp import check_use_centralized_idp
 from kite.checks.use_customer_managed_keys import check_use_customer_managed_keys
 from kite.checks.use_hardened_images import UseHardenedImagesCheck
@@ -415,7 +415,7 @@ __all__ = [
     "AutomateS3DataRetentionCheck",
     "AutomateDdbDataRetentionCheck",
     "DetectMissingAutomatedLifecycleManagementCheck",
-    "check_use_a_kms",
+    "UseAKmsCheck",
     "NoHumanAccessToUnencryptedKeyMaterialCheck",
     "RotateEncryptionKeysCheck",
     "KeyAccessControlCheck",

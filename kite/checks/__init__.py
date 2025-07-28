@@ -233,7 +233,7 @@ from kite.checks.scan_for_sensitive_data_in_dev import ScanForSensitiveDataInDev
 from kite.checks.scan_workloads_for_vulnerabilities import (
     ScanWorkloadsForVulnerabilitiesCheck,
 )
-from kite.checks.scim_protocol_used import check_scim_protocol_used
+from kite.checks.scim_protocol_used import ScimProtocolUsedCheck
 from kite.checks.scp_prevents_adding_internet_access_to_vpc import (
     check_scp_prevents_adding_internet_access_to_vpc,
 )
@@ -379,7 +379,7 @@ __all__ = [
     "DelegateIamWithPermissionBoundariesCheck",
     "AccessManagementLifecycleCheck",
     "AccessManagementLifecycleImplementedCheck",
-    "check_scim_protocol_used",
+    "ScimProtocolUsedCheck",
     "ActiveExternalAccessAnalyzerCheck",
     "MonitorAndRespondToS3PublicAccessCheck",
     "S3BucketAclDisabledCheck",

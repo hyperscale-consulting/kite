@@ -1,69 +1,46 @@
-"""Check if SCIM protocol is used for IAM Identity Center synchronization."""
-
-from typing import Any
-
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.helpers import is_identity_center_enabled
-from kite.helpers import manual_check
-
-CHECK_ID = "scim-protocol-used"
-CHECK_NAME = "SCIM Protocol Used for IAM Identity Center"
 
 
-def check_scim_protocol_used() -> dict[str, Any]:
-    """
-    Check if SCIM protocol is used to synchronize user and group information from
-    the external identity provider into IAM Identity Center's data store.
+class ScimProtocolUsedCheck:
+    def __init__(self):
+        self.check_id = "scim-protocol-used"
+        self.check_name = "SCIM Protocol Used for IAM Identity Center"
 
-    This check:
-    1. Verifies if Identity Center is enabled
-    2. Asks the user if SCIM protocol is used for synchronization
-
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-    """
-
-    identity_center_enabled = is_identity_center_enabled()
-
-    if not identity_center_enabled:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "FAIL",
-            "details": {"message": "Identity Center is not enabled."},
-        }
-
-    # Build the context message
-    context_message = (
-        "This check verifies that SCIM protocol is used to synchronize user and "
-        "group information from the external identity provider into IAM Identity "
-        "Center's data store.\n\n"
-        "Consider the following factors:\n"
-        "- Is SCIM protocol configured for user synchronization?\n"
-        "- Is SCIM protocol configured for group synchronization?\n"
-        "- Are changes in the external identity provider automatically reflected "
-        "in IAM Identity Center?\n"
-    )
-
-    return manual_check(
-        check_id=CHECK_ID,
-        check_name=CHECK_NAME,
-        message=context_message,
-        prompt=(
-            "Is SCIM protocol used to synchronize user and group information "
+    @property
+    def question(self) -> str:
+        return (
+            "Is the SCIM protocol used to synchronize user and group information "
             "from the external identity provider into IAM Identity Center's data store?"
-        ),
-        pass_message=("SCIM protocol is used for IAM Identity Center synchronization."),
-        fail_message=(
-            "SCIM protocol should be used for IAM Identity Center synchronization."
-        ),
-        default=False,
-    )
+        )
 
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that the SCIM protocol is used to synchronize user "
+            "and group information from the external identity provider into IAM "
+            "Identity Center's data store."
+        )
 
-check_scim_protocol_used._CHECK_ID = CHECK_ID
-check_scim_protocol_used._CHECK_NAME = CHECK_NAME
+    def run(self) -> CheckResult:
+        identity_center_enabled = is_identity_center_enabled()
+
+        if not identity_center_enabled:
+            return CheckResult(
+                status=CheckStatus.FAIL,
+                reason="Identity Center is not enabled.",
+            )
+
+        context_message = (
+            "Consider the following factors:\n"
+            "- Is the SCIM protocol configured for user synchronization?\n"
+            "- Is the SCIM protocol configured for group synchronization?\n"
+            "- Are changes in the external identity provider automatically reflected "
+            "in IAM Identity Center?\n"
+        )
+
+        return CheckResult(
+            status=CheckStatus.MANUAL,
+            context=context_message,
+        )

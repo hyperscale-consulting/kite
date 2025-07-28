@@ -35,7 +35,6 @@ from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
 from kite.checks import check_root_mfa_enabled
-from kite.checks import check_scim_protocol_used
 from kite.checks import check_scp_prevents_adding_internet_access_to_vpc
 from kite.checks import check_scp_prevents_cloudwatch_changes
 from kite.checks import check_scp_prevents_common_admin_role_changes
@@ -161,6 +160,7 @@ from kite.checks import S3BucketAclDisabledCheck
 from kite.checks import S3ConfusedDeputyProtectionCheck
 from kite.checks import ScanForSensitiveDataInDevCheck
 from kite.checks import ScanWorkloadsForVulnerabilitiesCheck
+from kite.checks import ScimProtocolUsedCheck
 from kite.checks import ScpPreventsLeavingOrgCheck
 from kite.checks import SecureSecretsStorageCheck
 from kite.checks import SecurityDataPublishedToLogArchiveAccountCheck
@@ -394,7 +394,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
         "checks": [
             AccessManagementLifecycleCheck(),
             AccessManagementLifecycleImplementedCheck(),
-            check_scim_protocol_used,
+            ScimProtocolUsedCheck(),
         ],
     },
     "Analyze public and cross-account access": {

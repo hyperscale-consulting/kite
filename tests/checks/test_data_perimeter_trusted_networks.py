@@ -4,7 +4,6 @@ from kite.checks import CheckStatus
 from kite.checks.data_perimeter_trusted_networks import (
     DataPerimeterTrustedNetworksCheck,
 )
-from kite.data import save_organization
 from tests.factories import build_ou
 from tests.factories import build_rcp
 from tests.factories import build_scp
@@ -97,40 +96,6 @@ def trusted_networks_scp():
             )
         ]
     }
-
-
-@pytest.fixture
-def scp_attached_to_root_ou(organization, trusted_networks_scp, mgmt_account_id):
-    organization.root.scps.append(trusted_networks_scp)
-    save_organization(mgmt_account_id, organization)
-    yield organization
-
-
-@pytest.fixture
-def scp_attached_to_all_top_level_ous(
-    organization, trusted_networks_scp, mgmt_account_id
-):
-    for ou in organization.root.child_ous:
-        ou.scps.append(trusted_networks_scp)
-    save_organization(mgmt_account_id, organization)
-    yield organization
-
-
-@pytest.fixture
-def rcp_attached_to_root_ou(organization, trusted_networks_rcp, mgmt_account_id):
-    organization.root.rcps.append(trusted_networks_rcp)
-    save_organization(mgmt_account_id, organization)
-    yield organization
-
-
-@pytest.fixture
-def rcp_attached_to_all_top_level_ous(
-    organization, trusted_networks_rcp, mgmt_account_id
-):
-    for ou in organization.root.child_ous:
-        ou.rcps.append(trusted_networks_rcp)
-    save_organization(mgmt_account_id, organization)
-    yield organization
 
 
 @pytest.fixture

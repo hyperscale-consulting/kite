@@ -238,7 +238,7 @@ from kite.checks.scp_prevents_adding_internet_access_to_vpc import (
     ScpPreventsAddingInternetAccessToVpcCheck,
 )
 from kite.checks.scp_prevents_cloudwatch_changes import (
-    check_scp_prevents_cloudwatch_changes,
+    ScpPreventsCloudwatchChangesCheck,
 )
 from kite.checks.scp_prevents_common_admin_role_changes import (
     check_scp_prevents_common_admin_role_changes,
@@ -369,7 +369,7 @@ __all__ = [
     "ActiveUnusedAccessAnalyzerCheck",
     "ScpPreventsLeavingOrgCheck",
     "check_scp_prevents_common_admin_role_changes",
-    "check_scp_prevents_cloudwatch_changes",
+    "ScpPreventsCloudwatchChangesCheck",
     "check_scp_prevents_config_changes",
     "check_scp_prevents_guardduty_changes",
     "check_scp_prevents_ram_external_sharing",

@@ -1,58 +1,71 @@
-"""SCP prevents CloudWatch changes check module."""
-
 import json
-from typing import Any
 
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.data import get_organization
 
-CHECK_ID = "scp-prevents-cloudwatch-changes"
-CHECK_NAME = "SCP Prevents CloudWatch Changes"
 
+class ScpPreventsCloudwatchChangesCheck:
+    def __init__(self):
+        self.check_id = "scp-prevents-cloudwatch-changes"
+        self.check_name = "SCP Prevents CloudWatch Changes"
 
-def check_scp_prevents_cloudwatch_changes() -> dict:
-    """
-    Check if there is an SCP that prevents changes to CloudWatch configuration.
+    @property
+    def question(self) -> str:
+        return ""  # fully automated check
 
-    This check verifies that there is at least one SCP that denies the following
-    CloudWatch actions:
-    - cloudwatch:DeleteAlarms
-    - cloudwatch:DeleteDashboards
-    - cloudwatch:DisableAlarmActions
-    - cloudwatch:PutDashboard
-    - cloudwatch:PutMetricAlarm
-    - cloudwatch:SetAlarmState
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that there is an SCP that prevents changes to "
+            "CloudWatch configuration."
+        )
 
-    The SCP must have:
-    1. Effect = Deny
-    2. Resource = "*"
-    3. All the specified CloudWatch actions
-
-    Returns:
-        A dictionary containing the finding for the SCP prevents CloudWatch changes
-        check, including details of all matching SCPs and their OUs.
-    """
-
-    org = get_organization()
-    if org is None:
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "FAIL",
-            "details": {
-                "message": (
+    def run(self) -> CheckResult:
+        org = get_organization()
+        if org is None:
+            return CheckResult(
+                status=CheckStatus.FAIL,
+                reason=(
                     "AWS Organizations is not being used, so SCP preventing "
                     "CloudWatch changes cannot be assessed."
                 ),
-            },
-        }
+            )
 
-    # Check all OUs for CloudWatch deny SCPs
-    def check_ou_for_cloudwatch_deny(ou) -> list[tuple[str, dict[str, str]]]:
+        matching_scps = self._check_ous_recursively(org.root)
+
+        if matching_scps:
+            scps_by_ou = {}
+            for ou_name, scp_details in matching_scps:
+                if ou_name not in scps_by_ou:
+                    scps_by_ou[ou_name] = []
+                scps_by_ou[ou_name].append(scp_details)
+
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason=(
+                    "Found SCPs preventing CloudWatch changes in the following OUs: "
+                )
+                + ", ".join(scps_by_ou.keys()),
+                details={
+                    "scps_by_ou": scps_by_ou,
+                },
+            )
+
+        return CheckResult(
+            status=CheckStatus.FAIL,
+            reason=(
+                "No SCP preventing CloudWatch changes was found in any OU in "
+                "the organization."
+            ),
+        )
+
+    def _check_ou_for_cloudwatch_deny(self, ou) -> list[tuple[str, dict[str, str]]]:
         matching_scps = []
         for scp in ou.scps:
             try:
                 content = json.loads(scp.content)
-                if _is_cloudwatch_deny_scp(content):
+                if self._is_cloudwatch_deny_scp(content):
                     matching_scps.append(
                         (
                             ou.name,
@@ -67,104 +80,48 @@ def check_scp_prevents_cloudwatch_changes() -> dict:
                 continue
         return matching_scps
 
-    # Check all OUs recursively
-    def check_ous_recursively(ou) -> list[tuple[str, dict[str, str]]]:
+    def _check_ous_recursively(self, ou) -> list[tuple[str, dict[str, str]]]:
         matching_scps = []
 
-        # Check current OU
-        matching_scps.extend(check_ou_for_cloudwatch_deny(ou))
+        matching_scps.extend(self._check_ou_for_cloudwatch_deny(ou))
 
-        # Check child OUs
         for child_ou in ou.child_ous:
-            matching_scps.extend(check_ous_recursively(child_ou))
+            matching_scps.extend(self._check_ous_recursively(child_ou))
 
         return matching_scps
 
-    # Start checking from root
-    matching_scps = check_ous_recursively(org.root)
+    def _is_cloudwatch_deny_scp(self, content: dict) -> bool:
+        if not isinstance(content, dict) or "Statement" not in content:
+            return False
 
-    if matching_scps:
-        # Group SCPs by OU for better readability
-        scps_by_ou = {}
-        for ou_name, scp_details in matching_scps:
-            if ou_name not in scps_by_ou:
-                scps_by_ou[ou_name] = []
-            scps_by_ou[ou_name].append(scp_details)
+        statements = content["Statement"]
+        if not isinstance(statements, list):
+            statements = [statements]
 
-        return {
-            "check_id": CHECK_ID,
-            "check_name": CHECK_NAME,
-            "status": "PASS",
-            "details": {
-                "message": (
-                    "Found SCPs preventing CloudWatch changes in the following OUs: "
-                )
-                + ", ".join(scps_by_ou.keys()),
-                "scps_by_ou": scps_by_ou,
-            },
+        required_actions = {
+            "cloudwatch:DeleteAlarms",
+            "cloudwatch:DeleteDashboards",
+            "cloudwatch:DisableAlarmActions",
+            "cloudwatch:PutDashboard",
+            "cloudwatch:PutMetricAlarm",
+            "cloudwatch:SetAlarmState",
         }
 
-    return {
-        "check_id": CHECK_ID,
-        "check_name": CHECK_NAME,
-        "status": "FAIL",
-        "details": {
-            "message": (
-                "No SCP preventing CloudWatch changes was found in any OU in "
-                "the organization."
-            ),
-        },
-    }
+        for statement in statements:
+            if not isinstance(statement, dict):
+                continue
 
+            if (
+                statement.get("Effect") == "Deny"
+                and "Action" in statement
+                and "Resource" in statement
+                and statement["Resource"] == "*"
+            ):
+                actions = statement["Action"]
+                if not isinstance(actions, list):
+                    actions = [actions]
 
-def _is_cloudwatch_deny_scp(content: dict[str, Any]) -> bool:
-    """
-    Check if an SCP effectively denies CloudWatch changes.
+                if all(action in actions for action in required_actions):
+                    return True
 
-    Args:
-        content: The SCP content as a dictionary
-
-    Returns:
-        True if the SCP denies the required CloudWatch actions
-    """
-    if not isinstance(content, dict) or "Statement" not in content:
         return False
-
-    statements = content["Statement"]
-    if not isinstance(statements, list):
-        statements = [statements]
-
-    required_actions = {
-        "cloudwatch:DeleteAlarms",
-        "cloudwatch:DeleteDashboards",
-        "cloudwatch:DisableAlarmActions",
-        "cloudwatch:PutDashboard",
-        "cloudwatch:PutMetricAlarm",
-        "cloudwatch:SetAlarmState",
-    }
-
-    for statement in statements:
-        if not isinstance(statement, dict):
-            continue
-
-        # Check for a deny statement with the required CloudWatch actions
-        if (
-            statement.get("Effect") == "Deny"
-            and "Action" in statement
-            and "Resource" in statement
-            and statement["Resource"] == "*"
-        ):
-            actions = statement["Action"]
-            if not isinstance(actions, list):
-                actions = [actions]
-
-            # Check if all required actions are present
-            if all(action in actions for action in required_actions):
-                return True
-
-    return False
-
-
-# Attach the check ID and name to the function
-check_scp_prevents_cloudwatch_changes._CHECK_ID = CHECK_ID
-check_scp_prevents_cloudwatch_changes._CHECK_NAME = CHECK_NAME

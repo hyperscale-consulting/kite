@@ -32,7 +32,6 @@ from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
 from kite.checks import check_establish_data_perimeter_trusted_identities
-from kite.checks import check_log_alerting
 from kite.checks import check_no_full_access_to_sensitive_services
 from kite.checks import CloudfrontLoggingEnabledCheck
 from kite.checks import CodeReviewsCheck
@@ -178,6 +177,7 @@ from kite.checks import UseCentralizedIdpCheck
 from kite.checks import UseCustomerManagedKeysCheck
 from kite.checks import UseHardenedImagesCheck
 from kite.checks import UseIdentityBrokerCheck
+from kite.checks import UseLogsForAlertingCheck
 from kite.checks import UseOfHigherLevelServicesCheck
 from kite.checks import UsePrivateLinkForVpcRoutingCheck
 from kite.checks import UseRoute53ResolverDnsFirewallCheck
@@ -448,7 +448,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             CloudfrontLoggingEnabledCheck(),
             ConfigRecordingEnabledCheck(),
             ImplementQueryingForLogsCheck(),
-            check_log_alerting,
+            UseLogsForAlertingCheck(),
         ],
     },
     "Capture logs, findings and metrics in standardized locations": {

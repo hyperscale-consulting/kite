@@ -281,7 +281,7 @@ from kite.checks.use_centralized_idp import UseCentralizedIdpCheck
 from kite.checks.use_customer_managed_keys import UseCustomerManagedKeysCheck
 from kite.checks.use_hardened_images import UseHardenedImagesCheck
 from kite.checks.use_identity_broker import UseIdentityBrokerCheck
-from kite.checks.use_logs_for_alerting import check_log_alerting
+from kite.checks.use_logs_for_alerting import UseLogsForAlertingCheck
 from kite.checks.use_of_higher_level_services import UseOfHigherLevelServicesCheck
 from kite.checks.use_private_link_for_vpc_routing import (
     UsePrivateLinkForVpcRoutingCheck,
@@ -397,7 +397,7 @@ __all__ = [
     "CloudfrontLoggingEnabledCheck",
     "ApiGatewayLoggingEnabledCheck",
     "ConfigRecordingEnabledCheck",
-    "check_log_alerting",
+    "UseLogsForAlertingCheck",
     "SecurityDataPublishedToLogArchiveAccountCheck",
     "DeployLogAnalysisToolsInAuditAccountCheck",
     "SecurityEventCorrelationCheck",

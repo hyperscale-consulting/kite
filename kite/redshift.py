@@ -1,6 +1,6 @@
-"""Redshift service module for Kite."""
-
 from dataclasses import dataclass
+
+from botocore.exceptions import ClientError
 
 
 @dataclass
@@ -25,13 +25,19 @@ def get_clusters(session, region: str) -> list[RedshiftCluster]:
     redshift_client = session.client("redshift", region_name=region)
     clusters = []
 
-    response = redshift_client.describe_clusters()
-    for cluster in response.get("Clusters", []):
-        clusters.append(
-            RedshiftCluster(
-                cluster_id=cluster.get("ClusterIdentifier"),
-                region=region,
+    try:
+        response = redshift_client.describe_clusters()
+        for cluster in response.get("Clusters", []):
+            clusters.append(
+                RedshiftCluster(
+                    cluster_id=cluster.get("ClusterIdentifier"),
+                    region=region,
+                )
             )
-        )
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "OptInRequired":
+            return []
+        else:
+            raise e
 
     return clusters

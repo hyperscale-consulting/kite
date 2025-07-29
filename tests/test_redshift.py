@@ -23,7 +23,7 @@ def test_get_clusters(stub_aws_session):
     stub_aws_session.register_client(client, "redshift", region_name="us-west-2")
     clusters = get_clusters(session=stub_aws_session, region="us-west-2")
     assert len(clusters) == 1
-    assert clusters[0].cluster_id == "test-cluster-1"
+    assert clusters[0]["ClusterIdentifier"] == "test-cluster-1"
 
 
 def test_get_clusters_no_sub(stub_aws_session):

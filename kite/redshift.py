@@ -1,17 +1,7 @@
-from dataclasses import dataclass
-
 from botocore.exceptions import ClientError
 
 
-@dataclass
-class RedshiftCluster:
-    """Redshift cluster data class."""
-
-    cluster_id: str
-    region: str
-
-
-def get_clusters(session, region: str) -> list[RedshiftCluster]:
+def get_clusters(session, region: str) -> list[dict]:
     """
     Get all Redshift clusters in a region.
 
@@ -23,21 +13,11 @@ def get_clusters(session, region: str) -> list[RedshiftCluster]:
         List of Redshift clusters
     """
     redshift_client = session.client("redshift", region_name=region)
-    clusters = []
-
     try:
         response = redshift_client.describe_clusters()
-        for cluster in response.get("Clusters", []):
-            clusters.append(
-                RedshiftCluster(
-                    cluster_id=cluster.get("ClusterIdentifier"),
-                    region=region,
-                )
-            )
+        return response.get("Clusters", [])
     except ClientError as e:
         if e.response["Error"]["Code"] == "OptInRequired":
             return []
         else:
             raise e
-
-    return clusters

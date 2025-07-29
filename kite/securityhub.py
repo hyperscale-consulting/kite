@@ -1,6 +1,7 @@
 from typing import Any
 
 import boto3
+from botocore.exceptions import ClientError
 
 
 def get_action_targets(session: boto3.Session, region: str) -> list[dict[str, Any]]:
@@ -18,11 +19,10 @@ def get_action_targets(session: boto3.Session, region: str) -> list[dict[str, An
         for page in paginator.paginate():
             action_targets.extend(page["ActionTargets"])
         return action_targets
-    except (
-        client.exceptions.InvalidAccessException,
-        client.exceptions.ResourceNotFoundException,
-    ):
-        return []
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "SubscriptionRequiredException":
+            return []
+        raise e
 
 
 def get_automation_rules(session: boto3.Session, region: str) -> list[dict[str, Any]]:
@@ -35,10 +35,12 @@ def get_automation_rules(session: boto3.Session, region: str) -> list[dict[str, 
     """
     try:
         client = session.client("securityhub", region_name=region)
-        response = client.list_automation_rules()
-        return response["AutomationRulesMetadata"]
-    except (
-        client.exceptions.InvalidAccessException,
-        client.exceptions.ResourceNotFoundException,
-    ):
-        return []
+        paginator = client.get_paginator("list_automation_rules")
+        rules = []
+        for page in paginator.paginate():
+            rules.extend(page["AutomationRulesMetadata"])
+        return rules
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "SubscriptionRequiredException":
+            return []
+        raise e

@@ -1,54 +1,48 @@
-import json
-
 import pytest
 
+from kite.checks.core import CheckStatus
 from kite.checks.data_perimeter_trusted_identities import (
-    check_establish_data_perimeter_trusted_identities,
+    DataPerimeterTrustedIdentitiesCheck,
 )
 from kite.data import save_organization
-from kite.models import ControlPolicy
+from tests.factories import build_ou
+from tests.factories import build_rcp
+from tests.factories import config_for_org
+from tests.factories import create_organization
+
+org_id = "o-1234567890"
 
 
-@pytest.fixture
-def trusted_identities_policy(organization_id):
-    return ControlPolicy(
-        id="123",
-        name="Trusted Identities Protection",
-        description="Trusted Identities Protection",
-        arn="arn:aws:iam::1234567890:policy/TrustedIdentitiesProtection",
-        type="RESOURCE_CONTROL_POLICY",
-        content=json.dumps(
-            {
-                "Statement": [
-                    dict(
-                        Effect="Deny",
-                        Action=[
-                            "s3:*",
-                            "sqs:*",
-                            "kms:*",
-                            "secretsmanager:*",
-                            "sts:AssumeRole",
-                            "sts:DecodeAuthorizationMessage",
-                            "sts:GetAccessKeyInfo",
-                            "sts:GetFederationToken",
-                            "sts:GetServiceBearerToken",
-                            "sts:GetSessionToken",
-                            "sts:SetContext",
-                        ],
-                        Resource="*",
-                        Principal="*",
-                        Condition={
-                            "StringNotEqualsIfExists": {
-                                "aws:PrincipalOrgID": organization_id,
-                                "aws:ResourceTag/dp:exclude:identity": "true",
-                            },
-                            "BoolIfExists": {"aws:PrincipalIsAWSService": "false"},
-                        },
-                    )
-                ]
-            }
-        ),
-    )
+def trusted_identities_policy():
+    return {
+        "Statement": [
+            dict(
+                Effect="Deny",
+                Action=[
+                    "s3:*",
+                    "sqs:*",
+                    "kms:*",
+                    "secretsmanager:*",
+                    "sts:AssumeRole",
+                    "sts:DecodeAuthorizationMessage",
+                    "sts:GetAccessKeyInfo",
+                    "sts:GetFederationToken",
+                    "sts:GetServiceBearerToken",
+                    "sts:GetSessionToken",
+                    "sts:SetContext",
+                ],
+                Resource="*",
+                Principal="*",
+                Condition={
+                    "StringNotEqualsIfExists": {
+                        "aws:PrincipalOrgID": org_id,
+                        "aws:ResourceTag/dp:exclude:identity": "true",
+                    },
+                    "BoolIfExists": {"aws:PrincipalIsAWSService": "false"},
+                },
+            )
+        ]
+    }
 
 
 @pytest.fixture
@@ -68,16 +62,43 @@ def rcp_attached_to_all_top_level_ous(
     yield organization
 
 
-def test_no_policies(organization):
-    result = check_establish_data_perimeter_trusted_identities()
-    assert result["status"] == "FAIL"
+@pytest.fixture
+def check():
+    return DataPerimeterTrustedIdentitiesCheck()
 
 
-def test_rcp_attached_to_root_ou(rcp_attached_to_root_ou):
-    result = check_establish_data_perimeter_trusted_identities()
-    assert result["status"] == "PASS"
+@config_for_org()
+def test_no_policies(check):
+    create_organization(
+        organization_id=org_id,
+    )
+    result = check.run()
+    assert result.status == CheckStatus.FAIL
+    assert "protection is not attached" in result.reason
 
 
-def test_rcp_attached_to_all_top_level_ous(rcp_attached_to_all_top_level_ous):
-    result = check_establish_data_perimeter_trusted_identities()
-    assert result["status"] == "PASS"
+@config_for_org()
+def test_rcp_attached_to_root_ou(check):
+    create_organization(
+        organization_id=org_id,
+        root_ou=build_ou(rcps=[build_rcp(content=trusted_identities_policy())]),
+    )
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+    assert "protection is attached to the root OU" in result.reason
+
+
+@config_for_org()
+def test_rcp_attached_to_all_top_level_ous(check):
+    create_organization(
+        organization_id=org_id,
+        root_ou=build_ou(
+            child_ous=[
+                build_ou(rcps=[build_rcp(content=trusted_identities_policy())]),
+                build_ou(rcps=[build_rcp(content=trusted_identities_policy())]),
+            ]
+        ),
+    )
+    result = check.run()
+    assert result.status == CheckStatus.PASS
+    assert "protection is attached to all top-level OUs" in result.reason

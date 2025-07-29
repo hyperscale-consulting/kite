@@ -31,7 +31,6 @@ from kite.checks import CaptureKeyContactsCheck
 from kite.checks import CentralizedArtifactReposCheck
 from kite.checks import CertDeploymentAndRenewalCheck
 from kite.checks import Check
-from kite.checks import check_establish_data_perimeter_trusted_identities
 from kite.checks import CloudfrontLoggingEnabledCheck
 from kite.checks import CodeReviewsCheck
 from kite.checks import ComplexPasswordsCheck
@@ -47,6 +46,7 @@ from kite.checks import CrossAccountConfusedDeputyPreventionCheck
 from kite.checks import CwDataProtectionPoliciesCheck
 from kite.checks import DataCatalogCheck
 from kite.checks import DataPerimeterConfusedDeputyProtectionCheck
+from kite.checks import DataPerimeterTrustedIdentitiesCheck
 from kite.checks import DataPerimeterTrustedNetworksCheck
 from kite.checks import DataPerimeterTrustedResourcesCheck
 from kite.checks import DefineAccessRequirementsCheck
@@ -415,7 +415,7 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             ScpPreventsRamInvitationsCheck(),
             S3BucketAclDisabledCheck(),
             MigrateFromOaiCheck(),
-            check_establish_data_perimeter_trusted_identities,
+            DataPerimeterTrustedIdentitiesCheck(),
             DataPerimeterConfusedDeputyProtectionCheck(),
             DataPerimeterTrustedResourcesCheck(),
             VpcEndpointsEnforceDataPerimeterCheck(),

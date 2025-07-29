@@ -77,7 +77,7 @@ from kite.checks.data_perimeter_confused_deputy_protection import (
     DataPerimeterConfusedDeputyProtectionCheck,
 )
 from kite.checks.data_perimeter_trusted_identities import (
-    check_establish_data_perimeter_trusted_identities,
+    DataPerimeterTrustedIdentitiesCheck,
 )
 from kite.checks.data_perimeter_trusted_networks import (
     DataPerimeterTrustedNetworksCheck,
@@ -379,7 +379,7 @@ __all__ = [
     "MonitorAndRespondToS3PublicAccessCheck",
     "S3BucketAclDisabledCheck",
     "MigrateFromOaiCheck",
-    "check_establish_data_perimeter_trusted_identities",
+    "DataPerimeterTrustedIdentitiesCheck",
     "DataPerimeterConfusedDeputyProtectionCheck",
     "DataPerimeterTrustedResourcesCheck",
     "VpcEndpointsEnforceDataPerimeterCheck",

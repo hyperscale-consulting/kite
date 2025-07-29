@@ -5,10 +5,13 @@ from kite.securityhub import get_automation_rules
 
 
 class ListActionTargetsPaginator:
-    def __init__(self, action_targets):
+    def __init__(self, action_targets, error_response=None):
         self.action_targets = action_targets
+        self.error_response = error_response
 
     def paginate(self):
+        if self.error_response:
+            raise ClientError(self.error_response, "ListActionTargets")
         return [{"ActionTargets": self.action_targets}]
 
 
@@ -19,7 +22,9 @@ class SecurityHubClient:
         self.automation_rules = []
         self.action_targets = []
         self.paginators = {
-            "describe_action_targets": ListActionTargetsPaginator(self.action_targets),
+            "describe_action_targets": ListActionTargetsPaginator(
+                self.action_targets, self.error_response
+            ),
         }
 
     def get_paginator(self, operation_name):
@@ -72,4 +77,11 @@ def test_get_automation_rules_no_subscription(stub_aws_session):
     client = SecurityHubClient(error_code="SubscriptionRequiredException")
     stub_aws_session.register_client(client, "securityhub", "eu-west-2")
     rules = get_automation_rules(session=stub_aws_session, region="eu-west-2")
+    assert len(rules) == 0
+
+
+def test_get_action_targets_no_subscription(stub_aws_session):
+    client = SecurityHubClient(error_code="SubscriptionRequiredException")
+    stub_aws_session.register_client(client, "securityhub", "eu-west-2")
+    rules = get_action_targets(session=stub_aws_session, region="eu-west-2")
     assert len(rules) == 0

@@ -1,93 +1,78 @@
-"""Check for IAM policies that allow full access to sensitive services."""
-
-from typing import Any
-
+from kite.checks.core import CheckResult
+from kite.checks.core import CheckStatus
 from kite.helpers import get_prowler_output
 
-CHECK_ID = "no-full-access-to-sensitive-services"
-CHECK_NAME = "No Full Access to Sensitive Services"
 
+class NoFullAccessToSensitiveServicesCheck:
+    def __init__(self):
+        self.check_id = "no-full-access-to-sensitive-services"
+        self.check_name = "No Full Access to Sensitive Services"
 
-def check_no_full_access_to_sensitive_services() -> dict[str, Any]:
-    """
-    Check if IAM policies allow full access to sensitive services.
+    @property
+    def question(self) -> str:
+        return ""
 
-    This check verifies that IAM policies (both inline and managed) do not allow
-    full access to sensitive services by checking Prowler results for the following
-    check IDs:
-    - iam_policy_no_full_access_to_cloudtrail
-    - iam_inline_policy_no_full_access_to_cloudtrail
-    - iam_policy_no_full_access_to_kms
-    - iam_inline_policy_no_full_access_to_kms
-    - iam_policy_cloudshell_admin_not_attached
+    @property
+    def description(self) -> str:
+        return (
+            "This check verifies that IAM policies (both inline and managed) do not "
+            "allow full access to sensitive services."
+        )
 
-    Returns:
-        Dict containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-                - failing_resources: List of resources that failed the check
-    """
-    # Get Prowler results
-    prowler_results = get_prowler_output()
+    def run(self) -> CheckResult:
+        # Get Prowler results
+        prowler_results = get_prowler_output()
 
-    # The check IDs we're interested in
-    check_ids = [
-        "iam_policy_no_full_access_to_cloudtrail",
-        "iam_inline_policy_no_full_access_to_cloudtrail",
-        "iam_policy_no_full_access_to_kms",
-        "iam_inline_policy_no_full_access_to_kms",
-        "iam_policy_cloudshell_admin_not_attached",
-    ]
+        # The check IDs we're interested in
+        check_ids = [
+            "iam_policy_no_full_access_to_cloudtrail",
+            "iam_inline_policy_no_full_access_to_cloudtrail",
+            "iam_policy_no_full_access_to_kms",
+            "iam_inline_policy_no_full_access_to_kms",
+            "iam_policy_cloudshell_admin_not_attached",
+        ]
 
-    # Track failing resources
-    failing_resources: list[dict[str, Any]] = []
+        # Track failing resources
+        failing_resources: list[dict] = []
 
-    # Check results for each check ID
-    for check_id in check_ids:
-        if check_id in prowler_results:
-            # Get results for this check ID
-            results = prowler_results[check_id]
+        # Check results for each check ID
+        for check_id in check_ids:
+            if check_id in prowler_results:
+                # Get results for this check ID
+                results = prowler_results[check_id]
 
-            # Add failing resources to the list
-            for result in results:
-                if result.status != "PASS":
-                    failing_resources.append(
-                        {
-                            "account_id": result.account_id,
-                            "resource_uid": result.resource_uid,
-                            "resource_name": result.resource_name,
-                            "resource_details": result.resource_details,
-                            "region": result.region,
-                            "check_id": check_id,
-                            "status": result.status,
-                        }
-                    )
+                # Add failing resources to the list
+                for result in results:
+                    if result.status != "PASS":
+                        failing_resources.append(
+                            {
+                                "account_id": result.account_id,
+                                "resource_uid": result.resource_uid,
+                                "resource_name": result.resource_name,
+                                "resource_details": result.resource_details,
+                                "region": result.region,
+                                "check_id": check_id,
+                                "status": result.status,
+                            }
+                        )
 
-    # Determine if the check passed
-    passed = len(failing_resources) == 0
+        # Determine if the check passed
+        passed = len(failing_resources) == 0
 
-    return {
-        "check_id": CHECK_ID,
-        "check_name": CHECK_NAME,
-        "status": "PASS" if passed else "FAIL",
-        "details": {
-            "message": (
-                "No IAM policies were found that allow full access to sensitive "
-                "services."
-                if passed
-                else (
-                    f"Found {len(failing_resources)} IAM policies that allow full "
-                    "access to sensitive services."
-                )
+        if passed:
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason=(
+                    "No IAM policies were found that allow full access to sensitive "
+                    "services."
+                ),
+            )
+
+        return CheckResult(
+            status=CheckStatus.FAIL,
+            reason=(
+                f"Found {len(failing_resources)} IAM policies that allow full "
+                "access to sensitive services."
             ),
-            "failing_resources": failing_resources,
-        },
-    }
-
-
-# Attach the check ID and name to the function
-check_no_full_access_to_sensitive_services._CHECK_ID = CHECK_ID
-check_no_full_access_to_sensitive_services._CHECK_NAME = CHECK_NAME
+            details={"failing_resources": failing_resources},
+        )

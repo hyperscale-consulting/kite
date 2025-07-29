@@ -175,7 +175,7 @@ from kite.checks.network_firewall_logging_enabled import (
 )
 from kite.checks.no_access_keys import NoAccessKeysCheck
 from kite.checks.no_full_access_to_sensitive_services import (
-    check_no_full_access_to_sensitive_services,
+    NoFullAccessToSensitiveServicesCheck,
 )
 from kite.checks.no_full_admin_policies import NoFullAdminPoliciesCheck
 from kite.checks.no_human_access_to_unencrypted_key_material import (
@@ -350,7 +350,7 @@ __all__ = [
     "NoFullAdminPoliciesCheck",
     "NoPolicyAllowsPrivilegeEscalationCheck",
     "NoPermissiveRoleAssumptionCheck",
-    "check_no_full_access_to_sensitive_services",
+    "NoFullAccessToSensitiveServicesCheck",
     "NoReadonlyThirdPartyAccessCheck",
     "CrossAccountConfusedDeputyPreventionCheck",
     "AdminPrivilegesAreRestrictedCheck",

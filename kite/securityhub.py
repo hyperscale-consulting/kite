@@ -35,11 +35,7 @@ def get_automation_rules(session: boto3.Session, region: str) -> list[dict[str, 
     """
     try:
         client = session.client("securityhub", region_name=region)
-        paginator = client.get_paginator("list_automation_rules")
-        rules = []
-        for page in paginator.paginate():
-            rules.extend(page["AutomationRulesMetadata"])
-        return rules
+        return client.list_automation_rules().get("AutomationRulesMetadata", [])
     except ClientError as e:
         if e.response["Error"]["Code"] == "SubscriptionRequiredException":
             return []

@@ -4,17 +4,6 @@ from kite.securityhub import get_action_targets
 from kite.securityhub import get_automation_rules
 
 
-class ListAutomationRulesPaginator:
-    def __init__(self, automation_rules, error_response=None):
-        self.automation_rules = automation_rules
-        self.error_response = error_response
-
-    def paginate(self):
-        if self.error_response:
-            raise ClientError(self.error_response, "ListAutomationRules")
-        return [{"AutomationRulesMetadata": self.automation_rules}]
-
-
 class ListActionTargetsPaginator:
     def __init__(self, action_targets):
         self.action_targets = action_targets
@@ -30,14 +19,16 @@ class SecurityHubClient:
         self.automation_rules = []
         self.action_targets = []
         self.paginators = {
-            "list_automation_rules": ListAutomationRulesPaginator(
-                self.automation_rules, self.error_response
-            ),
             "describe_action_targets": ListActionTargetsPaginator(self.action_targets),
         }
 
     def get_paginator(self, operation_name):
         return self.paginators[operation_name]
+
+    def list_automation_rules(self):
+        if self.error_response:
+            raise ClientError(self.error_response, "ListAutomationRules")
+        return {"AutomationRulesMetadata": self.automation_rules}
 
     def add_automation_rule(self, name):
         self.automation_rules.append(

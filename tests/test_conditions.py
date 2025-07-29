@@ -1,7 +1,7 @@
-from kite.conditions import has_any_account_root_principal_condition
-from kite.conditions import has_no_source_account_condition
-from kite.conditions import has_not_requested_region_condition
-from kite.conditions import has_not_source_org_id_condition
+from hyperscale.kite.conditions import has_any_account_root_principal_condition
+from hyperscale.kite.conditions import has_no_source_account_condition
+from hyperscale.kite.conditions import has_not_requested_region_condition
+from hyperscale.kite.conditions import has_not_source_org_id_condition
 
 
 def test_has_not_source_org_id_condition():

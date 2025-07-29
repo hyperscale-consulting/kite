@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from botocore.exceptions import ClientError
 
-from kite.guardduty import get_detectors
+from hyperscale.kite.guardduty import get_detectors
 
 
 class ListDetectorsPaginator:

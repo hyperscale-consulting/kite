@@ -2,11 +2,11 @@ import json
 
 import pytest
 
-from kite.checks.core import CheckStatus
-from kite.checks.vpc_endpoints_enforce_data_perimeter import (
+from hyperscale.kite.checks.core import CheckStatus
+from hyperscale.kite.checks.vpc_endpoints_enforce_data_perimeter import (
     VpcEndpointsEnforceDataPerimeterCheck,
 )
-from kite.data import save_vpc_endpoints
+from hyperscale.kite.data import save_vpc_endpoints
 from tests.factories import config_for_org
 from tests.factories import config_for_standalone_account
 from tests.factories import create_organization_with_workload_account

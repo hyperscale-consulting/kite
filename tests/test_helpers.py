@@ -5,13 +5,13 @@ from unittest.mock import patch
 
 import pytest
 
-from kite.config import Config
-from kite.helpers import get_account_ids_in_scope
-from kite.helpers import get_organization_structure_str
-from kite.organizations import Account
-from kite.organizations import ControlPolicy
-from kite.organizations import Organization
-from kite.organizations import OrganizationalUnit
+from hyperscale.kite.config import Config
+from hyperscale.kite.helpers import get_account_ids_in_scope
+from hyperscale.kite.helpers import get_organization_structure_str
+from hyperscale.kite.organizations import Account
+from hyperscale.kite.organizations import ControlPolicy
+from hyperscale.kite.organizations import Organization
+from hyperscale.kite.organizations import OrganizationalUnit
 
 
 @pytest.fixture
@@ -135,7 +135,7 @@ def mock_config():
 @pytest.fixture
 def mock_config_instance(mock_config):
     """Mock the Config singleton instance."""
-    with patch("kite.config.Config._instance", mock_config):
+    with patch("hyperscale.kite.config.Config._instance", mock_config):
         yield mock_config
 
 
@@ -159,7 +159,7 @@ def test_get_organization_structure_str(
 
 def test_get_account_ids_in_scope_with_management_and_account_ids(mock_config):
     """Test get_account_ids_in_scope with management account and account IDs."""
-    with patch("kite.helpers.Config.get", return_value=mock_config):
+    with patch("hyperscale.kite.helpers.Config.get", return_value=mock_config):
         account_ids = get_account_ids_in_scope()
 
         # Should include management account and account IDs

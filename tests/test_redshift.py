@@ -1,6 +1,6 @@
 from botocore.exceptions import ClientError
 
-from kite.redshift import get_clusters
+from hyperscale.kite.redshift import get_clusters
 
 
 class RedshiftClient:

@@ -1,7 +1,7 @@
 import pytest
 
-from kite.checks import AccurateAccountContactDetailsCheck
-from kite.checks import CheckStatus
+from hyperscale.kite.checks import AccurateAccountContactDetailsCheck
+from hyperscale.kite.checks import CheckStatus
 from tests.factories import config_for_org
 from tests.factories import config_for_standalone_account
 from tests.factories import create_organization

@@ -6,8 +6,8 @@ from datetime import time
 import pytest
 from botocore.exceptions import ClientError
 
-from kite.organizations import fetch_delegated_admins
-from kite.organizations import fetch_organization
+from hyperscale.kite.organizations import fetch_delegated_admins
+from hyperscale.kite.organizations import fetch_organization
 
 
 class ListPoliciesForTargetPaginator:

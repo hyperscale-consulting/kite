@@ -2,11 +2,11 @@ from unittest.mock import patch
 
 import pytest
 
-from kite.checks.core import CheckStatus
-from kite.checks.root_mfa_enabled import RootMfaEnabledCheck
-from kite.data import save_account_summary
-from kite.data import save_organization_features
-from kite.data import save_virtual_mfa_devices
+from hyperscale.kite.checks.core import CheckStatus
+from hyperscale.kite.checks.root_mfa_enabled import RootMfaEnabledCheck
+from hyperscale.kite.data import save_account_summary
+from hyperscale.kite.data import save_organization_features
+from hyperscale.kite.data import save_virtual_mfa_devices
 from tests.factories import config_for_org
 from tests.factories import config_for_standalone_account
 from tests.factories import create_organization

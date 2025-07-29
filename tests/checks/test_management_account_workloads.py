@@ -1,6 +1,8 @@
-from kite.checks import CheckStatus
-from kite.checks.management_account_workloads import ManagementAccountWorkloadsCheck
-from kite.data import save_ecs_clusters
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks.management_account_workloads import (
+    ManagementAccountWorkloadsCheck,
+)
+from hyperscale.kite.data import save_ecs_clusters
 from tests.factories import config_for_org
 from tests.factories import config_for_standalone_account
 from tests.factories import create_organization

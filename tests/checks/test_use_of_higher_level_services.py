@@ -1,8 +1,10 @@
 import pytest
 
-from kite.checks.core import CheckStatus
-from kite.checks.use_of_higher_level_services import UseOfHigherLevelServicesCheck
-from kite.data import save_ec2_instances
+from hyperscale.kite.checks.core import CheckStatus
+from hyperscale.kite.checks.use_of_higher_level_services import (
+    UseOfHigherLevelServicesCheck,
+)
+from hyperscale.kite.data import save_ec2_instances
 from tests.factories import build_account
 from tests.factories import build_ou
 from tests.factories import config_for_org

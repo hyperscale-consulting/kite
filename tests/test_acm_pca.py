@@ -1,6 +1,6 @@
 from botocore.exceptions import ClientError
 
-from kite.acm_pca import get_certificate_authorities
+from hyperscale.kite.acm_pca import get_certificate_authorities
 
 
 class ListCertificateAuthoritiesPaginator:

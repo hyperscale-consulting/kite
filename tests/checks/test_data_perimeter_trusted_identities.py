@@ -1,10 +1,10 @@
 import pytest
 
-from kite.checks.core import CheckStatus
-from kite.checks.data_perimeter_trusted_identities import (
+from hyperscale.kite.checks.core import CheckStatus
+from hyperscale.kite.checks.data_perimeter_trusted_identities import (
     DataPerimeterTrustedIdentitiesCheck,
 )
-from kite.data import save_organization
+from hyperscale.kite.data import save_organization
 from tests.factories import build_ou
 from tests.factories import build_rcp
 from tests.factories import config_for_org

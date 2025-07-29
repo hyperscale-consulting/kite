@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from botocore.exceptions import ClientError
 
-from kite.acm import get_certificates
+from hyperscale.kite.acm import get_certificates
 
 
 class ListCertificatesPaginator:

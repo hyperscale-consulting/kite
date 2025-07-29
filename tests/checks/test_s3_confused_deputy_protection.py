@@ -2,9 +2,11 @@ import json
 
 import pytest
 
-from kite.checks.core import CheckStatus
-from kite.checks.s3_confused_deputy_protection import S3ConfusedDeputyProtectionCheck
-from kite.data import save_bucket_metadata
+from hyperscale.kite.checks.core import CheckStatus
+from hyperscale.kite.checks.s3_confused_deputy_protection import (
+    S3ConfusedDeputyProtectionCheck,
+)
+from hyperscale.kite.data import save_bucket_metadata
 
 
 @pytest.fixture

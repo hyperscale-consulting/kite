@@ -1,7 +1,7 @@
 import pytest
 
-from kite.checks import CheckStatus
-from kite.checks.data_perimeter_trusted_networks import (
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks.data_perimeter_trusted_networks import (
     DataPerimeterTrustedNetworksCheck,
 )
 from tests.factories import build_ou

@@ -1,10 +1,10 @@
 import pytest
 
-from kite.checks import CheckStatus
-from kite.checks.data_perimeter_trusted_resources import (
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks.data_perimeter_trusted_resources import (
     DataPerimeterTrustedResourcesCheck,
 )
-from kite.data import save_organization
+from hyperscale.kite.data import save_organization
 from tests.factories import build_ou
 from tests.factories import build_scp
 from tests.factories import config_for_org

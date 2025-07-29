@@ -7,7 +7,7 @@ import pytest
 import yaml
 from click.exceptions import ClickException
 
-from kite.config import Config
+from hyperscale.kite.config import Config
 
 
 @pytest.fixture(autouse=True)

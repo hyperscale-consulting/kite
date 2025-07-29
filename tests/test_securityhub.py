@@ -1,7 +1,7 @@
 from botocore.exceptions import ClientError
 
-from kite.securityhub import get_action_targets
-from kite.securityhub import get_automation_rules
+from hyperscale.kite.securityhub import get_action_targets
+from hyperscale.kite.securityhub import get_automation_rules
 
 
 class ListActionTargetsPaginator:

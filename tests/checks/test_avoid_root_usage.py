@@ -3,9 +3,9 @@ from datetime import timezone
 
 import pytest
 
-from kite.checks import CheckStatus
-from kite.checks.avoid_root_usage import AvoidRootUsageCheck
-from kite.data import save_credentials_report
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks.avoid_root_usage import AvoidRootUsageCheck
+from hyperscale.kite.data import save_credentials_report
 from tests.factories import config_for_org
 from tests.factories import create_organization_with_workload_account
 

@@ -1,5 +1,5 @@
-from kite.checks.aws_organizations import AwsOrganizationsUsageCheck
-from kite.checks.core import CheckStatus
+from hyperscale.kite.checks.aws_organizations import AwsOrganizationsUsageCheck
+from hyperscale.kite.checks.core import CheckStatus
 from tests.factories import config_for_org
 from tests.factories import config_for_standalone_account
 from tests.factories import create_organization

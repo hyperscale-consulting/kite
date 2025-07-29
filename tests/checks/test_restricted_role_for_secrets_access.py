@@ -1,11 +1,11 @@
 import pytest
 
-from kite.checks.core import CheckStatus
-from kite.checks.restricted_role_for_secrets_access import (
+from hyperscale.kite.checks.core import CheckStatus
+from hyperscale.kite.checks.restricted_role_for_secrets_access import (
     RestrictedRoleForSecretsAccessCheck,
 )
-from kite.data import save_roles
-from kite.data import save_secrets
+from hyperscale.kite.data import save_roles
+from hyperscale.kite.data import save_secrets
 
 
 @pytest.fixture

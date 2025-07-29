@@ -6,12 +6,12 @@ from pathlib import Path
 
 import pytest
 
-from kite.config import Config
-from kite.data import save_organization
-from kite.models import Account
-from kite.models import ControlPolicy
-from kite.models import Organization
-from kite.models import OrganizationalUnit
+from hyperscale.kite.config import Config
+from hyperscale.kite.data import save_organization
+from hyperscale.kite.models import Account
+from hyperscale.kite.models import ControlPolicy
+from hyperscale.kite.models import Organization
+from hyperscale.kite.models import OrganizationalUnit
 
 
 class StubSession:

@@ -1,7 +1,9 @@
 import pytest
 
-from kite.checks.core import CheckStatus
-from kite.checks.root_access_keys_disallowed import RootAccessKeysDisallowedCheck
+from hyperscale.kite.checks.core import CheckStatus
+from hyperscale.kite.checks.root_access_keys_disallowed import (
+    RootAccessKeysDisallowedCheck,
+)
 from tests.factories import build_ou
 from tests.factories import build_scp
 from tests.factories import config_for_org

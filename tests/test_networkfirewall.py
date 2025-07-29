@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from botocore.exceptions import ClientError
 
-from kite.networkfirewall import get_firewalls
+from hyperscale.kite.networkfirewall import get_firewalls
 
 
 class ListFirewallsPaginator:

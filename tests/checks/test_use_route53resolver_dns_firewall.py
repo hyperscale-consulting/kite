@@ -1,14 +1,14 @@
 import pytest
 
-from kite.checks.core import CheckStatus
-from kite.checks.use_route53resolver_dns_firewall import (
+from hyperscale.kite.checks.core import CheckStatus
+from hyperscale.kite.checks.use_route53resolver_dns_firewall import (
     UseRoute53ResolverDnsFirewallCheck,
 )
-from kite.data import save_ec2_instances
-from kite.data import save_route53resolver_firewall_domain_lists
-from kite.data import save_route53resolver_firewall_rule_group_associations
-from kite.data import save_route53resolver_firewall_rule_groups
-from kite.data import save_vpcs
+from hyperscale.kite.data import save_ec2_instances
+from hyperscale.kite.data import save_route53resolver_firewall_domain_lists
+from hyperscale.kite.data import save_route53resolver_firewall_rule_group_associations
+from hyperscale.kite.data import save_route53resolver_firewall_rule_groups
+from hyperscale.kite.data import save_vpcs
 from tests.factories import build_dns_firewall_domain_list
 from tests.factories import build_dns_firewall_rule
 from tests.factories import build_dns_firewall_rule_group

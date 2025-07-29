@@ -5,10 +5,10 @@ from unittest.mock import MagicMock
 import pytest
 from botocore.exceptions import ClientError
 
-from kite.iam import fetch_credentials_report
-from kite.iam import fetch_virtual_mfa_devices
-from kite.iam import list_oidc_providers
-from kite.iam import list_saml_providers
+from hyperscale.kite.iam import fetch_credentials_report
+from hyperscale.kite.iam import fetch_virtual_mfa_devices
+from hyperscale.kite.iam import list_oidc_providers
+from hyperscale.kite.iam import list_saml_providers
 
 
 def _get_csv_header():
@@ -269,7 +269,7 @@ def test_fetch_organization_features_success(mock_session, mock_iam_client):
     }
 
     # Call the function
-    from kite.iam import fetch_organization_features
+    from hyperscale.kite.iam import fetch_organization_features
 
     result = fetch_organization_features(mock_session)
 
@@ -290,7 +290,7 @@ def test_fetch_organization_features_no_features(mock_session, mock_iam_client):
     mock_iam_client.list_organizations_features.return_value = {"EnabledFeatures": []}
 
     # Call the function
-    from kite.iam import fetch_organization_features
+    from hyperscale.kite.iam import fetch_organization_features
 
     result = fetch_organization_features(mock_session)
 
@@ -315,7 +315,7 @@ def test_fetch_organization_features_no_organizations(mock_session, mock_iam_cli
     )
 
     # Call the function
-    from kite.iam import fetch_organization_features
+    from hyperscale.kite.iam import fetch_organization_features
 
     result = fetch_organization_features(mock_session)
 
@@ -346,7 +346,7 @@ def test_fetch_organization_features_other_error(mock_session, mock_iam_client):
     )
 
     # Call the function and expect it to raise the exception
-    from kite.iam import fetch_organization_features
+    from hyperscale.kite.iam import fetch_organization_features
 
     with pytest.raises(ClientError) as excinfo:
         fetch_organization_features(mock_session)
@@ -380,7 +380,7 @@ def test_fetch_account_summary_success(mock_session, mock_iam_client):
     }
 
     # Call the function
-    from kite.iam import fetch_account_summary
+    from hyperscale.kite.iam import fetch_account_summary
 
     result = fetch_account_summary(mock_session)
 
@@ -420,7 +420,7 @@ def test_fetch_account_summary_error(mock_session, mock_iam_client):
     )
 
     # Call the function and expect it to raise the exception
-    from kite.iam import fetch_account_summary
+    from hyperscale.kite.iam import fetch_account_summary
 
     with pytest.raises(ClientError) as excinfo:
         fetch_account_summary(mock_session)

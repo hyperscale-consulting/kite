@@ -3,7 +3,7 @@ from collections import defaultdict
 
 import pytest
 
-from kite.identity_center import get_identity_center_instances
+from hyperscale.kite.identity_center import get_identity_center_instances
 
 
 class SsoAdminClient:

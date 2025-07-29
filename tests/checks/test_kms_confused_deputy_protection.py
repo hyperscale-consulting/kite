@@ -1,8 +1,10 @@
 import pytest
 
-from kite.checks import CheckStatus
-from kite.checks.kms_confused_deputy_protection import KmsConfusedDeputyProtectionCheck
-from kite.data import save_kms_keys
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks.kms_confused_deputy_protection import (
+    KmsConfusedDeputyProtectionCheck,
+)
+from hyperscale.kite.data import save_kms_keys
 from tests.factories import config_for_org
 from tests.factories import create_organization_with_workload_account
 

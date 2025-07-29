@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from botocore.exceptions import ClientError
 
-from kite.detective import get_graphs
+from hyperscale.kite.detective import get_graphs
 
 
 class DetectiveClient:

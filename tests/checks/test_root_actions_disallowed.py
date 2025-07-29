@@ -1,7 +1,7 @@
 import pytest
 
-from kite.checks import CheckStatus
-from kite.checks import RootActionsDisallowedCheck
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks import RootActionsDisallowedCheck
 from tests.factories import build_ou
 from tests.factories import build_scp
 from tests.factories import config_for_org

@@ -1,7 +1,7 @@
 import pytest
 
-from kite.checks import CheckStatus
-from kite.checks.data_perimeter_confused_deputy_protection import (
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks.data_perimeter_confused_deputy_protection import (
     DataPerimeterConfusedDeputyProtectionCheck,
 )
 from tests.factories import build_ou

@@ -1,5 +1,5 @@
-from kite.checks import CheckStatus
-from kite.checks.ou_structure import OuStructureCheck
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks.ou_structure import OuStructureCheck
 from tests.factories import build_account
 from tests.factories import build_ou
 from tests.factories import config_for_org

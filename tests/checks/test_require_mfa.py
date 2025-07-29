@@ -1,11 +1,11 @@
 import pytest
 
-from kite.checks import CheckStatus
-from kite.checks.require_mfa import RequireMfaCheck
-from kite.data import save_cognito_user_pools
-from kite.data import save_credentials_report
-from kite.data import save_identity_center_instances
-from kite.data import save_saml_providers
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks.require_mfa import RequireMfaCheck
+from hyperscale.kite.data import save_cognito_user_pools
+from hyperscale.kite.data import save_credentials_report
+from hyperscale.kite.data import save_identity_center_instances
+from hyperscale.kite.data import save_saml_providers
 from tests.factories import config_for_org
 from tests.factories import create_organization
 

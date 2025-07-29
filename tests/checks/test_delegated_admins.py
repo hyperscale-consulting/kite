@@ -1,9 +1,9 @@
 import pytest
 
-from kite.checks import CheckStatus
-from kite.checks import DelegatedAdminForSecurityServices
-from kite.data import save_delegated_admins
-from kite.models import DelegatedAdmin
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks import DelegatedAdminForSecurityServices
+from hyperscale.kite.data import save_delegated_admins
+from hyperscale.kite.models import DelegatedAdmin
 from tests.factories import build_account
 from tests.factories import build_delegated_admin
 from tests.factories import build_ou

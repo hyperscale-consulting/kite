@@ -2,9 +2,9 @@ from unittest.mock import patch
 
 import pytest
 
-from kite.checks import CheckStatus
-from kite.checks.no_root_access_keys import NoRootAccessKeysCheck
-from kite.data import save_account_summary
+from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks.no_root_access_keys import NoRootAccessKeysCheck
+from hyperscale.kite.data import save_account_summary
 from tests.factories import config_for_standalone_account
 
 account_id = "123456789012"

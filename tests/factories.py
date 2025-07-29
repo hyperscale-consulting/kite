@@ -3,14 +3,14 @@ from functools import wraps
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from kite.config import Config
-from kite.data import save_organization
-from kite.data import save_organization_features
-from kite.models import Account
-from kite.models import ControlPolicy
-from kite.models import DelegatedAdmin
-from kite.models import Organization
-from kite.models import OrganizationalUnit
+from hyperscale.kite.config import Config
+from hyperscale.kite.data import save_organization
+from hyperscale.kite.data import save_organization_features
+from hyperscale.kite.models import Account
+from hyperscale.kite.models import ControlPolicy
+from hyperscale.kite.models import DelegatedAdmin
+from hyperscale.kite.models import Organization
+from hyperscale.kite.models import OrganizationalUnit
 
 
 def create_organization(

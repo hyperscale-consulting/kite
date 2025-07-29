@@ -7,26 +7,26 @@ from prompt_toolkit import PromptSession
 from prompt_toolkit.input import create_pipe_input
 from prompt_toolkit.output import DummyOutput
 
-from kite import cloudfront
-from kite import dynamodb
-from kite import ec2
-from kite import ecs
-from kite import eks
-from kite import iam
-from kite import kms
-from kite import lambda_
-from kite import organizations
-from kite import rds
-from kite import redshift
-from kite import s3
-from kite import sagemaker
-from kite import sns
-from kite import sqs
-from kite import sts
-from kite.cli import Assessment
-from kite.cli import main
-from kite.config import Config
-from kite.models import DelegatedAdmin
+from hyperscale.kite import cloudfront
+from hyperscale.kite import dynamodb
+from hyperscale.kite import ec2
+from hyperscale.kite import ecs
+from hyperscale.kite import eks
+from hyperscale.kite import iam
+from hyperscale.kite import kms
+from hyperscale.kite import lambda_
+from hyperscale.kite import organizations
+from hyperscale.kite import rds
+from hyperscale.kite import redshift
+from hyperscale.kite import s3
+from hyperscale.kite import sagemaker
+from hyperscale.kite import sns
+from hyperscale.kite import sqs
+from hyperscale.kite import sts
+from hyperscale.kite.cli import Assessment
+from hyperscale.kite.cli import main
+from hyperscale.kite.config import Config
+from hyperscale.kite.models import DelegatedAdmin
 
 
 @pytest.fixture
@@ -297,8 +297,8 @@ def test_run_assess(runner, tmp_path, monkeypatch):
 
     with create_pipe_input() as pipe_input:
         test_session = PromptSession(input=pipe_input, output=DummyOutput())
-        monkeypatch.setattr("kite.ui.prompt_session", test_session)
-        monkeypatch.setattr("kite.ui.confirm_session", test_session)
+        monkeypatch.setattr("hyperscale.kite.ui.prompt_session", test_session)
+        monkeypatch.setattr("hyperscale.kite.ui.confirm_session", test_session)
 
         for _ in range(500):
             pipe_input.send_text(next(responses()))

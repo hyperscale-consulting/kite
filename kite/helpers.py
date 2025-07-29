@@ -34,7 +34,7 @@ def prompt_user_with_panel(
     prompt: str,
     default: bool = True,
     info_required: bool = True,
-) -> tuple[bool, dict[str, Any]]:
+) -> tuple[bool, str]:
     """
     Display a panel with context and prompt the user for a response.
 

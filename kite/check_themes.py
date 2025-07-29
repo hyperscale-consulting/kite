@@ -1,4 +1,4 @@
-from collections.abc import Callable
+from dataclasses import dataclass
 
 from kite.checks import AccessManagementLifecycleCheck
 from kite.checks import AccessManagementLifecycleImplementedCheck
@@ -190,13 +190,20 @@ from kite.checks import WafWebAclLoggingEnabledCheck
 from kite.checks import WellDefinedControlObjectivesCheck
 from kite.checks import WorkloadDependencyUpdatesCheck
 
-# Define check themes and their associated checks
-CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
-    "Multi-Account Architecture": {
-        "description": (
-            "Checks related to organizational structure, landing zone and guardrails"
-        ),
-        "checks": [
+
+@dataclass
+class CheckTheme:
+    name: str
+    description: str
+    checks: list[Check]
+
+
+CHECK_THEMES = [
+    CheckTheme(
+        name="Multi-Account Architecture",
+        description="Checks related to organizational structure, landing zone and "
+        "guardrails",
+        checks=[
             AwsOrganizationsUsageCheck(),
             AccountSeparationCheck(),
             OuStructureCheck(),
@@ -204,10 +211,11 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             DelegatedAdminForSecurityServices(),
             TrustedDelegatedAdminsCheck(),
         ],
-    },
-    "Root User Security": {
-        "description": "Checks related to the security of the root user",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Root User Security",
+        description="Checks related to the security of the root user",
+        checks=[
             AvoidRootUsageCheck(),
             RootCredentialsManagementEnabledCheck(),
             NoRootAccessKeysCheck(),
@@ -219,38 +227,40 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             RootCredentialsSecurityCheck(),
             RootAccessTestingCheck(),
         ],
-    },
-    "Control Objective Identification and Validation": {
-        "description": (
-            "Checks related to the identification and validation of control objectives"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Control Objective Identification and Validation",
+        description="Checks related to the identification and validation of control "
+        "objectives",
+        checks=[
             WellDefinedControlObjectivesCheck(),
             ControlImplementationValidationCheck(),
         ],
-    },
-    "Threat Intelligence": {
-        "description": "Checks related to the use of threat intelligence",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Threat Intelligence",
+        description="Checks related to the use of threat intelligence",
+        checks=[
             ThreatIntelligenceMonitoringCheck(),
             TechInventoriesScannedCheck(),
             WorkloadDependencyUpdatesCheck(),
             AwsManagedServicesThreatIntelCheck(),
         ],
-    },
-    "Reducing Security Management Scope": {
-        "description": "Checks related to reducing the scope of security management",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Reducing Security Management Scope",
+        description="Checks related to reducing the scope of security management",
+        checks=[
             UseOfHigherLevelServicesCheck(),
             AwsControlDocumentationCheck(),
             AwsServiceEvaluationCheck(),
         ],
-    },
-    "Automated Deployment of Standard Security Controls": {
-        "description": (
-            "Checks related to the automated deployment of standard security controls"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Automated Deployment of Standard Security Controls",
+        description="Checks related to the automated deployment of standard security "
+        "controls",
+        checks=[
             IacTemplatesCheck(),
             IacVersionControlCheck(),
             IacGuardrailsCheck(),
@@ -258,90 +268,89 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             AccountStandardsCheck(),
             ControlTowerCheck(),
         ],
-    },
-    "Threat modeling": {
-        "description": (
-            "Checks related to threat modeling practices and documentation"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Threat modeling",
+        description="Checks related to threat modeling practices and documentation",
+        checks=[
             ThreatModelingCheck(),
             DfdsCheck(),
             SecurityRisksCheck(),
         ],
-    },
-    "Evaluate and implement new security services": {
-        "description": (
-            "Checks related to evaluating and implementing new security services"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Evaluate and implement new security services",
+        description="Checks related to evaluating and implementing new security "
+        "services",
+        checks=[
             SecurityServicesEvaluationCheck(),
         ],
-    },
-    "Use strong sign-in mechanisms": {
-        "description": "Checks related to the use of strong sign-in mechanisms",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Use strong sign-in mechanisms",
+        description="Checks related to the use of strong sign-in mechanisms",
+        checks=[
             RequireMfaCheck(),
             ComplexPasswordsCheck(),
         ],
-    },
-    "Use temporary credentials": {
-        "description": "Checks related to the use of temporary credentials",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Use temporary credentials",
+        description="Checks related to the use of temporary credentials",
+        checks=[
             NoAccessKeysCheck(),
             NoKeyPairsCheck(),
             NoIamUserAccessCheck(),
         ],
-    },
-    "Store and use secrets securely": {
-        "description": "Checks related to secure storage and use of secrets",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Store and use secrets securely",
+        description="Checks related to secure storage and use of secrets",
+        checks=[
             NoSecretsInAwsResourcesCheck(),
             PreventAndDetectSecretsCheck(),
             SecureSecretsStorageCheck(),
             MonitorSecretsCheck(),
             RestrictedRoleForSecretsAccessCheck(),
         ],
-    },
-    "Rely on a centralized identity provider": {
-        "description": "Checks related to using a centralized identity provider",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Rely on a centralized identity provider",
+        description="Checks related to using a centralized identity provider",
+        checks=[
             UseCentralizedIdpCheck(),
             HrSystemIntegrationCheck(),
         ],
-    },
-    "Audit and rotate credentials periodically": {
-        "description": (
-            "Regularly audit and rotate credentials to maintain security and compliance"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Audit and rotate credentials periodically",
+        description="Regularly audit and rotate credentials to maintain security and "
+        "compliance",
+        checks=[
             CredentialRotationCheck(),
             IdentityAuditCheck(),
         ],
-    },
-    "Employ user groups and attributes": {
-        "description": (
-            "Checks related to using user groups and attributes for permission "
-            "management"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Employ user groups and attributes",
+        description="Checks related to using user groups and attributes for permission "
+        "management",
+        checks=[
             EmployUserGroupsAndAttributesCheck(),
         ],
-    },
-    "Define access requirements": {
-        "description": (
-            "Checks related to defining and documenting access requirements for "
-            "resources and components"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Define access requirements",
+        description="Checks related to defining and documenting access requirements "
+        "for resources and components",
+        checks=[
             DefineAccessRequirementsCheck(),
         ],
-    },
-    "Grant least privilege access": {
-        "description": (
-            "Follow the principle of least privilege by granting only the "
-            "permissions required to perform a task."
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Grant least privilege access",
+        description="Checks related to granting least privilege access",
+        checks=[
             NoFullAdminPoliciesCheck(),
             NoPolicyAllowsPrivilegeEscalationCheck(),
             NoPermissiveRoleAssumptionCheck(),
@@ -355,28 +364,28 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             LambdaConfusedDeputyProtectionCheck(),
             KmsConfusedDeputyProtectionCheck(),
         ],
-    },
-    "Establish emergency access procedures": {
-        "description": (
-            "Checks related to establishing and maintaining emergency access "
-            "procedures for critical failure scenarios"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Establish emergency access procedures",
+        description="Checks related to establishing and maintaining emergency access "
+        "procedures for critical failure scenarios",
+        checks=[
             EstablishedEmergencyAccessProceduresCheck(),
         ],
-    },
-    "Reduce permissions continuously": {
-        "description": "Checks related to reducing permissions continuously",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Reduce permissions continuously",
+        description="Checks related to reducing permissions continuously",
+        checks=[
             ActiveUnusedAccessAnalyzerCheck(),
             RegularlyReviewPermissionsCheck(),
         ],
-    },
-    "Define permission guardrails for your organization": {
-        "description": (
-            "Checks related to defining permission guardrails for your organization"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Define permission guardrails for your organization",
+        description="Checks related to defining permission guardrails for your "
+        "organization",
+        checks=[
             RegionDenyScpCheck(),
             ScpPreventsLeavingOrgCheck(),
             ScpPreventsCommonAdminRoleChangesCheck(),
@@ -388,29 +397,31 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             ScpPreventsAddingInternetAccessToVpcCheck(),
             DelegateIamWithPermissionBoundariesCheck(),
         ],
-    },
-    "Manage access based on lifecycle": {
-        "description": ("Checks related to managing access based on lifecycle"),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Manage access based on lifecycle",
+        description="Checks related to managing access based on lifecycle",
+        checks=[
             AccessManagementLifecycleCheck(),
             AccessManagementLifecycleImplementedCheck(),
             ScimProtocolUsedCheck(),
         ],
-    },
-    "Analyze public and cross-account access": {
-        "description": ("Checks related to analyzing public and cross-account access"),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Analyze public and cross-account access",
+        description="Checks related to analyzing public and cross-account access",
+        checks=[
             ActiveExternalAccessAnalyzerCheck(),
             MonitorAndRespondToS3PublicAccessCheck(),
             MaintainInventoryOfSharedResourcesCheck(),
             ApprovalProcessForResourceSharingCheck(),
         ],
-    },
-    "Share resources securely within your organization": {
-        "description": (
-            "Checks related to sharing resources securely within your organization"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Share resources securely within your organization",
+        description="Checks related to sharing resources securely within your "
+        "organization",
+        checks=[
             ScpPreventsRamExternalSharingCheck(),
             ScpPreventsRamInvitationsCheck(),
             S3BucketAclDisabledCheck(),
@@ -421,21 +432,19 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             VpcEndpointsEnforceDataPerimeterCheck(),
             DataPerimeterTrustedNetworksCheck(),
         ],
-    },
-    "Share resources securely with a 3rd party": {
-        "description": (
-            "Checks related to sharing resources securely with a 3rd party"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Share resources securely with a 3rd party",
+        description="Checks related to sharing resources securely with a 3rd party",
+        checks=[
             CrossAccountConfusedDeputyPreventionCheck(),
             RepeatableAuditableSetupFor3rdPartyAccessCheck(),
         ],
-    },
-    "Configure service and application logging": {
-        "description": (
-            "Checks related to configuring service and application logging"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Configure service and application logging",
+        description="Checks related to configuring service and application logging",
+        checks=[
             OrganizationalCloudTrailCheck(),
             VpcFlowLogsEnabledCheck(),
             ResolverQueryLogsEnabledCheck(),
@@ -450,345 +459,344 @@ CHECK_THEMES: dict[str, dict[str, str | list[Callable | Check]]] = {
             ImplementQueryingForLogsCheck(),
             UseLogsForAlertingCheck(),
         ],
-    },
-    "Capture logs, findings and metrics in standardized locations": {
-        "description": (
-            "Checks related to capturing logs, findings and metrics in standardized "
-            "locations"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Capture logs, findings and metrics in standardized locations",
+        description="Checks related to capturing logs, findings and metrics in "
+        "standardized locations",
+        checks=[
             SecurityDataPublishedToLogArchiveAccountCheck(),
-            # TODO: where should we check for log tampering prevention and
-            # access control?
             DeployLogAnalysisToolsInAuditAccountCheck(),
         ],
-    },
-    "Correlate and enrich security alerts": {
-        "description": (
-            "Checks relating to automated correlation and enrichment of security "
-            "alerts to accelerate incident response"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Correlate and enrich security alerts",
+        description="Checks relating to automated correlation and enrichment of "
+        "security alerts to accelerate incident response",
+        checks=[
             DetectiveEnabledCheck(),
             SecurityEventCorrelationCheck(),
         ],
-    },
-    "Initiate remediation for non-compliant resources": {
-        "description": (
-            "The steps to remedidate when resources are detected to be non-compliant "
-            "are defined, programmitically, along with resource configuration "
-            "standards so that they can be initiated either manually or "
-            "automatically when resources are found to be non-compliant"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Initiate remediation for non-compliant resources",
+        description="The steps to remedidate when resources are detected to be "
+        "non-compliant are defined, programmitically, along with resource "
+        "configuration standards so that they can be initiated either manually or "
+        "automatically when resources are found to be non-compliant",
+        checks=[
             AutoRemediateNonCompliantResourcesCheck(),
         ],
-    },
-    "Create network layers": {
-        "description": ("Checks related to creating network layers for your workloads"),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Create network layers",
+        description="Checks related to creating network layers for your workloads",
+        checks=[
             CreateNetworkLayersCheck(),
         ],
-    },
-    "Control traffic flow within your network layers": {
-        "description": (
-            "Checks related to controlling traffic flow within your network layers"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Control traffic flow within your network layers",
+        description="Checks related to controlling traffic flow within your network "
+        "layers",
+        checks=[
             ControlNetworkFlowWithNaclsCheck(),
             ControlNetworkFlowsWithSGsCheck(),
             ControlNetworkFlowsWithRouteTablesCheck(),
             UsePrivateLinkForVpcRoutingCheck(),
             UseRoute53ResolverDnsFirewallCheck(),
         ],
-    },
-    "Implement inspection-based protection": {
-        "description": (
-            "Checks related to implementing inspection-based protection for your "
-            "workloads"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Implement inspection-based protection",
+        description="Checks related to implementing inspection-based protection for "
+        "your workloads",
+        checks=[
             InspectHttpTrafficWithWafCheck(),
             InspectTrafficWithNetworkFirewallCheck(),
         ],
-    },
-    "Automate network protection": {
-        "description": "",
-        "checks": [],
-    },
-    "Perform vulnerability management": {
-        "description": (
-            "Checks related to performing vulnerability management for your workloads"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Perform vulnerability management",
+        description="Checks related to performing vulnerability management for your "
+        "workloads",
+        checks=[
             ScanWorkloadsForVulnerabilitiesCheck(),
             RemediateVulnerabilitiesCheck(),
             AutomatePatchManagementCheck(),
             VulnerabilityScanningInCICDPipelinesCheck(),
             AutomateMalwareAndThreatDetectionCheck(),
         ],
-    },
-    "Provision compute from hardened images": {
-        "description": ("Checks related to provisioning compute from hardened images"),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Provision compute from hardened images",
+        description="Checks related to provisioning compute from hardened images",
+        checks=[
             UseHardenedImagesCheck(),
         ],
-    },
-    "Reduce manual management and interactive access": {
-        "description": (
-            "Checks related to reducing manual management and interactive access"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Reduce manual management and interactive access",
+        description="Checks related to reducing manual management and interactive "
+        "access",
+        checks=[
             NoRdpOrSshAccessCheck(),
             AvoidInteractiveAccessCheck(),
             AuditInteractiveAccessWithSSMCheck(),
         ],
-    },
-    "Validate software integrity": {
-        "description": "Checks related to validating software integrity",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Validate software integrity",
+        description="Checks related to validating software integrity",
+        checks=[
             ValidateSoftwareIntegrityCheck(),
         ],
-    },
-    "Understand your data classification scheme": {
-        "description": "Checks relating to the classification of data",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Understand your data classification scheme",
+        description="Checks relating to the classification of data",
+        checks=[
             DocumentedDataClassificationSchemeCheck(),
             DataCatalogCheck(),
             TagDataWithSensitivityLevelCheck(),
         ],
-    },
-    "Apply data protection controls based on data sensitivity": {
-        "description": (
-            "Checks related to applying data protection controls based on data "
-            "sensitivity levels"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Apply data protection controls based on data sensitivity",
+        description="Checks related to applying data protection controls based on data "
+        "sensitivity levels",
+        checks=[
             IsolationBoundariesCheck(),
             SensitivityControlsCheck(),
             TokenizationAndAnonymizationCheck(),
         ],
-    },
-    "Automate identification and classification": {
-        "description": "",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Automate identification and classification",
+        description="Checks related to identifying and classifying data",
+        checks=[
             CwDataProtectionPoliciesCheck(),
             SnsDataProtectionPoliciesCheck(),
             DetectSensitiveDataTransformCheck(),
             MacieScansForSensitiveDataCheck(),
             ScanForSensitiveDataInDevCheck(),
         ],
-    },
-    "Define scalable data lifecycle management": {
-        "description": "",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Define scalable data lifecycle management",
+        description="Checks related to scalable data lifecycle management",
+        checks=[
             AutomateS3DataRetentionCheck(),
             AutomateDdbDataRetentionCheck(),
             ImplementRetentionPoliciesCheck(),
             DetectMissingAutomatedLifecycleManagementCheck(),
         ],
-    },
-    "Implement secure key management": {
-        "description": (
-            "Checks relating to the storage, rotation, access control, and "
-            "monitoring of key material used to secure data at rest for your "
-            "workloads."
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Implement secure key management",
+        description="Checks related to the storage, rotation, access control, and "
+        "monitoring of key material used to secure data at rest for your workloads.",
+        checks=[
             UseAKmsCheck(),
             NoHumanAccessToUnencryptedKeyMaterialCheck(),
             RotateEncryptionKeysCheck(),
             MonitorKeyUsageCheck(),
             KeyAccessControlCheck(),
         ],
-    },
-    "Enforce encryption at rest": {
-        "description": (
-            "Encrypt private data at rest to maintain confidentiality and provide "
-            "an additional layer of protection against unintended data disclosure "
-            "or exfiltration"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Enforce encryption at rest",
+        description="Checks related to enforcing encryption at rest",
+        checks=[
             UseServiceEncryptionAtRestCheck(),
             UseCustomerManagedKeysCheck(),
         ],
-    },
-    "Automate data at rest protection": {
-        "description": "Use automation to validate and enforce data at rest controls.",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Automate data at rest protection",
+        description="Checks related to automating data at rest protection",
+        checks=[
             DetectEncryptionAtRestMisconfigCheck(),
             EnforceDataProtectionAtRestWithPolicyAsCodeCheck(),
             AutomateDataAtRestProtectionWithGuardDutyCheck(),
             AirGappedBackupVaultCheck(),
             RestoreTestingCheck(),
         ],
-    },
-    "Enforce access control": {
-        "description": (
-            "Checks related to enforcing access control for S3 buckets and "
-            "object locking"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Enforce access control",
+        description="Checks related to enforcing access control",
+        checks=[
             ImplementVersioningAndObjectLockingCheck(),
         ],
-    },
-    "Implement secure key and certificate management": {
-        "description": (
-            "Checks relating to the secure management of TLS certificates and their "
-            "private keys"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Implement secure key and certificate management",
+        description="Checks relating to the secure management of TLS certificates and "
+        "their private keys",
+        checks=[
             CertDeploymentAndRenewalCheck(),
             ProtectRootCaCheck(),
             EstablishLoggingAndAuditTrailsForPrivateCACheck(),
         ],
-    },
-    "Enforce encryption in transit": {
-        "description": ("Checks related to enforcing encryption in transit"),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Enforce encryption in transit",
+        description="Checks related to enforcing encryption in transit",
+        checks=[
             EnforceHttpsCheck(),
             AvoidInsecureSslCiphersCheck(),
         ],
-    },
-    "Authenticate network communications": {
-        "description": ("Checks related to authenticating network communications"),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Authenticate network communications",
+        description="Checks related to authenticating network communications",
+        checks=[
             DefineAndDocumentWorkloadNetworkFlowsCheck(),
             ImplementAuthAcrossServicesCheck(),
             MonitorNetworkTrafficForUnauthorizedAccessCheck(),
         ],
-    },
-    "Identify key personnel and external resources": {
-        "description": (
-            "Checks related to identifying key personnel and external resources"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Identify key personnel and external resources",
+        description="Checks related to identifying key personnel and external "
+        "resources",
+        checks=[
             CaptureKeyContactsCheck(),
         ],
-    },
-    "Develop incident management plans": {
-        "description": "Checks related to developing incident management plans",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Develop incident management plans",
+        description="Checks related to developing incident management plans",
+        checks=[
             IncidentResponsePlansCheck(),
         ],
-    },
-    "Prepare forensic capabilities": {
-        "description": "Checks related to preparing forensic capabilities",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Prepare forensic capabilities",
+        description="Checks related to preparing forensic capabilities",
+        checks=[
             ForensicsOuCheck(),
             AutomateForensicsCheck(),
         ],
-    },
-    "Develop and test security incident response playbooks": {
-        "description": (
-            "Checks related to developing security incident response playbooks"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Develop and test security incident response playbooks",
+        description="Checks related to developing security incident response playbooks",
+        checks=[
             SecurityIrPlaybooksCheck(),
         ],
-    },
-    "Pre-provision access": {
-        "description": (
-            "Checks related to pre-provisioning access for incident response"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Pre-provision access",
+        description="Checks related to pre-provisioning access for incident response",
+        checks=[
             UseIdentityBrokerCheck(),
         ],
-    },
-    "Pre-deploy tools": {
-        "description": (
-            "Checks related to pre-deploying tools required to support "
-            "incident response and security operations"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Pre-deploy tools",
+        description="Checks related to pre-deploying tools required to support "
+        "incident response and security operations",
+        checks=[
             PreDeployToolsCheck(),
         ],
-    },
-    "Run simulations": {
-        "description": (
-            "Checks related to running regular simulations to test and "
-            "validate incident response capabilities"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Run simulations",
+        description="Checks related to running regular simulations to test and "
+        "validate incident response capabilities",
+        checks=[
             RunSimulationsCheck(),
         ],
-    },
-    "Establish a framework for learning from incidents": {
-        "description": (
-            "Checks related to establishing frameworks and processes for "
-            "learning from incidents and applying lessons learned"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Establish a framework for learning from incidents",
+        description="Checks related to establishing frameworks and processes for "
+        "learning from incidents and applying lessons learned",
+        checks=[
             LessonsLearnedFrameworkCheck(),
         ],
-    },
-    "Train for application security": {
-        "description": ("Checks related to training for application security"),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Train for application security",
+        description="Checks related to training for application security",
+        checks=[
             TrainForApplicationSecurityCheck(),
         ],
-    },
-    "Automate testing throughout the development and release lifecycle": {
-        "description": (
-            "Checks relating to the automated testing for security properties "
-            "throughout the development and release lifecycle"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Automate testing throughout the development and release lifecycle",
+        description="Checks relating to the automated testing for security properties "
+        "throughout the development and release lifecycle",
+        checks=[
             PerformSASTCheck(),
             PerformDASTCheck(),
             AutomatedSecurityTestsCheck(),
         ],
-    },
-    "Perform regular penetration testing": {
-        "description": "Checks related to performing regular penetration testing",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Perform regular penetration testing",
+        description="Checks related to performing regular penetration testing",
+        checks=[
             PenetrationTestingCheck(),
         ],
-    },
-    "Conduct code reviews": {
-        "description": (
-            "Checks related to conducting code reviews to detect security "
-            "vulnerabilities"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Conduct code reviews",
+        description="Checks related to conducting code reviews to detect security "
+        "vulnerabilities",
+        checks=[
             CodeReviewsCheck(),
         ],
-    },
-    "Centralize services for packages and dependencies": {
-        "description": (
-            "Checks related to using centralized services for packages and dependencies"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Centralize services for packages and dependencies",
+        description="Checks related to using centralized services for packages and "
+        "dependencies",
+        checks=[
             CentralizedArtifactReposCheck(),
         ],
-    },
-    "Deploy software programmatically": {
-        "description": "Checks related to deploying software programmatically",
-        "checks": [
+    ),
+    CheckTheme(
+        name="Deploy software programmatically",
+        description="Checks related to deploying software programmatically",
+        checks=[
             AutomateDeploymentsCheck(),
             ImmutableBuildsCheck(),
         ],
-    },
-    "Regularly assess security properties of the pipelines": {
-        "description": (
-            "The pipelines you use to build and deploy your software should follow the"
-            " same recommended practices as any other workload in your environment"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Regularly assess security properties of the pipelines",
+        description="The pipelines you use to build and deploy your software should "
+        "follow the same recommended practices as any other workload in your "
+        "environment",
+        checks=[
             PipelinesUseLeastPrivilegeCheck(),
             ReviewPipelinePermissionsRegularlyCheck(),
             ThreatModelPipelinesCheck(),
         ],
-    },
-    "Build a program that embeds security ownership in workload teams": {
-        "description": (
-            "Embed security ownership and decision-making in workload teams"
-        ),
-        "checks": [
+    ),
+    CheckTheme(
+        name="Build a program that embeds security ownership in workload teams",
+        description="Checks related to building a program that embeds security "
+        "ownership in workload teams",
+        checks=[
             SecurityGuardiansProgramCheck(),
         ],
-    },
-}
+    ),
+]
 
-# Flatten all checks for backward compatibility
-ALL_CHECKS = [check for theme in CHECK_THEMES.values() for check in theme["checks"]]
+
+def all_checks():
+    checks = []
+    for theme in CHECK_THEMES:
+        checks.extend(theme.checks)
+    return checks
+
+
+def find_check_by_id(check_id):
+    for check in all_checks():
+        if check.check_id == check_id:
+            return check
+    return None

@@ -32,8 +32,8 @@ class CheckResult:
     def __init__(
         self,
         status: CheckStatus,
-        reason: str | None = None,
-        context: str | None = None,
+        reason: str = "",
+        context: str = "",
         details: dict | None = None,
     ):
         self.status = status
@@ -50,3 +50,9 @@ class Check(Protocol):
 
     @property
     def description(self) -> str: ...
+
+    @property
+    def check_id(self) -> str: ...
+
+    @property
+    def check_name(self) -> str: ...

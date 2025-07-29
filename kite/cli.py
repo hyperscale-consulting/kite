@@ -15,8 +15,8 @@ from rich.panel import Panel
 from rich.table import Table
 
 from kite.accessanalyzer import list_analyzers
-from kite.check_themes import ALL_CHECKS
 from kite.check_themes import CHECK_THEMES
+from kite.check_themes import find_check_by_id
 from kite.checks import CheckStatus
 from kite.checks import make_finding
 from kite.cloudfront import get_distributions_by_web_acl
@@ -109,16 +109,6 @@ def display_theme_results(theme: str, findings: list):
     console.print()
 
 
-def find_check_by_id(check_id: str):
-    """Find a check function by its ID."""
-    for check in ALL_CHECKS:
-        if hasattr(check, "_CHECK_ID") and check._CHECK_ID == check_id:
-            return check
-        if hasattr(check, "check_id") and check.check_id == check_id:
-            return check
-    return None
-
-
 @click.group()
 @click.version_option()
 def main():
@@ -133,7 +123,7 @@ class Assessment:
     themes: dict = field(default_factory=lambda: defaultdict(list))
 
     @classmethod
-    def load(cls) -> "Assessment":
+    def load(cls) -> "Assessment | None":
         try:
             with open("kite-results.yaml") as f:
                 data = yaml.safe_load(f)
@@ -214,83 +204,41 @@ def assess(config: str, auto_save: bool = True):
         )
     )
 
-    try:
-        # Run checks by theme
-        for theme_name, theme_data in CHECK_THEMES.items():
-            console.print(
-                Panel(
-                    theme_data["description"],
-                    title=theme_name,
-                    border_style="blue",
-                )
-            )
-
-            for check in theme_data["checks"]:
-                if hasattr(check, "check_id"):
-                    check_id = check.check_id
-                elif hasattr(check, "_CHECK_ID"):
-                    check_id = check._CHECK_ID
-                else:
-                    raise Exception(
-                        f"Skipping check {check} - missing check_id or _CHECK_ID"
-                    )
-
-                if assessment.has_finding(check_id):
-                    console.print(
-                        f"[yellow]Skipping {check_id} - already assessed[/yellow]"
-                    )
-                    continue
-                if callable(check):
-                    finding = check()
-                else:
-                    # new style checks...
-                    result = check.run()
-                    if result.status == CheckStatus.MANUAL:
-                        description = check.description
-                        context = result.context
-                        question = check.question
-                        pass_, reason = prompt_user_with_panel(
-                            check_name=check.check_name,
-                            message="\n\n".join([description, context]),
-                            prompt=question,
-                        )
-                        finding = make_finding(
-                            check_id=check.check_id,
-                            check_name=check.check_name,
-                            description=check.description,
-                            status="PASS" if pass_ else "FAIL",
-                            reason=reason,
-                            details=result.details,
-                        )
-                    else:
-                        finding = make_finding(
-                            check_id=check.check_id,
-                            check_name=check.check_name,
-                            description=check.description,
-                            status=result.status.value,
-                            reason=result.reason,
-                            details=result.details,
-                        )
-
-                assessment.record(theme_name, finding)
-                display_finding(finding)
-
-                if auto_save:
-                    assessment.save()
-
-            display_theme_results(theme_name, assessment.themes[theme_name])
-
-        assessment.save()
+    for theme in CHECK_THEMES:
         console.print(
             Panel(
-                "Assessment results saved to kite-results.yaml",
-                title="Results",
+                theme.description,
+                title=theme.name,
                 border_style="blue",
             )
         )
 
-    except Exception as e:
-        raise click.ClickException(f"Error during assessment: {str(e)}") from e
+        for check in theme.checks:
+            check_id = check.check_id
+
+            if assessment.has_finding(check_id):
+                console.print(
+                    f"[yellow]Skipping {check_id} - already assessed[/yellow]"
+                )
+                continue
+
+            finding = _run_check(check)
+            assessment.record(theme.name, finding)
+            display_finding(finding)
+
+            if auto_save:
+                assessment.save()
+
+        display_theme_results(theme.name, assessment.themes[theme.name])
+
+    assessment.save()
+    console.print(
+        Panel(
+            "Assessment results saved to kite-results.yaml",
+            title="Results",
+            border_style="blue",
+        )
+    )
 
 
 def save_assessment(assessment):
@@ -307,14 +255,8 @@ def list_checks():
     table.add_column("Check Name", style="green")
 
     for theme in CHECK_THEMES:
-        for check in CHECK_THEMES[theme]["checks"]:
-            if hasattr(check, "_CHECK_ID") and hasattr(check, "_CHECK_NAME"):
-                check_id, check_name = (check._CHECK_ID, check._CHECK_NAME)
-            elif hasattr(check, "check_id") and hasattr(check, "check_name"):
-                check_id, check_name = (check.check_id, check.check_name)
-            else:
-                continue
-            table.add_row(theme, check_id, check_name)
+        for check in theme.checks:
+            table.add_row(theme.name, check.check_id, check.check_name)
 
     console.print(table)
 
@@ -340,38 +282,7 @@ def run_check(config, check_id):
         console.print(f"[red]Error: No check found with ID {check_id}[/red]")
         return
 
-    if hasattr(check, "_CHECK_NAME"):
-        console.print(f"\n[bold]Running check: {check._CHECK_NAME} ({check_id})[/bold]")
-        finding = check()
-    else:
-        # new style checks...
-        result = check.run()
-        if result.status == CheckStatus.MANUAL:
-            description = check.description
-            context = result.context
-            question = check.question
-            pass_, reason = prompt_user_with_panel(
-                check_name=check.check_name,
-                message="\n\n".join([description, context]),
-                prompt=question,
-            )
-            finding = make_finding(
-                check_id=check.check_id,
-                check_name=check.check_name,
-                description=check.description,
-                status="PASS" if pass_ else "FAIL",
-                reason=reason,
-                details=result.details,
-            )
-        else:
-            finding = make_finding(
-                check_id=check.check_id,
-                check_name=check.check_name,
-                description=check.description,
-                status=result.status.value,
-                reason=result.reason,
-                details=result.details,
-            )
+    finding = _run_check(check)
 
     # Display the result
     status_color = {"PASS": "green", "FAIL": "red", "ERROR": "yellow"}.get(
@@ -382,6 +293,37 @@ def run_check(config, check_id):
     if "details" in finding:
         console.print("\nDetails:")
         console.print(finding["details"])
+
+
+def _run_check(check):
+    result = check.run()
+    if result.status == CheckStatus.MANUAL:
+        description = check.description
+        context = result.context
+        question = check.question
+        pass_, reason = prompt_user_with_panel(
+            check_name=check.check_name,
+            message="\n\n".join([description, context]),
+            prompt=question,
+        )
+        finding = make_finding(
+            check_id=check.check_id,
+            check_name=check.check_name,
+            description=check.description,
+            status="PASS" if pass_ else "FAIL",
+            reason=reason,
+            details=result.details,
+        )
+    else:
+        finding = make_finding(
+            check_id=check.check_id,
+            check_name=check.check_name,
+            description=check.description,
+            status=result.status.value,
+            reason=result.reason,
+            details=result.details,
+        )
+    return finding
 
 
 @main.command()
@@ -541,24 +483,23 @@ def configure():
     type=click.Path(exists=True),
 )
 def list_accounts(config: str):
-    """List all accounts in the organization."""
     Config.load(config)
-    config = Config.get()
+    config_obj = Config.get()
     account_ids = set()
 
     # Add management account if provided
-    if config.management_account_id:
+    if config_obj.management_account_id:
         # Normalize to string to avoid duplicates
-        account_ids.add(str(config.management_account_id))
+        account_ids.add(str(config_obj.management_account_id))
 
     # Add account IDs from config if provided
-    if config.account_ids:
+    if config_obj.account_ids:
         # Normalize all account IDs to strings
-        account_ids.update(str(account_id) for account_id in config.account_ids)
+        account_ids.update(str(account_id) for account_id in config_obj.account_ids)
 
     # If we have a management account but no specific account IDs,
     # get all accounts in the organization
-    if config.management_account_id and not config.account_ids:
+    if config_obj.management_account_id and not config_obj.account_ids:
         session = assume_organizational_role()
         org_account_ids = fetch_account_ids(session)
 

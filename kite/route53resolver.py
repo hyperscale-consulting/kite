@@ -38,7 +38,7 @@ def get_firewall_rule_groups(
     firewall_rule_groups = []
     for page in paginator.paginate():
         for firewall_rule_group in page.get("FirewallRuleGroups", []):
-            firewall_rules = get_firewall_rules(
+            firewall_rules = _get_firewall_rules(
                 route53resolver, firewall_rule_group["Id"]
             )
             firewall_rule_group["FirewallRules"] = firewall_rules
@@ -46,8 +46,8 @@ def get_firewall_rule_groups(
     return firewall_rule_groups
 
 
-def get_firewall_rules(
-    route53resolver: boto3.client, firewall_rule_group_id: str
+def _get_firewall_rules(
+    route53resolver, firewall_rule_group_id: str
 ) -> list[dict[str, object]]:
     """Get all firewall rules in a firewall rule group."""
     paginator = route53resolver.get_paginator("list_firewall_rules")
@@ -68,7 +68,7 @@ def get_firewall_domain_lists(
         for firewall_domain_list in page.get("FirewallDomainLists", []):
             if "ManagedOwnerName" not in firewall_domain_list:
                 # Can only list domains for non-managed firewall domain lists
-                domains = get_firewall_domains(
+                domains = _get_firewall_domains(
                     route53resolver, firewall_domain_list["Id"]
                 )
                 firewall_domain_list["Domains"] = domains
@@ -76,8 +76,8 @@ def get_firewall_domain_lists(
     return firewall_domain_lists
 
 
-def get_firewall_domains(
-    route53resolver: boto3.client, firewall_domain_list_id: str
+def _get_firewall_domains(
+    route53resolver, firewall_domain_list_id: str
 ) -> list[dict[str, object]]:
     """Get all firewall domains in a firewall domain list."""
     paginator = route53resolver.get_paginator("list_firewall_domains")

@@ -23,7 +23,7 @@ def get_web_acls(
         detail = get_web_acl(session, web_acl["ARN"], region)
         detail["Scope"] = scope
         if scope == Scope.REGIONAL.value:
-            detail["Resources"] = get_resources_for_web_acl(client, web_acl["ARN"])
+            detail["Resources"] = _get_resources_for_web_acl(client, web_acl["ARN"])
         else:
             detail["Resources"] = cloudfront.get_distributions_by_web_acl(
                 session, web_acl["ARN"]
@@ -32,9 +32,7 @@ def get_web_acls(
     return web_acls
 
 
-def get_resources_for_web_acl(
-    client: boto3.client, web_acl_arn: str
-) -> list[dict[str, Any]]:
+def _get_resources_for_web_acl(client, web_acl_arn: str) -> list[dict[str, Any]]:
     response = client.list_resources_for_web_acl(WebACLArn=web_acl_arn)
     return response["ResourceArns"]
 

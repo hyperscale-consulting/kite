@@ -310,6 +310,7 @@ def test_run_assess(runner, tmp_path, monkeypatch):
         print(result.output)
         assert result.exit_code == 0
         assessment = Assessment.load()
+        assert assessment is not None
         assert assessment.get_finding("root-account-monitoring")["status"] == "PASS"
         assert assessment.get_finding("root-actions-disallowed")["status"] == "FAIL"
         assert (

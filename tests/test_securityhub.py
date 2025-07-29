@@ -11,7 +11,7 @@ class ListAutomationRulesPaginator:
 
     def paginate(self):
         if self.error_response:
-            raise ClientError(self.error_response, "ListAutomationRulesPaginator")
+            raise ClientError(self.error_response, "ListAutomationRules")
         return [{"AutomationRulesMetadata": self.automation_rules}]
 
 

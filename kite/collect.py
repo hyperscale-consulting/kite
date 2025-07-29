@@ -410,14 +410,6 @@ def collect_data() -> None:
         console.print(
             f"  [green]✓ Saved Organization for account {config.management_account_id}"
         )
-        org_collector = Collector(
-            session,
-            config.management_account_id,
-            "Organization",
-            organizations.fetch_organization,
-            save_organization,
-        )
-        org_collector()  # other collectors depend on this data so run it first
 
         for resource_type, fetch_fn, save_fn in _mgmt_account_collector_config:
             collectors.append(

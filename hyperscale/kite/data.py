@@ -201,7 +201,7 @@ def save_oidc_providers(account_id: str, providers: list[dict[str, Any]]) -> Non
 
 def get_oidc_providers(
     account_id: str,
-) -> list[dict[str, Any]] | None:
+) -> list[dict[str, Any]]:
     """Get OIDC providers.
 
     Returns:

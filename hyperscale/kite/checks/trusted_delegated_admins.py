@@ -19,8 +19,8 @@ class TrustedDelegatedAdminsCheck:
         return (
             "Accounts that are delegated administrators for a service have permission "
             "to perform actions on behalf of the organization, so should be locked "
-            "down accordingly. This verifies that all delegated admins are trusted and "
-            "restricted-access accounts."
+            "down accordingly. This check verifies that all delegated admins "
+            "are trusted and restricted-access accounts."
         )
 
     def run(self) -> CheckResult:

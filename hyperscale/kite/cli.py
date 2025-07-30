@@ -1,5 +1,6 @@
 import os
 import shutil
+import subprocess
 from collections import defaultdict
 from dataclasses import asdict
 from dataclasses import dataclass
@@ -668,6 +669,38 @@ def list_distributions_by_web_acl(config: str, account_id: str, web_acl_arn: str
     Config.load(config)
     session = assume_role(account_id)
     console.print(get_distributions_by_web_acl(session, web_acl_arn))
+
+
+@main.command()
+@click.option(
+    "--config",
+    "-c",
+    default="kite.yaml",
+    help="Path to config file (default: hyperscale.kite.yaml)",
+    type=click.Path(exists=True),
+)
+@click.argument("account_id")
+@click.argument("command", nargs=-1, type=click.UNPROCESSED)
+def exec(config: str, account_id: str, command: list[str]):
+    """Assume role in ACCOUNT_ID and run COMMAND"""
+    if not command:
+        raise click.ClickException("No command provided to run.")
+    cmd = list(command)
+    if cmd[0] != "aws":
+        cmd.insert(0, "aws")
+
+    Config.load(config)
+    session = assume_role(account_id)
+    creds = session.get_credentials().get_frozen_credentials()
+    env = os.environ.copy()
+    env.update(
+        {
+            "AWS_ACCESS_KEY_ID": creds.access_key,
+            "AWS_SECRET_ACCESS_KEY": creds.secret_key,
+            "AWS_SESSION_TOKEN": creds.token,
+        }
+    )
+    subprocess.run(cmd, env=env)
 
 
 if __name__ == "__main__":

@@ -101,9 +101,9 @@ class ManagementAccountWorkloadsCheck:
         message = (
             "Workloads should be placed in dedicated workload accounts, not the "
             "management account. This is because:\n"
-            "- SCPs and RCPs do not apply to the management account."
+            "- SCPs and RCPs do not apply to the management account.\n"
             "- Keeping workloads out of the management account helps to restrict "
-            "access."
+            "access.\n\n"
             "Consider the following factors for management account workloads:\n"
             "- Are there any workloads running in the management account?\n"
             "- If so, are there valid reasons for these workloads to be in the "

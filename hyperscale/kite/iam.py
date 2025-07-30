@@ -162,12 +162,8 @@ def list_saml_providers(session) -> list[dict[str, Any]]:
     """
     iam_client = session.client("iam")
 
-    try:
-        response = iam_client.list_saml_providers()
-        return response.get("SAMLProviderList", [])
-    except ClientError:
-        # If the API call fails, raise the exception
-        raise
+    response = iam_client.list_saml_providers()
+    return response.get("SAMLProviderList", [])
 
 
 def list_oidc_providers(session) -> list[dict[str, Any]]:
@@ -190,36 +186,32 @@ def list_oidc_providers(session) -> list[dict[str, Any]]:
     """
     iam_client = session.client("iam")
 
-    try:
-        response = iam_client.list_open_id_connect_providers()
-        providers = response.get("OpenIDConnectProviderList", [])
+    response = iam_client.list_open_id_connect_providers()
+    providers = response.get("OpenIDConnectProviderList", [])
 
-        # Get detailed information for each provider
-        detailed_providers = []
-        for provider in providers:
-            try:
-                provider_info = iam_client.get_open_id_connect_provider(
-                    OpenIDConnectProviderArn=provider["Arn"]
-                )
-                detailed_providers.append(
-                    {
-                        "Arn": provider["Arn"],
-                        "CreateDate": provider.get("CreateDate"),
-                        "Url": provider_info.get("Url"),
-                        "ClientIDList": provider_info.get("ClientIDList", []),
-                        "ThumbprintList": provider_info.get("ThumbprintList", []),
-                    }
-                )
-            except ClientError:
-                # If we can't get detailed info for a provider, just include basic info
-                detailed_providers.append(
-                    {"Arn": provider["Arn"], "CreateDate": provider.get("CreateDate")}
-                )
+    # Get detailed information for each provider
+    detailed_providers = []
+    for provider in providers:
+        try:
+            provider_info = iam_client.get_open_id_connect_provider(
+                OpenIDConnectProviderArn=provider["Arn"]
+            )
+            detailed_providers.append(
+                {
+                    "Arn": provider["Arn"],
+                    "CreateDate": provider.get("CreateDate"),
+                    "Url": provider_info.get("Url"),
+                    "ClientIDList": provider_info.get("ClientIDList", []),
+                    "ThumbprintList": provider_info.get("ThumbprintList", []),
+                }
+            )
+        except ClientError:
+            # If we can't get detailed info for a provider, just include basic info
+            detailed_providers.append(
+                {"Arn": provider["Arn"], "CreateDate": provider.get("CreateDate")}
+            )
 
-        return detailed_providers
-    except ClientError:
-        # If the API call fails, raise the exception
-        raise
+    return detailed_providers
 
 
 def get_password_policy(session) -> dict[str, Any]:

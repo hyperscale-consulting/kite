@@ -212,8 +212,8 @@ cd kite
 2. Run using `uv`:
 
 ```bash
-uv kite collect
-uv kite assess
+uv run kite collect
+uv run kite assess
 ```
 
 ### Running tests and linters

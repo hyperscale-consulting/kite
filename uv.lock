@@ -183,6 +183,24 @@ dev = [
     { name = "ruff" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "ruff" },
+]
+pre-commit = [
+    { name = "pre-commit" },
+    { name = "pre-commit-uv" },
+]
+tests = [
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-mock" },
+]
+typing = [
+    { name = "mypy" },
+    { name = "pyright" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "boto3", specifier = ">=1.26.0" },
@@ -200,6 +218,22 @@ requires-dist = [
     { name = "ruff", marker = "extra == 'dev'" },
 ]
 provides-extras = ["dev"]
+
+[package.metadata.requires-dev]
+dev = [{ name = "ruff" }]
+pre-commit = [
+    { name = "pre-commit" },
+    { name = "pre-commit-uv" },
+]
+tests = [
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-mock" },
+]
+typing = [
+    { name = "mypy" },
+    { name = "pyright" },
+]
 
 [[package]]
 name = "identify"

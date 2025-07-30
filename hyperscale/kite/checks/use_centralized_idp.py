@@ -23,6 +23,10 @@ class UseCentralizedIdpCheck:
     @property
     def description(self) -> str:
         return (
+            "By using a centralized identity provider, you have a single place to "
+            "manage workforce user identities and policies, the ability to assign "
+            "access to applications to users and groups, and the ability to monitor "
+            "user sign-in activity.\n\n"
             "This check verifies that a centralized identity provider is used "
             "across the organization's applications."
         )
@@ -78,8 +82,6 @@ class UseCentralizedIdpCheck:
             context_message += "SAML Providers:\n"
             for provider in saml_providers:
                 context_message += f"- {provider['Arn']}\n"
-                if "ValidUntil" in provider:
-                    context_message += f"  Valid until: {provider['ValidUntil']}\n"
         else:
             context_message += "No SAML providers configured\n"
 

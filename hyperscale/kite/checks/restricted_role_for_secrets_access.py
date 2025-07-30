@@ -102,9 +102,8 @@ class RestrictedRoleForSecretsAccessCheck:
 
         # Build message for manual review
         message = (
-            "Please confirm whether secrets access is restricted to a dedicated "
-            "role that can only be assumed by a small set of operational users.\n\n"
-            "Secrets should have resource policies that look something like this:\n\n"
+            "Secrets should have resource policies that look something like this, to "
+            "ensure that they can only be accessed via a dedicated role:\n\n"
             "{\n"
             '  "Statement": [\n'
             "    {\n"
@@ -123,6 +122,10 @@ class RestrictedRoleForSecretsAccessCheck:
             "    }\n"
             "  ]\n"
             "}\n\n"
+        )
+        message += (
+            "This role should only be assumable by a small set of operational "
+            "users, and monitored for abuse.\n\n"
         )
 
         if secrets_without_policy:

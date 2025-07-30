@@ -1,11 +1,14 @@
 # Kite - Cloud Security Assessments
 
-Kite is a command-line interface tool designed to help perform cloud security assessments efficiently. It provides a suite of commands to analyze and assess security configurations and best practices. Currently, only AWS is supported, and the checks align closely with the security pillar of the AWS Well-Architected framework.
+Kite is a tool designed to help perform AWS security assessments efficiently.
+It provides a suite of commands to analyze and assess security configurations
+and best practices. The checks align closely with the security pillar of the
+AWS Well-Architected framework.
 
 ## Installation
 
 ```bash
-pip install kite
+pip install hyperscale-kite
 ```
 
 ## Usage
@@ -16,7 +19,12 @@ Run the help command to get an overview of the available commands:
 kite --help
 ```
 
-`kite` works by assuming a role in each target account in order to check AWS configuration. A [CloudFormation template](https://raw.githubusercontent.com/hyperscale-consulting/kite/refs/heads/main/permissions/kite-assessment-role.yaml) with the required permissions is available to help setting this up. This can be deployed as a regular CloudFormation stack, or as a stack set to deploy across multiple accounts using AWS Organizations.
+`kite` works by assuming a role in each target account in order to check AWS
+configuration. A [CloudFormation
+template](https://raw.githubusercontent.com/hyperscale-consulting/kite/refs/heads/main/permissions/kite-assessment-role.yaml)
+with the required permissions is available to help setting this up. This can be
+deployed as a regular CloudFormation stack, or as a stack set to deploy across
+multiple accounts using AWS Organizations.
 
 ### Deploying the Assessment Role
 
@@ -49,7 +57,9 @@ Replace:
 
 #### Multi-Account Deployment using Stack Sets
 
-You can easily deploy the template across the entire AWS Organization - just remember you need to deploy to the management account separately using the instruction above.
+You can easily deploy the template across the entire AWS Organization - just
+remember you need to deploy to the management account separately using the
+instruction above.
 
 To deploy the assessment role across multiple accounts using AWS Organizations:
 
@@ -104,9 +114,16 @@ Replace:
 - `<REGION>` with the AWS region to deploy to
 - The `AssessmentEnd` date with when the assessment should end
 
-Note that the above `create-stack-set` command assumes that you are using [service-managed permissions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-activate-trusted-access.html). You can also use [self-managed permissions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs-self-managed.html).
+Note that the above `create-stack-set` command assumes that you are using
+[service-managed
+permissions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-activate-trusted-access.html).
+You can also use [self-managed
+permissions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-prereqs-self-managed.html).
 
-Once you've set up the role, you can switch to the AWS account / role from which you will be doing the assessment. The only permission this role needs is to be able to assume the assessment role in whichever account it is, for example:
+Once you've set up the role, you can switch to the AWS account / role from
+which you will be doing the assessment. The only permission this role needs is
+to be able to assume the assessment role in whichever account it is, for
+example:
 
 ```json
 {
@@ -132,7 +149,15 @@ Next, configure `kite`:
 kite configure
 ```
 
-`kite` can utilise the output of [Prowler](https://github.com/prowler-cloud/prowler) checks, and the role you created above can be used with `prowler`. If you're using AWS Organizations you can configure `prowler` to get the most out of the `prowler` checks - take a copy of the [config file](https://raw.githubusercontent.com/prowler-cloud/prowler/refs/heads/master/prowler/config/config.yaml) and update `organizations_enabled_regions` to your enabled regions, and `organizations_trusted_delegated_administrators` to the trusted administrator accounts for your organization (e.g. your security tooling account).
+`kite` can utilise the output of
+[Prowler](https://github.com/prowler-cloud/prowler) checks, and the role you
+created above can be used with `prowler`. If you're using AWS Organizations you
+can configure `prowler` to get the most out of the `prowler` checks - take a
+copy of the [config
+file](https://raw.githubusercontent.com/prowler-cloud/prowler/refs/heads/master/prowler/config/config.yaml)
+and update `organizations_enabled_regions` to your enabled regions, and
+`organizations_trusted_delegated_administrators` to the trusted administrator
+accounts for your organization (e.g. your security tooling account).
 
 Once installed and configured, you can run the `prowler` CLI for a standalone account:
 
@@ -154,13 +179,15 @@ for ACCOUNT in ${(f)ACCOUNT_IDS} ; do
 done
 ```
 
-While `prowler` is running you can tell `kite` to collect the data it will need for the assessment:
+While `prowler` is running you can tell `kite` to collect the data it will need
+for the assessment:
 
 ```bash
 kite collect
 ```
 
-Then, when `prowler` has finished scanning and `kite` has collected the data it needs, you can start an assessment:
+Then, when `prowler` has finished scanning and `kite` has collected the data it
+needs, you can start an assessment:
 
 ```bash
 kite assess
@@ -170,30 +197,31 @@ kite assess
 
 ### Prerequisites
 
-- Python 3.10+
-- uv
-- AWS credentials configured (via AWS CLI or environment variables)
+- Install `uv` via the [official instructions](https://docs.astral.sh/uv/getting-started/installation/)
+- Configure AWS credentials (via AWS CLI or environment variables)
 
-### Setup Development Environment
+### Running kite
 
-1. Clone the repository:
+1. Clone the repo:
 
 ```bash
 git clone https://github.com/hyperscale-consulting/kite
 cd kite
 ```
 
-2. Create a virtual environment:
+2. Run using `uv`:
 
 ```bash
-uv venv
-source .venv/bin/activate
+uv kite collect
+uv kite assess
 ```
 
-3. Install development dependencies:
+### Running tests and linters
 
 ```bash
-uv pip install -e ".[dev]"
+uv run ruff check --fix
+uv run pre-commit run --all-files
+uv run pytest
 ```
 
 ## Contributing

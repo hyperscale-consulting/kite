@@ -21,7 +21,7 @@ class HrSystemIntegrationCheck:
     def description(self) -> str:
         return (
             "This check verifies that your HR systems are integrated with your "
-            "identity provider to automatically synchronize personnel changes."
+            "external identity provider to automatically synchronize personnel changes."
         )
 
     def run(self) -> CheckResult:

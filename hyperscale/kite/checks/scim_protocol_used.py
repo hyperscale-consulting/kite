@@ -11,16 +11,17 @@ class ScimProtocolUsedCheck:
     @property
     def question(self) -> str:
         return (
-            "Is the SCIM protocol used to synchronize user and group information "
-            "from the external identity provider into IAM Identity Center's data store?"
+            "Is the System for Cross-domain Identity Management (SCIM) protocol used "
+            "to synchronize user and group information from the external identity "
+            "provider into IAM Identity Center's data store?"
         )
 
     @property
     def description(self) -> str:
         return (
-            "This check verifies that the SCIM protocol is used to synchronize user "
-            "and group information from the external identity provider into IAM "
-            "Identity Center's data store."
+            "This check verifies that the System for Cross-domain Identity Management "
+            "(SCIM) protocol is used to synchronize user and group information from "
+            "the external identity provider into IAM Identity Center's data store."
         )
 
     def run(self) -> CheckResult:

@@ -1,5 +1,4 @@
 import glob
-from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -65,91 +64,6 @@ def prompt_user_with_panel(
         info = value
 
     return response, info
-
-
-def manual_check(
-    check_id: str,
-    check_name: str,
-    message: str,
-    prompt: str,
-    pass_message: str,
-    fail_message: str,
-    default: bool = True,
-    pre_check: Callable[[], tuple[bool, dict[str, Any]]] | None = None,
-    error_message_prefix: str = "Error checking",
-) -> dict[str, Any]:
-    """
-    Generic function for manual checks that need to ask the user questions.
-
-    This function handles the common pattern of:
-    1. Running an optional pre-check function
-    2. Displaying a panel with context
-    3. Prompting the user for a response
-    4. Returning a standardized result dictionary
-
-    Args:
-        check_id: The ID of the check.
-        check_name: The name of the check.
-        message: The message to display in the panel.
-        prompt: The prompt to ask the user.
-        pass_message: The message to return if the user answers yes.
-        fail_message: The message to return if the user answers no.
-        default: The default value for the yes/no prompt.
-        pre_check: Optional function to run before prompting the user.
-            Should return a tuple of (should_continue, result_dict).
-            If should_continue is False, the function will return result_dict
-            without prompting the user.
-        error_message_prefix: The prefix for the error message if an exception occurs.
-
-    Returns:
-        A dictionary containing:
-            - check_id: str identifying the check
-            - check_name: str name of the check
-            - status: str indicating if the check passed ("PASS", "FAIL", or "ERROR")
-            - details: Dict containing:
-                - message: str describing the result
-                - Additional keys from additional_prompts if provided
-    """
-    try:
-        # Run pre-check if provided
-        if pre_check:
-            should_continue, result = pre_check()
-            if not should_continue:
-                return result
-
-        # Use prompt_user_with_panel to get the user's response
-        response, info = prompt_user_with_panel(
-            check_name=check_name,
-            message=message,
-            prompt=prompt,
-            default=default,
-        )
-
-        # Create the result dictionary
-        result = {
-            "check_id": check_id,
-            "check_name": check_name,
-            "status": "PASS" if response else "FAIL",
-            "details": {
-                "message": pass_message if response else fail_message,
-            },
-        }
-
-        # Add additional responses to the details
-        if info:
-            result["details"]["info"] = info
-
-        return result
-
-    except Exception as e:
-        return {
-            "check_id": check_id,
-            "check_name": check_name,
-            "status": "ERROR",
-            "details": {
-                "message": f"{error_message_prefix} {check_name.lower()}: {str(e)}",
-            },
-        }
 
 
 def assume_role(account_id: str) -> boto3.Session:

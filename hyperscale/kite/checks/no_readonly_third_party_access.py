@@ -2,7 +2,7 @@ from hyperscale.kite.checks.core import CheckResult
 from hyperscale.kite.checks.core import CheckStatus
 from hyperscale.kite.data import get_organization
 from hyperscale.kite.data import get_roles
-from hyperscale.kite.helpers import get_prowler_output
+from hyperscale.kite.prowler import get_prowler_output
 
 
 class NoReadonlyThirdPartyAccessCheck:

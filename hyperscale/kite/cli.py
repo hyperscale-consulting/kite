@@ -29,10 +29,10 @@ from hyperscale.kite.data import save_collection_metadata
 from hyperscale.kite.data import verify_collection_status
 from hyperscale.kite.helpers import assume_organizational_role
 from hyperscale.kite.helpers import assume_role
-from hyperscale.kite.helpers import get_prowler_output
 from hyperscale.kite.helpers import prompt_user_with_panel
 from hyperscale.kite.organizations import fetch_account_ids
 from hyperscale.kite.organizations import get_account_details
+from hyperscale.kite.prowler import get_prowler_output
 from hyperscale.kite.s3 import get_buckets
 from hyperscale.kite.ui import confirm
 from hyperscale.kite.ui import prompt

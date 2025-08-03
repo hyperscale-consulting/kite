@@ -7,7 +7,7 @@ from hyperscale.kite.checks.utils import get_vpcs_with_resources
 from hyperscale.kite.config import Config
 from hyperscale.kite.data import get_security_groups
 from hyperscale.kite.helpers import get_account_ids_in_scope
-from hyperscale.kite.helpers import get_prowler_output
+from hyperscale.kite.prowler import get_prowler_output
 
 prowler_checks = [
     "ec2_securitygroup_allow_ingress_from_internet_to_all_ports",

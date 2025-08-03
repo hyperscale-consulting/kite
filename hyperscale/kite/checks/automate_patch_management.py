@@ -4,7 +4,7 @@ from hyperscale.kite.config import Config
 from hyperscale.kite.data import get_ec2_instances
 from hyperscale.kite.data import get_maintenance_windows
 from hyperscale.kite.helpers import get_account_ids_in_scope
-from hyperscale.kite.helpers import get_prowler_output
+from hyperscale.kite.prowler import get_prowler_output
 
 
 class AutomatePatchManagementCheck:

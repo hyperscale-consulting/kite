@@ -7,7 +7,7 @@ from hyperscale.kite.checks.utils import get_vpcs_with_resources
 from hyperscale.kite.config import Config
 from hyperscale.kite.data import get_nacls
 from hyperscale.kite.helpers import get_account_ids_in_scope
-from hyperscale.kite.helpers import get_prowler_output
+from hyperscale.kite.prowler import get_prowler_output
 
 
 def _analyze() -> str:

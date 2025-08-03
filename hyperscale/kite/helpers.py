@@ -1,5 +1,3 @@
-import glob
-from dataclasses import dataclass
 from typing import Any
 
 import boto3
@@ -371,66 +369,6 @@ def get_user_pool_mfa_config(account_id: str, region: str, user_pool_id: str) ->
     return get_cognito_user_pool(account_id, region, user_pool_id).get(
         "MfaConfiguration", "OFF"
     )
-
-
-@dataclass
-class ProwlerResult:
-    """Represents a single prowler check result."""
-
-    account_id: str
-    status: str
-    extended_status: str
-    resource_uid: str
-    resource_name: str
-    resource_details: str
-    region: str
-
-
-def get_prowler_output() -> dict[str, list[ProwlerResult]]:
-    """
-    Read and cache prowler output files.
-
-    Returns:
-        A dictionary mapping check IDs to a list of ProwlerResult objects.
-
-    Raises:
-        ClickException: If no prowler output files are found.
-    """
-    if not hasattr(get_prowler_output, "_cache"):
-        config = Config.get()
-        prowler_files = glob.glob(f"{config.prowler_output_dir}/prowler-output-*.csv")
-
-        if not prowler_files:
-            raise click.ClickException(
-                f"No prowler output files found in {config.prowler_output_dir}"
-            )
-
-        results = {}
-        for file_path in prowler_files:
-            with open(file_path) as f:
-                # Skip header line
-                next(f)
-                for line in f:
-                    records = line.strip().split(";")
-                    if len(records) >= 26:  # Ensure we have enough fields
-                        check_id = records[10]
-                        result = ProwlerResult(
-                            account_id=records[2],
-                            status=records[13],
-                            extended_status=records[14],
-                            resource_uid=records[20],
-                            resource_name=records[21],
-                            resource_details=records[22],
-                            region=records[25],
-                        )
-
-                        if check_id not in results:
-                            results[check_id] = []
-                        results[check_id].append(result)
-
-        get_prowler_output._cache = results
-
-    return get_prowler_output._cache
 
 
 def get_account_key_pairs(account_id: str) -> list[dict[str, Any]]:

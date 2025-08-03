@@ -1,6 +1,6 @@
 from hyperscale.kite.checks.core import CheckResult
 from hyperscale.kite.checks.core import CheckStatus
-from hyperscale.kite.helpers import get_prowler_output
+from hyperscale.kite.prowler import get_prowler_output
 
 
 class NoSecretsInAwsResourcesCheck:

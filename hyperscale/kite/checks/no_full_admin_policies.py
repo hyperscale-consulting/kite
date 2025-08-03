@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from hyperscale.kite.checks.core import CheckResult
 from hyperscale.kite.checks.core import CheckStatus
-from hyperscale.kite.helpers import get_prowler_output
+from hyperscale.kite.prowler import get_prowler_output
 
 customer_attached_policy_check_id = (
     "iam_customer_attached_policy_no_administrative_privileges"

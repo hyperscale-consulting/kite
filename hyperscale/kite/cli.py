@@ -6,6 +6,7 @@ from dataclasses import asdict
 from dataclasses import dataclass
 from dataclasses import field
 from datetime import datetime
+from pathlib import Path
 
 import click
 import yaml
@@ -467,7 +468,7 @@ def configure():
         account_ids=account_ids,
         active_regions=active_regions,
         role_name=role_name,
-        prowler_output_dir=prowler_output_dir,
+        prowler_output_dir=Path(prowler_output_dir),
         external_id=external_id,
         data_dir=data_dir,
     )

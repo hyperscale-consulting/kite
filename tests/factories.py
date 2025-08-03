@@ -330,3 +330,25 @@ def build_dns_firewall_rule_group(id: str, name="foo-vpc-rules", rules=None):
         "ShareStatus": "NOT_SHARED",
         "FirewallRules": rules or [],
     }
+
+
+def build_prowler_check_result(check_id, account_id, region, status):
+    result = [""] * 26
+    result[10] = check_id
+    result[2] = account_id
+    result[25] = region
+    result[13] = status
+    return ";".join(result) + "\n"
+
+
+def create_prowler_output_file(account_id, check_results, timestamp="20250624122816"):
+    config = Config.get()
+    file_path = (
+        config.prowler_output_dir / f"prowler-output-{account_id}-{timestamp}.csv"
+    )
+    config.prowler_output_dir.mkdir(parents=True, exist_ok=True)
+    content = [
+        "header",
+    ]
+    content.extend(check_results)
+    file_path.write_text("\n".join(content) + "\n")

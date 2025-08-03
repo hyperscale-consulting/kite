@@ -279,7 +279,7 @@ def test_run_assess(runner, tmp_path, monkeypatch):
         account_ids=[],
         active_regions=["us-west-2", "us-east-1", "eu-west-2"],
         role_name="Kite",
-        prowler_output_dir=str(base_path / "fixtures/prowler"),
+        prowler_output_dir=base_path / "fixtures/prowler",
         data_dir=str(base_path / "fixtures/audit"),
         external_id="123456",
     )

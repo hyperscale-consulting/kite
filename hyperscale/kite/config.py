@@ -1,6 +1,5 @@
-"""Configuration module for Kite."""
-
 from dataclasses import dataclass
+from pathlib import Path
 from typing import ClassVar
 from typing import Optional
 
@@ -20,7 +19,7 @@ class Config:
     account_ids: list[str] | None
     active_regions: list[str]
     role_name: str
-    prowler_output_dir: str
+    prowler_output_dir: Path
     external_id: str
     data_dir: str = ".kite/audit"
 
@@ -34,7 +33,7 @@ class Config:
         account_ids: list[str],
         active_regions: list[str],
         role_name: str,
-        prowler_output_dir: str,
+        prowler_output_dir: Path,
         external_id: str,
         data_dir: str,
     ):
@@ -108,7 +107,7 @@ class Config:
                 account_ids=data.get("account_ids"),
                 active_regions=data["active_regions"],
                 role_name=data["role_name"],
-                prowler_output_dir=data["prowler_output_dir"],
+                prowler_output_dir=Path(data["prowler_output_dir"]),
                 external_id=data["external_id"],
                 data_dir=data.get("data_dir", ".kite/audit"),
             )
@@ -136,7 +135,7 @@ class Config:
                 "account_ids": self.account_ids,
                 "active_regions": self.active_regions,
                 "role_name": self.role_name,
-                "prowler_output_dir": self.prowler_output_dir,
+                "prowler_output_dir": str(self.prowler_output_dir),
                 "external_id": self.external_id,
                 "data_dir": self.data_dir,
             }

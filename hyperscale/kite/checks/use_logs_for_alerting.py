@@ -1,8 +1,6 @@
 from hyperscale.kite.checks.core import CheckResult
 from hyperscale.kite.checks.core import CheckStatus
-from hyperscale.kite.config import Config
-from hyperscale.kite.helpers import get_prowler_output
-from hyperscale.kite.helpers import ProwlerResult
+from hyperscale.kite.prowler import find_failed_accounts_and_regions
 
 
 class UseLogsForAlertingCheck:
@@ -25,10 +23,8 @@ class UseLogsForAlertingCheck:
         )
 
     def run(self) -> CheckResult:
-        # Get Prowler check results
-        prowler_results = get_prowler_output()
-        guardduty_passed = self._check_passed(prowler_results, "guardduty_is_enabled")
-        securityhub_passed = self._check_passed(prowler_results, "securityhub_enabled")
+        guardduty_failing = find_failed_accounts_and_regions("guardduty_is_enabled")
+        securityhub_failing = find_failed_accounts_and_regions("securityhub_enabled")
 
         message = (
             "Please confirm if you have implemented alerting for:\n"
@@ -40,24 +36,23 @@ class UseLogsForAlertingCheck:
             "4. AWS Config (e.g., configuration changes, compliance violations)\n"
             "5. Route53 Resolver Query Logs (e.g., DNS exfiltration attempts)\n"
             "6. Application specific logs\n\n"
-            "Additional Context:\n"
-            f"- GuardDuty Status: {'Enabled' if guardduty_passed else 'Disabled'}\n"
-            "- SecurityHub Status: "
-            f"{'Enabled' if securityhub_passed else 'Disabled'}\n\n"
-            "Note: GuardDuty and SecurityHub can provide additional alerting "
-            "capabilities for security events."
+            "Additional Context:\n\n"
+            "- GuardDuty Status: "
+        )
+        if guardduty_failing:
+            message += "*NOT* enabled across all accounts and regions"
+        else:
+            message += "enabled across all accounts and regions"
+        message += "\n\n"
+        message += "- SecurityHub Status: "
+        if securityhub_failing:
+            message += "*NOT* enabled across all accounts and regions"
+        else:
+            message += "enabled across all accounts and regions"
+
+        message += (
+            "\n\nNote: GuardDuty and SecurityHub can provide additional "
+            "alerting capabilities for security events."
         )
 
         return CheckResult(status=CheckStatus.MANUAL, context=message)
-
-    def _check_passed(
-        self, checks: dict[str, list[ProwlerResult]], check_id: str
-    ) -> bool:
-        config = Config.get()
-        if check_id in checks:
-            results = checks[check_id]
-            for result in results:
-                if result.status != "PASS" and result.region in config.active_regions:
-                    return False
-            return True
-        raise ValueError(f"Check {check_id} not found")

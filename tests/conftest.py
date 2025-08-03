@@ -68,7 +68,7 @@ def config(mgmt_account_id, active_regions, role_name, prowler_output_dir, data_
         account_ids=[],
         active_regions=active_regions,
         role_name=role_name,
-        prowler_output_dir=str(prowler_output_dir),
+        prowler_output_dir=prowler_output_dir,
         data_dir=data_dir,
         external_id="123456",
     )

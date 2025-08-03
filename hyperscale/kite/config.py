@@ -21,7 +21,7 @@ class Config:
     role_name: str
     prowler_output_dir: Path
     external_id: str
-    data_dir: str = ".kite/audit"
+    data_dir: Path = Path(".kite/audit")
 
     # Class variable to hold the singleton instance
     _instance: ClassVar[Optional["Config"]] = None
@@ -35,7 +35,7 @@ class Config:
         role_name: str,
         prowler_output_dir: Path,
         external_id: str,
-        data_dir: str,
+        data_dir: Path,
     ):
         cls._instance = cls(
             management_account_id=management_account_id,
@@ -109,7 +109,7 @@ class Config:
                 role_name=data["role_name"],
                 prowler_output_dir=Path(data["prowler_output_dir"]),
                 external_id=data["external_id"],
-                data_dir=data.get("data_dir", ".kite/audit"),
+                data_dir=Path(data.get("data_dir", ".kite/audit")),
             )
             return cls._instance
 
@@ -137,7 +137,7 @@ class Config:
                 "role_name": self.role_name,
                 "prowler_output_dir": str(self.prowler_output_dir),
                 "external_id": self.external_id,
-                "data_dir": self.data_dir,
+                "data_dir": str(self.data_dir),
             }
             # Remove None values
             config_dict = {k: v for k, v in config_dict.items() if v is not None}

@@ -7,7 +7,7 @@ from hyperscale.kite.checks.data_perimeter_trusted_identities import (
 from hyperscale.kite.data import save_organization
 from tests.factories import build_ou
 from tests.factories import build_rcp
-from tests.factories import config_for_org
+from tests.factories import create_config_for_org
 from tests.factories import create_organization
 
 org_id = "o-1234567890"
@@ -67,8 +67,8 @@ def check():
     return DataPerimeterTrustedIdentitiesCheck()
 
 
-@config_for_org()
 def test_no_policies(check):
+    create_config_for_org()
     create_organization(
         organization_id=org_id,
     )
@@ -77,8 +77,8 @@ def test_no_policies(check):
     assert "protection is not attached" in result.reason
 
 
-@config_for_org()
 def test_rcp_attached_to_root_ou(check):
+    create_config_for_org()
     create_organization(
         organization_id=org_id,
         root_ou=build_ou(rcps=[build_rcp(content=trusted_identities_policy())]),
@@ -88,8 +88,8 @@ def test_rcp_attached_to_root_ou(check):
     assert "protection is attached to the root OU" in result.reason
 
 
-@config_for_org()
 def test_rcp_attached_to_all_top_level_ous(check):
+    create_config_for_org()
     create_organization(
         organization_id=org_id,
         root_ou=build_ou(

@@ -5,7 +5,7 @@ from hyperscale.kite.checks.kms_confused_deputy_protection import (
     KmsConfusedDeputyProtectionCheck,
 )
 from hyperscale.kite.data import save_kms_keys
-from tests.factories import config_for_org
+from tests.factories import create_config_for_org
 from tests.factories import create_organization_with_workload_account
 
 workload_account_id = "123456789012"
@@ -62,8 +62,8 @@ def kms_key_without_protection():
     return keys
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_kms_confused_deputy_protection(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization_with_workload_account(
         workload_account_id=workload_account_id,
         mgmt_account_id=mgmt_account_id,
@@ -73,8 +73,8 @@ def test_kms_confused_deputy_protection(check):
     assert result.status == CheckStatus.PASS
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_kms_confused_deputy_protection_with_vulnerable_key(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization_with_workload_account(
         workload_account_id=workload_account_id,
         mgmt_account_id=mgmt_account_id,

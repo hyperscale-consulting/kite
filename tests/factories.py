@@ -1,5 +1,4 @@
 import json
-from functools import wraps
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -161,8 +160,8 @@ def build_delegated_admin(
 
 
 def create_config(
-    prowler_output_dir,
-    data_dir,
+    prowler_output_dir=None,
+    data_dir=None,
     mgmt_account_id: str | None = "111111111111",
     account_ids: list[str] | None = None,
     active_regions: list[str] | None = None,
@@ -172,96 +171,48 @@ def create_config(
     if active_regions is None:
         active_regions = ["us-east-1", "eu-west-2"]
 
-    Config.create(
-        management_account_id=mgmt_account_id,
-        account_ids=account_ids or [],
+    with TemporaryDirectory() as d:
+        Config.create(
+            management_account_id=mgmt_account_id,
+            account_ids=account_ids or [],
+            active_regions=active_regions,
+            role_name=role_name,
+            prowler_output_dir=prowler_output_dir or Path(d) / "prowler",
+            data_dir=data_dir or Path(d) / "data",
+            external_id=external_id,
+        )
+        return Config.get()
+
+
+def create_config_for_org(
+    mgmt_account_id="111111111111",
+    account_ids=None,
+    active_regions=None,
+    role_name="KiteAssessor",
+    external_id="12345",
+):
+    create_config(
+        mgmt_account_id=mgmt_account_id,
+        account_ids=account_ids,
         active_regions=active_regions,
         role_name=role_name,
-        prowler_output_dir=prowler_output_dir,
-        data_dir=data_dir,
         external_id=external_id,
     )
-    return Config.get()
 
 
-def config(
-    mgmt_account_id="111111111111",
+def create_config_for_standalone_account(
     account_ids=None,
     active_regions=None,
     role_name="KiteAssessor",
     external_id="12345",
 ):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            with TemporaryDirectory() as d:
-                create_config(
-                    mgmt_account_id=mgmt_account_id,
-                    account_ids=account_ids,
-                    active_regions=active_regions,
-                    role_name=role_name,
-                    external_id=external_id,
-                    prowler_output_dir=Path(d) / "prowler",
-                    data_dir=Path(d) / "data",
-                )
-                return func(*args, **kwargs)
-
-        return wrapper
-
-    return decorator
-
-
-def config_for_org(
-    mgmt_account_id="111111111111",
-    account_ids=None,
-    active_regions=None,
-    role_name="KiteAssessor",
-    external_id="12345",
-):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            with TemporaryDirectory() as d:
-                create_config(
-                    mgmt_account_id=mgmt_account_id,
-                    account_ids=account_ids,
-                    active_regions=active_regions,
-                    role_name=role_name,
-                    external_id=external_id,
-                    prowler_output_dir=Path(d) / "prowler",
-                    data_dir=Path(d) / "data",
-                )
-                return func(*args, **kwargs)
-
-        return wrapper
-
-    return decorator
-
-
-def config_for_standalone_account(
-    account_ids=None,
-    active_regions=None,
-    role_name="KiteAssessor",
-    external_id="12345",
-):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            with TemporaryDirectory() as d:
-                create_config(
-                    mgmt_account_id=None,
-                    account_ids=account_ids or ["111111111111"],
-                    active_regions=active_regions,
-                    role_name=role_name,
-                    external_id=external_id,
-                    prowler_output_dir=Path(d) / "prowler",
-                    data_dir=Path(d) / "data",
-                )
-                return func(*args, **kwargs)
-
-        return wrapper
-
-    return decorator
+    create_config(
+        mgmt_account_id=None,
+        account_ids=account_ids or ["111111111111"],
+        active_regions=active_regions,
+        role_name=role_name,
+        external_id=external_id,
+    )
 
 
 def create_organization_features(management_account_id, features=None):

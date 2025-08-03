@@ -6,8 +6,8 @@ from hyperscale.kite.checks.root_access_keys_disallowed import (
 )
 from tests.factories import build_ou
 from tests.factories import build_scp
-from tests.factories import config_for_org
-from tests.factories import config_for_standalone_account
+from tests.factories import create_config_for_org
+from tests.factories import create_config_for_standalone_account
 from tests.factories import create_organization
 
 mgmt_account_id = "123456789012"
@@ -74,8 +74,8 @@ def check() -> RootAccessKeysDisallowedCheck:
     return RootAccessKeysDisallowedCheck()
 
 
-@config_for_standalone_account()
 def test_check_no_org(check):
+    create_config_for_standalone_account()
     result = check.run()
     assert result.status == CheckStatus.FAIL
     assert result.reason is not None
@@ -91,8 +91,8 @@ def test_check_no_org(check):
         scp_with_deny_create_access_key_stringlike_root(),
     ],
 )
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_root_has_scp(check, scp_content):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(
         mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(scps=[build_scp(content=scp_content)]),
@@ -105,8 +105,8 @@ def test_root_has_scp(check, scp_content):
     )
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_all_top_level_ous_have_scp(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(
         mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(
@@ -124,8 +124,8 @@ def test_all_top_level_ous_have_scp(check):
     )
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_some_top_level_ous_have_scp(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(
         mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(
@@ -144,8 +144,8 @@ def test_some_top_level_ous_have_scp(check):
     )
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_root_does_not_have_scp(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(
         mgmt_account_id=mgmt_account_id, root_ou=build_ou(scps=[build_scp(content={})])
     )

@@ -7,7 +7,7 @@ from hyperscale.kite.models import DelegatedAdmin
 from tests.factories import build_account
 from tests.factories import build_delegated_admin
 from tests.factories import build_ou
-from tests.factories import config
+from tests.factories import create_config
 from tests.factories import create_organization
 
 mgmt_account_id = "1111111111111"
@@ -32,8 +32,8 @@ def test_no_delegated_admins(check):
     assert result.status == CheckStatus.FAIL
 
 
-@config(mgmt_account_id=mgmt_account_id)
 def test_delegated_admins_for_all_services(check):
+    create_config(mgmt_account_id=mgmt_account_id)
     create_organization(
         mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(
@@ -83,8 +83,8 @@ def test_delegated_admins_for_all_services(check):
     )
 
 
-@config(mgmt_account_id=mgmt_account_id)
 def test_delegated_admin_for_one_services(check):
+    create_config(mgmt_account_id=mgmt_account_id)
     create_organization(
         mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(

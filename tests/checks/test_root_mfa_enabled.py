@@ -7,8 +7,8 @@ from hyperscale.kite.checks.root_mfa_enabled import RootMfaEnabledCheck
 from hyperscale.kite.data import save_account_summary
 from hyperscale.kite.data import save_organization_features
 from hyperscale.kite.data import save_virtual_mfa_devices
-from tests.factories import config_for_org
-from tests.factories import config_for_standalone_account
+from tests.factories import create_config_for_org
+from tests.factories import create_config_for_standalone_account
 from tests.factories import create_organization
 
 mgmt_account_id = "123456789012"
@@ -55,8 +55,8 @@ def mock_get_root_virtual_mfa_device():
         yield mock
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_root_mfa_enabled_managed_credentials(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(mgmt_account_id=mgmt_account_id)
     save_organization_features(
         account_id=mgmt_account_id, features=["RootCredentialsManagement"]
@@ -70,8 +70,8 @@ def test_root_mfa_enabled_managed_credentials(check):
     )
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_root_virtual_mfa_enabled_managed_credentials(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(mgmt_account_id=mgmt_account_id)
     save_organization_features(
         account_id=mgmt_account_id, features=["RootCredentialsManagement"]
@@ -91,8 +91,8 @@ def test_root_virtual_mfa_enabled_managed_credentials(check):
     assert "Root MFA is enabled with virtual MFA devices in 1 account" in result.reason
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_no_root_mfa_managed_credentials(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(mgmt_account_id=mgmt_account_id)
     save_organization_features(
         account_id=mgmt_account_id, features=["RootCredentialsManagement"]
@@ -103,8 +103,8 @@ def test_no_root_mfa_managed_credentials(check):
     assert "Root MFA is not enabled in 1 account" in result.reason
 
 
-@config_for_standalone_account(account_ids=[mgmt_account_id])
 def test_no_mgmt_account_id_configured_managed_credentials(check):
+    create_config_for_standalone_account(account_ids=[mgmt_account_id])
     create_organization(mgmt_account_id=mgmt_account_id)
     save_organization_features(
         account_id=mgmt_account_id, features=["RootCredentialsManagement"]
@@ -117,8 +117,8 @@ def test_no_mgmt_account_id_configured_managed_credentials(check):
     )
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_root_mfa_not_managed_credentials(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(mgmt_account_id=mgmt_account_id)
     save_account_summary(mgmt_account_id, {"AccountMFAEnabled": 1})
     result = check.run()
@@ -128,8 +128,8 @@ def test_root_mfa_not_managed_credentials(check):
     )
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_root_virtual_mfa_not_managed_credentials(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(mgmt_account_id=mgmt_account_id)
     save_account_summary(mgmt_account_id, {"AccountMFAEnabled": 1})
     save_virtual_mfa_devices(
@@ -146,8 +146,8 @@ def test_root_virtual_mfa_not_managed_credentials(check):
     assert "Root MFA is enabled with virtual MFA devices" in result.reason
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_no_root_mfa_not_managed_credentials(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(mgmt_account_id=mgmt_account_id)
     save_account_summary(mgmt_account_id, {"AccountMFAEnabled": 0})
     result = check.run()

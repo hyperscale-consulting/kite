@@ -470,7 +470,7 @@ def configure():
         role_name=role_name,
         prowler_output_dir=Path(prowler_output_dir),
         external_id=external_id,
-        data_dir=data_dir,
+        data_dir=Path(data_dir),
     )
 
     config.save("kite.yaml")

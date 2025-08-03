@@ -7,7 +7,7 @@ from hyperscale.kite.checks.use_of_higher_level_services import (
 from hyperscale.kite.data import save_ec2_instances
 from tests.factories import build_account
 from tests.factories import build_ou
-from tests.factories import config_for_org
+from tests.factories import create_config_for_org
 from tests.factories import create_organization
 
 mgmt_account_id = "123456789012"
@@ -21,8 +21,8 @@ def check():
     return UseOfHigherLevelServicesCheck()
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_no_ec2_instances(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(
         mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(
@@ -44,8 +44,8 @@ def test_no_ec2_instances(check):
     assert "No EC2 instances" in result.reason
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_ec2_instances_found(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(
         mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(

@@ -5,7 +5,7 @@ import pytest
 from hyperscale.kite.checks import CheckStatus
 from hyperscale.kite.checks.no_root_access_keys import NoRootAccessKeysCheck
 from hyperscale.kite.data import save_account_summary
-from tests.factories import config_for_standalone_account
+from tests.factories import create_config_for_standalone_account
 
 account_id = "123456789012"
 
@@ -30,8 +30,8 @@ def mock_get_account_summary():
         yield mock
 
 
-@config_for_standalone_account([account_id])
 def test_no_root_access_keys(check):
+    create_config_for_standalone_account([account_id])
     account_summary = {"AccountAccessKeysPresent": 0}
     save_account_summary(account_id, account_summary)
     result = check.run()
@@ -40,8 +40,8 @@ def test_no_root_access_keys(check):
     assert result.reason == "No root access keys found in any accounts."
 
 
-@config_for_standalone_account([account_id])
 def test_root_access_keys_found(check):
+    create_config_for_standalone_account([account_id])
     account_summary = {"AccountAccessKeysPresent": 1}
     save_account_summary(account_id, account_summary)
 

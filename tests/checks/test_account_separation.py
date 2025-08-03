@@ -4,8 +4,8 @@ from hyperscale.kite.checks import CheckStatus
 from hyperscale.kite.checks.account_separation import AccountSeparationCheck
 from tests.factories import build_account
 from tests.factories import build_ou
-from tests.factories import config_for_org
-from tests.factories import config_for_standalone_account
+from tests.factories import create_config_for_org
+from tests.factories import create_config_for_standalone_account
 from tests.factories import create_organization
 
 mgmt_account_id = "123456789012"
@@ -18,15 +18,15 @@ def check():
     return AccountSeparationCheck()
 
 
-@config_for_standalone_account()
 def test_account_separation_check_no_org(check):
+    create_config_for_standalone_account()
     result = check.run()
     assert result.status == CheckStatus.FAIL
     assert "AWS Organizations is not being used" in result.reason
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_check_account_separation(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization(
         mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(

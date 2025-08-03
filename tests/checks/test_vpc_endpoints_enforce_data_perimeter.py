@@ -7,8 +7,8 @@ from hyperscale.kite.checks.vpc_endpoints_enforce_data_perimeter import (
     VpcEndpointsEnforceDataPerimeterCheck,
 )
 from hyperscale.kite.data import save_vpc_endpoints
-from tests.factories import config_for_org
-from tests.factories import config_for_standalone_account
+from tests.factories import create_config_for_org
+from tests.factories import create_config_for_standalone_account
 from tests.factories import create_organization_with_workload_account
 
 workload_account_id = "123456789012"
@@ -48,8 +48,8 @@ def check():
     return VpcEndpointsEnforceDataPerimeterCheck()
 
 
-@config_for_org()
 def test_no_policies(check):
+    create_config_for_org()
     create_organization_with_workload_account(
         workload_account_id=workload_account_id, organization_id=org_id
     )
@@ -64,8 +64,8 @@ def test_no_policies(check):
     assert "Some VPC endpoints are missing required endpoint policies" in result.reason
 
 
-@config_for_org()
 def test_allow_all_policy(check):
+    create_config_for_org()
     create_organization_with_workload_account(
         workload_account_id=workload_account_id, organization_id=org_id
     )
@@ -81,8 +81,8 @@ def test_allow_all_policy(check):
     assert "Some VPC endpoints are missing required endpoint policies" in result.reason
 
 
-@config_for_org()
 def test_enforce_data_perimeter_policy(check):
+    create_config_for_org()
     create_organization_with_workload_account(
         workload_account_id=workload_account_id, organization_id=org_id
     )
@@ -98,6 +98,6 @@ def test_enforce_data_perimeter_policy(check):
     assert result.status == CheckStatus.PASS
 
 
-@config_for_standalone_account()
 def test_no_org(check):
+    create_config_for_standalone_account()
     assert check.run().status == CheckStatus.FAIL

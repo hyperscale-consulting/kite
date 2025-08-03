@@ -6,7 +6,7 @@ from hyperscale.kite.data import save_delegated_admins
 from tests.factories import build_account
 from tests.factories import build_delegated_admin
 from tests.factories import build_ou
-from tests.factories import config
+from tests.factories import create_config
 from tests.factories import create_organization
 
 audit_account_id = "333333333333"
@@ -19,21 +19,21 @@ def check():
     return TrustedDelegatedAdminsCheck()
 
 
-@config(mgmt_account_id=mgmt_account_id)
 def test_organizations_not_used(check):
+    create_config(mgmt_account_id=mgmt_account_id)
     result = check.run()
     assert result.status == CheckStatus.PASS
 
 
-@config(mgmt_account_id=mgmt_account_id)
 def test_no_delegated_admins(check):
+    create_config(mgmt_account_id=mgmt_account_id)
     create_organization()
     result = check.run()
     assert result.status == CheckStatus.PASS
 
 
-@config(mgmt_account_id=mgmt_account_id)
 def test_lists_all_admins_for_manual_check(check):
+    create_config(mgmt_account_id=mgmt_account_id)
     create_organization(
         mgmt_account_id=mgmt_account_id,
         root_ou=build_ou(

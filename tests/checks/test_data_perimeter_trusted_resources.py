@@ -7,7 +7,7 @@ from hyperscale.kite.checks.data_perimeter_trusted_resources import (
 from hyperscale.kite.data import save_organization
 from tests.factories import build_ou
 from tests.factories import build_scp
-from tests.factories import config_for_org
+from tests.factories import create_config_for_org
 from tests.factories import create_organization
 
 organization_id = "test-org-id"
@@ -82,15 +82,15 @@ def check():
     return DataPerimeterTrustedResourcesCheck()
 
 
-@config_for_org()
 def test_no_policies(check):
+    create_config_for_org()
     create_organization(organization_id=organization_id)
     result = check.run()
     assert result.status == CheckStatus.FAIL
 
 
-@config_for_org()
 def test_scp_attached_to_root_ou(check):
+    create_config_for_org()
     create_organization(
         organization_id=organization_id,
         root_ou=build_ou(scps=[build_scp(content=trusted_resources_scp())]),
@@ -99,8 +99,8 @@ def test_scp_attached_to_root_ou(check):
     assert result.status == CheckStatus.PASS
 
 
-@config_for_org()
 def test_scp_attached_to_all_top_level_ous(check):
+    create_config_for_org()
     create_organization(
         organization_id=organization_id,
         root_ou=build_ou(

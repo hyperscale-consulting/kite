@@ -13,7 +13,7 @@ from tests.factories import build_dns_firewall_domain_list
 from tests.factories import build_dns_firewall_rule
 from tests.factories import build_dns_firewall_rule_group
 from tests.factories import build_dns_firewall_rule_group_association
-from tests.factories import config_for_org
+from tests.factories import create_config_for_org
 from tests.factories import create_organization_with_workload_account
 
 mgmt_account_id = "123456789012"
@@ -26,8 +26,8 @@ def check():
     return UseRoute53ResolverDnsFirewallCheck()
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_run_no_vpcs_with_resources(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization_with_workload_account(mgmt_account_id, workload_account_id)
     result = check.run()
 
@@ -36,8 +36,8 @@ def test_run_no_vpcs_with_resources(check):
     assert "No VPCs with resources found" in result.reason
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_run_vpcs_with_resources_and_dns_firewall(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization_with_workload_account(mgmt_account_id, workload_account_id)
 
     vpcs = [

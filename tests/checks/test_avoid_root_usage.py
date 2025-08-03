@@ -6,7 +6,7 @@ import pytest
 from hyperscale.kite.checks import CheckStatus
 from hyperscale.kite.checks.avoid_root_usage import AvoidRootUsageCheck
 from hyperscale.kite.data import save_credentials_report
-from tests.factories import config_for_org
+from tests.factories import create_config_for_org
 from tests.factories import create_organization_with_workload_account
 
 mgmt_account_id = "1111111111111"
@@ -18,8 +18,8 @@ def check():
     return AvoidRootUsageCheck()
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_check_root_not_used(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization_with_workload_account(mgmt_account_id, workload_account_id)
     credentials_report = {
         "root": {"user": "<root_account>", "password_last_used": "no_information"}
@@ -30,8 +30,8 @@ def test_check_root_not_used(check):
     assert result.status == CheckStatus.PASS
 
 
-@config_for_org(mgmt_account_id=mgmt_account_id)
 def test_check_root_used(check):
+    create_config_for_org(mgmt_account_id=mgmt_account_id)
     create_organization_with_workload_account(mgmt_account_id, workload_account_id)
     workload_credentials_report = {
         "root": {"user": "<root_account>", "password_last_used": "no_information"}

@@ -7,7 +7,7 @@ from hyperscale.kite.checks.data_perimeter_trusted_networks import (
 from tests.factories import build_ou
 from tests.factories import build_rcp
 from tests.factories import build_scp
-from tests.factories import config_for_org
+from tests.factories import create_config_for_org
 from tests.factories import create_organization
 
 
@@ -103,16 +103,16 @@ def check():
     return DataPerimeterTrustedNetworksCheck()
 
 
-@config_for_org()
 def test_no_policies(check):
+    create_config_for_org()
     create_organization()
     result = check.run()
     assert result.status == CheckStatus.FAIL
     assert "not enforced by both SCPs and RCPs" in result.reason
 
 
-@config_for_org()
 def test_scp_attached_to_root_ou(check):
+    create_config_for_org()
     create_organization(
         root_ou=build_ou(scps=[build_scp(content=trusted_networks_scp())]),
     )
@@ -121,8 +121,8 @@ def test_scp_attached_to_root_ou(check):
     assert "not enforced by both SCPs and RCPs" in result.reason
 
 
-@config_for_org()
 def test_scp_attached_to_all_top_level_ous(check):
+    create_config_for_org()
     create_organization(
         root_ou=build_ou(
             child_ous=[
@@ -136,8 +136,8 @@ def test_scp_attached_to_all_top_level_ous(check):
     assert "not enforced by both SCPs and RCPs" in result.reason
 
 
-@config_for_org()
 def test_rcp_attached_to_root_ou(check):
+    create_config_for_org()
     create_organization(
         root_ou=build_ou(rcps=[build_rcp(content=trusted_networks_rcp())]),
     )
@@ -146,8 +146,8 @@ def test_rcp_attached_to_root_ou(check):
     assert "not enforced by both SCPs and RCPs" in result.reason
 
 
-@config_for_org()
 def test_rcp_attached_to_all_top_level_ous(check):
+    create_config_for_org()
     create_organization(
         root_ou=build_ou(
             child_ous=[
@@ -161,8 +161,8 @@ def test_rcp_attached_to_all_top_level_ous(check):
     assert "not enforced by both SCPs and RCPs" in result.reason
 
 
-@config_for_org()
 def test_both_scp_and_rcp_attached_to_root_ou(check):
+    create_config_for_org()
     create_organization(
         root_ou=build_ou(
             scps=[build_scp(content=trusted_networks_scp())],

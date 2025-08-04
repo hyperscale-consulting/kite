@@ -27,6 +27,7 @@ from hyperscale.kite.cli import Assessment
 from hyperscale.kite.cli import main
 from hyperscale.kite.config import Config
 from hyperscale.kite.models import DelegatedAdmin
+from tests.factories import create_config
 
 
 @pytest.fixture
@@ -267,20 +268,37 @@ def test_run_assess_without_collect(runner, config_path):
 def test_run_collect(runner, config_path):
     result = runner.invoke(main, ["collect", "--config", str(config_path)])
     print(result.output)
-    # assert "Error collecting" not in result.output
     assert "Data collection complete" in result.output
     assert result.exit_code == 0
 
 
-def test_run_assess(runner, tmp_path, monkeypatch):
-    base_path = Path(__file__).parent
+@pytest.fixture
+def base_path():
+    yield Path(__file__).parent
+
+
+def test_run_assess_without_prowler_output(runner, tmp_path, base_path):
+    config = create_config(
+        prowler_output_dir=tmp_path / "prowler",  # no prowler data
+        data_dir=base_path / "fixtures/audit",  # simulate `collect` has been run
+        external_id="123456",  # external_id for simulated `collect`
+    )
+    config_path = str(tmp_path / "kite.yaml")
+    config.save(config_path)
+    result = runner.invoke(main, ["assess", "--config", config_path])
+    print(result.output)
+    assert result.exit_code != 0
+    assert "No Prowler results found" in result.output
+
+
+def test_run_assess(runner, tmp_path, monkeypatch, base_path):
     config = Config.create(
         management_account_id="111111111111",
         account_ids=[],
         active_regions=["us-west-2", "us-east-1", "eu-west-2"],
         role_name="Kite",
         prowler_output_dir=base_path / "fixtures/prowler",
-        data_dir=str(base_path / "fixtures/audit"),
+        data_dir=base_path / "fixtures/audit",
         external_id="123456",
     )
     config_path = str(tmp_path / "kite.yaml")

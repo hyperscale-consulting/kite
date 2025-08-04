@@ -33,6 +33,7 @@ from hyperscale.kite.helpers import prompt_user_with_panel
 from hyperscale.kite.organizations import fetch_account_ids
 from hyperscale.kite.organizations import get_account_details
 from hyperscale.kite.prowler import get_prowler_output
+from hyperscale.kite.prowler import NoProwlerDataException
 from hyperscale.kite.s3 import get_buckets
 from hyperscale.kite.ui import confirm
 from hyperscale.kite.ui import prompt
@@ -162,12 +163,21 @@ class Assessment:
         return finding
 
 
+def _verify_prowler_output_exists():
+    try:
+        get_prowler_output()
+    except NoProwlerDataException as err:
+        raise click.ClickException(
+            "No Prowler results found. Please run Prowler first."
+        ) from err
+
+
 @main.command()
 @click.option(
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 @click.option(
@@ -179,6 +189,7 @@ def assess(config: str, auto_save: bool = True):
 
     # Verify collection status
     verify_collection_status()
+    _verify_prowler_output_exists()
 
     # Format account IDs for display
     account_ids_str = (
@@ -268,7 +279,7 @@ def list_checks():
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 @click.argument("check_id", required=True)
@@ -276,7 +287,6 @@ def run_check(config, check_id):
     """Run a specific security check by ID."""
     Config.load(config)
 
-    # Verify collection status
     verify_collection_status()
 
     check = find_check_by_id(check_id)
@@ -333,7 +343,7 @@ def _run_check(check):
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 @click.argument("account_id", required=True)
@@ -377,7 +387,6 @@ def get_organization_account_details(account_id: str, config: str):
 def configure():
     """Configure the Kite CLI."""
 
-    # Check if hyperscale.kite.yaml exists
     if os.path.exists("kite.yaml"):
         if not confirm("kite.yaml already exists. Overwrite?"):
             return
@@ -481,7 +490,7 @@ def configure():
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 def list_accounts(config: str):
@@ -517,7 +526,7 @@ def list_accounts(config: str):
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 @click.argument("check_id", required=True)
@@ -574,7 +583,7 @@ def get_prowler_check_status(config: str, check_id: str):
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 def collect(config: str):
@@ -614,7 +623,7 @@ def collect(config: str):
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 @click.argument("account_id", required=True)
@@ -629,7 +638,7 @@ def list_access_analyzers(config: str, account_id: str):
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 @click.argument("account_id", required=True)
@@ -644,7 +653,7 @@ def get_s3_bucket_metadata(config: str, account_id: str):
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 @click.argument("account_id", required=True)
@@ -661,7 +670,7 @@ def list_web_acls(config: str, account_id: str, region: str, scope: str):
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 @click.argument("account_id", required=True)
@@ -677,7 +686,7 @@ def list_distributions_by_web_acl(config: str, account_id: str, web_acl_arn: str
     "--config",
     "-c",
     default="kite.yaml",
-    help="Path to config file (default: hyperscale.kite.yaml)",
+    help="Path to config file (default: kite.yaml)",
     type=click.Path(exists=True),
 )
 @click.argument("account_id")

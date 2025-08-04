@@ -112,7 +112,7 @@ def display_theme_results(theme: str, findings: list):
 
 
 @click.group()
-@click.version_option()
+@click.version_option(package_name="hyperscale.kite")
 def main():
     """Kite - AWS Security Assessment CLI."""
     pass

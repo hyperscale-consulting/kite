@@ -192,18 +192,6 @@ dependencies = [
     { name = "rich" },
 ]
 
-[package.optional-dependencies]
-dev = [
-    { name = "mypy" },
-    { name = "pre-commit" },
-    { name = "pre-commit-uv" },
-    { name = "pyright" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "pytest-mock" },
-    { name = "ruff" },
-]
-
 [package.dev-dependencies]
 dev = [
     { name = "ruff" },
@@ -226,19 +214,10 @@ typing = [
 requires-dist = [
     { name = "boto3", specifier = ">=1.26.0" },
     { name = "click", specifier = ">=8.0.0" },
-    { name = "mypy", marker = "extra == 'dev'" },
-    { name = "pre-commit", marker = "extra == 'dev'" },
-    { name = "pre-commit-uv", marker = "extra == 'dev'" },
     { name = "prompt-toolkit", specifier = ">=3.0.0" },
-    { name = "pyright", marker = "extra == 'dev'" },
-    { name = "pytest", marker = "extra == 'dev'" },
-    { name = "pytest-cov", marker = "extra == 'dev'" },
-    { name = "pytest-mock", marker = "extra == 'dev'" },
     { name = "pyyaml", specifier = ">=6.0.0" },
     { name = "rich", specifier = ">=10.0.0" },
-    { name = "ruff", marker = "extra == 'dev'" },
 ]
-provides-extras = ["dev"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "ruff" }]

@@ -22,18 +22,6 @@ dependencies = [
 [project.scripts]
 kite = "hyperscale.kite.cli:main"
 
-[project.optional-dependencies]
-dev = [
-  "ruff",
-  "pytest",
-  "pytest-cov",
-  "mypy",
-  "pyright",
-  "pytest-mock",
-  "pre-commit",
-  "pre-commit-uv",
-]
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

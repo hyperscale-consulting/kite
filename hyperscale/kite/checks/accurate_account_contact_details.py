@@ -19,10 +19,9 @@ class AccurateAccountContactDetailsCheck:
     @property
     def description(self) -> str:
         return (
-            "This check verifies that account contact details are accurate and secure. "
-            "If root credentials management is enabled at the org level, only the "
-            "management account contact details need to be verified. Otherwise, all "
-            "account contact details need to be verified."
+            "This check verifies that account contact details are accurate and, and "
+            "that the related email addresses and phone numbers are secures "
+            "appropriately."
         )
 
     def run(self) -> CheckResult:
@@ -33,22 +32,25 @@ class AccurateAccountContactDetailsCheck:
             root_credentials_managed = "RootCredentialsManagement" in features
             if root_credentials_managed:
                 context = (
-                    "Root credentials management is enabled at the org level. "
-                    "Verify the contact details for the management account only."
-                    "\n\n"
+                    "Root credentials management is enabled at the organizational "
+                    "level, so you only need to verify contact details for the "
+                    "management account.\n\n"
                 )
             else:
                 context = (
-                    "Root credentials management is not enabled at the org level. "
-                    "Verify the contact details for all accounts in scope.\n\n"
+                    "Root credentials management is *not* enabled at the organizational"
+                    " level. You will need to verify the contact details for all "
+                    "member accounts in scope for the assessment.\n\n"
                 )
 
         context += (
-            "Consider the following factors:\n"
+            "Consider the following:\n"
             "- Are contact details accurate and up-to-date?\n"
             "- Is the email address on a corporate domain and a distribution "
-            "list locked down to appropriate users?\n"
-            "- Is the phone number a secure phone dedicated for this purpose?"
+            "list locked down to appropriate users (e.g. cloud admins)?\n"
+            "- Is the phone number pointing to a suitably secured phone (e.g. "
+            "dedicated for this purpose, number kept private, kept in a secure "
+            "location)?"
         )
         return CheckResult(
             status=CheckStatus.MANUAL,

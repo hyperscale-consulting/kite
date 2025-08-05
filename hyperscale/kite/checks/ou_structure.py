@@ -32,9 +32,16 @@ class OuStructureCheck:
             )
         org_structure = get_organization_structure_str(org)
         message = (
-            "Consider the following factors for OU structure:\n"
-            "- Are OUs used to group accounts based on function, compliance "
-            "requirements, or a common set of controls?\n\n"
+            "A well-designed Organizational Unit (OU) structure can make it easier to "
+            "apply security controls across accounts. Therefore, your OU structure, "
+            "should be aligned with business needs, data sensitivity and workload "
+            "structure to enable grouping of accounts based on function, compliance "
+            "requirements, data sensitivity, or a common set of controls.\n\n"
+            "A well-designed OU structure is likely to include:\n"
+            "- A Security OU\n"
+            "- A Workloads OU\n"
+            "- Separate prod and non-prod sub-OUs\n"
+            "- Other OUs, such as Infrastructure, Sandbox, Deployments, as required\n\n"
             "Organization Structure:\n"
             f"{org_structure}"
         )

@@ -32,10 +32,10 @@ class AccountSeparationCheck:
             )
         org_structure = get_organization_structure_str(org)
         message = (
-            "Consider the following factors for account separation:\n"
-            "- Are unrelated workloads, or workloads with different data sensitivity, "
-            "separated into different accounts?\n"
-            "- Are dev, test, dev tooling, deployment, etc accounts separated from "
+            "Consider the following:\n"
+            "- Are unrelated workloads, or workloads with different data sensitivity "
+            "or compliance requirements, separated into different accounts?\n"
+            "- Are dev, test, dev tooling, and deployment accounts separated from "
             "workload accounts?\n"
             "- Are there separate log archive and audit (AKA security tooling) "
             "accounts?\n\n"

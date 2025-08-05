@@ -23,7 +23,10 @@ def test_credentials_management_enabled(check):
     )
     result = check.run()
     assert result.status == CheckStatus.MANUAL
-    assert "Root credentials management is enabled at the org level" in result.context
+    assert (
+        "Root credentials management is enabled at the organizational level"
+        in result.context
+    )
 
 
 def test_credentials_management_not_enabled(check):
@@ -33,7 +36,8 @@ def test_credentials_management_not_enabled(check):
     result = check.run()
     assert result.status == CheckStatus.MANUAL
     assert (
-        "Root credentials management is not enabled at the org level" in result.context
+        "Root credentials management is *not* enabled at the organizational level"
+        in result.context
     )
 
 

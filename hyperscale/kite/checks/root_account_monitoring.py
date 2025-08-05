@@ -23,10 +23,10 @@ class RootAccountMonitoringCheck:
 
     def run(self) -> CheckResult:
         context = (
-            "Consider the following factors:\n"
+            "Consider the following:\n"
             "- Are there systems in place to monitor root account activity?\n"
             "- Are there procedures to respond to suspicious root account activity?\n"
-            "- Are these procedures regularly tested and updated?"
+            "- Are these procedures regularly tested?"
         )
 
         return CheckResult(

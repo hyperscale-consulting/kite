@@ -118,7 +118,7 @@ class Config:
         except yaml.YAMLError as e:
             raise click.ClickException(f"Error parsing config file: {str(e)}") from e
 
-    def save(self, config_path: str) -> None:
+    def save(self, config_path: Path = Path("kite.yaml")) -> Path:
         """Save the current configuration to a YAML file.
 
         Args:
@@ -128,7 +128,6 @@ class Config:
             RuntimeError: If configuration hasn't been loaded yet.
             ClickException: If there's an error saving the file.
         """
-
         try:
             config_dict = {
                 "management_account_id": self.management_account_id,
@@ -144,5 +143,6 @@ class Config:
 
             with open(config_path, "w") as f:
                 yaml.dump(config_dict, f, default_flow_style=False)
+            return config_path
         except Exception as e:
             raise click.ClickException(f"Error saving config file: {str(e)}") from e

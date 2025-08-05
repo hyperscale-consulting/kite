@@ -1,5 +1,4 @@
 from pathlib import Path
-from unittest.mock import Mock
 
 import pytest
 from click.testing import CliRunner
@@ -15,7 +14,6 @@ from hyperscale.kite import eks
 from hyperscale.kite import iam
 from hyperscale.kite import kms
 from hyperscale.kite import lambda_
-from hyperscale.kite import organizations
 from hyperscale.kite import rds
 from hyperscale.kite import redshift
 from hyperscale.kite import s3
@@ -26,34 +24,18 @@ from hyperscale.kite import sts
 from hyperscale.kite.cli import Assessment
 from hyperscale.kite.cli import main
 from hyperscale.kite.config import Config
-from hyperscale.kite.models import DelegatedAdmin
+from hyperscale.kite.data import get_organization
+from tests.clients import OrganizationsClient
 from tests.factories import create_config
 
 
 @pytest.fixture
 def config_path(tmp_path: Path, config: Config):
     path = tmp_path / "kite.yaml"
-    config.save(str(path))
+    config.save(path)
     yield path
     if path.exists():
         path.unlink()
-
-
-@pytest.fixture
-def delegated_admins(audit_account_id):
-    yield [
-        DelegatedAdmin(
-            id=audit_account_id,
-            arn=f"arn:aws:organizations:::{audit_account_id}:account",
-            email="audit@example.com",
-            name="Audit Account",
-            status="ACTIVE",
-            joined_method="CREATED",
-            joined_timestamp="2021-01-01T00:00:00Z",
-            delegation_enabled_date="2021-01-01T00:00:00Z",
-            service_principal="securityhub.amazonaws.com",
-        )
-    ]
 
 
 @pytest.fixture
@@ -129,129 +111,53 @@ def password_policy():
 
 
 @pytest.fixture
-def iam_rotate_access_key_90_days_prowler_result():
-    fields = ["" for _ in range(26)]
-    fields[10] = "iam_rotate_access_key_90_days"
-    fields[13] = "PASS"
-    fields[14] = "PASS"
-    fields[20] = "arn:aws:iam::123456789012:user/user1"
-    fields[21] = "user1"
-    fields[22] = "IAM user"
-    fields[25] = "us-east-1"
-    yield fields
-
-
-@pytest.fixture
-def guardduty_is_enabled_prowler_result():
-    fields = ["" for _ in range(26)]
-    fields[10] = "guardduty_is_enabled"
-    fields[13] = "PASS"
-    fields[14] = "PASS"
-    fields[20] = ""
-    fields[21] = ""
-    fields[22] = ""
-    fields[25] = "us-east-1"
-    yield fields
-
-
-@pytest.fixture
-def securityhub_enabled_prowler_result():
-    fields = ["" for _ in range(26)]
-    fields[10] = "securityhub_enabled"
-    fields[13] = "PASS"
-    fields[14] = "PASS"
-    fields[20] = ""
-    fields[21] = ""
-    fields[22] = ""
-    fields[25] = "us-east-1"
-    yield fields
-
-
-@pytest.fixture
-def workload_account_prowler_output(
-    workload_account_id,
-    prowler_output_dir,
-    iam_rotate_access_key_90_days_prowler_result,
-    guardduty_is_enabled_prowler_result,
-    securityhub_enabled_prowler_result,
-):
-    path = prowler_output_dir / f"prowler-output-{workload_account_id}.csv"
-    with open(path, "w") as f:
-        f.write(";".join(iam_rotate_access_key_90_days_prowler_result) + "\n")
-        f.write(";".join(guardduty_is_enabled_prowler_result) + "\n")
-        f.write(";".join(securityhub_enabled_prowler_result) + "\n")
-    return path
-
-
-@pytest.fixture
-def prowler_output(workload_account_prowler_output):
-    pass
-
-
-@pytest.fixture
 def runner(
     monkeypatch,
-    config,
-    organization,
-    organization_features,
+    stub_aws_session,
     account_summary,
-    delegated_admins,
     credentials_report,
     virtual_mfa_devices,
-    prowler_output,
     password_policy,
+    organization_features,
     ec2_instances,
 ):
-    monkeypatch.setattr(sts, "assume_role", lambda *args, **kwargs: Mock())
+    def mock_assume_role(*_):
+        return stub_aws_session
+
+    monkeypatch.setattr(sts, "assume_role", mock_assume_role)
+
+    monkeypatch.setattr(ec2, "get_running_instances", lambda *_: ec2_instances)
+    monkeypatch.setattr(ecs, "get_clusters", lambda *_: [])
+    monkeypatch.setattr(eks, "get_cluster_names", lambda *_: [])
+    monkeypatch.setattr(lambda_, "get_functions", lambda *_: [])
+    monkeypatch.setattr(rds, "get_instances", lambda *_: [])
+    monkeypatch.setattr(dynamodb, "get_tables", lambda *_: [])
+    monkeypatch.setattr(redshift, "get_clusters", lambda *_: [])
+    monkeypatch.setattr(sagemaker, "get_notebook_instances", lambda *_: [])
+    monkeypatch.setattr(sns, "get_topics", lambda *_: [])
+    monkeypatch.setattr(sqs, "get_queues", lambda *_: [])
+    monkeypatch.setattr(kms, "get_keys", lambda *_: [])
+    monkeypatch.setattr(s3, "get_bucket_names", lambda *_: [])
+    monkeypatch.setattr(s3, "get_buckets", lambda *_: [])
+    monkeypatch.setattr(cloudfront, "get_distributions", lambda *_: [])
+    monkeypatch.setattr(iam, "fetch_credentials_report", lambda *_: credentials_report)
+    monkeypatch.setattr(iam, "fetch_account_summary", lambda *_: account_summary)
+    monkeypatch.setattr(iam, "list_saml_providers", lambda *_: [])
+    monkeypatch.setattr(iam, "list_oidc_providers", lambda *_: [])
     monkeypatch.setattr(
-        organizations, "fetch_organization", lambda *args, **kwargs: organization
+        iam, "fetch_virtual_mfa_devices", lambda *_: virtual_mfa_devices
     )
     monkeypatch.setattr(
-        organizations,
-        "fetch_delegated_admins",
-        lambda *args, **kwargs: delegated_admins,
+        iam, "fetch_organization_features", lambda *_: organization_features
     )
-    monkeypatch.setattr(
-        ec2, "get_running_instances", lambda *args, **kwargs: ec2_instances
-    )
-    monkeypatch.setattr(ecs, "get_clusters", lambda *args, **kwargs: [])
-    monkeypatch.setattr(eks, "get_cluster_names", lambda *args, **kwargs: [])
-    monkeypatch.setattr(lambda_, "get_functions", lambda *args, **kwargs: [])
-    monkeypatch.setattr(rds, "get_instances", lambda *args, **kwargs: [])
-    monkeypatch.setattr(dynamodb, "get_tables", lambda *args, **kwargs: [])
-    monkeypatch.setattr(redshift, "get_clusters", lambda *args, **kwargs: [])
-    monkeypatch.setattr(sagemaker, "get_notebook_instances", lambda *args, **kwargs: [])
-    monkeypatch.setattr(sns, "get_topics", lambda *args, **kwargs: [])
-    monkeypatch.setattr(sqs, "get_queues", lambda *args, **kwargs: [])
-    monkeypatch.setattr(kms, "get_keys", lambda *args, **kwargs: [])
-    monkeypatch.setattr(s3, "get_bucket_names", lambda *args, **kwargs: [])
-    monkeypatch.setattr(s3, "get_buckets", lambda *args, **kwargs: [])
-    monkeypatch.setattr(cloudfront, "get_distributions", lambda *args, **kwargs: [])
-    monkeypatch.setattr(
-        iam,
-        "fetch_organization_features",
-        lambda *args, **kwargs: organization_features,
-    )
-    monkeypatch.setattr(
-        iam, "fetch_credentials_report", lambda *args, **kwargs: credentials_report
-    )
-    monkeypatch.setattr(
-        iam, "fetch_account_summary", lambda *args, **kwargs: account_summary
-    )
-    monkeypatch.setattr(iam, "list_saml_providers", lambda *args, **kwargs: [])
-    monkeypatch.setattr(iam, "list_oidc_providers", lambda *args, **kwargs: [])
-    monkeypatch.setattr(
-        iam, "fetch_virtual_mfa_devices", lambda *args, **kwargs: virtual_mfa_devices
-    )
-    monkeypatch.setattr(
-        iam, "get_password_policy", lambda *args, **kwargs: password_policy
-    )
+    monkeypatch.setattr(iam, "get_password_policy", lambda *_: password_policy)
     runner = CliRunner()
     with runner.isolated_filesystem():
         yield runner
 
 
-def test_run_list_checks(runner, config):
+def test_run_list_checks(runner):
+    create_config()
     result = runner.invoke(main, ["list-checks"])
     assert result.exit_code == 0
 
@@ -265,11 +171,30 @@ def test_run_assess_without_collect(runner, config_path):
     assert result.exit_code != 0
 
 
-def test_run_collect(runner, config_path):
-    result = runner.invoke(main, ["collect", "--config", str(config_path)])
+def test_run_collect(runner, stub_aws_session, tmp_path):
+    mgmt_account_id = "111111111111"
+    audit_account_id = "999999999999"
+
+    org_client = OrganizationsClient()
+    org_client.set_organization(
+        id="test-org", master_account_id=mgmt_account_id, feature_set="ALL"
+    )
+    org_client.set_root()
+    org_client.add_delegated_admin(audit_account_id, "securityhub.amazonaws.com")
+
+    stub_aws_session.register_client(org_client, "organizations")
+    config = create_config(mgmt_account_id=mgmt_account_id)
+
+    result = runner.invoke(
+        main, ["collect", "--config", config.save(tmp_path / "kite.yaml")]
+    )
     print(result.output)
     assert "Data collection complete" in result.output
     assert result.exit_code == 0
+    saved_org = get_organization()
+    assert saved_org is not None
+    assert saved_org.id == "test-org"
+    assert saved_org.master_account_id == mgmt_account_id
 
 
 @pytest.fixture
@@ -283,8 +208,7 @@ def test_run_assess_without_prowler_output(runner, tmp_path, base_path):
         data_dir=base_path / "fixtures/audit",  # simulate `collect` has been run
         external_id="123456",  # external_id for simulated `collect`
     )
-    config_path = str(tmp_path / "kite.yaml")
-    config.save(config_path)
+    config_path = config.save(tmp_path / "kite.yaml")
     result = runner.invoke(main, ["assess", "--config", config_path])
     print(result.output)
     assert result.exit_code != 0
@@ -301,8 +225,7 @@ def test_run_assess(runner, tmp_path, monkeypatch, base_path):
         data_dir=base_path / "fixtures/audit",
         external_id="123456",
     )
-    config_path = str(tmp_path / "kite.yaml")
-    config.save(config_path)
+    config_path = config.save(tmp_path / "kite.yaml")
 
     def responses():
         answer = True

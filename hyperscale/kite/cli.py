@@ -482,7 +482,7 @@ def configure():
         data_dir=Path(data_dir),
     )
 
-    config.save("kite.yaml")
+    config.save()
 
 
 @main.command()

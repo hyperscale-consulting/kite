@@ -258,6 +258,9 @@ from hyperscale.kite.checks.prevent_and_detect_secrets import (
     PreventAndDetectSecretsCheck,
 )
 from hyperscale.kite.checks.protect_root_ca import ProtectRootCaCheck
+from hyperscale.kite.checks.provide_secure_configs import (
+    ProvideSecureConfigurationsCheck,
+)
 from hyperscale.kite.checks.rds_logging_enabled import RdsLoggingEnabledCheck
 from hyperscale.kite.checks.region_deny_scp import RegionDenyScpCheck
 from hyperscale.kite.checks.regularly_review_permissions import (
@@ -350,7 +353,6 @@ from hyperscale.kite.checks.security_services_evaluation import (
     SecurityServicesEvaluationCheck,
 )
 from hyperscale.kite.checks.sensitivity_controls import SensitivityControlsCheck
-from hyperscale.kite.checks.service_catalog import ServiceCatalogCheck
 from hyperscale.kite.checks.sns_confused_deputy_protection import (
     SnsConfusedDeputyProtectionCheck,
 )
@@ -429,7 +431,7 @@ __all__ = [
     "IacTemplatesCheck",
     "IacVersionControlCheck",
     "IacGuardrailsCheck",
-    "ServiceCatalogCheck",
+    "ProvideSecureConfigurationsCheck",
     "NoKeyPairsCheck",
     "NoSecretsInAwsResourcesCheck",
     "AvoidRootUsageCheck",

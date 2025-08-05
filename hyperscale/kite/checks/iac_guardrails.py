@@ -11,23 +11,21 @@ class IacGuardrailsCheck:
     def question(self) -> str:
         return (
             "Are guardrails in place to detect and alert on misconfigurations in "
-            "templates before deployment (e.g. CloudFormation Guard, cfn-lint, "
-            "cfn-nag, CloudFormation Hooks etc)?"
+            "IaC before deployment?"
         )
 
     @property
     def description(self) -> str:
         return (
             "This check verifies that guardrails are in place to detect and alert "
-            "on misconfigurations in templates before deployment."
+            "on misconfigurations in IaC before deployment."
         )
 
     def run(self) -> CheckResult:
         message = (
-            "Consider the following factors:\n"
-            "- Are guardrails in place to detect misconfigurations?\n"
-            "- Are guardrails in place to alert on misconfigurations?\n"
-            "- Are guardrails used before deployment?"
+            "Tools such as cfn-nag and Clouformation Guard can provide IaC guardrails "
+            "by detecting misconfigurations in IaC and then alerting and preventing "
+            "deployment of non-compliant resources."
         )
         return CheckResult(
             status=CheckStatus.MANUAL,

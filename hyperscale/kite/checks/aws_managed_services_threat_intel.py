@@ -11,21 +11,22 @@ class AwsManagedServicesThreatIntelCheck:
     def question(self) -> str:
         return (
             "Are AWS managed services that automatically update with the latest threat "
-            "intelligence used effectively?"
+            "intelligence used?"
         )
 
     @property
     def description(self) -> str:
         return (
             "This check verifies that AWS managed services that automatically update "
-            "with the latest threat intelligence are used effectively."
+            "with the latest threat intelligence are used."
         )
 
     def run(self) -> CheckResult:
         message = (
-            "Consider the following factors:\n"
-            "- Are AWS managed services with built-in threat intelligence being used "
-            "where appropriate? (e.g GuardDuty, WAF, Inspector, Shield Advanced)"
+            "Some AWS managed services, such as GuardDuty, WAF, Inspector, and Shield "
+            "Advanced, automatically incorporate new threat intelligence as "
+            "threats emerge over time. Adopting these services can help reduce the "
+            "overall effort of staying up-to-date with emerging threats."
         )
         return CheckResult(
             status=CheckStatus.MANUAL,

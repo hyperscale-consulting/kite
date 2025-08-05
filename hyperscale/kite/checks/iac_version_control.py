@@ -1,5 +1,3 @@
-"""Check for IaC templates stored in version control with CI/CD testing."""
-
 from hyperscale.kite.checks.core import CheckResult
 from hyperscale.kite.checks.core import CheckStatus
 
@@ -26,10 +24,12 @@ class IacVersionControlCheck:
 
     def run(self) -> CheckResult:
         message = (
-            "Consider the following factors:\n"
+            "Consider the following:\n"
             "- Are IaC templates stored in version control?\n"
             "- Are IaC templates tested as part of a CI/CD pipeline?\n"
-            "- Are IaC templates automatically deployed to production?"
+            "- Are IaC templates automatically deployed to production?\n"
+            "- Can you confidently re-create all production environments on demand, "
+            "based on what is stored in version control?"
         )
         return CheckResult(
             status=CheckStatus.MANUAL,

@@ -118,6 +118,7 @@ from hyperscale.kite.checks import PipelinesUseLeastPrivilegeCheck
 from hyperscale.kite.checks import PreDeployToolsCheck
 from hyperscale.kite.checks import PreventAndDetectSecretsCheck
 from hyperscale.kite.checks import ProtectRootCaCheck
+from hyperscale.kite.checks import ProvideSecureConfigurationsCheck
 from hyperscale.kite.checks import RdsLoggingEnabledCheck
 from hyperscale.kite.checks import RegionDenyScpCheck
 from hyperscale.kite.checks import RegularlyReviewPermissionsCheck
@@ -160,7 +161,6 @@ from hyperscale.kite.checks import SecurityIrPlaybooksCheck
 from hyperscale.kite.checks import SecurityRisksCheck
 from hyperscale.kite.checks import SecurityServicesEvaluationCheck
 from hyperscale.kite.checks import SensitivityControlsCheck
-from hyperscale.kite.checks import ServiceCatalogCheck
 from hyperscale.kite.checks import SnsConfusedDeputyProtectionCheck
 from hyperscale.kite.checks import SnsDataProtectionPoliciesCheck
 from hyperscale.kite.checks import SqsConfusedDeputyProtectionCheck
@@ -264,7 +264,7 @@ CHECK_THEMES = [
             IacTemplatesCheck(),
             IacVersionControlCheck(),
             IacGuardrailsCheck(),
-            ServiceCatalogCheck(),
+            ProvideSecureConfigurationsCheck(),
             AccountStandardsCheck(),
             ControlTowerCheck(),
         ],

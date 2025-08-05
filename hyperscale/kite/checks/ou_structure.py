@@ -33,7 +33,7 @@ class OuStructureCheck:
         org_structure = get_organization_structure_str(org)
         message = (
             "A well-designed Organizational Unit (OU) structure can make it easier to "
-            "apply security controls across accounts. Therefore, your OU structure, "
+            "apply security controls across accounts. Therefore, your OU structure "
             "should be aligned with business needs, data sensitivity and workload "
             "structure to enable grouping of accounts based on function, compliance "
             "requirements, data sensitivity, or a common set of controls.\n\n"

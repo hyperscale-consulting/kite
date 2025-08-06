@@ -38,7 +38,6 @@ from hyperscale.kite.checks import ControlImplementationValidationCheck
 from hyperscale.kite.checks import ControlNetworkFlowsWithRouteTablesCheck
 from hyperscale.kite.checks import ControlNetworkFlowsWithSGsCheck
 from hyperscale.kite.checks import ControlNetworkFlowWithNaclsCheck
-from hyperscale.kite.checks import ControlTowerCheck
 from hyperscale.kite.checks import CreateNetworkLayersCheck
 from hyperscale.kite.checks import CredentialRotationCheck
 from hyperscale.kite.checks import CrossAccountConfusedDeputyPreventionCheck
@@ -266,7 +265,6 @@ CHECK_THEMES = [
             IacGuardrailsCheck(),
             ProvideSecureConfigurationsCheck(),
             VendAccountsWithStandardizedControlsCheck(),
-            ControlTowerCheck(),
         ],
     ),
     CheckTheme(

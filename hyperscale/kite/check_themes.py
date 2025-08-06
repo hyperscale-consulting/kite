@@ -56,7 +56,6 @@ from hyperscale.kite.checks import DetectEncryptionAtRestMisconfigCheck
 from hyperscale.kite.checks import DetectiveEnabledCheck
 from hyperscale.kite.checks import DetectMissingAutomatedLifecycleManagementCheck
 from hyperscale.kite.checks import DetectSensitiveDataTransformCheck
-from hyperscale.kite.checks import DfdsCheck
 from hyperscale.kite.checks import DocumentedDataClassificationSchemeCheck
 from hyperscale.kite.checks import EksControlPlaneLoggingEnabledCheck
 from hyperscale.kite.checks import ElbLoggingEnabledCheck
@@ -156,7 +155,6 @@ from hyperscale.kite.checks import SecurityDataPublishedToLogArchiveAccountCheck
 from hyperscale.kite.checks import SecurityEventCorrelationCheck
 from hyperscale.kite.checks import SecurityGuardiansProgramCheck
 from hyperscale.kite.checks import SecurityIrPlaybooksCheck
-from hyperscale.kite.checks import SecurityRisksCheck
 from hyperscale.kite.checks import SecurityServicesEvaluationCheck
 from hyperscale.kite.checks import SensitivityControlsCheck
 from hyperscale.kite.checks import SnsConfusedDeputyProtectionCheck
@@ -272,8 +270,6 @@ CHECK_THEMES = [
         description="Checks related to threat modeling practices and documentation",
         checks=[
             ThreatModelingCheck(),
-            DfdsCheck(),
-            SecurityRisksCheck(),
         ],
     ),
     CheckTheme(

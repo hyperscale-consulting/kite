@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from hyperscale.kite.checks import AccessManagementLifecycleCheck
 from hyperscale.kite.checks import AccessManagementLifecycleImplementedCheck
 from hyperscale.kite.checks import AccountSeparationCheck
-from hyperscale.kite.checks import AccountStandardsCheck
 from hyperscale.kite.checks import AccurateAccountContactDetailsCheck
 from hyperscale.kite.checks import ActiveExternalAccessAnalyzerCheck
 from hyperscale.kite.checks import ActiveUnusedAccessAnalyzerCheck
@@ -183,6 +182,7 @@ from hyperscale.kite.checks import UsePrivateLinkForVpcRoutingCheck
 from hyperscale.kite.checks import UseRoute53ResolverDnsFirewallCheck
 from hyperscale.kite.checks import UseServiceEncryptionAtRestCheck
 from hyperscale.kite.checks import ValidateSoftwareIntegrityCheck
+from hyperscale.kite.checks import VendAccountsWithStandardizedControlsCheck
 from hyperscale.kite.checks import VpcEndpointsEnforceDataPerimeterCheck
 from hyperscale.kite.checks import VpcFlowLogsEnabledCheck
 from hyperscale.kite.checks import VulnerabilityScanningInCICDPipelinesCheck
@@ -265,7 +265,7 @@ CHECK_THEMES = [
             IacVersionControlCheck(),
             IacGuardrailsCheck(),
             ProvideSecureConfigurationsCheck(),
-            AccountStandardsCheck(),
+            VendAccountsWithStandardizedControlsCheck(),
             ControlTowerCheck(),
         ],
     ),

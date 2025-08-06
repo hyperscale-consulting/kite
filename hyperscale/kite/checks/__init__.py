@@ -5,7 +5,6 @@ from hyperscale.kite.checks.access_management_lifecycle_implemented import (
     AccessManagementLifecycleImplementedCheck,
 )
 from hyperscale.kite.checks.account_separation import AccountSeparationCheck
-from hyperscale.kite.checks.account_standards import AccountStandardsCheck
 from hyperscale.kite.checks.accurate_account_contact_details import (
     AccurateAccountContactDetailsCheck,
 )
@@ -399,6 +398,9 @@ from hyperscale.kite.checks.use_service_encryption_at_rest import (
 from hyperscale.kite.checks.validate_software_integrity import (
     ValidateSoftwareIntegrityCheck,
 )
+from hyperscale.kite.checks.vend_accounts_with_standardized_controls import (
+    VendAccountsWithStandardizedControlsCheck,
+)
 from hyperscale.kite.checks.vpc_endpoints_enforce_data_perimeter import (
     VpcEndpointsEnforceDataPerimeterCheck,
 )
@@ -586,7 +588,7 @@ __all__ = [
     "CheckStatus",
     "make_finding",
     "CaptureKeyContactsCheck",
-    "AccountStandardsCheck",
+    "VendAccountsWithStandardizedControlsCheck",
     "ApprovalProcessForResourceSharingCheck",
     "AutomateDeploymentsCheck",
     "AutomateForensicsCheck",

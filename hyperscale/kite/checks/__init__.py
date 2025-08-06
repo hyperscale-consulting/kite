@@ -135,7 +135,6 @@ from hyperscale.kite.checks.detect_sensitive_data_transform import (
     DetectSensitiveDataTransformCheck,
 )
 from hyperscale.kite.checks.detective_enabled import DetectiveEnabledCheck
-from hyperscale.kite.checks.dfds import DfdsCheck
 from hyperscale.kite.checks.documented_data_classification_scheme import (
     DocumentedDataClassificationSchemeCheck,
 )
@@ -347,7 +346,6 @@ from hyperscale.kite.checks.security_guardians_program import (
     SecurityGuardiansProgramCheck,
 )
 from hyperscale.kite.checks.security_ir_playbooks import SecurityIrPlaybooksCheck
-from hyperscale.kite.checks.security_risks import SecurityRisksCheck
 from hyperscale.kite.checks.security_services_evaluation import (
     SecurityServicesEvaluationCheck,
 )
@@ -448,7 +446,6 @@ __all__ = [
     "TechInventoriesScannedCheck",
     "WorkloadDependencyUpdatesCheck",
     "ThreatModelingCheck",
-    "SecurityRisksCheck",
     "SecurityServicesEvaluationCheck",
     "RequireMfaCheck",
     "ComplexPasswordsCheck",
@@ -603,7 +600,6 @@ __all__ = [
     "DataCatalogCheck",
     "DefineAccessRequirementsCheck",
     "DefineAndDocumentWorkloadNetworkFlowsCheck",
-    "DfdsCheck",
     "DocumentedDataClassificationSchemeCheck",
     "DetectiveEnabledCheck",
     "ControlNetworkFlowsWithSGsCheck",

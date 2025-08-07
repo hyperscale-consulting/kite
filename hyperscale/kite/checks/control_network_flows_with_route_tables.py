@@ -12,7 +12,6 @@ from hyperscale.kite.helpers import get_account_ids_in_scope
 def _analyze() -> str:
     accounts = get_account_ids_in_scope()
     config = Config.get()
-    analysis = "Route Table Network Flow Analysis:\n\n"
     vpcs_by_account_and_region = defaultdict(dict)
     for account_id in accounts:
         for region in config.active_regions:
@@ -20,6 +19,10 @@ def _analyze() -> str:
             if vpcs_with_resources:
                 vpcs_by_account_and_region[account_id][region] = vpcs_with_resources
 
+    if not vpcs_by_account_and_region:
+        return ""  # no VPCs with resources to analyze
+
+    analysis = "Route Table Network Flow Analysis:\n\n"
     for account_id, regions in vpcs_by_account_and_region.items():
         analysis += account_id + "\n" + "=" * 50 + "\n\n"
         for region, vpcs in regions.items():
@@ -120,6 +123,11 @@ class ControlNetworkFlowsWithRouteTablesCheck:
 
     def run(self) -> CheckResult:
         rtb_analysis = _analyze()
+        if not rtb_analysis:
+            return CheckResult(
+                status=CheckStatus.PASS,
+                reason="No VPCs with resources could be found",
+            )
         message = (
             "Below is a summary of each VPC and subnet with resources, including a "
             "summary of the route tables associated with each subnet.\n\n"

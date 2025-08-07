@@ -147,7 +147,6 @@ def _analyze_subnet(subnet, sg_details, prowler_output):
 def _analyze() -> str:
     accounts = get_account_ids_in_scope()
     config = Config.get()
-    analysis = "Security Group Network Flow Analysis:\n\n"
     vpcs_by_account_and_region = defaultdict(dict)
     for account_id in accounts:
         for region in config.active_regions:
@@ -156,6 +155,11 @@ def _analyze() -> str:
                 vpcs_by_account_and_region[account_id][region] = vpcs_with_resources
 
     prowler_output = get_prowler_output()
+    if not vpcs_by_account_and_region:
+        return ""  # no VPCs with resources to analyze
+
+    analysis = "Security Group Network Flow Analysis:\n\n"
+
     for account_id, regions in vpcs_by_account_and_region.items():
         analysis += account_id + "\n" + "=" * 50 + "\n\n"
         for region, vpcs in regions.items():
@@ -191,6 +195,10 @@ class ControlNetworkFlowsWithSGsCheck:
 
     def run(self) -> CheckResult:
         sg_analysis = _analyze()
+        if not sg_analysis:
+            return CheckResult(
+                status=CheckStatus.PASS, reason="No VPCs with resources could be found"
+            )
         message = (
             "Below is a summary of each VPC and subnet with resources, including a "
             "summary of the security group rules applied to each resource.\n\n"

@@ -1,5 +1,5 @@
-from hyperscale.kite.checks.control_network_flows_with_sgs import (
-    ControlNetworkFlowsWithSGsCheck,
+from hyperscale.kite.checks.control_network_flow_with_nacls import (
+    ControlNetworkFlowWithNaclsCheck,
 )
 from hyperscale.kite.checks.core import CheckStatus
 from tests.factories import create_config_for_standalone_account
@@ -13,6 +13,6 @@ def test_no_vpcs():
         account_ids=[account_id], active_regions=[region]
     )
 
-    result = ControlNetworkFlowsWithSGsCheck().run()
+    result = ControlNetworkFlowWithNaclsCheck().run()
     assert result.status == CheckStatus.PASS
     assert result.reason == "No VPCs with resources could be found"

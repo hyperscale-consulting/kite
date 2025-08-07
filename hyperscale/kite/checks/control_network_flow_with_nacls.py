@@ -13,7 +13,6 @@ from hyperscale.kite.prowler import get_prowler_output
 def _analyze() -> str:
     accounts = get_account_ids_in_scope()
     config = Config.get()
-    analysis = "NACL Network Flow Analysis:\n\n"
     vpcs_by_account_and_region = defaultdict(dict)
     for account_id in accounts:
         for region in config.active_regions:
@@ -21,6 +20,10 @@ def _analyze() -> str:
             if vpcs_with_resources:
                 vpcs_by_account_and_region[account_id][region] = vpcs_with_resources
 
+    if not vpcs_by_account_and_region:
+        return ""  # no VPCs with resources to analyze
+
+    analysis = "NACL Network Flow Analysis:\n\n"
     prowler_output = get_prowler_output()
     for account_id, regions in vpcs_by_account_and_region.items():
         analysis += account_id + "\n" + "=" * 50 + "\n\n"
@@ -151,6 +154,10 @@ class ControlNetworkFlowWithNaclsCheck:
 
     def run(self) -> CheckResult:
         nacl_analysis = _analyze()
+        if not nacl_analysis:
+            return CheckResult(
+                status=CheckStatus.PASS, reason="No VPCs with resources could be found"
+            )
         message = (
             "Below is a summary of each VPC and subnet with resources, including a "
             "summary of the NACL rules applied to each subnet.\n\n"

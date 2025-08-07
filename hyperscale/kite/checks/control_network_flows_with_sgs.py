@@ -154,11 +154,11 @@ def _analyze() -> str:
             if vpcs_with_resources:
                 vpcs_by_account_and_region[account_id][region] = vpcs_with_resources
 
-    prowler_output = get_prowler_output()
     if not vpcs_by_account_and_region:
         return ""  # no VPCs with resources to analyze
 
     analysis = "Security Group Network Flow Analysis:\n\n"
+    prowler_output = get_prowler_output()
 
     for account_id, regions in vpcs_by_account_and_region.items():
         analysis += account_id + "\n" + "=" * 50 + "\n\n"

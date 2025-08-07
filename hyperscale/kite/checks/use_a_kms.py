@@ -1,8 +1,18 @@
+from collections import defaultdict
+
 from hyperscale.kite.checks.core import CheckResult
 from hyperscale.kite.checks.core import CheckStatus
 from hyperscale.kite.config import Config
 from hyperscale.kite.data import get_kms_keys
 from hyperscale.kite.helpers import get_account_ids_in_scope
+
+
+def _keys_with_origin(keys: list[dict], origins: list[str]) -> list[dict]:
+    return [key for key in keys if key.get("Origin") in origins]
+
+
+def _get_customer_managed_keys(account: str, region: str) -> list[dict]:
+    return [k for k in get_kms_keys(account, region) if k["KeyManager"] == "CUSTOMER"]
 
 
 class UseAKmsCheck:
@@ -26,84 +36,59 @@ class UseAKmsCheck:
 
     def run(self) -> CheckResult:
         config = Config.get()
-        all_hsm_keys = []
-        all_external_store_keys = []
-
-        # Get all in-scope accounts
         accounts = get_account_ids_in_scope()
 
-        # Check each account in each active region
+        all_keys = defaultdict(dict)
         for account in accounts:
             for region in config.active_regions:
-                # Get keys for this account and region
-                keys = get_kms_keys(account, region)
-
+                keys = _get_customer_managed_keys(account, region)
                 if keys:
-                    hsm_keys, external_store_keys = self._format_keys_by_origin(
-                        keys, account, region
-                    )
-                    all_hsm_keys.extend(hsm_keys)
-                    all_external_store_keys.extend(external_store_keys)
+                    all_keys[account][region] = keys
 
-        # Format the output
-        output = []
-        if all_hsm_keys:
-            output.append("\nAWS KMS keys protected by hardware security module:")
-            output.extend(sorted(all_hsm_keys))
-
-        if all_external_store_keys:
-            output.append(
-                "\nExternal key store keys (please verify these are protected by "
-                "hardware security module):"
-            )
-            output.extend(sorted(all_external_store_keys))
-
-        # Build the message
         message = (
-            "All keys should be stored in a KMS using HSMs to protect keys. This "
-            "includes keys used by workloads to encrypt data, which should be envelope "
-            "encrypted with a key that is stored in a HSM-backed KMS.\n\n"
-            "Current KMS Keys:\n" + "\n".join(output) + "\n\nPlease verify that:\n"
-            "- All keys used for data encryption are envelope encrypted with a key "
-            "stored in a HSM-backed KMS\n"
-            "- All external key stores use hardware security modules to protect keys"
+            "All keys should be stored in a KMS using HSMs to protect keys.\n\n"
+            "This includes keys used by workloads, which should be envelope encrypted "
+            "with a key that is stored in a HSM-backed KMS.\n\n"
+            "In AWS, there are 4 possible origins of key material:\n"
+            "- AWS KMS: key material is generated and stored in AWS managed HSM "
+            "appliances.\n"
+            "- AWS CloudHSM: key material is generated and stored in customer-managed "
+            "AWS CloudHSM clusters.\n"
+            "- External key store: key material is generated and stored outside of "
+            "AWS, in customer-managed HSMs.\n"
+            "- External: key material is generated externally and the imported into "
+            "AWS KMS. This type should be avoided where possible because copies may "
+            "exist outside of a HSM.\n\n"
+        )
+        if all_keys:
+            message += "The following AWS KMS keys were found in in-scope accounts:\n\n"
+            for account_id, regions in all_keys.items():
+                message += f"\nAccount: {account_id}\n"
+                for region, keys in regions.items():
+                    message += f"\n  Region: {region}\n"
+                    hsm_keys = _keys_with_origin(
+                        keys, ["AWS_KMS", "AWS_CLOUDHSM", "EXTERNAL_KEY_STORE"]
+                    )
+                    if hsm_keys:
+                        message += "    ✅ Keys stored and generated in a HSM:\n"
+                        for k in hsm_keys:
+                            message += f"    - {k['KeyId']} (Origin {k['Origin']})\n"
+                    external_keys = _keys_with_origin(keys, ["EXTERNAL"])
+                    if external_keys:
+                        message += "    ⚠️ Keys generated outside of a HSM:\n"
+                        for k in external_keys:
+                            message += f"    - {k['KeyId']} (Origin {k['Origin']})\n"
+
+        else:
+            message += (
+                "⚠️ No customer-managed AWS KMS keys could be found in any "
+                "in-scope account.\n"
+            )
+
+        message += (
+            "\nEnsure that any keys not created in AWS KMS (such as workload "
+            "data keys) are stored in a HSM or envelope encrypted by a master key "
+            "stored in a HSM.\n"
         )
 
         return CheckResult(status=CheckStatus.MANUAL, context=message)
-
-    def _format_keys_by_origin(
-        self, keys: list[dict], account: str, region: str
-    ) -> tuple[list[str], list[str]]:
-        """
-        Format KMS keys grouped by their origin.
-
-        Args:
-            keys: List of KMS key dictionaries
-            account: AWS account ID
-            region: AWS region
-
-        Returns:
-            Tuple of (hsm_keys, external_store_keys) where each is a list of
-            formatted key strings
-        """
-        # Group keys by origin
-        hsm_keys = []
-        external_store_keys = []
-
-        for key in keys:
-            key_id = key.get("KeyId")
-            if not key_id:
-                continue
-
-            metadata = key.get("Metadata", {})
-            if metadata.get("KeyManager") != "CUSTOMER":
-                continue
-
-            formatted_key = f"  - {key_id} ({account}/{region})"
-            origin = metadata.get("Origin")
-            if origin in ["AWS_KMS", "EXTERNAL", "AWS_CLOUDHSM"]:
-                hsm_keys.append(formatted_key)
-            elif origin == "EXTERNAL_KEY_STORE":
-                external_store_keys.append(formatted_key)
-
-        return hsm_keys, external_store_keys

@@ -257,3 +257,56 @@ def test_run_assess(runner, tmp_path, monkeypatch, base_path):
         assert (
             assessment.get_finding("no-permissive-role-assumption")["status"] == "PASS"
         )
+
+
+def test_report_without_results(runner, tmp_path):
+    config = create_config()
+    result = runner.invoke(main, ["report", "-c", config.save(tmp_path / "kite.yaml")])
+    assert result.exit_code != 0
+    assert "Results file not found" in result.output
+
+
+def test_report(runner, tmp_path):
+    config = create_config()
+    assessment = Assessment()
+    assessment.record(
+        "Identity and Access Management",
+        {
+            "check_id": "test_001",
+            "check_name": "Test Check 1",
+            "description": "A test check for IAM",
+            "status": "PASS",
+            "reason": "Test passed successfully",
+            "details": {"message": "Test passed successfully"},
+        },
+    )
+    assessment.record(
+        "Data Protection",
+        {
+            "check_id": "test_002",
+            "check_name": "Test Check 2",
+            "description": "A test check for data protection",
+            "status": "FAIL",
+            "reason": "Test failed as expected",
+            "details": {"message": "Test failed as expected"},
+        },
+    )
+    assessment.save()
+    result = runner.invoke(main, ["report", "-c", config.save(tmp_path / "kite.yaml")])
+
+    assert "HTML report generated" in result.output
+    assert result.exit_code == 0
+
+    report_dir = config.data_dir / "html"
+    assert report_dir.exists()
+    assert (report_dir / "report.html").exists()
+    assert (report_dir / "styles.css").exists()
+    assert (report_dir / "script.js").exists()
+
+    # Check the HTML content
+    html_content = (report_dir / "report.html").read_text()
+    assert "Kite Security Assessment Report" in html_content
+    assert "Test Check 1" in html_content
+    assert "Test Check 2" in html_content
+    assert "PASS" in html_content
+    assert "FAIL" in html_content

@@ -193,6 +193,20 @@ needs, you can start an assessment:
 kite assess
 ```
 
+After completing the assessment, you can generate a HTML report from the results:
+
+```bash
+kite report
+```
+
+This will create an HTML report in the `<data_dir>/html/` directory that you can open in your web browser. The report includes:
+
+- **Executive Summary**: Overview of all checks with pass/fail statistics
+- **Interactive Chart**: Visual representation of assessment results
+- **Detailed Results**: Organized by security themes with individual check details
+
+The report provides a professional presentation of your security assessment results that can be shared with stakeholders or used for compliance reporting.
+
 ## Development
 
 ### Prerequisites

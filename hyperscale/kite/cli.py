@@ -1,11 +1,6 @@
 import os
 import shutil
 import subprocess
-from collections import defaultdict
-from dataclasses import asdict
-from dataclasses import dataclass
-from dataclasses import field
-from datetime import datetime
 from pathlib import Path
 
 import click
@@ -25,6 +20,7 @@ from hyperscale.kite.cloudfront import get_distributions_by_web_acl
 from hyperscale.kite.collect import collect_data
 from hyperscale.kite.collect import CollectException
 from hyperscale.kite.config import Config
+from hyperscale.kite.core import Assessment
 from hyperscale.kite.data import save_collection_metadata
 from hyperscale.kite.data import verify_collection_status
 from hyperscale.kite.helpers import assume_organizational_role
@@ -34,6 +30,7 @@ from hyperscale.kite.organizations import fetch_account_ids
 from hyperscale.kite.organizations import get_account_details
 from hyperscale.kite.prowler import get_prowler_output
 from hyperscale.kite.prowler import NoProwlerDataException
+from hyperscale.kite.report import generate_html_report
 from hyperscale.kite.s3 import get_buckets
 from hyperscale.kite.ui import confirm
 from hyperscale.kite.ui import prompt
@@ -119,50 +116,6 @@ def main():
     pass
 
 
-@dataclass
-class Assessment:
-    timestamp: str = datetime.now().isoformat()
-    config_file: str = "kite.yaml"
-    themes: dict = field(default_factory=lambda: defaultdict(list))
-
-    @classmethod
-    def load(cls) -> "Assessment | None":
-        try:
-            with open("kite-results.yaml") as f:
-                data = yaml.safe_load(f)
-                data["themes"] = defaultdict(list, data.get("themes", {}))
-                return Assessment(**data)
-        except FileNotFoundError:
-            return None
-
-    def record(self, theme_name: str, finding):
-        self.themes[theme_name].append(finding)
-
-    def save(self):
-        with open("kite-results.yaml", "w") as f:
-            data = asdict(self)
-            data["themes"] = dict(
-                self.themes
-            )  # Convert defaultdict to dict for YAML serialization
-            yaml.dump(data, f, default_flow_style=False)
-
-    def has_finding(self, check_id: str) -> bool:
-        return self._get_finding(check_id) is not None
-
-    def _get_finding(self, check_id: str) -> dict | None:
-        for _, findings in self.themes.items():
-            for f in findings:
-                if f["check_id"] == check_id:
-                    return f
-        return None
-
-    def get_finding(self, check_id: str) -> dict:
-        finding = self._get_finding(check_id)
-        if finding is None:
-            raise ValueError(f"No finding found for check ID: {check_id}")
-        return finding
-
-
 def _verify_prowler_output_exists():
     try:
         get_prowler_output()
@@ -187,7 +140,6 @@ def assess(config: str, auto_save: bool = True):
     """Start a security assessment using the specified config file."""
     config_data = Config.load(config)
 
-    # Verify collection status
     verify_collection_status()
     _verify_prowler_output_exists()
 
@@ -196,12 +148,12 @@ def assess(config: str, auto_save: bool = True):
         ", ".join(config_data.account_ids) if config_data.account_ids else "ALL"
     )
 
-    assessment = Assessment.load()
-    if assessment:
+    try:
+        assessment = Assessment.load()
         progress_msg = (
             "Continuing AWS security assessment using results from ./kite-results.yaml"
         )
-    else:
+    except FileNotFoundError:
         progress_msg = "Starting new AWS security assessment"
         assessment = Assessment()
 
@@ -711,6 +663,32 @@ def exec(config: str, account_id: str, command: list[str]):
         }
     )
     subprocess.run(cmd, env=env)
+
+
+@main.command()
+@click.option(
+    "--config",
+    "-c",
+    default="kite.yaml",
+    help="Path to config file (default: kite.yaml)",
+    type=click.Path(exists=True),
+)
+def report(config: str):
+    """Generate an HTML report from kite-results.yaml."""
+    Config.load(config)
+    try:
+        report_path = generate_html_report()
+        console.print(
+            Panel(
+                f"HTML report generated at {report_path}",
+                title="Report",
+                border_style="blue",
+            )
+        )
+    except FileNotFoundError as e:
+        raise click.ClickException(
+            "Results file not found. Please run 'kite assess' first."
+        ) from e
 
 
 if __name__ == "__main__":

@@ -23,8 +23,6 @@ class SensitivityControlsCheck:
 
     def run(self) -> CheckResult:
         context = (
-            "This check verifies that appropriate controls are implemented based on "
-            "data sensitivity levels.\n\n"
             "Consider the following:\n"
             "- Are access controls (IAM policies, SCPs) implemented based on data "
             "sensitivity?\n"

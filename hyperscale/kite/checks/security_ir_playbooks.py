@@ -25,9 +25,6 @@ class SecurityIrPlaybooksCheck:
 
     def run(self) -> CheckResult:
         context = (
-            "This check verifies that security incident response playbooks are in "
-            "place for anticipated incidents such as DoS, ransomware, or credential "
-            "compromise.\n\n"
             "Consider the following factors:\n"
             "- Are playbooks available for common incident types (DoS, ransomware, "
             "credential compromise, data breach, malware)?\n"

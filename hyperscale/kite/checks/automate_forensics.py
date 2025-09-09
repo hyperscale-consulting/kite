@@ -24,9 +24,10 @@ class AutomateForensicsCheck:
 
     def run(self) -> CheckResult:
         message = (
-            "This check verifies that the collection of forensics, such as snapshots "
-            "of EBS volumes, memory dumps, process lists and logs is automated as far "
-            "as possible."
+            "During a security incident, you need to be able to collect and analyze "
+            "evidence quickly and accurately. This means that robust automation should "
+            "be in place to capture forensic data such as EBS volume snapshots, memory "
+            "dumps, process lists, and logs."
         )
         return CheckResult(
             status=CheckStatus.MANUAL,

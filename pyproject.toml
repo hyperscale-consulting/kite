@@ -1,6 +1,6 @@
 [project]
 name = "hyperscale-kite"
-version = "0.3.0"
+version = "0.3.1"
 description = "A tool for AWS security assessments"
 readme = "README.md"
 requires-python = ">=3.10"

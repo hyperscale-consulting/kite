@@ -13,6 +13,8 @@ class Finding:
     check_name: str
     status: str
     description: str
+    criticality: int
+    difficulty: int
     reason: str
     details: dict = field(default_factory=dict)
 
@@ -20,6 +22,8 @@ class Finding:
 def make_finding(
     check_id: str,
     check_name: str,
+    criticality: int,
+    difficulty: int,
     status: str,
     reason: str,
     description: str,
@@ -32,6 +36,8 @@ def make_finding(
         check_name=check_name,
         status=status,
         description=description,
+        criticality=criticality,
+        difficulty=difficulty,
         reason=reason,
         details=details,
     )

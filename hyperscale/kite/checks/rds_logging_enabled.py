@@ -51,3 +51,11 @@ class RdsLoggingEnabledCheck:
             reason=message,
             details=details,
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

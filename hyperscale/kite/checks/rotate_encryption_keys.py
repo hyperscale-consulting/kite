@@ -97,3 +97,11 @@ class RotateEncryptionKeysCheck:
                 disabled_keys.append(formatted_key)
 
         return enabled_keys, disabled_keys
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

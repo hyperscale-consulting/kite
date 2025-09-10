@@ -83,3 +83,11 @@ class LambdaConfusedDeputyProtectionCheck:
                 "vulnerable_functions": vulnerable_functions,
             },
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

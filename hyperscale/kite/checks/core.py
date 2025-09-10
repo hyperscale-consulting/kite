@@ -36,3 +36,9 @@ class Check(Protocol):
 
     @property
     def check_name(self) -> str: ...
+
+    @property
+    def criticality(self) -> int: ...
+
+    @property
+    def difficulty(self) -> int: ...

@@ -87,3 +87,11 @@ class ActiveExternalAccessAnalyzerCheck:
             reason="No active external access analyzer found.",
             details={"summary": summary},
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

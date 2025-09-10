@@ -134,3 +134,11 @@ class ManagementAccountWorkloadsCheck:
             status=CheckStatus.MANUAL,
             context=message,
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

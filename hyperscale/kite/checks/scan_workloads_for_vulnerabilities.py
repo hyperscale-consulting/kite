@@ -91,3 +91,11 @@ class ScanWorkloadsForVulnerabilitiesCheck:
             "accounts_missing_scanning": dict(accounts_missing_scanning),
             "scanned_resource_types": sorted(list(scanned_resource_types)),
         }
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

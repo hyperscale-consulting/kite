@@ -49,3 +49,11 @@ class ConfigRecordingEnabledCheck:
                 "recorders_found": recorders_found,
             },
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

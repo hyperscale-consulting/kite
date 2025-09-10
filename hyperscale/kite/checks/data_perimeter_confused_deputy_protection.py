@@ -106,3 +106,11 @@ class DataPerimeterConfusedDeputyProtectionCheck:
                 f"{', '.join(missing_ous)}"
             ),
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

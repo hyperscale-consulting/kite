@@ -62,6 +62,14 @@ class UseRoute53ResolverDnsFirewallCheck:
             context=message,
         )
 
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5
+
 
 def _get_vpcs_with_resources() -> dict[str, list[str]]:
     """Get VPCs that have resources in them, organized by account."""

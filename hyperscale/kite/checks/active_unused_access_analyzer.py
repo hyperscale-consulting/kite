@@ -130,3 +130,11 @@ class ActiveUnusedAccessAnalyzerCheck:
             context=message,
             details={"summary": summary},
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

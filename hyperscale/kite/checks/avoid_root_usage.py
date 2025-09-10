@@ -71,3 +71,11 @@ class AvoidRootUsageCheck:
             reason="Root account password has not been used in the last 90 days in any "
             "account.",
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

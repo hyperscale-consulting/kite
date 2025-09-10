@@ -45,3 +45,11 @@ class ScimProtocolUsedCheck:
             status=CheckStatus.MANUAL,
             context=context_message,
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

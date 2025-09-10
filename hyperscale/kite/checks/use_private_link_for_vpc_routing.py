@@ -52,6 +52,14 @@ class UsePrivateLinkForVpcRoutingCheck:
             context=message,
         )
 
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5
+
 
 def _analyze_vpc_peering_connections() -> str:
     """Analyze VPC peering connections across all accounts and regions."""

@@ -183,3 +183,11 @@ class ScpPreventsGuarddutyChangesCheck:
                     return True
 
         return False
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

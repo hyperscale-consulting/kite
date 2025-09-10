@@ -32,3 +32,11 @@ class RegionDenyScpCheck:
         return check_for_org_wide_region_deny_scp(
             get_organization(), config.active_regions
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

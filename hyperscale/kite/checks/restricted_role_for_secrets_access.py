@@ -168,6 +168,14 @@ class RestrictedRoleForSecretsAccessCheck:
             context=message,
         )
 
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5
+
 
 def get_trust_policy(role_arn):
     role = get_role_by_arn(role_arn)

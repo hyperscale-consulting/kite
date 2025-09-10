@@ -73,3 +73,11 @@ class UseOfHigherLevelServicesCheck:
             context=context,
             details={"ec2_instances": ec2_instances_by_account},
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

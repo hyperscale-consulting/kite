@@ -98,3 +98,11 @@ class RootMfaEnabledCheck:
                 "accounts_with_virtual_mfa": accounts_with_virtual_mfa,
             },
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

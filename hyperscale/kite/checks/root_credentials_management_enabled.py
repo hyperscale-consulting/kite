@@ -39,3 +39,11 @@ class RootCredentialsManagementEnabledCheck:
                 "root account credentials for day-to-day operations."
             ),
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

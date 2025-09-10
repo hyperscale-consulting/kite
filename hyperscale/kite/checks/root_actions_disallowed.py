@@ -21,3 +21,11 @@ class RootActionsDisallowedCheck:
 
     def run(self) -> CheckResult:
         return check_for_org_wide_disallow_root_actions_scp(get_organization())
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

@@ -93,3 +93,11 @@ class AutoRemediateNonCompliantResourcesCheck:
                 "security_hub_action_targets": security_hub_action_targets,
             },
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

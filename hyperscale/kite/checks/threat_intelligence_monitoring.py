@@ -35,3 +35,11 @@ class ThreatIntelligenceMonitoringCheck:
             status=CheckStatus.MANUAL,
             context=context,
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

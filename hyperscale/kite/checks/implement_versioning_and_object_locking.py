@@ -83,3 +83,11 @@ class ImplementVersioningAndObjectLockingCheck:
                 "buckets_without_protection": buckets_without_protection,
             },
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

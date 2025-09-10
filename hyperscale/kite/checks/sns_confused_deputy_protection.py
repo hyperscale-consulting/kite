@@ -99,3 +99,11 @@ class SnsConfusedDeputyProtectionCheck:
                 "be vulnerable to confused deputy attacks."
             ),
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

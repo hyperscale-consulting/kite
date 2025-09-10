@@ -49,3 +49,11 @@ class NoAccessKeysCheck:
                 "users_with_keys": users_with_keys,
             },
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

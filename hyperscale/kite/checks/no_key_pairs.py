@@ -46,3 +46,11 @@ class NoKeyPairsCheck:
                 "accounts_with_key_pairs": accounts_with_key_pairs,
             },
         )
+
+    @property
+    def criticality(self) -> int:
+        return 5
+
+    @property
+    def difficulty(self) -> int:
+        return 5

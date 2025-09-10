@@ -12,15 +12,16 @@ from rich.panel import Panel
 from rich.table import Table
 
 from hyperscale.kite.accessanalyzer import list_analyzers
-from hyperscale.kite.check_themes import CHECK_THEMES
 from hyperscale.kite.check_themes import find_check_by_id
+from hyperscale.kite.check_themes import THEMES
 from hyperscale.kite.checks import CheckStatus
-from hyperscale.kite.checks import make_finding
 from hyperscale.kite.cloudfront import get_distributions_by_web_acl
 from hyperscale.kite.collect import collect_data
 from hyperscale.kite.collect import CollectException
 from hyperscale.kite.config import Config
 from hyperscale.kite.core import Assessment
+from hyperscale.kite.core import Finding
+from hyperscale.kite.core import make_finding
 from hyperscale.kite.data import save_collection_metadata
 from hyperscale.kite.data import verify_collection_status
 from hyperscale.kite.helpers import assume_organizational_role
@@ -39,15 +40,15 @@ from hyperscale.kite.wafv2 import get_web_acls
 console = Console()
 
 
-def display_finding(finding: dict):
+def display_finding(finding: Finding):
     """
     Display a finding in a consistent format.
 
     Args:
         finding: The finding dictionary to display.
     """
-    status = finding["status"]
-    check_name = finding["check_name"]
+    status = finding.status
+    check_name = finding.check_name
 
     if status == "FAIL":
         console.print(
@@ -75,7 +76,7 @@ def display_finding(finding: dict):
         )
 
 
-def display_theme_results(theme: str, findings: list):
+def display_theme_results(theme: str, findings: list[Finding]):
     """
     Display results for a theme in a table format.
 
@@ -93,15 +94,15 @@ def display_theme_results(theme: str, findings: list):
             "PASS": "✅",
             "FAIL": "❌",
             "ERROR": "⚠️",
-        }.get(finding["status"], "❓")
+        }.get(finding.status, "❓")
 
         # Safely get the message from details, with a fallback if it doesn't exist
-        details = finding.get("details", {})
+        details = finding.details
         message = details.get("message", "No details provided")
 
         table.add_row(
-            finding["check_name"],
-            f"{status_emoji} {finding['status']}",
+            finding.check_name,
+            f"{status_emoji} {finding.status}",
             message,
         )
 
@@ -169,41 +170,45 @@ def assess(config: str, auto_save: bool = True):
         )
     )
 
-    for theme in CHECK_THEMES:
+    for theme in THEMES:
+        for practice in theme.practices:
+            console.print(
+                Panel(
+                    practice.description,
+                    title=practice.name,
+                    border_style="blue",
+                )
+            )
+
+            for check in practice.checks:
+                check_id = check.check_id
+
+                if assessment.has_finding(check_id):
+                    console.print(
+                        f"[yellow]Skipping {check_id} - already assessed[/yellow]"
+                    )
+                    continue
+
+                finding = _run_check(check)
+                assessment.record(theme.name, practice.name, finding)
+                display_finding(finding)
+
+                if auto_save:
+                    assessment.save()
+
+            display_theme_results(
+                practice.name,
+                assessment.themes[theme.name].practices[practice.name].findings,
+            )
+
+        assessment.save()
         console.print(
             Panel(
-                theme.description,
-                title=theme.name,
+                "Assessment results saved to kite-results.yaml",
+                title="Results",
                 border_style="blue",
             )
         )
-
-        for check in theme.checks:
-            check_id = check.check_id
-
-            if assessment.has_finding(check_id):
-                console.print(
-                    f"[yellow]Skipping {check_id} - already assessed[/yellow]"
-                )
-                continue
-
-            finding = _run_check(check)
-            assessment.record(theme.name, finding)
-            display_finding(finding)
-
-            if auto_save:
-                assessment.save()
-
-        display_theme_results(theme.name, assessment.themes[theme.name])
-
-    assessment.save()
-    console.print(
-        Panel(
-            "Assessment results saved to kite-results.yaml",
-            title="Results",
-            border_style="blue",
-        )
-    )
 
 
 def save_assessment(assessment):
@@ -219,9 +224,10 @@ def list_checks():
     table.add_column("Check ID", style="cyan")
     table.add_column("Check Name", style="green")
 
-    for theme in CHECK_THEMES:
-        for check in theme.checks:
-            table.add_row(theme.name, check.check_id, check.check_name)
+    for theme in THEMES:
+        for practice in theme.practices:
+            for check in practice.checks:
+                table.add_row(theme.name, check.check_id, check.check_name)
 
     console.print(table)
 
@@ -250,16 +256,16 @@ def run_check(config, check_id):
 
     # Display the result
     status_color = {"PASS": "green", "FAIL": "red", "ERROR": "yellow"}.get(
-        finding["status"], "white"
+        finding.status, "white"
     )
 
-    console.print(f"\nStatus: [{status_color}]{finding['status']}[/{status_color}]")
-    if "details" in finding:
+    console.print(f"\nStatus: [{status_color}]{finding.status}[/{status_color}]")
+    if finding.details:
         console.print("\nDetails:")
-        console.print(finding["details"])
+        console.print(finding.details)
 
 
-def _run_check(check):
+def _run_check(check) -> Finding:
     result = check.run()
     if result.status == CheckStatus.MANUAL:
         description = check.description

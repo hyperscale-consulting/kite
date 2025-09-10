@@ -24,6 +24,7 @@ from hyperscale.kite import sts
 from hyperscale.kite.cli import Assessment
 from hyperscale.kite.cli import main
 from hyperscale.kite.config import Config
+from hyperscale.kite.core import Finding
 from hyperscale.kite.data import get_organization
 from tests.clients import OrganizationsClient
 from tests.factories import create_config
@@ -252,11 +253,9 @@ def test_run_assess(runner, tmp_path, monkeypatch, base_path):
         assert result.exit_code == 0
         assessment = Assessment.load()
         assert assessment is not None
-        assert assessment.get_finding("root-account-monitoring")["status"] == "PASS"
-        assert assessment.get_finding("root-actions-disallowed")["status"] == "FAIL"
-        assert (
-            assessment.get_finding("no-permissive-role-assumption")["status"] == "PASS"
-        )
+        assert assessment.get_finding("root-account-monitoring").status == "PASS"
+        assert assessment.get_finding("root-actions-disallowed").status == "FAIL"
+        assert assessment.get_finding("no-permissive-role-assumption").status == "PASS"
 
 
 def test_report_without_results(runner, tmp_path):
@@ -269,27 +268,28 @@ def test_report_without_results(runner, tmp_path):
 def test_report(runner, tmp_path):
     config = create_config()
     assessment = Assessment()
-    assessment.record(
-        "Identity and Access Management",
-        {
-            "check_id": "test_001",
-            "check_name": "Test Check 1",
-            "description": "A test check for IAM",
-            "status": "PASS",
-            "reason": "Test passed successfully",
-            "details": {"message": "Test passed successfully"},
-        },
+    finding = Finding(
+        check_id="test_001",
+        check_name="Test Check 1",
+        description="A test check for IAM",
+        status="PASS",
+        reason="Test passed successfully",
+        details={"message": "Test passed successfully"},
     )
     assessment.record(
-        "Data Protection",
-        {
-            "check_id": "test_002",
-            "check_name": "Test Check 2",
-            "description": "A test check for data protection",
-            "status": "FAIL",
-            "reason": "Test failed as expected",
-            "details": {"message": "Test failed as expected"},
-        },
+        "Identity and Access Management", "Continuously reduce permissions", finding
+    )
+
+    finding2 = Finding(
+        check_id="test_002",
+        check_name="Test Check 2",
+        description="A test check for data protection",
+        status="FAIL",
+        reason="Test failed as expected",
+        details={"message": "Test failed as expected"},
+    )
+    assessment.record(
+        "Data Protection", "Apply controls based on sensitivity", finding2
     )
     assessment.save()
     result = runner.invoke(main, ["report", "-c", config.save(tmp_path / "kite.yaml")])

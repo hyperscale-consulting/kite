@@ -90,7 +90,6 @@ from hyperscale.kite.checks.control_tower import ControlTowerCheck
 from hyperscale.kite.checks.core import Check
 from hyperscale.kite.checks.core import CheckResult
 from hyperscale.kite.checks.core import CheckStatus
-from hyperscale.kite.checks.core import make_finding
 from hyperscale.kite.checks.create_network_layers import CreateNetworkLayersCheck
 from hyperscale.kite.checks.credential_rotation import CredentialRotationCheck
 from hyperscale.kite.checks.cross_account_confused_deputy_prevention import (
@@ -583,7 +582,6 @@ __all__ = [
     "Check",
     "CheckResult",
     "CheckStatus",
-    "make_finding",
     "CaptureKeyContactsCheck",
     "VendAccountsWithStandardizedControlsCheck",
     "ApprovalProcessForResourceSharingCheck",

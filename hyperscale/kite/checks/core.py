@@ -2,26 +2,6 @@ from enum import Enum
 from typing import Protocol
 
 
-def make_finding(
-    check_id: str,
-    check_name: str,
-    status: str,
-    reason: str,
-    description: str,
-    details: dict | None = None,
-) -> dict:
-    details = details or {}
-    details["message"] = reason  # backward compatibility with legacy checks
-    return {
-        "check_id": check_id,
-        "check_name": check_name,
-        "status": status,
-        "description": description,
-        "reason": reason,
-        "details": details,
-    }
-
-
 class CheckStatus(Enum):
     PASS = "PASS"
     FAIL = "FAIL"

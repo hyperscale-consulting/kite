@@ -1,9 +1,10 @@
 from datetime import datetime
 from pathlib import Path
-from typing import Any
 
 from hyperscale.kite.config import Config
 from hyperscale.kite.core import Assessment
+from hyperscale.kite.core import Finding
+from hyperscale.kite.core import ThemeAssessment
 
 
 def generate_html_report() -> str:
@@ -45,16 +46,17 @@ def _generate_html_content(assessment: Assessment) -> str:
     failed_checks = 0
     error_checks = 0
 
-    for _, findings in themes.items():
-        for finding in findings:
-            total_checks += 1
-            status = finding.get("status", "UNKNOWN")
-            if status == "PASS":
-                passed_checks += 1
-            elif status == "FAIL":
-                failed_checks += 1
-            elif status == "ERROR":
-                error_checks += 1
+    for theme in themes.values():
+        for practice in theme.practices.values():
+            for finding in practice.findings:
+                total_checks += 1
+                status = finding.status
+                if status == "PASS":
+                    passed_checks += 1
+                elif status == "FAIL":
+                    failed_checks += 1
+                elif status == "ERROR":
+                    error_checks += 1
 
     # Generate the HTML
     html = f"""<!DOCTYPE html>
@@ -100,8 +102,8 @@ def _generate_html_content(assessment: Assessment) -> str:
         </div>
 
         <div class="themes-section">
-            <h2>Assessment Results by Theme</h2>
-            {_generate_themes_html(themes)}
+            <h2>Assessment Results by Practice</h2>
+            {_generate_practices_html(themes)}
         </div>
     </div>
 
@@ -136,31 +138,32 @@ def _generate_html_content(assessment: Assessment) -> str:
     return html
 
 
-def _generate_themes_html(themes: dict[str, list[dict[str, Any]]]) -> str:
-    themes_html = ""
+def _generate_practices_html(themes: dict[str, ThemeAssessment]) -> str:
+    practices_html = ""
 
-    for theme_name, findings in themes.items():
-        themes_html += f"""
-            <div class="theme-section">
-                <h3 class="theme-title">{theme_name}</h3>
-                <div class="findings-container">
-                    {_generate_findings_html(findings)}
+    for theme in themes.values():
+        for practice_name, practice in theme.practices.items():
+            practices_html += f"""
+                <div class="theme-section">
+                    <h3 class="theme-title">{practice_name}</h3>
+                    <div class="findings-container">
+                        {_generate_findings_html(practice.findings)}
+                    </div>
                 </div>
-            </div>
-        """
+            """
 
-    return themes_html
+    return practices_html
 
 
-def _generate_findings_html(findings: list[dict[str, Any]]) -> str:
+def _generate_findings_html(findings: list[Finding]) -> str:
     findings_html = ""
 
     for finding in findings:
-        status = finding.get("status", "UNKNOWN")
-        check_id = finding.get("check_id", "")
-        check_name = finding.get("check_name", "")
-        description = finding.get("description", "")
-        reason = finding.get("reason", "")
+        status = finding.status
+        check_id = finding.check_id
+        check_name = finding.check_name
+        description = finding.description
+        reason = finding.reason
 
         status_class = status.lower()
         status_icon = _get_status_icon(status)

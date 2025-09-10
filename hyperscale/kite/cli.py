@@ -12,9 +12,9 @@ from rich.panel import Panel
 from rich.table import Table
 
 from hyperscale.kite.accessanalyzer import list_analyzers
-from hyperscale.kite.check_themes import find_check_by_id
-from hyperscale.kite.check_themes import THEMES
 from hyperscale.kite.checks import CheckStatus
+from hyperscale.kite.checks import find_check_by_id
+from hyperscale.kite.checks import THEMES
 from hyperscale.kite.cloudfront import get_distributions_by_web_acl
 from hyperscale.kite.collect import collect_data
 from hyperscale.kite.collect import CollectException

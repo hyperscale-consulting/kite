@@ -41,8 +41,8 @@ class ValidateSoftwareIntegrityCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 3
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 4

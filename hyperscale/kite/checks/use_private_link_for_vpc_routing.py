@@ -54,11 +54,11 @@ class UsePrivateLinkForVpcRoutingCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 3
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 4
 
 
 def _analyze_vpc_peering_connections() -> str:

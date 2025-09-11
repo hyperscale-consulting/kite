@@ -157,7 +157,7 @@ class DataPerimeterTrustedIdentitiesCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 4
 
     @property
     def difficulty(self) -> int:

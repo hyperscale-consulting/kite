@@ -88,11 +88,11 @@ class SqsConfusedDeputyProtectionCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 2
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 3
 
 
 def _is_service_principal(principal: Any) -> bool:

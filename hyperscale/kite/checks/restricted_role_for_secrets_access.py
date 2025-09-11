@@ -170,11 +170,11 @@ class RestrictedRoleForSecretsAccessCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 6
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 6
 
 
 def get_trust_policy(role_arn):

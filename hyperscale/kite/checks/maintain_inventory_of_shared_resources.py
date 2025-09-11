@@ -40,8 +40,8 @@ class MaintainInventoryOfSharedResourcesCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 1
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 2

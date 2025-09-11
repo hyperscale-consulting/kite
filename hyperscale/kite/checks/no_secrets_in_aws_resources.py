@@ -99,8 +99,8 @@ class NoSecretsInAwsResourcesCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 9
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 4

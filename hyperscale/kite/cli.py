@@ -1,3 +1,4 @@
+import enum
 import os
 import shutil
 import subprocess
@@ -216,18 +217,71 @@ def save_assessment(assessment):
         yaml.dump(assessment, f, default_flow_style=False)
 
 
+class CheckSortType(enum.Enum):
+    CRITICALITY = enum.auto()
+    DIFFICULTY = enum.auto()
+    ID = enum.auto()
+
+
 @main.command()
-def list_checks():
+@click.option(
+    "--sort-by",
+    "-s",
+    default=None,
+    type=click.Choice(CheckSortType, case_sensitive=False),
+)
+@click.option("--theme", "-t", default=None, type=str)
+def list_checks(sort_by, theme):
     """List all available security checks."""
     table = Table(title="Available Security Checks")
+    table.add_column("Check ID", style="yellow")
+    table.add_column("Check Name", style="cyan")
+    table.add_column("Criticality", style="green")
+    table.add_column("Difficulty", style="green")
+
+    checks = [
+        check
+        for theme_obj in THEMES
+        if theme is None or theme_obj.name == theme
+        for practice in theme_obj.practices
+        for check in practice.checks
+    ]
+
+    sort_keys = {
+        CheckSortType.CRITICALITY: lambda c: c.criticality,
+        CheckSortType.DIFFICULTY: lambda c: c.difficulty,
+        CheckSortType.ID: lambda c: c.check_id,
+    }
+
+    key_func = sort_keys.get(sort_by)
+    reverse = sort_by in {
+        CheckSortType.CRITICALITY,
+        CheckSortType.DIFFICULTY,
+    }
+    sorted_checks = (
+        sorted(checks, key=key_func, reverse=reverse) if key_func else checks
+    )
+
+    for check in sorted_checks:
+        table.add_row(
+            check.check_id,
+            check.check_name,
+            str(check.criticality),
+            str(check.difficulty),
+        )
+
+    console.print(table)
+
+
+@main.command()
+def list_themes():
+    """List available themes."""
+
+    table = Table(title="Themes")
     table.add_column("Theme", style="yellow")
-    table.add_column("Check ID", style="cyan")
-    table.add_column("Check Name", style="green")
 
     for theme in THEMES:
-        for practice in theme.practices:
-            for check in practice.checks:
-                table.add_row(theme.name, check.check_id, check.check_name)
+        table.add_row(theme.name)
 
     console.print(table)
 

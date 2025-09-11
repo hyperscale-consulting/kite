@@ -52,7 +52,7 @@ class OuStructureCheck:
 
     @property
     def criticality(self) -> int:
-        return 4
+        return 2
 
     @property
     def difficulty(self) -> int:

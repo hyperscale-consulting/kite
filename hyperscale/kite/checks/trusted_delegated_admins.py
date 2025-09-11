@@ -73,8 +73,8 @@ class TrustedDelegatedAdminsCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 7
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 2

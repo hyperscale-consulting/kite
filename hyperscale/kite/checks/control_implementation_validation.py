@@ -27,6 +27,10 @@ class ControlImplementationValidationCheck:
             "Consider the following factors:\n"
             "- Are SCPs, resource policies, role trust policies, and other "
             "guardrails used to prevent non-compliant resource configurations?\n"
+            "- Is autoremediation in place to correct non-compliant resource "
+            "configuration where appropriate?\n"
+            "- Is alerting in place to notify teams of non-compliant resource "
+            "configurations?\n"
             "- Are Security Hub standards and AWS Config conformance packs used to "
             "track conformance?\n"
             "- Is evidence of effectiveness at both a point in time and over a period "
@@ -39,8 +43,8 @@ class ControlImplementationValidationCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 9
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 8

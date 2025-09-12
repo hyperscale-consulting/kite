@@ -34,4 +34,4 @@ class MacieScansForSensitiveDataCheck:
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 3

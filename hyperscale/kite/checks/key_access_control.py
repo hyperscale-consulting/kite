@@ -373,8 +373,8 @@ class KeyAccessControlCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 6
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 4

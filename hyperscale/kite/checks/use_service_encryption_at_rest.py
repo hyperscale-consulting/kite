@@ -98,4 +98,4 @@ class UseServiceEncryptionAtRestCheck:
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 1

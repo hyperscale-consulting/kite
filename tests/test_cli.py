@@ -303,14 +303,16 @@ def test_report(runner, tmp_path):
 
     report_dir = config.data_dir / "html"
     assert report_dir.exists()
-    assert (report_dir / "report.html").exists()
-    assert (report_dir / "styles.css").exists()
-    assert (report_dir / "script.js").exists()
 
-    # Check the HTML content
-    html_content = (report_dir / "report.html").read_text()
-    assert "Kite Security Assessment Report" in html_content
-    assert "Test Check 1" in html_content
-    assert "Test Check 2" in html_content
-    assert "PASS" in html_content
-    assert "FAIL" in html_content
+    # Expect index.html in the dashboard output
+    index_html = report_dir / "index.html"
+    assert index_html.exists(), "index.html not found in report output"
+
+    # Ensure the placeholder token has been replaced in index.html only
+    placeholder = "PYTHON-SECURE-COMPASS-RESULTS-ONE"
+    index_content = index_html.read_text(errors="ignore")
+    assert placeholder not in index_content
+
+    # The injected YAML should include the findings; verify presence in index.html
+    assert "Test Check 1" in index_content
+    assert "Test Check 2" in index_content

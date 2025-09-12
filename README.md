@@ -199,7 +199,7 @@ After completing the assessment, you can generate a HTML report from the results
 kite report
 ```
 
-This will create an HTML report in the `<data_dir>/html/` directory that you can open in your web browser. The report includes:
+This will create an HTML report in the `<data_dir>/html/index.html` directory that you can open in your web browser. The report includes:
 
 - **Executive Summary**: Overview of all checks with pass/fail statistics
 - **Interactive Chart**: Visual representation of assessment results
@@ -237,6 +237,19 @@ uv run ruff check --fix
 uv run pre-commit run --all-files
 uv run pytest
 ```
+
+### Dashboard Assets
+
+The assets used by the generated report live in the directory hyperscale/kite/dashboard/. This is the
+output from a react-vite-app from https://github.com/hyperscale-consulting/kite-dashboard/.
+
+To make changes, clone that repo, make any changes and then build the app.
+
+```bash
+npm run build
+```
+
+and then copy the contents of the folder dist/* to hyperscale/kite/dashboard/.
 
 ## Contributing
 

@@ -1,5 +1,3 @@
-"""Check for performing Static Application Security Testing (SAST)."""
-
 from hyperscale.kite.checks.core import CheckResult
 from hyperscale.kite.checks.core import CheckStatus
 
@@ -39,8 +37,8 @@ class PerformSASTCheck:
 
     @property
     def criticality(self) -> int:
-        return 5
+        return 7
 
     @property
     def difficulty(self) -> int:
-        return 5
+        return 3

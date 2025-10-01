@@ -46,16 +46,55 @@ def make_finding(
 @dataclass
 class PracticeAssessment:
     findings: list[Finding] = field(default_factory=list)
+    score_raw: int = 0
+    score_max: int = 0
+    score_percentage: int = 0
+
+    def record(self, finding: Finding):
+        self.findings.append(finding)
+        self.score_raw = self.score()
+        self.score_max = self.max_score()
+        self.score_percentage = (
+            self.score_raw * 100 // self.score_max if self.score_max > 0 else 0
+        )
+
+    def max_score(self) -> int:
+        return sum([f.criticality for f in self.findings])
+
+    def score(self) -> int:
+        return sum([f.criticality for f in self.findings if f.status == "PASS"])
+
+    def failures(self) -> list[Finding]:
+        return [f for f in self.findings if f.status == "FAIL"]
 
 
 @dataclass
 class ThemeAssessment:
     practices: dict[str, PracticeAssessment] = field(default_factory=dict)
+    score_raw: int = 0
+    score_max: int = 0
+    score_percentage: int = 0
 
     def record(self, practice: str, finding: Finding):
-        self.practices.setdefault(practice, PracticeAssessment()).findings.append(
-            finding
+        self.practices.setdefault(practice, PracticeAssessment()).record(finding)
+        self.score_raw = self.score()
+        self.score_max = self.max_score()
+        self.score_percentage = (
+            self.score_raw * 100 // self.score_max if self.score_max > 0 else 0
         )
+
+    def max_score(self) -> int:
+        return sum([p.max_score() for p in self.practices.values()])
+
+    def score(self) -> int:
+        return sum([p.score() for p in self.practices.values()])
+
+    def failures(self) -> list[Finding]:
+        return [
+            finding
+            for practice in self.practices.values()
+            for finding in practice.failures()
+        ]
 
 
 @dataclass
@@ -63,6 +102,10 @@ class Assessment:
     timestamp: str = datetime.now().isoformat()
     config_file: str = "kite.yaml"
     themes: dict[str, ThemeAssessment] = field(default_factory=dict)
+    priorities: list[dict] = field(default_factory=list)
+    score_raw: int = 0
+    score_max: int = 0
+    score_percentage: int = 0
 
     @classmethod
     def load(cls) -> "Assessment":
@@ -72,10 +115,38 @@ class Assessment:
 
     def record(self, theme: str, practice: str, finding: Finding):
         self.themes.setdefault(theme, ThemeAssessment()).record(practice, finding)
+        self.score_raw = self.score()
+        self.score_max = self.max_score()
+        self.score_percentage = (
+            self.score_raw * 100 // self.score_max if self.score_max > 0 else 0
+        )
+        self.priorities = self._priorities()
 
     def save(self):
         with open("kite-results.yaml", "w") as f:
             yaml.safe_dump(asdict(self), f, sort_keys=False)
+
+    def _priorities(self) -> list[dict]:
+        failed_findings = sorted(
+            [finding for theme in self.themes.values() for finding in theme.failures()],
+            key=lambda x: (-x.criticality, x.difficulty),
+        )
+        return [
+            dict(
+                check_id=f.check_id,
+                check_name=f.check_name,
+                description=f.description,
+                criticality=f.criticality,
+                difficulty=f.difficulty,
+            )
+            for f in failed_findings
+        ]
+
+    def score(self) -> int:
+        return sum([theme.score() for theme in self.themes.values()])
+
+    def max_score(self) -> int:
+        return sum([theme.max_score() for theme in self.themes.values()])
 
     def has_finding(self, check_id: str) -> bool:
         return self._get_finding(check_id) is not None

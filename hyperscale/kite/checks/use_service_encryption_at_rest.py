@@ -31,6 +31,7 @@ class UseServiceEncryptionAtRestCheck:
             "opensearch_service_domains_encryption_at_rest_enabled",
             "ec2_ebs_volume_encryption",
             "rds_instance_storage_encrypted",
+            "rds_snapshots_encrypted",
             "dynamodb_accelerator_cluster_encryption_enabled",
             "ec2_ebs_default_encryption",
             "ec2_ebs_snapshots_encrypted",

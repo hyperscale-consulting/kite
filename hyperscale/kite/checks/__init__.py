@@ -148,7 +148,7 @@ from hyperscale.kite.checks.employ_user_groups_and_attributes import (
 from hyperscale.kite.checks.enforce_data_protection_at_rest_with_policy_as_code import (
     EnforceDataProtectionAtRestWithPolicyAsCodeCheck,
 )
-from hyperscale.kite.checks.enforce_https import EnforceHttpsCheck
+from hyperscale.kite.checks.enforce_tls import EnforceTlsCheck
 from hyperscale.kite.checks.establish_logging_and_audit_trails_for_private_ca import (
     EstablishLoggingAndAuditTrailsForPrivateCACheck,
 )
@@ -901,7 +901,7 @@ THEMES = [
                 name="Enforce encryption in transit",
                 description="Checks related to enforcing encryption in transit",
                 checks=[
-                    EnforceHttpsCheck(),
+                    EnforceTlsCheck(),
                     AvoidInsecureSslCiphersCheck(),
                 ],
             ),

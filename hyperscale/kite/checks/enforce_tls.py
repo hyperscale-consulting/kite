@@ -3,10 +3,10 @@ from hyperscale.kite.checks.core import CheckStatus
 from hyperscale.kite.prowler import get_prowler_output
 
 
-class EnforceHttpsCheck:
+class EnforceTlsCheck:
     def __init__(self):
-        self.check_id = "enforce-https"
-        self.check_name = "Enforce HTTPS"
+        self.check_id = "enforce-tls"
+        self.check_name = "Enforce TLS"
 
     @property
     def question(self) -> str:
@@ -14,7 +14,7 @@ class EnforceHttpsCheck:
 
     @property
     def description(self) -> str:
-        return "This check verifies that HTTPS is enforced across AWS services."
+        return "This check verifies that TLS is enforced across AWS services."
 
     def run(self) -> CheckResult:
         prowler_results = get_prowler_output()
@@ -26,6 +26,7 @@ class EnforceHttpsCheck:
             "elb_ssl_listeners",
             "elbv2_ssl_listeners",
             "s3_bucket_secure_transport_policy",
+            "redshift_cluster_in_transit_encryption_enabled",
         ]
         failing_resources = {}
         for check_id in check_ids:
@@ -57,9 +58,9 @@ class EnforceHttpsCheck:
                                 "check_id": check_id,
                             }
                         )
-        message = "This check verifies that HTTPS is enforced across AWS services.\n\n"
+        message = "This check verifies that TLS is enforced across AWS services.\n\n"
         if failing_resources:
-            message += "The following resources do not have HTTPS enforced:\n\n"
+            message += "The following resources do not have TLS enforced:\n\n"
             for service, resources in sorted(failing_resources.items()):
                 message += f"{service}:\n"
                 for resource in sorted(resources, key=lambda x: x["resource_name"]):
@@ -70,7 +71,7 @@ class EnforceHttpsCheck:
                     )
                 message += "\n"
         else:
-            message += "All services have HTTPS enforced.\n"
+            message += "All services have TLS enforced.\n"
         passed = len(failing_resources) == 0
         return CheckResult(
             status=CheckStatus.PASS if passed else CheckStatus.FAIL,

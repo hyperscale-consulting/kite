@@ -25,6 +25,7 @@ class UseServiceEncryptionAtRestCheck:
 
         # The check IDs we're interested in
         check_ids = [
+            "apigateway_restapi_cache_encrypted",
             "efs_encryption_at_rest_enabled",
             "opensearch_service_domains_encryption_at_rest_enabled",
             "ec2_ebs_volume_encryption",

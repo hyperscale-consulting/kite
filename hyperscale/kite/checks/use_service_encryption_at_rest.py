@@ -44,6 +44,7 @@ class UseServiceEncryptionAtRestCheck:
             "glue_etl_jobs_amazon_s3_encryption_enabled",
             "glue_etl_jobs_cloudwatch_logs_encryption_enabled",
             "glue_etl_jobs_job_bookmark_encryption_enabled",
+            "kinesis_stream_encrypted_at_rest",
             "sagemaker_notebook_instance_encryption_enabled",
             "sagemaker_training_jobs_intercontainer_encryption_enabled",
             "sagemaker_training_jobs_volume_and_output_encryption_enabled",

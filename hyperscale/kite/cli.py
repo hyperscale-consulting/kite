@@ -138,7 +138,8 @@ def _verify_prowler_output_exists():
 @click.option(
     "--auto-save/--no-auto-save", default=True, help="Enable or disable auto-saving"
 )
-def assess(config: str, auto_save: bool = True):
+@click.option("--amend", is_flag=True, help="Amend the assessment")
+def assess(config: str, auto_save: bool = True, amend: bool = False):
     """Start a security assessment using the specified config file."""
     config_data = Config.load(config)
 
@@ -184,13 +185,17 @@ def assess(config: str, auto_save: bool = True):
             for check in practice.checks:
                 check_id = check.check_id
 
-                if assessment.has_finding(check_id):
+                if assessment.has_finding(check_id) and not amend:
                     console.print(
                         f"[yellow]Skipping {check_id} - already assessed[/yellow]"
                     )
                     continue
 
-                finding = _run_check(check)
+                existing_finding = None
+                if assessment.has_finding(check_id) and amend:
+                    existing_finding = assessment.get_finding(check_id)
+
+                finding = _run_check(check, existing_finding)
                 assessment.record(theme.name, practice.name, finding)
                 display_finding(finding)
 
@@ -319,8 +324,14 @@ def run_check(config, check_id):
         console.print(finding.details)
 
 
-def _run_check(check) -> Finding:
+def _run_check(check, existing_finding: Finding | None = None) -> Finding:
     result = check.run()
+    default_answer = ""
+    default_reason = ""
+    if existing_finding:
+        default_answer = "y" if existing_finding.status == "PASS" else "n"
+        default_reason = existing_finding.reason
+
     if result.status == CheckStatus.MANUAL:
         description = check.description
         context = result.context
@@ -329,6 +340,8 @@ def _run_check(check) -> Finding:
             check_name=check.check_name,
             message="\n\n".join([description, context]),
             prompt=question,
+            default_answer=default_answer,
+            default_reason=default_reason,
         )
         finding = make_finding(
             check_id=check.check_id,

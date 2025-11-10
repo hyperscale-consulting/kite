@@ -50,8 +50,21 @@ class PracticeAssessment:
     score_max: int = 0
     score_percentage: int = 0
 
+    def _find_finding(self, check_id: str) -> Finding | None:
+        for finding in self.findings:
+            if finding.check_id == check_id:
+                return finding
+
     def record(self, finding: Finding):
-        self.findings.append(finding)
+        existing = self._find_finding(finding.check_id)
+        if existing:
+            existing.status = finding.status
+            existing.reason = finding.reason
+            existing.details = finding.details
+            existing.criticality = finding.criticality
+        else:
+            self.findings.append(finding)
+
         self.score_raw = self.score()
         self.score_max = self.max_score()
         self.score_percentage = (

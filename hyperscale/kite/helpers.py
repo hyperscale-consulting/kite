@@ -29,7 +29,8 @@ def prompt_user_with_panel(
     check_name: str,
     message: str,
     prompt: str,
-    default: bool = True,
+    default_answer: str = "",
+    default_reason: str = "",
     info_required: bool = True,
 ) -> tuple[bool, str]:
     """
@@ -55,10 +56,12 @@ def prompt_user_with_panel(
     ui.print_panel(message, title=check_name, border_style="blue")
 
     # Prompt the user
-    response = ui.confirm(prompt, default=default)
+    response = ui.confirm(prompt, default=default_answer)
 
     if info_required:
-        value = ui.prompt("Please provide details explaining your answer")
+        value = ui.prompt(
+            "Please provide details explaining your answer", default_reason
+        )
         info = value
 
     return response, info

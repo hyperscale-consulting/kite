@@ -121,7 +121,11 @@ class NoFullAdminPoliciesCheck:
         message += "Consider using more granular permissions that follow the "
         message += "principle of least privilege."
 
-        return CheckResult(status=CheckStatus.FAIL, reason=message)
+        return CheckResult(
+            status=CheckStatus.FAIL,
+            reason="Policies with administrative privileges were found",
+            details={"message": message},
+        )
 
     @property
     def criticality(self) -> int:

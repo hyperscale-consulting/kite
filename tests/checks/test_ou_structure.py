@@ -15,10 +15,7 @@ def test_no_org():
     result = OuStructureCheck().run()
     assert result.status == CheckStatus.FAIL
     assert result.reason is not None
-    assert (
-        result.reason
-        == "AWS Organizations is not being used, so OU structure cannot be assessed."
-    )
+    assert result.reason == "AWS Organizations is not being used."
 
 
 def test_org():

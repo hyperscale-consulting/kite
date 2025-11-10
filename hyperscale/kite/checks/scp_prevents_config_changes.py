@@ -26,10 +26,7 @@ class ScpPreventsConfigChangesCheck:
         if org is None:
             return CheckResult(
                 status=CheckStatus.FAIL,
-                reason=(
-                    "AWS Organizations is not being used, so SCP preventing "
-                    "AWS Config changes cannot be assessed."
-                ),
+                reason="AWS Organizations is not being used.",
             )
 
         # Check root OU for Config deny SCP

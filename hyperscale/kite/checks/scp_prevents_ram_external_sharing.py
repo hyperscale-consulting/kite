@@ -26,10 +26,7 @@ class ScpPreventsRamExternalSharingCheck:
         if org is None:
             return CheckResult(
                 status=CheckStatus.FAIL,
-                reason=(
-                    "AWS Organizations is not being used, so SCP preventing "
-                    "RAM external sharing cannot be assessed."
-                ),
+                reason="AWS Organizations is not being used.",
             )
 
         # Check root OU for RAM external sharing deny SCP

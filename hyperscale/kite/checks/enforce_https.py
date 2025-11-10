@@ -57,24 +57,14 @@ class EnforceHttpsCheck:
                                 "check_id": check_id,
                             }
                         )
-        message = "This check verifies that HTTPS is enforced across AWS services.\n\n"
         if failing_resources:
-            message += "The following resources do not have HTTPS enforced:\n\n"
-            for service, resources in sorted(failing_resources.items()):
-                message += f"{service}:\n"
-                for resource in sorted(resources, key=lambda x: x["resource_name"]):
-                    message += (
-                        f"  - {resource['resource_name']} "
-                        f"(Account: {resource['account_id']}, "
-                        f"Region: {resource['region']})\n"
-                    )
-                message += "\n"
+            reason = f"{len(failing_resources)} resources do not have HTTPS enforced"
         else:
-            message += "All services have HTTPS enforced.\n"
+            reason = "All services have HTTPS enforced."
         passed = len(failing_resources) == 0
         return CheckResult(
             status=CheckStatus.PASS if passed else CheckStatus.FAIL,
-            reason=message,
+            reason=reason,
             details={
                 "failing_resources": failing_resources,
             },

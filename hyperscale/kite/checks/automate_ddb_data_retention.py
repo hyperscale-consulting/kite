@@ -49,11 +49,10 @@ class AutomateDdbDataRetentionCheck:
         return CheckResult(
             status=CheckStatus.FAIL,
             reason=(
-                "The following DynamoDB tables do not have TTL enabled for "
-                "automated data retention:\n"
-                + "\n".join(f"- {table}" for table in sorted(tables_without_ttl))
-                + "\n\nEnable TTL on these tables to automatically delete data "
-                "when it reaches the end of its retention period."
+                f"{len(tables_without_ttl)} DynamoDB tables do not have TTL enabled "
+                "for automated data retention. Enable TTL on these tables to "
+                "automatically delete data when it reaches the end of its retention "
+                "period."
             ),
         )
 

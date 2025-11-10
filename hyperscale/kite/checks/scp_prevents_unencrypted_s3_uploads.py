@@ -26,10 +26,7 @@ class ScpPreventsUnencryptedS3UploadsCheck:
         if org is None:
             return CheckResult(
                 status=CheckStatus.FAIL,
-                reason=(
-                    "AWS Organizations is not being used, so SCP preventing "
-                    "unencrypted S3 uploads cannot be assessed."
-                ),
+                reason="AWS Organizations is not being used.",
             )
 
         # Check root OU for S3 encryption deny SCP

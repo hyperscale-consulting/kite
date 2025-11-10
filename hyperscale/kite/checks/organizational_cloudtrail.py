@@ -27,7 +27,7 @@ class OrganizationalCloudTrailCheck:
                 status=CheckStatus.FAIL,
                 reason=(
                     "AWS Organizations is not being used, so organizational "
-                    "CloudTrail cannot be assessed."
+                    "CloudTrail is not available."
                 ),
             )
         trail, account, region = get_organizational_trail()

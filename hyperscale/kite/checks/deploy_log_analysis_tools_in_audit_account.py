@@ -31,8 +31,7 @@ class DeployLogAnalysisToolsInAuditAccountCheck:
         if not org:
             return CheckResult(
                 status=CheckStatus.FAIL,
-                reason="No AWS Organization found. This check requires an "
-                "organization.",
+                reason="AWS Organizations is not enabled.",
             )
         audit_account_id = self._find_audit_account(org)
         if audit_account_id:

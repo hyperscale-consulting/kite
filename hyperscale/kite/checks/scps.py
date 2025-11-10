@@ -117,8 +117,7 @@ def _check_for_org_wide_scp(
     if organization is None:
         return CheckResult(
             status=CheckStatus.FAIL,
-            reason="AWS Organizations is not being used, or the management account is "
-            "not configured.",
+            reason="AWS Organizations is not being used.",
         )
 
     if _root_has_matching_scp(organization, matcher):

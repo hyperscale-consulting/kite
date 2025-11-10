@@ -26,10 +26,7 @@ class ScpPreventsCloudwatchChangesCheck:
         if org is None:
             return CheckResult(
                 status=CheckStatus.FAIL,
-                reason=(
-                    "AWS Organizations is not being used, so SCP preventing "
-                    "CloudWatch changes cannot be assessed."
-                ),
+                reason="AWS Organizations is not being used.",
             )
 
         matching_scps = self._check_ous_recursively(org.root)

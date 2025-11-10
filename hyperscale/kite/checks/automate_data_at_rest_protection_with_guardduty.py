@@ -63,31 +63,13 @@ class AutomateDataAtRestProtectionWithGuardDutyCheck:
                     if missing_features:
                         issues_by_account[account_id][region] = missing_features
                         has_issues = True
-        message = "GuardDuty Configuration for Data at Rest Protection:\n\n"
         if has_issues:
-            message += "The following issues were found:\n\n"
-            for account_id, regions in issues_by_account.items():
-                if regions:
-                    message += f"Account: {account_id}\n"
-                    for region, issues in regions.items():
-                        message += f"  Region: {region}\n"
-                        for issue in issues:
-                            if issue == "NO_DETECTORS":
-                                message += "    - No GuardDuty detectors found\n"
-                            elif issue == "DETECTOR_DISABLED":
-                                message += "    - GuardDuty detector is disabled\n"
-                            else:
-                                message += f"    - Feature {issue} is not enabled\n"
-                        message += "\n"
+            reason = "GuardDuty detectors were missing, disabled, or missing features."
         else:
-            message += "GuardDuty is properly configured for data at rest protection:\n"
-            message += "- GuardDuty is enabled in all accounts and regions\n"
-            message += "- All required features are enabled:\n"
-            for feature in sorted(self._get_required_features()):
-                message += f"  - {feature}\n"
+            reason = "GuardDuty is properly configured for data at rest protection"
         return CheckResult(
             status=CheckStatus.PASS if not has_issues else CheckStatus.FAIL,
-            reason=message,
+            reason=reason,
             details={
                 "issues": issues_by_account,
             },

@@ -25,10 +25,7 @@ class OuStructureCheck:
         if org is None:
             return CheckResult(
                 status=CheckStatus.FAIL,
-                reason=(
-                    "AWS Organizations is not being used, so OU structure "
-                    "cannot be assessed."
-                ),
+                reason="AWS Organizations is not being used.",
             )
         org_structure = get_organization_structure_str(org)
         message = (

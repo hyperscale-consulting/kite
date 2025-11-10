@@ -88,7 +88,9 @@ def test_root_virtual_mfa_enabled_managed_credentials(check):
     )
     result = check.run()
     assert result.status == CheckStatus.FAIL
-    assert "Root MFA is enabled with virtual MFA devices in 1 account" in result.reason
+    assert (
+        "Root MFA is enabled but with virtual MFA devices in 1 account" in result.reason
+    )
 
 
 def test_no_root_mfa_managed_credentials(check):
@@ -143,7 +145,7 @@ def test_root_virtual_mfa_not_managed_credentials(check):
     )
     result = check.run()
     assert result.status == CheckStatus.FAIL
-    assert "Root MFA is enabled with virtual MFA devices" in result.reason
+    assert "Root MFA is enabled but with virtual MFA devices" in result.reason
 
 
 def test_no_root_mfa_not_managed_credentials(check):

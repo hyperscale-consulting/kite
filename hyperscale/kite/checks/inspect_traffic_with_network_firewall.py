@@ -32,7 +32,7 @@ class InspectTrafficWithNetworkFirewallCheck:
                 firewalls = get_networkfirewall_firewalls(account_id, region)
                 total_firewalls += len(firewalls)
         if total_firewalls == 0:
-            msg = "No Network Firewalls found across all accounts and regions."
+            msg = "No Network Firewalls found."
             result = {
                 "check_id": self.check_id,
                 "check_name": self.check_name,

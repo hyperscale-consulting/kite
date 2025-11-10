@@ -26,10 +26,7 @@ class ScpPreventsAddingInternetAccessToVpcCheck:
         if org is None:
             return CheckResult(
                 status=CheckStatus.FAIL,
-                reason=(
-                    "AWS Organizations is not being used, so SCP preventing "
-                    "adding internet access to VPC cannot be assessed."
-                ),
+                reason="AWS Organizations is not being used.",
             )
 
         matching_scps = self._find_matching_scps(org.root)

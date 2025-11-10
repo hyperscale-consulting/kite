@@ -74,10 +74,7 @@ class RepeatableAuditableSetupFor3rdPartyAccessCheck:
         if org is None:
             return CheckResult(
                 status=CheckStatus.FAIL,
-                reason=(
-                    "AWS Organizations is not being used, so third-party access "
-                    "cannot be assessed."
-                ),
+                reason="AWS Organizations is not being used.",
             )
 
         org_account_ids = {account.id for account in org.get_accounts()}

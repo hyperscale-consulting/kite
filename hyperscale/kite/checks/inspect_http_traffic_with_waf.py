@@ -210,7 +210,6 @@ class InspectHttpTrafficWithWafCheck:
         if total_wafs == 0:
             msg_parts = [
                 "No WAF web ACLs found in any account or region.",
-                "This check fails automatically as no WAF protection is configured.",
             ]
             msg = " ".join(msg_parts)
             result = {

@@ -85,7 +85,7 @@ class RootMfaEnabledCheck:
             )
         if accounts_with_virtual_mfa:
             message_parts.append(
-                f"Root MFA is enabled with virtual MFA devices in "
+                f"Root MFA is enabled but with virtual MFA devices in "
                 f"{len(accounts_with_virtual_mfa)} accounts."
             )
         reason = " ".join(message_parts)

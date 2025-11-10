@@ -72,9 +72,7 @@ class SecurityDataPublishedToLogArchiveAccountCheck:
         if not org:
             return CheckResult(
                 status=CheckStatus.FAIL,
-                reason=(
-                    "No AWS Organization found. This check requires an organization."
-                ),
+                reason="AWS Organizations is not being used.",
             )
 
         # Find Log Archive account

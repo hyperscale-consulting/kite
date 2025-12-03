@@ -24,13 +24,13 @@ class CrossAccountConfusedDeputyPreventionCheck:
         )
 
     def _is_principal_in_organization(
-        self, principal: str, org_account_ids: set[str]
+        self, principal: str, org_account_ids: set[str], this_account: str
     ) -> bool:
         if principal.endswith(".amazonaws.com"):
             return True
         try:
             account_id = principal.split(":")[4]
-            return account_id in org_account_ids
+            return account_id == this_account or account_id in org_account_ids
         except (IndexError, AttributeError):
             return False
 
@@ -60,7 +60,7 @@ class CrossAccountConfusedDeputyPreventionCheck:
                                 if isinstance(principal_value, list):
                                     for principal in principal_value:
                                         if not self._is_principal_in_organization(
-                                            principal, org_account_ids
+                                            principal, org_account_ids, account_id
                                         ):
                                             has_external_principal = True
                                             if self._has_external_id_condition(
@@ -70,7 +70,7 @@ class CrossAccountConfusedDeputyPreventionCheck:
                                             break
                                 elif isinstance(principal_value, str):
                                     if not self._is_principal_in_organization(
-                                        principal_value, org_account_ids
+                                        principal_value, org_account_ids, account_id
                                     ):
                                         has_external_principal = True
                                         if self._has_external_id_condition(statement):
